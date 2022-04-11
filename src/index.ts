@@ -10,6 +10,6 @@ state.dispatchGame({name: "MOVE_UNIT_TO", position: {x: 500, y: 300}, id: 0});
 setInterval(() => state.dispatchGame({name: "TICK"}), 33);
 
 const renderer = new CanvasRenderer(document.getElementById('canvas') as HTMLCanvasElement);
-setInterval(() => renderer.render(state.getGameState(), state.getClientState()), 30);
+window.requestAnimationFrame(() => renderer.render(state.getGameState(), state.getClientState()))
 
 setInterval(() => console.log(state.getGameState()), 1000);
