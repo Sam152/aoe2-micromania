@@ -1,7 +1,7 @@
-
-<script type="module" src="js/index.js"></script>
+<canvas id="game" />
 
 <script type="module">
-  import GameStateReducer from "./js/GameState.js";
-  GameStateReducer();
+  import {LocalStateManager} from "../src/StateManager";
+
+  new LocalStateManager()
 </script>

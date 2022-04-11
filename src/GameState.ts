@@ -1,25 +1,13 @@
-import {Upgrades} from "./game/Upgrades.js";
+import {GameState, GameStateAction} from "./types";
 
-export default function GameStateReducer(
-    // action, previousState
-) {
-  return {
-    // units: [],
-    //
-    // projectiles: [],
-
-    players: [
-      {
-        upgrades: [
-            Upgrades.Ballistics,
-        ],
-      },
-      {
-        upgrades: [
-          Upgrades.Ballistics,
-          Upgrades.Fletching,
-        ],
-      }
-    ]
-  };
+function GameStateReducer(state: GameState, action: GameStateAction): GameState {
+  return state;
 }
+
+const defaultState: GameState = {
+  units: [],
+  projectiles: [],
+  players: [],
+};
+
+export { defaultState, GameStateReducer };

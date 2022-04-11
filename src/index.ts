@@ -1,7 +1,2 @@
 
-
-import GameStateReducer from "./GameState.js";
-
-GameStateReducer();
-
-alert('hello world');
+alert('hello world!!11');
