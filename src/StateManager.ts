@@ -18,6 +18,14 @@ class LocalStateManager implements StateManagerInterface {
     dispatchGame(action: GameStateAction) {
         this.gameState = GameStateReducer(this.gameState, action);
     }
+
+    getClientState(): ClientState {
+        return this.clientState;
+    }
+
+    getGameState(): GameState {
+        return this.gameState;
+    }
 }
 
 class NetworkedStateManager implements StateManagerInterface {
@@ -37,6 +45,13 @@ class NetworkedStateManager implements StateManagerInterface {
         // dispatch to server.
     }
 
+    getClientState(): ClientState {
+        return undefined;
+    }
+
+    getGameState(): GameState {
+        return undefined;
+    }
 }
 
 export {LocalStateManager, NetworkedStateManager}

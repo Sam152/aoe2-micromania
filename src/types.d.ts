@@ -49,6 +49,8 @@ type ClientStateAction = {
 interface StateManagerInterface {
     dispatchGame(action: GameStateAction): void;
     dispatchClient(action: ClientStateAction): void;
+    getGameState(): GameState;
+    getClientState(): ClientState;
 }
 
 export {

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "serve": "http-server dist",
+    "serve": "http-server dist -e js",
     "watch": "tsc --watch"
   }
 }
