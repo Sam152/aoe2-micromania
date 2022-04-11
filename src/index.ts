@@ -1,9 +1,9 @@
 import {LocalStateManager} from "./StateManager";
-import CanvasRenderer from "./client/CanvasRenderer";
+import CanvasRenderer from "./drawing/CanvasRenderer";
 
 const state = new LocalStateManager();
 
-state.dispatchGame({name: "SPAWN_UNIT", position: {x: 1, y: 1}});
+state.dispatchGame({name: "SPAWN_UNIT", position: {x: 300, y: 200}});
 setInterval(() => state.dispatchGame({name: "TICK"}), 100);
 
 const renderer = new CanvasRenderer(document.getElementById('canvas') as HTMLCanvasElement);
