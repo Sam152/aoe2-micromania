@@ -1,6 +1,8 @@
-export default function ClientState(action, previousState) {
+export default function ClientStateReducer(
+    // action, previousState
+) {
   return {
     hotkeyAction: 'PATROL',
-    selectedUnits: [],
+    // selectedUnits: [],
   };
 }

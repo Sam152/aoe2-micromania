@@ -1,10 +1,10 @@
 export default class CanvasRenderer {
 
-    constructor(canvas) {
-    }
-
-    render(gameState, clientState) {
-
-    }
+    // constructor(canvas) {
+    // }
+    //
+    // render(gameState, clientState) {
+    //
+    // }
 
 }

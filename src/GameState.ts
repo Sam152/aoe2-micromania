@@ -1,10 +1,12 @@
-import {Upgrades} from "./game/Upgrades";
+import {Upgrades} from "./game/Upgrades.js";
 
-export default function GameState(action, previousState) {
+export default function GameStateReducer(
+    // action, previousState
+) {
   return {
-    units: [],
-
-    projectiles: [],
+    // units: [],
+    //
+    // projectiles: [],
 
     players: [
       {

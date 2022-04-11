@@ -239,15 +239,15 @@ const data = [
 
 export class UnitStatistics {
 
-    movementSpeed(unit) {
+    movementSpeed(unit: string) {
         return 1.0;
     }
 
-    frameDelay(unit) {
+    frameDelay(unit: string) {
         return 1.0;
     }
 
-    reloadRate(unit) {
+    reloadRate(unit: string) {
         return 1.0;
     }
 

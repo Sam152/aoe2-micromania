@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "module": "system",
+    "module": "es2020",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outFile": "../../built/local/tsc.js",
-    "sourceMap": true
+    "outDir": "dist/js/",
+    "sourceMap": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
