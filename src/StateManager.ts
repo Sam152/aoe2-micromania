@@ -42,7 +42,8 @@ class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchGame(action: GameStateAction) {
-        // dispatch to server.
+        // dispatch to server?
+        // run reducer locally as well for interpolation?
     }
 
     getClientState(): ClientState {

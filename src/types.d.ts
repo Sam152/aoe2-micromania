@@ -32,6 +32,10 @@ type GameStateAction = {
 } | {
     name: "SPAWN_UNIT";
     position: GamePosition;
+} | {
+    name: "MOVE_UNIT_TO";
+    position: GamePosition;
+    id: number;
 };
 
 interface ClientState {
