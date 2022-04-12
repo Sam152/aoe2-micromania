@@ -1,5 +1,7 @@
-export enum MovementCommands {
+enum MovementCommands {
     StandGround,
     Aggressive,
     NoAttack,
 }
+
+export default MovementCommands;

@@ -1,15 +1,20 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import {LocalStateManager, NetworkedStateManager} from "../common/state/StateManager";
 import SpawnUnits from "../common/modes/SpawnUnits";
+import LocalStateManager from "../common/state/LocalStateManager";
+import RoomManager from "../common/rooms/RoomManager";
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
     // options
 });
 
+const roomManager = new RoomManager();
+
+
 io.on("connection", (socket) => {
-    console.log('client connected');
+    console.log('CONNECTED');
+    console.log(socket.id);
 
     const state = new LocalStateManager((gameState) => {
         socket.emit('stateUpdated', state.getGameState());
@@ -17,6 +22,7 @@ io.on("connection", (socket) => {
     state.init();
 
     const mode = new SpawnUnits();
+    console.log('starting');
     mode.start(state.dispatchGame.bind(state));
 
     socket.on('stateDispatch', (action) => {

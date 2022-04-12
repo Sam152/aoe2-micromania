@@ -28,6 +28,8 @@ interface GameState {
 }
 
 type UnitId = number;
+type RoomId = string;
+type ClientId = string;
 
 type GameStateAction = {
     name: "TICK";
@@ -76,4 +78,6 @@ export {
     ClientState,
     ClientStateAction,
     StateManagerInterface,
+    RoomId,
+    ClientId,
 }

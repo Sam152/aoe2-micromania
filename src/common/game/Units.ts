@@ -1,4 +1,6 @@
-export enum Units {
+enum Units {
     Archer,
     CavalryArcher,
 }
+
+export default Units;

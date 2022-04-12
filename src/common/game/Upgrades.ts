@@ -1,4 +1,4 @@
-export enum Upgrades {
+enum Upgrades {
     Ballistics,
 
     Fletching,
@@ -8,3 +8,5 @@ export enum Upgrades {
     Crossbow,
     Arbalest,
 }
+
+export default Upgrades;

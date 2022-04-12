@@ -237,7 +237,7 @@ const data = [
 ];
 
 
-export class UnitStatistics {
+export default class UnitStatistics {
 
     movementSpeed(unit: string) {
         return 1.0;
