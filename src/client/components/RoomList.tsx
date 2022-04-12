@@ -1,14 +1,15 @@
 import {Socket} from "socket.io-client";
-import useEmittedData from "./hooks/useEmittedData";
+import useEmittedData from "../hooks/useEmittedData";
+import {EmittedRoom} from "../../types";
+import roomStatusLabel from "../../common/rooms/RoomStatusLabel";
 
-export default function RoomList({io}: {io: Socket}) {
-    const roomList = useEmittedData(io, 'listRooms', []);
-
+export default function RoomList({io, roomList}: {io: Socket, roomList: EmittedRoom[]}) {
     return (
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Status</th>
                     <th>Players</th>
                     <th>Spectators</th>
                     <th></th>
@@ -19,6 +20,7 @@ export default function RoomList({io}: {io: Socket}) {
             {roomList.map(room => (
                 <tr key={room.id}>
                     <td>{room.id}</td>
+                    <td>{roomStatusLabel.get(room.status)}</td>
                     <td>{room.players}/{room.slots}</td>
                     <td>{room.spectators}</td>
                     <td>

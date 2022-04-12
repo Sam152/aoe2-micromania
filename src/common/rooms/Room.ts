@@ -11,7 +11,7 @@ export default class Room {
     players: Player[] = [];
     spectators: Player[] = [];
     state?: StateManagerInterface = null;
-    private status: RoomStatus;
+    public status: RoomStatus;
     room: BroadcastOperator<any, any>;
 
     constructor(id: RoomId, slots: number, room: BroadcastOperator<any, any>) {
@@ -30,15 +30,10 @@ export default class Room {
         return this.slots === this.players.length;
     }
 
-    leave(player: Player): void {
-        if (this.hasSpectator(player)) {
-            this.spectators = this.spectators.filter(player => player.socket.id !== player.socket.id)
-        }
-        if (this.hasPlayer(player)) {
-            this.players = this.players.filter(player => player.socket.id !== player.socket.id)
-        }
-
-        player.socket.leave(this.id);
+    leave(leavingPlayer: Player): void {
+        this.spectators = this.spectators.filter(player => player.socket.id !== leavingPlayer.socket.id)
+        this.players = this.players.filter(player => player.socket.id !== leavingPlayer.socket.id)
+        leavingPlayer.socket.leave(this.id);
     }
 
     spectate(player: Player): void {
@@ -54,14 +49,15 @@ export default class Room {
         return this.spectators.find(p => p.socket.id === player.socket.id) !== undefined;
     }
 
-    start() {
-        this.room.emit('gameStarted');
+    startGame() {
+        this.status = RoomStatus.Started;
+
         this.state = new LocalStateManager((gameState) => {
             this.room.emit('gameStateUpdated', gameState);
         });
 
-        const mode = new SpawnUnits();
-        mode.start(this.state.dispatchGame.bind(this.state));
+        const gameMode = new SpawnUnits();
+        gameMode.start(this.state.dispatchGame.bind(this.state));
 
         this.state.init();
     }

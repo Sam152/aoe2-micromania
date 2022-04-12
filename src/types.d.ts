@@ -1,3 +1,5 @@
+import RoomStatus from "./common/rooms/RoomStatus";
+
 interface GamePosition {
     x: number;
     y: number;
@@ -70,6 +72,19 @@ interface GameMode {
     start(dispatcher: GameDispatcher): void;
 }
 
+interface EmittedPlayerLobbyMetadata {
+    inRoom?: EmittedRoom;
+    isSpectator?: boolean;
+}
+
+interface EmittedRoom {
+    id: RoomId;
+    players: number;
+    spectators: number;
+    slots: number;
+    status: RoomStatus;
+}
+
 export {
     GameMode,
     GameDispatcher,
@@ -80,4 +95,6 @@ export {
     StateManagerInterface,
     RoomId,
     ClientId,
+    EmittedPlayerLobbyMetadata,
+    EmittedRoom,
 }

@@ -24,20 +24,40 @@ io.on('connection', (socket) => {
     socket.on<RoomId>('joinRoom', (roomId) => {
         roomManager.joinRoom(roomId, player);
         roomManager.emitRooms(io);
-        roomManager.emitPlayerInfo(player);
+        roomManager.emitPlayerInfoForRoom(roomId);
     });
 
     socket.on<RoomId>('spectateRoom', (roomId) => {
         roomManager.spectateRoom(roomId, player);
         roomManager.emitRooms(io);
-        roomManager.emitPlayerInfo(player);
+        roomManager.emitPlayerInfoForRoom(roomId);
+    });
+
+    socket.on('leaveRoom', () => {
+        const leftRoom = roomManager.leaveRoom(player);
+        if (leftRoom) {
+            roomManager.emitRooms(io);
+            roomManager.emitPlayerInfo(player);
+            roomManager.emitPlayerInfoForRoom(leftRoom.id);
+        }
+    });
+
+    socket.on('startGame', () => {
+        const room = roomManager.getRoomWithPlayer(player);
+        room.startGame();
+
+        roomManager.emitRooms(io);
+        roomManager.emitPlayerInfoForRoom(room.id);
     });
 
     socket.on("disconnect", (reason) => {
-        roomManager.leaveRoom(player);
-        roomManager.emitRooms(io);
+        const leftRoom = roomManager.leaveRoom(player);
+        if (leftRoom) {
+            roomManager.emitRooms(io);
+            roomManager.emitPlayerInfo(player);
+            roomManager.emitPlayerInfoForRoom(leftRoom.id);
+        }
     });
 });
 
 httpServer.listen(3000);
-console.log('Starting server');

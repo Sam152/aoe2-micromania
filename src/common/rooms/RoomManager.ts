@@ -1,9 +1,10 @@
-import {RoomId} from "../../types";
+import {EmittedRoom, RoomId} from "../../types";
 import Room from "./Room";
 import generateId from "../util/generateId";
-import {Server, Socket} from "socket.io";
+import {Server} from "socket.io";
 import EventEmitter from "events";
 import Player from "./Player";
+import RoomStatus from "./RoomStatus";
 
 export default class RoomManager {
 
@@ -37,9 +38,15 @@ export default class RoomManager {
             return;
         }
         const room = this.getRoom(id);
-        if (!room.isFull()) {
-            room.join(player);
+
+        if (room.status === RoomStatus.Started) {
+            return;
         }
+        if (room.isFull()) {
+            return;
+        }
+
+        room.join(player);
     }
 
     spectateRoom(id: RoomId, player: Player) {
@@ -51,11 +58,13 @@ export default class RoomManager {
         room.spectate(player);
     }
 
-    leaveRoom(player: Player) {
+    leaveRoom(player: Player): Room | null {
         const playerRoom = this.getRoomWithPlayer(player);
         if (playerRoom) {
             playerRoom.leave(player);
+            return playerRoom;
         }
+        return null;
     }
 
     getRoomWithPlayer(player: Player): Room | null {
@@ -66,19 +75,30 @@ export default class RoomManager {
         return this.getRoomWithPlayer(player) !== null;
     }
 
-    emitRooms(emitter: EventEmitter) {
-        emitter.emit('listRooms', this.getRooms().map(room => ({
+    roomEmit(room: Room): EmittedRoom {
+        return {
             id: room.id,
             players: room.players.length,
             spectators: room.spectators.length,
             slots: room.slots,
-        })));
+            status: room.status,
+        };
+    }
+
+    emitRooms(emitter: EventEmitter) {
+        emitter.emit('listRooms', this.getRooms().map(this.roomEmit));
+    }
+
+    emitPlayerInfoForRoom(roomId: RoomId) {
+        const room = this.getRoom(roomId);
+        room.players.map(player => this.emitPlayerInfo(player));
+        room.spectators.map(player => this.emitPlayerInfo(player));
     }
 
     emitPlayerInfo(player: Player) {
         const playerRoom = this.getRoomWithPlayer(player);
         player.socket.emit('playerInfo', {
-            inRoom: playerRoom ? playerRoom.id : null,
+            inRoom: playerRoom ? this.roomEmit(playerRoom) : null,
             isSpectator: playerRoom ? playerRoom.hasSpectator(player) : null,
         });
     }

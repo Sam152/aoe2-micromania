@@ -1,6 +1,6 @@
 import {createRef, useEffect} from "react";
-import CanvasRenderer from "../common/drawing/CanvasRenderer";
-import {StateManagerInterface} from "../types";
+import CanvasRenderer from "../../common/drawing/CanvasRenderer";
+import {StateManagerInterface} from "../../types";
 
 export default function GameCanvas({stateManager}: {stateManager: StateManagerInterface}) {
 
