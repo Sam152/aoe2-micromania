@@ -1,7 +1,7 @@
 import {Socket} from "socket.io-client";
-import useEmittedData from "../hooks/useEmittedData";
 import {EmittedRoom} from "../../types";
 import roomStatusLabel from "../../common/rooms/RoomStatusLabel";
+import RoomStatus from "../../common/rooms/RoomStatus";
 
 export default function RoomList({io, roomList}: {io: Socket, roomList: EmittedRoom[]}) {
     return (
@@ -24,7 +24,7 @@ export default function RoomList({io, roomList}: {io: Socket, roomList: EmittedR
                     <td>{room.players}/{room.slots}</td>
                     <td>{room.spectators}</td>
                     <td>
-                        <button onClick={() => io.emit('joinRoom', room.id)}>Join</button>
+                        <button disabled={room.status !== RoomStatus.Gathering || room.players == room.slots} onClick={() => io.emit('joinRoom', room.id)}>Join</button>
                         <button onClick={() => io.emit('spectateRoom', room.id)}>Spectate</button>
                     </td>
                 </tr>

@@ -44,10 +44,13 @@ io.on('connection', (socket) => {
 
     socket.on('startGame', () => {
         const room = roomManager.getRoomWithPlayer(player);
-        room.startGame();
 
-        roomManager.emitRooms(io);
-        roomManager.emitPlayerInfoForRoom(room.id);
+        // Make sure only players, not spectators can start games.
+        if (room.hasPlayer(player)) {
+            room.startGame();
+            roomManager.emitRooms(io);
+            roomManager.emitPlayerInfoForRoom(room.id);
+        }
     });
 
     socket.on("disconnect", (reason) => {
