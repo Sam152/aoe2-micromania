@@ -24,5 +24,7 @@ module.exports = {
     indent: ['error', 4],
     'max-len': ['error', 120],
     'require-jsdoc': 0,
+    'react/react-in-jsx-scope': 0,
+    'no-unused-vars': 0,
   },
 };

@@ -83,6 +83,7 @@ interface EmittedRoom {
     spectators: number;
     slots: number;
     status: RoomStatus;
+    joinable: boolean;
 }
 
 export {
