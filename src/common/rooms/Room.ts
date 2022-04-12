@@ -1,4 +1,4 @@
-import {RoomId, StateManagerInterface} from "../../types";
+import {EmittedRoom, RoomId, StateManagerInterface} from "../../types";
 import LocalStateManager from "../state/LocalStateManager";
 import Player from "./Player";
 import {BroadcastOperator} from "socket.io/dist/broadcast-operator";
@@ -60,5 +60,15 @@ export default class Room {
         gameMode.start(this.state.dispatchGame.bind(this.state));
 
         this.state.init();
+    }
+
+    toEmitted(): EmittedRoom {
+        return {
+            id: this.id,
+            players: this.players.length,
+            spectators: this.spectators.length,
+            slots: this.slots,
+            status: this.status,
+        };
     }
 }

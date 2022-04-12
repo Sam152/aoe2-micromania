@@ -14,7 +14,6 @@ export default function SinglePlayerGame() {
 
     return (
         <div>
-            Single player.
             <GameCanvas stateManager={stateManager} />
         </div>
     )

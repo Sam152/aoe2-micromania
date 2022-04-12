@@ -75,18 +75,8 @@ export default class RoomManager {
         return this.getRoomWithPlayer(player) !== null;
     }
 
-    roomEmit(room: Room): EmittedRoom {
-        return {
-            id: room.id,
-            players: room.players.length,
-            spectators: room.spectators.length,
-            slots: room.slots,
-            status: room.status,
-        };
-    }
-
     emitRooms(emitter: EventEmitter) {
-        emitter.emit('listRooms', this.getRooms().map(this.roomEmit));
+        emitter.emit('listRooms', this.getRooms().map(room => room.toEmitted()));
     }
 
     emitPlayerInfoForRoom(roomId: RoomId) {
@@ -98,7 +88,7 @@ export default class RoomManager {
     emitPlayerInfo(player: Player) {
         const playerRoom = this.getRoomWithPlayer(player);
         player.socket.emit('playerInfo', {
-            inRoom: playerRoom ? this.roomEmit(playerRoom) : null,
+            inRoom: playerRoom ? playerRoom.toEmitted() : null,
             isSpectator: playerRoom ? playerRoom.hasSpectator(player) : null,
         });
     }
