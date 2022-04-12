@@ -1,4 +1,4 @@
-import {ClientState, ClientStateAction} from "../types";
+import {ClientState, ClientStateAction} from "../../types";
 
 function ClientStateReducer(state: ClientState, action: ClientStateAction): ClientState {
   return state;

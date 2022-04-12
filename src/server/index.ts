@@ -1,6 +1,7 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import {LocalStateManager, NetworkedStateManager} from "../common/StateManager";
+import {LocalStateManager, NetworkedStateManager} from "../common/state/StateManager";
+import SpawnUnits from "../common/modes/SpawnUnits";
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
@@ -8,15 +9,17 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-    console.log('connected !!');
+    console.log('client connected');
 
     const state = new LocalStateManager((gameState) => {
-        socket.emit('updateState', state.getGameState());
+        socket.emit('stateUpdated', state.getGameState());
     });
     state.init();
 
-    socket.on("stateDispatch", (action) => {
-        console.log(action);
+    const mode = new SpawnUnits();
+    mode.start(state.dispatchGame.bind(state));
+
+    socket.on('stateDispatch', (action) => {
         state.dispatchGame(action);
     });
 });

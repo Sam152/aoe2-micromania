@@ -1,4 +1,4 @@
-import {GameState, GameStateAction} from "../types";
+import {GameState, GameStateAction} from "../../types";
 
 function GameStateReducer(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
@@ -14,17 +14,13 @@ function GameStateReducer(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'MOVE_UNIT_TO') {
-        return {
-            ...state,
-            units: [
-                ...state.units.slice(0, action.id),
-                {
-                    ...state.units[action.id],
-                    movingTo: action.position,
-                },
-                ...state.units.slice(action.id + 1),
-            ]
-        }
+        state.units[action.id].movingTo = action.position;
+        return state;
+    }
+
+    if (action.name === 'STOP_UNIT') {
+        state.units[action.id].movingTo = null;
+        return state;
     }
 
     if (action.name === 'TICK') {

@@ -1,6 +1,6 @@
 import {defaultState as defaultGameState, GameStateReducer} from "./GameState";
 import {ClientStateReducer, defaultState as defaultClientState} from "./ClientState";
-import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from "../types";
+import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from "../../types";
 import {Socket} from "socket.io-client";
 
 /**
@@ -17,11 +17,11 @@ class LocalStateManager implements StateManagerInterface {
         this.gameStateListener = gameStateListener;
     }
 
-    dispatchClient(action: ClientStateAction) {
+    dispatchClient(action: ClientStateAction): void {
         this.clientState = ClientStateReducer(this.clientState, action);
     }
 
-    dispatchGame(action: GameStateAction) {
+    dispatchGame(action: GameStateAction): void {
         this.gameState = GameStateReducer(this.gameState, action);
         if (this.gameStateListener) {
             this.gameStateListener(this.gameState);
@@ -60,6 +60,7 @@ class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchGame(action: GameStateAction) {
+        // @todo, a local tick and state could also be invoked for interpolation, when network latency is high.
         this.socket.emit('stateDispatch', action);
     }
 
@@ -72,7 +73,7 @@ class NetworkedStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        this.socket.on('updateState', (serverState) => this.gameState = serverState);
+        this.socket.on('stateUpdated', (serverState) => this.gameState = serverState);
     }
 }
 

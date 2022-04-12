@@ -27,6 +27,8 @@ interface GameState {
     players: Player[];
 }
 
+type UnitId = number;
+
 type GameStateAction = {
     name: "TICK";
 } | {
@@ -35,7 +37,10 @@ type GameStateAction = {
 } | {
     name: "MOVE_UNIT_TO";
     position: GamePosition;
-    id: number;
+    id: UnitId;
+}| {
+    name: "STOP_UNIT";
+    id: UnitId;
 };
 
 interface ClientState {
@@ -50,15 +55,22 @@ type ClientStateAction = {
     position: ScreenPosition,
 };
 
+type GameDispatcher = (action: GameStateAction) => void;
 interface StateManagerInterface {
     init(): void;
-    dispatchGame(action: GameStateAction): void;
+    dispatchGame: GameDispatcher;
     dispatchClient(action: ClientStateAction): void;
     getGameState(): GameState;
     getClientState(): ClientState;
 }
 
+interface GameMode {
+    start(dispatcher: GameDispatcher): void;
+}
+
 export {
+    GameMode,
+    GameDispatcher,
     GameState,
     GameStateAction,
     ClientState,
