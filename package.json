@@ -22,6 +22,7 @@
   },
   "scripts": {
     "build": "webpack -c webpack.client.config.js --mode=development && webpack -c webpack.server.config.js --mode=development",
+    "lint": "eslint \"src/**\"  --fix",
     "watch-client": "webpack serve -c webpack.client.config.js --mode=development",
     "watch-server": "webpack watch -c webpack.server.config.js --mode=development",
     "start-server": "nodemon ./dist-server/bundle.js"
