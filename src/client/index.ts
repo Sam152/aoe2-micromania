@@ -4,8 +4,14 @@ import SpawnUnits from "../common/modes/SpawnUnits";
 import NetworkedStateManager from "../common/state/NetworkedStateManager";
 
 
-const state = new NetworkedStateManager(io());
+const connection = io();
+
+const state = new NetworkedStateManager(connection);
 state.init();
+
+connection.on('roomsList', (roomData) => {
+   console.log(roomData);
+});
 
 // const state = new LocalStateManager();
 // state.init();

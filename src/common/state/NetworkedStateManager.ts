@@ -35,6 +35,6 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        this.socket.on('stateUpdated', (serverState) => this.gameState = serverState);
+        this.socket.on('gameStateUpdated', (serverState) => this.gameState = serverState);
     }
 }
