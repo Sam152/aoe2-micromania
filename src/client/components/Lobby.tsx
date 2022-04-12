@@ -10,8 +10,6 @@ export default function Lobby({io}: {io: Socket}) {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>(io, 'playerInfo', { inRoom: null, isSpectator: null });
     const roomList = useEmittedData<EmittedRoom[]>(io, 'listRooms', []);
 
-    console.log(playerInfo);
-
     return (
         <div>
             {playerInfo.inRoom ? (

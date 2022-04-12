@@ -6,7 +6,6 @@ import NetworkedStateManager from "../../common/state/NetworkedStateManager";
 import {Socket} from "socket.io-client";
 
 export default function MultiplayerGame({io}: {io: Socket}) {
-
     const stateManager = useMemo(() => {
         const state = new NetworkedStateManager(io);
         state.init();
