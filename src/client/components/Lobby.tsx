@@ -1,12 +1,12 @@
-import {Socket} from "socket.io-client";
-import RoomList from "./RoomList";
-import useEmittedData from "../hooks/useEmittedData";
-import Room from "./Room";
-import {EmittedPlayerLobbyMetadata, EmittedRoom} from "../../types";
-import RoomStatus from "../../common/rooms/RoomStatus";
-import MultiplayerGame from "./MultiplayerGame";
-import {useState} from "react";
-import SinglePlayerGame from "./SinglePlayerGame";
+import {Socket} from 'socket.io-client';
+import RoomList from './RoomList';
+import useEmittedData from '../hooks/useEmittedData';
+import Room from './Room';
+import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../../types';
+import RoomStatus from '../../common/rooms/RoomStatus';
+import MultiplayerGame from './MultiplayerGame';
+import {useState} from 'react';
+import SinglePlayerGame from './SinglePlayerGame';
 
 export default function Lobby({io}: { io: Socket }) {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>(io, 'playerInfo', {inRoom: null, isSpectator: null});
@@ -35,5 +35,5 @@ export default function Lobby({io}: { io: Socket }) {
                 </>
             )}
         </div>
-    )
+    );
 }

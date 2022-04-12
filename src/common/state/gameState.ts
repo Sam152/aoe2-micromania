@@ -1,5 +1,5 @@
-import {GameState, GameStateAction} from "../../types";
-import deepClone from "../util/deepClone";
+import {GameState, GameStateAction} from '../../types';
+import deepClone from '../util/deepClone';
 
 function gameStateReducer(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
@@ -18,7 +18,7 @@ function gameStateReducer(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'TICK') {
-        state.units.map(function (unit) {
+        state.units.map(function(unit) {
             if (unit.movingTo) {
                 unit.position.x++;
                 unit.position.y++;

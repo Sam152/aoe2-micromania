@@ -1,13 +1,12 @@
-import {EmittedRoom, RoomId} from "../../types";
-import Room from "./Room";
-import generateId from "../util/generateId";
-import {Server} from "socket.io";
-import EventEmitter from "events";
-import Player from "./Player";
-import RoomStatus from "./RoomStatus";
+import {EmittedRoom, RoomId} from '../../types';
+import Room from './Room';
+import generateId from '../util/generateId';
+import {Server} from 'socket.io';
+import EventEmitter from 'events';
+import Player from './Player';
+import RoomStatus from './RoomStatus';
 
 export default class RoomManager {
-
     io: Server;
     private rooms: { [key: RoomId]: Room; } = {};
 
@@ -68,7 +67,7 @@ export default class RoomManager {
     }
 
     getRoomWithPlayer(player: Player): Room | null {
-        return this.getRooms().find(room => room.hasPlayer(player) || room.hasSpectator(player)) ?? null;
+        return this.getRooms().find((room) => room.hasPlayer(player) || room.hasSpectator(player)) ?? null;
     }
 
     playerIsInRoom(player: Player): boolean {
@@ -76,13 +75,13 @@ export default class RoomManager {
     }
 
     emitRooms(emitter: EventEmitter) {
-        emitter.emit('listRooms', this.getRooms().map(room => room.toEmitted()));
+        emitter.emit('listRooms', this.getRooms().map((room) => room.toEmitted()));
     }
 
     emitPlayerInfoForRoom(roomId: RoomId) {
         const room = this.getRoom(roomId);
-        room.players.map(player => this.emitPlayerInfo(player));
-        room.spectators.map(player => this.emitPlayerInfo(player));
+        room.players.map((player) => this.emitPlayerInfo(player));
+        room.spectators.map((player) => this.emitPlayerInfo(player));
     }
 
     emitPlayerInfo(player: Player) {
@@ -92,5 +91,4 @@ export default class RoomManager {
             isSpectator: playerRoom ? playerRoom.hasSpectator(player) : null,
         });
     }
-
 }

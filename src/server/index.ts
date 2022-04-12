@@ -1,10 +1,10 @@
-import { createServer } from "http";
-import { Server } from "socket.io";
-import SpawnUnits from "../common/modes/SpawnUnits";
-import LocalStateManager from "../common/state/LocalStateManager";
-import RoomManager from "../common/rooms/RoomManager";
-import Player from "../common/rooms/Player";
-import {RoomId} from "../types";
+import {createServer} from 'http';
+import {Server} from 'socket.io';
+import SpawnUnits from '../common/modes/SpawnUnits';
+import LocalStateManager from '../common/state/LocalStateManager';
+import RoomManager from '../common/rooms/RoomManager';
+import Player from '../common/rooms/Player';
+import {RoomId} from '../types';
 
 const httpServer = createServer();
 const io = new Server(httpServer, {});
@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on("disconnect", (reason) => {
+    socket.on('disconnect', (reason) => {
         const leftRoom = roomManager.leaveRoom(player);
         if (leftRoom) {
             roomManager.emitRooms(io);

@@ -1,7 +1,7 @@
-import {defaultState as defaultGameState, gameStateReducer} from "./gameState";
-import {clientStateReducer, defaultState as defaultClientState} from "./clientState";
-import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from "../../types";
-import {Socket} from "socket.io-client";
+import {defaultState as defaultGameState, gameStateReducer} from './gameState';
+import {clientStateReducer, defaultState as defaultClientState} from './clientState';
+import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../types';
+import {Socket} from 'socket.io-client';
 
 /**
  * A state manager with a client => server relationship.
@@ -22,7 +22,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchGame(action: GameStateAction) {
-        // @todo, a local tick and state could also be invoked for interpolation, when network latency is high.
+    // @todo, a local tick and state could also be invoked for interpolation, when network latency is high.
         this.socket.emit('stateDispatch', action);
     }
 

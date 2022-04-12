@@ -6,7 +6,7 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'airbnb',
+    'google',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -21,5 +21,6 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
+    indent: ['error', 4],
   },
 };

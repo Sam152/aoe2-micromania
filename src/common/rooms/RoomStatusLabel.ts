@@ -1,4 +1,4 @@
-import RoomStatus from "./RoomStatus";
+import RoomStatus from './RoomStatus';
 
 const RoomStatusLabel = new Map<RoomStatus, string>([
     [RoomStatus.Started, 'Started'],

@@ -1,5 +1,5 @@
-import {ClientState, GameState} from "../../types";
-import {circle} from "./shapes";
+import {ClientState, GameState} from '../../types';
+import {circle} from './shapes';
 
 export default class CanvasRenderer {
     private canvas: HTMLCanvasElement;
@@ -14,12 +14,12 @@ export default class CanvasRenderer {
     }
 
     fit() {
-        this.context.canvas.width  = window.innerWidth;
+        this.context.canvas.width = window.innerWidth;
         this.context.canvas.height = window.innerHeight;
     }
 
     render(gameState: GameState, clientState: ClientState) {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
-        gameState.units.map(unit => circle(this.context, unit.position.x, unit.position.y, 10));
+        gameState.units.map((unit) => circle(this.context, unit.position.x, unit.position.y, 10));
     }
 }

@@ -1,9 +1,8 @@
-import {createRef, useEffect} from "react";
-import CanvasRenderer from "../../common/drawing/CanvasRenderer";
-import {StateManagerInterface} from "../../types";
+import {createRef, useEffect} from 'react';
+import CanvasRenderer from '../../common/drawing/CanvasRenderer';
+import {StateManagerInterface} from '../../types';
 
 export default function GameCanvas({stateManager}: {stateManager: StateManagerInterface}) {
-
     const ref = createRef<HTMLCanvasElement>();
 
     useEffect(() => {
@@ -11,11 +10,11 @@ export default function GameCanvas({stateManager}: {stateManager: StateManagerIn
         const render = () => {
             renderer.render(stateManager.getGameState(), stateManager.getClientState());
             window.requestAnimationFrame(render);
-        }
+        };
         render();
     }, []);
 
     return (
-      <canvas ref={ref} />
+        <canvas ref={ref} />
     );
 }

@@ -1,4 +1,4 @@
-import RoomStatus from "./common/rooms/RoomStatus";
+import RoomStatus from './common/rooms/RoomStatus';
 
 interface GamePosition {
     x: number;
@@ -34,16 +34,16 @@ type RoomId = string;
 type ClientId = string;
 
 type GameStateAction = {
-    name: "TICK";
+    name: 'TICK';
 } | {
-    name: "SPAWN_UNIT";
+    name: 'SPAWN_UNIT';
     position: GamePosition;
 } | {
-    name: "MOVE_UNIT_TO";
+    name: 'MOVE_UNIT_TO';
     position: GamePosition;
     id: UnitId;
 }| {
-    name: "STOP_UNIT";
+    name: 'STOP_UNIT';
     id: UnitId;
 };
 
@@ -52,10 +52,10 @@ interface ClientState {
 }
 
 type ClientStateAction = {
-    name: "DRAG_START",
+    name: 'DRAG_START',
     position: ScreenPosition,
 } | {
-    name: "DRAG_END",
+    name: 'DRAG_END',
     position: ScreenPosition,
 };
 
@@ -97,4 +97,4 @@ export {
     ClientId,
     EmittedPlayerLobbyMetadata,
     EmittedRoom,
-}
+};

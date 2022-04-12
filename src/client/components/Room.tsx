@@ -1,6 +1,6 @@
-import {Socket} from "socket.io-client";
-import {EmittedPlayerLobbyMetadata, EmittedRoom} from "../../types";
-import RoomStatusLabel from "../../common/rooms/RoomStatusLabel";
+import {Socket} from 'socket.io-client';
+import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../../types';
+import RoomStatusLabel from '../../common/rooms/RoomStatusLabel';
 
 export default function Room({io, playerInfo}: {io: Socket, playerInfo: EmittedPlayerLobbyMetadata}) {
     const room = playerInfo.inRoom;
@@ -22,5 +22,5 @@ export default function Room({io, playerInfo}: {io: Socket, playerInfo: EmittedP
 
             <button onClick={() => io.emit('leaveRoom')}>Leave Lobby</button>
         </div>
-    )
+    );
 }

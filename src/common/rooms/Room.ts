@@ -1,9 +1,9 @@
-import {EmittedRoom, RoomId, StateManagerInterface} from "../../types";
-import LocalStateManager from "../state/LocalStateManager";
-import Player from "./Player";
-import {BroadcastOperator} from "socket.io/dist/broadcast-operator";
-import SpawnUnits from "../modes/SpawnUnits";
-import RoomStatus from "./RoomStatus";
+import {EmittedRoom, RoomId, StateManagerInterface} from '../../types';
+import LocalStateManager from '../state/LocalStateManager';
+import Player from './Player';
+import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
+import SpawnUnits from '../modes/SpawnUnits';
+import RoomStatus from './RoomStatus';
 
 export default class Room {
     id: RoomId;
@@ -31,8 +31,8 @@ export default class Room {
     }
 
     leave(leavingPlayer: Player): void {
-        this.spectators = this.spectators.filter(player => player.socket.id !== leavingPlayer.socket.id)
-        this.players = this.players.filter(player => player.socket.id !== leavingPlayer.socket.id)
+        this.spectators = this.spectators.filter((player) => player.socket.id !== leavingPlayer.socket.id);
+        this.players = this.players.filter((player) => player.socket.id !== leavingPlayer.socket.id);
         leavingPlayer.socket.leave(this.id);
     }
 
@@ -42,11 +42,11 @@ export default class Room {
     }
 
     hasPlayer(player: Player): boolean {
-        return this.players.find(p => p.socket.id === player.socket.id) !== undefined;
+        return this.players.find((p) => p.socket.id === player.socket.id) !== undefined;
     }
 
     hasSpectator(player: Player): boolean {
-        return this.spectators.find(p => p.socket.id === player.socket.id) !== undefined;
+        return this.spectators.find((p) => p.socket.id === player.socket.id) !== undefined;
     }
 
     startGame() {

@@ -1,10 +1,9 @@
-import LocalStateManager from "../../common/state/LocalStateManager";
-import SpawnUnits from "../../common/modes/SpawnUnits";
-import GameCanvas from "./GameCanvas";
-import {useMemo} from "react";
+import LocalStateManager from '../../common/state/LocalStateManager';
+import SpawnUnits from '../../common/modes/SpawnUnits';
+import GameCanvas from './GameCanvas';
+import {useMemo} from 'react';
 
 export default function SinglePlayerGame() {
-
     const stateManager = useMemo(() => {
         const state = new LocalStateManager();
         state.init();
@@ -16,5 +15,5 @@ export default function SinglePlayerGame() {
         <div>
             <GameCanvas stateManager={stateManager} />
         </div>
-    )
+    );
 }
