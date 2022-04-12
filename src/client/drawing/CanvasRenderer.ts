@@ -1,4 +1,4 @@
-import {ClientState, GameState} from "../types";
+import {ClientState, GameState} from "../../types";
 import {circle} from "./shapes";
 
 export default class CanvasRenderer {
@@ -9,6 +9,11 @@ export default class CanvasRenderer {
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
 
+        this.fit();
+        window.addEventListener('resize', this.fit.bind(this));
+    }
+
+    fit() {
         this.context.canvas.width  = window.innerWidth;
         this.context.canvas.height = window.innerHeight;
     }

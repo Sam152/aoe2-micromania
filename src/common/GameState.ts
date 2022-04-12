@@ -1,4 +1,4 @@
-import {GameState, GameStateAction} from "./types";
+import {GameState, GameStateAction} from "../types";
 
 function GameStateReducer(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
