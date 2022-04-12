@@ -3,12 +3,13 @@ import LocalStateManager from "../state/LocalStateManager";
 import Player from "./Player";
 import {BroadcastOperator} from "socket.io/dist/broadcast-operator";
 import SpawnUnits from "../modes/SpawnUnits";
+import RoomStatus from "./RoomStatus";
 
 export default class Room {
     id: RoomId;
     slots: number;
-    players: Player[];
-    spectators: Player[];
+    players: Player[] = [];
+    spectators: Player[] = [];
     state?: StateManagerInterface = null;
     private status: RoomStatus;
     room: BroadcastOperator<any, any>;
@@ -20,14 +21,37 @@ export default class Room {
         this.room = room;
     }
 
-    join(player: Player) {
+    join(player: Player): void {
         this.players.push(player);
         player.socket.join(this.id);
     }
 
-    spectate(player: Player) {
+    isFull(): boolean {
+        return this.slots === this.players.length;
+    }
+
+    leave(player: Player): void {
+        if (this.hasSpectator(player)) {
+            this.spectators = this.spectators.filter(player => player.socket.id !== player.socket.id)
+        }
+        if (this.hasPlayer(player)) {
+            this.players = this.players.filter(player => player.socket.id !== player.socket.id)
+        }
+
+        player.socket.leave(this.id);
+    }
+
+    spectate(player: Player): void {
         this.spectators.push(player);
         player.socket.join(this.id);
+    }
+
+    hasPlayer(player: Player): boolean {
+        return this.players.find(p => p.socket.id === player.socket.id) !== undefined;
+    }
+
+    hasSpectator(player: Player): boolean {
+        return this.spectators.find(p => p.socket.id === player.socket.id) !== undefined;
     }
 
     start() {

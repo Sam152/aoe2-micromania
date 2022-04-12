@@ -3,3 +3,5 @@ enum RoomStatus {
     Started,
     Completed
 }
+
+export default RoomStatus;
