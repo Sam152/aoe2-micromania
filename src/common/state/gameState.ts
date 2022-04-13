@@ -25,6 +25,7 @@ function gameStateReducer(state: GameState, action: GameStateAction): GameState 
             }
             return unit;
         });
+        ++state.ticks;
     }
 
     return state;
@@ -32,6 +33,7 @@ function gameStateReducer(state: GameState, action: GameStateAction): GameState 
 
 function defaultState(): GameState {
     return deepClone({
+        ticks: 0,
         units: [],
         projectiles: [],
         players: [],

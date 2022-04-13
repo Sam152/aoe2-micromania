@@ -7,8 +7,8 @@ export default class SpawnUnits implements GameMode {
                 name: 'SPAWN_UNIT',
                 position: {
                     x: Math.floor(Math.random() * 1000),
-                    y: Math.floor(Math.random() * 1000)
-                }
+                    y: Math.floor(Math.random() * 1000),
+                },
             });
             // gameDispatcher({
             //     name: 'MOVE_UNIT_TO',

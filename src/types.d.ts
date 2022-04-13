@@ -24,6 +24,7 @@ interface Player {
 }
 
 interface GameState {
+    ticks: number;
     units: Unit[];
     projectiles: Projectile[];
     players: Player[];
@@ -86,6 +87,22 @@ interface EmittedRoom {
     joinable: boolean;
 }
 
+interface SlpFrame {
+    cmdTableOffset: number;
+    height: number;
+    hotspot: {x: number; y: number;}
+    outlineTableOffset: number;
+    paletteOffset: number;
+    properties: number;
+    width: number;
+}
+
+interface RenderedSlpFrame extends SlpFrame {
+    rendered: {
+        [key: number]: ImageBitmap;
+    }
+}
+
 export {
     GameMode,
     GameDispatcher,
@@ -98,4 +115,7 @@ export {
     ClientId,
     EmittedPlayerLobbyMetadata,
     EmittedRoom,
+    SlpFrame,
+    RenderedSlpFrame,
+    GamePosition,
 };

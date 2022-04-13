@@ -1,7 +1,9 @@
 import {defaultState as defaultGameState, gameStateReducer} from './gameState';
 import {clientStateReducer, defaultState as defaultClientState} from './clientState';
 import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../types';
-import {Socket} from 'socket.io-client';
+
+export const ticksPerSecond = 20;
+export const gameSpeed = 1.7;
 
 /**
  * A state manager that holds context locally, may either be a client or a server.
@@ -37,6 +39,6 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        setInterval(() => this.dispatchGame({name: 'TICK'}), 33);
+        setInterval(() => this.dispatchGame({name: 'TICK'}), 1000 / ticksPerSecond);
     }
 }
