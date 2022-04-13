@@ -18,16 +18,17 @@ export default class Slp {
         this.framesPerAngle =  this.slp.numFrames / this.directions;
     }
 
-    draw(context: CanvasRenderingContext2D, at: GamePosition, animationDuration: number, frameNumber: number, player: number) {
+    draw(context: CanvasRenderingContext2D, at: GamePosition, animationDuration: number, gameTickCount: number, player: number) {
 
         const gameSpeedAdjustedAnimationDuration = animationDuration / gameSpeed;
 
         const millisecondsForEachFramePassing = (1000 / ticksPerSecond);
+
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
 
         const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
 
-        const percentageOfAnimationComplete = (frameNumber % totalFramesForAnimation) / totalFramesForAnimation;
+        const percentageOfAnimationComplete = (gameTickCount % totalFramesForAnimation) / totalFramesForAnimation;
 
         const frameIndexToRender = Math.floor((percentageOfAnimationComplete * this.framesPerAngle));
 
