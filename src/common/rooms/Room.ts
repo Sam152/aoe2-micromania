@@ -69,7 +69,7 @@ export default class Room {
             spectators: this.spectators.length,
             slots: this.slots,
             status: this.status,
-            joinable: this.status === RoomStatus.Gathering && this.players.length < this.slots
+            joinable: this.status === RoomStatus.Gathering && this.players.length < this.slots,
         };
     }
 }

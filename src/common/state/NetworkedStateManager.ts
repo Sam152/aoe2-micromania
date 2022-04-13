@@ -22,7 +22,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchGame(action: GameStateAction) {
-    // @todo, a local tick and state could also be invoked for interpolation, when network latency is high.
+        // @todo, a local tick could also be invoked for interpolation, when network latency is high?
         this.socket.emit('stateDispatch', action);
     }
 
