@@ -1,6 +1,6 @@
 import {createServer} from 'http';
 import {Server} from 'socket.io';
-import SpawnUnits from '../common/modes/SpawnUnits';
+import ArcherMicro from '../common/modes/ArcherMicro';
 import LocalStateManager from '../common/state/LocalStateManager';
 import RoomManager from '../common/rooms/RoomManager';
 import Player from '../common/rooms/Player';

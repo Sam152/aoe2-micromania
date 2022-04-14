@@ -1,5 +1,6 @@
 import {ClientState, GameState} from '../../types';
 import SlpManager from "./SlpManager";
+import unitMetadataFactory from "../game/unitMetadataFactory";
 
 export default class CanvasRenderer {
     private canvas: HTMLCanvasElement;
@@ -16,15 +17,25 @@ export default class CanvasRenderer {
     }
 
     fit() {
-        this.context.canvas.width = window.innerWidth * 1.2;
-        this.context.canvas.height = window.innerHeight * 1.2;
+        this.context.canvas.width = window.innerWidth * Math.min(1.5, window.devicePixelRatio);
+        this.context.canvas.height = window.innerHeight * Math.min(1.5, window.devicePixelRatio);
     }
 
     render(gameState: GameState, clientState: ClientState) {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 
-        gameState.units.map((unit) => {
-            this.slpManager.getAsset('xbow-firing').draw(this.context, unit.position, 0.7, gameState.ticks, 1);
+        gameState.units.map((unitInstance) => {
+            const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
+            const animationMetadata = unitMetadata.animations[unitInstance.unitState];
+            const slpAsset = this.slpManager.getAsset(animationMetadata.slp);
+
+            slpAsset.draw(
+                this.context,
+                unitInstance.position,
+                animationMetadata.animationDuration,
+                gameState.ticks,
+                unitInstance.ownedByPlayer
+            );
         });
     }
 }

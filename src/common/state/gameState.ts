@@ -1,11 +1,15 @@
 import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
+import UnitState from "../game/UnitState";
 
 function gameStateReducer(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
         state.units.push({
             position: action.position,
             movingTo: null,
+            ownedByPlayer: action.forPlayer,
+            unitType: action.unitType,
+            unitState: UnitState.Idle,
         });
     }
 

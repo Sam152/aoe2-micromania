@@ -2,7 +2,7 @@ import {EmittedRoom, RoomId, StateManagerInterface} from '../../types';
 import LocalStateManager from '../state/LocalStateManager';
 import Player from './Player';
 import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
-import SpawnUnits from '../modes/SpawnUnits';
+import ArcherMicro from '../modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
 
 export default class Room {
@@ -56,7 +56,7 @@ export default class Room {
             this.room.emit('gameStateUpdated', gameState);
         });
 
-        const gameMode = new SpawnUnits();
+        const gameMode = new ArcherMicro();
         gameMode.start(this.state.dispatchGame.bind(this.state));
 
         this.state.init();

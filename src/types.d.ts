@@ -1,4 +1,6 @@
 import RoomStatus from './common/rooms/RoomStatus';
+import UnitState from "./common/game/UnitState";
+import Unit from "./common/game/Unit";
 
 interface GamePosition {
     x: number;
@@ -10,7 +12,11 @@ interface ScreenPosition {
     y: number;
 }
 
-interface Unit {
+interface UnitInstance {
+    ownedByPlayer: PlayerId;
+    unitType: Unit;
+    unitState: UnitState;
+
     position: GamePosition;
     movingTo: GamePosition | null;
 }
@@ -25,7 +31,7 @@ interface Player {
 
 interface GameState {
     ticks: number;
-    units: Unit[];
+    units: UnitInstance[];
     projectiles: Projectile[];
     players: Player[];
 }
@@ -33,12 +39,15 @@ interface GameState {
 type UnitId = number;
 type RoomId = string;
 type ClientId = string;
+type PlayerId = number;
 
 type GameStateAction = {
     name: 'TICK';
 } | {
     name: 'SPAWN_UNIT';
     position: GamePosition;
+    unitType: Unit,
+    forPlayer: PlayerId,
 } | {
     name: 'MOVE_UNIT_TO';
     position: GamePosition;
@@ -103,6 +112,21 @@ interface RenderedSlpFrame extends SlpFrame {
     }
 }
 
+interface UnitStats {
+    attackFrameDelay: number;
+    reloadTime: number;
+    movementRate: number;
+    hitPoints: number;
+    attackRange: number;
+    attackDamage: number;
+    animations: {
+        [key in UnitState]: {
+            slp: string;
+            animationDuration: number;
+        }
+    }
+}
+
 export {
     GameMode,
     GameDispatcher,
@@ -118,4 +142,5 @@ export {
     SlpFrame,
     RenderedSlpFrame,
     GamePosition,
+    UnitStats,
 };

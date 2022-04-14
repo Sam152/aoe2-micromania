@@ -1,5 +1,5 @@
 import LocalStateManager from '../../common/state/LocalStateManager';
-import SpawnUnits from '../../common/modes/SpawnUnits';
+import ArcherMicro from '../../common/modes/ArcherMicro';
 import GameCanvas from './GameCanvas';
 import {useMemo} from 'react';
 import NetworkedStateManager from '../../common/state/NetworkedStateManager';
