@@ -31,7 +31,7 @@ export default class Slp {
         direction: CompassDirection,
         style: AnimationStyle,
     ): Rectangle {
-        // @todo, can some of this be pre-computed?
+
         const gameSpeedAdjustedAnimationDuration = animationDuration / gameSpeed;
         const millisecondsForEachFramePassing = (1000 / ticksPerSecond);
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
