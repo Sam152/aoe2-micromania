@@ -1,7 +1,7 @@
 import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
-import UnitState from "../game/UnitState";
-import CompassDirection from "../game/CompassDirection";
+import UnitState from '../game/UnitState';
+import CompassDirection from '../game/CompassDirection';
 
 function gameStateReducer(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {

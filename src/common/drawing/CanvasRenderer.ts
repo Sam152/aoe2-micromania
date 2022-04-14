@@ -1,6 +1,6 @@
 import {ClientState, GameState} from '../../types';
-import SlpManager from "./SlpManager";
-import unitMetadataFactory from "../game/unitMetadataFactory";
+import SlpManager from './SlpManager';
+import unitMetadataFactory from '../game/unitMetadataFactory';
 
 export default class CanvasRenderer {
     private canvas: HTMLCanvasElement;

@@ -1,11 +1,10 @@
 import {GameDispatcher, GameMode} from '../../types';
-import Unit from "../game/Unit";
-import randomEnum from "../util/randomEnum";
-import CompassDirection from "../game/CompassDirection";
+import Unit from '../game/Unit';
+import randomEnum from '../util/randomEnum';
+import CompassDirection from '../game/CompassDirection';
 
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher): void {
-
         Array.from(Array(10).keys()).map((item, index) => {
             gameDispatcher({
                 name: 'SPAWN_UNIT',
@@ -30,6 +29,5 @@ export default class ArcherMicro implements GameMode {
                 },
             });
         });
-
     }
 }

@@ -1,4 +1,4 @@
-import {GamePosition} from "../../types";
+import {GamePosition} from '../../types';
 
 export function circle(ctx: CanvasRenderingContext2D, position: GamePosition, radius: number) {
     ctx.beginPath();

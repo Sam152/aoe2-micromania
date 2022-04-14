@@ -17,7 +17,9 @@ export default class SlpManager {
     }
 
     async downloadPreRenderAll() {
-        const paletteArrayBuffer = await fetch(`${this.assetPath}/default-palette.pal`).then((response) => response.arrayBuffer());
+        const paletteArrayBuffer = await fetch(`${this.assetPath}/default-palette.pal`)
+            .then((response) => response.arrayBuffer());
+
         const palette = new Palette(new Buffer(paletteArrayBuffer));
 
         const downloadedSlps = await Promise.all(

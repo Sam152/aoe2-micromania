@@ -1,7 +1,7 @@
 import {createRef, useEffect} from 'react';
 import CanvasRenderer from '../../common/drawing/CanvasRenderer';
 import {StateManagerInterface} from '../../types';
-import SlpManager from "../../common/drawing/SlpManager";
+import SlpManager from '../../common/drawing/SlpManager';
 
 export default function GameCanvas({stateManager}: {stateManager: StateManagerInterface}) {
     const ref = createRef<HTMLCanvasElement>();

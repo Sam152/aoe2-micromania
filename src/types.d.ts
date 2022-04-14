@@ -1,8 +1,8 @@
 import RoomStatus from './common/rooms/RoomStatus';
-import UnitState from "./common/game/UnitState";
-import Unit from "./common/game/Unit";
-import CompassDirection from "./common/game/CompassDirection";
-import AnimationStyle from "./common/drawing/AnimationStyle";
+import UnitState from './common/game/UnitState';
+import Unit from './common/game/Unit';
+import CompassDirection from './common/game/CompassDirection';
+import AnimationStyle from './common/drawing/AnimationStyle';
 
 interface GamePosition {
     x: number;
