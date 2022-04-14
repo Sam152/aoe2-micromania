@@ -1,6 +1,7 @@
 import {GamePosition, RenderedSlpFrame} from '../../types';
 import {gameSpeed, ticksPerSecond} from "../state/LocalStateManager";
 import CompassDirection from "../game/CompassDirection";
+import anchorAt from "../util/anchorAt";
 
 const SLP = require('genie-slp');
 
@@ -33,14 +34,16 @@ export default class Slp {
         const frame = this.frames[directionAdjustedFrameIndexToRender];
         const bitmap = frame.rendered[player];
 
+        const anchoredPosition = anchorAt(frame.hotspot, at);
+
         if (direction < 0) {
             const originalTransform = context.getTransform();
             context.setTransform(-1, 0, 0, 1, 0, 0);
-            context.drawImage(bitmap, -1 * at.x, at.y);
+            context.drawImage(bitmap, -1 * anchoredPosition.x, anchoredPosition.y);
             context.setTransform(originalTransform);
         }
         else {
-            context.drawImage(bitmap, at.x, at.y);
+            context.drawImage(bitmap, anchoredPosition.x, anchoredPosition.y);
         }
     }
 

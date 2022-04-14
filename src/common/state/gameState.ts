@@ -11,7 +11,7 @@ function gameStateReducer(state: GameState, action: GameStateAction): GameState 
             ownedByPlayer: action.forPlayer,
             unitType: action.unitType,
             unitState: UnitState.Idle,
-            direction: CompassDirection.North,
+            direction: action.direction ?? CompassDirection.South,
         });
     }
 

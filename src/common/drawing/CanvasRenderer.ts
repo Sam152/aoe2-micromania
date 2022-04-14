@@ -2,6 +2,8 @@ import {ClientState, GameState} from '../../types';
 import SlpManager from "./SlpManager";
 import unitMetadataFactory from "../game/unitMetadataFactory";
 import CompassDirection from "../game/CompassDirection";
+import {circle} from "./shapes";
+import unit from "../game/Unit";
 
 export default class CanvasRenderer {
     private canvas: HTMLCanvasElement;
@@ -36,7 +38,7 @@ export default class CanvasRenderer {
                 animationMetadata.animationDuration,
                 gameState.ticks,
                 unitInstance.ownedByPlayer,
-                CompassDirection.South,
+                unitInstance.direction,
             );
         });
     }

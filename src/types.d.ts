@@ -50,6 +50,7 @@ type GameStateAction = {
     position: GamePosition;
     unitType: Unit,
     forPlayer: PlayerId,
+    direction?: CompassDirection,
 } | {
     name: 'MOVE_UNIT_TO';
     position: GamePosition;
