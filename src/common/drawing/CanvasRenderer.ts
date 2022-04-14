@@ -4,6 +4,7 @@ import unitMetadataFactory from "../game/unitMetadataFactory";
 import CompassDirection from "../game/CompassDirection";
 import {circle} from "./shapes";
 import unit from "../game/Unit";
+import UnitState from "../game/UnitState";
 
 export default class CanvasRenderer {
     private canvas: HTMLCanvasElement;
@@ -29,7 +30,7 @@ export default class CanvasRenderer {
 
         gameState.units.map((unitInstance) => {
             const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
-            const animationMetadata = unitMetadata.animations[unitInstance.unitState];
+            const animationMetadata = unitMetadata.animations[UnitState.Idle];
             const slpAsset = this.slpManager.getAsset(animationMetadata.slp);
 
             slpAsset.draw(
