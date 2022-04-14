@@ -1,8 +1,9 @@
-import {GamePosition, RenderedSlpFrame} from '../../types';
+import {GamePosition, Rectangle, RenderedSlpFrame} from '../../types';
 import {gameSpeed, ticksPerSecond} from '../state/LocalStateManager';
 import CompassDirection from '../game/CompassDirection';
 import anchorAt from '../util/anchorAt';
 import AnimationStyle from './AnimationStyle';
+import {circle} from "./shapes";
 
 const SLP = require('genie-slp');
 
@@ -29,7 +30,7 @@ export default class Slp {
         player: number,
         direction: CompassDirection,
         style: AnimationStyle,
-    ) {
+    ): Rectangle {
         // @todo, can some of this be pre-computed?
         const gameSpeedAdjustedAnimationDuration = animationDuration / gameSpeed;
         const millisecondsForEachFramePassing = (1000 / ticksPerSecond);
@@ -58,5 +59,18 @@ export default class Slp {
         } else {
             context.drawImage(bitmap, anchoredPosition.x, anchoredPosition.y);
         }
+
+        const hitbox = {
+            x1: anchoredPosition.x - (flipped ? frame.width : 0),
+            y1: anchoredPosition.y,
+            x2: anchoredPosition.x - (flipped ? frame.width : 0) + frame.width,
+            y2: anchoredPosition.y + frame.height,
+        };
+
+        circle(context, at);
+        circle(context, {x: hitbox.x1, y: hitbox.y1});
+        circle(context, {x: hitbox.x2, y: hitbox.y2});
+
+        return hitbox;
     }
 }
