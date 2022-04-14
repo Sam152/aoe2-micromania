@@ -5,7 +5,7 @@ import CompassDirection from '../game/CompassDirection';
 
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher): void {
-        Array.from(Array(10).keys()).map((item, index) => {
+        Array.from(Array(20).keys()).map((item, index) => {
             gameDispatcher({
                 name: 'SPAWN_UNIT',
                 forPlayer: 1,
@@ -17,7 +17,7 @@ export default class ArcherMicro implements GameMode {
             });
         });
 
-        Array.from(Array(10).keys()).map((item, index) => {
+        Array.from(Array(20).keys()).map((item, index) => {
             gameDispatcher({
                 name: 'SPAWN_UNIT',
                 forPlayer: 2,

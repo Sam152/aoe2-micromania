@@ -29,7 +29,7 @@ export default class CanvasRenderer {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slpAsset = this.slpManager.getAsset(animationMetadata.slp);
 
-            slpAsset.draw(
+            const hitbox = slpAsset.draw(
                 this.context,
                 unitInstance.position,
                 animationMetadata.animationDuration,
