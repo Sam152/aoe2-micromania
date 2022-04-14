@@ -2,6 +2,7 @@
 
 import {ClientState, ClientStateAction, GameDispatcher, StateManagerInterface} from "../../types";
 import screenPositionToGamePosition from "../util/screenPositionToGamePosition";
+import {Vector2} from "three";
 
 const StInput = require('stinput');
 
@@ -24,13 +25,13 @@ export default class InputManager {
         if (this.input.released('mouse_left') && !this.dragging) {
             this.dispatch({
                 name: "LEFT_CLICK",
-                position: screenPositionToGamePosition(this.input.mousePosition),
+                position: this.mousePosition(),
             });
         }
         if (this.input.released('mouse_right') && !this.dragging) {
             this.dispatch({
                 name: "RIGHT_CLICK",
-                position: screenPositionToGamePosition(this.input.mousePosition),
+                position: this.mousePosition(),
             });
         }
 
@@ -38,12 +39,12 @@ export default class InputManager {
             if (!this.dragging) {
                 this.dispatch({
                     name: "DRAG_START",
-                    position: screenPositionToGamePosition(this.input.mousePosition),
+                    position: this.mousePosition(),
                 });
             }
             this.dispatch({
                 name: "DRAGGING",
-                position: screenPositionToGamePosition(this.input.mousePosition),
+                position: this.mousePosition(),
             });
             this.dragging = true;
         }
@@ -52,11 +53,15 @@ export default class InputManager {
             if (this.dragging) {
                 this.stateManager.dispatchClient({
                     name: "DRAG_END",
-                    position: screenPositionToGamePosition(this.input.mousePosition),
+                    position: this.mousePosition(),
                 });
             }
             this.dragging = false;
         }
+    }
+
+    mousePosition() {
+        return screenPositionToGamePosition(new Vector2(this.input.mousePosition.x, this.input.mousePosition.y));
     }
 
     dispatch(action: ClientStateAction) {

@@ -3,16 +3,7 @@ import UnitState from './common/game/UnitState';
 import Unit from './common/game/Unit';
 import CompassDirection from './common/game/CompassDirection';
 import AnimationStyle from './common/drawing/AnimationStyle';
-
-interface GamePosition {
-    x: number;
-    y: number;
-}
-
-interface ScreenPosition {
-    x: number;
-    y: number;
-}
+import {Vector2} from "three";
 
 interface UnitInstance {
     ownedByPlayer: PlayerId;
@@ -20,8 +11,8 @@ interface UnitInstance {
     unitState: UnitState;
     unitStateStartedAt: number;
 
-    position: GamePosition;
-    movingTo: GamePosition | null;
+    position: Vector2;
+    movingTo: Vector2;
     direction: CompassDirection;
 }
 
@@ -49,13 +40,13 @@ type GameStateAction = {
     name: 'TICK';
 } | {
     name: 'SPAWN_UNIT';
-    position: GamePosition;
+    position: Vector2;
     unitType: Unit,
     forPlayer: PlayerId,
     direction?: CompassDirection,
 } | {
     name: 'MOVE_UNIT_TO';
-    position: GamePosition;
+    position: Vector2;
     unit: UnitInstance;
 } | {
     name: 'STOP_UNIT';
@@ -68,24 +59,24 @@ interface ClientState {
         unit: UnitInstance,
     }>;
     selectedUnits: UnitInstance[];
-    lastLeftClick: GamePosition | null;
+    lastLeftClick: Vector2 | null;
 }
 
 type ClientStateAction = {
     name: 'DRAG_START',
-    position: ScreenPosition,
+    position: Vector2,
 } | {
     name: 'DRAGGING',
-    position: ScreenPosition,
+    position: Vector2,
 } | {
     name: 'DRAG_END',
-    position: ScreenPosition,
+    position: Vector2,
 } | {
     name: 'LEFT_CLICK',
-    position: ScreenPosition,
+    position: Vector2,
 } | {
     name: 'RIGHT_CLICK',
-    position: ScreenPosition,
+    position: Vector2,
 } | {
     name: 'UNIT_DRAWN',
     hitBox: Rectangle,
@@ -159,10 +150,8 @@ interface UnitStats {
 }
 
 interface Rectangle {
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
+    p1: Vector2;
+    p2: Vector2;
 }
 
 export {
@@ -180,8 +169,6 @@ export {
     EmittedRoom,
     SlpFrame,
     RenderedSlpFrame,
-    GamePosition,
-    ScreenPosition,
     UnitStats,
     Rectangle,
 };

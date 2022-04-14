@@ -1,9 +1,9 @@
-import {GamePosition, Rectangle, RenderedSlpFrame} from '../../types';
+import {Rectangle, RenderedSlpFrame} from '../../types';
 import {gameSpeed, ticksPerSecond} from '../state/LocalStateManager';
 import CompassDirection from '../game/CompassDirection';
 import anchorAt from '../util/anchorAt';
 import AnimationStyle from './AnimationStyle';
-import {circle} from "./shapes";
+import {Vector2} from "three";
 
 const SLP = require('genie-slp');
 
@@ -24,7 +24,7 @@ export default class Slp {
 
     draw(
         context: CanvasRenderingContext2D,
-        at: GamePosition,
+        at: Vector2,
         animationDuration: number,
         unitStateTickCount: number,
         player: number,
@@ -60,17 +60,9 @@ export default class Slp {
             context.drawImage(bitmap, anchoredPosition.x, anchoredPosition.y);
         }
 
-        const hitbox = {
-            x1: anchoredPosition.x - (flipped ? frame.width : 0),
-            y1: anchoredPosition.y,
-            x2: anchoredPosition.x - (flipped ? frame.width : 0) + frame.width,
-            y2: anchoredPosition.y + frame.height,
+        return {
+            p1: new Vector2(anchoredPosition.x - (flipped ? frame.width : 0), anchoredPosition.y),
+            p2: new Vector2(anchoredPosition.x - (flipped ? frame.width : 0) + frame.width, anchoredPosition.y + frame.height),
         };
-
-        // circle(context, at);
-        // circle(context, {x: hitbox.x1, y: hitbox.y1});
-        // circle(context, {x: hitbox.x2, y: hitbox.y2});
-
-        return hitbox;
     }
 }

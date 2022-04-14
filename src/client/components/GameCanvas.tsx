@@ -4,7 +4,6 @@ import {StateManagerInterface} from '../../types';
 import SlpManager from '../../common/drawing/SlpManager';
 import InputManager from "../../common/input/InputManager";
 import {Simulate} from "react-dom/test-utils";
-import input = Simulate.input;
 import {clientStateTransmitter} from "../../common/state/clientState";
 
 export default function GameCanvas({stateManager}: {stateManager: StateManagerInterface}) {

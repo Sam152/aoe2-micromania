@@ -2,6 +2,7 @@ import {GameDispatcher, GameMode} from '../../types';
 import Unit from '../game/Unit';
 import randomEnum from '../util/randomEnum';
 import CompassDirection from '../game/CompassDirection';
+import {Vector2} from "three";
 
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher): void {
@@ -10,10 +11,7 @@ export default class ArcherMicro implements GameMode {
                 name: 'SPAWN_UNIT',
                 forPlayer: 1,
                 unitType: Unit.Archer,
-                position: {
-                    x: Math.floor(Math.random() * 500),
-                    y: Math.floor(Math.random() * 500),
-                },
+                position: new Vector2(Math.floor(Math.random() * 500), Math.floor(Math.random() * 500)),
             });
         });
 
@@ -23,10 +21,7 @@ export default class ArcherMicro implements GameMode {
                 forPlayer: 2,
                 unitType: Unit.Archer,
                 direction: randomEnum(CompassDirection),
-                position: {
-                    x: Math.floor(Math.random() * 500) + 500,
-                    y: Math.floor(Math.random() * 500) + 500,
-                },
+                position: new Vector2(Math.floor(Math.random() * 500) + 500, Math.floor(Math.random() * 500) + 500),
             });
         });
     }

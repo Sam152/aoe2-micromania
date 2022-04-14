@@ -1,8 +1,9 @@
-import {GamePosition, Rectangle} from "../../types";
+import {Rectangle} from "../../types";
+import {Vector2} from "three";
 
-export default function positionInRect(rect: Rectangle, position: GamePosition) {
+export default function positionInRect(rect: Rectangle, position: Vector2) {
     return (
-        position.x > rect.x1 && position.x < rect.x2
-        && position.y > rect.y1 && position.y < rect.y2
+        position.x > rect.p1.x && position.x < rect.p2.x
+        && position.y > rect.p1.y && position.y < rect.p2.y
     );
 }

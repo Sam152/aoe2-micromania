@@ -1,9 +1,6 @@
-import {GamePosition, ScreenPosition} from "../../types";
 import screenManager from "../drawing/screenManager";
+import {Vector2} from "three";
 
-export default function screenPositionToGamePosition(screenPosition: ScreenPosition): GamePosition {
-    return {
-        x: screenPosition.x * screenManager.getCanvasScale(),
-        y: screenPosition.y * screenManager.getCanvasScale(),
-    }
+export default function screenPositionToGamePosition(screenPosition: Vector2): Vector2 {
+    return screenPosition.clone().multiplyScalar(screenManager.getCanvasScale());
 }

@@ -1,9 +1,6 @@
-import {GamePosition} from '../../types';
+import {Vector2} from "three";
 
 interface Hotspot { x: number, y: number };
-export default function anchorAt(hotspot: Hotspot, position: GamePosition, flipped: boolean = false): GamePosition {
-    return {
-        x: position.x - (hotspot.x * (flipped ? -1 : 1)),
-        y: position.y - hotspot.y,
-    };
+export default function anchorAt(hotspot: Hotspot, position: Vector2, flipped: boolean = false): Vector2 {
+    return position.clone().sub(new Vector2(hotspot.x * (flipped ? -1 : 1), hotspot.y));
 }
