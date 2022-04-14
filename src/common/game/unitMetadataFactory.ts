@@ -69,5 +69,4 @@ class UnitMetadata {
 }
 
 const unitMetadataFactory = new UnitMetadata();
-
 export default unitMetadataFactory;

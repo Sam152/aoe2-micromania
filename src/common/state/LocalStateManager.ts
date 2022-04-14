@@ -11,9 +11,9 @@ export const gameSpeed = 1.7;
 export default class LocalStateManager implements StateManagerInterface {
     private gameState: GameState;
     private clientState: ClientState;
-    private gameStateListener: (state: GameState) => void;
+    private gameStateListener: (state: GameState, action: GameStateAction) => void;
 
-    constructor(gameStateListener: (state: GameState) => void = null) {
+    constructor(gameStateListener: (state: GameState, action: GameStateAction) => void = null) {
         this.gameState = defaultGameState();
         this.clientState = defaultClientState();
         this.gameStateListener = gameStateListener;
@@ -26,7 +26,7 @@ export default class LocalStateManager implements StateManagerInterface {
     dispatchGame(action: GameStateAction): void {
         this.gameState = gameStateReducer(this.gameState, action);
         if (this.gameStateListener) {
-            this.gameStateListener(this.gameState);
+            this.gameStateListener(this.gameState, action);
         }
     }
 

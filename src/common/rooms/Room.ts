@@ -52,7 +52,9 @@ export default class Room {
     startGame() {
         this.status = RoomStatus.Started;
 
-        this.state = new LocalStateManager((gameState) => {
+        this.state = new LocalStateManager((gameState, action) => {
+            // The network could either dispatch the whole game state OR the action, letting the clients
+            // calculate the whole state + a hash of it's own internal calculated state.
             this.room.emit('gameStateUpdated', gameState);
         });
 

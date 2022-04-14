@@ -1,6 +1,7 @@
 import RoomStatus from './common/rooms/RoomStatus';
 import UnitState from "./common/game/UnitState";
 import Unit from "./common/game/Unit";
+import CompassDirection from "./common/game/CompassDirection";
 
 interface GamePosition {
     x: number;
@@ -19,6 +20,7 @@ interface UnitInstance {
 
     position: GamePosition;
     movingTo: GamePosition | null;
+    direction: CompassDirection;
 }
 
 interface Projectile {
