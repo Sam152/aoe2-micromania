@@ -67,9 +67,9 @@ export default class Slp {
             y2: anchoredPosition.y + frame.height,
         };
 
-        circle(context, at);
-        circle(context, {x: hitbox.x1, y: hitbox.y1});
-        circle(context, {x: hitbox.x2, y: hitbox.y2});
+        // circle(context, at);
+        // circle(context, {x: hitbox.x1, y: hitbox.y1});
+        // circle(context, {x: hitbox.x2, y: hitbox.y2});
 
         return hitbox;
     }

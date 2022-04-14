@@ -1,6 +1,8 @@
-import {ClientState, GameState} from '../../types';
+import {ClientDispatcher, ClientState, GameState} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../game/unitMetadataFactory';
+import {circle} from "./shapes";
+import screenManager from "./screenManager";
 
 export default class CanvasRenderer {
     private canvas: HTMLCanvasElement;
@@ -17,11 +19,12 @@ export default class CanvasRenderer {
     }
 
     fit() {
-        this.context.canvas.width = window.innerWidth * Math.min(1.5, window.devicePixelRatio);
-        this.context.canvas.height = window.innerHeight * Math.min(1.5, window.devicePixelRatio);
+        this.context.canvas.width = window.innerWidth * screenManager.getCanvasScale();
+        this.context.canvas.height = window.innerHeight * screenManager.getCanvasScale();
     }
 
-    render(gameState: GameState, clientState: ClientState) {
+    render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) {
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 
         gameState.units.map((unitInstance) => {
@@ -29,7 +32,7 @@ export default class CanvasRenderer {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slpAsset = this.slpManager.getAsset(animationMetadata.slp);
 
-            const hitbox = slpAsset.draw(
+            const hitBox = slpAsset.draw(
                 this.context,
                 unitInstance.position,
                 animationMetadata.animationDuration,
@@ -38,6 +41,15 @@ export default class CanvasRenderer {
                 unitInstance.direction,
                 animationMetadata.style,
             );
+            clientStateDispatcher({
+                name: "UNIT_DRAWN",
+                hitBox,
+                unit: unitInstance,
+            });
         });
+
+        if (clientState.lastLeftClick) {
+            circle(this.context, clientState.lastLeftClick);
+        }
     }
 }

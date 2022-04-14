@@ -1,5 +1,5 @@
-import {defaultState as defaultGameState, gameStateReducer} from './gameState';
-import {clientStateReducer, defaultState as defaultClientState} from './clientState';
+import {defaultState as defaultGameState, gameStateMutator} from './gameState';
+import {clientStateMutator, defaultState as defaultClientState} from './clientState';
 import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../types';
 
 export const ticksPerSecond = 20;
@@ -20,11 +20,11 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     dispatchClient(action: ClientStateAction): void {
-        this.clientState = clientStateReducer(this.clientState, action);
+        this.clientState = clientStateMutator(this.clientState, action);
     }
 
     dispatchGame(action: GameStateAction): void {
-        this.gameState = gameStateReducer(this.gameState, action);
+        this.gameState = gameStateMutator(this.gameState, action);
         if (this.gameStateListener) {
             this.gameStateListener(this.gameState, action);
         }

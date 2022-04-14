@@ -56,30 +56,55 @@ type GameStateAction = {
 } | {
     name: 'MOVE_UNIT_TO';
     position: GamePosition;
-    id: UnitId;
-}| {
+    unit: UnitInstance;
+} | {
     name: 'STOP_UNIT';
     id: UnitId;
 };
 
 interface ClientState {
-
+    unitHitBoxes: Array<{
+        hitBox: Rectangle,
+        unit: UnitInstance,
+    }>;
+    selectedUnits: UnitInstance[];
+    lastLeftClick: GamePosition | null;
 }
 
 type ClientStateAction = {
     name: 'DRAG_START',
     position: ScreenPosition,
 } | {
+    name: 'DRAGGING',
+    position: ScreenPosition,
+} | {
     name: 'DRAG_END',
     position: ScreenPosition,
+} | {
+    name: 'LEFT_CLICK',
+    position: ScreenPosition,
+} | {
+    name: 'RIGHT_CLICK',
+    position: ScreenPosition,
+} | {
+    name: 'UNIT_DRAWN',
+    hitBox: Rectangle,
+    unit: UnitInstance,
+} | {
+    name: 'FRAME_RENDERING_STARTED',
 };
 
 type GameDispatcher = (action: GameStateAction) => void;
+type ClientDispatcher = (action: ClientStateAction) => void;
+
 interface StateManagerInterface {
     init(): void;
+
     dispatchGame: GameDispatcher;
-    dispatchClient(action: ClientStateAction): void;
+    dispatchClient: ClientDispatcher;
+
     getGameState(): GameState;
+
     getClientState(): ClientState;
 }
 
@@ -104,7 +129,7 @@ interface EmittedRoom {
 interface SlpFrame {
     cmdTableOffset: number;
     height: number;
-    hotspot: {x: number; y: number;}
+    hotspot: { x: number; y: number; }
     outlineTableOffset: number;
     paletteOffset: number;
     properties: number;
@@ -143,6 +168,7 @@ interface Rectangle {
 export {
     GameMode,
     GameDispatcher,
+    ClientDispatcher,
     GameState,
     GameStateAction,
     ClientState,
@@ -155,6 +181,7 @@ export {
     SlpFrame,
     RenderedSlpFrame,
     GamePosition,
+    ScreenPosition,
     UnitStats,
     Rectangle,
 };

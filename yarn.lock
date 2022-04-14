@@ -3438,6 +3438,11 @@ spdy@^4.0.2:
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
+stinput@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/stinput/-/stinput-2.0.2.tgz#779f05d9139f842d79f78cbcd7743a4b8499d771"
+  integrity sha512-AThxZdQnC51Lw65dpWXe0DRNQhXHk/JXRPoOH0cdws4vzif7VOmPyIFNBzcwB0IohituCCK0J4DDZNLc5OcZLA==
+
 string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.2:
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"

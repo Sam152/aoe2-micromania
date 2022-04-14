@@ -1,5 +1,5 @@
-import {defaultState as defaultGameState, gameStateReducer} from './gameState';
-import {clientStateReducer, defaultState as defaultClientState} from './clientState';
+import {defaultState as defaultGameState, gameStateMutator} from './gameState';
+import {clientStateMutator, defaultState as defaultClientState} from './clientState';
 import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../types';
 import {Socket} from 'socket.io-client';
 
@@ -18,7 +18,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchClient(action: ClientStateAction) {
-        this.clientState = clientStateReducer(this.clientState, action);
+        this.clientState = clientStateMutator(this.clientState, action);
     }
 
     dispatchGame(action: GameStateAction) {

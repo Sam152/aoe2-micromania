@@ -3,7 +3,7 @@ import deepClone from '../util/deepClone';
 import UnitState from '../game/UnitState';
 import CompassDirection from '../game/CompassDirection';
 
-function gameStateReducer(state: GameState, action: GameStateAction): GameState {
+function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
         state.units.push({
             position: action.position,
@@ -17,7 +17,9 @@ function gameStateReducer(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'MOVE_UNIT_TO') {
-        state.units[action.id].movingTo = action.position;
+        state.units.filter(instance => instance === action.unit).forEach(unitInstance => {
+            unitInstance.movingTo = action.position;
+        });
     }
 
     if (action.name === 'STOP_UNIT') {
@@ -47,4 +49,4 @@ function defaultState(): GameState {
     });
 }
 
-export {defaultState, gameStateReducer};
+export {defaultState, gameStateMutator};
