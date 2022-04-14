@@ -2,6 +2,7 @@ import RoomStatus from './common/rooms/RoomStatus';
 import UnitState from "./common/game/UnitState";
 import Unit from "./common/game/Unit";
 import CompassDirection from "./common/game/CompassDirection";
+import AnimationStyle from "./common/drawing/AnimationStyle";
 
 interface GamePosition {
     x: number;
@@ -17,6 +18,7 @@ interface UnitInstance {
     ownedByPlayer: PlayerId;
     unitType: Unit;
     unitState: UnitState;
+    unitStateStartedAt: number;
 
     position: GamePosition;
     movingTo: GamePosition | null;
@@ -126,6 +128,7 @@ interface UnitStats {
         [key in UnitState]: {
             slp: string;
             animationDuration: number;
+            style: AnimationStyle;
         }
     }
 }

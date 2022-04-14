@@ -19,7 +19,6 @@ export default class ArcherMicro implements GameMode {
         });
 
         Array.from(Array(10).keys()).map((item, index) => {
-            console.log(randomEnum(CompassDirection));
             gameDispatcher({
                 name: 'SPAWN_UNIT',
                 forPlayer: 2,

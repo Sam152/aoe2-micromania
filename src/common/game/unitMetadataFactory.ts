@@ -1,6 +1,7 @@
 import Unit from "./Unit";
 import UnitState from "./UnitState";
 import {UnitStats} from "../../types";
+import AnimationStyle from "../drawing/AnimationStyle";
 const aocUnitsData = require('./data/aoc_units.json');
 
 const unitDefinitions: {[key in Unit]: {
@@ -9,6 +10,7 @@ const unitDefinitions: {[key in Unit]: {
             [key in UnitState]: {
                 slp: string;
                 animationDuration: number;
+                style: AnimationStyle;
             }
         };
     }} = {
@@ -18,22 +20,27 @@ const unitDefinitions: {[key in Unit]: {
             [UnitState.Idle]: {
                 slp: 'xbow-stand',
                 animationDuration: 2,
+                style: AnimationStyle.Loop,
             },
             [UnitState.Firing]: {
                 slp: 'xbow-firing',
                 animationDuration: 0.7,
+                style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
                 slp: 'xbow-moving',
                 animationDuration: 1,
+                style: AnimationStyle.Loop,
             },
             [UnitState.Patrolling]: {
                 slp: 'xbow-moving',
                 animationDuration: 1,
+                style: AnimationStyle.Loop,
             },
             [UnitState.Fallen]: {
-                slp: 'xbow-moving',
-                animationDuration: 10,
+                slp: 'xbow-decay',
+                animationDuration: 3,
+                style: AnimationStyle.Play,
             }
         }
     }
