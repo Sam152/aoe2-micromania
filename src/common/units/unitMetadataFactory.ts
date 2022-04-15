@@ -1,7 +1,7 @@
 import Unit from './Unit';
 import UnitState from './UnitState';
 import {UnitStats} from '../../types';
-import AnimationStyle from '../drawing/AnimationStyle';
+import AnimationStyle from './AnimationStyle';
 const aocUnitsData = require('./data/aoc_units.json');
 
 const unitDefinitions: {[key in Unit]: {

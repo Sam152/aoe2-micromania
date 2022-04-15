@@ -1,9 +1,9 @@
 import {Rectangle, RenderedSlpFrame} from '../../types';
-import CompassDirection from '../game/CompassDirection';
+import CompassDirection from '../units/CompassDirection';
 import anchorAt from '../util/anchorAt';
-import AnimationStyle from './AnimationStyle';
+import AnimationStyle from '../units/AnimationStyle';
 import {Vector2} from "three";
-import engineConfiguration from "../game/engineConfiguration";
+import engineConfiguration from "../units/engineConfiguration";
 
 const SLP = require('genie-slp');
 

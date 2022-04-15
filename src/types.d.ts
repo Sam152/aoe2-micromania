@@ -1,11 +1,11 @@
 import RoomStatus from './common/rooms/RoomStatus';
-import UnitState from './common/game/UnitState';
-import Unit from './common/game/Unit';
-import CompassDirection from './common/game/CompassDirection';
-import AnimationStyle from './common/drawing/AnimationStyle';
+import UnitState from './common/units/UnitState';
+import Unit from './common/units/Unit';
+import CompassDirection from './common/units/CompassDirection';
+import AnimationStyle from './common/units/AnimationStyle';
 import {Vector2} from "three";
 
-interface UnitInstance {
+export interface UnitInstance {
     ownedByPlayer: PlayerId;
     unitType: Unit;
     unitState: UnitState;
@@ -17,25 +17,30 @@ interface UnitInstance {
     direction: CompassDirection;
 }
 
-interface Projectile {
+export interface Projectile {
 
 }
 
-interface Player {
+export interface Player {
 
 }
 
-interface GameState {
+export interface RendererInterface {
+    render: (gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) => void;
+    bootUp: () => Promise<void>;
+}
+
+export interface GameState {
     ticks: number;
     units: UnitInstance[];
     projectiles: Projectile[];
     players: Player[];
 }
 
-type UnitId = number;
-type RoomId = string;
-type ClientId = string;
-type PlayerId = number;
+export type UnitId = number;
+export type RoomId = string;
+export type ClientId = string;
+export type PlayerId = number;
 
 type GameStateAction = {
     name: 'TICK';
@@ -54,16 +59,17 @@ type GameStateAction = {
     id: UnitId;
 };
 
-interface ClientState {
+export interface ClientState {
     unitHitBoxes: Array<{
         hitBox: Rectangle,
         unit: UnitInstance,
     }>;
     selectedUnits: UnitInstance[];
+    selectionRectangle: Rectangle | null;
     lastLeftClick: Vector2 | null;
 }
 
-type ClientStateAction = {
+export type ClientStateAction = {
     name: 'DRAG_START',
     position: Vector2,
 } | {
@@ -86,10 +92,10 @@ type ClientStateAction = {
     name: 'FRAME_RENDERING_STARTED',
 };
 
-type GameDispatcher = (action: GameStateAction) => void;
-type ClientDispatcher = (action: ClientStateAction) => void;
+export type GameDispatcher = (action: GameStateAction) => void;
+export type ClientDispatcher = (action: ClientStateAction) => void;
 
-interface StateManagerInterface {
+export interface StateManagerInterface {
     init(): void;
 
     dispatchGame: GameDispatcher;
@@ -100,16 +106,16 @@ interface StateManagerInterface {
     getClientState(): ClientState;
 }
 
-interface GameMode {
+export interface GameMode {
     start(dispatcher: GameDispatcher): void;
 }
 
-interface EmittedPlayerLobbyMetadata {
+export interface EmittedPlayerLobbyMetadata {
     inRoom?: EmittedRoom;
     isSpectator?: boolean;
 }
 
-interface EmittedRoom {
+export interface EmittedRoom {
     id: RoomId;
     players: number;
     spectators: number;
@@ -118,7 +124,7 @@ interface EmittedRoom {
     joinable: boolean;
 }
 
-interface SlpFrame {
+export interface SlpFrame {
     cmdTableOffset: number;
     height: number;
     hotspot: { x: number; y: number; }
@@ -128,13 +134,13 @@ interface SlpFrame {
     width: number;
 }
 
-interface RenderedSlpFrame extends SlpFrame {
+export interface RenderedSlpFrame extends SlpFrame {
     rendered: {
         [key: number]: ImageBitmap;
     }
 }
 
-interface UnitStats {
+export interface UnitStats {
     attackFrameDelay: number;
     reloadTime: number;
     movementRate: number;
@@ -150,26 +156,7 @@ interface UnitStats {
     }
 }
 
-interface Rectangle {
+export interface Rectangle {
     p1: Vector2;
     p2: Vector2;
 }
-
-export {
-    GameMode,
-    GameDispatcher,
-    ClientDispatcher,
-    GameState,
-    GameStateAction,
-    ClientState,
-    ClientStateAction,
-    StateManagerInterface,
-    RoomId,
-    ClientId,
-    EmittedPlayerLobbyMetadata,
-    EmittedRoom,
-    SlpFrame,
-    RenderedSlpFrame,
-    UnitStats,
-    Rectangle,
-};

@@ -1,10 +1,10 @@
 import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
-import UnitState from '../game/UnitState';
-import CompassDirection from '../game/CompassDirection';
-import compassDirectionCalculator from "../game/compassDirectionCalculator";
-import unitMetadataFactory from "../game/unitMetadataFactory";
-import engineConfiguration from "../game/engineConfiguration";
+import UnitState from '../units/UnitState';
+import CompassDirection from '../units/CompassDirection';
+import compassDirectionCalculator from "../units/compassDirectionCalculator";
+import unitMetadataFactory from "../units/unitMetadataFactory";
+import engineConfiguration from "../units/engineConfiguration";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
@@ -24,8 +24,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         state.units.filter(instance => instance === action.unit).forEach(unit => {
             unit.movingTo = action.position;
             unit.movingDirection = unit.movingTo.clone().sub(unit.position).normalize();
-            console.log(action.position.clone().sub(unit.movingTo));
-            console.log(unit.movingDirection);
             unit.direction = compassDirectionCalculator.getDirection(unit.position, unit.movingTo);
             unit.unitState = UnitState.Moving;
         });
@@ -38,6 +36,11 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'TICK') {
         state.units.filter(unit => unit.movingTo !== null).map(function(unit) {
             unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * engineConfiguration.unitSpeedFactor));
+            if (unit.position.distanceTo(unit.movingTo) < 10) {
+                unit.movingTo = null;
+                unit.movingDirection = null;
+                unit.unitState = UnitState.Idle;
+            }
         });
         ++state.ticks;
     }

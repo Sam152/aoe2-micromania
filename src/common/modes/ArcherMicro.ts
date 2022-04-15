@@ -1,7 +1,7 @@
 import {GameDispatcher, GameMode} from '../../types';
-import Unit from '../game/Unit';
+import Unit from '../units/Unit';
 import randomEnum from '../util/randomEnum';
-import CompassDirection from '../game/CompassDirection';
+import CompassDirection from '../units/CompassDirection';
 import {Vector2} from "three";
 
 export default class ArcherMicro implements GameMode {
