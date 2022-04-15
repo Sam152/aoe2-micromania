@@ -2,6 +2,7 @@ import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../game/UnitState';
 import CompassDirection from '../game/CompassDirection';
+import compassDirectionCalculator from "../game/compassDirectionCalculator";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
@@ -19,6 +20,8 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'MOVE_UNIT_TO') {
         state.units.filter(instance => instance === action.unit).forEach(unitInstance => {
             unitInstance.movingTo = action.position;
+            unitInstance.direction = compassDirectionCalculator.getDirection(unitInstance.position, unitInstance.movingTo);
+            unitInstance.unitState = UnitState.Moving;
         });
     }
 
@@ -29,8 +32,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'TICK') {
         state.units.map(function(unit) {
             if (unit.movingTo) {
-                unit.position.x++;
-                unit.position.y++;
+                unit.position.lerp(unit.movingTo, 0.1);
             }
             return unit;
         });

@@ -1,6 +1,6 @@
 import {ClientState, ClientStateAction, GameDispatcher, GameState} from '../../types';
 import deepClone from '../util/deepClone';
-import positionInRect from "../util/positionInRect";
+import isInRect from "../util/isInRect";
 import {act} from "react-dom/test-utils";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
@@ -18,7 +18,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     if (action.name === "LEFT_CLICK") {
         state.lastLeftClick = action.position;
         state.selectedUnits = state.unitHitBoxes
-            .filter(unitAndHitBox => positionInRect(unitAndHitBox.hitBox, action.position))
+            .filter(unitAndHitBox => isInRect(unitAndHitBox.hitBox, action.position))
             .map(unitAndHitBox => unitAndHitBox.unit);
     }
 
