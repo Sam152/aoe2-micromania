@@ -1,9 +1,9 @@
 import {Rectangle, RenderedSlpFrame} from '../../types';
-import {gameSpeed, ticksPerSecond} from '../state/LocalStateManager';
 import CompassDirection from '../game/CompassDirection';
 import anchorAt from '../util/anchorAt';
 import AnimationStyle from './AnimationStyle';
 import {Vector2} from "three";
+import engineConfiguration from "../game/engineConfiguration";
 
 const SLP = require('genie-slp');
 
@@ -32,8 +32,8 @@ export default class Slp {
         style: AnimationStyle,
     ): Rectangle {
 
-        const gameSpeedAdjustedAnimationDuration = animationDuration / gameSpeed;
-        const millisecondsForEachFramePassing = (1000 / ticksPerSecond);
+        const gameSpeedAdjustedAnimationDuration = animationDuration / engineConfiguration.gameSpeed;
+        const millisecondsForEachFramePassing = (1000 / engineConfiguration.ticksPerSecond);
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
         const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
 

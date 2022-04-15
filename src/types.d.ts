@@ -12,7 +12,8 @@ interface UnitInstance {
     unitStateStartedAt: number;
 
     position: Vector2;
-    movingTo: Vector2;
+    movingTo?: Vector2;
+    movingDirection?: Vector2;
     direction: CompassDirection;
 }
 

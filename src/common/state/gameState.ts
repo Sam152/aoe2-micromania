@@ -3,12 +3,15 @@ import deepClone from '../util/deepClone';
 import UnitState from '../game/UnitState';
 import CompassDirection from '../game/CompassDirection';
 import compassDirectionCalculator from "../game/compassDirectionCalculator";
+import unitMetadataFactory from "../game/unitMetadataFactory";
+import engineConfiguration from "../game/engineConfiguration";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
         state.units.push({
             position: action.position,
             movingTo: null,
+            movingDirection: null,
             ownedByPlayer: action.forPlayer,
             unitType: action.unitType,
             unitState: UnitState.Idle,
@@ -18,10 +21,13 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'MOVE_UNIT_TO') {
-        state.units.filter(instance => instance === action.unit).forEach(unitInstance => {
-            unitInstance.movingTo = action.position;
-            unitInstance.direction = compassDirectionCalculator.getDirection(unitInstance.position, unitInstance.movingTo);
-            unitInstance.unitState = UnitState.Moving;
+        state.units.filter(instance => instance === action.unit).forEach(unit => {
+            unit.movingTo = action.position;
+            unit.movingDirection = unit.movingTo.clone().sub(unit.position).normalize();
+            console.log(action.position.clone().sub(unit.movingTo));
+            console.log(unit.movingDirection);
+            unit.direction = compassDirectionCalculator.getDirection(unit.position, unit.movingTo);
+            unit.unitState = UnitState.Moving;
         });
     }
 
@@ -30,11 +36,8 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'TICK') {
-        state.units.map(function(unit) {
-            if (unit.movingTo) {
-                unit.position.lerp(unit.movingTo, 0.1);
-            }
-            return unit;
+        state.units.filter(unit => unit.movingTo !== null).map(function(unit) {
+            unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * engineConfiguration.unitSpeedFactor));
         });
         ++state.ticks;
     }
