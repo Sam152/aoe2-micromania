@@ -4,6 +4,7 @@ import {Vector2} from "three";
 export function normalizeGameStateAction(action: GameStateAction): GameStateAction {
     const vectorKeys = [
         'position',
+        'position',
     ];
     vectorKeys.map(key => {
         if (key in action) {
@@ -20,8 +21,8 @@ export function normalizeGameStateObject(state: GameState): GameState {
     state.units = state.units.map((unit: UnitInstance) => ({
         ...unit,
         position: new Vector2(unit.position.x, unit.position.y),
-        movingDirection: unit.movingDirection ? new Vector2(unit.movingDirection.x, unit.movingDirection.y) : unit.movingDirection,
-        movingTo: unit.movingTo ? new Vector2(unit.movingTo.x, unit.movingTo.y) : unit.movingTo,
+        movingDirection: unit.movingDirection ? new Vector2(unit.movingDirection.x, unit.movingDirection.y) : null,
+        waypoints: unit.waypoints.map(waypoint => new Vector2(waypoint.x, waypoint.y)),
     }));
     return state;
 }

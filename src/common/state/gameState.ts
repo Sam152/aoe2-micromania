@@ -2,9 +2,11 @@ import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
-import compassDirectionCalculator from "../units/compassDirectionCalculator";
 import unitMetadataFactory from "../units/unitMetadataFactory";
 import engineConfiguration from "../units/engineConfiguration";
+import moveTowardsCurrentWaypoint from "./mutations/moveTowardsCurrentWaypoint";
+import formationManager from "../units/formations/FormationManager";
+import stopUnit from "./mutations/stopUnit";
 
 let unitId = 0;
 
@@ -13,7 +15,8 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         state.units.push({
             id: unitId++,
             position: action.position,
-            movingTo: null,
+            waypoints: [],
+            clickedWaypoints: [],
             movingDirection: null,
             ownedByPlayer: action.forPlayer,
             unitType: action.unitType,
@@ -23,26 +26,44 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
     }
 
-    if (action.name === 'MOVE_UNIT_TO') {
-        state.units.filter(instance => instance.id === action.unit).forEach(unit => {
-            unit.movingTo = action.position;
-            unit.movingDirection = unit.movingTo.clone().sub(unit.position).normalize();
-            unit.direction = compassDirectionCalculator.getDirection(unit.position, unit.movingTo);
-            unit.unitState = UnitState.Moving;
+    if (action.name === 'MOVE_UNITS_TO') {
+        const units = state.units.filter(instance => action.units.includes(instance.id));
+        units.forEach(unit => {
+            unit.clickedWaypoints = [action.position];
+        });
+        const positions = units.map(unit => unit.position);
+        formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
+            units[index].waypoints = formationPosition;
+            moveTowardsCurrentWaypoint(units[index]);
         });
     }
 
-    if (action.name === 'STOP_UNIT') {
-        state.units[action.id].movingTo = null;
+    if (action.name === 'ADD_WAYPOINT') {
+        state.units.filter(instance => action.units.includes(instance.id)).forEach(unit => {
+            unit.clickedWaypoints.push(action.position);
+            unit.waypoints.push(action.position)
+            moveTowardsCurrentWaypoint(unit);
+        });
+    }
+
+    if (action.name === 'STOP_UNITS') {
+        console.log('stopping');
+        state.units.filter(instance => action.units.includes(instance.id)).forEach(unit => {
+           stopUnit(unit);
+        });
     }
 
     if (action.name === 'TICK') {
-        state.units.filter(unit => unit.movingTo !== null).map(function(unit) {
+        state.units.filter(unit => unit.waypoints.length > 0).map(function(unit) {
             unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * engineConfiguration.unitSpeedFactor));
-            if (unit.position.distanceTo(unit.movingTo) < 10) {
-                unit.movingTo = null;
-                unit.movingDirection = null;
-                unit.unitState = UnitState.Idle;
+            if (unit.position.distanceTo(unit.waypoints[0]) < 10) {
+                unit.waypoints.shift();
+                if (unit.waypoints.length) {
+                    moveTowardsCurrentWaypoint(unit);
+                }
+                else {
+                    stopUnit(unit);
+                }
             }
         });
         ++state.ticks;

@@ -4,6 +4,7 @@ import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';
 import AnimationStyle from './common/units/AnimationStyle';
 import {Vector2} from "three";
+import FormationType from "./common/units/formations/FormationType";
 
 export interface UnitInstance {
     id: number;
@@ -12,8 +13,12 @@ export interface UnitInstance {
     unitState: UnitState;
     unitStateStartedAt: number;
 
+    // A waypoint is an exact location a unit is moving to and a clicked waypoint
+    // is the users input that lead to a unit moving, independent of any formations.
+    waypoints: Array<Vector2>;
+    clickedWaypoints: Array<Vector2>;
+
     position: Vector2;
-    movingTo?: Vector2;
     movingDirection?: Vector2;
     direction: CompassDirection;
 }
@@ -50,12 +55,17 @@ type GameStateAction = {
     forPlayer: PlayerId,
     direction?: CompassDirection,
 } | {
-    name: 'MOVE_UNIT_TO';
+    name: 'MOVE_UNITS_TO';
     position: Vector2;
-    unit: number;
+    units: number[];
+    formation: FormationType;
 } | {
-    name: 'STOP_UNIT';
-    id: number;
+    name: 'ADD_WAYPOINT';
+    position: Vector2;
+    units: number[];
+} | {
+    name: 'STOP_UNITS';
+    units: number[];
 };
 
 export interface ClientState {
@@ -64,6 +74,7 @@ export interface ClientState {
         unit: UnitInstance,
     }>;
     selectedUnits: UnitInstance[];
+    selectedFormation: FormationType;
     selectionRectangle: Rectangle | null;
     lastLeftClick: Vector2 | null;
 }
@@ -71,6 +82,8 @@ export interface ClientState {
 export type ClientStateAction = {
     name: 'DRAG_START',
     position: Vector2,
+} | {
+    name: 'STOP_UNITS',
 } | {
     name: 'DRAGGING',
     position: Vector2,
@@ -82,6 +95,9 @@ export type ClientStateAction = {
     position: Vector2,
 } | {
     name: 'RIGHT_CLICK',
+    position: Vector2,
+} | {
+    name: 'SHIFT_RIGHT_CLICK',
     position: Vector2,
 } | {
     name: 'UNIT_DRAWN',
@@ -158,4 +174,8 @@ export interface UnitStats {
 export interface Rectangle {
     p1: Vector2;
     p2: Vector2;
+}
+
+export interface FormationInterface {
+    form(positions: Array<Vector2>, destination: Vector2): Array<Array<Vector2>>;
 }

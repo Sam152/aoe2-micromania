@@ -2,7 +2,8 @@ import {ClientState, ClientStateAction, GameDispatcher, GameState} from '../../t
 import deepClone from '../util/deepClone';
 import pointInRect from "../util/pointInRect";
 import rectIntersectingWithRect, {normalizeRect} from "../util/rectIntersectingWithRect";
-import {circle} from "../drawing/shapes";
+import FormationType from "../units/formations/FormationType";
+import {act} from "react-dom/test-utils";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === "FRAME_RENDERING_STARTED") {
@@ -42,13 +43,34 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     return state;
 }
 
+/**
+ * Dispatch into the game state, local actions which impact the game state.
+ */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
-    if (action.name === "RIGHT_CLICK" && clientState.selectedUnits.length > 0) {
-        clientState.selectedUnits.map(selectedUnit => gameDispatcher({
-            name: "MOVE_UNIT_TO",
+    console.log(action);
+
+    if (action.name === "RIGHT_CLICK") {
+        gameDispatcher({
+            name: "MOVE_UNITS_TO",
             position: action.position,
-            unit: selectedUnit.id,
-        }));
+            units: clientState.selectedUnits.map(selectedUnit => selectedUnit.id),
+            formation: clientState.selectedFormation,
+        });
+    }
+    if (action.name === "SHIFT_RIGHT_CLICK") {
+        gameDispatcher({
+            name: "ADD_WAYPOINT",
+            position: action.position,
+            units: clientState.selectedUnits.map(selectedUnit => selectedUnit.id),
+        });
+    }
+
+    if (action.name === "STOP_UNITS") {
+        console.log('ye');
+        gameDispatcher({
+            name: "STOP_UNITS",
+            units: clientState.selectedUnits.map(selectedUnit => selectedUnit.id),
+        });
     }
 }
 
@@ -58,6 +80,7 @@ function defaultState(): ClientState {
         selectedUnits: [],
         lastLeftClick: null,
         selectionRectangle: null,
+        selectedFormation: FormationType.Line,
     });
 }
 

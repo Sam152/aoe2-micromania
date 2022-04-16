@@ -1,7 +1,7 @@
-import {defaultState as defaultGameState, gameStateMutator} from './gameState';
-import {clientStateMutator, defaultState as defaultClientState} from './clientState';
-import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../types';
-import engineConfiguration from "../units/engineConfiguration";
+import {defaultState as defaultGameState, gameStateMutator} from '../gameState';
+import {clientStateMutator, defaultState as defaultClientState} from '../clientState';
+import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../../types';
+import engineConfiguration from "../../units/engineConfiguration";
 
 /**
  * A state manager that holds context locally, may either be a client or a server.

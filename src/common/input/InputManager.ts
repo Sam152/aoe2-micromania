@@ -1,5 +1,3 @@
-// https://github.com/RonenNess/stinput
-
 import {ClientState, ClientStateAction, GameDispatcher, StateManagerInterface} from "../../types";
 import screenPositionToGamePosition from "../util/screenPositionToGamePosition";
 import {Vector2} from "three";
@@ -30,7 +28,7 @@ export default class InputManager {
         }
         if (this.input.released('mouse_right') && !this.dragging) {
             this.dispatch({
-                name: "RIGHT_CLICK",
+                name: this.input.shiftDown ? "SHIFT_RIGHT_CLICK" : "RIGHT_CLICK",
                 position: this.mousePosition(),
             });
         }
@@ -51,12 +49,18 @@ export default class InputManager {
 
         if (this.input.released('mouse_left')) {
             if (this.dragging) {
-                this.stateManager.dispatchClient({
+                this.dispatch({
                     name: "DRAG_END",
                     position: this.mousePosition(),
                 });
             }
             this.dragging = false;
+        }
+
+        if (this.input.pressed('f')) {
+            this.dispatch({
+                name: "STOP_UNITS",
+            });
         }
     }
 

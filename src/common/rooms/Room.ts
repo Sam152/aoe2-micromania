@@ -1,5 +1,5 @@
 import {EmittedRoom, RoomId, StateManagerInterface} from '../../types';
-import LocalStateManager from '../state/LocalStateManager';
+import LocalStateManager from '../state/managers/LocalStateManager';
 import Player from './Player';
 import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
 import ArcherMicro from '../modes/ArcherMicro';

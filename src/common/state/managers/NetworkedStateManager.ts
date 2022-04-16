@@ -1,5 +1,5 @@
-import {defaultState as defaultGameState, gameStateMutator} from './gameState';
-import {clientStateMutator, defaultState as defaultClientState} from './clientState';
+import {defaultState as defaultGameState, gameStateMutator} from '../gameState';
+import {clientStateMutator, defaultState as defaultClientState} from '../clientState';
 import {
     ClientState,
     ClientStateAction,
@@ -7,10 +7,10 @@ import {
     GameStateAction,
     StateManagerInterface,
     UnitInstance
-} from '../../types';
+} from '../../../types';
 import {Socket} from 'socket.io-client';
 import {Vector2} from "three";
-import {normalizeGameStateObject} from "../util/normalizer";
+import {normalizeGameStateObject} from "../../util/normalizer";
 
 /**
  * A state manager with a client => server relationship.

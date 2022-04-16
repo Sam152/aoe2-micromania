@@ -1,5 +1,5 @@
 import GameCanvas from './GameCanvas';
-import NetworkedStateManager from '../../common/state/NetworkedStateManager';
+import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
 import {Socket} from 'socket.io-client';
 
 export default function MultiplayerGame({io}: {io: Socket}) {

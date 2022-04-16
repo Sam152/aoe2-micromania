@@ -1,4 +1,4 @@
-import LocalStateManager from '../../common/state/LocalStateManager';
+import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import ArcherMicro from '../../common/modes/ArcherMicro';
 import GameCanvas from './GameCanvas';
 import {useMemo} from 'react';

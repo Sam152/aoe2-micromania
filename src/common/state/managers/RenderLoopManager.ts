@@ -1,7 +1,7 @@
-import InputManager from "../input/InputManager";
-import {clientStateTransmitter} from "./clientState";
-import CanvasRenderer from "../drawing/CanvasRenderer";
-import {StateManagerInterface} from "../../types";
+import InputManager from "../../input/InputManager";
+import {clientStateTransmitter} from "../clientState";
+import CanvasRenderer from "../../drawing/CanvasRenderer";
+import {StateManagerInterface} from "../../../types";
 
 export default class RenderLoopManager {
     private stateManager: StateManagerInterface;
