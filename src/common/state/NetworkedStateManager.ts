@@ -1,7 +1,15 @@
 import {defaultState as defaultGameState, gameStateMutator} from './gameState';
 import {clientStateMutator, defaultState as defaultClientState} from './clientState';
-import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../types';
+import {
+    ClientState,
+    ClientStateAction,
+    GameState,
+    GameStateAction,
+    StateManagerInterface,
+    UnitInstance
+} from '../../types';
 import {Socket} from 'socket.io-client';
+import {Vector2} from "three";
 
 /**
  * A state manager with a client => server relationship.
@@ -35,6 +43,16 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        this.socket.on('gameStateUpdated', (serverState) => this.gameState = serverState);
+        this.socket.on('gameStateUpdated', (serverState) => {
+            // In the absence of a more sophisticated normalizer, points need to be converted back
+            // into three.js vectors when state is transmitted from the server.
+            serverState.units = serverState.units.map((unit: UnitInstance) => ({
+                ...unit,
+                position: new Vector2(unit.position.x, unit.position.y),
+                movingDirection: unit.movingDirection ? new Vector2(unit.movingDirection.x, unit.movingDirection.y) : unit.movingDirection,
+                movingTo: unit.movingTo ? new Vector2(unit.movingTo.x, unit.movingTo.y) : unit.movingTo,
+            }));
+            this.gameState = serverState;
+        });
     }
 }

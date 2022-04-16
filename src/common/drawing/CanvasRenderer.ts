@@ -37,12 +37,6 @@ export default class CanvasRenderer implements RendererInterface {
 
         this.drawUnits(gameState, clientStateDispatcher);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
-
-        if (clientState.selectionRectangle) {
-            const normalized = normalizeRect(clientState.selectionRectangle);
-            circle(this.context, normalized.p1, 10);
-            circle(this.context, normalized.p2, 10, 'red');
-        }
     }
 
     drawUnits(gameState: GameState, clientStateDispatcher: ClientDispatcher) {

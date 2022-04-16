@@ -6,9 +6,12 @@ import compassDirectionCalculator from "../units/compassDirectionCalculator";
 import unitMetadataFactory from "../units/unitMetadataFactory";
 import engineConfiguration from "../units/engineConfiguration";
 
+let unitId = 0;
+
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
         state.units.push({
+            id: unitId++,
             position: action.position,
             movingTo: null,
             movingDirection: null,
@@ -21,7 +24,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'MOVE_UNIT_TO') {
-        state.units.filter(instance => instance === action.unit).forEach(unit => {
+        state.units.filter(instance => instance.id === action.unit).forEach(unit => {
             unit.movingTo = action.position;
             unit.movingDirection = unit.movingTo.clone().sub(unit.position).normalize();
             unit.direction = compassDirectionCalculator.getDirection(unit.position, unit.movingTo);
@@ -52,8 +55,6 @@ function defaultState(): GameState {
     return deepClone({
         ticks: 0,
         units: [],
-        projectiles: [],
-        players: [],
     });
 }
 

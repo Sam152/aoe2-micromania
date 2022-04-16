@@ -47,7 +47,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         clientState.selectedUnits.map(selectedUnit => gameDispatcher({
             name: "MOVE_UNIT_TO",
             position: action.position,
-            unit: selectedUnit,
+            unit: selectedUnit.id,
         }));
     }
 }

@@ -67,7 +67,6 @@ class UnitMetadata {
                 attackDamage: parseFloat(aocData.at),
                 animations: unitDefinitions[unit].animations,
             };
-            console.log(this.units[unit]);
         });
     }
 

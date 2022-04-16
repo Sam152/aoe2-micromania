@@ -6,6 +6,7 @@ import AnimationStyle from './common/units/AnimationStyle';
 import {Vector2} from "three";
 
 export interface UnitInstance {
+    id: number;
     ownedByPlayer: PlayerId;
     unitType: Unit;
     unitState: UnitState;
@@ -33,8 +34,6 @@ export interface RendererInterface {
 export interface GameState {
     ticks: number;
     units: UnitInstance[];
-    projectiles: Projectile[];
-    players: Player[];
 }
 
 export type UnitId = number;
@@ -53,10 +52,10 @@ type GameStateAction = {
 } | {
     name: 'MOVE_UNIT_TO';
     position: Vector2;
-    unit: UnitInstance;
+    unit: number;
 } | {
     name: 'STOP_UNIT';
-    id: UnitId;
+    id: number;
 };
 
 export interface ClientState {
