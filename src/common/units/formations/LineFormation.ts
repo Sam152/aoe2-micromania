@@ -24,27 +24,17 @@ export default class LineFormation implements FormationInterface {
         newPositions = newPositions.map(newPosition => rotateAroundOrigin(destination, newPosition, directionalAngle));
 
         // Find the shortest distance between each source and destination point in the formation.
-        const indexMap: {[key: number]: number} = {};
         const newPositionIndexes = Array.from(Array(newPositions.length).keys());
-        const shortestPositions = Array();
-        positions.forEach((position, positionIndex) => {
-            const candidates = newPositionIndexes.filter(candidate => typeof indexMap[candidate] === 'undefined');
+        const usedIndexes: number[] = [];
+        newPositions = positions.map((position, positionIndex) => {
+            const candidates = newPositionIndexes.filter(candidate => usedIndexes.indexOf(candidate) === -1);
             const distances = candidates.map(candidate => newPositions[candidate].distanceTo(position));
             const shortestDistanceIndex = candidates[distances.indexOf(Math.min(...distances))];
-            shortestPositions[positionIndex] = newPositions[shortestDistanceIndex];
-            indexMap[shortestDistanceIndex] = positionIndex;
+            usedIndexes.push(shortestDistanceIndex);
+            return newPositions[shortestDistanceIndex];
         });
 
-        console.log(indexMap);
-
-
-
-
-
-
-
-
-        return shortestPositions.map(newPosition => [newPosition]);
+        return newPositions.map(newPosition => [newPosition]);
     }
 
 }
