@@ -55,7 +55,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'TICK') {
         state.units.filter(unit => unit.waypoints.length > 0).map(function(unit) {
             unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * engineConfiguration.unitSpeedFactor));
-            if (unit.position.distanceTo(unit.waypoints[0]) < 10) {
+            if (unit.position.distanceTo(unit.waypoints[0]) < 5) {
                 unit.waypoints.shift();
                 if (unit.waypoints.length) {
                     moveTowardsCurrentWaypoint(unit);
