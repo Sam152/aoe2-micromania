@@ -2,14 +2,19 @@ import {FormationInterface} from "../../../types";
 import {Vector2} from "three";
 import averageVector from "../../util/averageVector";
 import rotateAroundOrigin from "../../util/rotateAroundOrigin";
+import standardDeviation from "just-standard-deviation";
 
 export default class LineFormation implements FormationInterface {
 
     distanceBetween = 30;
 
     form(positions: Array<Vector2>, destination: Vector2): Array<Vector2> {
-        const startingPoint = averageVector(positions);
 
+        if (positions.length === 1) {
+            return [destination.clone()];
+        }
+
+        const startingPoint = averageVector(positions);
         const rows = Math.floor(positions.length / 4);
 
         // Line up the units into rows.
@@ -35,22 +40,21 @@ export default class LineFormation implements FormationInterface {
 
 
     sortIntoShortestDistance(newPositions: Array<Vector2>, positions: Array<Vector2>): [Array<Vector2>, number] {
-        // Find the shortest distance between each source and destination point in the formation.
         const newPositionIndexes = Array.from(Array(newPositions.length).keys());
         const usedIndexes: number[] = [];
-        let totalDistanceTraveled = 0;
+        const distancesTraveled: number[] = [];
 
         const sortedIntoShortestTravel = positions.map((position, positionIndex) => {
             const candidates = newPositionIndexes.filter(candidate => usedIndexes.indexOf(candidate) === -1);
             const distances = candidates.map(candidate => newPositions[candidate].distanceTo(position));
             const shortestDistance = Math.min(...distances);
-            totalDistanceTraveled += shortestDistance;
+            distancesTraveled.push(shortestDistance);
             const shortestDistanceIndex = candidates[distances.indexOf(shortestDistance)];
             usedIndexes.push(shortestDistanceIndex);
             return newPositions[shortestDistanceIndex];
         });
 
-        return [sortedIntoShortestTravel, totalDistanceTraveled];
+        return [sortedIntoShortestTravel, standardDeviation(distancesTraveled)];
     }
 
 }

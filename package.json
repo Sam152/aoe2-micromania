@@ -36,6 +36,7 @@
     "bufferutil": "^4.0.6",
     "genie-slp": "^1.1.0",
     "jascpal": "^0.1.4",
+    "just-standard-deviation": "^2.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "socket.io": "^4.4.1",

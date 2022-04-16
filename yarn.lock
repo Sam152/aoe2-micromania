@@ -2368,6 +2368,11 @@ json5@^1.0.1:
     array-includes "^3.1.4"
     object.assign "^4.1.2"
 
+just-standard-deviation@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/just-standard-deviation/-/just-standard-deviation-2.0.2.tgz#f3829d4dbbc481ded8966eee59ae05da2cabd05d"
+  integrity sha512-9FdkLrRHK6iQstaFqdP3ls9U1NrL99soCJA2WJNrmm3BJRrF1CHhOJ0I750KY6qltaqc2mg9zbhSNK/cCwYWTg==
+
 keyv@^3.0.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/keyv/-/keyv-3.1.0.tgz"
