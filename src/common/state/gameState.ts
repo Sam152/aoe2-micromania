@@ -33,7 +33,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
         const positions = units.map(unit => unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
-            units[index].waypoints = formationPosition;
+            units[index].waypoints = [formationPosition];
             moveTowardsCurrentWaypoint(units[index]);
         });
     }
