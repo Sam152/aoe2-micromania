@@ -179,3 +179,9 @@ export interface Rectangle {
 export interface FormationInterface {
     form(positions: Array<Vector2>, destination: Vector2): Array<Array<Vector2>>;
 }
+
+declare global {
+    interface Window {
+        ctx: CanvasRenderingContext2D;
+    }
+}

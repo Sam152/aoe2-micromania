@@ -33,6 +33,9 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
+        // Debug only.
+        window.ctx = this.context;
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 
         this.drawUnits(gameState, clientStateDispatcher);

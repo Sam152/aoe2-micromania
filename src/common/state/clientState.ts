@@ -47,8 +47,6 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
  * Dispatch into the game state, local actions which impact the game state.
  */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
-    console.log(action);
-
     if (action.name === "RIGHT_CLICK") {
         gameDispatcher({
             name: "MOVE_UNITS_TO",
@@ -66,7 +64,6 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     }
 
     if (action.name === "STOP_UNITS") {
-        console.log('ye');
         gameDispatcher({
             name: "STOP_UNITS",
             units: clientState.selectedUnits.map(selectedUnit => selectedUnit.id),

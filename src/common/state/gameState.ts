@@ -47,7 +47,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'STOP_UNITS') {
-        console.log('stopping');
         state.units.filter(instance => action.units.includes(instance.id)).forEach(unit => {
            stopUnit(unit);
         });
