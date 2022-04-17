@@ -11,18 +11,18 @@ export default class ArcherMicro implements GameMode {
                 name: 'SPAWN_UNIT',
                 forPlayer: 1,
                 unitType: Unit.Archer,
-                position: new Vector2(Math.floor(Math.random() * 500), Math.floor(Math.random() * 500)),
+                position: new Vector2(Math.floor(Math.random() * 200) + 200, Math.floor(Math.random() * 200) + 200),
             });
         });
 
-        Array.from(Array(20).keys()).map((item, index) => {
-            gameDispatcher({
-                name: 'SPAWN_UNIT',
-                forPlayer: 2,
-                unitType: Unit.Archer,
-                direction: randomEnum(CompassDirection),
-                position: new Vector2(Math.floor(Math.random() * 500) + 500, Math.floor(Math.random() * 500) + 500),
-            });
-        });
+        // Array.from(Array(20).keys()).map((item, index) => {
+        //     gameDispatcher({
+        //         name: 'SPAWN_UNIT',
+        //         forPlayer: 2,
+        //         unitType: Unit.Archer,
+        //         direction: randomEnum(CompassDirection),
+        //         position: new Vector2(Math.floor(Math.random() * 500) + 500, Math.floor(Math.random() * 500) + 500),
+        //     });
+        // });
     }
 }

@@ -57,6 +57,10 @@ export default class CanvasRenderer implements RendererInterface {
                 unitInstance.direction,
                 animationMetadata.style,
             );
+
+            this.context.font = "11px Arial";
+            this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 30);
+
             clientStateDispatcher({
                 name: "UNIT_DRAWN",
                 hitBox,
