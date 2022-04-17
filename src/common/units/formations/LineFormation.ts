@@ -17,12 +17,9 @@ export default class LineFormation implements FormationInterface {
 
         const startingPoint = averageVector(positions);
 
-        console.log(positions);
-
         // Line up the units into rows.
         const rows = Math.ceil(positions.length / this.unitsPerRow);
         const columns = Math.ceil(positions.length / rows);
-        console.log('Columns', columns);
         let newPositions = positions.map((position, index) => {
             const row = Math.ceil((index + 1) / columns);
             return destination.clone().add(new Vector2((index % columns) * this.distanceBetween, row * this.distanceBetween));
@@ -39,28 +36,15 @@ export default class LineFormation implements FormationInterface {
         // Find the shortest distance between each source and destination point in the formation.
         const [newPositionsA, travelA] = this.sortIntoShortestDistance(newPositions, positions);
         const [newPositionsB, travelB] = this.sortIntoShortestDistance(newPositions, [...positions].reverse());
-        const [newPositionsC, travelC] = this.sortIntoShortestDistance(newPositions, columnize(positions, columns));
-        const [newPositionsD, travelD] = this.sortIntoShortestDistance(newPositions, columnize(positions, columns).reverse());
 
-        const bestPath = Math.min(travelA, travelB, travelC, travelD);
+        const bestFormationMapping = Math.min(travelA, travelB);
 
-        if (bestPath === travelA) {
-            console.log('A won');
+        if (bestFormationMapping === travelA) {
             return newPositionsA;
         }
-        if (bestPath === travelB) {
-            console.log('B won');
+        if (bestFormationMapping === travelB) {
             return newPositionsB.reverse();
         }
-        if (bestPath === travelC) {
-            console.log('C won');
-            return columnize(newPositionsC, columns);
-        }
-        if (bestPath === travelD) {
-            console.log('D won');
-            return columnize(newPositionsD, columns).reverse();
-        }
-
     }
 
     sortIntoShortestDistance(newPositions: Array<Vector2>, positions: Array<Vector2>): [Array<Vector2>, number] {
