@@ -47,7 +47,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
  * Dispatch into the game state, local actions which impact the game state.
  */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
-    if (action.name === "RIGHT_CLICK") {
+    if (action.name === "RIGHT_CLICK" && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: "MOVE_UNITS_TO",
             position: action.position,

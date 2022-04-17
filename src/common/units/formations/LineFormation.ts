@@ -16,10 +16,13 @@ export default class LineFormation implements FormationInterface {
         }
 
         const startingPoint = averageVector(positions);
-        const rows = Math.floor(positions.length / this.unitsPerRow);
+
+        console.log(positions);
 
         // Line up the units into rows.
+        const rows = Math.ceil(positions.length / this.unitsPerRow);
         const columns = Math.ceil(positions.length / rows);
+        console.log('Columns', columns);
         let newPositions = positions.map((position, index) => {
             const row = Math.ceil((index + 1) / columns);
             return destination.clone().add(new Vector2((index % columns) * this.distanceBetween, row * this.distanceBetween));
@@ -36,8 +39,8 @@ export default class LineFormation implements FormationInterface {
         // Find the shortest distance between each source and destination point in the formation.
         const [newPositionsA, travelA] = this.sortIntoShortestDistance(newPositions, positions);
         const [newPositionsB, travelB] = this.sortIntoShortestDistance(newPositions, [...positions].reverse());
-        const [newPositionsC, travelC] = this.sortIntoShortestDistance(newPositions, columnize(positions, columns + 1));
-        const [newPositionsD, travelD] = this.sortIntoShortestDistance(newPositions, columnize(positions, columns + 1).reverse());
+        const [newPositionsC, travelC] = this.sortIntoShortestDistance(newPositions, columnize(positions, columns));
+        const [newPositionsD, travelD] = this.sortIntoShortestDistance(newPositions, columnize(positions, columns).reverse());
 
         const bestPath = Math.min(travelA, travelB, travelC, travelD);
 
@@ -51,11 +54,11 @@ export default class LineFormation implements FormationInterface {
         }
         if (bestPath === travelC) {
             console.log('C won');
-            return columnize(newPositionsC, columns + 1);
+            return columnize(newPositionsC, columns);
         }
         if (bestPath === travelD) {
             console.log('D won');
-            return columnize(newPositionsD, columns + 1).reverse();
+            return columnize(newPositionsD, columns).reverse();
         }
 
     }
@@ -75,7 +78,12 @@ export default class LineFormation implements FormationInterface {
             return newPositions[shortestDistanceIndex];
         });
 
-        return [sortedIntoShortestTravel, standardDeviation(distancesTraveled)];
+        return [
+            sortedIntoShortestTravel,
+            newPositions.length === 2
+                ? distancesTraveled[0] + distancesTraveled[1]
+                : standardDeviation(distancesTraveled)
+        ];
     }
 
 }
