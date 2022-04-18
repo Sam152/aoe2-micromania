@@ -1,11 +1,11 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from "./shapes";
+import {square} from "./shapes";
 import screenManager from "./screenManager";
 import {Vector2} from "three";
-import {normalizeRect} from "../util/rectIntersectingWithRect";
 import engineConfiguration from "../units/engineConfiguration";
+import AnimationStyle from "../units/AnimationStyle";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -39,16 +39,22 @@ export default class CanvasRenderer implements RendererInterface {
         }
 
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
+
         this.drawUnits(gameState, clientState, clientStateDispatcher);
-        this.drawWaypointFlags(gameState, clientState);
+        this.drawMovementCommandAnimations(gameState, clientState);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
     }
 
-    drawWaypointFlags(gameState: GameState, clientState: ClientState) {
+    drawMovementCommandAnimations(gameState: GameState, clientState: ClientState) {
         const flag = this.slpManager.getAsset('waypoint-flag');
         clientState.selectedUnits.forEach(unit => unit.clickedWaypoints.forEach(waypoint => {
             flag.draw(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
+        if (clientState.lastMoveClick) {
+            const asset = this.slpManager.getAsset('move-command');
+            const [position, startedTick] = clientState.lastMoveClick;
+            asset.draw(this.context, position, 9, clientState.renderedFrames - startedTick, AnimationStyle.Play);
+        }
     }
 
     drawUnits(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) {

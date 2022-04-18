@@ -3,11 +3,11 @@ import deepClone from '../util/deepClone';
 import pointInRect from "../util/pointInRect";
 import rectIntersectingWithRect, {normalizeRect} from "../util/rectIntersectingWithRect";
 import FormationType from "../units/formations/FormationType";
-import {act} from "react-dom/test-utils";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === "FRAME_RENDERING_STARTED") {
         state.unitHitBoxes = [];
+        state.renderedFrames++;
     }
 
     if (action.name === "UNIT_DRAWN") {
@@ -15,6 +15,10 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
             unit: action.unit,
             hitBox: action.hitBox,
         });
+    }
+
+    if (action.name === "RIGHT_CLICK" && state.selectedUnits.length > 0) {
+        state.lastMoveClick = [action.position, state.renderedFrames];
     }
 
     if (action.name === "LEFT_CLICK") {
@@ -83,8 +87,10 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
 function defaultState(): ClientState {
     return deepClone({
         unitHitBoxes: [],
+        renderedFrames: 0,
         selectedUnits: [],
         lastLeftClick: null,
+        lastMoveClick: null,
         selectionRectangle: null,
         selectedFormation: FormationType.Line,
     });

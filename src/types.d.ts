@@ -74,10 +74,12 @@ export interface ClientState {
         hitBox: Rectangle,
         unit: UnitInstance,
     }>;
+    renderedFrames: number;
     selectedUnits: UnitInstance[];
     selectedFormation: FormationType;
     selectionRectangle: Rectangle | null;
     lastLeftClick: Vector2 | null;
+    lastMoveClick: [Vector2, number] | null;
 }
 
 export type ClientStateAction = {

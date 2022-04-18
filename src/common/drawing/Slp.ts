@@ -34,9 +34,9 @@ export default class Slp {
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
         const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
 
-        const percentageOfAnimationComplete = style === AnimationStyle.Loop ?
-            (unitStateTickCount % totalFramesForAnimation) / totalFramesForAnimation :
-            Math.min(unitStateTickCount / totalFramesForAnimation, 1);
+        const percentageOfAnimationComplete = style === AnimationStyle.Loop
+            ? (unitStateTickCount % totalFramesForAnimation) / totalFramesForAnimation
+            : Math.min(unitStateTickCount / totalFramesForAnimation, 1);
 
         // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
         const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.slp.numFrames - 1));

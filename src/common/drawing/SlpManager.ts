@@ -80,6 +80,7 @@ export default class SlpManager {
             'mangonel-decay',
             'waypoint-flag',
             'mouse-icons',
+            'move-command',
         ];
     }
 }
