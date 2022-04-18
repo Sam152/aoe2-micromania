@@ -19,9 +19,19 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
 
     if (action.name === "LEFT_CLICK") {
         state.lastLeftClick = action.position;
-        state.selectedUnits = state.unitHitBoxes
-            .filter(unitAndHitBox => pointInRect(unitAndHitBox.hitBox, action.position))
-            .map(unitAndHitBox => unitAndHitBox.unit);
+        const foundUnit = state.unitHitBoxes.find(unitAndHitBox => pointInRect(unitAndHitBox.hitBox, action.position))
+        if (foundUnit) {
+            state.selectedUnits = [foundUnit.unit];
+        }
+    }
+
+    if (action.name === "DOUBLE_CLICK") {
+        const foundUnit = state.unitHitBoxes.find(unitAndHitBox => pointInRect(unitAndHitBox.hitBox, action.position))
+        if (foundUnit) {
+            state.selectedUnits = state.unitHitBoxes
+                .filter(unitAndHitBox => unitAndHitBox.unit.unitType === foundUnit.unit.unitType)
+                .map(unitAndHitBox => unitAndHitBox.unit);
+        }
     }
 
     if (action.name === "DRAG_START") {
