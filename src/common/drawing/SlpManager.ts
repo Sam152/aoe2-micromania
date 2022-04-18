@@ -62,7 +62,7 @@ export default class SlpManager {
         });
     }
 
-    getAsset(assetId: string) {
+    getAsset(assetId: string): Slp {
         return this.slpList[assetId];
     }
 
@@ -73,6 +73,7 @@ export default class SlpManager {
             'xbow-firing',
             'xbow-moving',
             'xbow-stand',
+            'waypoint-flag',
         ];
     }
 }

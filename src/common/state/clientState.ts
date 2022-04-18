@@ -58,6 +58,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     if (action.name === "SHIFT_RIGHT_CLICK") {
         gameDispatcher({
             name: "ADD_WAYPOINT",
+            formation: clientState.selectedFormation,
             position: action.position,
             units: clientState.selectedUnits.map(selectedUnit => selectedUnit.id),
         });

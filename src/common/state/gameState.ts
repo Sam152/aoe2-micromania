@@ -29,7 +29,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'MOVE_UNITS_TO') {
         const units = state.units.filter(instance => action.units.includes(instance.id));
         units.forEach(unit => {
-            unit.clickedWaypoints = [action.position];
+            unit.clickedWaypoints = [];
         });
         const positions = units.map(unit => unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
@@ -39,10 +39,16 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'ADD_WAYPOINT') {
-        state.units.filter(instance => action.units.includes(instance.id)).forEach(unit => {
+        const units = state.units.filter(instance => action.units.includes(instance.id));
+        units.forEach(unit => {
             unit.clickedWaypoints.push(action.position);
-            unit.waypoints.push(action.position)
-            moveTowardsCurrentWaypoint(unit);
+        });
+        const positions = units.map(unit => unit.waypoints.at(-1) ?? unit.position);
+        formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
+            units[index].waypoints.push(formationPosition);
+            if (units[index].unitState === UnitState.Idle) {
+                moveTowardsCurrentWaypoint(units[index]);
+            }
         });
     }
 

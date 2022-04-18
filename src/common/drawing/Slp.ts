@@ -27,6 +27,38 @@ export default class Slp {
         at: Vector2,
         animationDuration: number,
         unitStateTickCount: number,
+        style: AnimationStyle = AnimationStyle.Loop,
+    ) {
+
+        const gameSpeedAdjustedAnimationDuration = animationDuration / engineConfiguration.gameSpeed;
+        const millisecondsForEachFramePassing = (1000 / engineConfiguration.ticksPerSecond);
+        const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
+        const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
+
+        const percentageOfAnimationComplete = style === AnimationStyle.Loop ?
+            (unitStateTickCount % totalFramesForAnimation) / totalFramesForAnimation :
+            Math.min(unitStateTickCount / totalFramesForAnimation, 1);
+
+        // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
+        const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.slp.numFrames - 1));
+
+        const frame = this.frames[frameIndexToRender];
+        const bitmap = frame.rendered[1];
+
+        const anchoredPosition = anchorAt(frame.hotspot, at);
+        context.drawImage(bitmap, anchoredPosition.x, anchoredPosition.y);
+
+        return {
+            p1: new Vector2(anchoredPosition.x, anchoredPosition.y),
+            p2: new Vector2(anchoredPosition.x + frame.width, anchoredPosition.y + frame.height),
+        };
+    }
+
+    drawUnit(
+        context: CanvasRenderingContext2D,
+        at: Vector2,
+        animationDuration: number,
+        unitStateTickCount: number,
         player: number,
         direction: CompassDirection,
         style: AnimationStyle,
@@ -64,5 +96,13 @@ export default class Slp {
             p1: new Vector2(anchoredPosition.x - (flipped ? frame.width : 0), anchoredPosition.y),
             p2: new Vector2(anchoredPosition.x - (flipped ? frame.width : 0) + frame.width, anchoredPosition.y + frame.height),
         };
+    }
+
+    getWidth(): number {
+        return this.slp.frames[0].width;
+    }
+
+    getHeight(): number {
+        return this.slp.frames[0].height;
     }
 }

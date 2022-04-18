@@ -63,6 +63,7 @@ type GameStateAction = {
     name: 'ADD_WAYPOINT';
     position: Vector2;
     units: number[];
+    formation: FormationType;
 } | {
     name: 'STOP_UNITS';
     units: number[];
