@@ -95,6 +95,9 @@ export type ClientStateAction = {
     name: 'LEFT_CLICK',
     position: Vector2,
 } | {
+    name: 'DOUBLE_CLICK',
+    position: Vector2,
+} | {
     name: 'RIGHT_CLICK',
     position: Vector2,
 } | {
@@ -166,6 +169,7 @@ export interface UnitStats {
     animations: {
         [key in UnitState]: {
             slp: string;
+            underSlp?: string;
             animationDuration: number;
             style: AnimationStyle;
         }

@@ -4,16 +4,20 @@ import {Vector2} from "three";
 
 const StInput = require('stinput');
 
+const doubleClickDuration = 500;
+
 export default class InputManager {
     input: typeof StInput;
     private dragging: boolean;
     stateManager: StateManagerInterface;
     private clientStateTransmitter: (clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void;
+    private lastLeftClick: number;
 
     constructor(element: HTMLCanvasElement, stateManager: StateManagerInterface, clientStateTransmitter: (clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void) {
         this.input = new StInput();
         this.input.disableContextMenu = true;
         this.dragging = false;
+        this.lastLeftClick = 0;
 
         this.stateManager = stateManager;
         this.clientStateTransmitter = clientStateTransmitter;
@@ -21,10 +25,12 @@ export default class InputManager {
 
     dispatchInput(): void {
         if (this.input.released('mouse_left') && !this.dragging) {
+            const time = (new Date).getTime();
             this.dispatch({
-                name: "LEFT_CLICK",
+                name: time - this.lastLeftClick < doubleClickDuration ? "DOUBLE_CLICK" : "LEFT_CLICK",
                 position: this.mousePosition(),
             });
+            this.lastLeftClick = time;
         }
         if (this.input.released('mouse_right') && !this.dragging) {
             this.dispatch({

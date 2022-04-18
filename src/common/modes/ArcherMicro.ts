@@ -15,6 +15,13 @@ export default class ArcherMicro implements GameMode {
             });
         });
 
+        gameDispatcher({
+            name: 'SPAWN_UNIT',
+            forPlayer: 1,
+            unitType: Unit.Mangonel,
+            position: new Vector2(Math.floor(Math.random() * 200) + 200, Math.floor(Math.random() * 200) + 200),
+        });
+
         // Array.from(Array(20).keys()).map((item, index) => {
         //     gameDispatcher({
         //         name: 'SPAWN_UNIT',

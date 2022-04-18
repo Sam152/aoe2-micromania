@@ -57,7 +57,7 @@ export default class SlpManager {
             };
         }));
 
-        renderedFrames.map(({id, slp, frames}) => {
+        renderedFrames.forEach(({id, slp, frames}) => {
             this.slpList[id] = new Slp(id, slp, frames);
         });
     }
@@ -73,6 +73,11 @@ export default class SlpManager {
             'xbow-firing',
             'xbow-moving',
             'xbow-stand',
+            'mangonel-stand',
+            'mangonel-moving',
+            'mangonel-firing',
+            'mangonel-death',
+            'mangonel-decay',
             'waypoint-flag',
         ];
     }

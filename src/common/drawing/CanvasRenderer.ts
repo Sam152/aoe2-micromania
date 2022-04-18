@@ -65,6 +65,19 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context.stroke();
             }
 
+            if (animationMetadata.underSlp) {
+                const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);
+                underSlp.drawUnit(
+                    this.context,
+                    unitInstance.position,
+                    animationMetadata.animationDuration,
+                    gameState.ticks - unitInstance.unitStateStartedAt,
+                    unitInstance.ownedByPlayer,
+                    unitInstance.direction,
+                    animationMetadata.style,
+                )
+            }
+
             const hitBox = slp.drawUnit(
                 this.context,
                 unitInstance.position,
