@@ -3,12 +3,11 @@ import {Vector2} from "three";
 import averageVector from "../../util/averageVector";
 import rotateAroundOrigin from "../../util/rotateAroundOrigin";
 import standardDeviation from "just-standard-deviation";
-import columnize from "../../util/columnize";
 
 export default class LineFormation implements FormationInterface {
 
-    distanceBetween = 100;
-    unitsPerRow = 4;
+    distanceBetween = 35;
+    unitsPerRow = 6;
 
     form(positions: Array<Vector2>, destination: Vector2): Array<Vector2> {
         if (positions.length === 1) {

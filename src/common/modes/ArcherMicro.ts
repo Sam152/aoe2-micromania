@@ -6,7 +6,7 @@ import {Vector2} from "three";
 
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher): void {
-        Array.from(Array(20).keys()).map((item, index) => {
+        Array.from(Array(24).keys()).map((item, index) => {
             gameDispatcher({
                 name: 'SPAWN_UNIT',
                 forPlayer: 1,
