@@ -79,6 +79,7 @@ export default class SlpManager {
             'mangonel-death',
             'mangonel-decay',
             'waypoint-flag',
+            'mouse-icons',
         ];
     }
 }

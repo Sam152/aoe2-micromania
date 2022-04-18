@@ -20,9 +20,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     if (action.name === "LEFT_CLICK") {
         state.lastLeftClick = action.position;
         const foundUnit = state.unitHitBoxes.find(unitAndHitBox => pointInRect(unitAndHitBox.hitBox, action.position))
-        if (foundUnit) {
-            state.selectedUnits = [foundUnit.unit];
-        }
+        state.selectedUnits = foundUnit ? [foundUnit.unit] : [];
     }
 
     if (action.name === "DOUBLE_CLICK") {

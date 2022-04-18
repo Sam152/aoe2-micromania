@@ -29,7 +29,6 @@ export default class Slp {
         unitStateTickCount: number,
         style: AnimationStyle = AnimationStyle.Loop,
     ) {
-
         const gameSpeedAdjustedAnimationDuration = animationDuration / engineConfiguration.gameSpeed;
         const millisecondsForEachFramePassing = (1000 / engineConfiguration.ticksPerSecond);
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
