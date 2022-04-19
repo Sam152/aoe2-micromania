@@ -1,5 +1,6 @@
 import {Vector2} from "three";
 import config from "../config";
+import {GameState} from "../../types";
 
 export default class Grid {
     private readonly size: number;
@@ -11,6 +12,10 @@ export default class Grid {
         this.size = size;
         this.tileHalfHeight = config.tileHeight / 2;
         this.tileHalfWidth = config.tileWidth / 2;
+    }
+
+    static fromGameState(gameState: GameState) {
+        return new Grid(gameState.mapSize);
     }
 
     tileDrawnAt(x: number, y: number): Vector2 {

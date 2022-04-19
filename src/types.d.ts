@@ -129,7 +129,7 @@ export interface StateManagerInterface {
 }
 
 export interface GameMode {
-    start(dispatcher: GameDispatcher): void;
+    start(dispatcher: GameDispatcher, gameState: GameState): void;
 }
 
 export interface EmittedPlayerLobbyMetadata {

@@ -60,7 +60,7 @@ export default class Room {
         });
 
         const gameMode = new ArcherMicro();
-        gameMode.start(this.state.dispatchGame.bind(this.state));
+        gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
 
         this.players.map(player => {
             player.socket.on('stateDispatch', action => {

@@ -7,7 +7,7 @@ export default function SinglePlayerGame() {
     const stateManager = useMemo(() => {
         const state = new LocalStateManager();
         state.init();
-        (new ArcherMicro()).start(state.dispatchGame.bind(state));
+        (new ArcherMicro()).start(state.dispatchGame.bind(state), state.getGameState());
         return state;
     }, []);
 
