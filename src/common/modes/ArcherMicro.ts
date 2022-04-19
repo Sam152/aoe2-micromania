@@ -1,6 +1,5 @@
 import {GameDispatcher, GameMode, GameState} from '../../types';
 import Unit from '../units/Unit';
-import {Vector2} from 'three';
 import Grid from '../terrain/Grid';
 
 export default class ArcherMicro implements GameMode {
@@ -24,14 +23,21 @@ export default class ArcherMicro implements GameMode {
             }
         }
 
-        // Array.from(Array(20).keys()).map((item, index) => {
-        //     gameDispatcher({
-        //         name: 'SPAWN_UNIT',
-        //         forPlayer: 2,
-        //         unitType: Unit.Archer,
-        //         direction: randomEnum(CompassDirection),
-        //         position: new Vector2(Math.floor(Math.random() * 500) + 500, Math.floor(Math.random() * 500) + 500),
-        //     });
-        // });
+        for (let x = gameState.mapSize - 1; x > gameState.mapSize - 6; x--) {
+            for (let y = gameState.mapSize - 1; y > gameState.mapSize - 6; y--) {
+                gameDispatcher({
+                    name: 'SPAWN_UNIT',
+                    forPlayer: 2,
+                    unitType: Unit.Archer,
+                    position: grid.middleOfTile(x, y),
+                });
+            }
+        }
+        gameDispatcher({
+            name: 'SPAWN_UNIT',
+            forPlayer: 2,
+            unitType: Unit.Mangonel,
+            position: grid.middleOfTile(gameState.mapSize - 7, gameState.mapSize - 3),
+        });
     }
 }

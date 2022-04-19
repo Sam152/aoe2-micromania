@@ -30,6 +30,10 @@ export default class CanvasRenderer implements RendererInterface {
         this.context.canvas.height = window.innerHeight * screenManager.getCanvasScale();
     }
 
+    getSize(): Vector2 {
+        return new Vector2(this.context.canvas.width, this.context.canvas.height);
+    }
+
     bootUp(): Promise<void> {
         return this.slpManager.downloadPreRenderAll();
     }

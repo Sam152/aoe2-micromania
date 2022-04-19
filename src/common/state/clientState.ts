@@ -5,6 +5,7 @@ import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingW
 import FormationType from '../units/formations/FormationType';
 import config from "../config";
 import {Vector2} from "three";
+import Grid from "../terrain/Grid";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === 'FRAME_RENDERING_STARTED') {
@@ -36,6 +37,10 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
                 .filter((unitAndHitBox) => unitAndHitBox.unit.unitType === foundUnit.unit.unitType)
                 .map((unitAndHitBox) => unitAndHitBox.unit);
         }
+    }
+
+    if (action.name === 'FIXATE_CAMERA') {
+        state.camera = action.location;
     }
 
     if (action.name === 'ARROW_DOWN') {

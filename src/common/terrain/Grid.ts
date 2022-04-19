@@ -7,11 +7,13 @@ export default class Grid {
     private readonly indexSize: number;
     private readonly tileHalfHeight: number;
     private readonly tileHalfWidth: number;
+    private gridMiddle: Vector2;
 
     constructor(size: number) {
         this.size = size;
         this.tileHalfHeight = config.tileHeight / 2;
         this.tileHalfWidth = config.tileWidth / 2;
+        this.gridMiddle = new Vector2((config.tileWidth * size) / 2, (config.tileHeight * size) / 2);
     }
 
     static fromGameState(gameState: GameState) {
@@ -34,6 +36,10 @@ export default class Grid {
             this.tileHalfWidth + xOffset,
             (this.size * this.tileHalfHeight) + yOffset,
         );
+    }
+
+    middleOfGrid(): Vector2 {
+        return this.gridMiddle;
     }
 
     iterateTiles(func: (x: number, y: number) => void) {

@@ -2,6 +2,7 @@ import InputManager from '../../input/InputManager';
 import {clientStateTransmitter} from '../clientState';
 import CanvasRenderer from '../../drawing/CanvasRenderer';
 import {StateManagerInterface} from '../../../types';
+import Grid from "../../terrain/Grid";
 
 export default class RenderLoopManager {
     private stateManager: StateManagerInterface;
@@ -16,6 +17,10 @@ export default class RenderLoopManager {
 
     start() {
         this.renderer.bootUp().then(() => {
+            this.stateManager.dispatchClient({
+                name: 'FIXATE_CAMERA',
+                location: (new Grid(this.stateManager.getGameState().mapSize)).middleOfGrid().sub(this.renderer.getSize().divideScalar(2)),
+            });
             this.render();
         });
     }

@@ -121,6 +121,9 @@ export type ClientStateAction = {
     unit: UnitInstance,
 } | {
     name: 'FRAME_RENDERING_STARTED',
+} | {
+    name: 'FIXATE_CAMERA',
+    location: Vector2;
 };
 
 export type GameDispatcher = (action: GameStateAction) => void;

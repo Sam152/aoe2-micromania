@@ -80,7 +80,7 @@ function defaultState(): GameState {
     return deepClone({
         ticks: 0,
         units: [],
-        mapSize: 40,
+        mapSize: 20,
     });
 }
 
