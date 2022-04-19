@@ -49,10 +49,10 @@ export default class CanvasRenderer implements RendererInterface {
         this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
 
-    translateCamera(camera: { x: number, y: number }) {
+    translateCamera(camera: Vector2) {
         this.context.translate(
-            (camera.x * -1) + this.context.canvas.width / 2,
-            (camera.y * -1) + this.context.canvas.height / 2,
+            (camera.x * -1),
+            (camera.y * -1),
         );
     }
 

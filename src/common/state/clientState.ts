@@ -3,6 +3,8 @@ import deepClone from '../util/deepClone';
 import pointInRect from '../util/pointInRect';
 import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingWithRect';
 import FormationType from '../units/formations/FormationType';
+import config from "../config";
+import {Vector2} from "three";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === 'FRAME_RENDERING_STARTED') {
@@ -34,6 +36,19 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
                 .filter((unitAndHitBox) => unitAndHitBox.unit.unitType === foundUnit.unit.unitType)
                 .map((unitAndHitBox) => unitAndHitBox.unit);
         }
+    }
+
+    if (action.name === 'ARROW_DOWN') {
+        state.camera.y += config.cameraPanSpeed;
+    }
+    if (action.name === 'ARROW_UP') {
+        state.camera.y -= config.cameraPanSpeed;
+    }
+    if (action.name === 'ARROW_LEFT') {
+        state.camera.x -= config.cameraPanSpeed;
+    }
+    if (action.name === 'ARROW_RIGHT') {
+        state.camera.x += config.cameraPanSpeed;
     }
 
     if (action.name === 'DRAG_START') {
@@ -76,7 +91,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         });
     }
 
-    if (action.name === 'STOP_UNITS') {
+    if (action.name === 'HOTKEY_STOP') {
         gameDispatcher({
             name: 'STOP_UNITS',
             units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
@@ -85,7 +100,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
 }
 
 function defaultState(): ClientState {
-    return deepClone({
+    const state = deepClone({
         unitHitBoxes: [],
         renderedFrames: 0,
         selectedUnits: [],
@@ -93,8 +108,9 @@ function defaultState(): ClientState {
         lastMoveClick: null,
         selectionRectangle: null,
         selectedFormation: FormationType.Line,
-        camera: {x: 1000, y: 900},
-    });
+    }) as ClientState;
+    state.camera = new Vector2(0, 0);
+    return state;
 }
 
 export {defaultState, clientStateMutator, clientStateTransmitter};

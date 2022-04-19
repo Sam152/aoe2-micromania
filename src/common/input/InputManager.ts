@@ -1,5 +1,5 @@
 import {ClientState, ClientStateAction, GameDispatcher, StateManagerInterface} from '../../types';
-import screenPositionToGamePosition from '../util/screenPositionToGamePosition';
+import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
 import {Vector2} from 'three';
 
 const StInput = require('stinput');
@@ -23,19 +23,19 @@ export default class InputManager {
         this.clientStateTransmitter = clientStateTransmitter;
     }
 
-    dispatchInput(): void {
+    dispatchInput(cameraPosition: Vector2): void {
         if (this.input.released('mouse_left') && !this.dragging) {
             const time = (new Date).getTime();
             this.dispatch({
                 name: time - this.lastLeftClick < doubleClickDuration ? 'DOUBLE_CLICK' : 'LEFT_CLICK',
-                position: this.mousePosition(),
+                position: this.mousePosition(cameraPosition),
             });
             this.lastLeftClick = time;
         }
         if (this.input.released('mouse_right') && !this.dragging) {
             this.dispatch({
                 name: this.input.shiftDown ? 'SHIFT_RIGHT_CLICK' : 'RIGHT_CLICK',
-                position: this.mousePosition(),
+                position: this.mousePosition(cameraPosition),
             });
         }
 
@@ -43,12 +43,12 @@ export default class InputManager {
             if (!this.dragging) {
                 this.dispatch({
                     name: 'DRAG_START',
-                    position: this.mousePosition(),
+                    position: this.mousePosition(cameraPosition),
                 });
             }
             this.dispatch({
                 name: 'DRAGGING',
-                position: this.mousePosition(),
+                position: this.mousePosition(cameraPosition),
             });
             this.dragging = true;
         }
@@ -57,7 +57,7 @@ export default class InputManager {
             if (this.dragging) {
                 this.dispatch({
                     name: 'DRAG_END',
-                    position: this.mousePosition(),
+                    position: this.mousePosition(cameraPosition),
                 });
             }
             this.dragging = false;
@@ -65,13 +65,36 @@ export default class InputManager {
 
         if (this.input.pressed('f')) {
             this.dispatch({
-                name: 'STOP_UNITS',
+                name: 'HOTKEY_STOP',
+            });
+        }
+
+        if (this.input.down('left_arrow') || this.input.down('a')) {
+            this.dispatch({
+                name: 'ARROW_LEFT',
+            });
+        }
+        if (this.input.down('right_arrow') || this.input.down('d')) {
+            this.dispatch({
+                name: 'ARROW_RIGHT',
+            });
+        }
+        if (this.input.down('up_arrow') || this.input.down('w')) {
+            this.dispatch({
+                name: 'ARROW_UP',
+            });
+        }
+        if (this.input.down('down_arrow') || this.input.down('s')) {
+            this.dispatch({
+                name: 'ARROW_DOWN',
             });
         }
     }
 
-    mousePosition() {
-        return screenPositionToGamePosition(new Vector2(this.input.mousePosition.x, this.input.mousePosition.y));
+    mousePosition(cameraPosition: Vector2) {
+        return screenPositionToGamePosition(
+            (new Vector2(this.input.mousePosition.x, this.input.mousePosition.y)).add(gamePositionToScreenPosition(cameraPosition))
+        );
     }
 
     dispatch(action: ClientStateAction) {

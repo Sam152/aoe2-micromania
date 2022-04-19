@@ -5,6 +5,7 @@ const config = {
     unitSpeedFactor: 5,
     tileWidth: 96,
     tileHeight: 48,
+    cameraPanSpeed: 3,
 };
 
 export default config;

@@ -81,14 +81,22 @@ export interface ClientState {
     selectionRectangle: Rectangle | null;
     lastLeftClick: Vector2 | null;
     lastMoveClick: [Vector2, number] | null;
-    camera: { x: number, y: number };
+    camera: Vector2;
 }
 
 export type ClientStateAction = {
     name: 'DRAG_START',
     position: Vector2,
 } | {
-    name: 'STOP_UNITS',
+    name: 'HOTKEY_STOP',
+}| {
+    name: 'ARROW_LEFT',
+}| {
+    name: 'ARROW_RIGHT',
+}| {
+    name: 'ARROW_UP',
+}| {
+    name: 'ARROW_DOWN',
 } | {
     name: 'DRAGGING',
     position: Vector2,
