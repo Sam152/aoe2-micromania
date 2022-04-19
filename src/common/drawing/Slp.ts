@@ -4,6 +4,7 @@ import anchorAt from '../util/anchorAt';
 import AnimationStyle from '../units/AnimationStyle';
 import {Vector2} from "three";
 import engineConfiguration from "../units/engineConfiguration";
+import unit from "../units/Unit";
 
 const SLP = require('genie-slp');
 
