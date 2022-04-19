@@ -23,7 +23,7 @@ export default class SlpManager {
         const palette = new Palette(new Buffer(paletteArrayBuffer));
 
         const downloadedSlps = await Promise.all(
-            this.assetList()
+            [...this.assetList(), ...this.assetPlayerList()]
                 .map((assetId) => fetch(`${this.assetPath}/${assetId}.slp`)
                     .then((response) => response.arrayBuffer())
                     .then((arrayBuffer) => ({
@@ -35,7 +35,10 @@ export default class SlpManager {
 
         const renderedFrames = await Promise.all(downloadedSlps.map(async ({id, slp}) => {
             const frames = await Promise.all(slp.frames.map(async (frame: SlpFrame, frameNumber: number) => {
-                const rendered = await Promise.all(renderedPlayers.map((playerId) => {
+
+                const rendersToBuild = this.assetPlayerList().includes(id) ? renderedPlayers : [1];
+
+                const rendered = await Promise.all(rendersToBuild.map((playerId) => {
                     const imageData = slp.renderFrame(frameNumber, palette, {player: playerId});
                     return createImageBitmap(imageData).then((bitmap) => ({
                         playerId,
@@ -66,7 +69,7 @@ export default class SlpManager {
         return this.slpList[assetId];
     }
 
-    assetList(): string[] {
+    assetPlayerList(): string[] {
         return [
             'xbow-death',
             'xbow-decay',
@@ -79,8 +82,14 @@ export default class SlpManager {
             'mangonel-death',
             'mangonel-decay',
             'waypoint-flag',
+        ];
+    }
+
+    assetList(): string[] {
+        return [
             'mouse-icons',
             'move-command',
+            'terrain-green',
         ];
     }
 }
