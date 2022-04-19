@@ -39,6 +39,7 @@ export interface RendererInterface {
 export interface GameState {
     ticks: number;
     units: UnitInstance[];
+    mapSize: number;
 }
 
 export type UnitId = number;

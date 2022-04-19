@@ -90,6 +90,7 @@ export default class SlpManager {
             'mouse-icons',
             'move-command',
             'terrain-green',
+            'terrain-sandy',
         ];
     }
 }

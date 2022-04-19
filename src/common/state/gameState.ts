@@ -3,7 +3,7 @@ import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
 import unitMetadataFactory from "../units/unitMetadataFactory";
-import engineConfiguration from "../units/engineConfiguration";
+import config from "../config";
 import moveTowardsCurrentWaypoint from "./mutations/moveTowardsCurrentWaypoint";
 import formationManager from "../units/formations/FormationManager";
 import stopUnit from "./mutations/stopUnit";
@@ -60,7 +60,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.name === 'TICK') {
         state.units.filter(unit => unit.waypoints.length > 0).map(function(unit) {
-            unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * engineConfiguration.unitSpeedFactor));
+            unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * config.unitSpeedFactor));
             if (unit.position.distanceTo(unit.waypoints[0]) < 5) {
                 unit.waypoints.shift();
                 if (unit.waypoints.length) {
@@ -81,6 +81,7 @@ function defaultState(): GameState {
     return deepClone({
         ticks: 0,
         units: [],
+        mapSize: 40,
     });
 }
 

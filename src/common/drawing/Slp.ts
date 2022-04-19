@@ -3,7 +3,7 @@ import CompassDirection from '../units/CompassDirection';
 import anchorAt from '../util/anchorAt';
 import AnimationStyle from '../units/AnimationStyle';
 import {Vector2} from "three";
-import engineConfiguration from "../units/engineConfiguration";
+import config from "../config";
 import unit from "../units/Unit";
 
 const SLP = require('genie-slp');
@@ -19,19 +19,28 @@ export default class Slp {
         this.id = id;
         this.frames = frames;
         this.slp = slp;
-
         this.framesPerAngle = this.slp.numFrames / this.directions;
     }
 
-    draw(
+    drawFrame(
+        context: CanvasRenderingContext2D,
+        at: Vector2,
+        frameIndex: number
+    ) {
+        const frame = this.frames[frameIndex % this.frames.length];
+        const bitmap = frame.rendered[1];
+        context.drawImage(bitmap, at.x, at.y);
+    }
+
+    animateAsset(
         context: CanvasRenderingContext2D,
         at: Vector2,
         animationDuration: number,
         unitStateTickCount: number,
         style: AnimationStyle = AnimationStyle.Loop,
     ) {
-        const gameSpeedAdjustedAnimationDuration = animationDuration / engineConfiguration.gameSpeed;
-        const millisecondsForEachFramePassing = (1000 / engineConfiguration.ticksPerSecond);
+        const gameSpeedAdjustedAnimationDuration = animationDuration / config.gameSpeed;
+        const millisecondsForEachFramePassing = (1000 / config.ticksPerSecond);
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
         const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
 
@@ -54,7 +63,7 @@ export default class Slp {
         };
     }
 
-    drawUnit(
+    animatePlayerAsset(
         context: CanvasRenderingContext2D,
         at: Vector2,
         animationDuration: number,
@@ -64,8 +73,8 @@ export default class Slp {
         style: AnimationStyle,
     ): Rectangle {
 
-        const gameSpeedAdjustedAnimationDuration = animationDuration / engineConfiguration.gameSpeed;
-        const millisecondsForEachFramePassing = (1000 / engineConfiguration.ticksPerSecond);
+        const gameSpeedAdjustedAnimationDuration = animationDuration / config.gameSpeed;
+        const millisecondsForEachFramePassing = (1000 / config.ticksPerSecond);
         const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
         const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
 
@@ -104,5 +113,9 @@ export default class Slp {
 
     getHeight(): number {
         return this.slp.frames[0].height;
+    }
+
+    getFramesCount(): number {
+        return this.frames.length;
     }
 }

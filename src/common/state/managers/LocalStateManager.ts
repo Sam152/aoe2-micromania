@@ -1,7 +1,7 @@
 import {defaultState as defaultGameState, gameStateMutator} from '../gameState';
 import {clientStateMutator, defaultState as defaultClientState} from '../clientState';
 import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../../types';
-import engineConfiguration from "../../units/engineConfiguration";
+import config from "../../config";
 
 /**
  * A state manager that holds context locally, may either be a client or a server.
@@ -37,6 +37,6 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        setInterval(() => this.dispatchGame({name: 'TICK'}), 1000 / engineConfiguration.ticksPerSecond);
+        setInterval(() => this.dispatchGame({name: 'TICK'}), 1000 / config.ticksPerSecond);
     }
 }
