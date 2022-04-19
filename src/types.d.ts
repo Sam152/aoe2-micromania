@@ -81,6 +81,7 @@ export interface ClientState {
     selectionRectangle: Rectangle | null;
     lastLeftClick: Vector2 | null;
     lastMoveClick: [Vector2, number] | null;
+    camera: { x: number, y: number };
 }
 
 export type ClientStateAction = {

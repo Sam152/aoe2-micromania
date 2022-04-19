@@ -24,7 +24,6 @@ export default class ArcherMicro implements GameMode {
             }
         }
 
-
         // Array.from(Array(20).keys()).map((item, index) => {
         //     gameDispatcher({
         //         name: 'SPAWN_UNIT',

@@ -93,6 +93,7 @@ function defaultState(): ClientState {
         lastMoveClick: null,
         selectionRectangle: null,
         selectedFormation: FormationType.Line,
+        camera: {x: 1000, y: 900},
     });
 }
 

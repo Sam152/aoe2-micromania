@@ -38,13 +38,22 @@ export default class CanvasRenderer implements RendererInterface {
         if (config.debug) {
             window.ctx = this.context;
         }
-
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 
+        this.translateCamera(clientState.camera);
         this.drawTerrain(gameState);
         this.drawUnits(gameState, clientState, clientStateDispatcher);
         this.drawMovementCommandAnimations(gameState, clientState);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
+
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
+    }
+
+    translateCamera(camera: { x: number, y: number }) {
+        this.context.translate(
+            (camera.x * -1) + this.context.canvas.width / 2,
+            (camera.y * -1) + this.context.canvas.height / 2,
+        );
     }
 
     drawTerrain(gameState: GameState) {
