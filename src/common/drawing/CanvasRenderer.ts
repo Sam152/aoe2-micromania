@@ -50,10 +50,7 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     translateCamera(camera: Vector2) {
-        this.context.translate(
-            (camera.x * -1),
-            (camera.y * -1),
-        );
+        this.context.translate(-camera.x, -camera.y);
     }
 
     drawTerrain(gameState: GameState) {
