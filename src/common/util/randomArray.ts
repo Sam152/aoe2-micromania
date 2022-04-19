@@ -1,4 +1,4 @@
-import arrayOfSize from "./arrayOfSize";
+import arrayOfSize from './arrayOfSize';
 
 export default function randomArray(start: number, end: number, length: number): Array<number> {
     return arrayOfSize(length)

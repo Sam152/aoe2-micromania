@@ -4,7 +4,7 @@ import Player from './Player';
 import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
 import ArcherMicro from '../modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
-import {normalizeGameStateAction} from "../util/normalizer";
+import {normalizeGameStateAction} from '../util/normalizer';
 
 export default class Room {
     id: RoomId;
@@ -62,9 +62,8 @@ export default class Room {
         const gameMode = new ArcherMicro();
         gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
 
-        this.players.map(player => {
-            player.socket.on('stateDispatch', action => {
-
+        this.players.map((player) => {
+            player.socket.on('stateDispatch', (action) => {
                 this.state.dispatchGame(normalizeGameStateAction(action));
             });
         });

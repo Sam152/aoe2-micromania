@@ -8,7 +8,6 @@ class ScreenManager {
     getCanvasScale() {
         return this.scale;
     }
-
 }
 
 export default new ScreenManager();

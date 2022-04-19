@@ -1,7 +1,7 @@
-import {Vector2} from "three";
-import {Rectangle} from "../../types";
+import {Vector2} from 'three';
+import {Rectangle} from '../../types';
 
-export function circle(ctx: CanvasRenderingContext2D, position: Vector2, radius: number = 5, color: string = "green") {
+export function circle(ctx: CanvasRenderingContext2D, position: Vector2, radius: number = 5, color: string = 'green') {
     ctx.beginPath();
     ctx.arc(position.x, position.y, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
@@ -16,6 +16,6 @@ export function square(ctx: CanvasRenderingContext2D, rect: Rectangle, color: st
 }
 
 export function number(ctx: CanvasRenderingContext2D, position: Vector2, text: any): void {
-    ctx.font = "11px Arial";
+    ctx.font = '11px Arial';
     ctx.fillText(`${text}`, position.x - 20, position.y - 30);
 }

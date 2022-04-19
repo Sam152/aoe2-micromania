@@ -1,7 +1,7 @@
 import {GameDispatcher, GameMode, GameState} from '../../types';
 import Unit from '../units/Unit';
-import {Vector2} from "three";
-import Grid from "../terrain/Grid";
+import {Vector2} from 'three';
+import Grid from '../terrain/Grid';
 
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher, gameState: GameState): void {

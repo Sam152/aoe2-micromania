@@ -1,4 +1,4 @@
-import {Vector2} from "three";
+import {Vector2} from 'three';
 
 interface Hotspot { x: number, y: number };
 export default function anchorAt(hotspot: Hotspot, position: Vector2, flipped: boolean = false): Vector2 {

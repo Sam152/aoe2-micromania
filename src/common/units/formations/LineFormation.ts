@@ -1,11 +1,10 @@
-import {FormationInterface} from "../../../types";
-import {Vector2} from "three";
-import averageVector from "../../util/averageVector";
-import rotateAroundOrigin from "../../util/rotateAroundOrigin";
-import standardDeviation from "just-standard-deviation";
+import {FormationInterface} from '../../../types';
+import {Vector2} from 'three';
+import averageVector from '../../util/averageVector';
+import rotateAroundOrigin from '../../util/rotateAroundOrigin';
+import standardDeviation from 'just-standard-deviation';
 
 export default class LineFormation implements FormationInterface {
-
     distanceBetween = 35;
     unitsPerRow = 6;
 
@@ -26,11 +25,11 @@ export default class LineFormation implements FormationInterface {
 
         // Move the units to the middle of the destination point.
         const offsetFromDestination = averageVector(newPositions).sub(destination);
-        newPositions.map(newPosition => newPosition.sub(offsetFromDestination));
+        newPositions.map((newPosition) => newPosition.sub(offsetFromDestination));
 
         // Rotate the units in the direction they were moving.
         const directionalAngle = destination.clone().sub(startingPoint).angle() + (Math.PI / 2);
-        newPositions = newPositions.map(newPosition => rotateAroundOrigin(destination, newPosition, directionalAngle));
+        newPositions = newPositions.map((newPosition) => rotateAroundOrigin(destination, newPosition, directionalAngle));
 
         // Find the shortest distance between each source and destination point in the formation.
         const [newPositionsA, travelA] = this.sortIntoShortestDistance(newPositions, positions);
@@ -52,8 +51,8 @@ export default class LineFormation implements FormationInterface {
         const distancesTraveled: number[] = [];
 
         const sortedIntoShortestTravel = positions.map((position, positionIndex) => {
-            const candidates = newPositionIndexes.filter(candidate => usedIndexes.indexOf(candidate) === -1);
-            const distances = candidates.map(candidate => newPositions[candidate].distanceTo(position));
+            const candidates = newPositionIndexes.filter((candidate) => usedIndexes.indexOf(candidate) === -1);
+            const distances = candidates.map((candidate) => newPositions[candidate].distanceTo(position));
             const shortestDistance = Math.min(...distances);
             distancesTraveled.push(shortestDistance);
             const shortestDistanceIndex = candidates[distances.indexOf(shortestDistance)];
@@ -63,10 +62,9 @@ export default class LineFormation implements FormationInterface {
 
         return [
             sortedIntoShortestTravel,
-            newPositions.length === 2
-                ? distancesTraveled[0] + distancesTraveled[1]
-                : standardDeviation(distancesTraveled)
+            newPositions.length === 2 ?
+                distancesTraveled[0] + distancesTraveled[1] :
+                standardDeviation(distancesTraveled),
         ];
     }
-
 }

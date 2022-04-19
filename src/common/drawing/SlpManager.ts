@@ -35,7 +35,6 @@ export default class SlpManager {
 
         const renderedFrames = await Promise.all(downloadedSlps.map(async ({id, slp}) => {
             const frames = await Promise.all(slp.frames.map(async (frame: SlpFrame, frameNumber: number) => {
-
                 const rendersToBuild = this.assetPlayerList().includes(id) ? renderedPlayers : [1];
 
                 const rendered = await Promise.all(rendersToBuild.map((playerId) => {

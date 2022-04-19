@@ -1,6 +1,6 @@
-import {Rectangle} from "../../types";
-import {Vector2} from "three";
-import {circle} from "../drawing/shapes";
+import {Rectangle} from '../../types';
+import {Vector2} from 'three';
+import {circle} from '../drawing/shapes';
 
 export function normalizeRect(rect: Rectangle) {
     return {
@@ -10,7 +10,7 @@ export function normalizeRect(rect: Rectangle) {
 }
 
 export default function rectIntersectingWithRect(rectA: Rectangle, rectB: Rectangle): boolean {
-    return(
+    return (
         rectA.p1.x < rectB.p2.x &&
         rectA.p2.x > rectB.p1.x &&
         rectA.p1.y < rectB.p2.y &&

@@ -1,12 +1,12 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from "./shapes";
-import screenManager from "./screenManager";
-import {Vector2} from "three";
-import config from "../config";
-import AnimationStyle from "../units/AnimationStyle";
-import Grid from "../terrain/Grid";
+import {circle, square} from './shapes';
+import screenManager from './screenManager';
+import {Vector2} from 'three';
+import config from '../config';
+import AnimationStyle from '../units/AnimationStyle';
+import Grid from '../terrain/Grid';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -61,7 +61,7 @@ export default class CanvasRenderer implements RendererInterface {
 
     drawMovementCommandAnimations(gameState: GameState, clientState: ClientState) {
         const flag = this.slpManager.getAsset('waypoint-flag');
-        clientState.selectedUnits.forEach(unit => unit.clickedWaypoints.forEach(waypoint => {
+        clientState.selectedUnits.forEach((unit) => unit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
         if (clientState.lastMoveClick) {
@@ -78,7 +78,7 @@ export default class CanvasRenderer implements RendererInterface {
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
             // If the unit is selected, draw an oval around its base.
-            if (clientState.selectedUnits.map(unit => unit.id).includes(unitInstance.id)) {
+            if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
                 this.context.beginPath();
                 this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
                 this.context.ellipse(unitInstance.position.x, unitInstance.position.y, slp.getWidth() / 1.5, slp.getWidth() / 3, 0, 0, 2 * Math.PI);
@@ -95,7 +95,7 @@ export default class CanvasRenderer implements RendererInterface {
                     unitInstance.ownedByPlayer,
                     unitInstance.direction,
                     animationMetadata.style,
-                )
+                );
             }
 
             const hitBox = slp.animatePlayerAsset(
@@ -110,12 +110,12 @@ export default class CanvasRenderer implements RendererInterface {
 
 
             if (config.debug) {
-                this.context.font = "11px Arial";
+                this.context.font = '11px Arial';
                 this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 30);
             }
 
             clientStateDispatcher({
-                name: "UNIT_DRAWN",
+                name: 'UNIT_DRAWN',
                 hitBox,
                 unit: unitInstance,
             });
@@ -127,10 +127,10 @@ export default class CanvasRenderer implements RendererInterface {
             return;
         }
         const nudgeFactor = 1;
-        square(context, selection, "black", 1);
+        square(context, selection, 'black', 1);
         square(context, {
             p1: new Vector2(selection.p1.x - nudgeFactor, selection.p1.y - nudgeFactor),
             p2: new Vector2(selection.p2.x - nudgeFactor, selection.p2.y - nudgeFactor),
-        }, "white", 1);
+        }, 'white', 1);
     }
 }

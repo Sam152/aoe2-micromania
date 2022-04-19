@@ -1,6 +1,6 @@
-import {ClientState, ClientStateAction, GameDispatcher, StateManagerInterface} from "../../types";
-import screenPositionToGamePosition from "../util/screenPositionToGamePosition";
-import {Vector2} from "three";
+import {ClientState, ClientStateAction, GameDispatcher, StateManagerInterface} from '../../types';
+import screenPositionToGamePosition from '../util/screenPositionToGamePosition';
+import {Vector2} from 'three';
 
 const StInput = require('stinput');
 
@@ -27,14 +27,14 @@ export default class InputManager {
         if (this.input.released('mouse_left') && !this.dragging) {
             const time = (new Date).getTime();
             this.dispatch({
-                name: time - this.lastLeftClick < doubleClickDuration ? "DOUBLE_CLICK" : "LEFT_CLICK",
+                name: time - this.lastLeftClick < doubleClickDuration ? 'DOUBLE_CLICK' : 'LEFT_CLICK',
                 position: this.mousePosition(),
             });
             this.lastLeftClick = time;
         }
         if (this.input.released('mouse_right') && !this.dragging) {
             this.dispatch({
-                name: this.input.shiftDown ? "SHIFT_RIGHT_CLICK" : "RIGHT_CLICK",
+                name: this.input.shiftDown ? 'SHIFT_RIGHT_CLICK' : 'RIGHT_CLICK',
                 position: this.mousePosition(),
             });
         }
@@ -42,12 +42,12 @@ export default class InputManager {
         if (this.input.mouseMoving && this.input.mouseDown(this.input.MouseButtons.left)) {
             if (!this.dragging) {
                 this.dispatch({
-                    name: "DRAG_START",
+                    name: 'DRAG_START',
                     position: this.mousePosition(),
                 });
             }
             this.dispatch({
-                name: "DRAGGING",
+                name: 'DRAGGING',
                 position: this.mousePosition(),
             });
             this.dragging = true;
@@ -56,7 +56,7 @@ export default class InputManager {
         if (this.input.released('mouse_left')) {
             if (this.dragging) {
                 this.dispatch({
-                    name: "DRAG_END",
+                    name: 'DRAG_END',
                     position: this.mousePosition(),
                 });
             }
@@ -65,7 +65,7 @@ export default class InputManager {
 
         if (this.input.pressed('f')) {
             this.dispatch({
-                name: "STOP_UNITS",
+                name: 'STOP_UNITS',
             });
         }
     }

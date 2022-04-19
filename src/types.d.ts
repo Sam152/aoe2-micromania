@@ -3,8 +3,8 @@ import UnitState from './common/units/UnitState';
 import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';
 import AnimationStyle from './common/units/AnimationStyle';
-import {Vector2} from "three";
-import FormationType from "./common/units/formations/FormationType";
+import {Vector2} from 'three';
+import FormationType from './common/units/formations/FormationType';
 
 export interface UnitInstance {
     id: number;

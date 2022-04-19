@@ -1,13 +1,13 @@
-import compassDirectionCalculator from "../../units/compassDirectionCalculator";
-import UnitState from "../../units/UnitState";
-import {UnitInstance} from "../../../types";
-import formationManager from "../../units/formations/FormationManager";
-import FormationType from "../../units/formations/FormationType";
-import {Vector2} from "three";
+import compassDirectionCalculator from '../../units/compassDirectionCalculator';
+import UnitState from '../../units/UnitState';
+import {UnitInstance} from '../../../types';
+import formationManager from '../../units/formations/FormationManager';
+import FormationType from '../../units/formations/FormationType';
+import {Vector2} from 'three';
 
 
 export function moveUnitsTowardsCurrentWaypoint(formation: FormationType, destination: Vector2, units: UnitInstance[]) {
-    const positions = units.map(unit => unit.position);
+    const positions = units.map((unit) => unit.position);
     formationManager.get(formation).form(positions, destination).map((formationPosition, index) => {
         units[index].waypoints = [formationPosition];
         moveTowardsCurrentWaypoint(units[index]);

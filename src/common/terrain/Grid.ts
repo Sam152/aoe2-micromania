@@ -1,6 +1,6 @@
-import {Vector2} from "three";
-import config from "../config";
-import {GameState} from "../../types";
+import {Vector2} from 'three';
+import config from '../config';
+import {GameState} from '../../types';
 
 export default class Grid {
     private readonly size: number;
@@ -43,5 +43,4 @@ export default class Grid {
             }
         }
     }
-
 }

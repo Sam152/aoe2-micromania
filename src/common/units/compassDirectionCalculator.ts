@@ -1,5 +1,5 @@
-import {Vector2} from "three";
-import CompassDirection from "./CompassDirection";
+import {Vector2} from 'three';
+import CompassDirection from './CompassDirection';
 
 class CompassDirectionCalculator {
     private circle: number;
@@ -35,7 +35,7 @@ class CompassDirectionCalculator {
     }
 
     private getQuadrant(angle: number): number {
-        const quadrant = this.quadrants.findIndex(quadrant => angle >= quadrant[0] && angle < quadrant[1]);
+        const quadrant = this.quadrants.findIndex((quadrant) => angle >= quadrant[0] && angle < quadrant[1]);
         // The index of the quadrant may not be found since the first quadrant starts at a negative offset, which
         // the angle will not be computed to. The final quadrant will end at 2PI - halfQuadrant, where the negative
         // offset quadrant begins.
@@ -52,7 +52,6 @@ class CompassDirectionCalculator {
         }
         return quadrants;
     }
-
 }
 
 const compassDirectionCalculator = new CompassDirectionCalculator();

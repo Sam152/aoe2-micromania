@@ -6,11 +6,11 @@ import {
     GameState,
     GameStateAction,
     StateManagerInterface,
-    UnitInstance
+    UnitInstance,
 } from '../../../types';
 import {Socket} from 'socket.io-client';
-import {Vector2} from "three";
-import {normalizeGameStateObject} from "../../util/normalizer";
+import {Vector2} from 'three';
+import {normalizeGameStateObject} from '../../util/normalizer';
 
 /**
  * A state manager with a client => server relationship.
