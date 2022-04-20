@@ -24,7 +24,12 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     }
 
     if (action.name === 'RIGHT_CLICK' && state.selectedUnits.length > 0) {
-        state.lastMoveClick = [action.position, state.renderedFrames];
+        const attacking = state.unitHitBoxes
+            .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
+            .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
+        if (!attacking) {
+            state.lastMoveClick = [action.position, state.renderedFrames];
+        }
     }
 
     if (action.name === 'LEFT_CLICK') {
@@ -88,12 +93,24 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
  */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
     if (action.name === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
-        gameDispatcher({
-            name: 'MOVE_UNITS_TO',
-            position: action.position,
-            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
-            formation: clientState.selectedFormation,
-        });
+        const attacking = clientState.unitHitBoxes
+            .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
+            .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
+
+        if (attacking) {
+            gameDispatcher({
+                name: 'ATTACK',
+                units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+                target: attacking.unit.id
+            });
+        } else {
+            gameDispatcher({
+                name: 'MOVE_UNITS_TO',
+                position: action.position,
+                units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+                formation: clientState.selectedFormation,
+            });
+        }
     }
     if (action.name === 'SHIFT_RIGHT_CLICK') {
         gameDispatcher({

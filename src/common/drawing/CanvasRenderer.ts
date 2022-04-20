@@ -170,7 +170,10 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     renderMouse(state: ClientState) {
-        const attacking = state.unitHitBoxes.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
+        const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
+            .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
+            .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
+
         const cursor = attacking ? 4 : 0;
 
         this.slpManager.getAsset('mouse-icons').drawFrame(this.context, state.mousePosition, cursor);

@@ -81,6 +81,10 @@ type GameStateAction = {
 } | {
     name: 'DELETE_UNITS';
     units: number[];
+} | {
+    name: 'ATTACK';
+    units: number[];
+    target: number;
 };
 
 export interface ClientState {

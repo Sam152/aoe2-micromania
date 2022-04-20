@@ -1,4 +1,4 @@
-import {GameState, GameStateAction, PlayerId} from '../../types';
+import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
@@ -70,6 +70,16 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
                direction: deletedUnit.direction,
            });
         });
+    }
+
+    if (action.name === 'ATTACK') {
+        const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
+        attackingUnits.forEach(attackingUnit => {
+            attackingUnit.unitState = UnitState.Firing;
+            attackingUnit.unitStateStartedAt = state.ticks;
+            attackingUnit.movingDirection = null;
+            attackingUnit.waypoints = [];
+        })
     }
 
     if (action.name === 'TICK') {
