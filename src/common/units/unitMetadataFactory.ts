@@ -2,12 +2,14 @@ import Unit from './Unit';
 import UnitState from './UnitState';
 import {UnitStats} from '../../types';
 import AnimationStyle from './AnimationStyle';
+import ProjectileType from "./ProjectileType";
 
 const aocUnitsData = require('./data/aoc_units.json');
 
 const unitDefinitions: {
     [key in Unit]: {
         aocDataName: string;
+        firesProjectileType: ProjectileType;
         animations: {
             [key in UnitState]: {
                 slp: string;
@@ -20,6 +22,7 @@ const unitDefinitions: {
 } = {
     [Unit.Archer]: {
         aocDataName: 'Crossbowman',
+        firesProjectileType: ProjectileType.Arrow,
         animations: {
             [UnitState.Idle]: {
                 slp: 'xbow-stand',
@@ -50,6 +53,7 @@ const unitDefinitions: {
     },
     [Unit.Mangonel]: {
         aocDataName: 'Mangonel',
+        firesProjectileType: ProjectileType.Rock,
         animations: {
             [UnitState.Idle]: {
                 slp: 'mangonel-stand',
@@ -94,6 +98,7 @@ class UnitMetadata {
             }) => element.name === unitDefinitions[unit].aocDataName);
 
             this.units[unit] = {
+                firesProjectileType: unitDefinitions[unit].firesProjectileType,
                 attackFrameDelay: parseFloat(aocData.ad),
                 reloadTime: parseFloat(aocData.fr),
                 movementRate: parseFloat(aocData.mr),

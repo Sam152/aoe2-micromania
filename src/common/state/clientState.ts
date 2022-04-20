@@ -3,8 +3,8 @@ import deepClone from '../util/deepClone';
 import pointInRect from '../util/pointInRect';
 import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingWithRect';
 import FormationType from '../units/formations/FormationType';
-import config from "../config";
-import {Vector2} from "three";
+import config from '../config';
+import {Vector2} from 'three';
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === 'FRAME_RENDERING_STARTED') {
@@ -101,7 +101,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
             gameDispatcher({
                 name: 'ATTACK',
                 units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
-                target: attacking.unit.id
+                target: attacking.unit.id,
             });
         } else {
             gameDispatcher({

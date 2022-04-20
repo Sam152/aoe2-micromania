@@ -2,7 +2,7 @@ import InputManager from '../../input/InputManager';
 import {clientStateTransmitter} from '../clientState';
 import CanvasRenderer from '../../drawing/CanvasRenderer';
 import {StateManagerInterface} from '../../../types';
-import Grid from "../../terrain/Grid";
+import Grid from '../../terrain/Grid';
 
 export default class RenderLoopManager {
     private stateManager: StateManagerInterface;

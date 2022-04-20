@@ -108,7 +108,7 @@ export default class InputManager {
 
     mousePosition(cameraPosition: Vector2) {
         return screenPositionToGamePosition(
-            (new Vector2(this.input.mousePosition.x, this.input.mousePosition.y)).add(gamePositionToScreenPosition(cameraPosition))
+            (new Vector2(this.input.mousePosition.x, this.input.mousePosition.y)).add(gamePositionToScreenPosition(cameraPosition)),
         );
     }
 

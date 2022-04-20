@@ -7,8 +7,8 @@ import {Vector2} from 'three';
 import config from '../config';
 import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
-import UnitState from "../units/UnitState";
-import pointInRect from "../util/pointInRect";
+import UnitState from '../units/UnitState';
+import pointInRect from '../util/pointInRect';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;

@@ -1,4 +1,4 @@
-import {GameState, GameStateAction} from '../../types';
+import {GameState, GameStateAction, PlayerId} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
@@ -7,8 +7,10 @@ import config from '../config';
 import moveTowardsCurrentWaypoint from './mutations/moveTowardsCurrentWaypoint';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit from './mutations/stopUnit';
-import compassDirectionCalculator from "../units/compassDirectionCalculator";
-import unitState from "../units/UnitState";
+import compassDirectionCalculator from '../units/compassDirectionCalculator';
+import unitState from '../units/UnitState';
+import ProjectileType from "../units/ProjectileType";
+import {Vector3} from "three";
 
 let unitId = 0;
 
@@ -62,7 +64,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'DELETE_UNITS') {
         const deletedUnits = state.units.filter((instance) => action.units.includes(instance.id));
         state.units = state.units.filter((instance) => !action.units.includes(instance.id));
-        deletedUnits.forEach(deletedUnit => {
+        deletedUnits.forEach((deletedUnit) => {
             state.fallenUnits.push({
                 id: deletedUnit.id,
                 ownedByPlayer: deletedUnit.ownedByPlayer,
@@ -77,17 +79,17 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'ATTACK') {
         const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
         const target = state.units.find(({id}) => action.target === id);
-        attackingUnits.forEach(attackingUnit => {
+        attackingUnits.forEach((attackingUnit) => {
             attackingUnit.unitState = UnitState.Firing;
             attackingUnit.unitStateStartedAt = state.ticks;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, target.position);
             attackingUnit.waypoints = [];
-        })
+        });
     }
 
     if (action.name === 'TICK') {
         // Move all units that have some active waypoint.
-        state.units.filter((unit) => unit.waypoints.length > 0).forEach(function (unit) {
+        state.units.filter((unit) => unit.waypoints.length > 0).forEach(function(unit) {
             unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * config.unitSpeedFactor));
             if (unit.position.distanceTo(unit.waypoints[0]) < 5) {
                 unit.waypoints.shift();
@@ -102,10 +104,17 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         // Release arrows for all firing units that have reached the tick corresponding to their frame delay.
         state.units
             .filter(({unitState}) => unitState === UnitState.Firing)
-            .forEach(unit => {
-                const firingFrame = Math.ceil(unitMetadataFactory.getUnit(unit.unitType).attackFrameDelay * config.ticksPerSecond);
+            .forEach((unit) => {
+                const unitData = unitMetadataFactory.getUnit(unit.unitType);
+                const firingFrame = Math.ceil(unitData.attackFrameDelay * config.ticksPerSecond);
                 if (state.ticks - unit.unitStateStartedAt === Math.ceil(firingFrame)) {
-
+                    state.projectiles.push({
+                        ownedBy: unit.ownedByPlayer,
+                        type: unitData.firesProjectileType,
+                        damage: 6,
+                        targeting: 5,
+                        position: new Vector3(1, 2, 3),
+                    });
                 }
             });
 
@@ -119,6 +128,7 @@ function defaultState(): GameState {
     return deepClone({
         ticks: 0,
         units: [],
+        projectiles: [],
         fallenUnits: [],
         mapSize: 20,
     });

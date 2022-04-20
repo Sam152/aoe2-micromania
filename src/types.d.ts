@@ -3,9 +3,9 @@ import UnitState from './common/units/UnitState';
 import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';
 import AnimationStyle from './common/units/AnimationStyle';
-import {Vector2} from 'three';
+import {Vector2, Vector3} from 'three';
 import FormationType from './common/units/formations/FormationType';
-import ProjectileType from "./common/units/ProjectileType";
+import ProjectileType from './common/units/ProjectileType';
 
 export interface UnitInstance {
     id: number;
@@ -33,11 +33,12 @@ export interface FallenUnitInstance {
     direction: CompassDirection;
 }
 
-export interface Projectile {
+export interface ProjectileInstance {
     ownedBy: PlayerId;
     type: ProjectileType;
+    damage: number;
     targeting: PlayerId;
-    position: PlayerId;
+    position: Vector3;
 }
 
 export interface RendererInterface {
@@ -48,6 +49,7 @@ export interface RendererInterface {
 export interface GameState {
     ticks: number;
     units: UnitInstance[];
+    projectiles: ProjectileInstance[];
     fallenUnits: FallenUnitInstance[];
     mapSize: number;
 }
@@ -147,7 +149,7 @@ export type ClientStateAction = {
 } | {
     name: 'FIXATE_CAMERA',
     location: Vector2;
-}  | {
+} | {
     name: 'MOUSE_POSITIONED',
     position: Vector2,
 };
@@ -203,6 +205,7 @@ export interface RenderedSlpFrame extends SlpFrame {
 
 export interface UnitStats {
     attackFrameDelay: number;
+    firesProjectileType: ProjectileType;
     reloadTime: number;
     movementRate: number;
     hitPoints: number;
