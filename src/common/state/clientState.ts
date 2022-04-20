@@ -110,12 +110,14 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
             name: 'DELETE_UNITS',
             units: [clientState.selectedUnits[0].id],
         });
+        clientState.selectedUnits.shift();
     }
     if (action.name === 'HOTKEY_SHIFT_DELETE' && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'DELETE_UNITS',
             units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
         });
+        clientState.selectedUnits = [];
     }
 }
 
