@@ -63,7 +63,7 @@ const unitDefinitions: {
             },
             [UnitState.Firing]: {
                 slp: 'mangonel-firing',
-                animationDuration: 0.7,
+                animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
