@@ -24,6 +24,11 @@ export default class InputManager {
     }
 
     dispatchInput(cameraPosition: Vector2): void {
+        this.dispatch({
+            name: 'MOUSE_POSITIONED',
+            position: this.mousePosition(cameraPosition),
+        });
+
         if (this.input.released('mouse_left') && !this.dragging) {
             const time = (new Date).getTime();
             this.dispatch({
@@ -66,6 +71,16 @@ export default class InputManager {
         if (this.input.pressed('f')) {
             this.dispatch({
                 name: 'HOTKEY_STOP',
+            });
+        }
+        if (!this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
+            this.dispatch({
+                name: 'HOTKEY_DELETE',
+            });
+        }
+        if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
+            this.dispatch({
+                name: 'HOTKEY_SHIFT_DELETE',
             });
         }
 

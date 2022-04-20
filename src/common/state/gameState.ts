@@ -1,4 +1,4 @@
-import {GameState, GameStateAction} from '../../types';
+import {GameState, GameStateAction, PlayerId} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
@@ -57,8 +57,23 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             stopUnit(unit);
         });
     }
+    if (action.name === 'DELETE_UNITS') {
+        const deletedUnits = state.units.filter((instance) => action.units.includes(instance.id));
+        state.units = state.units.filter((instance) => !action.units.includes(instance.id));
+        deletedUnits.forEach(deletedUnit => {
+           state.fallenUnits.push({
+               id: deletedUnit.id,
+               ownedByPlayer: deletedUnit.ownedByPlayer,
+               unitType: deletedUnit.unitType,
+               unitFallenAt: state.ticks,
+               position: deletedUnit.position,
+               direction: deletedUnit.direction,
+           });
+        });
+    }
 
     if (action.name === 'TICK') {
+        // Move all units that have some active waypoint.
         state.units.filter((unit) => unit.waypoints.length > 0).map(function(unit) {
             unit.position.add(unit.movingDirection.clone().multiplyScalar(unitMetadataFactory.getUnit(unit.unitType).movementRate * config.unitSpeedFactor));
             if (unit.position.distanceTo(unit.waypoints[0]) < 5) {
@@ -80,6 +95,7 @@ function defaultState(): GameState {
     return deepClone({
         ticks: 0,
         units: [],
+        fallenUnits: [],
         mapSize: 20,
     });
 }

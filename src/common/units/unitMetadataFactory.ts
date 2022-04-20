@@ -41,9 +41,14 @@ const unitDefinitions: {
                 animationDuration: 1,
                 style: AnimationStyle.Loop,
             },
-            [UnitState.Fallen]: {
+            [UnitState.Falling]: {
+                slp: 'xbow-death',
+                animationDuration: 1,
+                style: AnimationStyle.Play,
+            },
+            [UnitState.Decaying]: {
                 slp: 'xbow-decay',
-                animationDuration: 3,
+                animationDuration: 20,
                 style: AnimationStyle.Play,
             },
         },
@@ -73,9 +78,14 @@ const unitDefinitions: {
                 animationDuration: 1,
                 style: AnimationStyle.Loop,
             },
-            [UnitState.Fallen]: {
+            [UnitState.Falling]: {
+                slp: 'mangonel-death',
+                animationDuration: 1,
+                style: AnimationStyle.Play,
+            },
+            [UnitState.Decaying]: {
                 slp: 'mangonel-decay',
-                animationDuration: 3,
+                animationDuration: 20,
                 style: AnimationStyle.Play,
             },
         },

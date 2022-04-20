@@ -93,7 +93,6 @@ export default class Slp {
 
         if (flipped) {
             const originalTransform = context.getTransform();
-            console.log(originalTransform);
             context.setTransform(-1, 0, 0, 1, originalTransform.e, originalTransform.f);
             context.drawImage(bitmap, -1 * anchoredPosition.x, anchoredPosition.y);
             context.setTransform(originalTransform);

@@ -5,12 +5,15 @@ import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingW
 import FormationType from '../units/formations/FormationType';
 import config from "../config";
 import {Vector2} from "three";
-import Grid from "../terrain/Grid";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === 'FRAME_RENDERING_STARTED') {
         state.unitHitBoxes = [];
         state.renderedFrames++;
+    }
+
+    if (action.name === 'MOUSE_POSITIONED') {
+        state.mousePosition = action.position;
     }
 
     if (action.name === 'UNIT_DRAWN') {
@@ -76,7 +79,8 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
 }
 
 /**
- * Dispatch into the game state, local actions which impact the game state.
+ * Dispatch into the game state, local actions which should be transmitted to the server (or handled locally via the
+ * single player state manager).
  */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
     if (action.name === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
@@ -95,10 +99,21 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
             units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
         });
     }
-
     if (action.name === 'HOTKEY_STOP') {
         gameDispatcher({
             name: 'STOP_UNITS',
+            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+        });
+    }
+    if (action.name === 'HOTKEY_DELETE' && clientState.selectedUnits.length > 0) {
+        gameDispatcher({
+            name: 'DELETE_UNITS',
+            units: [clientState.selectedUnits[0].id],
+        });
+    }
+    if (action.name === 'HOTKEY_SHIFT_DELETE' && clientState.selectedUnits.length > 0) {
+        gameDispatcher({
+            name: 'DELETE_UNITS',
             units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
         });
     }
@@ -115,6 +130,7 @@ function defaultState(): ClientState {
         selectedFormation: FormationType.Line,
     }) as ClientState;
     state.camera = new Vector2(0, 0);
+    state.mousePosition = new Vector2(0, 0);
     return state;
 }
 

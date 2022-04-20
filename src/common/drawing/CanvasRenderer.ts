@@ -1,12 +1,13 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from './shapes';
+import {square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three';
 import config from '../config';
 import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
+import UnitState from "../units/UnitState";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -46,6 +47,7 @@ export default class CanvasRenderer implements RendererInterface {
 
         this.translateCamera(clientState.camera);
         this.drawTerrain(gameState);
+        this.drawFallenUnits(gameState);
         this.drawUnits(gameState, clientState, clientStateDispatcher);
         this.drawMovementCommandAnimations(gameState, clientState);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
@@ -129,6 +131,27 @@ export default class CanvasRenderer implements RendererInterface {
                 hitBox,
                 unit: unitInstance,
             });
+        });
+    }
+
+    drawFallenUnits(gameState: GameState) {
+        gameState.fallenUnits.map((unitInstance) => {
+            const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
+
+            const ticksUntilDecay = 100;
+            const ticksSinceFallen = gameState.ticks - unitInstance.unitFallenAt;
+            const animationMetadata = unitMetadata.animations[ticksSinceFallen < ticksUntilDecay ? UnitState.Falling : UnitState.Decaying];
+
+            const slp = this.slpManager.getAsset(animationMetadata.slp);
+            slp.animatePlayerAsset(
+                this.context,
+                unitInstance.position,
+                animationMetadata.animationDuration,
+                ticksSinceFallen < ticksUntilDecay ? ticksSinceFallen : ticksSinceFallen - ticksUntilDecay,
+                unitInstance.ownedByPlayer,
+                unitInstance.direction,
+                animationMetadata.style,
+            );
         });
     }
 

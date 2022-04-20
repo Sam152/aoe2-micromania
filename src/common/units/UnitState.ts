@@ -3,7 +3,7 @@ enum UnitState {
     Firing,
     Moving,
     Patrolling,
-    Fallen,
+    Falling,
+    Decaying,
 }
-
 export default UnitState;

@@ -1,5 +1,5 @@
 import RoomStatus from './common/rooms/RoomStatus';
-import UnitState from './common/units/UnitState';
+import UnitState, {FallenUnitState} from './common/units/UnitState';
 import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';
 import AnimationStyle from './common/units/AnimationStyle';
@@ -23,6 +23,15 @@ export interface UnitInstance {
     direction: CompassDirection;
 }
 
+export interface FallenUnitInstance {
+    id: number;
+    ownedByPlayer: PlayerId;
+    unitType: Unit;
+    unitFallenAt: number;
+    position: Vector2;
+    direction: CompassDirection;
+}
+
 export interface Projectile {
 
 }
@@ -39,6 +48,7 @@ export interface RendererInterface {
 export interface GameState {
     ticks: number;
     units: UnitInstance[];
+    fallenUnits: FallenUnitInstance[];
     mapSize: number;
 }
 
@@ -68,6 +78,9 @@ type GameStateAction = {
 } | {
     name: 'STOP_UNITS';
     units: number[];
+} | {
+    name: 'DELETE_UNITS';
+    units: number[];
 };
 
 export interface ClientState {
@@ -79,6 +92,7 @@ export interface ClientState {
     selectedUnits: UnitInstance[];
     selectedFormation: FormationType;
     selectionRectangle: Rectangle | null;
+    mousePosition: Vector2;
     lastLeftClick: Vector2 | null;
     lastMoveClick: [Vector2, number] | null;
     camera: Vector2;
@@ -89,7 +103,11 @@ export type ClientStateAction = {
     position: Vector2,
 } | {
     name: 'HOTKEY_STOP',
-}| {
+} | {
+    name: 'HOTKEY_DELETE',
+} | {
+    name: 'HOTKEY_SHIFT_DELETE',
+} | {
     name: 'ARROW_LEFT',
 }| {
     name: 'ARROW_RIGHT',
@@ -124,6 +142,9 @@ export type ClientStateAction = {
 } | {
     name: 'FIXATE_CAMERA',
     location: Vector2;
+}  | {
+    name: 'MOUSE_POSITIONED',
+    position: Vector2,
 };
 
 export type GameDispatcher = (action: GameStateAction) => void;
