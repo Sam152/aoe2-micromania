@@ -36,11 +36,6 @@ const unitDefinitions: {
                 animationDuration: 1,
                 style: AnimationStyle.Loop,
             },
-            [UnitState.Patrolling]: {
-                slp: 'xbow-moving',
-                animationDuration: 1,
-                style: AnimationStyle.Loop,
-            },
             [UnitState.Falling]: {
                 slp: 'xbow-death',
                 animationDuration: 1,
@@ -67,12 +62,6 @@ const unitDefinitions: {
                 style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
-                slp: 'mangonel-moving',
-                underSlp: 'mangonel-stand',
-                animationDuration: 1,
-                style: AnimationStyle.Loop,
-            },
-            [UnitState.Patrolling]: {
                 slp: 'mangonel-moving',
                 underSlp: 'mangonel-stand',
                 animationDuration: 1,

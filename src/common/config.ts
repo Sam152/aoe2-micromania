@@ -4,7 +4,7 @@ const config = {
     ticksPerSecond: 20,
     unitSpeedFactor: 5,
     tileWidth: 96,
-    tileHeight: 48,
+    tileHeight: 47,
     cameraPanSpeed: 3,
 };
 
