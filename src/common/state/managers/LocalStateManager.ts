@@ -13,7 +13,7 @@ export default class LocalStateManager implements StateManagerInterface {
 
     constructor(gameStateListener: (state: GameState, action: GameStateAction) => void = null) {
         this.gameState = defaultGameState();
-        this.clientState = defaultClientState();
+        this.clientState = defaultClientState(1);
         this.gameStateListener = gameStateListener;
     }
 

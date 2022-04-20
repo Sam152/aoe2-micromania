@@ -9,9 +9,9 @@ import {useState} from 'react';
 import SinglePlayerGame from './SinglePlayerGame';
 
 export default function Lobby({io}: { io: Socket }) {
-    return (<SinglePlayerGame/>);
+    // return (<SinglePlayerGame/>);
 
-    const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>(io, 'playerInfo', {inRoom: null, isSpectator: null});
+    const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>(io, 'playerInfo', {inRoom: null, isSpectator: null, playingAs: null});
     const roomList = useEmittedData<EmittedRoom[]>(io, 'listRooms', []);
 
     const [playingSinglePlayer, setPlayingSinglePlayer] = useState(false);
@@ -24,7 +24,7 @@ export default function Lobby({io}: { io: Socket }) {
                         <Room io={io} playerInfo={playerInfo}/>
                     )}
                     {playerInfo.inRoom.status === RoomStatus.Started && (
-                        <MultiplayerGame io={io}/>
+                        <MultiplayerGame io={io} playingAs={playerInfo.playingAs} />
                     )}
                 </>
             ) : playingSinglePlayer ? (

@@ -169,6 +169,7 @@ export interface GameMode {
 export interface EmittedPlayerLobbyMetadata {
     inRoom?: EmittedRoom;
     isSpectator?: boolean;
+    playingAs?: number;
 }
 
 export interface EmittedRoom {

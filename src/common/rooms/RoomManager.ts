@@ -89,6 +89,7 @@ export default class RoomManager {
         player.socket.emit('playerInfo', {
             inRoom: playerRoom ? playerRoom.toEmitted() : null,
             isSpectator: playerRoom ? playerRoom.hasSpectator(player) : null,
+            playingAs: playerRoom ? playerRoom.getPlayerId(player) : null,
         });
     }
 }

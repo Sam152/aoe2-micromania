@@ -46,6 +46,13 @@ export default class Room {
         return this.players.find((p) => p.socket.id === player.socket.id) !== undefined;
     }
 
+    getPlayerId(player: Player): number | null {
+        if (!this.hasPlayer(player)) {
+            return null;
+        }
+        return this.players.findIndex((p) => p.socket.id === player.socket.id) + 1;
+    }
+
     hasSpectator(player: Player): boolean {
         return this.spectators.find((p) => p.socket.id === player.socket.id) !== undefined;
     }
