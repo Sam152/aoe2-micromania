@@ -29,14 +29,17 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
 
     if (action.name === 'LEFT_CLICK') {
         state.lastLeftClick = action.position;
-        const foundUnit = state.unitHitBoxes.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
+        const foundUnit = state.unitHitBoxes
+            .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
+            .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
         state.selectedUnits = foundUnit ? [foundUnit.unit] : [];
     }
 
     if (action.name === 'DOUBLE_CLICK') {
-        const foundUnit = state.unitHitBoxes.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
+        const ownUnits = state.unitHitBoxes.filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs);
+        const foundUnit = ownUnits.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
         if (foundUnit) {
-            state.selectedUnits = state.unitHitBoxes
+            state.selectedUnits = ownUnits
                 .filter((unitAndHitBox) => unitAndHitBox.unit.unitType === foundUnit.unit.unitType)
                 .map((unitAndHitBox) => unitAndHitBox.unit);
         }
@@ -68,6 +71,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     if (action.name === 'DRAGGING') {
         state.selectionRectangle.p2 = action.position;
         state.selectedUnits = state.unitHitBoxes
+            .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .filter((unitAndHitBox) => rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)))
             .map((unitAndHitBox) => unitAndHitBox.unit);
     }
