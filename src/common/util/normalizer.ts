@@ -1,4 +1,4 @@
-import {GameState, GameStateAction, UnitInstance} from '../../types';
+import {FallenUnitInstance, GameState, GameStateAction, UnitInstance} from '../../types';
 import {Vector2} from 'three';
 
 export function normalizeGameStateAction(action: GameStateAction): GameStateAction {
@@ -23,6 +23,10 @@ export function normalizeGameStateObject(state: GameState): GameState {
         position: new Vector2(unit.position.x, unit.position.y),
         movingDirection: unit.movingDirection ? new Vector2(unit.movingDirection.x, unit.movingDirection.y) : null,
         waypoints: unit.waypoints.map((waypoint) => new Vector2(waypoint.x, waypoint.y)),
+    }));
+    state.fallenUnits = state.fallenUnits.map((unit: FallenUnitInstance) => ({
+        ...unit,
+        position: new Vector2(unit.position.x, unit.position.y),
     }));
     return state;
 }
