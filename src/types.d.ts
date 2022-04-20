@@ -88,6 +88,7 @@ export interface ClientState {
         hitBox: Rectangle,
         unit: UnitInstance,
     }>;
+    playingAs: number;
     renderedFrames: number;
     selectedUnits: UnitInstance[];
     selectedFormation: FormationType;

@@ -8,6 +8,7 @@ import config from '../config';
 import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
 import UnitState from "../units/UnitState";
+import pointInRect from "../util/pointInRect";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -51,6 +52,7 @@ export default class CanvasRenderer implements RendererInterface {
         this.drawUnits(gameState, clientState, clientStateDispatcher);
         this.drawMovementCommandAnimations(gameState, clientState);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
+        this.renderMouse(clientState);
 
         this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
@@ -165,5 +167,12 @@ export default class CanvasRenderer implements RendererInterface {
             p1: new Vector2(selection.p1.x - nudgeFactor, selection.p1.y - nudgeFactor),
             p2: new Vector2(selection.p2.x - nudgeFactor, selection.p2.y - nudgeFactor),
         }, 'white', 1);
+    }
+
+    renderMouse(state: ClientState) {
+        const attacking = state.unitHitBoxes.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
+        const cursor = attacking ? 4 : 0;
+
+        this.slpManager.getAsset('mouse-icons').drawFrame(this.context, state.mousePosition, cursor);
     }
 }

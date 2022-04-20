@@ -119,9 +119,10 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     }
 }
 
-function defaultState(): ClientState {
+function defaultState(playingAs: number): ClientState {
     const state = deepClone({
         unitHitBoxes: [],
+        playingAs: playingAs,
         renderedFrames: 0,
         selectedUnits: [],
         lastLeftClick: null,
