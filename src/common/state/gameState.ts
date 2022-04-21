@@ -82,6 +82,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         attackingUnits.forEach((attackingUnit) => {
             attackingUnit.unitState = UnitState.Firing;
             attackingUnit.unitStateStartedAt = state.ticks;
+            attackingUnit.targetingUnit = action.target;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, target.position);
             attackingUnit.waypoints = [];
         });
@@ -108,9 +109,12 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
                 const unitData = unitMetadataFactory.getUnit(unit.unitType);
                 const firingFrame = Math.ceil(unitData.attackFrameDelay * config.ticksPerSecond);
                 if (state.ticks - unit.unitStateStartedAt === Math.ceil(firingFrame)) {
+                    const targetingUnit = state.units.find(({id}) => id === unit.targetingUnit);
                     state.projectiles.push({
                         ownedBy: unit.ownedByPlayer,
                         type: unitData.firesProjectileType,
+                        startingPoint: unit.position,
+                        destination: targetingUnit.position,
                         damage: 6,
                         targeting: 5,
                         position: new Vector3(1, 2, 3),
