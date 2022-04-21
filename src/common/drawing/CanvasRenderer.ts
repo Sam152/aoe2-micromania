@@ -1,7 +1,7 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {square} from './shapes';
+import {circle, square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three';
 import config from '../config';
@@ -9,16 +9,27 @@ import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
 import UnitState from '../units/UnitState';
 import pointInRect from '../util/pointInRect';
+import projectileMetadata from "../units/projectileMetadataFactory";
+import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
     private slpManager: SlpManager;
+    lastRenderedGameTick: number;
+    frameAtLastRenderedTick: number;
+    framesPerTick: number;
+    fractionOfTickRendered: number;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
         this.slpManager = new SlpManager('/assets');
+
+        this.lastRenderedGameTick = 0;
+        this.frameAtLastRenderedTick = 0;
+        this.fractionOfTickRendered = 0;
+        this.framesPerTick = 5; // @todo, how to calculate?
 
         // @ts-ignore
         window.ctx = this.context;
@@ -41,15 +52,23 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
-        if (config.debug) {
-            window.ctx = this.context;
+        // Attempt to smooth out the rendering of game ticks, which are slower than how often a frame is rendered, by
+        // caclulating what fraction of a game tick we are through. This requires us to record what frame we were at
+        // when a new tick is started, how many have passed since the last tick and an estimate of the total frames that
+        // are rendered for each tick.
+        if (gameState.ticks !== this.lastRenderedGameTick) {
+            this.lastRenderedGameTick = gameState.ticks;
+            this.frameAtLastRenderedTick = clientState.renderedFrames;
         }
+        this.fractionOfTickRendered = (clientState.renderedFrames - this.frameAtLastRenderedTick) / this.framesPerTick;
+
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 
         this.translateCamera(clientState.camera);
         this.drawTerrain(gameState);
         this.drawFallenUnits(gameState);
         this.drawUnits(gameState, clientState, clientStateDispatcher);
+        this.drawProjectiles(gameState, clientState, clientStateDispatcher);
         this.drawMovementCommandAnimations(gameState, clientState);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
         this.renderMouse(clientState);
@@ -85,8 +104,17 @@ export default class CanvasRenderer implements RendererInterface {
         }
     }
 
+    drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
+        gameState.projectiles.forEach(projectile => {
+            const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
+            let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
+            const percentageComplete = ticksOfJourneyComplete / totalTicksInJourney;
+            circle(this.context, projectile.startingPoint.clone().add(projectile.pathVector.clone().multiplyScalar(percentageComplete)), 5, 'red');
+        });
+    }
+
     drawUnits(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) {
-        gameState.units.map((unitInstance) => {
+        gameState.units.forEach((unitInstance) => {
             const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
@@ -99,11 +127,16 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context.stroke();
             }
 
+            const movementVector = calculateUnitMovementPerTick(unitInstance);
+            const interpolatedPosition = movementVector
+                ? unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered))
+                : unitInstance.position;
+
             if (animationMetadata.underSlp) {
                 const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);
                 underSlp.animatePlayerAsset(
                     this.context,
-                    unitInstance.position,
+                    interpolatedPosition,
                     animationMetadata.animationDuration,
                     gameState.ticks - unitInstance.unitStateStartedAt,
                     unitInstance.ownedByPlayer,
@@ -114,7 +147,7 @@ export default class CanvasRenderer implements RendererInterface {
 
             const hitBox = slp.animatePlayerAsset(
                 this.context,
-                unitInstance.position,
+                interpolatedPosition,
                 animationMetadata.animationDuration,
                 gameState.ticks - unitInstance.unitStateStartedAt,
                 unitInstance.ownedByPlayer,

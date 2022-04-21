@@ -14,7 +14,7 @@ export interface UnitInstance {
     unitState: UnitState;
     unitStateStartedAt: number;
 
-    targetingUnit: number;
+    targetingUnit?: number;
 
     // A waypoint is an exact location a unit is moving to and a clicked waypoint
     // is the users input that lead to a unit moving, independent of any formations.
@@ -38,11 +38,12 @@ export interface FallenUnitInstance {
 export interface ProjectileInstance {
     ownedBy: PlayerId;
     type: ProjectileType;
-    damage: number;
     targeting: PlayerId;
-    position: Vector3;
     startingPoint: Vector2;
     destination: Vector2;
+    pathVector: Vector2;
+    startingTick: number;
+    arrivingTick: number;
 }
 
 export interface RendererInterface {
