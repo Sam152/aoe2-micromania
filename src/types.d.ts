@@ -36,6 +36,7 @@ export interface FallenUnitInstance {
 }
 
 export interface ProjectileInstance {
+    id: number;
     ownedBy: PlayerId;
     type: ProjectileType;
     targeting: PlayerId;

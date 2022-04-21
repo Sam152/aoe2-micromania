@@ -109,9 +109,11 @@ export default class CanvasRenderer implements RendererInterface {
 
     drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
         gameState.projectiles.forEach(projectile => {
+            circle(this.context, projectile.destination);
+
             const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
             let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
-            const percentageComplete = ticksOfJourneyComplete / totalTicksInJourney;
+            const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
             circle(this.context, projectile.startingPoint.clone().add(projectile.pathVector.clone().multiplyScalar(percentageComplete)), 5, 'red');
         });
     }
@@ -134,7 +136,6 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, slp.getWidth() / 1.5, slp.getWidth() / 3, 0, 0, 2 * Math.PI);
                 this.context.stroke();
             }
-
 
             if (animationMetadata.underSlp) {
                 const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);

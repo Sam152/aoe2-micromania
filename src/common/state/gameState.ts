@@ -8,6 +8,7 @@ import stopUnit from './mutations/stopUnit';
 import compassDirectionCalculator from '../units/compassDirectionCalculator';
 import fireProjectiles from "./mutations/fireProjectiles";
 import moveUnits from "./mutations/moveUnits";
+import registerProjectileHits from "./mutations/registerProjectileHits";
 
 let unitId = 0;
 
@@ -90,8 +91,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'TICK') {
         moveUnits(state);
         fireProjectiles(state);
-
-
+        registerProjectileHits(state);
 
         ++state.ticks;
     }
