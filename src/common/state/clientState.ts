@@ -113,12 +113,18 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         }
     }
     if (action.name === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
-        gameDispatcher({
-            name: 'ADD_WAYPOINT',
-            formation: clientState.selectedFormation,
-            position: action.position,
-            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
-        });
+        const attacking = clientState.unitHitBoxes
+            .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
+            .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
+
+        if (!attacking) {
+            gameDispatcher({
+                name: 'ADD_WAYPOINT',
+                formation: clientState.selectedFormation,
+                position: action.position,
+                units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+            });
+        }
     }
     if (action.name === 'HOTKEY_STOP') {
         gameDispatcher({
