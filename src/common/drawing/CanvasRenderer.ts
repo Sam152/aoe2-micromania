@@ -29,7 +29,7 @@ export default class CanvasRenderer implements RendererInterface {
         this.lastRenderedGameTick = 0;
         this.frameAtLastRenderedTick = 0;
         this.fractionOfTickRendered = 0;
-        this.framesPerTick = 5; // @todo, how to calculate?
+        this.framesPerTick = 0;
 
         // @ts-ignore
         window.ctx = this.context;
@@ -57,6 +57,9 @@ export default class CanvasRenderer implements RendererInterface {
         // when a new tick is started, how many have passed since the last tick and an estimate of the total frames that
         // are rendered for each tick.
         if (gameState.ticks !== this.lastRenderedGameTick) {
+            // Attempt to guess the frames per tick.
+            this.framesPerTick = clientState.renderedFrames - this.frameAtLastRenderedTick;
+            // Record the rendered tick and the frame we are rendering.
             this.lastRenderedGameTick = gameState.ticks;
             this.frameAtLastRenderedTick = clientState.renderedFrames;
         }
@@ -119,18 +122,19 @@ export default class CanvasRenderer implements RendererInterface {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
-            // If the unit is selected, draw an oval around its base.
-            if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
-                this.context.beginPath();
-                this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
-                this.context.ellipse(unitInstance.position.x, unitInstance.position.y, slp.getWidth() / 1.5, slp.getWidth() / 3, 0, 0, 2 * Math.PI);
-                this.context.stroke();
-            }
-
             const movementVector = calculateUnitMovementPerTick(unitInstance);
             const interpolatedPosition = movementVector
                 ? unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered))
                 : unitInstance.position;
+
+            // If the unit is selected, draw an oval around its base.
+            if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
+                this.context.beginPath();
+                this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
+                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, slp.getWidth() / 1.5, slp.getWidth() / 3, 0, 0, 2 * Math.PI);
+                this.context.stroke();
+            }
+
 
             if (animationMetadata.underSlp) {
                 const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);
