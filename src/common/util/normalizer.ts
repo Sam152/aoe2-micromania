@@ -1,9 +1,9 @@
-import {FallenUnitInstance, GameState, GameStateAction, UnitInstance} from '../../types';
+import {FallenUnitInstance, GameState, GameStateAction, PlayerId, ProjectileInstance, UnitInstance} from '../../types';
 import {Vector2} from 'three';
+import ProjectileType from "../units/ProjectileType";
 
 export function normalizeGameStateAction(action: GameStateAction): GameStateAction {
     const vectorKeys = [
-        'position',
         'position',
     ];
     vectorKeys.map((key) => {
@@ -27,6 +27,12 @@ export function normalizeGameStateObject(state: GameState): GameState {
     state.fallenUnits = state.fallenUnits.map((unit: FallenUnitInstance) => ({
         ...unit,
         position: new Vector2(unit.position.x, unit.position.y),
+    }));
+    state.projectiles = state.projectiles.map((projectile: ProjectileInstance) => ({
+        ...projectile,
+        startingPoint: new Vector2(projectile.startingPoint.x, projectile.startingPoint.y),
+        destination: new Vector2(projectile.destination.x, projectile.destination.y),
+        pathVector: new Vector2(projectile.pathVector.x, projectile.pathVector.y),
     }));
     return state;
 }
