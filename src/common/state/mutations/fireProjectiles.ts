@@ -42,7 +42,7 @@ export default function fireProjectiles(state: GameState) {
         .filter(({unitState}) => unitState === UnitState.Firing)
         .forEach((unit) => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
-            const firingFrame = Math.ceil(unitData.attackFrameDelay * config.ticksPerSecond);
+            const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
             const idleFrame = ticksForAnimation(unitData.animations[UnitState.Firing].animationDuration);
 
             if (state.ticks - unit.unitStateStartedAt === firingFrame) {
@@ -61,7 +61,7 @@ export default function fireProjectiles(state: GameState) {
                     targeting: targetingUnit.id,
                 });
 
-                unit.reloadsAt = state.ticks + Math.ceil(unitData.reloadTime * config.ticksPerSecond);
+                unit.reloadsAt = state.ticks + Math.ceil((unitData.reloadTime  / config.gameSpeed) * config.ticksPerSecond);
             }
 
             if (state.ticks - unit.unitStateStartedAt === idleFrame) {
