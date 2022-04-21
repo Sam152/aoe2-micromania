@@ -103,14 +103,12 @@ export default class CanvasRenderer implements RendererInterface {
         if (clientState.lastMoveClick) {
             const asset = this.slpManager.getAsset('move-command');
             const [position, startedTick] = clientState.lastMoveClick;
-            asset.animateAsset(this.context, position, 9, clientState.renderedFrames - startedTick, AnimationStyle.Play);
+            asset.animateAsset(this.context, position, 3, clientState.renderedFrames - startedTick, AnimationStyle.Play);
         }
     }
 
     drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
         gameState.projectiles.forEach(projectile => {
-            circle(this.context, projectile.destination);
-
             const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
             let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
             const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);

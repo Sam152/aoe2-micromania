@@ -15,6 +15,7 @@ export interface UnitInstance {
     unitStateStartedAt: number;
 
     targetingUnit?: number;
+    reloadsAt: number;
 
     // A waypoint is an exact location a unit is moving to and a clicked waypoint
     // is the users input that lead to a unit moving, independent of any formations.

@@ -20,6 +20,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             waypoints: [],
             clickedWaypoints: [],
             movingDirection: null,
+            reloadsAt: 0,
             ownedByPlayer: action.forPlayer,
             unitType: action.unitType,
             unitState: UnitState.Idle,
@@ -104,7 +105,7 @@ function defaultState(): GameState {
         units: [],
         projectiles: [],
         fallenUnits: [],
-        mapSize: 20,
+        mapSize: 13,
     });
 }
 

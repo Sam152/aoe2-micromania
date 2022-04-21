@@ -5,6 +5,7 @@ import AnimationStyle from '../units/AnimationStyle';
 import {Vector2} from 'three';
 import config from '../config';
 import unit from '../units/Unit';
+import ticksForAnimation from "../util/ticksForAnimation";
 
 const SLP = require('genie-slp');
 
@@ -39,14 +40,10 @@ export default class Slp {
         unitStateTickCount: number,
         style: AnimationStyle = AnimationStyle.Loop,
     ) {
-        const gameSpeedAdjustedAnimationDuration = animationDuration / config.gameSpeed;
-        const millisecondsForEachFramePassing = (1000 / config.ticksPerSecond);
-        const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
-        const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
-
+        const totalTicksForAnimation = ticksForAnimation(animationDuration);
         const percentageOfAnimationComplete = style === AnimationStyle.Loop ?
-            (unitStateTickCount % totalFramesForAnimation) / totalFramesForAnimation :
-            Math.min(unitStateTickCount / totalFramesForAnimation, 1);
+            (unitStateTickCount % totalTicksForAnimation) / totalTicksForAnimation :
+            Math.min(unitStateTickCount / totalTicksForAnimation, 1);
 
         // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
         const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.slp.numFrames - 1));
@@ -72,14 +69,11 @@ export default class Slp {
         direction: CompassDirection,
         style: AnimationStyle,
     ): Rectangle {
-        const gameSpeedAdjustedAnimationDuration = animationDuration / config.gameSpeed;
-        const millisecondsForEachFramePassing = (1000 / config.ticksPerSecond);
-        const totalMillisecondsRequiredForWholeAnimation = (gameSpeedAdjustedAnimationDuration * 1000);
-        const totalFramesForAnimation = totalMillisecondsRequiredForWholeAnimation / millisecondsForEachFramePassing;
+        const totalTicksForAnimation = ticksForAnimation(animationDuration);
 
         const percentageOfAnimationComplete = style === AnimationStyle.Loop ?
-            (unitStateTickCount % totalFramesForAnimation) / totalFramesForAnimation :
-            Math.min(unitStateTickCount / totalFramesForAnimation, 1);
+            (unitStateTickCount % totalTicksForAnimation) / totalTicksForAnimation :
+            Math.min(unitStateTickCount / totalTicksForAnimation, 1);
 
         // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
         const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.framesPerAngle - 1));
