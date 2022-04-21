@@ -15,7 +15,11 @@ export function moveUnitsTowardsCurrentWaypoint(formation: FormationType, destin
 }
 
 export default function moveTowardsCurrentWaypoint(unit: UnitInstance): void {
-    unit.movingDirection = unit.waypoints[0].clone().sub(unit.position).normalize();
-    unit.direction = compassDirectionCalculator.getDirection(unit.position, unit.waypoints[0]);
+    setUnitMovementTowards(unit, unit.waypoints[0]);
+}
+
+export function setUnitMovementTowards(unit: UnitInstance, destination: Vector2) {
+    unit.movingDirection = destination.clone().sub(unit.position).normalize();
+    unit.direction = compassDirectionCalculator.getDirection(unit.position, destination);
     unit.unitState = UnitState.Moving;
 }

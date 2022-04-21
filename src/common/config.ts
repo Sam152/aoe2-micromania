@@ -5,6 +5,7 @@ const config = {
     unitSpeedFactor: 5,
     tileWidth: 96,
     tileHeight: 47,
+    tileLength: 60,
     cameraPanSpeed: 3,
 };
 

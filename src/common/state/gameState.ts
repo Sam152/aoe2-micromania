@@ -32,6 +32,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const units = state.units.filter((instance) => action.units.includes(instance.id));
         units.forEach((unit) => {
             unit.clickedWaypoints = [];
+            unit.targetingUnit = null;
         });
         const positions = units.map((unit) => unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
@@ -44,6 +45,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const units = state.units.filter((instance) => action.units.includes(instance.id));
         units.forEach((unit) => {
             unit.clickedWaypoints.push(action.position);
+            unit.targetingUnit = null;
         });
         const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
@@ -78,9 +80,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
         const target = state.units.find(({id}) => action.target === id);
         attackingUnits.forEach((attackingUnit) => {
-            attackingUnit.unitStateStartedAt = state.ticks;
-            attackingUnit.unitState = UnitState.Firing;
-
             attackingUnit.targetingUnit = action.target;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, target.position);
             attackingUnit.waypoints = [];
@@ -89,8 +88,8 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'TICK') {
-        moveUnits(state);
         fireProjectiles(state);
+        moveUnits(state);
         registerProjectileHits(state);
 
         ++state.ticks;

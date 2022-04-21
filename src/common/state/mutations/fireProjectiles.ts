@@ -3,15 +3,38 @@ import unitMetadataFactory from "../../units/unitMetadataFactory";
 import config from "../../config";
 import {GameState} from "../../../types";
 import projectileMetadata from "../../units/projectileMetadataFactory";
+import hasValue from "../../util/hasValue";
+import {setUnitMovementTowards} from "./moveTowardsCurrentWaypoint";
+import calculateUnitMovementPerTick from "../../units/calculateUnitMovementPerTick";
 
 let projectileIds = 0;
 
 export default function fireProjectiles(state: GameState) {
+
+    // Check if a unit should be firing or moving towards it's target.
+    state.units.filter(unit => hasValue(unit.targetingUnit) && unit.unitState !== UnitState.Firing).forEach(unit => {
+        const unitData = unitMetadataFactory.getUnit(unit.unitType);
+        const targetUnit = state.units.find(({id}) => id === unit.targetingUnit);
+        const unitInRange = unit.position.distanceTo(targetUnit.position) < unitData.attackRange * config.tileLength;
+
+        if (unitInRange) {
+            unit.movingDirection = null;
+            unit.unitStateStartedAt = state.ticks;
+            unit.unitState = UnitState.Firing;
+        }
+        else {
+            setUnitMovementTowards(unit, targetUnit.position);
+            unit.position.add(calculateUnitMovementPerTick(unit));
+        }
+    });
+
+    // Handle the firing component of the attacking phase.
     state.units
         .filter(({unitState}) => unitState === UnitState.Firing)
         .forEach((unit) => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
             const firingFrame = Math.ceil(unitData.attackFrameDelay * config.ticksPerSecond);
+
             if (state.ticks - unit.unitStateStartedAt === Math.ceil(firingFrame)) {
                 const targetingUnit = state.units.find(({id}) => id === unit.targetingUnit);
                 const distance = unit.position.distanceTo(targetingUnit.position);
