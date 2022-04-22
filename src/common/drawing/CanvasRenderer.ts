@@ -9,7 +9,7 @@ import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
 import UnitState from '../units/UnitState';
 import pointInRect from '../util/pointInRect';
-import projectileMetadata from "../units/projectileMetadataFactory";
+import projectileMetadata from "../units/projectileMetadata";
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
 
 export default class CanvasRenderer implements RendererInterface {
