@@ -3,13 +3,13 @@ import RoomList from './RoomList';
 import useEmittedData from '../hooks/useEmittedData';
 import Room from './Room';
 import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../../types';
-import RoomStatus from '../../common/rooms/RoomStatus';
+import RoomStatus from '../../server/rooms/RoomStatus';
 import MultiplayerGame from './MultiplayerGame';
 import {useState} from 'react';
 import SinglePlayerGame from './SinglePlayerGame';
 
 export default function Lobby({io}: { io: Socket }) {
-    return (<SinglePlayerGame/>);
+    // return (<SinglePlayerGame/>);
 
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>(io, 'playerInfo', {inRoom: null, isSpectator: null, playingAs: null});
     const roomList = useEmittedData<EmittedRoom[]>(io, 'listRooms', []);

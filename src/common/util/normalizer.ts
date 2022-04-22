@@ -1,6 +1,5 @@
 import {FallenUnitInstance, GameState, GameStateAction, PlayerId, ProjectileInstance, UnitInstance} from '../../types';
 import {Vector2} from 'three';
-import ProjectileType from "../units/ProjectileType";
 
 export function normalizeGameStateAction(action: GameStateAction): GameStateAction {
     const vectorKeys = [

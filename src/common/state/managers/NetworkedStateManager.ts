@@ -10,7 +10,7 @@ import {
 } from '../../../types';
 import {Socket} from 'socket.io-client';
 import {Vector2} from 'three';
-import {normalizeGameStateObject} from '../../util/normalizer';
+import {normalizeGameStateAction, normalizeGameStateObject} from '../../util/normalizer';
 
 /**
  * A state manager with a client => server relationship.
@@ -31,7 +31,6 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchGame(action: GameStateAction) {
-        // @todo, a local tick could also be invoked for interpolation, when network latency is high?
         this.socket.emit('stateDispatch', action);
     }
 
@@ -46,6 +45,10 @@ export default class NetworkedStateManager implements StateManagerInterface {
     init(): void {
         this.socket.on('gameStateUpdated', (serverState) => {
             this.gameState = normalizeGameStateObject(serverState);
+        });
+        this.socket.on('gameStateAction', (serverAction) => {
+            const action = normalizeGameStateAction(serverAction);
+            this.gameState = gameStateMutator(this.gameState, action);
         });
     }
 }

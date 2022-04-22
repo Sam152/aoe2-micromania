@@ -1,7 +1,7 @@
 import {Socket} from 'socket.io-client';
 import {EmittedRoom} from '../../types';
-import roomStatusLabel from '../../common/rooms/RoomStatusLabel';
-import RoomStatus from '../../common/rooms/RoomStatus';
+import roomStatusLabel from '../../server/rooms/RoomStatusLabel';
+import RoomStatus from '../../server/rooms/RoomStatus';
 
 export default function RoomList({io, roomList}: {io: Socket, roomList: EmittedRoom[]}) {
     return (

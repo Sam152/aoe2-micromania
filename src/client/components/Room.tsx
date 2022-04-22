@@ -1,6 +1,6 @@
 import {Socket} from 'socket.io-client';
 import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../../types';
-import RoomStatusLabel from '../../common/rooms/RoomStatusLabel';
+import RoomStatusLabel from '../../server/rooms/RoomStatusLabel';
 
 export default function Room({io, playerInfo}: {io: Socket, playerInfo: EmittedPlayerLobbyMetadata}) {
     const room = playerInfo.inRoom;

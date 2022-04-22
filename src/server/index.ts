@@ -1,7 +1,7 @@
 import {createServer} from 'http';
 import {Server} from 'socket.io';
-import RoomManager from '../common/rooms/RoomManager';
-import Player from '../common/rooms/Player';
+import RoomManager from './rooms/RoomManager';
+import Player from './rooms/Player';
 import {RoomId} from '../types';
 
 const httpServer = createServer();

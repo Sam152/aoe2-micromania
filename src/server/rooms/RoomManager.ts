@@ -1,6 +1,6 @@
 import {EmittedRoom, RoomId} from '../../types';
 import Room from './Room';
-import generateId from '../util/generateId';
+import generateId from '../../common/util/generateId';
 import {Server} from 'socket.io';
 import EventEmitter from 'events';
 import Player from './Player';

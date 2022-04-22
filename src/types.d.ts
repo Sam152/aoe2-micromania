@@ -1,4 +1,4 @@
-import RoomStatus from './common/rooms/RoomStatus';
+import RoomStatus from './server/rooms/RoomStatus';
 import UnitState from './common/units/UnitState';
 import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';

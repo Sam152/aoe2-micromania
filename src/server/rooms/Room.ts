@@ -1,10 +1,10 @@
 import {EmittedRoom, RoomId, StateManagerInterface} from '../../types';
-import LocalStateManager from '../state/managers/LocalStateManager';
+import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import Player from './Player';
 import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
-import ArcherMicro from '../modes/ArcherMicro';
+import ArcherMicro from '../../common/modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
-import {normalizeGameStateAction} from '../util/normalizer';
+import {normalizeGameStateAction} from '../../common/util/normalizer';
 
 export default class Room {
     id: RoomId;
@@ -62,20 +62,26 @@ export default class Room {
 
         this.state = new LocalStateManager((gameState, action) => {
             // The network could either dispatch the whole units state OR the action, letting the clients
-            // calculate the whole state + a hash of it's own internal calculated state.
+            // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
+            // where clients could drift out of sync and require syncing back up?
             this.room.emit('gameStateUpdated', gameState);
+            // this.room.emit('gameStateAction', action);
         });
-
-        const gameMode = new ArcherMicro();
-        gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
 
         this.players.map((player) => {
             player.socket.on('stateDispatch', (action) => {
+                // @todo, actions should be validated here for anti-cheat.
                 this.state.dispatchGame(normalizeGameStateAction(action));
             });
         });
 
-        this.state.init();
+        // Allow some time for assets to load in each client.
+        // @todo wait for a "loaded" ping from each player.
+        setTimeout(() => {
+            this.state.init();
+            const gameMode = new ArcherMicro();
+            gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
+        }, 2000);
     }
 
     toEmitted(): EmittedRoom {
