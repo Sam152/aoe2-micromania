@@ -112,7 +112,21 @@ export default class CanvasRenderer implements RendererInterface {
             const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
             let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
             const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
-            circle(this.context, projectile.startingPoint.clone().add(projectile.pathVector.clone().multiplyScalar(percentageComplete)), 5, 'red');
+
+            const length = projectile.pathVector.length();
+            const lengthComplete = percentageComplete * length;
+
+            const zValue = (
+                -1 * Math.pow(lengthComplete - (length / 2), 2) + Math.pow(length / 2, 2)
+            ) * 0.005;
+
+            const positionOnPathVector = projectile.pathVector.clone().multiplyScalar(percentageComplete);
+            const position = projectile.startingPoint.clone().add(positionOnPathVector);
+
+            circle(this.context, {
+                x: position.x,
+                y: position.y - zValue
+            }, 5, 'red');
         });
     }
 

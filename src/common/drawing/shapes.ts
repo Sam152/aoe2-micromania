@@ -1,7 +1,7 @@
 import {Vector2, Vector3} from 'three';
 import {Rectangle} from '../../types';
 
-export function circle(ctx: CanvasRenderingContext2D, position: Vector2 | Vector3, radius: number = 5, color: string = 'green') {
+export function circle(ctx: CanvasRenderingContext2D, position: Vector2 | Vector3 | {x: number, y: number}, radius: number = 5, color: string = 'green') {
     ctx.beginPath();
     ctx.arc(position.x, position.y, radius, 0, 2 * Math.PI, false);
     ctx.fillStyle = color;
