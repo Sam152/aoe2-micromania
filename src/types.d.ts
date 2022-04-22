@@ -220,6 +220,7 @@ export interface UnitStats {
     attackRange: number;
     attackDamage: number;
     firingAnchor: Vector2;
+    selectionRadius: number;
     animations: {
         [key in UnitState]: {
             slp: string;

@@ -28,6 +28,7 @@ const unitDefinitions: {
         attackRange: 6,
         attackDamage: 4,
         firingAnchor: new Vector2(14, -24),
+        selectionRadius: 20,
         animations: {
             [UnitState.Idle]: {
                 slp: 'xbow-stand',
@@ -64,7 +65,8 @@ const unitDefinitions: {
         attackRange: 7, // minimum 3?
         attackDamage: 40,
         firesProjectileType: ProjectileType.Rock,
-        firingAnchor: new Vector2(0, 0),
+        firingAnchor: new Vector2(0, -30),
+        selectionRadius: 50,
         animations: {
             [UnitState.Idle]: {
                 slp: 'mangonel-stand',

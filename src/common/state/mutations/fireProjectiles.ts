@@ -59,8 +59,10 @@ export default function fireProjectiles(state: GameState) {
                         targetingUnit.position.clone().add(new Vector2(20, 15)),
                         targetingUnit.position.clone().add(new Vector2(-14, 12)),
                         targetingUnit.position.clone().add(new Vector2(-22, -11)),
+                        targetingUnit.position.clone().add(new Vector2(-22, -11)),
                         targetingUnit.position.clone().add(new Vector2(-13, 30)),
                         targetingUnit.position.clone().add(new Vector2(30, 30)),
+                        targetingUnit.position.clone().add(new Vector2(15, 15)),
                     ]
                     : [targetingUnit.position.clone()]
 

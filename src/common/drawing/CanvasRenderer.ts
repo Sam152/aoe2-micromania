@@ -147,7 +147,7 @@ export default class CanvasRenderer implements RendererInterface {
             if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
                 this.context.beginPath();
                 this.context.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, slp.getWidth() / 2, slp.getWidth() / 4, 0, 0, 2 * Math.PI);
+                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
                 this.context.stroke();
             }
 
