@@ -1,7 +1,7 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {square} from './shapes';
+import {circle, square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three';
 import config from '../config';
@@ -126,7 +126,7 @@ export default class CanvasRenderer implements RendererInterface {
             this.slpManager.getAsset(projectileInfo.asset).drawFrame(
                 this.context,
                 position,
-                10,
+                projectileInfo.frames[projectile.id % projectileInfo.frames.length],
                 angle + Math.PI * 1.5
             );
         });

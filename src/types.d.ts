@@ -46,6 +46,7 @@ export interface ProjectileInstance {
     pathVector: Vector2;
     startingTick: number;
     arrivingTick: number;
+    hasDamage: boolean;
 }
 
 export interface RendererInterface {
