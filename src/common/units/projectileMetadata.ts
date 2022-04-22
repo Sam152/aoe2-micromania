@@ -6,7 +6,7 @@ const projectileMetadata: {
     }
 } = {
     [ProjectileType.Arrow]: {
-        speed: 45,
+        speed: 30,
     },
     [ProjectileType.Rock]: {
         speed: 10,

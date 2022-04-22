@@ -4,25 +4,28 @@ import {UnitStats} from '../../types';
 import AnimationStyle from './AnimationStyle';
 import ProjectileType from "./ProjectileType";
 
-const aocUnitsData = require('./data/aoc_units.json');
-
+/**
+ * Definitions of units, mapped from AOC JSON file:
+ * @code
+ * attackFrameDelay: parseFloat(aocData.ad),
+ * reloadTime: parseFloat(aocData.fr),
+ * movementRate: parseFloat(aocData.mr),
+ * hitPoints: parseFloat(aocData.hp),
+ * attackRange: parseFloat(aocData.ra),
+ * attackDamage: parseFloat(aocData.at),
+ * @endcode
+ */
 const unitDefinitions: {
-    [key in Unit]: {
-        aocDataName: string;
-        firesProjectileType: ProjectileType;
-        animations: {
-            [key in UnitState]: {
-                slp: string;
-                underSlp?: string;
-                animationDuration: number;
-                style: AnimationStyle;
-            }
-        };
-    }
+    [key in Unit]: UnitStats
 } = {
     [Unit.Archer]: {
-        aocDataName: 'Crossbowman',
         firesProjectileType: ProjectileType.Arrow,
+        attackFrameDelay: 0.35,
+        reloadTime: 2,
+        movementRate: 0.96,
+        hitPoints: 30,
+        attackRange: 6,
+        attackDamage: 4,
         animations: {
             [UnitState.Idle]: {
                 slp: 'xbow-stand',
@@ -52,7 +55,12 @@ const unitDefinitions: {
         },
     },
     [Unit.Mangonel]: {
-        aocDataName: 'Mangonel',
+        attackFrameDelay: 0,
+        reloadTime: 6,
+        movementRate: 0.6,
+        hitPoints: 50,
+        attackRange: 7, // minimum 3?
+        attackDamage: 40,
         firesProjectileType: ProjectileType.Rock,
         animations: {
             [UnitState.Idle]: {
@@ -92,20 +100,10 @@ class UnitMetadata {
 
     constructor() {
         this.units = {};
-        (Object.keys(unitDefinitions) as unknown as Unit[]).forEach((unit) => {
-            const aocData = aocUnitsData.data.find((element: {
-                [key: string]: any;
-            }) => element.name === unitDefinitions[unit].aocDataName);
-
+        (Object.keys(unitDefinitions) as unknown as Unit[]).forEach(unit => {
             this.units[unit] = {
-                firesProjectileType: unitDefinitions[unit].firesProjectileType,
-                attackFrameDelay: parseFloat(aocData.ad),
-                reloadTime: parseFloat(aocData.fr),
-                movementRate: parseFloat(aocData.mr),
-                hitPoints: parseFloat(aocData.hp),
-                attackRange: parseFloat(aocData.ra),
-                attackDamage: parseFloat(aocData.at),
-                animations: unitDefinitions[unit].animations,
+                // Compute any required properties.
+                ...unitDefinitions[unit],
             };
         });
     }

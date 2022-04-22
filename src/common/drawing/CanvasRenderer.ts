@@ -1,7 +1,7 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from './shapes';
+import {square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three';
 import config from '../config';
@@ -9,8 +9,9 @@ import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
 import UnitState from '../units/UnitState';
 import pointInRect from '../util/pointInRect';
-import projectileMetadata from "../units/projectileMetadata";
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
+import CompassDirection from "../units/CompassDirection";
+import getArrowPosition from "./helpers/getArrowPosition";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -20,6 +21,7 @@ export default class CanvasRenderer implements RendererInterface {
     frameAtLastRenderedTick: number;
     framesPerTick: number;
     fractionOfTickRendered: number;
+    private lastCursor: number | null;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -33,6 +35,8 @@ export default class CanvasRenderer implements RendererInterface {
 
         // @ts-ignore
         window.ctx = this.context;
+
+        this.lastCursor = null;
 
         this.fit();
         window.addEventListener('resize', this.fit.bind(this));
@@ -113,20 +117,16 @@ export default class CanvasRenderer implements RendererInterface {
             let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
             const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
 
-            const length = projectile.pathVector.length();
-            const lengthComplete = percentageComplete * length;
+            const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
+            const position = getArrowPosition(projectile, percentageComplete);
+            const angle = position.clone().sub(positionPrevious).angle();
 
-            const zValue = (
-                -1 * Math.pow(lengthComplete - (length / 2), 2) + Math.pow(length / 2, 2)
-            ) * 0.005;
-
-            const positionOnPathVector = projectile.pathVector.clone().multiplyScalar(percentageComplete);
-            const position = projectile.startingPoint.clone().add(positionOnPathVector);
-
-            circle(this.context, {
-                x: position.x,
-                y: position.y - zValue
-            }, 5, 'red');
+            this.slpManager.getAsset('arrow').drawFrame(
+                this.context,
+                position,
+                10,
+                angle + Math.PI * 1.5
+            );
         });
     }
 
@@ -144,8 +144,8 @@ export default class CanvasRenderer implements RendererInterface {
             // If the unit is selected, draw an oval around its base.
             if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
                 this.context.beginPath();
-                this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
-                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, slp.getWidth() / 1.5, slp.getWidth() / 3, 0, 0, 2 * Math.PI);
+                this.context.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, slp.getWidth() / 2, slp.getWidth() / 4, 0, 0, 2 * Math.PI);
                 this.context.stroke();
             }
 
@@ -223,9 +223,11 @@ export default class CanvasRenderer implements RendererInterface {
         const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
-
         const cursor = attacking ? 4 : 0;
 
-        this.slpManager.getAsset('mouse-icons').drawFrame(this.context, state.mousePosition, cursor);
+        if (cursor !== this.lastCursor) {
+            this.canvas.style.cursor = `url("assets/cursor/${cursor}.svg"), none`;
+            this.lastCursor = cursor;
+        }
     }
 }

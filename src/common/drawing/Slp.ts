@@ -27,10 +27,21 @@ export default class Slp {
         context: CanvasRenderingContext2D,
         at: Vector2,
         frameIndex: number,
+        rotate: number | null = null,
     ) {
         const frame = this.frames[frameIndex % this.frames.length];
         const bitmap = frame.rendered[1];
-        context.drawImage(bitmap, at.x, at.y);
+
+        if (rotate) {
+            context.save();
+            context.translate(at.x, at.y);
+            context.rotate(rotate);
+            context.translate(-at.x, -at.y);
+            context.drawImage(bitmap, at.x, at.y);
+            context.restore();
+        } else {
+            context.drawImage(bitmap, at.x, at.y);
+        }
     }
 
     animateAsset(

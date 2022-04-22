@@ -87,6 +87,7 @@ export default class SlpManager {
     assetList(): string[] {
         return [
             'mouse-icons',
+            'arrow',
             'move-command',
             'terrain-green',
             'terrain-sandy',
