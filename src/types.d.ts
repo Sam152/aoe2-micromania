@@ -218,6 +218,7 @@ export interface UnitStats {
     hitPoints: number;
     attackRange: number;
     attackDamage: number;
+    firingAnchor: Vector2;
     animations: {
         [key in UnitState]: {
             slp: string;

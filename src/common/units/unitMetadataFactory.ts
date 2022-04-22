@@ -3,6 +3,7 @@ import UnitState from './UnitState';
 import {UnitStats} from '../../types';
 import AnimationStyle from './AnimationStyle';
 import ProjectileType from "./ProjectileType";
+import {Vector2} from "three";
 
 /**
  * Definitions of units, mapped from AOC JSON file:
@@ -26,6 +27,7 @@ const unitDefinitions: {
         hitPoints: 30,
         attackRange: 6,
         attackDamage: 4,
+        firingAnchor: new Vector2(14, -24),
         animations: {
             [UnitState.Idle]: {
                 slp: 'xbow-stand',
@@ -62,6 +64,7 @@ const unitDefinitions: {
         attackRange: 7, // minimum 3?
         attackDamage: 40,
         firesProjectileType: ProjectileType.Rock,
+        firingAnchor: new Vector2(0, 0),
         animations: {
             [UnitState.Idle]: {
                 slp: 'mangonel-stand',

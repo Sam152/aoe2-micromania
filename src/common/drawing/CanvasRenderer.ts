@@ -10,8 +10,8 @@ import Grid from '../terrain/Grid';
 import UnitState from '../units/UnitState';
 import pointInRect from '../util/pointInRect';
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
-import CompassDirection from "../units/CompassDirection";
 import getArrowPosition from "./helpers/getArrowPosition";
+import projectileMetadata from "../units/projectileMetadata";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -113,6 +113,8 @@ export default class CanvasRenderer implements RendererInterface {
 
     drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
         gameState.projectiles.forEach(projectile => {
+            const projectileInfo = projectileMetadata[projectile.type];
+
             const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
             let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
             const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
@@ -121,7 +123,7 @@ export default class CanvasRenderer implements RendererInterface {
             const position = getArrowPosition(projectile, percentageComplete);
             const angle = position.clone().sub(positionPrevious).angle();
 
-            this.slpManager.getAsset('arrow').drawFrame(
+            this.slpManager.getAsset(projectileInfo.asset).drawFrame(
                 this.context,
                 position,
                 10,

@@ -49,15 +49,17 @@ export default function fireProjectiles(state: GameState) {
                 const targetingUnit = state.units.find(({id}) => id === unit.targetingUnit);
                 const distance = unit.position.distanceTo(targetingUnit.position);
 
+                const startingPoint = unit.position.clone().add(unitData.firingAnchor);
+
                 state.projectiles.push({
                     id: projectileIds++,
                     ownedBy: unit.ownedByPlayer,
                     type: unitData.firesProjectileType,
-                    startingPoint: unit.position.clone(),
+                    startingPoint: startingPoint,
                     destination: targetingUnit.position.clone(),
                     startingTick: state.ticks,
                     arrivingTick: Math.floor(state.ticks + (distance / projectileMetadata[unitData.firesProjectileType].speed)),
-                    pathVector: targetingUnit.position.clone().sub(unit.position),
+                    pathVector: targetingUnit.position.clone().sub(startingPoint),
                     targeting: targetingUnit.id,
                 });
 

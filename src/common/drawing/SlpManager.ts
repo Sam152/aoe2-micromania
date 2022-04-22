@@ -88,6 +88,7 @@ export default class SlpManager {
         return [
             'mouse-icons',
             'arrow',
+            'rocks',
             'move-command',
             'terrain-green',
             'terrain-sandy',
