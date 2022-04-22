@@ -80,7 +80,6 @@ export default function fireProjectiles(state: GameState) {
                         hasDamage: index === 0,
                     });
                 });
-                console.log(state.projectiles);
 
                 unit.reloadsAt = state.ticks + Math.ceil((unitData.reloadTime  / config.gameSpeed) * config.ticksPerSecond);
             }
