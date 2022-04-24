@@ -12,6 +12,7 @@ import pointInRect from '../util/pointInRect';
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
 import getArrowPosition from "./helpers/getArrowPosition";
 import projectileMetadata from "../units/projectileMetadata";
+import ActiveCommand from "../input/ActiveCommand";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -222,10 +223,17 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     renderMouse(state: ClientState) {
-        const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
-            .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
-            .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
-        const cursor = attacking ? 4 : 0;
+        let cursor;
+
+        if (state.activeCommand === ActiveCommand.AttackGround) {
+            cursor = 8;
+        }
+        else if (state.activeCommand === ActiveCommand.Default) {
+            const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
+                .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
+                .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
+            cursor = attacking ? 4 : 0;
+        }
 
         if (cursor !== this.lastCursor) {
             this.canvas.style.cursor = `url("graphics/interface/${cursor}.svg"), none`;

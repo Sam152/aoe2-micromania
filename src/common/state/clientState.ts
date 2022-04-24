@@ -1,10 +1,12 @@
-import {ClientState, ClientStateAction, GameDispatcher, GameState} from '../../types';
+import {ClientState, ClientStateAction, GameDispatcher} from '../../types';
 import deepClone from '../util/deepClone';
 import pointInRect from '../util/pointInRect';
 import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingWithRect';
 import FormationType from '../units/formations/FormationType';
 import config from '../config';
 import {Vector2} from 'three';
+import Unit from "../units/Unit";
+import ActiveCommand from "../input/ActiveCommand";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.name === 'FRAME_RENDERING_STARTED') {
@@ -23,7 +25,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         });
     }
 
-    if (action.name === 'RIGHT_CLICK' && state.selectedUnits.length > 0) {
+    if (action.name === 'RIGHT_CLICK' && state.selectedUnits.length > 0 && state.activeCommand === ActiveCommand.Default) {
         const attacking = state.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
@@ -32,7 +34,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         }
     }
 
-    if (action.name === 'LEFT_CLICK') {
+    if (action.name === 'LEFT_CLICK' && state.activeCommand === ActiveCommand.Default) {
         state.lastLeftClick = action.position;
         const foundUnit = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
@@ -48,6 +50,10 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
                 .filter((unitAndHitBox) => unitAndHitBox.unit.unitType === foundUnit.unit.unitType)
                 .map((unitAndHitBox) => unitAndHitBox.unit);
         }
+    }
+
+    if (action.name === 'HOTKEY_ATTACK_GROUND' && state.selectedUnits.length > 0 && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)) {
+        state.activeCommand = ActiveCommand.AttackGround;
     }
 
     if (action.name === 'FIXATE_CAMERA') {
@@ -92,7 +98,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
  * single player state manager).
  */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
-    if (action.name === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
+    if (action.name === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.Default) {
         const attacking = clientState.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
@@ -111,6 +117,15 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
                 formation: clientState.selectedFormation,
             });
         }
+    }
+    console.log(action.name, clientState.selectedUnits);
+    if (['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.AttackGround) {
+        gameDispatcher({
+            name: 'ATTACK_GROUND',
+            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+            position: clientState.mousePosition,
+        });
+        clientState.activeCommand = ActiveCommand.Default;
     }
     if (action.name === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
         const attacking = clientState.unitHitBoxes
@@ -154,6 +169,7 @@ function defaultState(playingAs: number): ClientState {
         playingAs: playingAs,
         renderedFrames: 0,
         selectedUnits: [],
+        activeCommand: ActiveCommand.Default,
         lastLeftClick: null,
         lastMoveClick: null,
         selectionRectangle: null,

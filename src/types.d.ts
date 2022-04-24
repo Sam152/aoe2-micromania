@@ -95,6 +95,10 @@ type GameStateAction = {
     name: 'ATTACK';
     units: number[];
     target: number;
+} | {
+    name: 'ATTACK_GROUND';
+    units: number[];
+    position: Vector2;
 };
 
 export interface ClientState {
@@ -105,6 +109,7 @@ export interface ClientState {
     playingAs: number;
     renderedFrames: number;
     selectedUnits: UnitInstance[];
+    activeCommand: ActiveCommand;
     selectedFormation: FormationType;
     selectionRectangle: Rectangle | null;
     mousePosition: Vector2;
