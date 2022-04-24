@@ -78,6 +78,11 @@ export default class InputManager {
                 name: 'HOTKEY_DELETE',
             });
         }
+        if (this.input.pressed('r')) {
+            this.dispatch({
+                name: 'HOTKEY_ATTACK_GROUND',
+            });
+        }
         if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
             this.dispatch({
                 name: 'HOTKEY_SHIFT_DELETE',

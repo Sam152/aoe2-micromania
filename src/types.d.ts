@@ -119,6 +119,8 @@ export type ClientStateAction = {
 } | {
     name: 'HOTKEY_STOP',
 } | {
+    name: 'HOTKEY_ATTACK_GROUND',
+} | {
     name: 'HOTKEY_DELETE',
 } | {
     name: 'HOTKEY_SHIFT_DELETE',
