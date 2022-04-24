@@ -74,6 +74,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     }
 
     if (action.name === 'DRAG_START') {
+        state.activeCommand = ActiveCommand.Default;
         state.selectionRectangle = {
             p1: action.position,
             p2: action.position,

@@ -18,7 +18,7 @@ export default function fireProjectiles(state: GameState) {
         .filter((unit) => (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing)
         .forEach((unit) => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
-            const targetingPosition = unit.targetingUnit ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
+            const targetingPosition = hasValue(unit.targetingUnit) ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
             const unitInRange = unit.position.distanceTo(targetingPosition) < unitData.attackRange * config.tileLength;
 
             if (unitInRange) {
