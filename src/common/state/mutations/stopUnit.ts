@@ -6,4 +6,6 @@ export default function stopUnit(unit: UnitInstance): void {
     unit.movingDirection = null;
     unit.waypoints = [];
     unit.clickedWaypoints = [];
+    unit.targetingPosition = null;
+    unit.targetingUnit = null;
 }

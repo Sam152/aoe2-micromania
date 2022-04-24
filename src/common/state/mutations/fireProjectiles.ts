@@ -16,11 +16,11 @@ export default function fireProjectiles(state: GameState) {
 
     // Check if a unit should be firing or moving towards it's target.
     state.units
-        .filter(unit => hasValue(unit.targetingUnit) && unit.unitState !== UnitState.Firing)
+        .filter(unit => (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing)
         .forEach(unit => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
-            const targetUnit = state.units.find(({id}) => id === unit.targetingUnit);
-            const unitInRange = unit.position.distanceTo(targetUnit.position) < unitData.attackRange * config.tileLength;
+            const targetingPosition = unit.targetingUnit ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
+            const unitInRange = unit.position.distanceTo(targetingPosition) < unitData.attackRange * config.tileLength;
 
             if (unitInRange) {
                 unit.movingDirection = null;
@@ -34,7 +34,7 @@ export default function fireProjectiles(state: GameState) {
                 }
 
             } else {
-                setUnitMovementTowards(unit, targetUnit.position);
+                setUnitMovementTowards(unit, targetingPosition);
                 unit.position.add(calculateUnitMovementPerTick(unit));
             }
         });
@@ -49,22 +49,24 @@ export default function fireProjectiles(state: GameState) {
 
             if (state.ticks - unit.unitStateStartedAt === firingFrame) {
                 const targetingUnit = state.units.find(({id}) => id === unit.targetingUnit);
-                const distance = unit.position.distanceTo(targetingUnit.position);
+                const targetingPosition = unit.targetingUnit ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
+
+                const distance = unit.position.distanceTo(targetingPosition);
 
                 const startingPoint = unit.position.clone().add(unitData.firingAnchor);
 
                 const destinations = unitData.firesProjectileType === ProjectileType.Rock
                     ? [
-                        targetingUnit.position.clone(),
-                        targetingUnit.position.clone().add(new Vector2(20, 15)),
-                        targetingUnit.position.clone().add(new Vector2(-14, 12)),
-                        targetingUnit.position.clone().add(new Vector2(-22, -11)),
-                        targetingUnit.position.clone().add(new Vector2(-22, -11)),
-                        targetingUnit.position.clone().add(new Vector2(-13, 30)),
-                        targetingUnit.position.clone().add(new Vector2(30, 30)),
-                        targetingUnit.position.clone().add(new Vector2(15, 15)),
+                        targetingPosition.clone(),
+                        targetingPosition.clone().add(new Vector2(20, 15)),
+                        targetingPosition.clone().add(new Vector2(-14, 12)),
+                        targetingPosition.clone().add(new Vector2(-22, -11)),
+                        targetingPosition.clone().add(new Vector2(-22, -11)),
+                        targetingPosition.clone().add(new Vector2(-13, 30)),
+                        targetingPosition.clone().add(new Vector2(30, 30)),
+                        targetingPosition.clone().add(new Vector2(15, 15)),
                     ]
-                    : [targetingUnit.position.clone()]
+                    : [targetingPosition.clone()]
 
                 destinations.forEach((destination, index) => {
                     state.projectiles.push({
@@ -76,7 +78,7 @@ export default function fireProjectiles(state: GameState) {
                         startingTick: state.ticks,
                         arrivingTick: Math.floor(state.ticks + (distance / projectileMetadata[unitData.firesProjectileType].speed)),
                         pathVector: destination.clone().sub(startingPoint),
-                        targeting: targetingUnit.id,
+                        targeting: targetingUnit ? targetingUnit.id : null,
                         hasDamage: index === 0,
                     });
                 });

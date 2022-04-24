@@ -13,10 +13,6 @@ import registerProjectileHits from "./mutations/registerProjectileHits";
 let unitId = 0;
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
-    if (action.name === 'ATTACK_GROUND') {
-        console.log(action);
-    }
-
     if (action.name === 'SPAWN_UNIT') {
         state.units.push({
             id: unitId++,
@@ -38,6 +34,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         units.forEach((unit) => {
             unit.clickedWaypoints = [];
             unit.targetingUnit = null;
+            unit.targetingPosition = null;
         });
         const positions = units.map((unit) => unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
@@ -91,6 +88,16 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             attackingUnit.movingDirection = null;
         });
     }
+    if (action.name === 'ATTACK_GROUND') {
+        const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
+        attackingUnits.forEach((attackingUnit) => {
+            attackingUnit.targetingPosition = action.position;
+            attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, action.position);
+            attackingUnit.waypoints = [];
+            attackingUnit.movingDirection = null;
+        });
+    }
+
 
     if (action.name === 'TICK') {
         fireProjectiles(state);

@@ -15,6 +15,7 @@ export interface UnitInstance {
     unitStateStartedAt: number;
 
     targetingUnit?: number;
+    targetingPosition?: Vector2;
     reloadsAt: number;
 
     // A waypoint is an exact location a unit is moving to and a clicked waypoint
@@ -40,7 +41,7 @@ export interface ProjectileInstance {
     id: number;
     ownedBy: PlayerId;
     type: ProjectileType;
-    targeting: PlayerId;
+    targeting?: PlayerId;
     startingPoint: Vector2;
     destination: Vector2;
     pathVector: Vector2;
