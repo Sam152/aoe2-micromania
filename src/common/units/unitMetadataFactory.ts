@@ -2,8 +2,8 @@ import Unit from './Unit';
 import UnitState from './UnitState';
 import {UnitStats} from '../../types';
 import AnimationStyle from './AnimationStyle';
-import ProjectileType from "./ProjectileType";
-import {Vector2} from "three";
+import ProjectileType from './ProjectileType';
+import {Vector2} from 'three';
 
 /**
  * Definitions of units, mapped from AOC JSON file:
@@ -105,7 +105,7 @@ class UnitMetadata {
 
     constructor() {
         this.units = {};
-        (Object.keys(unitDefinitions) as unknown as Unit[]).forEach(unit => {
+        (Object.keys(unitDefinitions) as unknown as Unit[]).forEach((unit) => {
             this.units[unit] = {
                 // Compute any required properties.
                 ...unitDefinitions[unit],

@@ -6,9 +6,9 @@ import moveTowardsCurrentWaypoint from './mutations/moveTowardsCurrentWaypoint';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit from './mutations/stopUnit';
 import compassDirectionCalculator from '../units/compassDirectionCalculator';
-import fireProjectiles from "./mutations/fireProjectiles";
-import moveUnits from "./mutations/moveUnits";
-import registerProjectileHits from "./mutations/registerProjectileHits";
+import fireProjectiles from './mutations/fireProjectiles';
+import moveUnits from './mutations/moveUnits';
+import registerProjectileHits from './mutations/registerProjectileHits';
 
 let unitId = 0;
 

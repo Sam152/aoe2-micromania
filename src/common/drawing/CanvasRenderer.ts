@@ -9,10 +9,10 @@ import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
 import UnitState from '../units/UnitState';
 import pointInRect from '../util/pointInRect';
-import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
-import getArrowPosition from "./helpers/getArrowPosition";
-import projectileMetadata from "../units/projectileMetadata";
-import ActiveCommand from "../input/ActiveCommand";
+import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick';
+import getArrowPosition from './helpers/getArrowPosition';
+import projectileMetadata from '../units/projectileMetadata';
+import ActiveCommand from '../input/ActiveCommand';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -113,11 +113,11 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
-        gameState.projectiles.forEach(projectile => {
+        gameState.projectiles.forEach((projectile) => {
             const projectileInfo = projectileMetadata[projectile.type];
 
             const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
-            let ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
+            const ticksOfJourneyComplete = (gameState.ticks - projectile.startingTick) + this.fractionOfTickRendered;
             const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
 
             const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
@@ -128,7 +128,7 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context,
                 position,
                 projectileInfo.frames[projectile.id % projectileInfo.frames.length],
-                angle + Math.PI * 1.5
+                angle + Math.PI * 1.5,
             );
         });
     }
@@ -140,9 +140,9 @@ export default class CanvasRenderer implements RendererInterface {
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
             const movementVector = calculateUnitMovementPerTick(unitInstance);
-            const interpolatedPosition = movementVector
-                ? unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered))
-                : unitInstance.position;
+            const interpolatedPosition = movementVector ?
+                unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
+                unitInstance.position;
 
             // If the unit is selected, draw an oval around its base.
             if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
@@ -227,8 +227,7 @@ export default class CanvasRenderer implements RendererInterface {
 
         if (state.activeCommand === ActiveCommand.AttackGround) {
             cursor = 8;
-        }
-        else if (state.activeCommand === ActiveCommand.Default) {
+        } else if (state.activeCommand === ActiveCommand.Default) {
             const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
                 .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
                 .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));

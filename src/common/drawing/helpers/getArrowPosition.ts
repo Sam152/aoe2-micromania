@@ -1,5 +1,5 @@
-import {ProjectileInstance} from "../../../types";
-import {Vector2} from "three";
+import {ProjectileInstance} from '../../../types';
+import {Vector2} from 'three';
 
 
 export default function getArrowPosition(projectile: ProjectileInstance, percentageComplete: number) {
@@ -12,6 +12,6 @@ export default function getArrowPosition(projectile: ProjectileInstance, percent
 
     const positionOnPathVector = projectile.pathVector.clone().multiplyScalar(percentageComplete);
     return projectile.startingPoint.clone().add(positionOnPathVector).sub(
-        new Vector2(0, zValue)
+        new Vector2(0, zValue),
     );
 }

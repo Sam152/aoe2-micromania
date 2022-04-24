@@ -3,7 +3,7 @@ import CompassDirection from '../units/CompassDirection';
 import anchorAt from '../util/anchorAt';
 import AnimationStyle from '../units/AnimationStyle';
 import {Vector2} from 'three';
-import ticksForAnimation from "../util/ticksForAnimation";
+import ticksForAnimation from '../util/ticksForAnimation';
 
 const SLP = require('genie-slp');
 

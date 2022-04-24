@@ -1,9 +1,9 @@
-import {GameState} from "../../../types";
+import {GameState} from '../../../types';
 
 export default function registerProjectileHits(state: GameState) {
     const landedProjectiles = state.projectiles.filter(({arrivingTick}) => arrivingTick === state.ticks);
 
-    landedProjectiles.forEach(projectile => {
+    landedProjectiles.forEach((projectile) => {
         console.log('HANDLE HIT');
     });
 

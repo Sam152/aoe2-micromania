@@ -1,4 +1,4 @@
-import config from "../config";
+import config from '../config';
 
 export default function ticksForAnimation(animationDuration: number): number {
     const gameSpeedAdjustedAnimationDuration = animationDuration / config.gameSpeed;

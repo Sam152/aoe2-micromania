@@ -55,6 +55,8 @@ export interface RendererInterface {
     bootUp: () => Promise<void>;
 }
 
+export type StateTransmitter = (clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void;
+
 export interface GameState {
     ticks: number;
     units: UnitInstance[];

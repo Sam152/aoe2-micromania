@@ -1,4 +1,4 @@
-import ProjectileType from "./ProjectileType";
+import ProjectileType from './ProjectileType';
 
 const projectileMetadata: {
     [key in ProjectileType]: {

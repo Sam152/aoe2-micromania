@@ -1,9 +1,9 @@
-import unitMetadataFactory from "../../units/unitMetadataFactory";
-import config from "../../config";
-import moveTowardsCurrentWaypoint from "./moveTowardsCurrentWaypoint";
-import stopUnit from "./stopUnit";
-import {GameState} from "../../../types";
-import calculateUnitMovementPerTick from "../../units/calculateUnitMovementPerTick";
+import unitMetadataFactory from '../../units/unitMetadataFactory';
+import config from '../../config';
+import moveTowardsCurrentWaypoint from './moveTowardsCurrentWaypoint';
+import stopUnit from './stopUnit';
+import {GameState} from '../../../types';
+import calculateUnitMovementPerTick from '../../units/calculateUnitMovementPerTick';
 
 export default function moveUnits(state: GameState) {
     // Move all units that have some active waypoint.
@@ -18,5 +18,4 @@ export default function moveUnits(state: GameState) {
             }
         }
     });
-
 }

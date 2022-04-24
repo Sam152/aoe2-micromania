@@ -1,23 +1,22 @@
-import UnitState from "../../units/UnitState";
-import unitMetadataFactory from "../../units/unitMetadataFactory";
-import config from "../../config";
-import {GameState} from "../../../types";
-import projectileMetadata from "../../units/projectileMetadata";
-import hasValue from "../../util/hasValue";
-import {setUnitMovementTowards} from "./moveTowardsCurrentWaypoint";
-import calculateUnitMovementPerTick from "../../units/calculateUnitMovementPerTick";
-import ticksForAnimation from "../../util/ticksForAnimation";
-import ProjectileType from "../../units/ProjectileType";
-import {Vector2} from "three";
+import UnitState from '../../units/UnitState';
+import unitMetadataFactory from '../../units/unitMetadataFactory';
+import config from '../../config';
+import {GameState} from '../../../types';
+import projectileMetadata from '../../units/projectileMetadata';
+import hasValue from '../../util/hasValue';
+import {setUnitMovementTowards} from './moveTowardsCurrentWaypoint';
+import calculateUnitMovementPerTick from '../../units/calculateUnitMovementPerTick';
+import ticksForAnimation from '../../util/ticksForAnimation';
+import ProjectileType from '../../units/ProjectileType';
+import {Vector2} from 'three';
 
 let projectileIds = 0;
 
 export default function fireProjectiles(state: GameState) {
-
     // Check if a unit should be firing or moving towards it's target.
     state.units
-        .filter(unit => (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing)
-        .forEach(unit => {
+        .filter((unit) => (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing)
+        .forEach((unit) => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
             const targetingPosition = unit.targetingUnit ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
             const unitInRange = unit.position.distanceTo(targetingPosition) < unitData.attackRange * config.tileLength;
@@ -32,7 +31,6 @@ export default function fireProjectiles(state: GameState) {
                     unit.unitState = UnitState.Idle;
                     unit.unitStateStartedAt = state.ticks;
                 }
-
             } else {
                 setUnitMovementTowards(unit, targetingPosition);
                 unit.position.add(calculateUnitMovementPerTick(unit));
@@ -55,8 +53,8 @@ export default function fireProjectiles(state: GameState) {
 
                 const startingPoint = unit.position.clone().add(unitData.firingAnchor);
 
-                const destinations = unitData.firesProjectileType === ProjectileType.Rock
-                    ? [
+                const destinations = unitData.firesProjectileType === ProjectileType.Rock ?
+                    [
                         targetingPosition.clone(),
                         targetingPosition.clone().add(new Vector2(20, 15)),
                         targetingPosition.clone().add(new Vector2(-14, 12)),
@@ -65,8 +63,8 @@ export default function fireProjectiles(state: GameState) {
                         targetingPosition.clone().add(new Vector2(-13, 30)),
                         targetingPosition.clone().add(new Vector2(30, 30)),
                         targetingPosition.clone().add(new Vector2(15, 15)),
-                    ]
-                    : [targetingPosition.clone()]
+                    ] :
+                    [targetingPosition.clone()];
 
                 destinations.forEach((destination, index) => {
                     state.projectiles.push({
@@ -83,7 +81,7 @@ export default function fireProjectiles(state: GameState) {
                     });
                 });
 
-                unit.reloadsAt = state.ticks + Math.ceil((unitData.reloadTime  / config.gameSpeed) * config.ticksPerSecond);
+                unit.reloadsAt = state.ticks + Math.ceil((unitData.reloadTime / config.gameSpeed) * config.ticksPerSecond);
             }
 
             if (state.ticks - unit.unitStateStartedAt === idleFrame) {

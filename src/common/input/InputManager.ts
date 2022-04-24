@@ -1,4 +1,10 @@
-import {ClientState, ClientStateAction, GameDispatcher, StateManagerInterface} from '../../types';
+import {
+    ClientState,
+    ClientStateAction,
+    GameDispatcher,
+    StateManagerInterface,
+    StateTransmitter,
+} from '../../types';
 import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
 import {Vector2} from 'three';
 
@@ -10,10 +16,10 @@ export default class InputManager {
     input: typeof StInput;
     private dragging: boolean;
     stateManager: StateManagerInterface;
-    private clientStateTransmitter: (clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void;
+    private clientStateTransmitter: StateTransmitter;
     private lastLeftClick: number;
 
-    constructor(element: HTMLCanvasElement, stateManager: StateManagerInterface, clientStateTransmitter: (clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void) {
+    constructor(element: HTMLCanvasElement, stateManager: StateManagerInterface, clientStateTransmitter: StateTransmitter) {
         this.input = new StInput();
         this.input.disableContextMenu = true;
         this.dragging = false;

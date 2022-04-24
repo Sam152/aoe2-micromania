@@ -1,7 +1,7 @@
-import unitMetadataFactory from "./unitMetadataFactory";
-import config from "../config";
-import {UnitInstance} from "../../types";
-import {Vector2} from "three";
+import unitMetadataFactory from './unitMetadataFactory';
+import config from '../config';
+import {UnitInstance} from '../../types';
+import {Vector2} from 'three';
 
 export default function calculateUnitMovementPerTick(unit: UnitInstance): Vector2 | null {
     if (unit.movingDirection) {
