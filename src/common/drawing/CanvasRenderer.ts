@@ -147,7 +147,7 @@ export default class CanvasRenderer implements RendererInterface {
             // If the unit is selected, draw an oval around its base.
             if (clientState.selectedUnits.map((unit) => unit.id).includes(unitInstance.id)) {
                 this.context.beginPath();
-                this.context.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+                this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
                 this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
                 this.context.stroke();
             }

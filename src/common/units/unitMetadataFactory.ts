@@ -28,7 +28,7 @@ const unitDefinitions: {
         attackRange: 6,
         attackDamage: 4,
         firingAnchor: new Vector2(14, -24),
-        selectionRadius: 20,
+        selectionRadius: 15,
         animations: {
             [UnitState.Idle]: {
                 slp: 'units/xbow-stand',

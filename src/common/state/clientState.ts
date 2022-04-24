@@ -118,7 +118,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
             });
         }
     }
-    console.log(action.name, clientState.selectedUnits);
+
     if (['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.AttackGround) {
         gameDispatcher({
             name: 'ATTACK_GROUND',
