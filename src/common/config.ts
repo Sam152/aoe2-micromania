@@ -3,9 +3,9 @@ const config = {
     gameSpeed: 1.7,
     ticksPerSecond: 20,
     unitSpeedFactor: 5,
-    tileWidth: 96,
-    tileHeight: 47,
-    tileLength: 60,
+    tileWidth: 98,
+    tileHeight: 48,
+    tileLength: 99,
     cameraPanSpeed: 3,
 };
 

@@ -105,7 +105,7 @@ function defaultState(): GameState {
         units: [],
         projectiles: [],
         fallenUnits: [],
-        mapSize: 13,
+        mapSize: 20,
     });
 }
 
