@@ -26,7 +26,7 @@ export default class CanvasRenderer implements RendererInterface {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
-        this.slpManager = new SlpManager('/assets');
+        this.slpManager = new SlpManager('/graphics');
 
         this.lastRenderedGameTick = 0;
         this.frameAtLastRenderedTick = 0;
@@ -88,7 +88,7 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawTerrain(gameState: GameState) {
-        const terrain = this.slpManager.getAsset('terrain-green');
+        const terrain = this.slpManager.getAsset('terrain/green');
         const grid = new Grid(gameState.mapSize);
 
         // Terrain drawing algo documented at https://simonsan.github.io/openage-webdocs/sphinx/doc/media/terrain.html.
@@ -100,12 +100,12 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawMovementCommandAnimations(gameState: GameState, clientState: ClientState) {
-        const flag = this.slpManager.getAsset('waypoint-flag');
+        const flag = this.slpManager.getAsset('interface/waypoint-flag');
         clientState.selectedUnits.forEach((unit) => unit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
         if (clientState.lastMoveClick) {
-            const asset = this.slpManager.getAsset('move-command');
+            const asset = this.slpManager.getAsset('interface/move-command');
             const [position, startedTick] = clientState.lastMoveClick;
             asset.animateAsset(this.context, position, 3, clientState.renderedFrames - startedTick, AnimationStyle.Play);
         }
@@ -228,7 +228,7 @@ export default class CanvasRenderer implements RendererInterface {
         const cursor = attacking ? 4 : 0;
 
         if (cursor !== this.lastCursor) {
-            this.canvas.style.cursor = `url("assets/cursor/${cursor}.svg"), none`;
+            this.canvas.style.cursor = `url("graphics/interface/${cursor}.svg"), none`;
             this.lastCursor = cursor;
         }
     }

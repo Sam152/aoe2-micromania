@@ -65,33 +65,35 @@ export default class SlpManager {
     }
 
     getAsset(assetId: string): Slp {
+        if (!(assetId in this.slpList)) {
+            throw new Error(`Could not find asset in SLP manager ${assetId}`);
+        }
         return this.slpList[assetId];
     }
 
     assetPlayerList(): string[] {
         return [
-            'xbow-death',
-            'xbow-decay',
-            'xbow-firing',
-            'xbow-moving',
-            'xbow-stand',
-            'mangonel-stand',
-            'mangonel-moving',
-            'mangonel-firing',
-            'mangonel-death',
-            'mangonel-decay',
-            'waypoint-flag',
+            'units/xbow-death',
+            'units/xbow-decay',
+            'units/xbow-firing',
+            'units/xbow-moving',
+            'units/xbow-stand',
+            'units/mangonel-stand',
+            'units/mangonel-moving',
+            'units/mangonel-firing',
+            'units/mangonel-death',
+            'units/mangonel-decay',
+            'interface/waypoint-flag',
         ];
     }
 
     assetList(): string[] {
         return [
-            'mouse-icons',
-            'arrow',
-            'rocks',
-            'move-command',
-            'terrain-green',
-            'terrain-sandy',
+            'projectiles/arrow',
+            'projectiles/rocks',
+            'interface/move-command',
+            'terrain/green',
+            'terrain/sandy',
         ];
     }
 }

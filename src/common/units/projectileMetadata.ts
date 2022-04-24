@@ -9,12 +9,12 @@ const projectileMetadata: {
 } = {
     [ProjectileType.Arrow]: {
         speed: 30,
-        asset: 'arrow',
+        asset: 'projectiles/arrow',
         frames: [10],
     },
     [ProjectileType.Rock]: {
         speed: 10,
-        asset: 'rocks',
+        asset: 'projectiles/rocks',
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     },
 };

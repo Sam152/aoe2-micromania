@@ -31,27 +31,27 @@ const unitDefinitions: {
         selectionRadius: 20,
         animations: {
             [UnitState.Idle]: {
-                slp: 'xbow-stand',
+                slp: 'units/xbow-stand',
                 animationDuration: 2,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Firing]: {
-                slp: 'xbow-firing',
+                slp: 'units/xbow-firing',
                 animationDuration: 0.7,
                 style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
-                slp: 'xbow-moving',
+                slp: 'units/xbow-moving',
                 animationDuration: 1,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Falling]: {
-                slp: 'xbow-death',
+                slp: 'units/xbow-death',
                 animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Decaying]: {
-                slp: 'xbow-decay',
+                slp: 'units/xbow-decay',
                 animationDuration: 20,
                 style: AnimationStyle.Play,
             },
@@ -69,28 +69,28 @@ const unitDefinitions: {
         selectionRadius: 50,
         animations: {
             [UnitState.Idle]: {
-                slp: 'mangonel-stand',
+                slp: 'units/mangonel-stand',
                 animationDuration: 2,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Firing]: {
-                slp: 'mangonel-firing',
+                slp: 'units/mangonel-firing',
                 animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
-                slp: 'mangonel-moving',
-                underSlp: 'mangonel-stand',
+                slp: 'units/mangonel-moving',
+                underSlp: 'units/mangonel-stand',
                 animationDuration: 1,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Falling]: {
-                slp: 'mangonel-death',
+                slp: 'units/mangonel-death',
                 animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Decaying]: {
-                slp: 'mangonel-decay',
+                slp: 'units/mangonel-decay',
                 animationDuration: 20,
                 style: AnimationStyle.Play,
             },
