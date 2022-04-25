@@ -47,7 +47,7 @@ export default function fireProjectiles(state: GameState) {
 
             if (state.ticks - unit.unitStateStartedAt === firingFrame) {
                 const targetingUnit = state.units.find(({id}) => id === unit.targetingUnit);
-                const targetingPosition = unit.targetingUnit ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
+                const targetingPosition = hasValue(unit.targetingUnit) ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
 
                 const distance = unit.position.distanceTo(targetingPosition);
 

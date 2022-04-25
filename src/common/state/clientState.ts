@@ -5,7 +5,6 @@ import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingW
 import FormationType from '../units/formations/FormationType';
 import config from '../config';
 import {Vector2} from 'three';
-import Unit from '../units/Unit';
 import ActiveCommand from '../input/ActiveCommand';
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
