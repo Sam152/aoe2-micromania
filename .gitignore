@@ -2,5 +2,5 @@
 /node_modules
 /dist/js
 /dist/bundle.js
-/dist-server/bundle.js
+/dist-server/bundle.*
 .DS_Store

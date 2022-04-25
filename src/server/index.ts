@@ -1,14 +1,21 @@
-import {createServer} from 'http';
+import {createServer} from 'https';
 import {Server} from 'socket.io';
 import RoomManager from './rooms/RoomManager';
 import Player from './rooms/Player';
 import {RoomId} from '../types';
+import * as fs from "fs";
 
-const httpServer = createServer();
-const io = new Server(httpServer, {});
+const httpServer = createServer({
+    key: fs.readFileSync(process.env.KEY_FILE),
+    cert: fs.readFileSync(process.env.CERT_FILE),
+});
+const io = new Server(httpServer, {
+    transports: ['websocket'],
+});
 
 const roomManager = new RoomManager(io);
 
+console.log('Starting server');
 io.on('connection', (socket) => {
     const player = new Player(socket);
     roomManager.emitRooms(player.socket);
@@ -61,4 +68,5 @@ io.on('connection', (socket) => {
     });
 });
 
+console.log('Listening');
 httpServer.listen(3000);
