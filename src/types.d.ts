@@ -115,7 +115,7 @@ export interface ClientState {
     }>;
     playingAs: number;
     renderedFrames: number;
-    selectedUnits: UnitInstance[];
+    selectedUnits: Array<UnitId>;
     activeCommand: ActiveCommand;
     selectedFormation: FormationType;
     selectionRectangle: Rectangle | null;

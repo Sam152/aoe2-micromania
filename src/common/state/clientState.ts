@@ -39,7 +39,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         const foundUnit = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
-        state.selectedUnits = foundUnit ? [foundUnit.unit] : [];
+        state.selectedUnits = foundUnit ? [foundUnit.unit.id] : [];
     }
 
     if (action.name === 'DOUBLE_CLICK') {
@@ -48,11 +48,11 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         if (foundUnit) {
             state.selectedUnits = ownUnits
                 .filter((unitAndHitBox) => unitAndHitBox.unit.unitType === foundUnit.unit.unitType)
-                .map((unitAndHitBox) => unitAndHitBox.unit);
+                .map((unitAndHitBox) => unitAndHitBox.unit.id);
         }
     }
 
-    if (action.name === 'HOTKEY_ATTACK_GROUND' && state.selectedUnits.length > 0 && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)) {
+    if (action.name === 'HOTKEY_ATTACK_GROUND' && state.selectedUnits.length > 0/* && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)*/) {
         state.activeCommand = ActiveCommand.AttackGround;
     }
 
@@ -85,7 +85,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         state.selectedUnits = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .filter((unitAndHitBox) => rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)))
-            .map((unitAndHitBox) => unitAndHitBox.unit);
+            .map((unitAndHitBox) => unitAndHitBox.unit.id);
     }
     if (action.name === 'DRAG_END') {
         state.selectionRectangle = null;
@@ -107,14 +107,14 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         if (attacking) {
             gameDispatcher({
                 name: 'ATTACK',
-                units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+                units: clientState.selectedUnits,
                 target: attacking.unit.id,
             });
         } else {
             gameDispatcher({
                 name: 'MOVE_UNITS_TO',
                 position: action.position,
-                units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+                units: clientState.selectedUnits,
                 formation: clientState.selectedFormation,
             });
         }
@@ -123,7 +123,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     if (['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.AttackGround) {
         gameDispatcher({
             name: 'ATTACK_GROUND',
-            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+            units: clientState.selectedUnits,
             position: clientState.mousePosition,
         });
         clientState.activeCommand = ActiveCommand.Default;
@@ -138,27 +138,27 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
                 name: 'ADD_WAYPOINT',
                 formation: clientState.selectedFormation,
                 position: action.position,
-                units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+                units: clientState.selectedUnits,
             });
         }
     }
     if (action.name === 'HOTKEY_STOP') {
         gameDispatcher({
             name: 'STOP_UNITS',
-            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+            units: clientState.selectedUnits,
         });
     }
     if (action.name === 'HOTKEY_DELETE' && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'DELETE_UNITS',
-            units: [clientState.selectedUnits[0].id],
+            units: [clientState.selectedUnits[0]],
         });
         clientState.selectedUnits.shift();
     }
     if (action.name === 'HOTKEY_SHIFT_DELETE' && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'DELETE_UNITS',
-            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit.id),
+            units: clientState.selectedUnits.map((selectedUnit) => selectedUnit),
         });
         clientState.selectedUnits = [];
     }
