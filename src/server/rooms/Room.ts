@@ -64,8 +64,8 @@ export default class Room {
             // The network could either dispatch the whole units state OR the action, letting the clients
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?
-            this.room.emit('gameStateUpdated', gameState);
-            // this.room.emit('gameStateAction', action);
+            // this.room.emit('gameStateUpdated', gameState);
+            this.room.emit('gameStateAction', action);
         });
 
         this.players.map((player) => {
