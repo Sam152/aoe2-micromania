@@ -1,14 +1,16 @@
-import {createServer} from 'https';
+import {createServer as createServerHttps} from 'https';
+import {createServer as createServerHttp} from 'http';
 import {Server} from 'socket.io';
 import RoomManager from './rooms/RoomManager';
 import Player from './rooms/Player';
 import {RoomId} from '../types';
 import * as fs from "fs";
 
-const httpServer = createServer(process.env.KEY_FILE && process.env.CERT_FILE ? {
+const httpServer = process.env.KEY_FILE && process.env.CERT_FILE ? createServerHttps({
     key: fs.readFileSync(process.env.KEY_FILE),
     cert: fs.readFileSync(process.env.CERT_FILE),
-} : {});
+}) : createServerHttp();
+
 const io = new Server(httpServer, {
     transports: ['websocket'],
 });
