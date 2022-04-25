@@ -1,4 +1,4 @@
-import {EmittedRoom, RoomId, StateManagerInterface} from '../../types';
+import {EmittedRoom, GameStateAction, RoomId, StateManagerInterface} from '../../types';
 import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import Player from './Player';
 import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
@@ -40,6 +40,12 @@ export default class Room {
     spectate(player: Player): void {
         this.spectators.push(player);
         player.socket.join(this.id);
+
+        player.socket.on('stateDispatch', (action: GameStateAction) => {
+            if (action.name === 'SPECTATOR_LOADED') {
+                player.socket.emit('gameStateUpdated', this.state.getGameState());
+            }
+        });
     }
 
     hasPlayer(player: Player): boolean {
@@ -64,7 +70,6 @@ export default class Room {
             // The network could either dispatch the whole units state OR the action, letting the clients
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?
-            // this.room.emit('gameStateUpdated', gameState);
             this.room.emit('gameStateAction', action);
         });
 
@@ -72,16 +77,15 @@ export default class Room {
             player.socket.on('stateDispatch', (action) => {
                 // @todo, actions should be validated here for anti-cheat.
                 this.state.dispatchGame(normalizeGameStateAction(action));
+
+                if (!this.state.getGameState().gameModeStarted && this.state.getGameState().loadedPlayers.length === this.players.length) {
+                    this.state.init();
+                    const gameMode = new ArcherMicro();
+                    gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
+                    this.state.dispatchGame({name: "GAME_MODE_STARTED"});
+                }
             });
         });
-
-        // Allow some time for assets to load in each client.
-        // @todo wait for a "loaded" ping from each player.
-        setTimeout(() => {
-            this.state.init();
-            const gameMode = new ArcherMicro();
-            gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
-        }, 2000);
     }
 
     toEmitted(): EmittedRoom {

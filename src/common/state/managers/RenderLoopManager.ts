@@ -17,6 +17,17 @@ export default class RenderLoopManager {
 
     start() {
         this.renderer.bootUp().then(() => {
+            if (this.stateManager.getClientState().playingAs) {
+                this.stateManager.dispatchGame({
+                    name: 'CLIENT_LOADED',
+                    player: this.stateManager.getClientState().playingAs,
+                });
+            }
+            else {
+                this.stateManager.dispatchGame({
+                    name: 'SPECTATOR_LOADED',
+                });
+            }
             this.stateManager.dispatchClient({
                 name: 'FIXATE_CAMERA',
                 location: (new Grid(this.stateManager.getGameState().mapSize)).middleOfGrid().sub(this.renderer.getSize().divideScalar(2)),

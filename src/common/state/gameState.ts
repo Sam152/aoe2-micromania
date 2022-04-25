@@ -29,6 +29,12 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             hitPoints: stats.hitPoints,
         });
     }
+    if (action.name === 'CLIENT_LOADED') {
+        state.loadedPlayers.push(action.player);
+    }
+    if (action.name === 'GAME_MODE_STARTED') {
+        state.gameModeStarted = true;
+    }
 
     if (action.name === 'MOVE_UNITS_TO') {
         const units = state.units.filter((instance) => action.units.includes(instance.id));
@@ -120,6 +126,8 @@ function defaultState(): GameState {
         projectiles: [],
         fallenUnits: [],
         mapSize: 14,
+        loadedPlayers: [],
+        gameModeStarted: false,
     });
 }
 

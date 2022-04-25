@@ -68,6 +68,8 @@ export interface GameState {
     projectiles: ProjectileInstance[];
     fallenUnits: FallenUnitInstance[];
     mapSize: number;
+    loadedPlayers: Array<PlayerId>;
+    gameModeStarted: boolean;
 }
 
 export type UnitId = number;
@@ -77,6 +79,13 @@ export type PlayerId = number;
 
 type GameStateAction = {
     name: 'TICK';
+} | {
+    name: 'CLIENT_LOADED';
+    player: number;
+} | {
+    name: 'SPECTATOR_LOADED';
+} | {
+    name: 'GAME_MODE_STARTED';
 } | {
     name: 'SPAWN_UNIT';
     position: Vector2;
