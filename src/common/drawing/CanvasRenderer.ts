@@ -13,6 +13,7 @@ import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick'
 import getArrowPosition from './helpers/getArrowPosition';
 import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
+import getUnitInstanceHitBox from "../util/getUnitInstanceHitBox";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -175,10 +176,12 @@ export default class CanvasRenderer implements RendererInterface {
                 animationMetadata.style,
             );
 
-
             if (config.debug) {
+                // Draw the unit number.
                 this.context.font = '11px Arial';
                 this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 30);
+                // Draw the units hit box.
+                square(this.context, getUnitInstanceHitBox(unitInstance));
             }
 
             clientStateDispatcher({

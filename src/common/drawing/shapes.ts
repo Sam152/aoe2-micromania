@@ -8,7 +8,7 @@ export function circle(ctx: CanvasRenderingContext2D, position: Vector2 | Vector
     ctx.fill();
 }
 
-export function square(ctx: CanvasRenderingContext2D, rect: Rectangle, color: string, width: number) {
+export function square(ctx: CanvasRenderingContext2D, rect: Rectangle, color: string = 'red', width: number = 2) {
     ctx.beginPath();
     ctx.lineWidth = width;
     ctx.strokeStyle = color;

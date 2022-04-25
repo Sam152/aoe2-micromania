@@ -78,6 +78,7 @@ export default function fireProjectiles(state: GameState) {
                         pathVector: destination.clone().sub(startingPoint),
                         targeting: targetingUnit ? targetingUnit.id : null,
                         hasDamage: index === 0,
+                        firedByType: unit.unitType,
                     });
                 });
 

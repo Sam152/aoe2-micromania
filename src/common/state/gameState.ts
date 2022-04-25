@@ -9,11 +9,13 @@ import compassDirectionCalculator from '../units/compassDirectionCalculator';
 import fireProjectiles from './mutations/fireProjectiles';
 import moveUnits from './mutations/moveUnits';
 import registerProjectileHits from './mutations/registerProjectileHits';
+import unitMetadataFactory from "../units/unitMetadataFactory";
 
 let unitId = 0;
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
+        const stats = unitMetadataFactory.getUnit(action.unitType);
         state.units.push({
             id: unitId++,
             position: action.position,
@@ -26,6 +28,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             unitState: UnitState.Idle,
             unitStateStartedAt: state.ticks,
             direction: action.direction ?? CompassDirection.South,
+            hp: stats.hitPoints,
         });
     }
 
@@ -92,6 +95,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
         attackingUnits.forEach((attackingUnit) => {
             attackingUnit.targetingPosition = action.position;
+            attackingUnit.targetingUnit = null;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, action.position);
             attackingUnit.waypoints = [];
             attackingUnit.movingDirection = null;
