@@ -4,7 +4,7 @@ import {Server} from 'socket.io';
 import RoomManager from './rooms/RoomManager';
 import Player from './rooms/Player';
 import {RoomId} from '../types';
-import * as fs from "fs";
+import * as fs from 'fs';
 
 const httpServer = process.env.KEY_FILE && process.env.CERT_FILE ? createServerHttps({
     key: fs.readFileSync(process.env.KEY_FILE),

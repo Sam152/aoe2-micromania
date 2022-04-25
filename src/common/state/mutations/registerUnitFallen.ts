@@ -1,5 +1,5 @@
 import {GameState, UnitInstance} from '../../../types';
-import UnitState from "../../units/UnitState";
+import UnitState from '../../units/UnitState';
 
 export default function registerUnitFallen(state: GameState, unit: UnitInstance) {
     state.units = state.units.filter(({id}) => unit.id !== id);

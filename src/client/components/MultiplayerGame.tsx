@@ -1,7 +1,7 @@
 import GameCanvas from './GameCanvas';
 import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
 import {Socket} from 'socket.io-client';
-import React from "react";
+import React from 'react';
 
 
 const MultiplayerGame = React.memo(function({io, playingAs}: {io: Socket, playingAs: number}) {
@@ -16,5 +16,6 @@ const MultiplayerGame = React.memo(function({io, playingAs}: {io: Socket, playin
         </div>
     );
 });
+MultiplayerGame.displayName = 'MultiplayerGame';
 
 export default MultiplayerGame;

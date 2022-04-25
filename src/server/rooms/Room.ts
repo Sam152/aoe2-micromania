@@ -82,7 +82,7 @@ export default class Room {
                     this.state.init();
                     const gameMode = new ArcherMicro();
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
-                    this.state.dispatchGame({name: "GAME_MODE_STARTED"});
+                    this.state.dispatchGame({name: 'GAME_MODE_STARTED'});
                 }
             });
         });

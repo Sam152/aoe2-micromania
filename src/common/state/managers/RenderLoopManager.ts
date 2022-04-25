@@ -22,8 +22,7 @@ export default class RenderLoopManager {
                     name: 'CLIENT_LOADED',
                     player: this.stateManager.getClientState().playingAs,
                 });
-            }
-            else {
+            } else {
                 this.stateManager.dispatchGame({
                     name: 'SPECTATOR_LOADED',
                 });
