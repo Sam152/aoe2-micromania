@@ -9,8 +9,9 @@ import projectileMetadata from '../../units/projectileMetadata';
 export default function registerProjectileHits(state: GameState) {
     const landedProjectiles = state.projectiles.filter(({arrivingTick}) => arrivingTick === state.ticks);
 
-    const areaProjectiles = landedProjectiles.filter(({type}) => projectileMetadata[type].damageIsAreaOfEffect);
-    const standardProjectiles = landedProjectiles.filter(({type}) => !projectileMetadata[type].damageIsAreaOfEffect);
+    const damageProjectiles = landedProjectiles.filter(({hasDamage}) => hasDamage);
+    const areaProjectiles = damageProjectiles.filter(({type}) => projectileMetadata[type].damageIsAreaOfEffect);
+    const standardProjectiles = damageProjectiles.filter(({type}) => !projectileMetadata[type].damageIsAreaOfEffect);
 
     standardProjectiles.forEach((projectile) => {
         const hitUnit = state.units.find((unit) => pointInRect(getUnitInstanceHitBox(unit), projectile.destination));
