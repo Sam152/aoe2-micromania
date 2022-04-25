@@ -13,7 +13,7 @@ import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick'
 import getArrowPosition from './helpers/getArrowPosition';
 import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
-import getUnitInstanceHitBox from "../util/getUnitInstanceHitBox";
+import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -182,11 +182,11 @@ export default class CanvasRenderer implements RendererInterface {
 
                 const hpLeft = unitInstance.hitPoints / unitMetadata.hitPoints;
                 this.context.beginPath();
-                this.context.fillStyle = "black";
+                this.context.fillStyle = 'black';
                 this.context.fillRect(anchoredAt.x - (hpBarWidth / 2), anchoredAt.y + unitMetadata.hitPointsBarAnchor, hpBarWidth, 6);
 
                 this.context.beginPath();
-                this.context.fillStyle = "green";
+                this.context.fillStyle = 'green';
                 this.context.fillRect(anchoredAt.x - (hpBarWidth / 2) + 1, anchoredAt.y + unitMetadata.hitPointsBarAnchor + 1, (hpBarWidth - 2) * hpLeft, 4);
             }
 

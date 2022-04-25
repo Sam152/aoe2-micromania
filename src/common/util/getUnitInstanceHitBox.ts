@@ -1,5 +1,5 @@
-import {Rectangle, UnitInstance} from "../../types";
-import unitMetadataFactory from "../units/unitMetadataFactory";
+import {Rectangle, UnitInstance} from '../../types';
+import unitMetadataFactory from '../units/unitMetadataFactory';
 
 export default function getUnitInstanceHitBox(unit: UnitInstance): Rectangle {
     const metadata = unitMetadataFactory.getUnit(unit.unitType);

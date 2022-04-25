@@ -9,7 +9,7 @@ import compassDirectionCalculator from '../units/compassDirectionCalculator';
 import fireProjectiles from './mutations/fireProjectiles';
 import moveUnits from './mutations/moveUnits';
 import registerProjectileHits from './mutations/registerProjectileHits';
-import unitMetadataFactory from "../units/unitMetadataFactory";
+import unitMetadataFactory from '../units/unitMetadataFactory';
 
 let unitId = 0;
 

@@ -71,14 +71,8 @@ const unitDefinitions: {
         attackRange: 7, // minimum 3?
         attackDamage: 40,
         areaOfEffect: [
-            {
-                distanceFromTarget: 30,
-                percentageOfAttack: 1,
-            },
-            {
-                distanceFromTarget: 60,
-                percentageOfAttack: 0.8,
-            },
+            {distanceFromTarget: 30, percentageOfAttack: 1},
+            {distanceFromTarget: 60, percentageOfAttack: 0.8},
         ],
         firesProjectileType: ProjectileType.Rock,
         firingAnchor: new Vector2(0, -30),

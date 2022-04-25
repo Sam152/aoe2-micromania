@@ -1,13 +1,12 @@
 import {GameState} from '../../../types';
-import getUnitInstanceHitBox from "../../util/getUnitInstanceHitBox";
-import pointInRect from "../../util/pointInRect";
-import calculateDamage from "../../units/calculateDamage";
-import registerUnitFallen from "./registerUnitFallen";
-import unitMetadataFactory from "../../units/unitMetadataFactory";
-import projectileMetadata from "../../units/projectileMetadata";
+import getUnitInstanceHitBox from '../../util/getUnitInstanceHitBox';
+import pointInRect from '../../util/pointInRect';
+import calculateDamage from '../../units/calculateDamage';
+import registerUnitFallen from './registerUnitFallen';
+import unitMetadataFactory from '../../units/unitMetadataFactory';
+import projectileMetadata from '../../units/projectileMetadata';
 
 export default function registerProjectileHits(state: GameState) {
-
     const landedProjectiles = state.projectiles.filter(({arrivingTick}) => arrivingTick === state.ticks);
 
     const areaProjectiles = landedProjectiles.filter(({type}) => projectileMetadata[type].damageIsAreaOfEffect);
@@ -34,7 +33,7 @@ export default function registerProjectileHits(state: GameState) {
                 .filter(({position}) => position.distanceTo(projectile.destination) < distanceFromTarget)
                 // That haven't already been damaged.
                 .filter(({id}) => !damagedUnits.includes(id));
-            affectedUnits.forEach(affectedUnit => {
+            affectedUnits.forEach((affectedUnit) => {
                 affectedUnit.hitPoints -= calculateDamage(projectile.firedByType, affectedUnit.unitType) * percentageOfAttack;
                 damagedUnits.push(affectedUnit.id);
                 if (affectedUnit.hitPoints <= 0) {

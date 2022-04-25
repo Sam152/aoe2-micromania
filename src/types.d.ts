@@ -6,7 +6,7 @@ import AnimationStyle from './common/units/AnimationStyle';
 import {Vector2} from 'three';
 import FormationType from './common/units/formations/FormationType';
 import ProjectileType from './common/units/ProjectileType';
-import ActiveCommand from "./common/input/ActiveCommand";
+import ActiveCommand from './common/input/ActiveCommand';
 
 export interface UnitInstance {
     id: number;
