@@ -5,10 +5,10 @@ import Player from './rooms/Player';
 import {RoomId} from '../types';
 import * as fs from "fs";
 
-const httpServer = createServer({
+const httpServer = createServer(process.env.KEY_FILE && process.env.CERT_FILE ? {
     key: fs.readFileSync(process.env.KEY_FILE),
     cert: fs.readFileSync(process.env.CERT_FILE),
-});
+} : {});
 const io = new Server(httpServer, {
     transports: ['websocket'],
 });
@@ -68,4 +68,4 @@ io.on('connection', (socket) => {
     });
 });
 
-httpServer.listen(3000, process.env.HOSTNAME);
+httpServer.listen(3000);
