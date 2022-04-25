@@ -13,7 +13,7 @@ import {Vector2} from 'three';
 let projectileIds = 0;
 
 export default function fireProjectiles(state: GameState) {
-    // Check if a unit should be firing or moving towards it's target.
+    // Check if a unit should be firing or moving towards its target.
     state.units
         .filter((unit) => (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing)
         .forEach((unit) => {
