@@ -2,7 +2,6 @@ html, body {
     padding: 0;
     margin: 0;
     display: block;
-    cursor: url("assets/cursor/4.png"), default;
 }
 
 canvas {
