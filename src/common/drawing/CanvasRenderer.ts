@@ -104,7 +104,6 @@ export default class CanvasRenderer implements RendererInterface {
 
     drawMovementCommandAnimations(gameState: GameState, clientState: ClientState) {
         const flag = this.slpManager.getAsset('interface/waypoint-flag');
-        console.log(clientState.selectedUnits);
         unitsFromSelection(gameState, clientState.selectedUnits).forEach(selectedUnit => selectedUnit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
