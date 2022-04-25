@@ -10,7 +10,6 @@ import ticksForAnimation from '../../util/ticksForAnimation';
 import ProjectileType from '../../units/ProjectileType';
 import {Vector2} from 'three';
 
-let projectileIds = 0;
 
 export default function fireProjectiles(state: GameState) {
     // Check if a unit should be firing or moving towards its target.
@@ -68,7 +67,7 @@ export default function fireProjectiles(state: GameState) {
 
                 destinations.forEach((destination, index) => {
                     state.projectiles.push({
-                        id: projectileIds++,
+                        id: state.idAt++,
                         ownedBy: unit.ownedByPlayer,
                         type: unitData.firesProjectileType,
                         startingPoint: startingPoint,

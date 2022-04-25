@@ -63,6 +63,7 @@ export type StateTransmitter = (clientState: ClientState, action: ClientStateAct
 
 export interface GameState {
     ticks: number;
+    idAt: 0;
     units: UnitInstance[];
     projectiles: ProjectileInstance[];
     fallenUnits: FallenUnitInstance[];

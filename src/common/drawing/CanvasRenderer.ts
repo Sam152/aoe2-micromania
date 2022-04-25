@@ -194,7 +194,7 @@ export default class CanvasRenderer implements RendererInterface {
             if (config.debug) {
                 // Draw the unit number.
                 this.context.font = '11px Arial';
-                this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 30);
+                this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 40);
                 // Draw the units hit box.
                 square(this.context, getUnitInstanceHitBox(unitInstance));
             }

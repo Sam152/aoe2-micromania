@@ -11,13 +11,11 @@ import moveUnits from './mutations/moveUnits';
 import registerProjectileHits from './mutations/registerProjectileHits';
 import unitMetadataFactory from '../units/unitMetadataFactory';
 
-let unitId = 0;
-
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'SPAWN_UNIT') {
         const stats = unitMetadataFactory.getUnit(action.unitType);
         state.units.push({
-            id: unitId++,
+            id: state.idAt++,
             position: action.position,
             waypoints: [],
             clickedWaypoints: [],
@@ -117,6 +115,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 function defaultState(): GameState {
     return deepClone({
         ticks: 0,
+        idAt: 0,
         units: [],
         projectiles: [],
         fallenUnits: [],
