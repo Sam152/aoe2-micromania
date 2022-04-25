@@ -176,6 +176,20 @@ export default class CanvasRenderer implements RendererInterface {
                 animationMetadata.style,
             );
 
+            if (unitInstance.hitPoints !== unitMetadata.hitPoints) {
+                const anchoredAt = unitInstance.position;
+                const hpBarWidth = 40;
+
+                const hpLeft = unitInstance.hitPoints / unitMetadata.hitPoints;
+                this.context.beginPath();
+                this.context.fillStyle = "black";
+                this.context.fillRect(anchoredAt.x - (hpBarWidth / 2), anchoredAt.y + unitMetadata.hitPointsBarAnchor, hpBarWidth, 6);
+
+                this.context.beginPath();
+                this.context.fillStyle = "green";
+                this.context.fillRect(anchoredAt.x - (hpBarWidth / 2) + 1, anchoredAt.y + unitMetadata.hitPointsBarAnchor + 1, (hpBarWidth - 2) * hpLeft, 4);
+            }
+
             if (config.debug) {
                 // Draw the unit number.
                 this.context.font = '11px Arial';

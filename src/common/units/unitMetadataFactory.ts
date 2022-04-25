@@ -27,12 +27,14 @@ const unitDefinitions: {
         hitPoints: 30,
         attackRange: 6,
         attackDamage: 4,
+        areaOfEffect: null,
         firingAnchor: new Vector2(14, -24),
         selectionRadius: 15,
         hitBox: {
             p1: new Vector2(-10, -35),
             p2: new Vector2(10, 10),
         },
+        hitPointsBarAnchor: -49,
         animations: {
             [UnitState.Idle]: {
                 slp: 'units/xbow-stand',
@@ -68,6 +70,16 @@ const unitDefinitions: {
         hitPoints: 50,
         attackRange: 7, // minimum 3?
         attackDamage: 40,
+        areaOfEffect: [
+            {
+                distanceFromTarget: 30,
+                percentageOfAttack: 1,
+            },
+            {
+                distanceFromTarget: 60,
+                percentageOfAttack: 0.8,
+            },
+        ],
         firesProjectileType: ProjectileType.Rock,
         firingAnchor: new Vector2(0, -30),
         selectionRadius: 50,
@@ -75,6 +87,7 @@ const unitDefinitions: {
             p1: new Vector2(-30, -40),
             p2: new Vector2(30, 30),
         },
+        hitPointsBarAnchor: -55,
         animations: {
             [UnitState.Idle]: {
                 slp: 'units/mangonel-stand',

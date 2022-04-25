@@ -28,7 +28,7 @@ export interface UnitInstance {
     movingDirection?: Vector2;
     direction: CompassDirection;
 
-    hp: number;
+    hitPoints: number;
 }
 
 export interface FallenUnitInstance {
@@ -233,9 +233,11 @@ export interface UnitStats {
     hitPoints: number;
     attackRange: number;
     attackDamage: number;
+    areaOfEffect: Array<{ distanceFromTarget: number; percentageOfAttack: number; }> | null;
     firingAnchor: Vector2;
     selectionRadius: number;
     hitBox: Rectangle;
+    hitPointsBarAnchor: number;
     animations: {
         [key in UnitState]: {
             slp: string;

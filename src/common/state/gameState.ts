@@ -28,7 +28,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             unitState: UnitState.Idle,
             unitStateStartedAt: state.ticks,
             direction: action.direction ?? CompassDirection.South,
-            hp: stats.hitPoints,
+            hitPoints: stats.hitPoints,
         });
     }
 
@@ -120,7 +120,7 @@ function defaultState(): GameState {
         units: [],
         projectiles: [],
         fallenUnits: [],
-        mapSize: 20,
+        mapSize: 14,
     });
 }
 
