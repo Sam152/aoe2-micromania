@@ -1,7 +1,7 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from './shapes';
+import {square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three';
 import config from '../config';
@@ -86,11 +86,11 @@ export default class CanvasRenderer implements RendererInterface {
         this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
 
-    translateCamera(camera: Vector2) {
+    translateCamera(camera: Vector2): void {
         this.context.translate(-camera.x, -camera.y);
     }
 
-    drawTerrain(gameState: GameState) {
+    drawTerrain(gameState: GameState): void {
         const terrain = this.slpManager.getAsset('terrain/green');
         const grid = new Grid(gameState.mapSize);
 
@@ -102,7 +102,7 @@ export default class CanvasRenderer implements RendererInterface {
         });
     }
 
-    drawMovementCommandAnimations(gameState: GameState, clientState: ClientState) {
+    drawMovementCommandAnimations(gameState: GameState, clientState: ClientState): void {
         const flag = this.slpManager.getAsset('interface/waypoint-flag');
         unitsFromSelection(gameState, clientState.selectedUnits).forEach(selectedUnit => selectedUnit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
