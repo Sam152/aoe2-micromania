@@ -4,6 +4,7 @@ import Lobby from './components/Lobby';
 
 const connection = io({
     transports: ['websocket'],
+    port: 3000,
 });
 const root = createRoot(document.getElementById('ui'));
 root.render(<Lobby io={connection} />);

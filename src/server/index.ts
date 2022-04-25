@@ -68,5 +68,4 @@ io.on('connection', (socket) => {
     });
 });
 
-console.log('Listening');
 httpServer.listen(3000, process.env.HOSTNAME);
