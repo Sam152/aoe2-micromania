@@ -55,6 +55,14 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         state.activeCommand = ActiveCommand.AttackGround;
     }
 
+    if (action.name === 'HOTKEY_PATROL' && state.selectedUnits.length > 0) {
+        state.activeCommand = ActiveCommand.Patrol;
+    }
+    if (['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && state.activeCommand === ActiveCommand.Patrol) {
+        // @ts-ignore
+        state.lastMoveClick = [action.position, state.renderedFrames];
+    }
+
     if (action.name === 'FIXATE_CAMERA') {
         state.camera = action.location;
     }
@@ -119,7 +127,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         }
     }
 
-    if (['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.AttackGround) {
+    if (clientState.activeCommand === ActiveCommand.AttackGround && ['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'ATTACK_GROUND',
             units: clientState.selectedUnits,
@@ -127,6 +135,16 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         });
         clientState.activeCommand = ActiveCommand.Default;
     }
+
+    if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0) {
+        gameDispatcher({
+            name: 'PATROL',
+            units: clientState.selectedUnits,
+            position: clientState.mousePosition,
+        });
+        clientState.activeCommand = ActiveCommand.Default;
+    }
+
     if (action.name === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
         const attacking = clientState.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)

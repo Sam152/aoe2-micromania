@@ -95,26 +95,30 @@ type GameStateAction = {
 } | {
     name: 'MOVE_UNITS_TO';
     position: Vector2;
-    units: number[];
+    units: UnitId[];
     formation: FormationType;
 } | {
     name: 'ADD_WAYPOINT';
     position: Vector2;
-    units: number[];
+    units: UnitId[];
     formation: FormationType;
 } | {
     name: 'STOP_UNITS';
-    units: number[];
+    units: UnitId[];
 } | {
     name: 'DELETE_UNITS';
-    units: number[];
+    units: UnitId[];
 } | {
     name: 'ATTACK';
-    units: number[];
+    units: UnitId[];
     target: number;
 } | {
     name: 'ATTACK_GROUND';
-    units: number[];
+    units: UnitId[];
+    position: Vector2;
+} | {
+    name: 'PATROL';
+    units: UnitId[];
     position: Vector2;
 };
 
@@ -140,6 +144,9 @@ export type ClientStateAction = {
     position: Vector2,
 } | {
     name: 'HOTKEY_STOP',
+} | {
+    name: 'HOTKEY_PATROL',
+    position: Vector2,
 } | {
     name: 'HOTKEY_ATTACK_GROUND',
 } | {

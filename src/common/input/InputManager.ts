@@ -1,7 +1,5 @@
 import {
-    ClientState,
     ClientStateAction,
-    GameDispatcher,
     StateManagerInterface,
     StateTransmitter,
 } from '../../types';
@@ -10,7 +8,7 @@ import {Vector2} from 'three';
 
 const StInput = require('stinput');
 
-const doubleClickDuration = 500;
+const doubleClickDuration = 250;
 
 export default class InputManager {
     input: typeof StInput;
@@ -87,6 +85,12 @@ export default class InputManager {
         if (this.input.pressed('r')) {
             this.dispatch({
                 name: 'HOTKEY_ATTACK_GROUND',
+            });
+        }
+        if (this.input.pressed('q')) {
+            this.dispatch({
+                name: 'HOTKEY_PATROL',
+                position: this.mousePosition(cameraPosition),
             });
         }
         if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {

@@ -242,15 +242,21 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     renderMouse(state: ClientState) {
-        let cursor;
+        const map = {
+            [ActiveCommand.AttackGround]: 8,
+            [ActiveCommand.Patrol]: 18,
+            [ActiveCommand.Default]: 0,
+        };
 
-        if (state.activeCommand === ActiveCommand.AttackGround) {
-            cursor = 8;
-        } else if (state.activeCommand === ActiveCommand.Default) {
+        let cursor;
+        if (state.activeCommand === ActiveCommand.Default) {
             const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
                 .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
                 .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
             cursor = attacking ? 4 : 0;
+        }
+        else {
+            cursor = map[state.activeCommand];
         }
 
         if (cursor !== this.lastCursor) {
