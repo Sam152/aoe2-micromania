@@ -14,7 +14,7 @@ import getArrowPosition from './helpers/getArrowPosition';
 import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
 import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
-import unitsFromSelection from '../util/unitsFromSelection';
+import unitsInGameState from '../util/unitsInGameState';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -104,7 +104,7 @@ export default class CanvasRenderer implements RendererInterface {
 
     drawMovementCommandAnimations(gameState: GameState, clientState: ClientState): void {
         const flag = this.slpManager.getAsset('interface/waypoint-flag');
-        unitsFromSelection(gameState, clientState.selectedUnits).forEach((selectedUnit) => selectedUnit.clickedWaypoints.forEach((waypoint) => {
+        unitsInGameState(gameState, clientState.selectedUnits).forEach((selectedUnit) => selectedUnit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
         if (clientState.lastMoveClick) {

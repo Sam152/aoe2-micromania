@@ -10,8 +10,17 @@ import fireProjectiles from './mutations/fireProjectiles';
 import moveUnits from './mutations/moveUnits';
 import registerProjectileHits from './mutations/registerProjectileHits';
 import unitMetadataFactory from '../units/unitMetadataFactory';
+import unitsInGameState from "../util/unitsInGameState";
+import registerUnitFallen from "./mutations/registerUnitFallen";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
+    if (action.name === 'CLIENT_LOADED') {
+        state.loadedPlayers.push(action.player);
+    }
+    if (action.name === 'GAME_MODE_STARTED') {
+        state.gameModeStarted = true;
+    }
+
     if (action.name === 'SPAWN_UNIT') {
         const stats = unitMetadataFactory.getUnit(action.unitType);
         state.units.push({
@@ -29,29 +38,22 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             hitPoints: stats.hitPoints,
         });
     }
-    if (action.name === 'CLIENT_LOADED') {
-        state.loadedPlayers.push(action.player);
-    }
-    if (action.name === 'GAME_MODE_STARTED') {
-        state.gameModeStarted = true;
-    }
 
     if (action.name === 'MOVE_UNITS_TO') {
-        const units = state.units.filter((instance) => action.units.includes(instance.id));
+        const units = unitsInGameState(state, action.units);
         units.forEach((unit) => {
             unit.clickedWaypoints = [];
             unit.targetingUnit = null;
             unit.targetingPosition = null;
         });
         const positions = units.map((unit) => unit.position);
-        formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
+        formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
             units[index].waypoints = [formationPosition];
             moveTowardsCurrentWaypoint(units[index]);
         });
     }
-
     if (action.name === 'ADD_WAYPOINT') {
-        const units = state.units.filter((instance) => action.units.includes(instance.id));
+        const units = unitsInGameState(state, action.units);
         units.forEach((unit) => {
             unit.clickedWaypoints.push(action.position);
             unit.targetingUnit = null;
@@ -66,29 +68,14 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'STOP_UNITS') {
-        state.units.filter((instance) => action.units.includes(instance.id)).forEach((unit) => {
-            stopUnit(unit);
-        });
+        unitsInGameState(state, action.units).forEach(unit => stopUnit(unit));
     }
     if (action.name === 'DELETE_UNITS') {
-        const deletedUnits = state.units.filter((instance) => action.units.includes(instance.id));
-        state.units = state.units.filter((instance) => !action.units.includes(instance.id));
-        deletedUnits.forEach((deletedUnit) => {
-            state.fallenUnits.push({
-                id: deletedUnit.id,
-                ownedByPlayer: deletedUnit.ownedByPlayer,
-                unitType: deletedUnit.unitType,
-                unitFallenAt: state.ticks,
-                position: deletedUnit.position,
-                direction: deletedUnit.direction,
-            });
-        });
+        unitsInGameState(state, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
     }
-
     if (action.name === 'ATTACK') {
-        const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
         const target = state.units.find(({id}) => action.target === id);
-        attackingUnits.forEach((attackingUnit) => {
+        unitsInGameState(state, action.units).forEach((attackingUnit) => {
             attackingUnit.targetingUnit = action.target;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, target.position);
             attackingUnit.waypoints = [];
@@ -96,8 +83,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
     }
     if (action.name === 'ATTACK_GROUND') {
-        const attackingUnits = state.units.filter(({id}) => action.units.includes(id));
-        attackingUnits.forEach((attackingUnit) => {
+        unitsInGameState(state, action.units).forEach((attackingUnit) => {
             attackingUnit.targetingPosition = action.position;
             attackingUnit.targetingUnit = null;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, action.position);
@@ -106,12 +92,10 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
     }
 
-
     if (action.name === 'TICK') {
         fireProjectiles(state);
         moveUnits(state);
         registerProjectileHits(state);
-
         ++state.ticks;
     }
 

@@ -9,6 +9,9 @@ export default class LineFormation implements FormationInterface {
     unitsPerRow = 6;
 
     form(positions: Array<Vector2>, destination: Vector2): Array<Vector2> {
+        if (positions.length === 0) {
+            return [];
+        }
         if (positions.length === 1) {
             return [destination.clone()];
         }
