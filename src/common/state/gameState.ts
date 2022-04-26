@@ -12,6 +12,8 @@ import registerProjectileHits from './mutations/registerProjectileHits';
 import unitMetadataFactory from '../units/unitMetadataFactory';
 import unitsInGameState from "../util/unitsInGameState";
 import registerUnitFallen from "./mutations/registerUnitFallen";
+import averageVector from "../util/averageVector";
+import patrolUnits from "./mutations/patrolUnits";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -92,9 +94,24 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
     }
 
+    if (action.name === 'PATROL') {
+        const returnTo = averageVector(unitsInGameState(state, action.units).map(({position}) => position));
+        unitsInGameState(state, action.units).forEach((patrollingUnit) => {
+            patrollingUnit.targetingPosition = null;
+            patrollingUnit.targetingUnit = null;
+            patrollingUnit.waypoints = [];
+            patrollingUnit.movingDirection = null;
+            patrollingUnit.direction = compassDirectionCalculator.getDirection(patrollingUnit.position, action.position);
+
+            patrollingUnit.patrollingTo = action.position;
+            patrollingUnit.patrollingToReturn = returnTo;
+        });
+    }
+
     if (action.name === 'TICK') {
         fireProjectiles(state);
         moveUnits(state);
+        patrolUnits(state);
         registerProjectileHits(state);
         ++state.ticks;
     }

@@ -12,8 +12,10 @@ export interface UnitInstance {
     id: number;
     ownedByPlayer: PlayerId;
     unitType: Unit;
-    unitState: UnitState;
+
     unitStateStartedAt: number;
+    unitState: UnitState;
+    direction: CompassDirection;
 
     targetingUnit?: number;
     targetingPosition?: Vector2;
@@ -24,9 +26,11 @@ export interface UnitInstance {
     waypoints: Array<Vector2>;
     clickedWaypoints: Array<Vector2>;
 
-    position: Vector2;
     movingDirection?: Vector2;
-    direction: CompassDirection;
+    position: Vector2;
+
+    patrollingTo?: Vector2;
+    patrollingToReturn?: Vector2;
 
     hitPoints: number;
 }
