@@ -4,7 +4,7 @@ import config from '../../config';
 import {GameState} from '../../../types';
 import projectileMetadata from '../../units/projectileMetadata';
 import hasValue from '../../util/hasValue';
-import {setUnitMovementTowards} from './moveTowardsCurrentWaypoint';
+import {setUnitMovementTowards} from './setUnitMovementTowardsCurrentWaypoint';
 import calculateUnitMovementPerTick from '../../units/calculateUnitMovementPerTick';
 import ticksForAnimation from '../../util/ticksForAnimation';
 import ProjectileType from '../../units/ProjectileType';
@@ -18,7 +18,7 @@ export default function fireProjectiles(state: GameState) {
         .forEach((unit) => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
             const targetingPosition = hasValue(unit.targetingUnit) ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
-            const unitInRange = unit.position.distanceTo(targetingPosition) < unitData.attackRange * config.tileLength;
+            const unitInRange = unit.position.distanceTo(targetingPosition) < unitData.attackRange * config.tileGameStatsLength;
 
             if (unitInRange) {
                 unit.movingDirection = null;

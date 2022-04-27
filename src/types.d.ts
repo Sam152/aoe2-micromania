@@ -21,16 +21,20 @@ export interface UnitInstance {
     targetingPosition?: Vector2;
     reloadsAt: number;
 
-    // A waypoint is an exact location a unit is moving to and a clicked waypoint
-    // is the users input that lead to a unit moving, independent of any formations.
+    // A movement state that is an instruction to move to a specific location.
     waypoints: Array<Vector2>;
     clickedWaypoints: Array<Vector2>;
 
-    movingDirection?: Vector2;
-    position: Vector2;
-
+    // A movement state that patrols the unit between two locations.
     patrollingTo?: Vector2;
     patrollingToReturn?: Vector2;
+
+    // A movement state that is a unit getting into a formation before executing some other movement state.
+    reformingTo?: Vector2;
+
+    // Basic vectors used in all movement states.
+    movingDirection?: Vector2;
+    position: Vector2;
 
     hitPoints: number;
 }
@@ -122,6 +126,7 @@ type GameStateAction = {
     position: Vector2;
 } | {
     name: 'PATROL';
+    formation: FormationType;
     units: UnitId[];
     position: Vector2;
 };

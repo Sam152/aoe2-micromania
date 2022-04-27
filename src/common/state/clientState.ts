@@ -144,6 +144,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'PATROL',
+            formation: clientState.selectedFormation,
             units: clientState.selectedUnits,
             position: clientState.mousePosition,
         });

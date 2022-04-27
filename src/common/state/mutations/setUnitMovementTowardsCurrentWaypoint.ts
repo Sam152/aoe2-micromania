@@ -10,11 +10,11 @@ export function moveUnitsTowardsCurrentWaypoint(formation: FormationType, destin
     const positions = units.map((unit) => unit.position);
     formationManager.get(formation).form(positions, destination).map((formationPosition, index) => {
         units[index].waypoints = [formationPosition];
-        moveTowardsCurrentWaypoint(units[index]);
+        setUnitMovementTowardsCurrentWaypoint(units[index]);
     });
 }
 
-export default function moveTowardsCurrentWaypoint(unit: UnitInstance): void {
+export default function setUnitMovementTowardsCurrentWaypoint(unit: UnitInstance): void {
     setUnitMovementTowards(unit, unit.waypoints[0]);
 }
 
