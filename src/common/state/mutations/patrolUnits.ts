@@ -4,7 +4,6 @@ import calculateUnitMovementPerTick from "../../units/calculateUnitMovementPerTi
 import config from "../../config";
 import swapProperties from "../../util/swapProperties";
 import {setUnitMovementTowards} from "./setUnitMovementTowardsCurrentWaypoint";
-import stopUnit from "./stopUnit";
 
 export default function patrolUnits(state: GameState) {
     state.units.filter(({patrollingTo, reformingArrivalTick}) => hasValue(patrollingTo) && !hasValue(reformingArrivalTick)).forEach(function(unit) {

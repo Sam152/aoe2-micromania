@@ -1,4 +1,4 @@
-import {GameState, GameStateAction, PlayerId} from '../../types';
+import {GameState, GameStateAction, PlayerId, UnitInstance} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
@@ -16,6 +16,7 @@ import averageVector from "../util/averageVector";
 import patrolUnits from "./mutations/patrolUnits";
 import reformUnits from "./mutations/reformUnits";
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
+import addUnitReformingSpeedFactor from "../util/addUnitReformingSpeedFactor";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -100,40 +101,25 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'PATROL') {
-
-        // Reforming logic, @todo make func.
         const units = unitsInGameState(state, action.units);
         units.forEach(unit => stopUnit(unit));
+        const positions = units.map((unit) => unit.position);
 
-        const reformAt = averageVector(unitsInGameState(state, action.units).map(({position}) => position));
-        const reformPositions = units.map((unit) => unit.position);
+        const startingPosition = averageVector(positions);
 
-        const distances: Array<number> = [];
-        const arrivalTicks: Array<number> = [];
-
-        formationManager.get(action.formation).form(reformPositions, reformAt, action.position.clone().sub(reformAt).angle()).forEach((formationPosition, index) => {
-            units[index].reformingTo = formationPosition;
-            setUnitMovementTowards(units[index], units[index].reformingTo);
-
-            distances[index] = units[index].reformingTo.distanceTo(units[index].position);
-            arrivalTicks[index] = state.ticks + (distances[index] !== 0 ? Math.floor(distances[index] / calculateUnitMovementPerTick(units[index]).length()) : 0);
-        });
-
-        const maxDistance = Math.max(...distances);
-        const arrivalTick = Math.max(...arrivalTicks);
-
-        units.forEach((unit, index) => {
-            unit.reformingSpeedFactor = distances[index] / maxDistance;
-            unit.reformingArrivalTick = arrivalTick;
-        });
-
-
-        // Calculate where units are patrolling to and from.
-        const positions = units.map((unit) => unit.reformingTo);
-        formationManager.get(action.formation).form(positions, action.position, action.position.clone().sub(reformAt).angle()).forEach((formationPosition, index) => {
+        formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
             units[index].patrollingTo = formationPosition;
-            units[index].patrollingToReturn = units[index].reformingTo;
         });
+
+        const groupTravelledVector = averageVector(units.map(({patrollingTo}) => patrollingTo)).sub(startingPosition);
+
+        units.map(unit => {
+            unit.patrollingToReturn = unit.patrollingTo.clone().sub(groupTravelledVector);
+            unit.reformingTo = unit.patrollingToReturn.clone();
+            setUnitMovementTowards(unit, unit.reformingTo);
+        });
+
+        addUnitReformingSpeedFactor(state.ticks, units);
     }
 
     if (action.name === 'TICK') {
