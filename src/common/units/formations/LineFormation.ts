@@ -8,7 +8,7 @@ export default class LineFormation implements FormationInterface {
     distanceBetween = 35;
     unitsPerRow = 6;
 
-    form(positions: Array<Vector2>, destination: Vector2): Array<Vector2> {
+    form(positions: Array<Vector2>, destination: Vector2, directionAngleOverride?: number): Array<Vector2> {
         if (positions.length === 0) {
             return [];
         }
@@ -31,7 +31,7 @@ export default class LineFormation implements FormationInterface {
         newPositions.map((newPosition) => newPosition.sub(offsetFromDestination));
 
         // Rotate the units in the direction they were moving.
-        const directionalAngle = destination.clone().sub(startingPoint).angle() + (Math.PI / 2);
+        const directionalAngle = (directionAngleOverride || destination.clone().sub(startingPoint).angle()) + (Math.PI / 2);
         newPositions = newPositions.map((newPosition) => rotateAroundOrigin(destination, newPosition, directionalAngle));
 
         // Find the shortest distance between each source and destination point in the formation.

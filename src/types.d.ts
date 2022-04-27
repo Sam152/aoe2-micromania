@@ -32,6 +32,7 @@ export interface UnitInstance {
     // A movement state that is a unit getting into a formation before executing some other movement state.
     reformingTo?: Vector2;
     reformingSpeedFactor?: number;
+    reformingArrivalTick?: number;
 
     // Basic vectors used in all movement states.
     movingDirection?: Vector2;
@@ -283,7 +284,7 @@ export interface Rectangle {
 }
 
 export interface FormationInterface {
-    form(positions: Array<Vector2>, destination: Vector2): Array<Vector2>;
+    form(positions: Array<Vector2>, destination: Vector2, directionAngleOverride?: number): Array<Vector2>;
 }
 
 declare global {

@@ -23,7 +23,7 @@ const config = {
     /**
      * The distance you have to be from a location to have considered "arrived" there.
      */
-    arrivalDistance: 5,
+    arrivalDistance: 3,
     /**
      * The length of a single tile as far as the game statistics are concerned.
      */
