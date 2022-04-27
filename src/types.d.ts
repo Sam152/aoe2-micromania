@@ -195,6 +195,8 @@ export type ClientStateAction = {
 } | {
     name: 'MOUSE_POSITIONED',
     position: Vector2,
+} | {
+    name: 'HOTKEY_CANCEL'
 };
 
 export type GameDispatcher = (action: GameStateAction) => void;

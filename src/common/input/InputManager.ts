@@ -99,6 +99,12 @@ export default class InputManager {
             });
         }
 
+        if (this.input.keyPressed(StInput.KeyboardKeys.escape)) {
+            this.dispatch({
+                name: 'HOTKEY_CANCEL',
+            });
+        }
+
         if (this.input.down('left_arrow') || this.input.down('a')) {
             this.dispatch({
                 name: 'ARROW_LEFT',

@@ -2,7 +2,7 @@ import {GameState, GameStateAction, PlayerId} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
-import moveTowardsCurrentWaypoint from './mutations/moveTowardsCurrentWaypoint';
+import moveTowardsCurrentWaypoint, {setUnitMovementTowards} from './mutations/moveTowardsCurrentWaypoint';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit from './mutations/stopUnit';
 import compassDirectionCalculator from '../units/compassDirectionCalculator';
@@ -14,6 +14,7 @@ import unitsInGameState from "../util/unitsInGameState";
 import registerUnitFallen from "./mutations/registerUnitFallen";
 import averageVector from "../util/averageVector";
 import patrolUnits from "./mutations/patrolUnits";
+import resetUnitCommands from "../util/resetUnitCommands";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -43,12 +44,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.name === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
-        units.forEach((unit) => {
-            unit.clickedWaypoints = [];
-            unit.targetingUnit = null;
-            unit.targetingPosition = null;
-        });
+        units.forEach(unit => resetUnitCommands(unit));
         const positions = units.map((unit) => unit.position);
+
         formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
             units[index].waypoints = [formationPosition];
             moveTowardsCurrentWaypoint(units[index]);
@@ -59,6 +57,12 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         units.forEach((unit) => {
             unit.clickedWaypoints.push(action.position);
             unit.targetingUnit = null;
+
+            if (unit.patrollingTo) {
+                unit.patrollingTo = null;
+                unit.patrollingToReturn = null;
+                unit.unitState = UnitState.Idle;
+            }
         });
         const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
@@ -105,6 +109,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
             patrollingUnit.patrollingTo = action.position;
             patrollingUnit.patrollingToReturn = returnTo;
+            setUnitMovementTowards(patrollingUnit, action.position);
         });
     }
 

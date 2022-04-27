@@ -58,7 +58,12 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     if (action.name === 'HOTKEY_PATROL' && state.selectedUnits.length > 0) {
         state.activeCommand = ActiveCommand.Patrol;
     }
-    if (['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && state.activeCommand === ActiveCommand.Patrol) {
+
+    if (action.name === 'HOTKEY_CANCEL') {
+        state.activeCommand = ActiveCommand.Default;
+    }
+
+    if (['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && state.activeCommand === ActiveCommand.Patrol) {
         // @ts-ignore
         state.lastMoveClick = [action.position, state.renderedFrames];
     }
@@ -80,21 +85,21 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         state.camera.x += config.cameraPanSpeed;
     }
 
-    if (action.name === 'DRAG_START') {
-        state.activeCommand = ActiveCommand.Default;
+    if (action.name === 'DRAG_START' && state.activeCommand === ActiveCommand.Default) {
+        // state.activeCommand = ActiveCommand.Default;
         state.selectionRectangle = {
             p1: action.position,
             p2: action.position,
         };
     }
-    if (action.name === 'DRAGGING') {
+    if (action.name === 'DRAGGING' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle.p2 = action.position;
         state.selectedUnits = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .filter((unitAndHitBox) => rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)))
             .map((unitAndHitBox) => unitAndHitBox.unit.id);
     }
-    if (action.name === 'DRAG_END') {
+    if (action.name === 'DRAG_END' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle = null;
     }
 
@@ -127,7 +132,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         }
     }
 
-    if (clientState.activeCommand === ActiveCommand.AttackGround && ['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0) {
+    if (clientState.activeCommand === ActiveCommand.AttackGround && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'ATTACK_GROUND',
             units: clientState.selectedUnits,
@@ -136,7 +141,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         clientState.activeCommand = ActiveCommand.Default;
     }
 
-    if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK'].includes(action.name) && clientState.selectedUnits.length > 0) {
+    if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'PATROL',
             units: clientState.selectedUnits,
