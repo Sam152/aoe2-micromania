@@ -242,10 +242,15 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     renderMouse(state: ClientState) {
-        const map = {
+        const cursorMap = {
             [ActiveCommand.AttackGround]: 8,
             [ActiveCommand.Patrol]: 18,
             [ActiveCommand.Default]: 0,
+        };
+        const anchorMap: {[key: number]: string} = {
+            8: '0 0',
+            18: '10 24',
+            0: '0 0',
         };
 
         let cursor;
@@ -256,11 +261,12 @@ export default class CanvasRenderer implements RendererInterface {
             cursor = attacking ? 4 : 0;
         }
         else {
-            cursor = map[state.activeCommand];
+            cursor = cursorMap[state.activeCommand];
         }
 
         if (cursor !== this.lastCursor) {
-            this.canvas.style.cursor = `url("graphics/interface/${cursor}.svg"), none`;
+            const anchor = anchorMap[cursor];
+            this.canvas.style.cursor = `url("graphics/interface/${cursor}.svg") ${anchor}, none`;
             this.lastCursor = cursor;
         }
     }
