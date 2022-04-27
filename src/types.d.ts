@@ -31,6 +31,7 @@ export interface UnitInstance {
 
     // A movement state that is a unit getting into a formation before executing some other movement state.
     reformingTo?: Vector2;
+    reformingSpeedFactor?: number;
 
     // Basic vectors used in all movement states.
     movingDirection?: Vector2;

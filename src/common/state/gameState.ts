@@ -104,15 +104,25 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
         const reformAt = averageVector(unitsInGameState(state, action.units).map(({position}) => position));
         const reformPositions = units.map((unit) => unit.position);
+
+        const distances: Array<number> = [];
         formationManager.get(action.formation).form(reformPositions, reformAt).forEach((formationPosition, index) => {
             units[index].reformingTo = formationPosition;
             setUnitMovementTowards(units[index], units[index].reformingTo);
+            distances[index] = units[index].reformingTo.distanceTo(units[index].position);
+        });
+
+        console.log(distances);
+
+        const maxDistance = Math.max(...distances);
+        units.forEach((unit, index) => {
+            console.log(unit.reformingSpeedFactor);
+            unit.reformingSpeedFactor = distances[index] / maxDistance;
         });
 
         const positions = units.map((unit) => unit.position);
         formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
             units[index].patrollingTo = formationPosition;
-            // setUnitMovementTowards(units[index], units[index].patrollingTo);
         });
 
         const destinationPositions = units.map((unit) => unit.patrollingTo);
