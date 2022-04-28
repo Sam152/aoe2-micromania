@@ -141,7 +141,7 @@ export default class CanvasRenderer implements RendererInterface {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
-            const movementVector = calculateUnitMovementPerTick(unitInstance);
+            const movementVector = calculateUnitMovementPerTick(unitInstance, unitInstance.reformingSpeedFactor || 1);
             const interpolatedPosition = movementVector ?
                 unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
                 unitInstance.position;
@@ -251,6 +251,7 @@ export default class CanvasRenderer implements RendererInterface {
             8: '0 0',
             18: '10 24',
             0: '0 0',
+            4: '0 0',
         };
 
         let cursor;

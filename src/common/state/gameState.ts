@@ -4,7 +4,7 @@ import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
 import setUnitMovementTowardsCurrentWaypoint, {setUnitMovementTowards} from './mutations/setUnitMovementTowardsCurrentWaypoint';
 import formationManager from '../units/formations/FormationManager';
-import stopUnit from './mutations/stopUnit';
+import stopUnit, {stopUnitExceptForWaypoints} from './mutations/stopUnit';
 import compassDirectionCalculator from '../units/compassDirectionCalculator';
 import fireProjectiles from './mutations/fireProjectiles';
 import moveUnits from './mutations/moveUnits';
@@ -58,13 +58,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const units = unitsInGameState(state, action.units);
         units.forEach((unit) => {
             unit.clickedWaypoints.push(action.position);
-            unit.targetingUnit = null;
-
-            if (unit.patrollingTo) {
-                unit.patrollingTo = null;
-                unit.patrollingToReturn = null;
-                unit.unitState = UnitState.Idle;
-            }
+            stopUnitExceptForWaypoints(unit);
         });
         const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
         formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
@@ -115,13 +109,19 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         // Translate their destinations back to their average starting position, then reform and return the
         // patrol to that location.
         const groupTravelledVector = averageVector(units.map(({patrollingTo}) => patrollingTo)).sub(startingPosition);
-        units.map(unit => {
-            unit.patrollingToReturn = unit.patrollingTo.clone().sub(groupTravelledVector);
-            unit.reformingTo = unit.patrollingToReturn.clone();
-            setUnitMovementTowards(unit, unit.reformingTo);
-        });
 
-        addUnitReformingSpeedFactor(state.ticks, units);
+        if (units.length > 1) {
+            units.map(unit => {
+                unit.patrollingToReturn = unit.patrollingTo.clone().sub(groupTravelledVector);
+                unit.reformingTo = unit.patrollingToReturn.clone();
+                setUnitMovementTowards(unit, unit.reformingTo);
+            });
+            addUnitReformingSpeedFactor(state.ticks, units);
+        }
+        else if (units.length === 1) {
+            units[0].patrollingToReturn = units[0].patrollingTo.clone().sub(groupTravelledVector);
+            setUnitMovementTowards(units[0], units[0].patrollingTo);
+        }
     }
 
     if (action.name === 'TICK') {

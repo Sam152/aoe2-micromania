@@ -2,6 +2,10 @@ import {UnitInstance} from "../../types";
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
 
 export default function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
+    if (units.length < 2) {
+        throw new Error('Should only reform more than one unit.');
+    }
+
     const distances: Array<number> = [];
     const arrivalTicks: Array<number> = [];
 
