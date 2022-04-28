@@ -142,11 +142,10 @@ export default class CanvasRenderer implements RendererInterface {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
-            const shouldInterpolate = !hasValue(unitInstance.reformingArrivalTick) || unitInstance.reformingSpeedFactor >= 1;
-            const movementVector = calculateUnitMovementPerTick(unitInstance, unitInstance.reformingSpeedFactor || 1);
-            const interpolatedPosition = movementVector && shouldInterpolate ?
-                unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
-                unitInstance.position;
+            const movementVector = calculateUnitMovementPerTick(unitInstance);
+            const interpolatedPosition = movementVector
+                ? unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered))
+                : unitInstance.position;
 
             // If the unit is selected, draw an oval around its base.
             if (clientState.selectedUnits.includes(unitInstance.id)) {
@@ -156,7 +155,7 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context.stroke();
             }
 
-            const animationDuration = animationMetadata.animationDuration * (unitInstance.reformingSpeedFactor || 1);
+            const animationDuration = animationMetadata.animationDuration / (unitInstance.reformingSpeedFactor || 1);
 
             if (animationMetadata.underSlp) {
                 const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);

@@ -31,7 +31,7 @@ export default function fireProjectiles(state: GameState) {
                     unit.unitStateStartedAt = state.ticks;
                 }
             } else {
-                setUnitMovementTowards(unit, targetingPosition);
+                setUnitMovementTowards(state, unit, targetingPosition);
                 unit.position.add(calculateUnitMovementPerTick(unit));
             }
         });

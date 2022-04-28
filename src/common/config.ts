@@ -21,10 +21,6 @@ const config = {
     tileWidth: 98,
     tileHeight: 48,
     /**
-     * The distance you have to be from a location to have considered "arrived" there.
-     */
-    arrivalDistance: 3,
-    /**
      * The length of a single tile as far as the game statistics are concerned.
      */
     tileGameStatsLength: 99,

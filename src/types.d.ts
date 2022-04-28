@@ -34,6 +34,12 @@ export interface UnitInstance {
     reformingSpeedFactor?: number;
     reformingArrivalTick?: number;
 
+    // A generic tick at which a unit is expected to complete some kind of movement action. This is helpful when
+    // deciding a unit should stop or take a return patrol path, since it's difficult to know when a unit has reached
+    // its destination by measuring its position alone, since movement speed can have a unit travel some distance OVER
+    // its intended destination.
+    arrivalTick?: number;
+
     // Basic vectors used in all movement states.
     movingDirection?: Vector2;
     position: Vector2;

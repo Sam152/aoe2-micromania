@@ -9,9 +9,11 @@ export default function patrolUnits(state: GameState) {
     state.units.filter(({patrollingTo, reformingArrivalTick}) => hasValue(patrollingTo) && !hasValue(reformingArrivalTick)).forEach(function(unit) {
         unit.position.add(calculateUnitMovementPerTick(unit));
 
-        if (unit.position.distanceTo(unit.patrollingTo) < config.arrivalDistance) {
+        if (state.ticks === unit.arrivalTick) {
+            unit.position = unit.patrollingTo.clone();
+
             swapProperties(unit, 'patrollingTo', 'patrollingToReturn');
-            setUnitMovementTowards(unit, unit.patrollingTo);
+            setUnitMovementTowards(state, unit, unit.patrollingTo);
         }
     });
 }

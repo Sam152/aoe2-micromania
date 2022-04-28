@@ -1,28 +1,23 @@
 import setUnitMovementTowardsCurrentWaypoint, {setUnitMovementTowards} from './setUnitMovementTowardsCurrentWaypoint';
 import {GameState} from '../../../types';
 import calculateUnitMovementPerTick from '../../units/calculateUnitMovementPerTick';
-import config from "../../config";
 import hasValue from "../../util/hasValue";
 
 export default function reformUnits(state: GameState) {
     state.units.filter(({reformingTo}) => hasValue(reformingTo)).forEach(function(unit) {
-        unit.position.add(calculateUnitMovementPerTick(unit, unit.reformingSpeedFactor));
-        if (unit.position.distanceTo(unit.reformingTo) < config.arrivalDistance) {
-            unit.reformingTo = null;
-            unit.reformingSpeedFactor = null;
-        }
+        unit.position.add(calculateUnitMovementPerTick(unit));
     });
 
     state.units.filter(({reformingArrivalTick}) => reformingArrivalTick === state.ticks).forEach(function(unit) {
-        unit.reformingArrivalTick = null;
         unit.reformingTo = null;
+        unit.reformingArrivalTick = null;
         unit.reformingSpeedFactor = null;
 
         if (unit.waypoints.length) {
-            setUnitMovementTowardsCurrentWaypoint(unit);
+            setUnitMovementTowardsCurrentWaypoint(state, unit);
         }
         if (unit.patrollingTo) {
-            setUnitMovementTowards(unit, unit.patrollingTo);
+            setUnitMovementTowards(state, unit, unit.patrollingTo);
         }
     });
 }

@@ -9,6 +9,9 @@ import {useState} from 'react';
 import SinglePlayerGame from './SinglePlayerGame';
 
 export default function Lobby({io}: { io: Socket }) {
+
+    return (<SinglePlayerGame />);
+
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>(io, 'playerInfo', {inRoom: null, isSpectator: null, playingAs: null});
     const roomList = useEmittedData<EmittedRoom[]>(io, 'listRooms', []);
 
