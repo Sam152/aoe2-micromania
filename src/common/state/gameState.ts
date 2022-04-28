@@ -2,7 +2,9 @@ import {GameState, GameStateAction, PlayerId, UnitInstance} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
-import setUnitMovementTowardsCurrentWaypoint, {setUnitMovementTowards} from './mutations/setUnitMovementTowardsCurrentWaypoint';
+import setUnitMovementTowardsCurrentWaypoint, {
+    setUnitMovementTowards
+} from './mutations/setUnitMovementTowardsCurrentWaypoint';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit, {stopUnitExceptForWaypoints} from './mutations/stopUnit';
 import compassDirectionCalculator from '../units/compassDirectionCalculator';
@@ -94,28 +96,28 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const units = unitsInGameState(state, action.units);
         units.forEach(unit => stopUnit(unit));
 
-        const positions = units.map((unit) => unit.position);
-        const startingPosition = averageVector(positions);
-
-        // Find the formation the units will make at their patrol destination.
-        formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
-            units[index].patrollingToReturn = formationPosition;
-        });
-
-        // Translate their destinations back to their average starting position, then reform and return the
-        // patrol to that location.
-        const groupTravelledVector = averageVector(units.map(({patrollingToReturn}) => patrollingToReturn)).sub(startingPosition);
-
         if (units.length > 1) {
+            const positions = units.map((unit) => unit.position);
+            const startingPosition = averageVector(positions);
+
+            // Find the formation the units will make at their patrol destination.
+            formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
+                units[index].patrollingToReturn = formationPosition;
+            });
+
+            // Translate their destinations back to their average starting position, then reform and return the
+            // patrol to that location.
+            const groupTravelledVector = averageVector(units.map(({patrollingToReturn}) => patrollingToReturn)).sub(startingPosition);
             units.map(unit => {
                 unit.patrollingTo = unit.patrollingToReturn.clone().sub(groupTravelledVector);
                 unit.reformingTo = unit.patrollingToReturn.clone();
                 setUnitMovementTowards(state, unit, unit.reformingTo);
             });
             addUnitReformingSpeedFactor(state.ticks, units);
-        }
-        else if (units.length === 1) {
-            units[0].patrollingToReturn = units[0].patrollingTo.clone().sub(groupTravelledVector);
+        } else if (units.length === 1) {
+            // units[0].patrollingToReturn = units[0].patrollingTo.clone().sub(groupTravelledVector);
+            units[0].patrollingTo = action.position.clone();
+            units[0].patrollingToReturn = units[0].position.clone();
             setUnitMovementTowards(state, units[0], units[0].patrollingTo);
         }
     }
