@@ -99,16 +99,16 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
         // Find the formation the units will make at their patrol destination.
         formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
-            units[index].patrollingTo = formationPosition;
+            units[index].patrollingToReturn = formationPosition;
         });
 
         // Translate their destinations back to their average starting position, then reform and return the
         // patrol to that location.
-        const groupTravelledVector = averageVector(units.map(({patrollingTo}) => patrollingTo)).sub(startingPosition);
+        const groupTravelledVector = averageVector(units.map(({patrollingToReturn}) => patrollingToReturn)).sub(startingPosition);
 
         if (units.length > 1) {
             units.map(unit => {
-                unit.patrollingToReturn = unit.patrollingTo.clone().sub(groupTravelledVector);
+                unit.patrollingTo = unit.patrollingToReturn.clone().sub(groupTravelledVector);
                 unit.reformingTo = unit.patrollingToReturn.clone();
                 setUnitMovementTowards(state, unit, unit.reformingTo);
             });

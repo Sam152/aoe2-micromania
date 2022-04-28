@@ -18,9 +18,18 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
     const maxDistance = Math.max(...distances);
     const arrivalTick = Math.max(...ticksForReform);
 
-    units.forEach((unit, index) => {
-        unit.reformingSpeedFactor = (distances[index] / maxDistance) * 2;
-        unit.reformingArrivalTick = ticks + Math.ceil(arrivalTick / 2);
-    });
+    const speedFactors = distances.map(distance => distance / maxDistance);
+    const smallestSpeedFactor = Math.min(...speedFactors);
 
+    // Try a "catch-up" factor that turns the slowest moving unit into one that moves at a
+    // rate of "1", ie, the normal movement speed of a unit, but cap it at a reasonable
+    // rate of extra movement you would accept, otherwise extremely slow moving units in a
+    // catch-up phase will make other units extrmely fast.
+    const catchUpFactor = Math.min(1.5, 1 / smallestSpeedFactor);
+
+    // Scale all unit speeds, so units will slow down to all arrive at the reform point at the same time.
+    units.forEach((unit, index) => {
+        unit.reformingSpeedFactor = (distances[index] / maxDistance) * catchUpFactor;
+        unit.reformingArrivalTick = ticks + Math.ceil(arrivalTick / catchUpFactor);
+    });
 }
