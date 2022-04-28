@@ -1,9 +1,11 @@
-sync-files:
+build:
 	yarn run build-prod
+
+sync-files:
 	rsync -av ./dist/* root@167.71.219.138:/var/www/mm/www/
 	rsync -av ./dist-server/* root@167.71.219.138:/var/www/mm/server/
 
 kick:
-	ssh root@167.71.219.138 "/var/www/mm/server/kick.sh"
+	ssh -n -f root@167.71.219.138 "sh -c 'cd /var/www/mm/server; nohup ./kick.sh > /dev/null 2>&1 &'"
 
-deploy: sync-files kick
+deploy: build sync-files kick
