@@ -78,10 +78,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'ATTACK') {
         const target = state.units.find(({id}) => action.target === id);
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
+            stopUnit(attackingUnit);
             attackingUnit.targetingUnit = action.target;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, target.position);
-            attackingUnit.waypoints = [];
-            attackingUnit.movingDirection = null;
         });
     }
     if (action.name === 'ATTACK_GROUND') {

@@ -142,7 +142,7 @@ export default class CanvasRenderer implements RendererInterface {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
-            const shouldInterpolate = !hasValue(unitInstance.reformingArrivalTick) || unitInstance.reformingSpeedFactor > 0.8;
+            const shouldInterpolate = !hasValue(unitInstance.reformingArrivalTick) || unitInstance.reformingSpeedFactor >= 1;
             const movementVector = calculateUnitMovementPerTick(unitInstance, unitInstance.reformingSpeedFactor || 1);
             const interpolatedPosition = movementVector && shouldInterpolate ?
                 unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
@@ -156,12 +156,14 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context.stroke();
             }
 
+            const animationDuration = animationMetadata.animationDuration * (unitInstance.reformingSpeedFactor || 1);
+
             if (animationMetadata.underSlp) {
                 const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);
                 underSlp.animatePlayerAsset(
                     this.context,
                     interpolatedPosition,
-                    animationMetadata.animationDuration,
+                    animationDuration,
                     gameState.ticks - unitInstance.unitStateStartedAt,
                     unitInstance.ownedByPlayer,
                     unitInstance.direction,
@@ -172,7 +174,7 @@ export default class CanvasRenderer implements RendererInterface {
             const hitBox = slp.animatePlayerAsset(
                 this.context,
                 interpolatedPosition,
-                animationMetadata.animationDuration,
+                animationDuration,
                 gameState.ticks - unitInstance.unitStateStartedAt,
                 unitInstance.ownedByPlayer,
                 unitInstance.direction,
