@@ -7,19 +7,20 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
     }
 
     const distances: Array<number> = [];
-    const arrivalTicks: Array<number> = [];
+    const ticksForReform: Array<number> = [];
 
     units.forEach(unit => {
         const distanceToReform = unit.reformingTo.distanceTo(unit.position);
         distances.push(distanceToReform);
-        arrivalTicks.push(ticks + (distanceToReform !== 0 ? Math.floor(distanceToReform / calculateUnitMovementPerTick(unit).length()) : 0));
+        ticksForReform.push(distanceToReform !== 0 ? Math.floor(distanceToReform / calculateUnitMovementPerTick(unit).length()) : 0);
     });
 
     const maxDistance = Math.max(...distances);
-    const arrivalTick = Math.max(...arrivalTicks);
+    const arrivalTick = Math.max(...ticksForReform);
 
     units.forEach((unit, index) => {
-        unit.reformingSpeedFactor = distances[index] / maxDistance;
-        unit.reformingArrivalTick = arrivalTick;
+        unit.reformingSpeedFactor = (distances[index] / maxDistance) * 2;
+        unit.reformingArrivalTick = ticks + Math.ceil(arrivalTick / 2);
     });
+
 }

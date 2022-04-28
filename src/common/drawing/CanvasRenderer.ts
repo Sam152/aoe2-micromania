@@ -15,6 +15,7 @@ import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
 import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
 import unitsInGameState from '../util/unitsInGameState';
+import hasValue from "../util/hasValue";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -141,8 +142,9 @@ export default class CanvasRenderer implements RendererInterface {
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
+            const shouldInterpolate = !hasValue(unitInstance.reformingArrivalTick) || unitInstance.reformingSpeedFactor > 0.8;
             const movementVector = calculateUnitMovementPerTick(unitInstance, unitInstance.reformingSpeedFactor || 1);
-            const interpolatedPosition = movementVector ?
+            const interpolatedPosition = movementVector && shouldInterpolate ?
                 unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
                 unitInstance.position;
 

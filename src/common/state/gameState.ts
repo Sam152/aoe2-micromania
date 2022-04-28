@@ -86,11 +86,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
     if (action.name === 'ATTACK_GROUND') {
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
+            stopUnit(attackingUnit);
             attackingUnit.targetingPosition = action.position;
-            attackingUnit.targetingUnit = null;
             attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, action.position);
-            attackingUnit.waypoints = [];
-            attackingUnit.movingDirection = null;
         });
     }
 

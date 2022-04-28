@@ -8,8 +8,6 @@ const MultiplayerGame = React.memo(function({io, playingAs}: {io: Socket, playin
     const state = new NetworkedStateManager(io, playingAs);
     state.init();
 
-    console.log('RERENDER');
-
     return (
         <div>
             <GameCanvas stateManager={state} />

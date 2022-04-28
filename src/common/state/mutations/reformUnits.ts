@@ -15,6 +15,9 @@ export default function reformUnits(state: GameState) {
 
     state.units.filter(({reformingArrivalTick}) => reformingArrivalTick === state.ticks).forEach(function(unit) {
         unit.reformingArrivalTick = null;
+        unit.reformingTo = null;
+        unit.reformingSpeedFactor = null;
+
         if (unit.waypoints.length) {
             setUnitMovementTowardsCurrentWaypoint(unit);
         }
