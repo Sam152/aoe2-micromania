@@ -82,14 +82,12 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
             stopUnit(attackingUnit);
             attackingUnit.targetingUnit = action.target;
-            attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, target.position);
         });
     }
     if (action.name === 'ATTACK_GROUND') {
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
             stopUnit(attackingUnit);
             attackingUnit.targetingPosition = action.position;
-            attackingUnit.direction = compassDirectionCalculator.getDirection(attackingUnit.position, action.position);
         });
     }
 
@@ -124,12 +122,12 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'TICK') {
-        fireProjectiles(state);
         reformUnits(state);
         moveUnits(state);
         patrolUnits(state);
         autoAttack(state);
         registerProjectileHits(state);
+        fireProjectiles(state);
         ++state.ticks;
     }
 

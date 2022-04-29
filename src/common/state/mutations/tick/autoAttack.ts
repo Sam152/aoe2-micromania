@@ -13,9 +13,7 @@ export default function autoAttack(state: GameState) {
         }
 
         const targetDistances = targets.map(({position}) => attackingUnit.position.distanceToSquared(position));
-
         const closestUnit = targets[targetDistances.indexOf(Math.min(...targetDistances))];
-
         if (inAttackRange(attackingUnit, closestUnit.position)) {
             attackingUnit.targetingUnit = closestUnit.id;
         }
