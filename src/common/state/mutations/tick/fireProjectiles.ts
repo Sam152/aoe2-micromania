@@ -1,14 +1,15 @@
-import UnitState from '../../units/UnitState';
-import unitMetadataFactory from '../../units/unitMetadataFactory';
-import config from '../../config';
-import {GameState} from '../../../types';
-import projectileMetadata from '../../units/projectileMetadata';
-import hasValue from '../../util/hasValue';
-import {setUnitMovementTowards} from './setUnitMovementTowardsCurrentWaypoint';
-import calculateUnitMovementPerTick from '../../units/calculateUnitMovementPerTick';
-import ticksForAnimation from '../../util/ticksForAnimation';
-import ProjectileType from '../../units/ProjectileType';
+import UnitState from '../../../units/UnitState';
+import unitMetadataFactory from '../../../units/unitMetadataFactory';
+import config from '../../../config';
+import {GameState} from '../../../../types';
+import projectileMetadata from '../../../units/projectileMetadata';
+import hasValue from '../../../util/hasValue';
+import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
+import ticksForAnimation from '../../../util/ticksForAnimation';
+import ProjectileType from '../../../units/ProjectileType';
 import {Vector2} from 'three';
+import inAttackRange from "../../../util/inAttackRange";
+import setUnitMovementTowards from "../initiated/setUnitMovementTowards";
 
 
 export default function fireProjectiles(state: GameState) {
@@ -18,9 +19,8 @@ export default function fireProjectiles(state: GameState) {
         .forEach((unit) => {
             const unitData = unitMetadataFactory.getUnit(unit.unitType);
             const targetingPosition = hasValue(unit.targetingUnit) ? state.units.find(({id}) => id === unit.targetingUnit).position : unit.targetingPosition;
-            const unitInRange = unit.position.distanceTo(targetingPosition) < unitData.attackRange * config.tileGameStatsLength;
 
-            if (unitInRange) {
+            if (inAttackRange(unit, targetingPosition)) {
                 unit.movingDirection = null;
 
                 if (unit.reloadsAt <= state.ticks) {

@@ -2,22 +2,23 @@ import {GameState, GameStateAction, PlayerId, UnitInstance} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
-import setUnitMovementTowardsCurrentWaypoint, {
-    setUnitMovementTowards
-} from './mutations/setUnitMovementTowardsCurrentWaypoint';
+import setUnitMovementTowards, {
+    setUnitMovementTowardsCurrentWaypoint
+} from './mutations/initiated/setUnitMovementTowards';
 import formationManager from '../units/formations/FormationManager';
-import stopUnit, {stopUnitExceptForWaypoints} from './mutations/stopUnit';
+import stopUnit, {stopUnitExceptForWaypoints} from './mutations/initiated/stopUnit';
 import compassDirectionCalculator from '../units/compassDirectionCalculator';
-import fireProjectiles from './mutations/fireProjectiles';
-import moveUnits from './mutations/moveUnits';
-import registerProjectileHits from './mutations/registerProjectileHits';
+import fireProjectiles from './mutations/tick/fireProjectiles';
+import moveUnits from './mutations/tick/moveUnits';
+import registerProjectileHits from './mutations/tick/registerProjectileHits';
 import unitMetadataFactory from '../units/unitMetadataFactory';
 import unitsInGameState from "../util/unitsInGameState";
-import registerUnitFallen from "./mutations/registerUnitFallen";
+import registerUnitFallen from "./mutations/tick/registerUnitFallen";
 import averageVector from "../util/averageVector";
-import patrolUnits from "./mutations/patrolUnits";
-import reformUnits from "./mutations/reformUnits";
+import patrolUnits from "./mutations/tick/patrolUnits";
+import reformUnits from "./mutations/tick/reformUnits";
 import addUnitReformingSpeedFactor from "../util/addUnitReformingSpeedFactor";
+import autoAttack from "./mutations/tick/autoAttack";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -127,6 +128,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         reformUnits(state);
         moveUnits(state);
         patrolUnits(state);
+        autoAttack(state);
         registerProjectileHits(state);
         ++state.ticks;
     }
@@ -141,7 +143,7 @@ function defaultState(): GameState {
         units: [],
         projectiles: [],
         fallenUnits: [],
-        mapSize: 14,
+        mapSize: 18,
         loadedPlayers: [],
         gameModeStarted: false,
     });

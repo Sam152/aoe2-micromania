@@ -1,10 +1,10 @@
-import {GameState} from '../../../types';
-import getUnitInstanceHitBox from '../../util/getUnitInstanceHitBox';
-import pointInRect from '../../util/pointInRect';
-import calculateDamage from '../../units/calculateDamage';
+import {GameState} from '../../../../types';
+import getUnitInstanceHitBox from '../../../util/getUnitInstanceHitBox';
+import pointInRect from '../../../util/pointInRect';
+import calculateDamage from '../../../units/calculateDamage';
 import registerUnitFallen from './registerUnitFallen';
-import unitMetadataFactory from '../../units/unitMetadataFactory';
-import projectileMetadata from '../../units/projectileMetadata';
+import unitMetadataFactory from '../../../units/unitMetadataFactory';
+import projectileMetadata from '../../../units/projectileMetadata';
 
 export default function registerProjectileHits(state: GameState) {
     const landedProjectiles = state.projectiles.filter(({arrivingTick}) => arrivingTick === state.ticks);

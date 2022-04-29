@@ -1,10 +1,10 @@
-import compassDirectionCalculator from '../../units/compassDirectionCalculator';
-import UnitState from '../../units/UnitState';
-import {GameState, UnitInstance} from '../../../types';
-import formationManager from '../../units/formations/FormationManager';
-import FormationType from '../../units/formations/FormationType';
+import compassDirectionCalculator from '../../../units/compassDirectionCalculator';
+import UnitState from '../../../units/UnitState';
+import {GameState, UnitInstance} from '../../../../types';
+import formationManager from '../../../units/formations/FormationManager';
+import FormationType from '../../../units/formations/FormationType';
 import {Vector2} from 'three';
-import ticksToDestination from "../../util/ticksToDestination";
+import ticksToDestination from "../../../util/ticksToDestination";
 
 export function moveUnitsTowardsCurrentWaypoint(state: GameState, formation: FormationType, destination: Vector2, units: UnitInstance[]) {
     const positions = units.map((unit) => unit.position);
@@ -14,11 +14,11 @@ export function moveUnitsTowardsCurrentWaypoint(state: GameState, formation: For
     });
 }
 
-export default function setUnitMovementTowardsCurrentWaypoint(state: GameState, unit: UnitInstance): void {
+export function setUnitMovementTowardsCurrentWaypoint(state: GameState, unit: UnitInstance): void {
     setUnitMovementTowards(state, unit, unit.waypoints[0]);
 }
 
-export function setUnitMovementTowards(state: GameState, unit: UnitInstance, destination: Vector2) {
+export default function setUnitMovementTowards(state: GameState, unit: UnitInstance, destination: Vector2) {
     unit.movingDirection = destination.clone().sub(unit.position).normalize();
     const ticks = ticksToDestination(unit, destination);
 
