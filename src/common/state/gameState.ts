@@ -128,6 +128,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         autoAttack(state);
         registerProjectileHits(state);
         fireProjectiles(state);
+
         ++state.ticks;
     }
 

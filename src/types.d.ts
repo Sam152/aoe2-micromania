@@ -230,6 +230,10 @@ export interface GameMode {
     start(dispatcher: GameDispatcher, gameState: GameState): void;
 }
 
+export interface Ai {
+    makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void;
+}
+
 export interface EmittedPlayerLobbyMetadata {
     inRoom?: EmittedRoom;
     isSpectator?: boolean;

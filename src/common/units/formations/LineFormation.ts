@@ -3,6 +3,7 @@ import {Vector2} from 'three';
 import averageVector from '../../util/averageVector';
 import rotateAroundOrigin from '../../util/rotateAroundOrigin';
 import standardDeviation from 'just-standard-deviation';
+import swapProperties from "../../util/swapProperties";
 
 export default class LineFormation implements FormationInterface {
     distanceBetween = 35;
@@ -19,8 +20,9 @@ export default class LineFormation implements FormationInterface {
         const startingPoint = averageVector(positions);
 
         // Line up the units into rows.
-        const rows = Math.ceil(positions.length / this.unitsPerRow);
-        const columns = Math.ceil(positions.length / rows);
+        let rows = Math.ceil(positions.length / this.unitsPerRow);
+        let columns = Math.ceil(positions.length / rows);
+
         let newPositions = positions.map((position, index) => {
             const row = Math.ceil((index + 1) / columns);
             return destination.clone().add(new Vector2((index % columns) * this.distanceBetween, row * this.distanceBetween));
