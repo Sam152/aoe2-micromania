@@ -1,5 +1,5 @@
 import {Rectangle} from '../../types';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 
 export default function pointInRect(rect: Rectangle, position: Vector2): boolean {
     return (

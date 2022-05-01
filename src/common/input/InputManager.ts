@@ -4,7 +4,7 @@ import {
     StateTransmitter,
 } from '../../types';
 import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 
 const StInput = require('stinput');
 

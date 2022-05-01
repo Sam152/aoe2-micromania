@@ -3,7 +3,7 @@ import UnitState from '../../../units/UnitState';
 import {GameState, UnitInstance} from '../../../../types';
 import formationManager from '../../../units/formations/FormationManager';
 import FormationType from '../../../units/formations/FormationType';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import ticksToDestination from '../../../util/ticksToDestination';
 
 export function moveUnitsTowardsCurrentWaypoint(state: GameState, formation: FormationType, destination: Vector2, units: UnitInstance[]) {

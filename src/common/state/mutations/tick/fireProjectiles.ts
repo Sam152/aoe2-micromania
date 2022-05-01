@@ -7,7 +7,7 @@ import hasValue from '../../../util/hasValue';
 import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
 import ticksForAnimation from '../../../util/ticksForAnimation';
 import ProjectileType from '../../../units/ProjectileType';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import inAttackRange, {inMinimumRange} from '../../../util/inAttackRange';
 import setUnitMovementTowards, {setUnitMovementAwayFrom} from '../initiated/setUnitMovementTowards';
 import compassDirectionCalculator from '../../../units/compassDirectionCalculator';

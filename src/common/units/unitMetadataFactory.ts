@@ -3,7 +3,7 @@ import UnitState from './UnitState';
 import {UnitStats} from '../../types';
 import AnimationStyle from './AnimationStyle';
 import ProjectileType from './ProjectileType';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 
 /**
  * Definitions of units, mapped from AOC JSON file:

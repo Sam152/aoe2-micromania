@@ -4,7 +4,7 @@ import pointInRect from '../util/pointInRect';
 import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingWithRect';
 import FormationType from '../units/formations/FormationType';
 import config from '../config';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import ActiveCommand from '../input/ActiveCommand';
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {

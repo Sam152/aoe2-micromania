@@ -9,7 +9,7 @@ import {
     UnitInstance,
 } from '../../../types';
 import {Socket} from 'socket.io-client';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import {normalizeGameStateAction, normalizeGameStateObject} from '../../util/normalizer';
 
 /**

@@ -2,7 +2,7 @@ import {Rectangle, RenderedSlpFrame} from '../../types';
 import CompassDirection from '../units/CompassDirection';
 import anchorAt from '../util/anchorAt';
 import AnimationStyle from '../units/AnimationStyle';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import ticksForAnimation from '../util/ticksForAnimation';
 
 const SLP = require('genie-slp');

@@ -1,4 +1,4 @@
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 
 export default function rotateAroundOrigin(origin: Vector2, point: Vector2, angle: number): Vector2 {
     return new Vector2(

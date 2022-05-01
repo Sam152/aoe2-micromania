@@ -3,7 +3,7 @@ import UnitState from './common/units/UnitState';
 import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';
 import AnimationStyle from './common/units/AnimationStyle';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import FormationType from './common/units/formations/FormationType';
 import ProjectileType from './common/units/ProjectileType';
 import ActiveCommand from './common/input/ActiveCommand';

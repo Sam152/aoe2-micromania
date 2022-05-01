@@ -1,5 +1,5 @@
 import {FormationInterface} from '../../../types';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import averageVector from '../../util/averageVector';
 import rotateAroundOrigin from '../../util/rotateAroundOrigin';
 import standardDeviation from 'just-standard-deviation';

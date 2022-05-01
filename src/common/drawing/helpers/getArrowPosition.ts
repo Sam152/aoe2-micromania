@@ -1,5 +1,5 @@
 import {ProjectileInstance} from '../../../types';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 
 
 export default function getArrowPosition(projectile: ProjectileInstance, percentageComplete: number) {

@@ -1,6 +1,6 @@
 import {Ai, GameDispatcher, GameState, GameStateAction} from '../../types';
 import FormationType from '../units/formations/FormationType';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import averageVector from '../util/averageVector';
 
 /**

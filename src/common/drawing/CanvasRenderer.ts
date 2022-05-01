@@ -3,7 +3,7 @@ import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
 import {square} from './shapes';
 import screenManager from './screenManager';
-import {Vector2} from 'three';
+import {Vector2} from 'three/src/math/Vector2';
 import config from '../config';
 import AnimationStyle from '../units/AnimationStyle';
 import Grid from '../terrain/Grid';
