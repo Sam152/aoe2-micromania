@@ -7,7 +7,7 @@ import UnitState from "../../../units/UnitState";
 
 export default function patrolUnits(state: GameState) {
     state.units
-        .filter(unit => hasValue(unit.patrollingTo) && !hasValue(unit.reformingArrivalTick) && unit.unitState === UnitState.Moving)
+        .filter(unit => hasValue(unit.patrollingTo) && !hasValue(unit.reformingArrivalTick) && !hasValue(unit.targetingUnit) && unit.unitState === UnitState.Moving)
         .forEach(unit => {
             unit.position.add(calculateUnitMovementPerTick(unit));
 

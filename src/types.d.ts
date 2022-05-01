@@ -272,6 +272,7 @@ export interface UnitStats {
     movementRate: number;
     hitPoints: number;
     attackRange: number;
+    attackMinRange: number;
     attackDamage: number;
     areaOfEffect: Array<{ distanceFromTarget: number; percentageOfAttack: number; }> | null;
     firingAnchor: Vector2;

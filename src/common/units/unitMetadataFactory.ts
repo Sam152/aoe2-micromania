@@ -26,6 +26,7 @@ const unitDefinitions: {
         movementRate: 0.96,
         hitPoints: 30,
         attackRange: 6,
+        attackMinRange: 0,
         attackDamage: 4,
         areaOfEffect: null,
         firingAnchor: new Vector2(14, -24),
@@ -68,7 +69,8 @@ const unitDefinitions: {
         reloadTime: 6,
         movementRate: 0.6,
         hitPoints: 50,
-        attackRange: 7, // minimum 3?
+        attackRange: 7,
+        attackMinRange: 3,
         attackDamage: 40,
         areaOfEffect: [
             {distanceFromTarget: 30, percentageOfAttack: 1},

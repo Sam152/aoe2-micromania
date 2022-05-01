@@ -26,3 +26,8 @@ export default function setUnitMovementTowards(state: GameState, unit: UnitInsta
     unit.unitState = UnitState.Moving;
     unit.arrivalTick = state.ticks + ticks;
 }
+
+export function setUnitMovementAwayFrom(state: GameState, unit: UnitInstance, thingToAvoid: Vector2) {
+    const direction = unit.position.clone().add(unit.position.clone().sub(thingToAvoid));
+    setUnitMovementTowards(state, unit, direction);
+}

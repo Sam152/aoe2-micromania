@@ -4,6 +4,7 @@ import {UnitInstance} from '../../types';
 import {Vector2} from 'three';
 
 export default function calculateUnitMovementPerTick(unit: UnitInstance): Vector2 | null {
+    debugger;
     if (unit.movingDirection) {
         return unit.movingDirection
             .clone()

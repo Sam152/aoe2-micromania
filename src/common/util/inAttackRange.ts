@@ -3,7 +3,12 @@ import config from "../config";
 import unitMetadataFactory from "../units/unitMetadataFactory";
 import {UnitInstance} from "../../types";
 
-export default function inAttackRange(unit: UnitInstance, position: Vector2) {
+export default function inAttackRange(unit: UnitInstance, position: Vector2): boolean {
     const unitData = unitMetadataFactory.getUnit(unit.unitType);
     return unit.position.distanceTo(position) < unitData.attackRange * config.tileGameStatsLength;
+}
+
+export function inMinimumRange(unit: UnitInstance, position: Vector2): boolean {
+    const unitData = unitMetadataFactory.getUnit(unit.unitType);
+    return unit.position.distanceTo(position) < unitData.attackMinRange * config.tileGameStatsLength;
 }
