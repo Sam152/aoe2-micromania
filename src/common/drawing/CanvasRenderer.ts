@@ -15,7 +15,7 @@ import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
 import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
 import unitsInGameState from '../util/unitsInGameState';
-import hasValue from "../util/hasValue";
+import hasValue from '../util/hasValue';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -143,9 +143,9 @@ export default class CanvasRenderer implements RendererInterface {
             const slp = this.slpManager.getAsset(animationMetadata.slp);
 
             const movementVector = calculateUnitMovementPerTick(unitInstance);
-            const interpolatedPosition = movementVector
-                ? unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered))
-                : unitInstance.position;
+            const interpolatedPosition = movementVector ?
+                unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
+                unitInstance.position;
 
             // If the unit is selected, draw an oval around its base.
             if (clientState.selectedUnits.includes(unitInstance.id)) {
@@ -263,8 +263,7 @@ export default class CanvasRenderer implements RendererInterface {
                 .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
                 .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
             cursor = attacking ? 4 : 0;
-        }
-        else {
+        } else {
             cursor = cursorMap[state.activeCommand];
         }
 

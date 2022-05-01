@@ -1,12 +1,12 @@
-import {GameState} from "../../../../types";
-import UnitState from "../../../units/UnitState";
-import inAttackRange from "../../../util/inAttackRange";
-import hasValue from "../../../util/hasValue";
+import {GameState} from '../../../../types';
+import UnitState from '../../../units/UnitState';
+import inAttackRange from '../../../util/inAttackRange';
+import hasValue from '../../../util/hasValue';
 
 export default function autoAttack(state: GameState) {
-    const attackingUnits = state.units.filter(unit => unit.unitState === UnitState.Idle || hasValue(unit.patrollingTo));
+    const attackingUnits = state.units.filter((unit) => unit.unitState === UnitState.Idle || hasValue(unit.patrollingTo));
 
-    attackingUnits.forEach(attackingUnit => {
+    attackingUnits.forEach((attackingUnit) => {
         const targets = state.units.filter(({ownedByPlayer}) => ownedByPlayer !== attackingUnit.ownedByPlayer);
         if (targets.length === 0) {
             return;

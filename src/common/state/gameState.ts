@@ -3,7 +3,7 @@ import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
 import setUnitMovementTowards, {
-    setUnitMovementTowardsCurrentWaypoint
+    setUnitMovementTowardsCurrentWaypoint,
 } from './mutations/initiated/setUnitMovementTowards';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit, {stopUnitExceptForWaypoints} from './mutations/initiated/stopUnit';
@@ -12,13 +12,13 @@ import fireProjectiles from './mutations/tick/fireProjectiles';
 import moveUnits from './mutations/tick/moveUnits';
 import registerProjectileHits from './mutations/tick/registerProjectileHits';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import unitsInGameState from "../util/unitsInGameState";
-import registerUnitFallen from "./mutations/tick/registerUnitFallen";
-import averageVector from "../util/averageVector";
-import patrolUnits from "./mutations/tick/patrolUnits";
-import reformUnits from "./mutations/tick/reformUnits";
-import addUnitReformingSpeedFactor from "../util/addUnitReformingSpeedFactor";
-import autoAttack from "./mutations/tick/autoAttack";
+import unitsInGameState from '../util/unitsInGameState';
+import registerUnitFallen from './mutations/tick/registerUnitFallen';
+import averageVector from '../util/averageVector';
+import patrolUnits from './mutations/tick/patrolUnits';
+import reformUnits from './mutations/tick/reformUnits';
+import addUnitReformingSpeedFactor from '../util/addUnitReformingSpeedFactor';
+import autoAttack from './mutations/tick/autoAttack';
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -48,7 +48,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.name === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
-        units.forEach(unit => stopUnit(unit));
+        units.forEach((unit) => stopUnit(unit));
         const positions = units.map((unit) => unit.position);
 
         formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
@@ -72,7 +72,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'STOP_UNITS') {
-        unitsInGameState(state, action.units).forEach(unit => stopUnit(unit));
+        unitsInGameState(state, action.units).forEach((unit) => stopUnit(unit));
     }
     if (action.name === 'DELETE_UNITS') {
         unitsInGameState(state, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
@@ -94,7 +94,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.name === 'PATROL') {
         console.log('PATROLLING');
         const units = unitsInGameState(state, action.units);
-        units.forEach(unit => stopUnit(unit));
+        units.forEach((unit) => stopUnit(unit));
 
         if (units.length > 1) {
             const positions = units.map((unit) => unit.position);
@@ -108,7 +108,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             // Translate their destinations back to their average starting position, then reform and return the
             // patrol to that location.
             const groupTravelledVector = averageVector(units.map(({patrollingToReturn}) => patrollingToReturn)).sub(startingPosition);
-            units.map(unit => {
+            units.map((unit) => {
                 unit.patrollingTo = unit.patrollingToReturn.clone().sub(groupTravelledVector);
                 unit.reformingTo = unit.patrollingToReturn.clone();
                 setUnitMovementTowards(state, unit, unit.reformingTo);

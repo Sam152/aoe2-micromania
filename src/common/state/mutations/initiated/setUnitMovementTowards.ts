@@ -4,7 +4,7 @@ import {GameState, UnitInstance} from '../../../../types';
 import formationManager from '../../../units/formations/FormationManager';
 import FormationType from '../../../units/formations/FormationType';
 import {Vector2} from 'three';
-import ticksToDestination from "../../../util/ticksToDestination";
+import ticksToDestination from '../../../util/ticksToDestination';
 
 export function moveUnitsTowardsCurrentWaypoint(state: GameState, formation: FormationType, destination: Vector2, units: UnitInstance[]) {
     const positions = units.map((unit) => unit.position);

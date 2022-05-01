@@ -8,9 +8,9 @@ import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPe
 import ticksForAnimation from '../../../util/ticksForAnimation';
 import ProjectileType from '../../../units/ProjectileType';
 import {Vector2} from 'three';
-import inAttackRange, {inMinimumRange} from "../../../util/inAttackRange";
-import setUnitMovementTowards, {setUnitMovementAwayFrom} from "../initiated/setUnitMovementTowards";
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
+import inAttackRange, {inMinimumRange} from '../../../util/inAttackRange';
+import setUnitMovementTowards, {setUnitMovementAwayFrom} from '../initiated/setUnitMovementTowards';
+import compassDirectionCalculator from '../../../units/compassDirectionCalculator';
 
 
 export default function fireProjectiles(state: GameState) {
@@ -23,8 +23,7 @@ export default function fireProjectiles(state: GameState) {
             if (inMinimumRange(unit, targetingPosition)) {
                 setUnitMovementAwayFrom(state, unit, targetingPosition);
                 unit.position.add(calculateUnitMovementPerTick(unit));
-            }
-            else if (inAttackRange(unit, targetingPosition)) {
+            } else if (inAttackRange(unit, targetingPosition)) {
                 unit.movingDirection = null;
 
                 if (unit.reloadsAt <= state.ticks) {

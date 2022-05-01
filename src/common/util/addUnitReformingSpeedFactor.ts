@@ -1,5 +1,5 @@
-import {UnitInstance} from "../../types";
-import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
+import {UnitInstance} from '../../types';
+import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick';
 
 export default function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
     if (units.length < 2) {
@@ -9,7 +9,7 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
     const distances: Array<number> = [];
     const ticksForReform: Array<number> = [];
 
-    units.forEach(unit => {
+    units.forEach((unit) => {
         const distanceToReform = unit.reformingTo.distanceTo(unit.position);
         distances.push(distanceToReform);
         ticksForReform.push(distanceToReform !== 0 ? Math.floor(distanceToReform / calculateUnitMovementPerTick(unit).length()) : 0);
@@ -18,7 +18,7 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
     const maxDistance = Math.max(...distances);
     const arrivalTick = Math.max(...ticksForReform);
 
-    const speedFactors = distances.map(distance => distance / maxDistance);
+    const speedFactors = distances.map((distance) => distance / maxDistance);
     const smallestSpeedFactor = Math.min(...speedFactors);
 
     // Try a "catch-up" factor that turns the slowest moving unit into one that moves at a

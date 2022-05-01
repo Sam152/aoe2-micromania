@@ -1,7 +1,7 @@
 import stopUnit from '../initiated/stopUnit';
 import {GameState} from '../../../../types';
 import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
-import {setUnitMovementTowardsCurrentWaypoint} from "../initiated/setUnitMovementTowards";
+import {setUnitMovementTowardsCurrentWaypoint} from '../initiated/setUnitMovementTowards';
 
 export default function moveUnits(state: GameState) {
     // Move all units that have some active waypoint.

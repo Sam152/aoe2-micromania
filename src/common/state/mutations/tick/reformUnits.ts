@@ -1,29 +1,28 @@
 import setUnitMovementTowards, {setUnitMovementTowardsCurrentWaypoint} from '../initiated/setUnitMovementTowards';
 import {GameState} from '../../../../types';
 import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
-import hasValue from "../../../util/hasValue";
-import UnitState from "../../../units/UnitState";
+import hasValue from '../../../util/hasValue';
+import UnitState from '../../../units/UnitState';
 
 export default function reformUnits(state: GameState) {
-
     // Move units that are reforming.
     state.units
         .filter(({reformingTo, unitState, targetingUnit}) => hasValue(reformingTo) && !hasValue(targetingUnit) && unitState === UnitState.Moving)
-        .forEach(function (unit) {
+        .forEach(function(unit) {
             unit.position.add(calculateUnitMovementPerTick(unit));
         });
 
     // Get units moving again, after falling idle in the middle of reforming (ie they stopped to fire at something).
     state.units
-        .filter(({reformingTo, unitState}) => hasValue(reformingTo)  && unitState === UnitState.Idle)
-        .forEach(function (unit) {
+        .filter(({reformingTo, unitState}) => hasValue(reformingTo) && unitState === UnitState.Idle)
+        .forEach(function(unit) {
             setUnitMovementTowards(state, unit, unit.reformingTo);
             // If a unit has stopped to fire at a target, give up on trying to uniformly arrive at a destination
             // at the same time as its peers, just get there eventually.
             unit.reformingArrivalTick = unit.arrivalTick;
         });
 
-    state.units.filter(({reformingArrivalTick}) => reformingArrivalTick === state.ticks).forEach(function (unit) {
+    state.units.filter(({reformingArrivalTick}) => reformingArrivalTick === state.ticks).forEach(function(unit) {
         unit.reformingTo = null;
         unit.reformingArrivalTick = null;
         unit.reformingSpeedFactor = null;
