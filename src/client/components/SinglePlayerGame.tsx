@@ -12,7 +12,6 @@ export default function SinglePlayerGame() {
         const manager = new LocalStateManager((state: GameState, action: GameStateAction) => {
             ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
         });
-
         manager.init();
         (new ArcherMicro()).start(manager.dispatchGame.bind(manager), manager.getGameState());
 
