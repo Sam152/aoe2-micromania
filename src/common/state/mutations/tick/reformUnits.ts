@@ -8,7 +8,7 @@ export default function reformUnits(state: GameState) {
 
     // Move units that are reforming.
     state.units
-        .filter(({reformingTo, unitState}) => hasValue(reformingTo)  && unitState === UnitState.Moving)
+        .filter(({reformingTo, unitState, targetingUnit}) => hasValue(reformingTo) && !hasValue(targetingUnit) && unitState === UnitState.Moving)
         .forEach(function (unit) {
             unit.position.add(calculateUnitMovementPerTick(unit));
         });
