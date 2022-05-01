@@ -8,18 +8,13 @@ import averageVector from "../util/averageVector";
  */
 export default class PatrollingAi implements Ai {
     playingAs: number;
-    nextTick: number;
-    handled: boolean;
 
     constructor(playingAs: number) {
         this.playingAs = playingAs;
-        this.handled = false;
     }
 
     makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-        if (state.ticks === 20 && !this.handled) {
-            this.handled = true;
-
+        if (action.name === 'TICK' && state.ticks === 20) {
             const patrolTo = averageVector(state.units
                 .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)
                 .map(({position}) => position));

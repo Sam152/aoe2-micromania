@@ -92,6 +92,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'PATROL') {
+        console.log('PATROLLING');
         const units = unitsInGameState(state, action.units);
         units.forEach(unit => stopUnit(unit));
 
@@ -131,7 +132,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
         ++state.ticks;
     }
-
     return state;
 }
 
