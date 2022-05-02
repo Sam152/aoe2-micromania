@@ -14,8 +14,6 @@ export default class PatrollingAi implements Ai {
     }
 
     makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-        return;
-
         if (action.name === 'TICK' && state.ticks === 20) {
             const patrolTo = averageVector(state.units
                 .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)

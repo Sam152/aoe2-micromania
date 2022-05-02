@@ -131,9 +131,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         reformUnits(state);
         moveUnits(state);
         patrolUnits(state);
+        fireProjectiles(state);
         autoAttack(state);
         registerProjectileHits(state);
-        fireProjectiles(state);
 
         ++state.ticks;
     }

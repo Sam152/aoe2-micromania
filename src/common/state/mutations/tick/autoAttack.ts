@@ -4,9 +4,17 @@ import inAttackRange from '../../../util/inAttackRange';
 import hasValue from '../../../util/hasValue';
 
 export default function autoAttack(state: GameState) {
-    const attackingUnits = state.units.filter((unit) => unit.unitState === UnitState.Idle || hasValue(unit.patrollingTo));
+    const autoAttackingUnits = state.units.filter((unit) => {
+        return (
+            unit.unitState === UnitState.Idle
+            || hasValue(unit.patrollingTo)
+        ) && (
+            !hasValue(unit.targetingUnit)
+            || !hasValue(unit.targetingPosition)
+        )
+    });
 
-    attackingUnits.forEach((attackingUnit) => {
+    autoAttackingUnits.forEach((attackingUnit) => {
         const targets = state.units.filter(({ownedByPlayer}) => ownedByPlayer !== attackingUnit.ownedByPlayer);
         if (targets.length === 0) {
             return;
