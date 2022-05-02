@@ -1,10 +1,7 @@
-import {
-    ClientStateAction,
-    StateManagerInterface,
-    StateTransmitter,
-} from '../../types';
+import {ClientStateAction, StateManagerInterface, StateTransmitter,} from '../../types';
 import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
 import {Vector2} from 'three/src/math/Vector2';
+import FormationType from "../units/formations/FormationType";
 
 const StInput = require('stinput');
 
@@ -93,6 +90,19 @@ export default class InputManager {
                 position: this.mousePosition(cameraPosition),
             });
         }
+        if (this.input.pressed('z')) {
+            this.dispatch({
+                name: 'HOTKEY_FORMATION_CHANGED',
+                formation: FormationType.Line,
+            });
+        }
+        if (this.input.pressed('c')) {
+            this.dispatch({
+                name: 'HOTKEY_FORMATION_CHANGED',
+                formation: FormationType.Spread,
+            });
+        }
+
         if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
             this.dispatch({
                 name: 'HOTKEY_SHIFT_DELETE',

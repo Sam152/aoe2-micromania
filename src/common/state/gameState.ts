@@ -1,4 +1,4 @@
-import {GameState, GameStateAction, PlayerId, UnitInstance} from '../../types';
+import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
 import CompassDirection from '../units/CompassDirection';
@@ -7,7 +7,6 @@ import setUnitMovementTowards, {
 } from './mutations/initiated/setUnitMovementTowards';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit, {stopUnitExceptForWaypoints} from './mutations/initiated/stopUnit';
-import compassDirectionCalculator from '../units/compassDirectionCalculator';
 import fireProjectiles from './mutations/tick/fireProjectiles';
 import moveUnits from './mutations/tick/moveUnits';
 import registerProjectileHits from './mutations/tick/registerProjectileHits';
@@ -19,6 +18,7 @@ import patrolUnits from './mutations/tick/patrolUnits';
 import reformUnits from './mutations/tick/reformUnits';
 import addUnitReformingSpeedFactor from '../util/addUnitReformingSpeedFactor';
 import autoAttack from './mutations/tick/autoAttack';
+import FormationType from "../units/formations/FormationType";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -34,6 +34,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             id: state.idAt++,
             position: action.position,
             waypoints: [],
+            formation: FormationType.Line,
             clickedWaypoints: [],
             movingDirection: null,
             reloadsAt: 0,
@@ -42,7 +43,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             unitState: UnitState.Idle,
             unitStateStartedAt: state.ticks,
             direction: action.direction ?? CompassDirection.South,
-            hitPoints: stats.hitPoints,
+            hitPoints: stats.hitPoints
         });
     }
 
@@ -51,7 +52,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         units.forEach((unit) => stopUnit(unit));
         const positions = units.map((unit) => unit.position);
 
-        formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
+        formationManager.fromPopulation(units).form(positions, action.position).forEach((formationPosition, index) => {
             units[index].waypoints = [formationPosition];
             setUnitMovementTowardsCurrentWaypoint(state, units[index]);
         });
@@ -63,7 +64,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             stopUnitExceptForWaypoints(unit);
         });
         const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
-        formationManager.get(action.formation).form(positions, action.position).map((formationPosition, index) => {
+        formationManager.fromPopulation(units).form(positions, action.position).map((formationPosition, index) => {
             units[index].waypoints.push(formationPosition);
             if (units[index].unitState === UnitState.Idle) {
                 setUnitMovementTowardsCurrentWaypoint(state, units[index]);
@@ -78,7 +79,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         unitsInGameState(state, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
     }
     if (action.name === 'ATTACK') {
-        const target = state.units.find(({id}) => action.target === id);
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
             stopUnit(attackingUnit);
             attackingUnit.targetingUnit = action.target;
@@ -100,7 +100,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             const startingPosition = averageVector(positions);
 
             // Find the formation the units will make at their patrol destination.
-            formationManager.get(action.formation).form(positions, action.position).forEach((formationPosition, index) => {
+            formationManager.fromPopulation(units).form(positions, action.position).forEach((formationPosition, index) => {
                 units[index].patrollingToReturn = formationPosition;
             });
 
@@ -119,6 +119,12 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
             units[0].patrollingToReturn = units[0].position.clone();
             setUnitMovementTowards(state, units[0], units[0].patrollingTo);
         }
+    }
+
+    if (action.name === 'FORMATION_CHANGED') {
+        unitsInGameState(state, action.units).forEach(unit => {
+            unit.formation = action.formation;
+        });
     }
 
     if (action.name === 'TICK') {

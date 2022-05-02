@@ -127,7 +127,6 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
                 name: 'MOVE_UNITS_TO',
                 position: action.position,
                 units: clientState.selectedUnits,
-                formation: clientState.selectedFormation,
             });
         }
     }
@@ -144,11 +143,18 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
             name: 'PATROL',
-            formation: clientState.selectedFormation,
             units: clientState.selectedUnits,
             position: clientState.mousePosition,
         });
         clientState.activeCommand = ActiveCommand.Default;
+    }
+
+    if (action.name === 'HOTKEY_FORMATION_CHANGED') {
+        gameDispatcher({
+            name: 'FORMATION_CHANGED',
+            formation: action.formation,
+            units: clientState.selectedUnits,
+        });
     }
 
     if (action.name === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
@@ -159,7 +165,6 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         if (!attacking) {
             gameDispatcher({
                 name: 'ADD_WAYPOINT',
-                formation: clientState.selectedFormation,
                 position: action.position,
                 units: clientState.selectedUnits,
             });
@@ -197,7 +202,6 @@ function defaultState(playingAs: number): ClientState {
         lastLeftClick: null,
         lastMoveClick: null,
         selectionRectangle: null,
-        selectedFormation: FormationType.Line,
     }) as ClientState;
     state.camera = new Vector2(0, 0);
     state.mousePosition = new Vector2(0, 0);

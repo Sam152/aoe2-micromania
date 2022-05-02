@@ -43,6 +43,7 @@ export interface UnitInstance {
     // Basic vectors used in all movement states.
     movingDirection?: Vector2;
     position: Vector2;
+    formation: FormationType;
 
     hitPoints: number;
 }
@@ -90,7 +91,6 @@ export interface GameState {
 
 export type UnitId = number;
 export type RoomId = string;
-export type ClientId = string;
 export type PlayerId = number;
 
 type GameStateAction = {
@@ -112,12 +112,10 @@ type GameStateAction = {
     name: 'MOVE_UNITS_TO';
     position: Vector2;
     units: UnitId[];
-    formation: FormationType;
 } | {
     name: 'ADD_WAYPOINT';
     position: Vector2;
     units: UnitId[];
-    formation: FormationType;
 } | {
     name: 'STOP_UNITS';
     units: UnitId[];
@@ -134,9 +132,12 @@ type GameStateAction = {
     position: Vector2;
 } | {
     name: 'PATROL';
-    formation: FormationType;
     units: UnitId[];
     position: Vector2;
+} | {
+    name: 'FORMATION_CHANGED';
+    formation: FormationType;
+    units: UnitId[];
 };
 
 export interface ClientState {
@@ -148,7 +149,6 @@ export interface ClientState {
     renderedFrames: number;
     selectedUnits: Array<UnitId>;
     activeCommand: ActiveCommand;
-    selectedFormation: FormationType;
     selectionRectangle: Rectangle | null;
     mousePosition: Vector2;
     lastLeftClick: Vector2 | null;
@@ -210,6 +210,9 @@ export type ClientStateAction = {
     position: Vector2,
 } | {
     name: 'HOTKEY_CANCEL'
+} | {
+    name: 'HOTKEY_FORMATION_CHANGED',
+    formation: FormationType,
 };
 
 export type GameDispatcher = (action: GameStateAction) => void;
@@ -295,7 +298,7 @@ export interface Rectangle {
 }
 
 export interface FormationInterface {
-    form(positions: Array<Vector2>, destination: Vector2, directionAngleOverride?: number): Array<Vector2>;
+    form(positions: Array<Vector2>, destination: Vector2): Array<Vector2>;
 }
 
 declare global {

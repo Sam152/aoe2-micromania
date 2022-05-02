@@ -1,7 +1,6 @@
 enum FormationType {
     Line,
-    Box,
-    Staggered,
+    Spread,
     Flank,
 }
 export default FormationType;
