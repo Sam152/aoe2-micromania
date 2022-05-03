@@ -16,6 +16,10 @@ import patrolTo, {patrolGroupTo} from './mutations/initiated/patrolTo';
 import spawnUnit from './mutations/initiated/spawnUnit';
 import populationHas from '../util/populationHas';
 import populationVector from '../util/populationVector';
+import moveTo from "./mutations/initiated/moveTo";
+import averageVector from "../util/averageVector";
+import addUnitReformingSpeedFactor from "../util/addUnitReformingSpeedFactor";
+import config from "../config";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -31,13 +35,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.name === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
-        units.forEach((unit) => stopUnit(unit));
-        const positions = units.map((unit) => unit.position);
-
-        formationManager.fromPopulation(units).form(positions, action.position).forEach((formationPosition, index) => {
-            units[index].waypoints = [formationPosition];
-            setUnitMovementTowardsCurrentWaypoint(state, units[index]);
-        });
+        moveTo(state, units, action.position);
     }
     if (action.name === 'ADD_WAYPOINT') {
         const units = unitsInGameState(state, action.units);
@@ -82,6 +80,10 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         const units = unitsInGameState(state, action.units);
         units.forEach((unit) => unit.formation = action.formation);
 
+        if (units.length < 2) {
+            return;
+        }
+
         if (populationHas(units, 'patrollingTo')) {
             // Patrolling units can simply patrol again, since they already reform at their destination location.
             if (populationHas(units, 'reformingTo')) {
@@ -95,6 +97,22 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
                 patrolGroupTo(state, units, returningTo, destination);
             }
         } else if (populationHas(units, 'waypoints')) {
+            // Moving units can reform in place, then re-move to their destination to recalculate their
+            // final formation.
+            const destinations = units.map(({waypoints}) => waypoints[0]).filter(waypoint => waypoint);
+            const destination = averageVector(destinations);
+            moveTo(state, units, destination);
+
+            const positions = units.map(({position}) => position);
+            const position = averageVector(positions);
+            const reformAt = position.add(populationVector(units, 'movingDirection').multiplyScalar(config.movingReformDistance));
+
+            formationManager.fromPopulation(units).form(positions, reformAt).forEach((formationPosition, index) => {
+                units[index].reformingTo = formationPosition;
+                setUnitMovementTowards(state, units[index], units[index].reformingTo);
+                units[index].reformingArrivalTick = units[index].arrivalTick;
+            });
+            addUnitReformingSpeedFactor(state.ticks, units);
 
         } else {
             // Idle units should reform where they stand.
@@ -105,6 +123,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
                 setUnitMovementTowards(state, units[index], units[index].reformingTo);
                 units[index].reformingArrivalTick = units[index].arrivalTick;
             });
+            addUnitReformingSpeedFactor(state.ticks, units);
         }
     }
 

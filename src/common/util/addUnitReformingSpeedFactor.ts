@@ -1,5 +1,6 @@
 import {UnitInstance} from '../../types';
 import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick';
+import config from "../config";
 
 export default function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
     if (units.length < 2) {
@@ -25,7 +26,7 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
     // rate of "1", ie, the normal movement speed of a unit, but cap it at a reasonable
     // rate of extra movement you would accept, otherwise extremely slow moving units in a
     // catch-up phase will make other units extrmely fast.
-    const catchUpFactor = Math.min(1.5, 1 / smallestSpeedFactor);
+    const catchUpFactor = Math.min(config.maximumReformSpeedFactor, 1 / smallestSpeedFactor);
 
     // Scale all unit speeds, so units will slow down to all arrive at the reform point at the same time.
     units.forEach((unit, index) => {
