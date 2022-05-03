@@ -83,6 +83,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         units.forEach((unit) => unit.formation = action.formation);
 
         if (populationHas(units, 'patrollingTo')) {
+            // Patrolling units can simply patrol again, since they already reform at their destination location.
             if (populationHas(units, 'reformingTo')) {
                 const destination = populationVector(units, 'reformingTo')
                 const returningTo = units.map(({patrollingTo}) => patrollingTo);
@@ -96,18 +97,14 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         } else if (populationHas(units, 'waypoints')) {
 
         } else {
-            const reformingAt = populationHas(units, 'movingDirection')
-                ? populationVector(units, 'position').add(populationVector(units, 'movingDirection'))
-                : populationVector(units, 'position');
-
+            // Idle units should reform where they stand.
+            const reformPosition = populationVector(units, 'position');
             const positions = units.map(({position}) => position);
-
-            formationManager.fromPopulation(units).form(positions, reformingAt).forEach((formationPosition, index) => {
+            formationManager.fromPopulation(units).form(positions, reformPosition).forEach((formationPosition, index) => {
                 units[index].reformingTo = formationPosition;
                 setUnitMovementTowards(state, units[index], units[index].reformingTo);
                 units[index].reformingArrivalTick = units[index].arrivalTick;
             });
-
         }
     }
 
