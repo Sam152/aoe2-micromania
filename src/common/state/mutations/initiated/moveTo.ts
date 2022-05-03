@@ -20,7 +20,7 @@ export default function moveTo(state: GameState, units: UnitInstance[], destinat
     const position = averageVector(positions);
     // While moving, if the units are travelling a reasonable distance, reform them in their current location before
     // continuing to their destination.
-    if (units.length > 2 && position.distanceTo(destination) > config.movingReformDistance * 2) {
+    if (units.length > 2 && position.distanceTo(destination) > config.movingReformDistance) {
         const reformAt = position.add(populationVector(units, 'movingDirection').multiplyScalar(config.movingReformDistance));
         formationManager.fromPopulation(units).form(positions, reformAt).forEach((formationPosition, index) => {
             units[index].reformingTo = formationPosition;

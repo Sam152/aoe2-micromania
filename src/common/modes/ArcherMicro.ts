@@ -23,21 +23,21 @@ export default class ArcherMicro implements GameMode {
             }
         }
 
-        // for (let x = gameState.mapSize - 1; x > gameState.mapSize - 6; x--) {
-        //     for (let y = gameState.mapSize - 1; y > gameState.mapSize - 6; y--) {
-        //         gameDispatcher({
-        //             name: 'SPAWN_UNIT',
-        //             forPlayer: 2,
-        //             unitType: Unit.Archer,
-        //             position: grid.middleOfTile(x, y),
-        //         });
-        //     }
-        // }
-        // gameDispatcher({
-        //     name: 'SPAWN_UNIT',
-        //     forPlayer: 2,
-        //     unitType: Unit.Mangonel,
-        //     position: grid.middleOfTile(gameState.mapSize - 7, gameState.mapSize - 3),
-        // });
+        for (let x = gameState.mapSize - 1; x > gameState.mapSize - 6; x--) {
+            for (let y = gameState.mapSize - 1; y > gameState.mapSize - 6; y--) {
+                gameDispatcher({
+                    name: 'SPAWN_UNIT',
+                    forPlayer: 2,
+                    unitType: Unit.Archer,
+                    position: grid.middleOfTile(x, y),
+                });
+            }
+        }
+        gameDispatcher({
+            name: 'SPAWN_UNIT',
+            forPlayer: 2,
+            unitType: Unit.Mangonel,
+            position: grid.middleOfTile(gameState.mapSize - 7, gameState.mapSize - 3),
+        });
     }
 }

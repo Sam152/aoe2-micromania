@@ -22,7 +22,7 @@ const config = {
     /**
      * When moving, how much of the journey it should take to reform units.
      */
-    movingReformDistance: 100,
+    movingReformDistance: 150,
     /**
      * Tile dimensions.
      */

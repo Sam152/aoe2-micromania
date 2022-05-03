@@ -4,7 +4,6 @@ import populationVector from "../../../util/populationVector";
 import {patrolGroupTo} from "./patrolTo";
 import averageVector from "../../../util/averageVector";
 import moveTo from "./moveTo";
-import config from "../../../config";
 import formationManager from "../../../units/formations/FormationManager";
 import setUnitMovementTowards from "./setUnitMovementTowards";
 import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
