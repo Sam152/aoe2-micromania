@@ -20,6 +20,7 @@ import moveTo from "./mutations/initiated/moveTo";
 import averageVector from "../util/averageVector";
 import addUnitReformingSpeedFactor from "../util/addUnitReformingSpeedFactor";
 import config from "../config";
+import changeFormation from "./mutations/initiated/changeFormation";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -77,54 +78,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'FORMATION_CHANGED') {
-        const units = unitsInGameState(state, action.units);
-        units.forEach((unit) => unit.formation = action.formation);
-
-        if (units.length < 2) {
-            return;
-        }
-
-        if (populationHas(units, 'patrollingTo')) {
-            // Patrolling units can simply patrol again, since they already reform at their destination location.
-            if (populationHas(units, 'reformingTo')) {
-                const destination = populationVector(units, 'reformingTo')
-                const returningTo = units.map(({patrollingTo}) => patrollingTo);
-                patrolGroupTo(state, units, returningTo, destination);
-            }
-            else {
-                const destination = populationVector(units, 'patrollingTo');
-                const returningTo = units.map(({patrollingToReturn}) => patrollingToReturn);
-                patrolGroupTo(state, units, returningTo, destination);
-            }
-        } else if (populationHas(units, 'waypoints')) {
-            // Moving units can reform in place, then re-move to their destination to recalculate their
-            // final formation.
-            const destinations = units.map(({waypoints}) => waypoints[0]).filter(waypoint => waypoint);
-            const destination = averageVector(destinations);
-            moveTo(state, units, destination);
-
-            const positions = units.map(({position}) => position);
-            const position = averageVector(positions);
-            const reformAt = position.add(populationVector(units, 'movingDirection').multiplyScalar(config.movingReformDistance));
-
-            formationManager.fromPopulation(units).form(positions, reformAt).forEach((formationPosition, index) => {
-                units[index].reformingTo = formationPosition;
-                setUnitMovementTowards(state, units[index], units[index].reformingTo);
-                units[index].reformingArrivalTick = units[index].arrivalTick;
-            });
-            addUnitReformingSpeedFactor(state.ticks, units);
-
-        } else {
-            // Idle units should reform where they stand.
-            const reformPosition = populationVector(units, 'position');
-            const positions = units.map(({position}) => position);
-            formationManager.fromPopulation(units).form(positions, reformPosition).forEach((formationPosition, index) => {
-                units[index].reformingTo = formationPosition;
-                setUnitMovementTowards(state, units[index], units[index].reformingTo);
-                units[index].reformingArrivalTick = units[index].arrivalTick;
-            });
-            addUnitReformingSpeedFactor(state.ticks, units);
-        }
+        changeFormation(state, action);
     }
 
     if (action.name === 'TICK') {
