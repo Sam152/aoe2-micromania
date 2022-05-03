@@ -1,7 +1,7 @@
-import {ClientStateAction, StateManagerInterface, StateTransmitter,} from '../../types';
+import {ClientStateAction, StateManagerInterface, StateTransmitter} from '../../types';
 import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
 import {Vector2} from 'three/src/math/Vector2';
-import FormationType from "../units/formations/FormationType";
+import FormationType from '../units/formations/FormationType';
 
 const StInput = require('stinput');
 

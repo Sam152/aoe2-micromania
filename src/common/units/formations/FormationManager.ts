@@ -1,7 +1,7 @@
 import FormationType from './FormationType';
 import LineFormation from './types/LineFormation';
 import {FormationInterface, UnitInstance} from '../../../types';
-import SpreadFormation from "./types/SpreadFormation";
+import SpreadFormation from './types/SpreadFormation';
 
 class FormationManager {
     map: {[key: number]: FormationInterface };

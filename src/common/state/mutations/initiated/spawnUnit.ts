@@ -1,10 +1,10 @@
-import unitMetadataFactory from "../../../units/unitMetadataFactory";
-import FormationType from "../../../units/formations/FormationType";
-import UnitState from "../../../units/UnitState";
-import CompassDirection from "../../../units/CompassDirection";
-import {GameState, PlayerId} from "../../../../types";
-import {Vector2} from "three/src/math/Vector2";
-import Unit from "../../../units/Unit";
+import unitMetadataFactory from '../../../units/unitMetadataFactory';
+import FormationType from '../../../units/formations/FormationType';
+import UnitState from '../../../units/UnitState';
+import CompassDirection from '../../../units/CompassDirection';
+import {GameState, PlayerId} from '../../../../types';
+import {Vector2} from 'three/src/math/Vector2';
+import Unit from '../../../units/Unit';
 
 export default function spawnUnit(state: GameState, action: {
     name: 'SPAWN_UNIT';
@@ -27,6 +27,6 @@ export default function spawnUnit(state: GameState, action: {
         unitState: UnitState.Idle,
         unitStateStartedAt: state.ticks,
         direction: action.direction ?? CompassDirection.South,
-        hitPoints: stats.hitPoints
+        hitPoints: stats.hitPoints,
     });
 }

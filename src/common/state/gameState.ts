@@ -1,27 +1,21 @@
 import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
-import setUnitMovementTowards, {
-    setUnitMovementTowardsCurrentWaypoint,
-} from './mutations/initiated/setUnitMovementTowards';
+import setUnitMovementTowards, {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit, {stopUnitExceptForWaypoints} from './mutations/initiated/stopUnit';
 import fireProjectiles from './mutations/tick/fireProjectiles';
 import moveUnits from './mutations/tick/moveUnits';
 import registerProjectileHits from './mutations/tick/registerProjectileHits';
-import unitMetadataFactory from '../units/unitMetadataFactory';
 import unitsInGameState from '../util/unitsInGameState';
 import registerUnitFallen from './mutations/tick/registerUnitFallen';
-import averageVector from '../util/averageVector';
 import patrolUnits from './mutations/tick/patrolUnits';
 import reformUnits from './mutations/tick/reformUnits';
-import addUnitReformingSpeedFactor from '../util/addUnitReformingSpeedFactor';
 import autoAttack from './mutations/tick/autoAttack';
-import FormationType from "../units/formations/FormationType";
-import patrolTo, {patrolGroupTo} from "./mutations/initiated/patrolTo";
-import spawnUnit from "./mutations/initiated/spawnUnit";
-import populationHas from "../util/populationHas";
-import populationVector from "../util/populationVector";
+import patrolTo, {patrolGroupTo} from './mutations/initiated/patrolTo';
+import spawnUnit from './mutations/initiated/spawnUnit';
+import populationHas from '../util/populationHas';
+import populationVector from '../util/populationVector';
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -86,27 +80,35 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.name === 'FORMATION_CHANGED') {
         const units = unitsInGameState(state, action.units);
-        const positions = units.map((unit) => unit.position);
-        units.forEach(unit => unit.formation = action.formation);
-
-
-        // if (false) {
-        //     const reformingAt = populationHas(units, 'movingDirection')
-        //         ? populationVector(units, 'position').add(populationVector(units, 'movingDirection'))
-        //         : populationVector(units, 'position');
-        //
-        //     formationManager.fromPopulation(units).form(positions, reformingAt).forEach((formationPosition, index) => {
-        //         units[index].reformingTo = formationPosition;
-        //         setUnitMovementTowards(state, units[index], units[index].reformingTo);
-        //         units[index].reformingArrivalTick = units[index].arrivalTick;
-        //     });
-        // }
+        units.forEach((unit) => unit.formation = action.formation);
 
         if (populationHas(units, 'patrollingTo')) {
-            const destination = populationHas(units, 'reformingTo') ? populationVector(units, 'reformingTo') : populationVector(units, 'patrollingTo')
-            patrolTo(state, units, destination);
-        }
+            if (populationHas(units, 'reformingTo')) {
+                const destination = populationVector(units, 'reformingTo')
+                const returningTo = units.map(({patrollingTo}) => patrollingTo);
+                patrolGroupTo(state, units, returningTo, destination);
+            }
+            else {
+                const destination = populationVector(units, 'patrollingTo');
+                const returningTo = units.map(({patrollingToReturn}) => patrollingToReturn);
+                patrolGroupTo(state, units, returningTo, destination);
+            }
+        } else if (populationHas(units, 'waypoints')) {
 
+        } else {
+            const reformingAt = populationHas(units, 'movingDirection')
+                ? populationVector(units, 'position').add(populationVector(units, 'movingDirection'))
+                : populationVector(units, 'position');
+
+            const positions = units.map(({position}) => position);
+
+            formationManager.fromPopulation(units).form(positions, reformingAt).forEach((formationPosition, index) => {
+                units[index].reformingTo = formationPosition;
+                setUnitMovementTowards(state, units[index], units[index].reformingTo);
+                units[index].reformingArrivalTick = units[index].arrivalTick;
+            });
+
+        }
     }
 
     if (action.name === 'TICK') {

@@ -3,8 +3,8 @@ import {GameState} from '../../../../types';
 import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
 import hasValue from '../../../util/hasValue';
 import UnitState from '../../../units/UnitState';
-import stopUnit from "../initiated/stopUnit";
-import patrolTo from "../initiated/patrolTo";
+import stopUnit from '../initiated/stopUnit';
+import patrolTo from '../initiated/patrolTo';
 
 export default function reformUnits(state: GameState) {
     // Move units that are reforming.
@@ -31,11 +31,9 @@ export default function reformUnits(state: GameState) {
 
         if (unit.waypoints.length) {
             setUnitMovementTowardsCurrentWaypoint(state, unit);
-        }
-        else if (unit.patrollingTo) {
+        } else if (unit.patrollingTo) {
             setUnitMovementTowards(state, unit, unit.patrollingTo);
-        }
-        else {
+        } else {
             stopUnit(unit);
         }
     });

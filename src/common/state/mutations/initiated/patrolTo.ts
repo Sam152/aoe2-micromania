@@ -1,13 +1,13 @@
-import unitsInGameState from "../../../util/unitsInGameState";
-import stopUnit from "./stopUnit";
-import averageVector from "../../../util/averageVector";
-import formationManager from "../../../units/formations/FormationManager";
-import setUnitMovementTowards from "./setUnitMovementTowards";
-import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
-import {GameState, GameStateAction, UnitId, UnitInstance} from "../../../../types";
-import {Vector2} from "three/src/math/Vector2";
+import unitsInGameState from '../../../util/unitsInGameState';
+import stopUnit from './stopUnit';
+import averageVector from '../../../util/averageVector';
+import formationManager from '../../../units/formations/FormationManager';
+import setUnitMovementTowards from './setUnitMovementTowards';
+import addUnitReformingSpeedFactor from '../../../util/addUnitReformingSpeedFactor';
+import {GameState, GameStateAction, UnitId, UnitInstance} from '../../../../types';
+import {Vector2} from 'three/src/math/Vector2';
 
-export default function patrolTo(state: GameState,  units: UnitInstance[], position: Vector2) {
+export default function patrolTo(state: GameState, units: UnitInstance[], position: Vector2) {
     units.forEach((unit) => stopUnit(unit));
 
     if (units.length > 1) {

@@ -6,12 +6,12 @@ import hasValue from '../../../util/hasValue';
 export default function autoAttack(state: GameState) {
     const autoAttackingUnits = state.units.filter((unit) => {
         return (
-            unit.unitState === UnitState.Idle
-            || hasValue(unit.patrollingTo)
+            unit.unitState === UnitState.Idle ||
+            hasValue(unit.patrollingTo)
         ) && (
-            !hasValue(unit.targetingUnit)
-            || !hasValue(unit.targetingPosition)
-        )
+            !hasValue(unit.targetingUnit) ||
+            !hasValue(unit.targetingPosition)
+        );
     });
 
     autoAttackingUnits.forEach((attackingUnit) => {

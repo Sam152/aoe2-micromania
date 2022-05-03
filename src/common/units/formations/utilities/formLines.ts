@@ -1,7 +1,7 @@
-import {Vector2} from "three/src/math/Vector2";
-import averageVector from "../../../util/averageVector";
-import rotateAroundOrigin from "../../../util/rotateAroundOrigin";
-import standardDeviation from "just-standard-deviation";
+import {Vector2} from 'three/src/math/Vector2';
+import averageVector from '../../../util/averageVector';
+import rotateAroundOrigin from '../../../util/rotateAroundOrigin';
+import standardDeviation from 'just-standard-deviation';
 
 export default function formLines(positions: Array<Vector2>, destination: Vector2, rows: number, columns: number, startingPoint: Vector2, distanceBetween: number) {
     let newPositions = positions.map((position, index) => {

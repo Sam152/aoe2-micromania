@@ -1,7 +1,7 @@
 import {Vector2} from 'three/src/math/Vector2';
 import averageVector from '../../../util/averageVector';
-import formLines from "../utilities/formLines";
-import FormationBase from "../FormationBase";
+import formLines from '../utilities/formLines';
+import FormationBase from '../FormationBase';
 
 export default class LineFormation extends FormationBase {
     distanceBetween = 25;
@@ -14,5 +14,4 @@ export default class LineFormation extends FormationBase {
 
         return formLines(positions, destination, rows, columns, startingPoint, this.distanceBetween);
     }
-
 }
