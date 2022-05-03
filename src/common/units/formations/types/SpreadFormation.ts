@@ -4,7 +4,7 @@ import formLines from '../utilities/formLines';
 import FormationBase from '../FormationBase';
 
 export default class SpreadFormation extends FormationBase {
-    distanceBetween = 45;
+    distanceBetween = 40;
     unitsPerRow = 6;
 
     doForm(positions: Array<Vector2>, destination: Vector2): Array<Vector2> {

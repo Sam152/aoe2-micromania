@@ -15,7 +15,6 @@ import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
 import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
 import unitsInGameState from '../util/unitsInGameState';
-import hasValue from '../util/hasValue';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;

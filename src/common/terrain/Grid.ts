@@ -4,7 +4,6 @@ import {GameState} from '../../types';
 
 export default class Grid {
     private readonly size: number;
-    private readonly indexSize: number;
     private readonly tileHalfHeight: number;
     private readonly tileHalfWidth: number;
     private gridMiddle: Vector2;

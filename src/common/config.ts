@@ -14,7 +14,7 @@ const config = {
     /**
      * A constant, multiplied by unit speed statistics to make them feel correct.
      */
-    unitSpeedFactor: 5,
+    unitSpeedFactor: 4.25,
     /**
      * The factory by which units may travel faster than their actual speed, in order to get into formation.
      */
@@ -26,8 +26,8 @@ const config = {
     /**
      * Tile dimensions.
      */
-    tileWidth: 98,
-    tileHeight: 48,
+    tileWidth: 97,
+    tileHeight: 49,
     /**
      * The length of a single tile as far as the game statistics are concerned.
      */
