@@ -1,6 +1,6 @@
 import {UnitInstance} from '../../types';
 import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick';
-import config from "../config";
+import config from '../config';
 
 export default function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
     if (units.length < 2) {

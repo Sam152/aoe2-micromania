@@ -1,7 +1,6 @@
 import {GameState, GameStateAction} from '../../types';
 import deepClone from '../util/deepClone';
 import UnitState from '../units/UnitState';
-import setUnitMovementTowards, {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
 import formationManager from '../units/formations/FormationManager';
 import stopUnit, {stopUnitExceptForWaypoints} from './mutations/initiated/stopUnit';
 import fireProjectiles from './mutations/tick/fireProjectiles';
@@ -12,15 +11,10 @@ import registerUnitFallen from './mutations/tick/registerUnitFallen';
 import patrolUnits from './mutations/tick/patrolUnits';
 import reformUnits from './mutations/tick/reformUnits';
 import autoAttack from './mutations/tick/autoAttack';
-import patrolTo, {patrolGroupTo} from './mutations/initiated/patrolTo';
+import patrolTo from './mutations/initiated/patrolTo';
 import spawnUnit from './mutations/initiated/spawnUnit';
-import populationHas from '../util/populationHas';
-import populationVector from '../util/populationVector';
-import moveTo from "./mutations/initiated/moveTo";
-import averageVector from "../util/averageVector";
-import addUnitReformingSpeedFactor from "../util/addUnitReformingSpeedFactor";
-import config from "../config";
-import changeFormation from "./mutations/initiated/changeFormation";
+import moveTo from './mutations/initiated/moveTo';
+import changeFormation from './mutations/initiated/changeFormation';
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {
@@ -82,8 +76,8 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.name === 'TICK') {
-        reformUnits(state);
         moveUnits(state);
+        reformUnits(state);
         patrolUnits(state);
         fireProjectiles(state);
         autoAttack(state);

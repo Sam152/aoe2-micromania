@@ -18,11 +18,11 @@ const config = {
     /**
      * The factory by which units may travel faster than their actual speed, in order to get into formation.
      */
-    maximumReformSpeedFactor: 1.5,
+    maximumReformSpeedFactor: 1.75,
     /**
      * When moving, how much of the journey it should take to reform units.
      */
-    movingReformDistance: 150,
+    movingReformDistance: 100,
     /**
      * Tile dimensions.
      */
