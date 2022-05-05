@@ -7,6 +7,7 @@ import RoomStatus from '../../server/rooms/RoomStatus';
 import MultiplayerGame from './MultiplayerGame';
 import {useState} from 'react';
 import SinglePlayerGame from './SinglePlayerGame';
+import {Button} from "@chakra-ui/react";
 
 export default function Lobby({io}: { io: Socket }) {
     // return (<SinglePlayerGame />);
@@ -31,8 +32,8 @@ export default function Lobby({io}: { io: Socket }) {
                 <SinglePlayerGame/>
             ) : (
                 <>
-                    <button onClick={() => io.emit('createRoom')}>Create Room</button>
-                    <button onClick={() => setPlayingSinglePlayer(true)}>Start Single Player</button>
+                    <Button onClick={() => io.emit('createRoom')}>Create Room</Button>
+                    <Button onClick={() => setPlayingSinglePlayer(true)}>Start Single Player</Button>
                     <RoomList io={io} roomList={roomList}/>
                 </>
             )}
