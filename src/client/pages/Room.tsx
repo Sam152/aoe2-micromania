@@ -49,6 +49,10 @@ export default function Room() {
                 <Button onClick={() => connection.emit('joinRoom', room.id)}>Join Lobby</Button>
             )}
 
+            { playerInfo.playingAs && (
+                <Button onClick={() => connection.emit('spectateRoom', roomId)}>Spectate Lobby</Button>
+            )}
+
             <Button onClick={() => {leaveRoom(); connection.emit('leaveRoom')}}>Leave Lobby</Button>
         </div>
     );

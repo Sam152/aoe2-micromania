@@ -63,7 +63,6 @@ export default class RoomManager {
             else {
                 room.leave(player);
             }
-            return;
         }
 
         const room = this.getRoom(id);
