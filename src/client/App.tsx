@@ -1,6 +1,6 @@
 import useEmittedData from './hooks/useEmittedData';
 import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../types';
-import {ChakraProvider} from '@chakra-ui/react';
+import {ChakraProvider, HStack} from '@chakra-ui/react';
 import theme from './theme/theme';
 import {PlayerInfoContext, RoomListContext} from './hooks/useConnection';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
@@ -8,6 +8,7 @@ import Lobby from './pages/Lobby';
 import SinglePlayerGame from './pages/SinglePlayerGame';
 import React from 'react';
 import Room from './pages/Room';
+import TopBar from "./components/TopBar";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -19,9 +20,12 @@ export default function App() {
 
     return (
         <ChakraProvider theme={theme} resetCSS={true}>
+
+
             <PlayerInfoContext.Provider value={playerInfo}>
                 <RoomListContext.Provider value={roomList}>
                     <BrowserRouter>
+                        <TopBar />
                         <Routes>
                             <Route path="/" element={<Lobby/>}/>
                             <Route path="single-player" element={<SinglePlayerGame/>}/>

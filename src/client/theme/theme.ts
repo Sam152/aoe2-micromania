@@ -12,12 +12,22 @@ const theme = extendTheme({
     },
     components: {
         Button: {
-            baseStyle: {
-            },
+            baseStyle: {},
             defaultProps: {
                 size: 'sm',
             },
         },
+        Link: {
+            variants: {
+                'menu-link': {
+                    px: 6,
+                    py: 6,
+                    textTransform: 'uppercase',
+                    fontWeight: 'bold',
+
+                }
+            }
+        }
     },
 });
 

@@ -42,12 +42,12 @@ export default class CanvasRenderer implements RendererInterface {
         this.lastCursor = null;
 
         this.fit();
-        window.addEventListener('resize', this.fit.bind(this));
+        screenManager.onChange(this.fit.bind(this));
     }
 
     fit() {
         this.context.canvas.width = window.innerWidth * screenManager.getCanvasScale();
-        this.context.canvas.height = window.innerHeight * screenManager.getCanvasScale();
+        this.context.canvas.height = (window.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
     }
 
     getSize(): Vector2 {

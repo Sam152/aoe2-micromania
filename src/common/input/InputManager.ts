@@ -2,6 +2,7 @@ import {ClientStateAction, StateManagerInterface, StateTransmitter} from '../../
 import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
 import {Vector2} from 'three/src/math/Vector2';
 import FormationType from '../units/formations/FormationType';
+import screenManager from "../drawing/screenManager";
 
 const StInput = require('stinput');
 
@@ -139,7 +140,7 @@ export default class InputManager {
 
     mousePosition(cameraPosition: Vector2) {
         return screenPositionToGamePosition(
-            (new Vector2(this.input.mousePosition.x, this.input.mousePosition.y)).add(gamePositionToScreenPosition(cameraPosition)),
+            (new Vector2(this.input.mousePosition.x, this.input.mousePosition.y - screenManager.getTopOffset())).add(gamePositionToScreenPosition(cameraPosition)),
         );
     }
 
