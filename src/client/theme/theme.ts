@@ -27,9 +27,10 @@ const theme = extendTheme({
             variants: {
                 'menu-link': {
                     px: 6,
-                    py: 6,
+                    py: 4,
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
+                    fontSize: 'sm',
 
                 }
             }

@@ -16,8 +16,8 @@ class ScreenManager {
     }
 
     resize() {
-        const topBar = document.getElementById('top-bar');
-        this.topOffset = topBar ? topBar.offsetHeight : 72;
+        const topBar = document.getElementById('nav-bar');
+        this.topOffset = topBar ? topBar.offsetHeight : 52;
 
         this.callbacks.forEach(callback => callback());
     }

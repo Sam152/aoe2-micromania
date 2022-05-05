@@ -4,6 +4,7 @@ import {useEffect} from 'react';
 import {Button, Container} from '@chakra-ui/react';
 import useConnection, {usePlayerInfo, useRoomList} from '../hooks/useConnection';
 import {useNavigate} from 'react-router-dom';
+import Section from "../components/Section";
 
 export default function Lobby() {
     const io = useConnection();
@@ -22,7 +23,10 @@ export default function Lobby() {
         <>
             <Container>
                 <Button onClick={() => io.emit('createRoom')}>Create Room</Button>
-                <RoomList io={io} roomList={roomList}/>
+
+                <Section>
+                    <RoomList io={io} roomList={roomList}/>
+                </Section>
             </Container>
         </>
     );
