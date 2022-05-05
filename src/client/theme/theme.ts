@@ -17,6 +17,12 @@ const theme = extendTheme({
                 size: 'sm',
             },
         },
+        Container: {
+            baseStyle: {
+                maxW: 'container.xl',
+                py: 8,
+            },
+        },
         Link: {
             variants: {
                 'menu-link': {

@@ -1,9 +1,9 @@
 
 import RoomList from '../components/RoomList';
 import {useEffect} from 'react';
-import {Button} from '@chakra-ui/react';
+import {Button, Container} from '@chakra-ui/react';
 import useConnection, {usePlayerInfo, useRoomList} from '../hooks/useConnection';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export default function Lobby() {
     const io = useConnection();
@@ -20,9 +20,10 @@ export default function Lobby() {
 
     return (
         <>
-            <Button onClick={() => io.emit('createRoom')}>Create Room</Button>
-            <Button as={Link} to='/single-player'>Start Single Player</Button>
-            <RoomList io={io} roomList={roomList}/>
+            <Container>
+                <Button onClick={() => io.emit('createRoom')}>Create Room</Button>
+                <RoomList io={io} roomList={roomList}/>
+            </Container>
         </>
     );
 }
