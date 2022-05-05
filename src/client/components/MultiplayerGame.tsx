@@ -1,11 +1,12 @@
 import GameCanvas from './GameCanvas';
 import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
-import {Socket} from 'socket.io-client';
 import React from 'react';
+import useConnection from "../hooks/useConnection";
 
 
-const MultiplayerGame = React.memo(function({io, playingAs}: {io: Socket, playingAs: number}) {
-    const state = new NetworkedStateManager(io, playingAs);
+const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
+    const connection = useConnection();
+    const state = new NetworkedStateManager(connection, playingAs);
     state.init();
 
     return (

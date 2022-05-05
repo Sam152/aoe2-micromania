@@ -1,14 +1,15 @@
-import {Socket} from 'socket.io-client';
-import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../../types';
 import RoomStatusLabel from '../../server/rooms/RoomStatusLabel';
+import useConnection, {usePlayerInfo} from "../hooks/useConnection";
+import {Button} from "@chakra-ui/react";
 
-export default function Room({io, playerInfo}: {io: Socket, playerInfo: EmittedPlayerLobbyMetadata}) {
+export default function Room() {
+    const playerInfo = usePlayerInfo();
     const room = playerInfo.inRoom;
+    const connection = useConnection();
 
     return (
         <div>
             <h1>Lobby</h1>
-
             <ul>
                 <li><strong>Players:</strong> {room.players}/{room.slots}</li>
                 <li><strong>ID:</strong> {room.id}</li>
@@ -17,10 +18,10 @@ export default function Room({io, playerInfo}: {io: Socket, playerInfo: EmittedP
             </ul>
 
             {room.players === room.slots && playerInfo.inRoom && (
-                <button onClick={() => io.emit('startGame')}>Start</button>
+                <Button onClick={() => connection.emit('startGame')}>Start</Button>
             )}
 
-            <button onClick={() => io.emit('leaveRoom')}>Leave Lobby</button>
+            <Button onClick={() => connection.emit('leaveRoom')}>Leave Lobby</Button>
         </div>
     );
 }

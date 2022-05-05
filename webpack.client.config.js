@@ -35,13 +35,14 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'dist'),
         },
+        historyApiFallback: true,
         compress: true,
         port: 9000,
         proxy: {
             '/socket.io': {
                 target: 'http://localhost:3000',
                 ws: true
-            }
+            },
         }
     },
 };
