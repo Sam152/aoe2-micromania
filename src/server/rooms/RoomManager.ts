@@ -54,6 +54,9 @@ export default class RoomManager {
         }
 
         const room = this.getRoom(id);
+        if (!room) {
+            return;
+        }
         room.spectate(player);
     }
 
@@ -80,6 +83,9 @@ export default class RoomManager {
 
     emitPlayerInfoForRoom(roomId: RoomId) {
         const room = this.getRoom(roomId);
+        if (!room) {
+            return;
+        }
         room.players.map((player) => this.emitPlayerInfo(player));
         room.spectators.map((player) => this.emitPlayerInfo(player));
     }

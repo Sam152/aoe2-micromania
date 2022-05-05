@@ -25,6 +25,7 @@ export function normalizeGameStateObject(state: GameState): GameState {
         waypoints: unit.waypoints.map((waypoint) => new Vector2(waypoint.x, waypoint.y)),
         reformingTo: unit.reformingTo ? new Vector2(unit.reformingTo.x, unit.reformingTo.y) : null,
         patrollingTo: unit.patrollingTo ? new Vector2(unit.patrollingTo.x, unit.patrollingTo.y) : null,
+        patrollingToReturn: unit.patrollingToReturn ? new Vector2(unit.patrollingToReturn.x, unit.patrollingToReturn.y) : null,
     }));
     state.fallenUnits = state.fallenUnits.map((unit: FallenUnitInstance) => ({
         ...unit,

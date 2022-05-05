@@ -63,7 +63,7 @@ export default class Room {
         return this.spectators.find((p) => p.socket.id === player.socket.id) !== undefined;
     }
 
-    startGame() {
+    startGame(onStarted: Function) {
         this.status = RoomStatus.Starting;
 
         this.state = new LocalStateManager((gameState, action) => {
@@ -84,6 +84,7 @@ export default class Room {
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
                     this.state.dispatchGame({name: 'GAME_MODE_STARTED'});
                     this.status = RoomStatus.Started;
+                    onStarted();
                 }
             });
         });

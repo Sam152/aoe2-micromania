@@ -1,7 +1,6 @@
 import {Socket} from 'socket.io-client';
 import {EmittedRoom} from '../../types';
 import roomStatusLabel from '../../server/rooms/RoomStatusLabel';
-import RoomStatus from '../../server/rooms/RoomStatus';
 import {Button, Table, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 
 export default function RoomList({io, roomList}: {io: Socket, roomList: EmittedRoom[]}) {
