@@ -1,10 +1,10 @@
 import RoomStatusLabel from '../../server/rooms/RoomStatusLabel';
-import useConnection, {usePlayerInfo} from "../hooks/useConnection";
-import {Button, useBoolean} from "@chakra-ui/react";
-import {useNavigate, useParams} from "react-router-dom";
-import {useEffect, useReducer} from "react";
-import RoomStatus from "../../server/rooms/RoomStatus";
-import MultiplayerGame from "../components/MultiplayerGame";
+import useConnection, {usePlayerInfo} from '../hooks/useConnection';
+import {Button, useBoolean} from '@chakra-ui/react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useEffect, useReducer} from 'react';
+import RoomStatus from '../../server/rooms/RoomStatus';
+import MultiplayerGame from '../components/MultiplayerGame';
 
 export default function Room() {
     const playerInfo = usePlayerInfo();
@@ -20,7 +20,7 @@ export default function Room() {
             navigate('/');
         }
         if (!room && !isLeaving) {
-            connection.emit('spectateRoom', roomId)
+            connection.emit('spectateRoom', roomId);
         }
     }, [room]);
 
@@ -53,7 +53,9 @@ export default function Room() {
                 <Button onClick={() => connection.emit('spectateRoom', roomId)}>Spectate Lobby</Button>
             )}
 
-            <Button onClick={() => {leaveRoom(); connection.emit('leaveRoom')}}>Leave Lobby</Button>
+            <Button onClick={() => {
+                leaveRoom(); connection.emit('leaveRoom');
+            }}>Leave Lobby</Button>
         </div>
     );
 }

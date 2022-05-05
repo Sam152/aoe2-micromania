@@ -36,9 +36,8 @@ export default class RoomManager {
         if (this.playerIsInRoom(player)) {
             const room = this.getRoomWithPlayer(player);
             if (room.hasPlayer(player)) {
-                return
-            }
-            else {
+                return;
+            } else {
                 room.leave(player);
             }
         }
@@ -59,8 +58,7 @@ export default class RoomManager {
             const room = this.getRoomWithPlayer(player);
             if (room.hasSpectator(player)) {
                 return;
-            }
-            else {
+            } else {
                 room.leave(player);
             }
         }

@@ -1,7 +1,7 @@
 import GameCanvas from './GameCanvas';
 import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
 import React from 'react';
-import useConnection from "../hooks/useConnection";
+import useConnection from '../hooks/useConnection';
 
 
 const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {

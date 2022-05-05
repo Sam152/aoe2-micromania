@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
         // Make sure only players, not spectators can start games.
         if (room.hasPlayer(player)) {
             room.startGame(() => {
-                roomManager.emitRooms(io)
+                roomManager.emitRooms(io);
                 roomManager.emitPlayerInfoForRoom(room.id);
             });
             roomManager.emitRooms(io);

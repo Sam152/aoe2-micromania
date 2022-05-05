@@ -15,7 +15,7 @@ import patrolTo from './mutations/initiated/patrolTo';
 import spawnUnit from './mutations/initiated/spawnUnit';
 import moveTo from './mutations/initiated/moveTo';
 import changeFormation from './mutations/initiated/changeFormation';
-import {setUnitMovementTowardsCurrentWaypoint} from "./mutations/initiated/setUnitMovementTowards";
+import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.name === 'CLIENT_LOADED') {

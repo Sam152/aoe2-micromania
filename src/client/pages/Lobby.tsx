@@ -1,9 +1,9 @@
 
 import RoomList from '../components/RoomList';
 import {useEffect} from 'react';
-import {Button} from "@chakra-ui/react";
-import useConnection, {usePlayerInfo, useRoomList} from "../hooks/useConnection";
-import {Link, useNavigate} from "react-router-dom";
+import {Button} from '@chakra-ui/react';
+import useConnection, {usePlayerInfo, useRoomList} from '../hooks/useConnection';
+import {Link, useNavigate} from 'react-router-dom';
 
 export default function Lobby() {
     const io = useConnection();
@@ -16,7 +16,7 @@ export default function Lobby() {
         if (playerInfo.inRoom) {
             navigate(`/room/${playerInfo.inRoom.id}`);
         }
-    }, [playerInfo])
+    }, [playerInfo]);
 
     return (
         <>
