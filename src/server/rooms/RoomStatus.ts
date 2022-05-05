@@ -1,5 +1,6 @@
 enum RoomStatus {
     Gathering,
+    Starting,
     Started,
     Completed
 }

@@ -64,7 +64,7 @@ export default class Room {
     }
 
     startGame() {
-        this.status = RoomStatus.Started;
+        this.status = RoomStatus.Starting;
 
         this.state = new LocalStateManager((gameState, action) => {
             // The network could either dispatch the whole units state OR the action, letting the clients
@@ -83,6 +83,7 @@ export default class Room {
                     const gameMode = new ArcherMicro();
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
                     this.state.dispatchGame({name: 'GAME_MODE_STARTED'});
+                    this.status = RoomStatus.Started;
                 }
             });
         });

@@ -268,7 +268,7 @@ export default class CanvasRenderer implements RendererInterface {
 
         if (cursor !== this.lastCursor) {
             const anchor = anchorMap[cursor];
-            this.canvas.style.cursor = `url("graphics/interface/${cursor}.svg") ${anchor}, none`;
+            this.canvas.style.cursor = `url("/graphics/interface/${cursor}.svg") ${anchor}, none`;
             this.lastCursor = cursor;
         }
     }
