@@ -41,8 +41,12 @@ export default function Room() {
                 <li><strong>Spectators:</strong> {room.spectators}</li>
             </ul>
 
-            {room.players === room.slots && playerInfo.inRoom && (
+            {room.players === room.slots && !playerInfo.isSpectator && (
                 <Button onClick={() => connection.emit('startGame')}>Start</Button>
+            )}
+
+            {room.players < room.slots && playerInfo.isSpectator && (
+                <Button onClick={() => connection.emit('joinRoom', room.id)}>Join Lobby</Button>
             )}
 
             <Button onClick={() => {leaveRoom(); connection.emit('leaveRoom')}}>Leave Lobby</Button>

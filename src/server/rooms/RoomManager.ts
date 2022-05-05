@@ -34,7 +34,13 @@ export default class RoomManager {
 
     joinRoom(id: RoomId, player: Player) {
         if (this.playerIsInRoom(player)) {
-            return;
+            const room = this.getRoomWithPlayer(player);
+            if (room.hasPlayer(player)) {
+                return
+            }
+            else {
+                room.leave(player);
+            }
         }
         const room = this.getRoom(id);
 
@@ -50,6 +56,13 @@ export default class RoomManager {
 
     spectateRoom(id: RoomId, player: Player) {
         if (this.playerIsInRoom(player)) {
+            const room = this.getRoomWithPlayer(player);
+            if (room.hasSpectator(player)) {
+                return;
+            }
+            else {
+                room.leave(player);
+            }
             return;
         }
 

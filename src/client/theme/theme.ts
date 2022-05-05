@@ -13,7 +13,6 @@ const theme = extendTheme({
     components: {
         Button: {
             baseStyle: {
-                color: 'brand.100',
             },
             defaultProps: {
                 size: 'sm'
