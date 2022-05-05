@@ -19,7 +19,7 @@ export default function TopBar() {
     return (
         <Flex px={6} bg={bg} alignItems={"center"} id="nav-bar" sx={{userSelect: 'none'}} justify={"space-between"}>
             <HStack>
-                <Box mx={6}>
+                <Box mr={6}>
                     MicroMania
                 </Box>
                 <Flex>
