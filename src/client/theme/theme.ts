@@ -9,8 +9,21 @@ const theme = extendTheme({
             100: '#ff33cc',
             900: '#ff33cc',
         },
+        playerColors: {
+            0: '#2044ab',
+            1: '#e60b00'
+        }
+    },
+    spacing: {
+        space: {},
     },
     components: {
+        Skeleton: {
+            defaultProps: {
+                startColor: 'gray.800',
+                endColor: 'gray.900',
+            },
+        },
         Button: {
             baseStyle: {},
             defaultProps: {

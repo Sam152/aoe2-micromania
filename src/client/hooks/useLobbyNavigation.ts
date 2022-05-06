@@ -2,7 +2,7 @@ import {useCallback, useEffect, useReducer} from "react";
 import useConnection, {usePlayerInfo, useRoomList} from "./useConnection";
 import {useNavigate} from "react-router-dom";
 
-export default function useLobbyNavigateTo() {
+export default function useLobbyNavigation() {
     const io = useConnection();
 
     const playerInfo = usePlayerInfo();

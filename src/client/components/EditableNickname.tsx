@@ -9,6 +9,9 @@ import {
     useEditableControls
 } from "@chakra-ui/react";
 import {CheckIcon, CloseIcon, EditIcon} from "@chakra-ui/icons";
+import useConnection from "../hooks/useConnection";
+import defaultNickname from "../../common/social/defaultNickname";
+import {useEffect} from "react";
 
 function EditableControls() {
     const {
@@ -30,10 +33,25 @@ function EditableControls() {
 }
 
 export default function EditableNickname() {
+    const io = useConnection();
+    const existingNick = localStorage.getItem('nickname');
+
+    function onChange(value: string) {
+        io.emit('setNickname', value);
+        localStorage.setItem('nickname', value);
+    }
+
+    useEffect(() => {
+        if (existingNick) {
+            io.emit('setNickname', existingNick);
+        }
+    }, []);
+
     return (
         <Editable
-            defaultValue='Rasengan ⚡️'
+            defaultValue={existingNick || defaultNickname(io.id)}
             isPreviewFocusable={false}
+            onSubmit={onChange}
         >
             <HStack>
                 <EditablePreview/>

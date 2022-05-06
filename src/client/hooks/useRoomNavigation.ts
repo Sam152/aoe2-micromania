@@ -1,9 +1,8 @@
 import {useEffect, useReducer} from "react";
 import useConnection, {usePlayerInfo, useRoomList} from "./useConnection";
 import {useNavigate, useParams} from "react-router-dom";
-import RoomStatus from "../../server/rooms/RoomStatus";
 
-export default function useRoomNavigateTo() {
+export default function useRoomNavigation() {
     const playerInfo = usePlayerInfo();
     const connection = useConnection();
     const navigate = useNavigate();

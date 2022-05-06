@@ -250,6 +250,10 @@ export interface EmittedRoom {
     slots: number;
     status: RoomStatus;
     joinable: boolean;
+    playersList: Array<{
+        id: string;
+        name: string;
+    }>
 }
 
 export interface SlpFrame {

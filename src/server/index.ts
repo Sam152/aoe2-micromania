@@ -18,6 +18,7 @@ const io = new Server(httpServer, {
 const roomManager = new RoomManager(io);
 
 console.log('Starting server');
+
 io.on('connection', (socket) => {
     const player = new Player(socket);
     roomManager.emitRooms(player.socket);
@@ -59,6 +60,25 @@ io.on('connection', (socket) => {
                 roomManager.emitPlayerInfoForRoom(room.id);
             });
             roomManager.emitRooms(io);
+            roomManager.emitPlayerInfoForRoom(room.id);
+        }
+    });
+
+    socket.on('disconnect', (reason) => {
+        const leftRoom = roomManager.leaveRoom(player);
+        if (leftRoom) {
+            roomManager.emitRooms(io);
+            roomManager.emitPlayerInfo(player);
+            roomManager.emitPlayerInfoForRoom(leftRoom.id);
+        }
+    });
+
+    socket.on('setNickname', (nickname) => {
+        player.setNickname(nickname);
+
+        const room = roomManager.getRoomWithPlayer(player);
+        if (room) {
+            roomManager.emitPlayerInfo(player);
             roomManager.emitPlayerInfoForRoom(room.id);
         }
     });

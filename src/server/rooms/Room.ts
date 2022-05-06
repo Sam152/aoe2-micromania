@@ -98,6 +98,10 @@ export default class Room {
             slots: this.slots,
             status: this.status,
             joinable: this.status === RoomStatus.Gathering && this.players.length < this.slots,
+            playersList: this.players.map(player => ({
+                id: player.socket.id,
+                name: player.getNickname(),
+            })),
         };
     }
 }
