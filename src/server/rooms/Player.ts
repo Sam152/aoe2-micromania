@@ -1,4 +1,5 @@
 import {Socket} from 'socket.io';
+import defaultNickname from "../../common/social/defaultNickname";
 
 export default class Player {
     public socket: Socket;
@@ -13,6 +14,6 @@ export default class Player {
     }
 
     getNickname(): string {
-        return this.nickname || 'Default Nick';
+        return this.nickname || defaultNickname(this.socket.id);
     }
 }
