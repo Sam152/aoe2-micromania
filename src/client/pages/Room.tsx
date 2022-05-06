@@ -2,7 +2,7 @@ import RoomStatusLabel from '../../server/rooms/RoomStatusLabel';
 import useConnection, {usePlayerInfo} from '../hooks/useConnection';
 import {
     Box,
-    Button,
+    Button, Center,
     Container,
     Flex,
     Heading,
@@ -60,7 +60,7 @@ export default function Room() {
                                         const player = inRoom.playersList[slot] || null;
                                         return (
                                             <Tr key={slot}>
-                                                <Td>{slot + 1}</Td>
+                                                <Td><Center>{slot + 1}</Center></Td>
                                                 <Td><Square size={'20px'} bg={`playerColors.${slot}`}/></Td>
                                                 <Td>{player ? player.name : <Skeleton w={'300px'} h={4}/>}</Td>
                                             </Tr>
