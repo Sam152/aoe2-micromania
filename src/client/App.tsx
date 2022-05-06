@@ -1,6 +1,6 @@
 import useEmittedData from './hooks/useEmittedData';
 import {EmittedPlayerLobbyMetadata, EmittedRoom} from '../types';
-import {ChakraProvider, HStack} from '@chakra-ui/react';
+import {Button, ChakraProvider, HStack} from '@chakra-ui/react';
 import theme from './theme/theme';
 import {PlayerInfoContext, RoomListContext} from './hooks/useConnection';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
@@ -20,8 +20,6 @@ export default function App() {
 
     return (
         <ChakraProvider theme={theme} resetCSS={true}>
-
-
             <PlayerInfoContext.Provider value={playerInfo}>
                 <RoomListContext.Provider value={roomList}>
                     <BrowserRouter>

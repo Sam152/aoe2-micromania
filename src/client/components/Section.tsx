@@ -5,7 +5,7 @@ import {Box, useColorModeValue} from "@chakra-ui/react";
 export default function Section({children}: {children: JSX.Element}) {
     const bg = useColorModeValue('gray.100', 'gray.700');
     return (
-        <Box bg={bg} borderColor={'black'} borderWidth='1px' borderRadius='lg' overflow='hidden'>
+        <Box bg={bg} borderColor={'blue.500'} borderWidth='2px' borderRadius='lg' overflow='hidden'>
             {children}
         </Box>
     );

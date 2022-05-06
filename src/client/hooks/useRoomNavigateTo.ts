@@ -1,26 +1,36 @@
-import {useCallback, useEffect, useReducer} from "react";
+import {useEffect, useReducer} from "react";
 import useConnection, {usePlayerInfo, useRoomList} from "./useConnection";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import RoomStatus from "../../server/rooms/RoomStatus";
 
 export default function useRoomNavigateTo() {
-    const io = useConnection();
-
     const playerInfo = usePlayerInfo();
+    const connection = useConnection();
     const navigate = useNavigate();
+    const {roomId} = useParams();
 
-    const [isEnteringRoom, enterRoom] = useReducer(() => true, false);
+    const room = playerInfo.inRoom;
+
+    const [isLeaving, leaveRoom] = useReducer(() => true, false);
     useEffect(() => {
-        if (isEnteringRoom && playerInfo.inRoom) {
-            navigate(`/room/${playerInfo.inRoom.id}`);
-        } else if (playerInfo.inRoom) {
-            io.emit('leaveRoom');
+        if (!room && isLeaving) {
+            navigate('/');
         }
-    }, [playerInfo]);
+        if (!room && !isLeaving) {
+            connection.emit('spectateRoom', roomId);
+        }
+    }, [room]);
 
-    const emitAndEnter = useCallback((action: string, args: any = null): void => {
-        io.emit(action, args);
-        enterRoom();
-    }, []);
-
-    return emitAndEnter;
+    return {
+        canStart: room && room.players === room.slots && !playerInfo.isSpectator,
+        startGame: () => connection.emit('startGame'),
+        canChangeToPlayer: room && room.players < room.slots && playerInfo.isSpectator,
+        changeToPlayer: () => connection.emit('joinRoom', room.id),
+        canChangeToSpectator: room && playerInfo.playingAs,
+        changeToSpectator: () => connection.emit('spectateRoom', roomId),
+        leaveRoom: () => {
+            leaveRoom();
+            connection.emit('leaveRoom');
+        },
+    }
 }

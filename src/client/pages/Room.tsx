@@ -5,57 +5,50 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {useEffect, useReducer} from 'react';
 import RoomStatus from '../../server/rooms/RoomStatus';
 import MultiplayerGame from '../components/MultiplayerGame';
+import useRoomNavigateTo from "../hooks/useRoomNavigateTo";
 
 export default function Room() {
-    const playerInfo = usePlayerInfo();
-    const connection = useConnection();
-    const navigate = useNavigate();
-    const {roomId} = useParams();
+    const {
+        canStart,
+        startGame,
+        canChangeToPlayer,
+        changeToPlayer,
+        canChangeToSpectator,
+        changeToSpectator,
+        leaveRoom,
+    } = useRoomNavigateTo();
 
-    const room = playerInfo.inRoom;
+    const {inRoom, isSpectator, playingAs} = usePlayerInfo();
 
-    const [isLeaving, leaveRoom] = useReducer(() => true, false);
-    useEffect(() => {
-        if (!room && isLeaving) {
-            navigate('/');
-        }
-        if (!room && !isLeaving) {
-            connection.emit('spectateRoom', roomId);
-        }
-    }, [room]);
-
-
-    if (room && [RoomStatus.Started, RoomStatus.Starting].includes(room.status)) {
+    if (inRoom && [RoomStatus.Started, RoomStatus.Starting].includes(inRoom.status)) {
         return (
-            <MultiplayerGame playingAs={playerInfo.playingAs} />
+            <MultiplayerGame playingAs={playingAs} />
         );
     }
 
-    return room && (
+    return inRoom && (
         <div>
             <h1>Room</h1>
             <ul>
-                <li><strong>Players:</strong> {room.players}/{room.slots}</li>
-                <li><strong>ID:</strong> {room.id}</li>
-                <li><strong>Status:</strong> {RoomStatusLabel.get(room.status)}</li>
-                <li><strong>Spectators:</strong> {room.spectators}</li>
+                <li><strong>Players:</strong> {inRoom.players}/{inRoom.slots}</li>
+                <li><strong>ID:</strong> {inRoom.id}</li>
+                <li><strong>Status:</strong> {RoomStatusLabel.get(inRoom.status)}</li>
+                <li><strong>Spectators:</strong> {inRoom.spectators}</li>
             </ul>
 
-            {room.players === room.slots && !playerInfo.isSpectator && (
-                <Button onClick={() => connection.emit('startGame')}>Start</Button>
+            {canStart && (
+                <Button onClick={startGame}>Start</Button>
             )}
 
-            {room.players < room.slots && playerInfo.isSpectator && (
-                <Button onClick={() => connection.emit('joinRoom', room.id)}>Join Lobby</Button>
+            {canChangeToPlayer && (
+                <Button onClick={changeToPlayer}>Join Lobby</Button>
             )}
 
-            { playerInfo.playingAs && (
-                <Button onClick={() => connection.emit('spectateRoom', roomId)}>Spectate Lobby</Button>
+            { canChangeToSpectator && (
+                <Button onClick={changeToSpectator}>Spectate Lobby</Button>
             )}
 
-            <Button onClick={() => {
-                leaveRoom(); connection.emit('leaveRoom');
-            }}>Leave Lobby</Button>
+            <Button onClick={leaveRoom}>Leave Lobby</Button>
         </div>
     );
 }
