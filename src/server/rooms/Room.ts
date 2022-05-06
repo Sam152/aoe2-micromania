@@ -34,7 +34,9 @@ export default class Room {
     leave(leavingPlayer: Player): void {
         this.spectators = this.spectators.filter((player) => player.socket.id !== leavingPlayer.socket.id);
         this.players = this.players.filter((player) => player.socket.id !== leavingPlayer.socket.id);
+
         leavingPlayer.socket.leave(this.id);
+        leavingPlayer.socket.removeAllListeners('stateDispatch');
     }
 
     spectate(player: Player): void {
