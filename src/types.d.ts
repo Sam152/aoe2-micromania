@@ -88,6 +88,7 @@ export interface GameState {
     loadedPlayers: Array<PlayerId>;
     gameModeStarted: boolean;
     gameEnded: boolean;
+    winner?: PlayerId;
 }
 
 export type UnitId = number;
@@ -98,6 +99,9 @@ type GameStateAction = {
     n: 'T'; // Tick, reduced in size for a smaller transmission, could be an enum in the future.
 } | {
     n: 'CLIENT_LOADED';
+    player: number;
+} | {
+    n: 'PLAYER_DISCONNECTED';
     player: number;
 } | {
     n: 'SPECTATOR_LOADED';

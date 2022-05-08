@@ -34,10 +34,16 @@ export default class Room {
 
     leave(leavingPlayer: Player): void {
         this.spectators = this.spectators.filter((player) => player.socket.id !== leavingPlayer.socket.id);
+        const leavingIndex = this.players.findIndex((player) => player.socket.id === leavingPlayer.socket.id);
         this.players = this.players.filter((player) => player.socket.id !== leavingPlayer.socket.id);
 
         leavingPlayer.socket.leave(this.id);
         leavingPlayer.socket.removeAllListeners(TransportEvent.GameStateActionDispatch);
+
+        if (this.status === RoomStatus.Starting || this.status === RoomStatus.Started) {
+            this.state.dispatchGame({n: 'PLAYER_DISCONNECTED', player: leavingIndex + 1});
+            this.endGame();
+        }
     }
 
     spectate(player: Player): void {

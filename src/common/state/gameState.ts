@@ -26,6 +26,11 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
     if (action.n === 'GAME_ENDED') {
         state.gameEnded = true;
+        state.winner = action.winner;
+    }
+    if (action.n === 'PLAYER_DISCONNECTED') {
+        state.gameEnded = true;
+        state.winner = action.player === 1 ? 2 : 1;
     }
 
     if (action.n === 'SPAWN_UNIT') {
@@ -103,6 +108,7 @@ function defaultState(): GameState {
         loadedPlayers: [],
         gameModeStarted: false,
         gameEnded: false,
+        winner: null,
     });
 }
 
