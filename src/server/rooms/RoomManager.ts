@@ -84,7 +84,7 @@ export default class RoomManager {
         if (playerRoom) {
             playerRoom.leave(player);
 
-            if (playerRoom.status === RoomStatus.Gathering && playerRoom.players.length === 0) {
+            if (playerRoom.status === RoomStatus.Gathering && playerRoom.players.length === 0 && playerRoom.spectators.length === 0) {
                 delete this.rooms[playerRoom.id];
             }
 

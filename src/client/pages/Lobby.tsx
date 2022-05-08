@@ -1,6 +1,6 @@
 import {
     Button,
-    ButtonGroup,
+    ButtonGroup, Center,
     Container,
     HStack,
     Table,
@@ -41,6 +41,14 @@ export default function Lobby() {
                                 </Tr>
                             </Thead>
                             <Tbody>
+                                {roomList.length === 0 && (
+                                    <Tr>
+                                        <Td colSpan={5}>
+                                            <Center>There are no active lobbies.</Center>
+                                        </Td>
+                                    </Tr>
+                                )}
+
                                 {roomList.map((room) => (
                                     <Tr key={room.id}>
                                         <Td>{room.id}</Td>

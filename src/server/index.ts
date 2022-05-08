@@ -87,6 +87,6 @@ io.on('connection', (socket) => {
 setInterval(() => {
     roomManager.cleanRooms();
     roomManager.emitRooms(io);
-}, 60000);
+}, 30000);
 
 httpServer.listen(3000);
