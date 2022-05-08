@@ -7,12 +7,16 @@ import PatrollingAi from '../../common/ai/PatrollingAi';
 
 export default function SinglePlayerGame() {
     const stateManager = useMemo(() => {
+
         const ai = new PatrollingAi(2);
+        const gameMode = new ArcherMicro();
+
         const manager = new LocalStateManager((state: GameState, action: GameStateAction) => {
             ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
+            gameMode.onGameAction(state, action, manager.dispatchGame.bind(manager))
         });
         manager.init();
-        (new ArcherMicro()).start(manager.dispatchGame.bind(manager), manager.getGameState());
+        gameMode.start(manager.dispatchGame.bind(manager), manager.getGameState());
 
         return manager;
     }, []);

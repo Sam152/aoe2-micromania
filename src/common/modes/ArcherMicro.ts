@@ -1,4 +1,4 @@
-import {GameDispatcher, GameMode, GameState} from '../../types';
+import {GameDispatcher, GameMode, GameState, GameStateAction} from '../../types';
 import Unit from '../units/Unit';
 import Grid from '../terrain/Grid';
 
@@ -40,4 +40,10 @@ export default class ArcherMicro implements GameMode {
             position: grid.middleOfTile(gameState.mapSize - 7, gameState.mapSize - 3),
         });
     }
+
+    onGameAction(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
+
+
+    }
+
 }
