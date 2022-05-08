@@ -66,6 +66,11 @@ export default class Room {
         return this.spectators.find((p) => p.socket.id === player.socket.id) !== undefined;
     }
 
+    endGame(): void {
+        this.players.map((player) => player.socket.removeAllListeners(TransportEvent.GameStateActionDispatch));
+        this.state.cleanUp();
+    }
+
     startGame(onStarted: Function) {
         this.status = RoomStatus.Starting;
         const gameMode = new ArcherMicro();
@@ -78,6 +83,9 @@ export default class Room {
 
             if (action.n === 'T') {
                 gameMode.onTick(gameState, action, this.state.dispatchGame.bind(this.state));
+            }
+            if (gameState.gameEnded) {
+                this.endGame();
             }
         });
 

@@ -70,7 +70,7 @@ export default class CanvasRenderer implements RendererInterface {
             this.lastRenderedGameTick = gameState.ticks;
             this.frameAtLastRenderedTick = clientState.renderedFrames;
         }
-        this.fractionOfTickRendered = (clientState.renderedFrames - this.frameAtLastRenderedTick) / this.framesPerTick;
+        this.fractionOfTickRendered = gameState.gameEnded ? 1 : (clientState.renderedFrames - this.frameAtLastRenderedTick) / this.framesPerTick;
 
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.width);
 

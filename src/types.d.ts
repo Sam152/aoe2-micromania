@@ -224,6 +224,7 @@ export type ClientDispatcher = (action: ClientStateAction) => void;
 
 export interface StateManagerInterface {
     init(): void;
+    cleanUp(): void;
 
     dispatchGame: GameDispatcher;
     dispatchClient: ClientDispatcher;

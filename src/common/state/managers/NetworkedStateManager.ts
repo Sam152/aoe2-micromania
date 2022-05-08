@@ -55,4 +55,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
             this.gameState = gameStateMutator(this.gameState, action);
         });
     }
+
+    cleanUp(): void {
+    }
 }

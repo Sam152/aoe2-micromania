@@ -10,6 +10,7 @@ export default class LocalStateManager implements StateManagerInterface {
     private gameState: GameState;
     private clientState: ClientState;
     private gameStateListener: (state: GameState, action: GameStateAction) => void;
+    private ticker: NodeJS.Timer;
 
     constructor(gameStateListener: (state: GameState, action: GameStateAction) => void = null) {
         this.gameState = defaultGameState();
@@ -37,6 +38,10 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        setInterval(() => this.dispatchGame({n: 'T'}), 1000 / config.ticksPerSecond);
+        this.ticker = setInterval(() => this.dispatchGame({n: 'T'}), 1000 / config.ticksPerSecond);
+    }
+
+    cleanUp(): void {
+        clearInterval(this.ticker);
     }
 }
