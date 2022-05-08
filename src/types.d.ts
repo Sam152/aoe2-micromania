@@ -87,6 +87,7 @@ export interface GameState {
     mapSize: number;
     loadedPlayers: Array<PlayerId>;
     gameModeStarted: boolean;
+    gameEnded: boolean;
 }
 
 export type UnitId = number;

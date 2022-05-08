@@ -75,7 +75,10 @@ export default class Room {
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?
             this.room.emit(TransportEvent.GameStateActionTransmit, action);
-            gameMode.onGameAction(gameState, action, this.state.dispatchGame.bind(this.state));
+
+            if (action.n === 'T') {
+                gameMode.onTick(gameState, action, this.state.dispatchGame.bind(this.state));
+            }
         });
 
         this.players.map((player) => {
@@ -87,7 +90,6 @@ export default class Room {
                     this.state.init();
 
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
-
                     this.state.dispatchGame({n: 'GAME_MODE_STARTED'});
                     this.status = RoomStatus.Started;
                     onStarted();

@@ -24,6 +24,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.n === 'GAME_MODE_STARTED') {
         state.gameModeStarted = true;
     }
+    if (action.n === 'GAME_ENDED') {
+        state.gameEnded = true;
+    }
 
     if (action.n === 'SPAWN_UNIT') {
         spawnUnit(state, action);
@@ -99,6 +102,7 @@ function defaultState(): GameState {
         mapSize: 18,
         loadedPlayers: [],
         gameModeStarted: false,
+        gameEnded: false,
     });
 }
 
