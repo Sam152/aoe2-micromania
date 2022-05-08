@@ -43,9 +43,16 @@ export default class ArcherMicro implements GameMode {
 
     onGameAction(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
         if (action.n === 'T' && state.ticks % 10 === 0) {
-            console.log('Check if over');
-        }
+            const playerOneUnits = state.units.filter(({ownedByPlayer}) => ownedByPlayer === 1).length;
+            const playerTwoUnits = state.units.filter(({ownedByPlayer}) => ownedByPlayer === 2).length;
 
+            if (playerOneUnits === 0) {
+                dispatcher({n: 'GAME_ENDED', winner: 2});
+            }
+            else if(playerTwoUnits === 0) {
+                dispatcher({n: 'GAME_ENDED', winner: 1});
+            }
+        }
     }
 
 }

@@ -62,7 +62,7 @@ export default function Room() {
                                             <Tr key={slot}>
                                                 <Td><Center>{slot + 1}</Center></Td>
                                                 <Td><Square size={'20px'} bg={`playerColors.${slot}`}/></Td>
-                                                <Td>{player ? player.n : <Skeleton w={'300px'} h={4}/>}</Td>
+                                                <Td>{player ? player.name : <Skeleton w={'300px'} h={4}/>}</Td>
                                             </Tr>
                                         );
                                     })}

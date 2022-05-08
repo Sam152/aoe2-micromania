@@ -255,7 +255,7 @@ export interface EmittedRoom {
     joinable: boolean;
     playersList: Array<{
         id: string;
-        n: string;
+        name: string;
     }>
 }
 
