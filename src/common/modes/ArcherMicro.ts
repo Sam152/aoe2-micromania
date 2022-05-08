@@ -42,7 +42,9 @@ export default class ArcherMicro implements GameMode {
     }
 
     onGameAction(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-
+        if (action.n === 'T' && state.ticks % 10 === 0) {
+            console.log('Check if over');
+        }
 
     }
 

@@ -68,12 +68,14 @@ export default class Room {
 
     startGame(onStarted: Function) {
         this.status = RoomStatus.Starting;
+        const gameMode = new ArcherMicro();
 
         this.state = new LocalStateManager((gameState, action) => {
             // The network could either dispatch the whole units state OR the action, letting the clients
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?
             this.room.emit(TransportEvent.GameStateActionTransmit, action);
+            gameMode.onGameAction(gameState, action, this.state.dispatchGame.bind(this.state));
         });
 
         this.players.map((player) => {
@@ -84,7 +86,6 @@ export default class Room {
                 if (!this.state.getGameState().gameModeStarted && this.state.getGameState().loadedPlayers.length === this.players.length) {
                     this.state.init();
 
-                    const gameMode = new ArcherMicro();
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
 
                     this.state.dispatchGame({n: 'GAME_MODE_STARTED'});

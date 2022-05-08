@@ -103,6 +103,9 @@ type GameStateAction = {
 } | {
     n: 'GAME_MODE_STARTED';
 } | {
+    n: 'GAME_ENDED';
+    winner: PlayerId;
+} | {
     n: 'SPAWN_UNIT';
     position: Vector2;
     unitType: Unit,
