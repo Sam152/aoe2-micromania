@@ -83,15 +83,6 @@ io.on('connection', (socket) => {
             roomManager.emitPlayerInfoForRoom(leftRoom.id);
         }
     });
-
-    socket.on('disconnect', (reason) => {
-        const leftRoom = roomManager.leaveRoom(player);
-        if (leftRoom) {
-            roomManager.emitRooms(io);
-            roomManager.emitPlayerInfo(player);
-            roomManager.emitPlayerInfoForRoom(leftRoom.id);
-        }
-    });
 });
 
 httpServer.listen(3000);

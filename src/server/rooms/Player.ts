@@ -10,7 +10,9 @@ export default class Player {
     }
 
     setNickname(nickname: string): void {
-        this.nickname = nickname.substring(0, 25);
+        if (nickname.length > 1) {
+            this.nickname = nickname.substring(0, 25);
+        }
     }
 
     getNickname(): string {

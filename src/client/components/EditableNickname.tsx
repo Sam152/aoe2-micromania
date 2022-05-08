@@ -48,6 +48,14 @@ export default function EditableNickname() {
         }
     }, []);
 
+    if (!io.id) {
+        return (
+            <>
+                Loading...
+            </>
+        )
+    }
+
     return (
         <Editable
             defaultValue={existingNick || defaultNickname(io.id)}
