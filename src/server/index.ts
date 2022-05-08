@@ -5,6 +5,7 @@ import RoomManager from './rooms/RoomManager';
 import Player from './rooms/Player';
 import {RoomId} from '../types';
 import * as fs from 'fs';
+import TransportEvent from "../common/state/transport/TransportEvent";
 
 const httpServer = process.env.KEY_FILE && process.env.CERT_FILE ? createServerHttps({
     key: fs.readFileSync(process.env.KEY_FILE),
@@ -23,25 +24,25 @@ io.on('connection', (socket) => {
     const player = new Player(socket);
     roomManager.emitRooms(player.socket);
 
-    socket.on('createRoom', () => {
+    socket.on(TransportEvent.CreateRoom, () => {
         roomManager.createRoom(player);
         roomManager.emitRooms(io);
         roomManager.emitPlayerInfo(player);
     });
 
-    socket.on<RoomId>('joinRoom', (roomId) => {
+    socket.on<RoomId>(TransportEvent.JoinRoom, (roomId) => {
         roomManager.joinRoom(roomId, player);
         roomManager.emitRooms(io);
         roomManager.emitPlayerInfoForRoom(roomId);
     });
 
-    socket.on<RoomId>('spectateRoom', (roomId) => {
+    socket.on<RoomId>(TransportEvent.SpectateRoom, (roomId) => {
         roomManager.spectateRoom(roomId, player);
         roomManager.emitRooms(io);
         roomManager.emitPlayerInfoForRoom(roomId);
     });
 
-    socket.on('leaveRoom', () => {
+    socket.on(TransportEvent.LeaveRoom, () => {
         const leftRoom = roomManager.leaveRoom(player);
         if (leftRoom) {
             roomManager.emitRooms(io);
@@ -50,7 +51,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('startGame', () => {
+    socket.on(TransportEvent.StartGame, () => {
         const room = roomManager.getRoomWithPlayer(player);
 
         // Make sure only players, not spectators can start games.
@@ -64,22 +65,22 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('disconnect', (reason) => {
-        const leftRoom = roomManager.leaveRoom(player);
-        if (leftRoom) {
-            roomManager.emitRooms(io);
-            roomManager.emitPlayerInfo(player);
-            roomManager.emitPlayerInfoForRoom(leftRoom.id);
-        }
-    });
-
-    socket.on('setNickname', (nickname) => {
+    socket.on(TransportEvent.SetNickname, (nickname) => {
         player.setNickname(nickname);
 
         const room = roomManager.getRoomWithPlayer(player);
         if (room) {
             roomManager.emitPlayerInfo(player);
             roomManager.emitPlayerInfoForRoom(room.id);
+        }
+    });
+
+    socket.on('disconnect', (reason) => {
+        const leftRoom = roomManager.leaveRoom(player);
+        if (leftRoom) {
+            roomManager.emitRooms(io);
+            roomManager.emitPlayerInfo(player);
+            roomManager.emitPlayerInfoForRoom(leftRoom.id);
         }
     });
 

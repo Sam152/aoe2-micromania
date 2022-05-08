@@ -15,6 +15,7 @@ import {useRoomList} from '../hooks/useConnection';
 import Section from "../components/Section";
 import roomStatusLabel from "../../server/rooms/RoomStatusLabel";
 import useLobbyNavigation from "../hooks/useLobbyNavigation";
+import TransportEvent from "../../common/state/transport/TransportEvent";
 
 export default function Lobby() {
     const roomList = useRoomList();
@@ -24,8 +25,8 @@ export default function Lobby() {
         <Container>
             <VStack spacing={4}>
                 <ButtonGroup>
-                    <Button size='lg' onClick={() => roomNavigate('createRoom')}>Quick Join</Button>
-                    <Button variant='outline' size='lg' onClick={() => roomNavigate('createRoom')}>Create Room</Button>
+                    <Button size='lg' onClick={() => roomNavigate(TransportEvent.CreateRoom)}>Quick Join</Button>
+                    <Button variant='outline' size='lg' onClick={() => roomNavigate(TransportEvent.CreateRoom)}>Create Room</Button>
                 </ButtonGroup>
                 <Section width='full'>
                     <TableContainer>
@@ -49,9 +50,9 @@ export default function Lobby() {
                                         <Td>
                                             <ButtonGroup width='full' justifyContent='flex-end'>
                                                 <Button disabled={!room.joinable}
-                                                        onClick={() => roomNavigate('joinRoom', room.id)}>Join</Button>
+                                                        onClick={() => roomNavigate(TransportEvent.JoinRoom, room.id)}>Join</Button>
                                                 <Button variant='outline'
-                                                        onClick={() => roomNavigate('spectateRoom', room.id)}>Spectate</Button>
+                                                        onClick={() => roomNavigate(TransportEvent.SpectateRoom, room.id)}>Spectate</Button>
                                             </ButtonGroup>
                                         </Td>
                                     </Tr>

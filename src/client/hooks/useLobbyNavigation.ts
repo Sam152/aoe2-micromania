@@ -1,6 +1,7 @@
 import {useCallback, useEffect, useReducer} from "react";
 import useConnection, {usePlayerInfo, useRoomList} from "./useConnection";
 import {useNavigate} from "react-router-dom";
+import TransportEvent from "../../common/state/transport/TransportEvent";
 
 export default function useLobbyNavigation() {
     const io = useConnection();
@@ -13,7 +14,7 @@ export default function useLobbyNavigation() {
         if (isEnteringRoom && playerInfo.inRoom) {
             navigate(`/room/${playerInfo.inRoom.id}`);
         } else if (playerInfo.inRoom) {
-            io.emit('leaveRoom');
+            io.emit(TransportEvent.LeaveRoom);
         }
     }, [playerInfo]);
 

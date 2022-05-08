@@ -1,6 +1,7 @@
 import {useEffect, useReducer} from "react";
 import useConnection, {usePlayerInfo, useRoomList} from "./useConnection";
 import {useNavigate, useParams} from "react-router-dom";
+import TransportEvent from "../../common/state/transport/TransportEvent";
 
 export default function useRoomNavigation() {
     const playerInfo = usePlayerInfo();
@@ -16,20 +17,20 @@ export default function useRoomNavigation() {
             navigate('/');
         }
         if (!room && !isLeaving) {
-            connection.emit('spectateRoom', roomId);
+            connection.emit(TransportEvent.SpectateRoom, roomId);
         }
     }, [room]);
 
     return {
         canStart: room && room.players === room.slots && !playerInfo.isSpectator,
-        startGame: () => connection.emit('startGame'),
+        startGame: () => connection.emit(TransportEvent.StartGame),
         canChangeToPlayer: room && room.players < room.slots && playerInfo.isSpectator,
-        changeToPlayer: () => connection.emit('joinRoom', room.id),
+        changeToPlayer: () => connection.emit(TransportEvent.JoinRoom, room.id),
         canChangeToSpectator: room && playerInfo.playingAs,
-        changeToSpectator: () => connection.emit('spectateRoom', roomId),
+        changeToSpectator: () => connection.emit(TransportEvent.SpectateRoom, roomId),
         leaveRoom: () => {
             leaveRoom();
-            connection.emit('leaveRoom');
+            connection.emit(TransportEvent.LeaveRoom);
         },
     }
 }

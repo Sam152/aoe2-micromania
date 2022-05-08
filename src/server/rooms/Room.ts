@@ -5,6 +5,7 @@ import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
 import ArcherMicro from '../../common/modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
 import {normalizeGameStateAction} from '../../common/util/normalizer';
+import TransportEvent from "../../common/state/transport/TransportEvent";
 
 export default class Room {
     id: RoomId;
@@ -36,16 +37,16 @@ export default class Room {
         this.players = this.players.filter((player) => player.socket.id !== leavingPlayer.socket.id);
 
         leavingPlayer.socket.leave(this.id);
-        leavingPlayer.socket.removeAllListeners('stateDispatch');
+        leavingPlayer.socket.removeAllListeners(TransportEvent.GameStateActionDispatch);
     }
 
     spectate(player: Player): void {
         this.spectators.push(player);
         player.socket.join(this.id);
 
-        player.socket.on('stateDispatch', (action: GameStateAction) => {
+        player.socket.on(TransportEvent.GameStateActionDispatch, (action: GameStateAction) => {
             if (action.name === 'SPECTATOR_LOADED') {
-                player.socket.emit('gameStateUpdated', this.state.getGameState());
+                player.socket.emit(TransportEvent.WholeGameStateTransmit, this.state.getGameState());
             }
         });
     }
@@ -72,11 +73,11 @@ export default class Room {
             // The network could either dispatch the whole units state OR the action, letting the clients
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?
-            this.room.emit('gameStateAction', action);
+            this.room.emit(TransportEvent.GameStateActionTransmit, action);
         });
 
         this.players.map((player) => {
-            player.socket.on('stateDispatch', (action) => {
+            player.socket.on(TransportEvent.GameStateActionDispatch, (action) => {
                 // @todo, actions should be validated here for anti-cheat.
                 this.state.dispatchGame(normalizeGameStateAction(action));
 

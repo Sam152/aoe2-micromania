@@ -12,6 +12,7 @@ import {CheckIcon, CloseIcon, EditIcon} from "@chakra-ui/icons";
 import useConnection from "../hooks/useConnection";
 import defaultNickname from "../../common/social/defaultNickname";
 import {useEffect} from "react";
+import TransportEvent from "../../common/state/transport/TransportEvent";
 
 function EditableControls() {
     const {
@@ -37,13 +38,13 @@ export default function EditableNickname() {
     const existingNick = localStorage.getItem('nickname');
 
     function onChange(value: string) {
-        io.emit('setNickname', value);
+        io.emit(TransportEvent.SetNickname, value);
         localStorage.setItem('nickname', value);
     }
 
     useEffect(() => {
         if (existingNick) {
-            io.emit('setNickname', existingNick);
+            io.emit(TransportEvent.SetNickname, existingNick);
         }
     }, []);
 

@@ -11,6 +11,7 @@ import {
 import {Socket} from 'socket.io-client';
 import {Vector2} from 'three/src/math/Vector2';
 import {normalizeGameStateAction, normalizeGameStateObject} from '../../util/normalizer';
+import TransportEvent from "../transport/TransportEvent";
 
 /**
  * A state manager with a client => server relationship.
@@ -31,7 +32,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchGame(action: GameStateAction) {
-        this.socket.emit('stateDispatch', action);
+        this.socket.emit(TransportEvent.GameStateActionDispatch, action);
     }
 
     getClientState(): ClientState {
@@ -43,13 +44,13 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        this.socket.off('gameStateAction');
-        this.socket.off('gameStateUpdated');
+        this.socket.off(TransportEvent.GameStateActionTransmit);
+        this.socket.off(TransportEvent.WholeGameStateTransmit);
 
-        this.socket.on('gameStateUpdated', (serverState) => {
+        this.socket.on(TransportEvent.WholeGameStateTransmit, (serverState) => {
             this.gameState = normalizeGameStateObject(serverState);
         });
-        this.socket.on('gameStateAction', (serverAction) => {
+        this.socket.on(TransportEvent.GameStateActionTransmit, (serverAction) => {
             const action = normalizeGameStateAction(serverAction);
             this.gameState = gameStateMutator(this.gameState, action);
         });
