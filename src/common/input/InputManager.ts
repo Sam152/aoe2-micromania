@@ -27,21 +27,21 @@ export default class InputManager {
 
     dispatchInput(cameraPosition: Vector2): void {
         this.dispatch({
-            name: 'MOUSE_POSITIONED',
+            n: 'MOUSE_POSITIONED',
             position: this.mousePosition(cameraPosition),
         });
 
         if (this.input.released('mouse_left') && !this.dragging) {
             const time = (new Date).getTime();
             this.dispatch({
-                name: time - this.lastLeftClick < doubleClickDuration ? 'DOUBLE_CLICK' : 'LEFT_CLICK',
+                n: time - this.lastLeftClick < doubleClickDuration ? 'DOUBLE_CLICK' : 'LEFT_CLICK',
                 position: this.mousePosition(cameraPosition),
             });
             this.lastLeftClick = time;
         }
         if (this.input.released('mouse_right') && !this.dragging) {
             this.dispatch({
-                name: this.input.shiftDown ? 'SHIFT_RIGHT_CLICK' : 'RIGHT_CLICK',
+                n: this.input.shiftDown ? 'SHIFT_RIGHT_CLICK' : 'RIGHT_CLICK',
                 position: this.mousePosition(cameraPosition),
             });
         }
@@ -49,12 +49,12 @@ export default class InputManager {
         if (this.input.mouseMoving && this.input.mouseDown(this.input.MouseButtons.left)) {
             if (!this.dragging) {
                 this.dispatch({
-                    name: 'DRAG_START',
+                    n: 'DRAG_START',
                     position: this.mousePosition(cameraPosition),
                 });
             }
             this.dispatch({
-                name: 'DRAGGING',
+                n: 'DRAGGING',
                 position: this.mousePosition(cameraPosition),
             });
             this.dragging = true;
@@ -63,7 +63,7 @@ export default class InputManager {
         if (this.input.released('mouse_left')) {
             if (this.dragging) {
                 this.dispatch({
-                    name: 'DRAG_END',
+                    n: 'DRAG_END',
                     position: this.mousePosition(cameraPosition),
                 });
             }
@@ -72,68 +72,68 @@ export default class InputManager {
 
         if (this.input.pressed('f')) {
             this.dispatch({
-                name: 'HOTKEY_STOP',
+                n: 'HOTKEY_STOP',
             });
         }
         if (!this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
             this.dispatch({
-                name: 'HOTKEY_DELETE',
+                n: 'HOTKEY_DELETE',
             });
         }
         if (this.input.pressed('r')) {
             this.dispatch({
-                name: 'HOTKEY_ATTACK_GROUND',
+                n: 'HOTKEY_ATTACK_GROUND',
             });
         }
         if (this.input.pressed('q')) {
             this.dispatch({
-                name: 'HOTKEY_PATROL',
+                n: 'HOTKEY_PATROL',
                 position: this.mousePosition(cameraPosition),
             });
         }
         if (this.input.pressed('z')) {
             this.dispatch({
-                name: 'HOTKEY_FORMATION_CHANGED',
+                n: 'HOTKEY_FORMATION_CHANGED',
                 formation: FormationType.Line,
             });
         }
         if (this.input.pressed('c')) {
             this.dispatch({
-                name: 'HOTKEY_FORMATION_CHANGED',
+                n: 'HOTKEY_FORMATION_CHANGED',
                 formation: FormationType.Spread,
             });
         }
 
         if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
             this.dispatch({
-                name: 'HOTKEY_SHIFT_DELETE',
+                n: 'HOTKEY_SHIFT_DELETE',
             });
         }
 
         if (this.input.keyPressed(StInput.KeyboardKeys.escape)) {
             this.dispatch({
-                name: 'HOTKEY_CANCEL',
+                n: 'HOTKEY_CANCEL',
             });
         }
 
         if (this.input.down('left_arrow') || this.input.down('a')) {
             this.dispatch({
-                name: 'ARROW_LEFT',
+                n: 'ARROW_LEFT',
             });
         }
         if (this.input.down('right_arrow') || this.input.down('d')) {
             this.dispatch({
-                name: 'ARROW_RIGHT',
+                n: 'ARROW_RIGHT',
             });
         }
         if (this.input.down('up_arrow') || this.input.down('w')) {
             this.dispatch({
-                name: 'ARROW_UP',
+                n: 'ARROW_UP',
             });
         }
         if (this.input.down('down_arrow') || this.input.down('s')) {
             this.dispatch({
-                name: 'ARROW_DOWN',
+                n: 'ARROW_DOWN',
             });
         }
     }

@@ -7,7 +7,7 @@ export default class ArcherMicro implements GameMode {
         const grid = Grid.fromGameState(gameState);
 
         gameDispatcher({
-            name: 'SPAWN_UNIT',
+            n: 'SPAWN_UNIT',
             forPlayer: 1,
             unitType: Unit.Mangonel,
             position: grid.middleOfTile(7, 2),
@@ -15,7 +15,7 @@ export default class ArcherMicro implements GameMode {
         for (let x = 0; x < 5; x++) {
             for (let y = 0; y < 5; y++) {
                 gameDispatcher({
-                    name: 'SPAWN_UNIT',
+                    n: 'SPAWN_UNIT',
                     forPlayer: 1,
                     unitType: Unit.Archer,
                     position: grid.middleOfTile(x, y),
@@ -26,7 +26,7 @@ export default class ArcherMicro implements GameMode {
         for (let x = gameState.mapSize - 1; x > gameState.mapSize - 6; x--) {
             for (let y = gameState.mapSize - 1; y > gameState.mapSize - 6; y--) {
                 gameDispatcher({
-                    name: 'SPAWN_UNIT',
+                    n: 'SPAWN_UNIT',
                     forPlayer: 2,
                     unitType: Unit.Archer,
                     position: grid.middleOfTile(x, y),
@@ -34,7 +34,7 @@ export default class ArcherMicro implements GameMode {
             }
         }
         gameDispatcher({
-            name: 'SPAWN_UNIT',
+            n: 'SPAWN_UNIT',
             forPlayer: 2,
             unitType: Unit.Mangonel,
             position: grid.middleOfTile(gameState.mapSize - 7, gameState.mapSize - 3),

@@ -94,48 +94,48 @@ export type RoomId = string;
 export type PlayerId = number;
 
 type GameStateAction = {
-    name: 'TICK';
+    n: 'T'; // Tick, reduced in size for a smaller transmission, could be an enum in the future.
 } | {
-    name: 'CLIENT_LOADED';
+    n: 'CLIENT_LOADED';
     player: number;
 } | {
-    name: 'SPECTATOR_LOADED';
+    n: 'SPECTATOR_LOADED';
 } | {
-    name: 'GAME_MODE_STARTED';
+    n: 'GAME_MODE_STARTED';
 } | {
-    name: 'SPAWN_UNIT';
+    n: 'SPAWN_UNIT';
     position: Vector2;
     unitType: Unit,
     forPlayer: PlayerId,
     direction?: CompassDirection,
 } | {
-    name: 'MOVE_UNITS_TO';
+    n: 'MOVE_UNITS_TO';
     position: Vector2;
     units: UnitId[];
 } | {
-    name: 'ADD_WAYPOINT';
+    n: 'ADD_WAYPOINT';
     position: Vector2;
     units: UnitId[];
 } | {
-    name: 'STOP_UNITS';
+    n: 'STOP_UNITS';
     units: UnitId[];
 } | {
-    name: 'DELETE_UNITS';
+    n: 'DELETE_UNITS';
     units: UnitId[];
 } | {
-    name: 'ATTACK';
+    n: 'ATTACK';
     units: UnitId[];
     target: number;
 } | {
-    name: 'ATTACK_GROUND';
+    n: 'ATTACK_GROUND';
     units: UnitId[];
     position: Vector2;
 } | {
-    name: 'PATROL';
+    n: 'PATROL';
     units: UnitId[];
     position: Vector2;
 } | {
-    name: 'FORMATION_CHANGED';
+    n: 'FORMATION_CHANGED';
     formation: FormationType;
     units: UnitId[];
 };
@@ -157,61 +157,61 @@ export interface ClientState {
 }
 
 export type ClientStateAction = {
-    name: 'DRAG_START',
+    n: 'DRAG_START',
     position: Vector2,
 } | {
-    name: 'HOTKEY_STOP',
+    n: 'HOTKEY_STOP',
 } | {
-    name: 'HOTKEY_PATROL',
+    n: 'HOTKEY_PATROL',
     position: Vector2,
 } | {
-    name: 'HOTKEY_ATTACK_GROUND',
+    n: 'HOTKEY_ATTACK_GROUND',
 } | {
-    name: 'HOTKEY_DELETE',
+    n: 'HOTKEY_DELETE',
 } | {
-    name: 'HOTKEY_SHIFT_DELETE',
+    n: 'HOTKEY_SHIFT_DELETE',
 } | {
-    name: 'ARROW_LEFT',
+    n: 'ARROW_LEFT',
 }| {
-    name: 'ARROW_RIGHT',
+    n: 'ARROW_RIGHT',
 }| {
-    name: 'ARROW_UP',
+    n: 'ARROW_UP',
 }| {
-    name: 'ARROW_DOWN',
+    n: 'ARROW_DOWN',
 } | {
-    name: 'DRAGGING',
+    n: 'DRAGGING',
     position: Vector2,
 } | {
-    name: 'DRAG_END',
+    n: 'DRAG_END',
     position: Vector2,
 } | {
-    name: 'LEFT_CLICK',
+    n: 'LEFT_CLICK',
     position: Vector2,
 } | {
-    name: 'DOUBLE_CLICK',
+    n: 'DOUBLE_CLICK',
     position: Vector2,
 } | {
-    name: 'RIGHT_CLICK',
+    n: 'RIGHT_CLICK',
     position: Vector2,
 } | {
-    name: 'SHIFT_RIGHT_CLICK',
+    n: 'SHIFT_RIGHT_CLICK',
     position: Vector2,
 } | {
-    name: 'UNIT_DRAWN',
+    n: 'UNIT_DRAWN',
     hitBox: Rectangle,
     unit: UnitInstance,
 } | {
-    name: 'FRAME_RENDERING_STARTED',
+    n: 'FRAME_RENDERING_STARTED',
 } | {
-    name: 'FIXATE_CAMERA',
+    n: 'FIXATE_CAMERA',
     location: Vector2;
 } | {
-    name: 'MOUSE_POSITIONED',
+    n: 'MOUSE_POSITIONED',
     position: Vector2,
 } | {
-    name: 'HOTKEY_CANCEL'
+    n: 'HOTKEY_CANCEL'
 } | {
-    name: 'HOTKEY_FORMATION_CHANGED',
+    n: 'HOTKEY_FORMATION_CHANGED',
     formation: FormationType,
 };
 
@@ -252,7 +252,7 @@ export interface EmittedRoom {
     joinable: boolean;
     playersList: Array<{
         id: string;
-        name: string;
+        n: string;
     }>
 }
 

@@ -45,7 +45,7 @@ export default class Room {
         player.socket.join(this.id);
 
         player.socket.on(TransportEvent.GameStateActionDispatch, (action: GameStateAction) => {
-            if (action.name === 'SPECTATOR_LOADED') {
+            if (action.n === 'SPECTATOR_LOADED') {
                 player.socket.emit(TransportEvent.WholeGameStateTransmit, this.state.getGameState());
             }
         });
@@ -85,7 +85,7 @@ export default class Room {
                     this.state.init();
                     const gameMode = new ArcherMicro();
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
-                    this.state.dispatchGame({name: 'GAME_MODE_STARTED'});
+                    this.state.dispatchGame({n: 'GAME_MODE_STARTED'});
                     this.status = RoomStatus.Started;
                     onStarted();
                 }
@@ -103,7 +103,7 @@ export default class Room {
             joinable: this.status === RoomStatus.Gathering && this.players.length < this.slots,
             playersList: this.players.map(player => ({
                 id: player.socket.id,
-                name: player.getNickname(),
+                n: player.getNickname(),
             })),
         };
     }

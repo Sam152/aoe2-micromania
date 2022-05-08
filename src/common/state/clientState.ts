@@ -8,23 +8,23 @@ import {Vector2} from 'three/src/math/Vector2';
 import ActiveCommand from '../input/ActiveCommand';
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
-    if (action.name === 'FRAME_RENDERING_STARTED') {
+    if (action.n === 'FRAME_RENDERING_STARTED') {
         state.unitHitBoxes = [];
         state.renderedFrames++;
     }
 
-    if (action.name === 'MOUSE_POSITIONED') {
+    if (action.n === 'MOUSE_POSITIONED') {
         state.mousePosition = action.position;
     }
 
-    if (action.name === 'UNIT_DRAWN') {
+    if (action.n === 'UNIT_DRAWN') {
         state.unitHitBoxes.push({
             unit: action.unit,
             hitBox: action.hitBox,
         });
     }
 
-    if (action.name === 'RIGHT_CLICK' && state.selectedUnits.length > 0 && state.activeCommand === ActiveCommand.Default) {
+    if (action.n === 'RIGHT_CLICK' && state.selectedUnits.length > 0 && state.activeCommand === ActiveCommand.Default) {
         const attacking = state.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
@@ -33,7 +33,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         }
     }
 
-    if (action.name === 'LEFT_CLICK' && state.activeCommand === ActiveCommand.Default) {
+    if (action.n === 'LEFT_CLICK' && state.activeCommand === ActiveCommand.Default) {
         state.lastLeftClick = action.position;
         const foundUnit = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
@@ -41,7 +41,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         state.selectedUnits = foundUnit ? [foundUnit.unit.id] : [];
     }
 
-    if (action.name === 'DOUBLE_CLICK') {
+    if (action.n === 'DOUBLE_CLICK') {
         const ownUnits = state.unitHitBoxes.filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs);
         const foundUnit = ownUnits.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
         if (foundUnit) {
@@ -51,55 +51,55 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         }
     }
 
-    if (action.name === 'HOTKEY_ATTACK_GROUND' && state.selectedUnits.length > 0/* && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)*/) {
+    if (action.n === 'HOTKEY_ATTACK_GROUND' && state.selectedUnits.length > 0/* && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)*/) {
         state.activeCommand = ActiveCommand.AttackGround;
     }
 
-    if (action.name === 'HOTKEY_PATROL' && state.selectedUnits.length > 0) {
+    if (action.n === 'HOTKEY_PATROL' && state.selectedUnits.length > 0) {
         state.activeCommand = ActiveCommand.Patrol;
     }
 
-    if (action.name === 'HOTKEY_CANCEL') {
+    if (action.n === 'HOTKEY_CANCEL') {
         state.activeCommand = ActiveCommand.Default;
     }
 
-    if (['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && state.activeCommand === ActiveCommand.Patrol) {
+    if (['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.n) && state.activeCommand === ActiveCommand.Patrol) {
         // @ts-ignore
         state.lastMoveClick = [action.position, state.renderedFrames];
     }
 
-    if (action.name === 'FIXATE_CAMERA') {
+    if (action.n === 'FIXATE_CAMERA') {
         state.camera = action.location;
     }
 
-    if (action.name === 'ARROW_DOWN') {
+    if (action.n === 'ARROW_DOWN') {
         state.camera.y += config.cameraPanSpeed;
     }
-    if (action.name === 'ARROW_UP') {
+    if (action.n === 'ARROW_UP') {
         state.camera.y -= config.cameraPanSpeed;
     }
-    if (action.name === 'ARROW_LEFT') {
+    if (action.n === 'ARROW_LEFT') {
         state.camera.x -= config.cameraPanSpeed;
     }
-    if (action.name === 'ARROW_RIGHT') {
+    if (action.n === 'ARROW_RIGHT') {
         state.camera.x += config.cameraPanSpeed;
     }
 
-    if (action.name === 'DRAG_START' && state.activeCommand === ActiveCommand.Default) {
+    if (action.n === 'DRAG_START' && state.activeCommand === ActiveCommand.Default) {
         // state.activeCommand = ActiveCommand.Default;
         state.selectionRectangle = {
             p1: action.position,
             p2: action.position,
         };
     }
-    if (action.name === 'DRAGGING' && state.activeCommand === ActiveCommand.Default) {
+    if (action.n === 'DRAGGING' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle.p2 = action.position;
         state.selectedUnits = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .filter((unitAndHitBox) => rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)))
             .map((unitAndHitBox) => unitAndHitBox.unit.id);
     }
-    if (action.name === 'DRAG_END' && state.activeCommand === ActiveCommand.Default) {
+    if (action.n === 'DRAG_END' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle = null;
     }
 
@@ -111,81 +111,81 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
  * single player state manager).
  */
 function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
-    if (action.name === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.Default) {
+    if (action.n === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.Default) {
         const attacking = clientState.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
         if (attacking) {
             gameDispatcher({
-                name: 'ATTACK',
+                n: 'ATTACK',
                 units: clientState.selectedUnits,
                 target: attacking.unit.id,
             });
         } else {
             gameDispatcher({
-                name: 'MOVE_UNITS_TO',
+                n: 'MOVE_UNITS_TO',
                 position: action.position,
                 units: clientState.selectedUnits,
             });
         }
     }
 
-    if (clientState.activeCommand === ActiveCommand.AttackGround && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && clientState.selectedUnits.length > 0) {
+    if (clientState.activeCommand === ActiveCommand.AttackGround && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.n) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
-            name: 'ATTACK_GROUND',
+            n: 'ATTACK_GROUND',
             units: clientState.selectedUnits,
             position: clientState.mousePosition,
         });
         clientState.activeCommand = ActiveCommand.Default;
     }
 
-    if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.name) && clientState.selectedUnits.length > 0) {
+    if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.n) && clientState.selectedUnits.length > 0) {
         gameDispatcher({
-            name: 'PATROL',
+            n: 'PATROL',
             units: clientState.selectedUnits,
             position: clientState.mousePosition,
         });
         clientState.activeCommand = ActiveCommand.Default;
     }
 
-    if (action.name === 'HOTKEY_FORMATION_CHANGED') {
+    if (action.n === 'HOTKEY_FORMATION_CHANGED') {
         gameDispatcher({
-            name: 'FORMATION_CHANGED',
+            n: 'FORMATION_CHANGED',
             formation: action.formation,
             units: clientState.selectedUnits,
         });
     }
 
-    if (action.name === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
+    if (action.n === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
         const attacking = clientState.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
         if (!attacking) {
             gameDispatcher({
-                name: 'ADD_WAYPOINT',
+                n: 'ADD_WAYPOINT',
                 position: action.position,
                 units: clientState.selectedUnits,
             });
         }
     }
-    if (action.name === 'HOTKEY_STOP') {
+    if (action.n === 'HOTKEY_STOP') {
         gameDispatcher({
-            name: 'STOP_UNITS',
+            n: 'STOP_UNITS',
             units: clientState.selectedUnits,
         });
     }
-    if (action.name === 'HOTKEY_DELETE' && clientState.selectedUnits.length > 0) {
+    if (action.n === 'HOTKEY_DELETE' && clientState.selectedUnits.length > 0) {
         gameDispatcher({
-            name: 'DELETE_UNITS',
+            n: 'DELETE_UNITS',
             units: [clientState.selectedUnits[0]],
         });
         clientState.selectedUnits.shift();
     }
-    if (action.name === 'HOTKEY_SHIFT_DELETE' && clientState.selectedUnits.length > 0) {
+    if (action.n === 'HOTKEY_SHIFT_DELETE' && clientState.selectedUnits.length > 0) {
         gameDispatcher({
-            name: 'DELETE_UNITS',
+            n: 'DELETE_UNITS',
             units: clientState.selectedUnits.map((selectedUnit) => selectedUnit),
         });
         clientState.selectedUnits = [];

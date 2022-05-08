@@ -18,22 +18,22 @@ import changeFormation from './mutations/initiated/changeFormation';
 import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
-    if (action.name === 'CLIENT_LOADED') {
+    if (action.n === 'CLIENT_LOADED') {
         state.loadedPlayers.push(action.player);
     }
-    if (action.name === 'GAME_MODE_STARTED') {
+    if (action.n === 'GAME_MODE_STARTED') {
         state.gameModeStarted = true;
     }
 
-    if (action.name === 'SPAWN_UNIT') {
+    if (action.n === 'SPAWN_UNIT') {
         spawnUnit(state, action);
     }
 
-    if (action.name === 'MOVE_UNITS_TO') {
+    if (action.n === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
         moveTo(state, units, action.position);
     }
-    if (action.name === 'ADD_WAYPOINT') {
+    if (action.n === 'ADD_WAYPOINT') {
         const units = unitsInGameState(state, action.units);
         units.forEach((unit) => {
             unit.clickedWaypoints.push(action.position);
@@ -48,35 +48,35 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
     }
 
-    if (action.name === 'STOP_UNITS') {
+    if (action.n === 'STOP_UNITS') {
         unitsInGameState(state, action.units).forEach((unit) => stopUnit(unit));
     }
-    if (action.name === 'DELETE_UNITS') {
+    if (action.n === 'DELETE_UNITS') {
         unitsInGameState(state, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
     }
-    if (action.name === 'ATTACK') {
+    if (action.n === 'ATTACK') {
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
             stopUnit(attackingUnit);
             attackingUnit.targetingUnit = action.target;
         });
     }
-    if (action.name === 'ATTACK_GROUND') {
+    if (action.n === 'ATTACK_GROUND') {
         unitsInGameState(state, action.units).forEach((attackingUnit) => {
             stopUnit(attackingUnit);
             attackingUnit.targetingPosition = action.position;
         });
     }
 
-    if (action.name === 'PATROL') {
+    if (action.n === 'PATROL') {
         const units = unitsInGameState(state, action.units);
         patrolTo(state, units, action.position);
     }
 
-    if (action.name === 'FORMATION_CHANGED') {
+    if (action.n === 'FORMATION_CHANGED') {
         changeFormation(state, action);
     }
 
-    if (action.name === 'TICK') {
+    if (action.n === 'T') {
         moveUnits(state);
         reformUnits(state);
         patrolUnits(state);

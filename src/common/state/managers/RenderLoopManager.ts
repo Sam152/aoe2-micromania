@@ -19,16 +19,16 @@ export default class RenderLoopManager {
         this.renderer.bootUp().then(() => {
             if (this.stateManager.getClientState().playingAs) {
                 this.stateManager.dispatchGame({
-                    name: 'CLIENT_LOADED',
+                    n: 'CLIENT_LOADED',
                     player: this.stateManager.getClientState().playingAs,
                 });
             } else {
                 this.stateManager.dispatchGame({
-                    name: 'SPECTATOR_LOADED',
+                    n: 'SPECTATOR_LOADED',
                 });
             }
             this.stateManager.dispatchClient({
-                name: 'FIXATE_CAMERA',
+                n: 'FIXATE_CAMERA',
                 location: (new Grid(this.stateManager.getGameState().mapSize)).middleOfGrid().sub(this.renderer.getSize().divideScalar(2)),
             });
             this.render();
@@ -37,7 +37,7 @@ export default class RenderLoopManager {
 
     render() {
         // Dispatch client state to indicate a frame is being rendered.
-        this.stateManager.dispatchClient({name: 'FRAME_RENDERING_STARTED'});
+        this.stateManager.dispatchClient({n: 'FRAME_RENDERING_STARTED'});
 
         // Render the frame on the canvas and then dispatch input commands. Input must be dispatched after
         // rendering, since the renderer collects and dispatches events for assets being drawn on the canvas.

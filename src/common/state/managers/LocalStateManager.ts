@@ -37,6 +37,6 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        setInterval(() => this.dispatchGame({name: 'TICK'}), 1000 / config.ticksPerSecond);
+        setInterval(() => this.dispatchGame({n: 'T'}), 1000 / config.ticksPerSecond);
     }
 }

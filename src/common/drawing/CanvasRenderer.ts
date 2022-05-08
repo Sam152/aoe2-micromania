@@ -203,7 +203,7 @@ export default class CanvasRenderer implements RendererInterface {
             }
 
             clientStateDispatcher({
-                name: 'UNIT_DRAWN',
+                n: 'UNIT_DRAWN',
                 hitBox,
                 unit: unitInstance,
             });
