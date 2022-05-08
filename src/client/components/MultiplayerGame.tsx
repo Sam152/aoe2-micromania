@@ -1,16 +1,28 @@
 import GameCanvas from './GameCanvas';
 import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
-import React from 'react';
+import React, {useState} from 'react';
 import useConnection from '../hooks/useConnection';
 
-
 const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
+    const [winner, setWinner] = useState<number>();
+
     const connection = useConnection();
-    const state = new NetworkedStateManager(connection, playingAs);
+    const state = new NetworkedStateManager(connection, playingAs, (action, state) => {
+        if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
+            setWinner(state.winner);
+        }
+    });
     state.init();
 
     return (
         <div>
+
+            { winner && (
+                <>
+                WINNER!! {winner}
+                </>
+            )}
+
             <GameCanvas stateManager={state} />
         </div>
     );

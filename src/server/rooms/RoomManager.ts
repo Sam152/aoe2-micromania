@@ -25,7 +25,16 @@ export default class RoomManager {
     }
 
     getRooms(): Room[] {
-        return Object.values(this.rooms);
+        return Object.values(this.rooms).reverse();
+    }
+
+    cleanRooms(): void {
+        Object.keys(this.rooms).forEach(roomId => {
+           const room = this.rooms[roomId];
+           if (room.status === RoomStatus.Completed) {
+               delete this.rooms[roomId];
+           }
+        });
     }
 
     getRoom(id: RoomId): Room {

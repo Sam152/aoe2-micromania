@@ -6,10 +6,8 @@ import {
     GameState,
     GameStateAction,
     StateManagerInterface,
-    UnitInstance,
 } from '../../../types';
 import {Socket} from 'socket.io-client';
-import {Vector2} from 'three/src/math/Vector2';
 import {normalizeGameStateAction, normalizeGameStateObject} from '../../util/normalizer';
 import TransportEvent from "../transport/TransportEvent";
 
@@ -20,11 +18,13 @@ export default class NetworkedStateManager implements StateManagerInterface {
     private gameState: GameState;
     private clientState: ClientState;
     private socket: Socket;
+    private onActionCallback: (action: GameStateAction, state: GameState) => void;
 
-    constructor(socket: Socket, playingAs: number) {
+    constructor(socket: Socket, playingAs: number, onActionCallback: ((action: GameStateAction, state: GameState) => void) | null = null) {
         this.gameState = defaultGameState();
         this.clientState = defaultClientState(playingAs);
         this.socket = socket;
+        this.onActionCallback = onActionCallback;
     }
 
     dispatchClient(action: ClientStateAction) {
@@ -53,6 +53,10 @@ export default class NetworkedStateManager implements StateManagerInterface {
         this.socket.on(TransportEvent.GameStateActionTransmit, (serverAction) => {
             const action = normalizeGameStateAction(serverAction);
             this.gameState = gameStateMutator(this.gameState, action);
+
+            if (this.onActionCallback) {
+                this.onActionCallback(action, this.gameState);
+            }
         });
     }
 

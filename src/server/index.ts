@@ -18,8 +18,6 @@ const io = new Server(httpServer, {
 
 const roomManager = new RoomManager(io);
 
-console.log('Starting server');
-
 io.on('connection', (socket) => {
     const player = new Player(socket);
     roomManager.emitRooms(player.socket);
@@ -84,5 +82,11 @@ io.on('connection', (socket) => {
         }
     });
 });
+
+// Clean complete rooms at a regular interval.
+setInterval(() => {
+    roomManager.cleanRooms();
+    roomManager.emitRooms(io);
+}, 60000);
 
 httpServer.listen(3000);
