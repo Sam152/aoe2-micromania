@@ -13,7 +13,10 @@ export default function SinglePlayerGame() {
 
         const manager = new LocalStateManager((state: GameState, action: GameStateAction) => {
             ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
-            gameMode.onTick(state, action, manager.dispatchGame.bind(manager))
+
+            if (action.n === 'T') {
+                gameMode.onTick(state, action, manager.dispatchGame.bind(manager))
+            }
         });
         manager.init();
         gameMode.start(manager.dispatchGame.bind(manager), manager.getGameState());

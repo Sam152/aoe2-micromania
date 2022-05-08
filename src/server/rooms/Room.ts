@@ -69,6 +69,7 @@ export default class Room {
     endGame(): void {
         this.players.map((player) => player.socket.removeAllListeners(TransportEvent.GameStateActionDispatch));
         this.state.cleanUp();
+        this.status = RoomStatus.Completed;
     }
 
     startGame(onStarted: Function) {

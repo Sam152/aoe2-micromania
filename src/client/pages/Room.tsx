@@ -35,7 +35,7 @@ export default function Room() {
 
     const {inRoom, isSpectator, playingAs} = usePlayerInfo();
 
-    if (inRoom && [RoomStatus.Started, RoomStatus.Starting].includes(inRoom.status)) {
+    if (inRoom && [RoomStatus.Started, RoomStatus.Starting, RoomStatus.Completed].includes(inRoom.status)) {
         return (
             <MultiplayerGame playingAs={playingAs}/>
         );

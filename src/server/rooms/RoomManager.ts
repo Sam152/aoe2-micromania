@@ -1,4 +1,4 @@
-import {EmittedRoom, RoomId} from '../../types';
+import {RoomId} from '../../types';
 import Room from './Room';
 import generateId from '../../common/util/generateId';
 import {Server} from 'socket.io';
@@ -74,6 +74,11 @@ export default class RoomManager {
         const playerRoom = this.getRoomWithPlayer(player);
         if (playerRoom) {
             playerRoom.leave(player);
+
+            if (playerRoom.status === RoomStatus.Gathering && playerRoom.players.length === 0) {
+                delete this.rooms[playerRoom.id];
+            }
+
             return playerRoom;
         }
         return null;
