@@ -2,6 +2,7 @@ import GameCanvas from './GameCanvas';
 import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
 import React, {useState} from 'react';
 import useConnection from '../hooks/useConnection';
+import {Heading, Stack} from "@chakra-ui/react";
 
 const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
     const [winner, setWinner] = useState<number>();
@@ -17,9 +18,13 @@ const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
     return (
         <div>
 
+                <Stack>
+                    <Heading fontFamily={'victory'}>
+                        You are victorious!
+                    </Heading>
+                </Stack>
             { winner && (
                 <>
-                WINNER!! {winner}
                 </>
             )}
 

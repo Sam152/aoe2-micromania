@@ -1,9 +1,11 @@
 import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import ArcherMicro from '../../common/modes/ArcherMicro';
 import GameCanvas from '../components/GameCanvas';
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {GameState, GameStateAction} from '../../types';
 import PatrollingAi from '../../common/ai/PatrollingAi';
+import {Heading, Stack, Text} from "@chakra-ui/react";
+import VictoryBanner from "../components/VictoryBanner";
 
 export default function SinglePlayerGame() {
     const stateManager = useMemo(() => {
@@ -26,6 +28,9 @@ export default function SinglePlayerGame() {
 
     return (
         <div>
+
+            <VictoryBanner />
+
             <GameCanvas stateManager={stateManager} />
         </div>
     );

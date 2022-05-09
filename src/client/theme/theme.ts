@@ -1,8 +1,22 @@
 import {extendTheme} from '@chakra-ui/react';
+import '@fontsource/cinzel/500.css';
 
 const theme = extendTheme({
     config: {
         initialColorMode: 'dark',
+    },
+    fonts: {
+        victory: 'Cinzel, serif',
+    },
+    textStyles: {
+        victory: {
+            fontWeight: '500',
+            textTransform: 'uppercase',
+            fontFamily: 'Cinzel, serif',
+            fontSize: '5xl',
+            background: 'linear-gradient(#f2e965, #efba45)',
+            backgroundClip: 'text',
+        },
     },
     colors: {
         brand: {
@@ -33,13 +47,13 @@ const theme = extendTheme({
                 solid: {
                     backgroundColor: 'blue.200',
                     color: 'gray.800',
-                    _hover: { background: 'blue.500' },
-                    _active: { background: 'blue.700', textDecoration: 'underline' },
+                    _hover: {background: 'blue.500'},
+                    _active: {background: 'blue.700', textDecoration: 'underline'},
                 },
                 outline: {
                     borderColor: 'blue.200',
                     color: 'gray.100',
-                    _hover: { background: 'gray.800' },
+                    _hover: {background: 'gray.800'},
                 },
             }
         },
