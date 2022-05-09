@@ -25,7 +25,15 @@ export default class RoomManager {
     }
 
     quickJoin(player: Player): Room {
-        const joinRoom = this.getRoomsOldestFirst().find(room => room.players.length < room.slots);
+        const existingRoom = this.getRoomWithPlayer(player);
+        if (existingRoom) {
+            this.leaveRoom(player);
+        }
+
+        const joinRoom = this.getRoomsOldestFirst()
+            .filter(({status}) => status === RoomStatus.Gathering)
+            .find(room => room.players.length < room.slots);
+
         if (joinRoom) {
             this.joinRoom(joinRoom.id, player);
             return joinRoom;

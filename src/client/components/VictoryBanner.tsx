@@ -2,8 +2,12 @@ import {AlertDialogFooter, Box, Button, ButtonGroup, Flex, HStack, Stack, Text} 
 import React, {MouseEventHandler} from 'react';
 import {BsShieldFill} from 'react-icons/all';
 import {Icon} from '@chakra-ui/icons';
+import {useNavigate} from "react-router-dom";
+import useLobbyNavigation from "../hooks/useLobbyNavigation";
+import TransportEvent from "../../common/state/transport/TransportEvent";
+import useConnection from "../hooks/useConnection";
 
-function Banner({text, buttonText, onClick}: {text: string; buttonText: string; onClick: MouseEventHandler }) {
+function Banner({text, buttonText, onClick}: { text: string; buttonText: string; onClick: MouseEventHandler }) {
     return (
         <Flex
             position='absolute'
@@ -44,17 +48,28 @@ function Banner({text, buttonText, onClick}: {text: string; buttonText: string; 
     );
 }
 
+function usePlayAgain() {
+    // const emitAndEnter = useLobbyNavigation();
+    return () => {
+        // emitAndEnter(TransportEvent.QuickJoin);
+        // setTimeout(() => io.emit(TransportEvent.QuickJoin), 10);
+    };
+}
+
 export function VictoryBanner() {
-    return <Banner text={"You are victorious!"} buttonText={"Join another"} onClick={() => null} />;
+    const playAgain = usePlayAgain();
+    return <Banner text={"You are victorious!"} buttonText={"Join another"} onClick={playAgain}/>;
 }
 
 export function DefeatBanner() {
-    return <Banner text={"You have been defeated!"} buttonText={"Join another"} onClick={() => null} />;
+    const playAgain = usePlayAgain();
+    return <Banner text={"You have been defeated!"} buttonText={"Join another"} onClick={playAgain}/>;
 }
 
 export function SinglePlayerVictoryBanner() {
-    return <Banner text={"You are victorious!"} buttonText={"Play again"} onClick={() => null} />;
+    return <Banner text={"You are victorious!"} buttonText={"Play again"} onClick={() => null}/>;
 }
+
 export function SinglePlayerDefeatBanner() {
-    return <Banner text={"You have been defeated!"} buttonText={"Play again"} onClick={() => null} />;
+    return <Banner text={"You have been defeated!"} buttonText={"Play again"} onClick={() => null}/>;
 }
