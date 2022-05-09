@@ -24,8 +24,23 @@ export default class RoomManager {
         return this.rooms[id];
     }
 
+    quickJoin(player: Player): Room {
+        const joinRoom = this.getRoomsOldestFirst().find(room => room.players.length < room.slots);
+        if (joinRoom) {
+            this.joinRoom(joinRoom.id, player);
+            return joinRoom;
+        }
+        else {
+            return this.createRoom(player);
+        }
+    }
+
     getRooms(): Room[] {
         return Object.values(this.rooms).reverse();
+    }
+
+    getRoomsOldestFirst(): Room[] {
+        return Object.values(this.rooms);
     }
 
     cleanRooms(): void {

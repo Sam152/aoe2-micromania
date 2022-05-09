@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
         roomManager.emitPlayerInfo(player);
     });
 
+    socket.on(TransportEvent.QuickJoin, () => {
+        const room = roomManager.quickJoin(player);
+        roomManager.emitRooms(io);
+        roomManager.emitPlayerInfoForRoom(room.id);
+    });
+
     socket.on<RoomId>(TransportEvent.JoinRoom, (roomId) => {
         roomManager.joinRoom(roomId, player);
         roomManager.emitRooms(io);

@@ -1,13 +1,20 @@
 import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import ArcherMicro from '../../common/modes/ArcherMicro';
 import GameCanvas from '../components/GameCanvas';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {GameState, GameStateAction} from '../../types';
 import PatrollingAi from '../../common/ai/PatrollingAi';
 import {Box} from '@chakra-ui/react';
-import {VictoryBanner} from "../components/VictoryBanner";
+import {
+    DefeatBanner,
+    SinglePlayerDefeatBanner,
+    SinglePlayerVictoryBanner,
+    VictoryBanner
+} from "../components/VictoryBanner";
 
 export default function SinglePlayerGame() {
+    const [winner, setWinner] = useState<number>();
+
     const stateManager = useMemo(() => {
         const ai = new PatrollingAi(2);
         const gameMode = new ArcherMicro();
@@ -18,6 +25,14 @@ export default function SinglePlayerGame() {
             if (action.n === 'T') {
                 gameMode.onTick(state, action, manager.dispatchGame.bind(manager));
             }
+
+            if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
+                setWinner(state.winner);
+            }
+
+            if (state.gameEnded) {
+                manager.cleanUp();
+            }
         });
         manager.init();
         gameMode.start(manager.dispatchGame.bind(manager), manager.getGameState());
@@ -27,7 +42,11 @@ export default function SinglePlayerGame() {
 
     return (
         <Box pos="relative">
-            <VictoryBanner />
+            {winner && (stateManager.getClientState().playingAs === winner ? (
+                <SinglePlayerVictoryBanner/>
+            ) : (
+                <SinglePlayerDefeatBanner/>
+            ))}
             <GameCanvas stateManager={stateManager} />
         </Box>
     );

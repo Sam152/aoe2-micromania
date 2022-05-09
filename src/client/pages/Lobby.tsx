@@ -25,7 +25,7 @@ export default function Lobby() {
         <Container>
             <VStack spacing={4}>
                 <ButtonGroup>
-                    <Button size='lg' onClick={() => roomNavigate(TransportEvent.CreateRoom)}>Quick Join</Button>
+                    <Button size='lg' onClick={() => roomNavigate(TransportEvent.QuickJoin)}>Quick Join</Button>
                     <Button variant='outline' size='lg' onClick={() => roomNavigate(TransportEvent.CreateRoom)}>Create Room</Button>
                 </ButtonGroup>
                 <Section width='full'>

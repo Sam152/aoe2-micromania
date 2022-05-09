@@ -9,6 +9,7 @@ enum TransportEvent {
     LeaveRoom = '7',
     StartGame = '8',
     SetNickname = '9',
+    QuickJoin = '10',
 }
 
 export default TransportEvent;

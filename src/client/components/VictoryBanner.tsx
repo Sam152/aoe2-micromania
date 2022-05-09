@@ -1,9 +1,9 @@
-import {Box, Button, ButtonGroup, Flex, HStack, Stack, Text} from '@chakra-ui/react';
-import React from 'react';
+import {AlertDialogFooter, Box, Button, ButtonGroup, Flex, HStack, Stack, Text} from '@chakra-ui/react';
+import React, {MouseEventHandler} from 'react';
 import {BsShieldFill} from 'react-icons/all';
 import {Icon} from '@chakra-ui/icons';
 
-function Banner({text}: {text: string}) {
+function Banner({text, buttonText, onClick}: {text: string; buttonText: string; onClick: MouseEventHandler }) {
     return (
         <Flex
             position='absolute'
@@ -35,8 +35,8 @@ function Banner({text}: {text: string}) {
                 </HStack>
 
                 <ButtonGroup justifyContent={'center'}>
-                    <Button cursor='url("/graphics/interface/0.svg") 0 0, none' variant='inGame'>
-                        Join Another
+                    <Button onClick={onClick} cursor='url("/graphics/interface/0.svg") 0 0, none' variant='inGame'>
+                        {buttonText}
                     </Button>
                 </ButtonGroup>
             </Stack>
@@ -45,9 +45,16 @@ function Banner({text}: {text: string}) {
 }
 
 export function VictoryBanner() {
-    return <Banner text={"You are victorious!"} />;
+    return <Banner text={"You are victorious!"} buttonText={"Join another"} onClick={() => null} />;
 }
 
 export function DefeatBanner() {
-    return <Banner text={"You have been defeated!"} />;
+    return <Banner text={"You have been defeated!"} buttonText={"Join another"} onClick={() => null} />;
+}
+
+export function SinglePlayerVictoryBanner() {
+    return <Banner text={"You are victorious!"} buttonText={"Play again"} onClick={() => null} />;
+}
+export function SinglePlayerDefeatBanner() {
+    return <Banner text={"You have been defeated!"} buttonText={"Play again"} onClick={() => null} />;
 }
