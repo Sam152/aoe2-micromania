@@ -1,7 +1,7 @@
-import {useEffect, useReducer} from "react";
-import useConnection, {usePlayerInfo, useRoomList} from "./useConnection";
-import {useNavigate, useParams} from "react-router-dom";
-import TransportEvent from "../../common/state/transport/TransportEvent";
+import {useEffect, useReducer} from 'react';
+import useConnection, {usePlayerInfo, useRoomList} from './useConnection';
+import {useNavigate, useParams} from 'react-router-dom';
+import TransportEvent from '../../common/state/transport/TransportEvent';
 
 export default function useRoomNavigation() {
     const playerInfo = usePlayerInfo();
@@ -32,5 +32,5 @@ export default function useRoomNavigation() {
             leaveRoom();
             connection.emit(TransportEvent.LeaveRoom);
         },
-    }
+    };
 }

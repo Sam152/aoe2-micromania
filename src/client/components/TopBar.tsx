@@ -7,17 +7,17 @@ import {
     InputGroup,
     InputRightElement,
     Link,
-    useColorModeValue
-} from "@chakra-ui/react";
-import React from "react";
-import {Link as RouterLink} from "react-router-dom";
-import EditableNickname from "./EditableNickname";
+    useColorModeValue,
+} from '@chakra-ui/react';
+import React from 'react';
+import {Link as RouterLink} from 'react-router-dom';
+import EditableNickname from './EditableNickname';
 
 export default function TopBar() {
     const bg = useColorModeValue('gray.100', 'gray.900');
 
     return (
-        <Flex px={6} bg={bg} alignItems={"center"} id="nav-bar" sx={{userSelect: 'none'}} justify={"space-between"}>
+        <Flex px={6} bg={bg} alignItems={'center'} id="nav-bar" sx={{userSelect: 'none'}} justify={'space-between'}>
             <HStack>
                 <Box mr={6}>
                     MicroMania

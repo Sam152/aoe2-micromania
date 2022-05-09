@@ -9,13 +9,13 @@ import {
     Td,
     Th,
     Thead,
-    Tr, VStack
+    Tr, VStack,
 } from '@chakra-ui/react';
 import {useRoomList} from '../hooks/useConnection';
-import Section from "../components/Section";
-import roomStatusLabel from "../../server/rooms/RoomStatusLabel";
-import useLobbyNavigation from "../hooks/useLobbyNavigation";
-import TransportEvent from "../../common/state/transport/TransportEvent";
+import Section from '../components/Section';
+import roomStatusLabel from '../../server/rooms/RoomStatusLabel';
+import useLobbyNavigation from '../hooks/useLobbyNavigation';
+import TransportEvent from '../../common/state/transport/TransportEvent';
 
 export default function Lobby() {
     const roomList = useRoomList();
@@ -58,9 +58,9 @@ export default function Lobby() {
                                         <Td>
                                             <ButtonGroup width='full' justifyContent='flex-end'>
                                                 <Button disabled={!room.joinable}
-                                                        onClick={() => roomNavigate(TransportEvent.JoinRoom, room.id)}>Join</Button>
+                                                    onClick={() => roomNavigate(TransportEvent.JoinRoom, room.id)}>Join</Button>
                                                 <Button variant='outline'
-                                                        onClick={() => roomNavigate(TransportEvent.SpectateRoom, room.id)}>Spectate</Button>
+                                                    onClick={() => roomNavigate(TransportEvent.SpectateRoom, room.id)}>Spectate</Button>
                                             </ButtonGroup>
                                         </Td>
                                     </Tr>

@@ -2,7 +2,7 @@ import {ClientStateAction, StateManagerInterface, StateTransmitter} from '../../
 import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../util/screenPositionToGamePosition';
 import {Vector2} from 'three/src/math/Vector2';
 import FormationType from '../units/formations/FormationType';
-import screenManager from "../drawing/screenManager";
+import screenManager from '../drawing/screenManager';
 
 const StInput = require('stinput');
 

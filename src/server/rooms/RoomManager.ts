@@ -29,11 +29,11 @@ export default class RoomManager {
     }
 
     cleanRooms(): void {
-        Object.keys(this.rooms).forEach(roomId => {
-           const room = this.rooms[roomId];
-           if (room.status === RoomStatus.Completed) {
-               delete this.rooms[roomId];
-           }
+        Object.keys(this.rooms).forEach((roomId) => {
+            const room = this.rooms[roomId];
+            if (room.status === RoomStatus.Completed) {
+                delete this.rooms[roomId];
+            }
         });
     }
 

@@ -19,7 +19,7 @@ class ScreenManager {
         const topBar = document.getElementById('nav-bar');
         this.topOffset = topBar ? topBar.offsetHeight : 52;
 
-        this.callbacks.forEach(callback => callback());
+        this.callbacks.forEach((callback) => callback());
     }
 
     getTopOffset(): number {
@@ -29,7 +29,6 @@ class ScreenManager {
     getCanvasScale() {
         return this.scale;
     }
-
 }
 
 export default new ScreenManager();

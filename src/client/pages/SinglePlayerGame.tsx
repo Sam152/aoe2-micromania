@@ -4,12 +4,11 @@ import GameCanvas from '../components/GameCanvas';
 import React, {useMemo} from 'react';
 import {GameState, GameStateAction} from '../../types';
 import PatrollingAi from '../../common/ai/PatrollingAi';
-import {Heading, Stack, Text} from "@chakra-ui/react";
-import VictoryBanner from "../components/VictoryBanner";
+import {Box} from '@chakra-ui/react';
+import {VictoryBanner} from "../components/VictoryBanner";
 
 export default function SinglePlayerGame() {
     const stateManager = useMemo(() => {
-
         const ai = new PatrollingAi(2);
         const gameMode = new ArcherMicro();
 
@@ -17,7 +16,7 @@ export default function SinglePlayerGame() {
             ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
 
             if (action.n === 'T') {
-                gameMode.onTick(state, action, manager.dispatchGame.bind(manager))
+                gameMode.onTick(state, action, manager.dispatchGame.bind(manager));
             }
         });
         manager.init();
@@ -27,11 +26,9 @@ export default function SinglePlayerGame() {
     }, []);
 
     return (
-        <div>
-
+        <Box pos="relative">
             <VictoryBanner />
-
             <GameCanvas stateManager={stateManager} />
-        </div>
+        </Box>
     );
 }

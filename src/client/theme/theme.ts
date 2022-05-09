@@ -19,14 +19,15 @@ const theme = extendTheme({
         },
     },
     colors: {
-        brand: {
-            100: '#ff33cc',
-            900: '#ff33cc',
-        },
         playerColors: {
             0: '#2044ab',
-            1: '#e60b00'
-        }
+            1: '#e60b00',
+        },
+        ig: {
+            gold: '#e0bf4f',
+            red: '#6a1411',
+            darkRed: '#571411',
+        },
     },
     spacing: {
         space: {},
@@ -55,7 +56,19 @@ const theme = extendTheme({
                     color: 'gray.100',
                     _hover: {background: 'gray.800'},
                 },
-            }
+                inGame: {
+                    borderColor: 'ig.gold',
+                    borderWidth: '2px',
+                    textTransform: 'uppercase',
+                    color: 'ig.gold',
+                    background: 'ig.red',
+                    borderRadius: 0,
+                    textShadow: '1px 1px 1px #000',
+                    fontFamily: 'Cinzel, serif',
+                    _hover: {background: 'ig.darkRed'},
+                    _focus: {boxShadow: 'none'},
+                },
+            },
         },
         Container: {
             baseStyle: {
@@ -71,9 +84,8 @@ const theme = extendTheme({
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
                     fontSize: 'sm',
-
-                }
-            }
+                },
+            },
         },
         Table: {
             defaultProps: {
@@ -90,8 +102,8 @@ const theme = extendTheme({
                     th: {
                         borderColor: 'gray.600',
                         borderBottomWidth: '2px',
-                    }
-                }
+                    },
+                },
             },
         },
     },

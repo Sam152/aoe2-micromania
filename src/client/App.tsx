@@ -8,7 +8,7 @@ import Lobby from './pages/Lobby';
 import SinglePlayerGame from './pages/SinglePlayerGame';
 import React from 'react';
 import Room from './pages/Room';
-import TopBar from "./components/TopBar";
+import TopBar from './components/TopBar';
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {

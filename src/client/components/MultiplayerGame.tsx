@@ -2,7 +2,8 @@ import GameCanvas from './GameCanvas';
 import NetworkedStateManager from '../../common/state/managers/NetworkedStateManager';
 import React, {useState} from 'react';
 import useConnection from '../hooks/useConnection';
-import {Heading, Stack} from "@chakra-ui/react";
+import {Box} from '@chakra-ui/react';
+import {DefeatBanner, VictoryBanner} from "./VictoryBanner";
 
 const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
     const [winner, setWinner] = useState<number>();
@@ -16,20 +17,14 @@ const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
     state.init();
 
     return (
-        <div>
-
-                <Stack>
-                    <Heading fontFamily={'victory'}>
-                        You are victorious!
-                    </Heading>
-                </Stack>
-            { winner && (
-                <>
-                </>
-            )}
-
+        <Box position="relative">
+            {winner && (state.getClientState().playingAs === winner ? (
+                <VictoryBanner/>
+            ) : (
+                <DefeatBanner/>
+            ))}
             <GameCanvas stateManager={state} />
-        </div>
+        </Box>
     );
 });
 MultiplayerGame.displayName = 'MultiplayerGame';

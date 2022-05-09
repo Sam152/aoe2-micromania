@@ -12,15 +12,15 @@ import {
     Table,
     TableContainer, Tbody,
     Td, Th, Thead,
-    Tr
+    Tr,
 } from '@chakra-ui/react';
 import RoomStatus from '../../server/rooms/RoomStatus';
 import MultiplayerGame from '../components/MultiplayerGame';
-import useRoomNavigation from "../hooks/useRoomNavigation";
-import Section from "../components/Section";
-import {BiDoorOpen, BsArrowLeft, BsArrowRight, BsEye, BsGear, BsHouseDoor, BsThreeDots} from "react-icons/all";
-import {Icon} from "@chakra-ui/icons";
-import arrayOfSize from "../../common/util/arrayOfSize";
+import useRoomNavigation from '../hooks/useRoomNavigation';
+import Section from '../components/Section';
+import {BiDoorOpen, BsArrowLeft, BsArrowRight, BsEye, BsGear, BsHouseDoor, BsThreeDots} from 'react-icons/all';
+import {Icon} from '@chakra-ui/icons';
+import arrayOfSize from '../../common/util/arrayOfSize';
 
 export default function Room() {
     const {
@@ -56,7 +56,7 @@ export default function Room() {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {arrayOfSize(inRoom.slots).map(slot => {
+                                    {arrayOfSize(inRoom.slots).map((slot) => {
                                         const player = inRoom.playersList[slot] || null;
                                         return (
                                             <Tr key={slot}>
@@ -82,7 +82,7 @@ export default function Room() {
                     <Button disabled={!canChangeToPlayer} onClick={changeToPlayer} leftIcon={<Icon as={BsArrowLeft}/>}>Join
                         Game</Button>
                     <Button disabled={!canChangeToSpectator} onClick={changeToSpectator}
-                            rightIcon={<Icon as={BsArrowRight}/>}>Spectate</Button>
+                        rightIcon={<Icon as={BsArrowRight}/>}>Spectate</Button>
                 </Stack>
                 <Section width='30%' padding={3}>
                     <Stack>

@@ -5,7 +5,7 @@ import {BroadcastOperator} from 'socket.io/dist/broadcast-operator';
 import ArcherMicro from '../../common/modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
 import {normalizeGameStateAction} from '../../common/util/normalizer';
-import TransportEvent from "../../common/state/transport/TransportEvent";
+import TransportEvent from '../../common/state/transport/TransportEvent';
 
 export default class Room {
     id: RoomId;
@@ -121,7 +121,7 @@ export default class Room {
             slots: this.slots,
             status: this.status,
             joinable: this.status === RoomStatus.Gathering && this.players.length < this.slots,
-            playersList: this.players.map(player => ({
+            playersList: this.players.map((player) => ({
                 id: player.socket.id,
                 name: player.getNickname(),
             })),

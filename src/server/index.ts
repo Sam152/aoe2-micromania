@@ -5,7 +5,7 @@ import RoomManager from './rooms/RoomManager';
 import Player from './rooms/Player';
 import {RoomId} from '../types';
 import * as fs from 'fs';
-import TransportEvent from "../common/state/transport/TransportEvent";
+import TransportEvent from '../common/state/transport/TransportEvent';
 
 const httpServer = process.env.KEY_FILE && process.env.CERT_FILE ? createServerHttps({
     key: fs.readFileSync(process.env.KEY_FILE),

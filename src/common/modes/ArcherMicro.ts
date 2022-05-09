@@ -43,7 +43,7 @@ export default class ArcherMicro implements GameMode {
 
     onTick(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
         if (state.ticks % 10 !== 0) {
-            return
+            return;
         }
 
         const playerOneUnits = state.units.filter(({ownedByPlayer}) => ownedByPlayer === 1).length;
@@ -55,5 +55,4 @@ export default class ArcherMicro implements GameMode {
             dispatcher({n: 'GAME_ENDED', winner: 1});
         }
     }
-
 }

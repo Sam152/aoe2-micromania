@@ -6,13 +6,13 @@ import {
     Flex, HStack,
     IconButton,
     Input,
-    useEditableControls
-} from "@chakra-ui/react";
-import {CheckIcon, CloseIcon, EditIcon} from "@chakra-ui/icons";
-import useConnection from "../hooks/useConnection";
-import defaultNickname from "../../common/social/defaultNickname";
-import {useEffect} from "react";
-import TransportEvent from "../../common/state/transport/TransportEvent";
+    useEditableControls,
+} from '@chakra-ui/react';
+import {CheckIcon, CloseIcon, EditIcon} from '@chakra-ui/icons';
+import useConnection from '../hooks/useConnection';
+import defaultNickname from '../../common/social/defaultNickname';
+import {useEffect} from 'react';
+import TransportEvent from '../../common/state/transport/TransportEvent';
 
 function EditableControls() {
     const {
@@ -20,7 +20,7 @@ function EditableControls() {
         getSubmitButtonProps,
         getCancelButtonProps,
         getEditButtonProps,
-    } = useEditableControls()
+    } = useEditableControls();
     return isEditing ? (
         <ButtonGroup justifyContent='center' size='sm'>
             <IconButton icon={<CheckIcon/>} {...getSubmitButtonProps()} aria-label="Edit"/>
@@ -30,7 +30,7 @@ function EditableControls() {
         <Flex justifyContent='center'>
             <IconButton size='sm' icon={<EditIcon/>} {...getEditButtonProps()} aria-label="Edit"/>
         </Flex>
-    )
+    );
 }
 
 export default function EditableNickname() {
@@ -53,7 +53,7 @@ export default function EditableNickname() {
             <>
                 Loading...
             </>
-        )
+        );
     }
 
     return (
@@ -68,5 +68,5 @@ export default function EditableNickname() {
                 <EditableControls/>
             </HStack>
         </Editable>
-    )
+    );
 }

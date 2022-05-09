@@ -9,7 +9,7 @@ import {
 } from '../../../types';
 import {Socket} from 'socket.io-client';
 import {normalizeGameStateAction, normalizeGameStateObject} from '../../util/normalizer';
-import TransportEvent from "../transport/TransportEvent";
+import TransportEvent from '../transport/TransportEvent';
 
 /**
  * A state manager with a client => server relationship.
