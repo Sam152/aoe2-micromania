@@ -2,5 +2,6 @@
 /node_modules
 /dist/js
 /dist/bundle.js*
+/dist/*.woff*
 /dist-server/bundle.*
 .DS_Store
