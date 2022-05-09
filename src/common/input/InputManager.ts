@@ -152,4 +152,8 @@ export default class InputManager {
     clearInput(): void {
         this.input.endFrame();
     }
+
+    cleanUp() {
+        this.input.dispose();
+    }
 }

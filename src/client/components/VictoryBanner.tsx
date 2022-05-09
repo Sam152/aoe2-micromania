@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import useLobbyNavigation from "../hooks/useLobbyNavigation";
 import TransportEvent from "../../common/state/transport/TransportEvent";
 import useConnection from "../hooks/useConnection";
+import generateId from "../../common/util/generateId";
 
 function Banner({text, buttonText, onClick}: { text: string; buttonText: string; onClick: MouseEventHandler }) {
     return (
@@ -48,28 +49,24 @@ function Banner({text, buttonText, onClick}: { text: string; buttonText: string;
     );
 }
 
-function usePlayAgain() {
-    // const emitAndEnter = useLobbyNavigation();
-    return () => {
-        // emitAndEnter(TransportEvent.QuickJoin);
-        // setTimeout(() => io.emit(TransportEvent.QuickJoin), 10);
-    };
-}
-
 export function VictoryBanner() {
-    const playAgain = usePlayAgain();
-    return <Banner text={"You are victorious!"} buttonText={"Join another"} onClick={playAgain}/>;
+    const navigate = useNavigate();
+    return <Banner text={"You are victorious!"} buttonText={"Join another"} onClick={() => navigate('/quick-join')}/>;
 }
 
 export function DefeatBanner() {
-    const playAgain = usePlayAgain();
-    return <Banner text={"You have been defeated!"} buttonText={"Join another"} onClick={playAgain}/>;
+    const navigate = useNavigate();
+    return <Banner text={"You have been defeated!"} buttonText={"Join another"} onClick={() => navigate('/quick-join')}/>;
 }
 
 export function SinglePlayerVictoryBanner() {
-    return <Banner text={"You are victorious!"} buttonText={"Play again"} onClick={() => null}/>;
+    const navigate = useNavigate();
+    const id = generateId(6);
+    return <Banner text={"You are victorious!"} buttonText={"Play again"} onClick={() => navigate(`/single-player/${id}`)} />;
 }
 
 export function SinglePlayerDefeatBanner() {
-    return <Banner text={"You have been defeated!"} buttonText={"Play again"} onClick={() => null}/>;
+    const navigate = useNavigate();
+    const id = generateId(6);
+    return <Banner text={"You have been defeated!"} buttonText={"Play again"} onClick={() => navigate(`/single-player/${id}`)}/>;
 }

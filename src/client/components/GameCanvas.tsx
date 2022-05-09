@@ -8,6 +8,10 @@ export default function GameCanvas({stateManager}: {stateManager: StateManagerIn
     useEffect(() => {
         const renderLoop = new RenderLoopManager(stateManager, ref.current);
         renderLoop.start();
+
+        return () => {
+            renderLoop.stop();
+        }
     }, []);
 
     return (

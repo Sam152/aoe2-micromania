@@ -9,6 +9,7 @@ import SinglePlayerGame from './pages/SinglePlayerGame';
 import React from 'react';
 import Room from './pages/Room';
 import TopBar from './components/TopBar';
+import SinglePlayerGamePage from "./pages/SinglePlayerGame";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -26,7 +27,10 @@ export default function App() {
                         <TopBar />
                         <Routes>
                             <Route path="/" element={<Lobby/>}/>
-                            <Route path="single-player" element={<SinglePlayerGame/>}/>
+                            <Route path="single-player">
+                                <Route path=":id" element={<SinglePlayerGamePage />} />
+                                <Route path="" element={<SinglePlayerGamePage />} />
+                            </Route>
                             <Route path="room/:roomId" element={<Room />}/>
                         </Routes>
                     </BrowserRouter>

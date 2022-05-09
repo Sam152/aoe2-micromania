@@ -6,13 +6,19 @@ import {GameState, GameStateAction} from '../../types';
 import PatrollingAi from '../../common/ai/PatrollingAi';
 import {Box} from '@chakra-ui/react';
 import {
-    DefeatBanner,
     SinglePlayerDefeatBanner,
     SinglePlayerVictoryBanner,
-    VictoryBanner
 } from "../components/VictoryBanner";
+import {useParams} from "react-router-dom";
 
-export default function SinglePlayerGame() {
+export default function SinglePlayerGamePage() {
+    const {id} = useParams();
+    return (
+        <SinglePlayerGame key={id} />
+    );
+}
+
+function SinglePlayerGame() {
     const [winner, setWinner] = useState<number>();
 
     const stateManager = useMemo(() => {

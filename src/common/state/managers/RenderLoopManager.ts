@@ -35,6 +35,10 @@ export default class RenderLoopManager {
         });
     }
 
+    stop() {
+        this.inputManager.cleanUp();
+    }
+
     render() {
         // Dispatch client state to indicate a frame is being rendered.
         this.stateManager.dispatchClient({n: 'FRAME_RENDERING_STARTED'});
