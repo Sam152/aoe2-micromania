@@ -5,11 +5,11 @@ import theme from './theme/theme';
 import {PlayerInfoContext, RoomListContext} from './hooks/useConnection';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Lobby from './pages/Lobby';
-import SinglePlayerGame from './pages/SinglePlayerGame';
 import React from 'react';
 import Room from './pages/Room';
 import TopBar from './components/TopBar';
 import SinglePlayerGamePage from "./pages/SinglePlayerGame";
+import QuickJoin from "./pages/QuickJoin";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -24,14 +24,15 @@ export default function App() {
             <PlayerInfoContext.Provider value={playerInfo}>
                 <RoomListContext.Provider value={roomList}>
                     <BrowserRouter>
-                        <TopBar />
+                        <TopBar/>
                         <Routes>
                             <Route path="/" element={<Lobby/>}/>
+                            <Route path="/quick-join" element={<QuickJoin/>}/>
                             <Route path="single-player">
-                                <Route path=":id" element={<SinglePlayerGamePage />} />
-                                <Route path="" element={<SinglePlayerGamePage />} />
+                                <Route path=":id" element={<SinglePlayerGamePage/>}/>
+                                <Route path="" element={<SinglePlayerGamePage/>}/>
                             </Route>
-                            <Route path="room/:roomId" element={<Room />}/>
+                            <Route path="room/:roomId" element={<Room/>}/>
                         </Routes>
                     </BrowserRouter>
                 </RoomListContext.Provider>
