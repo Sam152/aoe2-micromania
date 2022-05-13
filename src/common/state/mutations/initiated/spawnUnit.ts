@@ -16,7 +16,7 @@ export default function spawnUnit(state: GameState, action: {
     const stats = unitMetadataFactory.getUnit(action.unitType);
     state.units.push({
         id: state.idAt++,
-        position: action.position,
+        position: action.position.clone(),
         waypoints: [],
         formation: FormationType.Line,
         clickedWaypoints: [],
