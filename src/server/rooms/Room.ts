@@ -6,6 +6,7 @@ import ArcherMicro from '../../common/modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
 import {normalizeGameStateAction} from '../../common/util/normalizer';
 import TransportEvent from '../../common/state/transport/TransportEvent';
+import RecordedGame from "../recs/RecordedGame";
 
 export default class Room {
     id: RoomId;
@@ -15,6 +16,7 @@ export default class Room {
     state?: StateManagerInterface = null;
     public status: RoomStatus;
     room: BroadcastOperator<any, any>;
+    private recordedGame: RecordedGame;
 
     constructor(id: RoomId, slots: number, room: BroadcastOperator<any, any>) {
         this.id = id;
@@ -75,6 +77,7 @@ export default class Room {
     endGame(): void {
         this.players.map((player) => player.socket.removeAllListeners(TransportEvent.GameStateActionDispatch));
         this.state.cleanUp();
+        this.recordedGame.completeRecording();
         this.status = RoomStatus.Completed;
     }
 
@@ -82,11 +85,16 @@ export default class Room {
         this.status = RoomStatus.Starting;
         const gameMode = new ArcherMicro();
 
+        this.recordedGame = new RecordedGame(this.players.map(player => player.getNickname()));
+
         this.state = new LocalStateManager((gameState, action) => {
             // The network could either dispatch the whole units state OR the action, letting the clients
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?
             this.room.emit(TransportEvent.GameStateActionTransmit, action);
+
+            // Keep a log of all actions created during this game, in order to save a recorded game.
+            this.recordedGame.pushAction(action);
 
             if (action.n === 'T') {
                 gameMode.onTick(gameState, action, this.state.dispatchGame.bind(this.state));
