@@ -33,7 +33,7 @@ export default function Replays() {
                         </Thead>
                         <Tbody>
                             {games.map(game => (
-                                <Tr>
+                                <Tr key={game.id}>
                                     <Td>{game.players.join(' vs ')}</Td>
                                     <Td>{ new Date(game.start).toLocaleString() }</Td>
                                     <Td>{humanizeDuration(game.end - game.start, {units: ['m', 's'], round: true})}</Td>

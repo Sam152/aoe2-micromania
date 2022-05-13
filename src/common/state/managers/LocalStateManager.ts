@@ -12,9 +12,9 @@ export default class LocalStateManager implements StateManagerInterface {
     private gameStateListener: (state: GameState, action: GameStateAction) => void;
     private ticker: NodeJS.Timer;
 
-    constructor(gameStateListener: (state: GameState, action: GameStateAction) => void = null) {
+    constructor(gameStateListener: (state: GameState, action: GameStateAction) => void = null, playingAs: number | null = 1) {
         this.gameState = defaultGameState();
-        this.clientState = defaultClientState(1);
+        this.clientState = defaultClientState(playingAs);
         this.gameStateListener = gameStateListener;
     }
 
