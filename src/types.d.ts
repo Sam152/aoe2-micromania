@@ -314,6 +314,18 @@ export interface FormationInterface {
     form(positions: Array<Vector2>, destination: Vector2): Array<Vector2>;
 }
 
+export interface ReplayIndexItem {
+    start: number;
+    end: number;
+    engineVersion: number;
+    players: Array<string>;
+    id: string;
+}
+
+export interface ReplayItem extends ReplayIndexItem {
+    actions: Array<GameStateAction>
+}
+
 declare global {
     interface Window {
         ctx: CanvasRenderingContext2D;

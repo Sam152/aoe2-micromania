@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/humanize-duration": "^3.27.1",
     "@types/three": "^0.139.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
@@ -46,6 +47,7 @@
     "bufferutil": "^4.0.6",
     "framer-motion": "^6",
     "genie-slp": "^1.1.0",
+    "humanize-duration": "^3.27.1",
     "jascpal": "^0.1.4",
     "just-standard-deviation": "^2.0.2",
     "react": "^18.0.0",

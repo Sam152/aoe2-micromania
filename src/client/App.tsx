@@ -10,6 +10,8 @@ import Room from './pages/Room';
 import TopBar from './components/TopBar';
 import SinglePlayerGamePage from "./pages/SinglePlayerGame";
 import QuickJoin from "./pages/QuickJoin";
+import Replays from "./pages/Replays";
+import Replay from "./pages/Replay";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -28,6 +30,10 @@ export default function App() {
                         <Routes>
                             <Route path="/" element={<Lobby/>}/>
                             <Route path="/quick-join" element={<QuickJoin/>}/>
+                            <Route path="/replays">
+                                <Route path=":replayId" element={<Replay />} />
+                                <Route path="" element={<Replays />} />
+                            </Route>
                             <Route path="single-player">
                                 <Route path=":id" element={<SinglePlayerGamePage/>}/>
                                 <Route path="" element={<SinglePlayerGamePage/>}/>
