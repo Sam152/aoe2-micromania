@@ -75,10 +75,13 @@ export default class Room {
     }
 
     endGame(): void {
-        this.players.map((player) => player.socket.removeAllListeners(TransportEvent.GameStateActionDispatch));
-        this.state.cleanUp();
-        this.recordedGame.completeRecording();
-        this.status = RoomStatus.Completed;
+        // Something is calling this twice, not sure how.
+        if (this.status !== RoomStatus.Completed) {
+            this.players.map((player) => player.socket.removeAllListeners(TransportEvent.GameStateActionDispatch));
+            this.state.cleanUp();
+            this.recordedGame.completeRecording();
+            this.status = RoomStatus.Completed;
+        }
     }
 
     startGame(onStarted: Function) {
