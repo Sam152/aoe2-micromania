@@ -2,7 +2,8 @@
 /node_modules
 /dist/js
 /dist/recs
-/dist/bundle.js*
+/dist/*.js
+/dist/*.txt
 /dist/*.woff*
 /dist-server/bundle.*
 .DS_Store
