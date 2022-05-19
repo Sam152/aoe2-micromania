@@ -31,7 +31,10 @@ module.exports = {
         new webpack.ProvidePlugin({
             Buffer: ['buffer', 'Buffer'],
         }),
-        new HtmlWebpackPlugin({}),
+        new HtmlWebpackPlugin({
+            title: 'MicroMania',
+            template: "./src/client/template.html"
+        }),
     ],
     optimization: {
         minimize: true,

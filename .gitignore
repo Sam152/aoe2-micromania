@@ -4,6 +4,7 @@
 /dist/recs
 /dist/*.js
 /dist/*.txt
+/dist/*.html
 /dist/*.woff*
 /dist-server/bundle.*
 .DS_Store
