@@ -16,7 +16,7 @@ import humanizeDuration from "humanize-duration";
 import useFetched from "../hooks/useFetched";
 
 export default function Replays() {
-    const games = useFetched<Array<ReplayIndexItem>>('/recs/index.json', []);
+    const games = useFetched<Array<ReplayIndexItem>>('/recs/index.json', []).reverse();
 
     return (
         <Container>
