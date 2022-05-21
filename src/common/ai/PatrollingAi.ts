@@ -12,17 +12,17 @@ export default class PatrollingAi implements Ai {
     }
 
     makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-        // if (state.ticks !== 20) {
-        //     return;
-        // }
-        // const patrolTo = averageVector(state.units
-        //     .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)
-        //     .map(({position}) => position));
-        //
-        // dispatcher({
-        //     n: 'PATROL',
-        //     position: patrolTo,
-        //     units: state.units.filter(({ownedByPlayer}) => ownedByPlayer === this.playingAs).map(({id}) => id),
-        // });
+        if (state.ticks !== 20) {
+            return;
+        }
+        const patrolTo = averageVector(state.units
+            .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)
+            .map(({position}) => position));
+
+        dispatcher({
+            n: 'PATROL',
+            position: patrolTo,
+            units: state.units.filter(({ownedByPlayer}) => ownedByPlayer === this.playingAs).map(({id}) => id),
+        });
     }
 }
