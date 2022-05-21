@@ -103,7 +103,7 @@ export default class InputManager {
                 formation: FormationType.Spread,
             });
         }
-        if (this.input.pressed('v')) {
+        if (this.input.keyPressed(86)) {
             this.dispatch({
                 n: 'HOTKEY_FORMATION_CHANGED',
                 formation: FormationType.Split,

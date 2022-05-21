@@ -1,8 +1,16 @@
 import Hotkey from "./Hotkey";
+const StInput = require('stinput');
 
-export default class HotkeyManager {
+class HotkeyManager {
 
-    getKeyFor(hotkey: Hotkey): string {
-        return 'z';
+    getBindFor(hotkey: Hotkey): number {
+        return 90;
+    }
+
+    setBindFor(hotkey: Hotkey, bind: number): void {
+
     }
 }
+
+const hotkeyManager = new HotkeyManager();
+export default hotkeyManager;
