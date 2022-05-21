@@ -47,7 +47,7 @@ export default function Hotkeys() {
                 <ButtonGroup justifyContent="flex-end" width="full">
                     <Button onClick={() => setScheme(hdHotkeyScheme)}>HD Hotkeys</Button>
                     <Button onClick={() => setScheme(deHotkeyScheme)}>DE Hotkeys</Button>
-                    <Button onClick={() => setScheme(aocHotkeyScheme)}>AoC Hotkeys</Button>
+                    <Button onClick={() => setScheme(aocHotkeyScheme)}>Classic Hotkeys</Button>
                     <Button variant='outline' onClick={clear}>Reset to default</Button>
                 </ButtonGroup>
 

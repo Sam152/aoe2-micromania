@@ -10,7 +10,7 @@ const hdHotkeyScheme: HotkeyScheme = {
     [Hotkey.AttackGround]: 82,
 
     [Hotkey.Stop]: 70,
-    [Hotkey.DeleteUnit]: 8,
+    [Hotkey.DeleteUnit]: 46,
 
     [Hotkey.CameraUp]: 38,
     [Hotkey.CameraDown]: 40,
