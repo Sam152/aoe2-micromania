@@ -26,8 +26,8 @@ const config = {
     /**
      * Tile dimensions.
      */
-    tileWidth: 97,
-    tileHeight: 49,
+    tileWidth: 96,
+    tileHeight: 48,
     /**
      * The length of a single tile as far as the game statistics are concerned.
      */
@@ -35,7 +35,7 @@ const config = {
     /**
      * How fast the camera should pan.
      */
-    cameraPanSpeed: 3,
+    cameraPanSpeed: 30,
 };
 
 export default config;
