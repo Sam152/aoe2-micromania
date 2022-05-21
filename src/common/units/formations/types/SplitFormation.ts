@@ -20,7 +20,7 @@ export default class SplitFormation extends FormationBase {
         const leftSplitDestination = destination;
         const rightSplitDestination = destination.clone().add(new Vector2(200, 0));
 
-        let newPositions = [
+        const newPositions = [
             ...formLines(leftSplitUnits, leftSplitDestination, rows, columns, startingPoint, this.distanceBetween),
             ...formLines(rightSplitUnits, rightSplitDestination, rows, columns, startingPoint, this.distanceBetween),
         ];
@@ -29,7 +29,7 @@ export default class SplitFormation extends FormationBase {
             positions,
             newPositions,
             destination,
-            startingPoint
+            startingPoint,
         );
     }
 }

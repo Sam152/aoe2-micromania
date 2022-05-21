@@ -3,8 +3,8 @@ import {GameState} from '../../../../types';
 import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
 import {setUnitMovementTowardsCurrentWaypoint} from '../initiated/setUnitMovementTowards';
 import hasValue from '../../../util/hasValue';
-import addWithClamp, {setWithClamp} from "../../../util/addWithClamp";
-import Grid from "../../../terrain/Grid";
+import addWithClamp, {setWithClamp} from '../../../util/addWithClamp';
+import Grid from '../../../terrain/Grid';
 
 export default function moveUnits(state: GameState) {
     // Move all units that have some active waypoint.

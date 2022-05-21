@@ -1,17 +1,16 @@
-import {GameState, GameStateAction, ReplayItem} from "../../types";
-import {useParams} from "react-router-dom";
-import useFetched from "../hooks/useFetched";
-import React, {useMemo, useState} from "react";
-import LocalStateManager from "../../common/state/managers/LocalStateManager";
-import {Box} from "@chakra-ui/react";
-import {SinglePlayerVictoryBanner} from "../components/VictoryBanner";
-import GameCanvas from "../components/GameCanvas";
-import config from "../../common/config";
-import {calcRelativePosition} from "framer-motion/types/projection/geometry/delta-calc";
-import {normalizeGameStateAction} from "../../common/util/normalizer";
+import {GameState, GameStateAction, ReplayItem} from '../../types';
+import {useParams} from 'react-router-dom';
+import useFetched from '../hooks/useFetched';
+import React, {useMemo, useState} from 'react';
+import LocalStateManager from '../../common/state/managers/LocalStateManager';
+import {Box} from '@chakra-ui/react';
+import {SinglePlayerVictoryBanner} from '../components/VictoryBanner';
+import GameCanvas from '../components/GameCanvas';
+import config from '../../common/config';
+import {calcRelativePosition} from 'framer-motion/types/projection/geometry/delta-calc';
+import {normalizeGameStateAction} from '../../common/util/normalizer';
 
 export default function Replay() {
-
     const {replayId} = useParams();
     const replay = useFetched<ReplayItem>(`/recs/${replayId}.json`, null);
 
@@ -30,7 +29,7 @@ export default function Replay() {
 
         const interval = setInterval(playTick, 1000 / config.ticksPerSecond);
         function playTick() {
-            while(true) {
+            while (true) {
                 const action = playableActions.shift();
                 console.log(action);
                 manager.dispatchGame(normalizeGameStateAction(action));

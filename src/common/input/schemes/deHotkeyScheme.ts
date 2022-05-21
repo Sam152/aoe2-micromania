@@ -1,5 +1,5 @@
-import {HotkeyScheme} from "../../../types";
-import Hotkey from "../Hotkey";
+import {HotkeyScheme} from '../../../types';
+import Hotkey from '../Hotkey';
 
 const deHotkeyScheme: HotkeyScheme = {
     [Hotkey.LineFormation]: 90,

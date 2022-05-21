@@ -6,7 +6,7 @@ import ArcherMicro from '../../common/modes/ArcherMicro';
 import RoomStatus from './RoomStatus';
 import {normalizeGameStateAction} from '../../common/util/normalizer';
 import TransportEvent from '../../common/state/transport/TransportEvent';
-import RecordedGame from "../recs/RecordedGame";
+import RecordedGame from '../recs/RecordedGame';
 
 export default class Room {
     id: RoomId;
@@ -88,7 +88,7 @@ export default class Room {
         this.status = RoomStatus.Starting;
         const gameMode = new ArcherMicro();
 
-        this.recordedGame = new RecordedGame(this.players.map(player => player.getNickname()));
+        this.recordedGame = new RecordedGame(this.players.map((player) => player.getNickname()));
 
         this.state = new LocalStateManager((gameState, action) => {
             // The network could either dispatch the whole units state OR the action, letting the clients

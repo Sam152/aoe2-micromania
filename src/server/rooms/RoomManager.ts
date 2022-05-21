@@ -32,13 +32,12 @@ export default class RoomManager {
 
         const joinRoom = this.getRoomsOldestFirst()
             .filter(({status}) => status === RoomStatus.Gathering)
-            .find(room => room.players.length < room.slots);
+            .find((room) => room.players.length < room.slots);
 
         if (joinRoom) {
             this.joinRoom(joinRoom.id, player);
             return joinRoom;
-        }
-        else {
+        } else {
             return this.createRoom(player);
         }
     }

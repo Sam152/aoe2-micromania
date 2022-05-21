@@ -11,20 +11,19 @@ import {
     Th,
     Thead,
     Tr,
-    useCounter, VStack
-} from "@chakra-ui/react";
-import Section from "../components/Section";
-import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable";
-import hotkeyManager from "../../common/input/HotkeyManager";
-import Hotkey from "../../common/input/Hotkey";
-import BindableRow from "../components/BindableRow";
-import {HotkeyScheme} from "../../types";
-import hdHotkeyScheme from "../../common/input/schemes/hdHotkeyScheme";
-import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme";
-import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme";
+    useCounter, VStack,
+} from '@chakra-ui/react';
+import Section from '../components/Section';
+import keycodeToHumanReadable from '../../common/util/keycodeToHumanReadable';
+import hotkeyManager from '../../common/input/HotkeyManager';
+import Hotkey from '../../common/input/Hotkey';
+import BindableRow from '../components/BindableRow';
+import {HotkeyScheme} from '../../types';
+import hdHotkeyScheme from '../../common/input/schemes/hdHotkeyScheme';
+import deHotkeyScheme from '../../common/input/schemes/deHotkeyScheme';
+import aocHotkeyScheme from '../../common/input/schemes/aocHotkeyScheme';
 
 export default function Hotkeys() {
-
     const rerender = useCounter();
     function setBind(hotkey: Hotkey, code: number) {
         hotkeyManager.setBindFor(hotkey, code);
@@ -92,7 +91,7 @@ export default function Hotkeys() {
                                 </Tr>
                                 <BindableRow label="Line formation" hotkey={Hotkey.LineFormation} setBind={setBind}/>
                                 <BindableRow label="Spread formation" hotkey={Hotkey.SpreadFormation}
-                                             setBind={setBind}/>
+                                    setBind={setBind}/>
                                 <BindableRow label="Split formation" hotkey={Hotkey.SplitFormation} setBind={setBind}/>
 
                                 <Tr>

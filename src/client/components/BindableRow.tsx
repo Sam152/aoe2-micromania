@@ -1,14 +1,14 @@
-import {Kbd, Td, Tr} from "@chakra-ui/react";
-import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable";
-import hotkeyManager from "../../common/input/HotkeyManager";
-import Hotkey from "../../common/input/Hotkey";
-import BindSelection from "./BindSelection";
+import {Kbd, Td, Tr} from '@chakra-ui/react';
+import keycodeToHumanReadable from '../../common/util/keycodeToHumanReadable';
+import hotkeyManager from '../../common/input/HotkeyManager';
+import Hotkey from '../../common/input/Hotkey';
+import BindSelection from './BindSelection';
 
 export default function BindableRow({
-                                        setBind,
+    setBind,
     label,
-    hotkey
-                                    }: {
+    hotkey,
+}: {
     setBind: (hotkey: Hotkey, code: number) => void,
     label: string,
     hotkey: number,
@@ -21,5 +21,5 @@ export default function BindableRow({
                 <BindSelection onChange={(keycode) => setBind(hotkey, keycode)}/>
             </Td>
         </Tr>
-    )
+    );
 }

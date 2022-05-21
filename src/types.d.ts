@@ -7,7 +7,7 @@ import {Vector2} from 'three/src/math/Vector2';
 import FormationType from './common/units/formations/FormationType';
 import ProjectileType from './common/units/ProjectileType';
 import ActiveCommand from './common/input/ActiveCommand';
-import Hotkey from "./common/input/Hotkey";
+import Hotkey from './common/input/Hotkey';
 
 export interface UnitInstance {
     id: number;

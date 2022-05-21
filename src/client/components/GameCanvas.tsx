@@ -11,10 +11,10 @@ export default function GameCanvas({stateManager}: {stateManager: StateManagerIn
 
         return () => {
             renderLoop.stop();
-        }
+        };
     }, []);
 
     return (
-        <canvas style={{width: "100vw", height: "calc(100vh - 53px)", display: "block", backgroundColor: "black"}} ref={ref} />
+        <canvas style={{width: '100vw', height: 'calc(100vh - 53px)', display: 'block', backgroundColor: 'black'}} ref={ref} />
     );
 }

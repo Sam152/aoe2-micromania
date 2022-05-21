@@ -2,8 +2,8 @@ import {GameState, UnitInstance} from '../../../../types';
 import UnitState from '../../../units/UnitState';
 import {getAttackRange} from '../../../util/inAttackRange';
 import {hasScalarValue} from '../../../util/hasValue';
-import {createUnitQuadtree} from "../../../util/buildQuadTree";
-import {Quadtree} from "d3-quadtree";
+import {createUnitQuadtree} from '../../../util/buildQuadTree';
+import {Quadtree} from 'd3-quadtree';
 
 export default function autoAttack(state: GameState) {
     const autoAttackingUnits = state.units.filter((unit) => {
@@ -17,8 +17,8 @@ export default function autoAttack(state: GameState) {
     });
 
     const quadtrees: {[key: number]: Quadtree<UnitInstance>} = {
-      1: createUnitQuadtree(),
-      2: createUnitQuadtree(),
+        1: createUnitQuadtree(),
+        2: createUnitQuadtree(),
     };
     quadtrees[1].addAll(state.units.filter(({ownedByPlayer}) => ownedByPlayer === 1));
     quadtrees[2].addAll(state.units.filter(({ownedByPlayer}) => ownedByPlayer === 2));

@@ -18,5 +18,4 @@ export default class LocalStorageObject<T> {
     set(object: T): void {
         window.localStorage.setItem(this.key, JSON.stringify(object));
     }
-
 }

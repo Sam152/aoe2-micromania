@@ -10,10 +10,10 @@ import {
     Tr,
 } from '@chakra-ui/react';
 import Section from '../components/Section';
-import {ReplayIndexItem} from "../../types";
-import {Link} from "react-router-dom";
-import humanizeDuration from "humanize-duration";
-import useFetched from "../hooks/useFetched";
+import {ReplayIndexItem} from '../../types';
+import {Link} from 'react-router-dom';
+import humanizeDuration from 'humanize-duration';
+import useFetched from '../hooks/useFetched';
 
 export default function Replays() {
     const games = useFetched<Array<ReplayIndexItem>>('/recs/index.json', []);
@@ -32,7 +32,7 @@ export default function Replays() {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {games.slice().reverse().map(game => (
+                            {games.slice().reverse().map((game) => (
                                 <Tr key={game.id}>
                                     <Td>{game.players.join(' vs ')}</Td>
                                     <Td>{ new Date(game.start).toLocaleString() }</Td>

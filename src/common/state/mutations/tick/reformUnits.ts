@@ -3,9 +3,9 @@ import {GameState} from '../../../../types';
 import hasValue from '../../../util/hasValue';
 import UnitState from '../../../units/UnitState';
 import stopUnit from '../initiated/stopUnit';
-import addWithClamp from "../../../util/addWithClamp";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
-import Grid from "../../../terrain/Grid";
+import addWithClamp from '../../../util/addWithClamp';
+import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
+import Grid from '../../../terrain/Grid';
 
 export default function reformUnits(state: GameState) {
     // Move units that are reforming.

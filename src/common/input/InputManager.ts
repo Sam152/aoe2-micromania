@@ -3,8 +3,8 @@ import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../uti
 import {Vector2} from 'three/src/math/Vector2';
 import FormationType from '../units/formations/FormationType';
 import screenManager from '../drawing/screenManager';
-import hotkeyManager from "./HotkeyManager";
-import Hotkey from "./Hotkey";
+import hotkeyManager from './HotkeyManager';
+import Hotkey from './Hotkey';
 
 const StInput = require('stinput');
 

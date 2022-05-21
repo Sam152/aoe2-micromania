@@ -17,8 +17,8 @@ export default function TopBar() {
     const bg = useColorModeValue('gray.100', 'gray.900');
 
     const linkProps = {
-        _activeLink: {backgroundColor:"blue.900"},
-        variant: "menu-link",
+        _activeLink: {backgroundColor: 'blue.900'},
+        variant: 'menu-link',
         as: RouterLink,
     };
 

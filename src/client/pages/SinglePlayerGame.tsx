@@ -8,8 +8,8 @@ import {Box} from '@chakra-ui/react';
 import {
     SinglePlayerDefeatBanner,
     SinglePlayerVictoryBanner,
-} from "../components/VictoryBanner";
-import {useParams} from "react-router-dom";
+} from '../components/VictoryBanner';
+import {useParams} from 'react-router-dom';
 
 export default function SinglePlayerGamePage() {
     const {id} = useParams();

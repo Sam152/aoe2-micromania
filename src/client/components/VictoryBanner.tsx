@@ -2,11 +2,11 @@ import {AlertDialogFooter, Box, Button, ButtonGroup, Flex, HStack, Stack, Text} 
 import React, {MouseEventHandler} from 'react';
 import {BsShieldFill} from 'react-icons/all';
 import {Icon} from '@chakra-ui/icons';
-import {useNavigate} from "react-router-dom";
-import useLobbyNavigation from "../hooks/useLobbyNavigation";
-import TransportEvent from "../../common/state/transport/TransportEvent";
-import useConnection from "../hooks/useConnection";
-import generateId from "../../common/util/generateId";
+import {useNavigate} from 'react-router-dom';
+import useLobbyNavigation from '../hooks/useLobbyNavigation';
+import TransportEvent from '../../common/state/transport/TransportEvent';
+import useConnection from '../hooks/useConnection';
+import generateId from '../../common/util/generateId';
 
 function Banner({text, buttonText, onClick}: { text: string; buttonText: string; onClick: MouseEventHandler }) {
     return (
@@ -51,22 +51,22 @@ function Banner({text, buttonText, onClick}: { text: string; buttonText: string;
 
 export function VictoryBanner() {
     const navigate = useNavigate();
-    return <Banner text={"You are victorious!"} buttonText={"Join another"} onClick={() => navigate('/quick-join')}/>;
+    return <Banner text={'You are victorious!'} buttonText={'Join another'} onClick={() => navigate('/quick-join')}/>;
 }
 
 export function DefeatBanner() {
     const navigate = useNavigate();
-    return <Banner text={"You have been defeated!"} buttonText={"Join another"} onClick={() => navigate('/quick-join')}/>;
+    return <Banner text={'You have been defeated!'} buttonText={'Join another'} onClick={() => navigate('/quick-join')}/>;
 }
 
 export function SinglePlayerVictoryBanner() {
     const navigate = useNavigate();
     const id = generateId(6);
-    return <Banner text={"You are victorious!"} buttonText={"Play again"} onClick={() => navigate(`/single-player/${id}`)} />;
+    return <Banner text={'You are victorious!'} buttonText={'Play again'} onClick={() => navigate(`/single-player/${id}`)} />;
 }
 
 export function SinglePlayerDefeatBanner() {
     const navigate = useNavigate();
     const id = generateId(6);
-    return <Banner text={"You have been defeated!"} buttonText={"Play again"} onClick={() => navigate(`/single-player/${id}`)}/>;
+    return <Banner text={'You have been defeated!'} buttonText={'Play again'} onClick={() => navigate(`/single-player/${id}`)}/>;
 }

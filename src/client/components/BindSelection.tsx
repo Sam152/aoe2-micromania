@@ -1,5 +1,5 @@
-import {Button, list, Select} from "@chakra-ui/react";
-import {useEffect, useState} from "react";
+import {Button, list, Select} from '@chakra-ui/react';
+import {useEffect, useState} from 'react';
 
 export default function BindSelection({onChange}: {onChange: (keycode: number) => void}) {
     const [listening, setListening] = useState(false);

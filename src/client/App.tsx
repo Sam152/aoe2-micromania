@@ -8,11 +8,11 @@ import Lobby from './pages/Lobby';
 import React from 'react';
 import Room from './pages/Room';
 import TopBar from './components/TopBar';
-import SinglePlayerGamePage from "./pages/SinglePlayerGame";
-import QuickJoin from "./pages/QuickJoin";
-import Replays from "./pages/Replays";
-import Replay from "./pages/Replay";
-import Hotkeys from "./pages/Hotkeys";
+import SinglePlayerGamePage from './pages/SinglePlayerGame';
+import QuickJoin from './pages/QuickJoin';
+import Replays from './pages/Replays';
+import Replay from './pages/Replay';
+import Hotkeys from './pages/Hotkeys';
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {

@@ -1,6 +1,6 @@
-import {GameStateAction} from "../../types";
-import * as fs from "fs";
-import generateId from "../../common/util/generateId";
+import {GameStateAction} from '../../types';
+import * as fs from 'fs';
+import generateId from '../../common/util/generateId';
 
 export default class RecordedGame {
     private players: Array<string>;
@@ -37,13 +37,12 @@ export default class RecordedGame {
         fs.writeFile(
             `${process.env.RECORDED_GAMES_DIRECTORY || '../game-recs'}/${metadata.id}.json`,
             JSON.stringify(rec),
-            err => err && console.log(err)
+            (err) => err && console.log(err),
         );
         fs.writeFile(
             `${process.env.RECORDED_GAMES_DIRECTORY || '../game-recs'}/${metadata.id}.metadata.json`,
             JSON.stringify(metadata),
-            err => err && console.log(err)
+            (err) => err && console.log(err),
         );
     }
-
 }

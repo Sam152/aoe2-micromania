@@ -1,8 +1,8 @@
-import Hotkey from "./Hotkey";
-import hdHotkeyScheme from "./schemes/hdHotkeyScheme";
-import LocalStorageObject from "../util/LocalStorageObject";
-import {HotkeyScheme} from "../../types";
-import deepClone from "../util/deepClone";
+import Hotkey from './Hotkey';
+import hdHotkeyScheme from './schemes/hdHotkeyScheme';
+import LocalStorageObject from '../util/LocalStorageObject';
+import {HotkeyScheme} from '../../types';
+import deepClone from '../util/deepClone';
 
 const defaultScheme = hdHotkeyScheme;
 
