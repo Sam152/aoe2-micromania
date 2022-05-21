@@ -21,6 +21,11 @@ class HotkeyManager {
         this.binds[hotkey] = bind;
         this.storage.set(this.binds);
     }
+
+    clearStorage() {
+        this.storage.set({});
+        this.binds = {};
+    }
 }
 
 const hotkeyManager = new HotkeyManager();
