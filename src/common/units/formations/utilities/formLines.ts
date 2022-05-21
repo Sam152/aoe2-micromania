@@ -4,11 +4,10 @@ import rotateAroundOrigin from '../../../util/rotateAroundOrigin';
 import standardDeviation from 'just-standard-deviation';
 
 export default function formLines(positions: Array<Vector2>, destination: Vector2, rows: number, columns: number, startingPoint: Vector2, distanceBetween: number) {
-    let newPositions = positions.map((position, index) => {
+    return positions.map((position, index) => {
         const row = Math.ceil((index + 1) / columns);
         return destination.clone().add(new Vector2((index % columns) * distanceBetween, row * distanceBetween));
     });
-    return translateAndRotate(positions, newPositions, destination, startingPoint);
 }
 
 export function translateAndRotate(positions: Array<Vector2>, newPositions: Array<Vector2>, destination: Vector2, startingPoint: Vector2) {
