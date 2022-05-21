@@ -4,15 +4,17 @@ import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPe
 import swapProperties from '../../../util/swapProperties';
 import setUnitMovementTowards from '../initiated/setUnitMovementTowards';
 import UnitState from '../../../units/UnitState';
+import addWithClamp, {setWithClamp} from "../../../util/addWithClamp";
+import Grid from "../../../terrain/Grid";
 
 export default function patrolUnits(state: GameState) {
     state.units
         .filter((unit) => hasValue(unit.patrollingTo) && !hasValue(unit.reformingArrivalTick) && !hasValue(unit.targetingUnit) && unit.unitState === UnitState.Moving)
         .forEach((unit) => {
-            unit.position.add(calculateUnitMovementPerTick(unit));
+            addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
 
             if (state.ticks === unit.arrivalTick) {
-                unit.position = unit.patrollingTo.clone();
+                setWithClamp(unit.position, unit.patrollingTo.clone(), Grid.fromGameState(state));
                 swapProperties(unit, 'patrollingTo', 'patrollingToReturn');
                 setUnitMovementTowards(state, unit, unit.patrollingTo);
             }

@@ -5,6 +5,6 @@ export default function addWithClamp(position: Vector2, addition: Vector2, grid:
     position.add(addition);
 }
 
-export function setWithClamp() {
-
+export function setWithClamp(position: Vector2, newPosition: Vector2, grid: Grid) {
+    position.set(newPosition.x, newPosition.y);
 }

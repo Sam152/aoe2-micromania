@@ -11,6 +11,8 @@ import {Vector2} from 'three/src/math/Vector2';
 import inAttackRange, {inMinimumRange} from '../../../util/inAttackRange';
 import setUnitMovementTowards, {setUnitMovementAwayFrom} from '../initiated/setUnitMovementTowards';
 import compassDirectionCalculator from '../../../units/compassDirectionCalculator';
+import addWithClamp from "../../../util/addWithClamp";
+import Grid from "../../../terrain/Grid";
 
 
 export default function fireProjectiles(state: GameState) {
@@ -22,7 +24,7 @@ export default function fireProjectiles(state: GameState) {
 
             if (inMinimumRange(unit, targetingPosition)) {
                 setUnitMovementAwayFrom(state, unit, targetingPosition);
-                unit.position.add(calculateUnitMovementPerTick(unit));
+                addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
             } else if (inAttackRange(unit, targetingPosition)) {
                 unit.movingDirection = null;
 
@@ -35,7 +37,7 @@ export default function fireProjectiles(state: GameState) {
                 }
             } else {
                 setUnitMovementTowards(state, unit, targetingPosition);
-                unit.position.add(calculateUnitMovementPerTick(unit));
+                addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
             }
         });
 

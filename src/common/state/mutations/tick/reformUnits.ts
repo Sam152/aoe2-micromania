@@ -1,17 +1,18 @@
 import setUnitMovementTowards, {setUnitMovementTowardsCurrentWaypoint} from '../initiated/setUnitMovementTowards';
 import {GameState} from '../../../../types';
-import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPerTick';
 import hasValue from '../../../util/hasValue';
 import UnitState from '../../../units/UnitState';
 import stopUnit from '../initiated/stopUnit';
-import patrolTo from '../initiated/patrolTo';
+import addWithClamp from "../../../util/addWithClamp";
+import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
+import Grid from "../../../terrain/Grid";
 
 export default function reformUnits(state: GameState) {
     // Move units that are reforming.
     state.units
         .filter(({reformingTo, unitState, targetingUnit}) => hasValue(reformingTo) && !hasValue(targetingUnit) && unitState === UnitState.Moving)
         .forEach(function(unit) {
-            unit.position.add(calculateUnitMovementPerTick(unit));
+            addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
         });
 
     // Get units moving again, after falling idle in the middle of reforming (ie they stopped to fire at something).
