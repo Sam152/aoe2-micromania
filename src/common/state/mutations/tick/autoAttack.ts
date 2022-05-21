@@ -1,29 +1,33 @@
-import {GameState} from '../../../../types';
+import {GameState, UnitInstance} from '../../../../types';
 import UnitState from '../../../units/UnitState';
-import inAttackRange from '../../../util/inAttackRange';
-import hasValue from '../../../util/hasValue';
+import {getAttackRange} from '../../../util/inAttackRange';
+import {hasScalarValue} from '../../../util/hasValue';
+import {createUnitQuadtree} from "../../../util/buildQuadTree";
+import {Quadtree} from "d3-quadtree";
 
 export default function autoAttack(state: GameState) {
     const autoAttackingUnits = state.units.filter((unit) => {
         return (
             unit.unitState === UnitState.Idle ||
-            hasValue(unit.patrollingTo)
+            hasScalarValue(unit.patrollingTo)
         ) && (
-            !hasValue(unit.targetingUnit) ||
-            !hasValue(unit.targetingPosition)
+            !hasScalarValue(unit.targetingUnit) ||
+            !hasScalarValue(unit.targetingPosition)
         );
     });
 
-    autoAttackingUnits.forEach((attackingUnit) => {
-        const targets = state.units.filter(({ownedByPlayer}) => ownedByPlayer !== attackingUnit.ownedByPlayer);
-        if (targets.length === 0) {
-            return;
-        }
+    const quadtrees: {[key: number]: Quadtree<UnitInstance>} = {
+      1: createUnitQuadtree(),
+      2: createUnitQuadtree(),
+    };
+    quadtrees[1].addAll(state.units.filter(({ownedByPlayer}) => ownedByPlayer === 1));
+    quadtrees[2].addAll(state.units.filter(({ownedByPlayer}) => ownedByPlayer === 2));
 
-        const targetDistances = targets.map(({position}) => attackingUnit.position.distanceToSquared(position));
-        const closestUnit = targets[targetDistances.indexOf(Math.min(...targetDistances))];
-        if (inAttackRange(attackingUnit, closestUnit.position)) {
-            attackingUnit.targetingUnit = closestUnit.id;
+    autoAttackingUnits.forEach((attackingUnit) => {
+        const searchQuadTree = attackingUnit.ownedByPlayer === 1 ? quadtrees[2] : quadtrees[1];
+        const closest = searchQuadTree.find(attackingUnit.position.x, attackingUnit.position.y, getAttackRange(attackingUnit));
+        if (closest) {
+            attackingUnit.targetingUnit = closest.id;
         }
     });
 }
