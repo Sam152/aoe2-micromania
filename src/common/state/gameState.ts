@@ -85,12 +85,29 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.n === 'T') {
+        // console.time('moveUnits');
         moveUnits(state);
+        // console.timeEnd('move units');
+
+        // console.time('reformUnits');
         reformUnits(state);
+        // console.timeEnd('reformUnits');
+
+        // console.time('patrolUnits');
         patrolUnits(state);
+        // console.timeEnd('patrolUnits');
+
+        // console.time('fireProjectiles');
         fireProjectiles(state);
+        // console.timeEnd('fireProjectiles');
+
+        console.time('autoAttack');
         autoAttack(state);
+        console.timeEnd('autoAttack');
+
+        // console.time('registerProjectileHits');
         registerProjectileHits(state);
+        // console.timeEnd('registerProjectileHits');
 
         ++state.ticks;
     }

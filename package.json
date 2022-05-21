@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/d3-quadtree": "^3.0.2",
     "@types/humanize-duration": "^3.27.1",
     "@types/three": "^0.139.0",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
@@ -46,6 +47,7 @@
     "@types/react-dom": "^18.0.0",
     "buffer": "^6.0.3",
     "bufferutil": "^4.0.6",
+    "d3-quadtree": "^3.0.1",
     "framer-motion": "^6",
     "genie-slp": "^1.1.0",
     "humanize-duration": "^3.27.1",
