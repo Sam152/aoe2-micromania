@@ -100,7 +100,7 @@ export default class CanvasRenderer implements RendererInterface {
             return func(point.x) > point.y;
         }
 
-        arrayOfSize(500).forEach(n => {
+        arrayOfSize(1500).forEach(n => {
             circle(this.context, new Vector2(n, bottomLeft(n)), 1, 'green');
             circle(this.context, new Vector2(n, topRight(n)), 1, 'blue');
             circle(this.context, new Vector2(n, topLeft(n)), 1, 'red');
@@ -108,7 +108,6 @@ export default class CanvasRenderer implements RendererInterface {
         });
 
         if (clientState.lastLeftClick) {
-
             if (
                 isBelowLine(topLeft, clientState.lastLeftClick)
                 && isBelowLine(topRight, clientState.lastLeftClick)
@@ -120,7 +119,6 @@ export default class CanvasRenderer implements RendererInterface {
             else {
                 circle(this.context, clientState.lastLeftClick,3, 'red');
             }
-
         }
 
 
