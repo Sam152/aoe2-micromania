@@ -16,7 +16,7 @@ import humanizeDuration from "humanize-duration";
 import useFetched from "../hooks/useFetched";
 
 export default function Replays() {
-    const games = useFetched<Array<ReplayIndexItem>>('/recs/index.json', []).reverse();
+    const games = useFetched<Array<ReplayIndexItem>>('/recs/index.json', []);
 
     return (
         <Container>
@@ -32,7 +32,7 @@ export default function Replays() {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {games.map(game => (
+                            {games.slice().reverse().map(game => (
                                 <Tr key={game.id}>
                                     <Td>{game.players.join(' vs ')}</Td>
                                     <Td>{ new Date(game.start).toLocaleString() }</Td>
