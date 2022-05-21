@@ -1,6 +1,4 @@
 import {Ai, GameDispatcher, GameState, GameStateAction} from '../../types';
-import FormationType from '../units/formations/FormationType';
-import {Vector2} from 'three/src/math/Vector2';
 import averageVector from '../util/averageVector';
 
 /**
@@ -14,16 +12,17 @@ export default class PatrollingAi implements Ai {
     }
 
     makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-        // if (action.n === 'T' && state.ticks === 20) {
-        //     const patrolTo = averageVector(state.units
-        //         .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)
-        //         .map(({position}) => position));
-        //
-        //     dispatcher({
-        //         n: 'PATROL',
-        //         position: patrolTo,
-        //         units: state.units.filter(({ownedByPlayer}) => ownedByPlayer === this.playingAs).map(({id}) => id),
-        //     });
-        // }
+        if (state.ticks !== 20) {
+            return;
+        }
+        const patrolTo = averageVector(state.units
+            .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)
+            .map(({position}) => position));
+
+        dispatcher({
+            n: 'PATROL',
+            position: patrolTo,
+            units: state.units.filter(({ownedByPlayer}) => ownedByPlayer === this.playingAs).map(({id}) => id),
+        });
     }
 }

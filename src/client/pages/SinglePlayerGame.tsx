@@ -26,10 +26,9 @@ function SinglePlayerGame() {
         const gameMode = new ArcherMicro();
 
         const manager = new LocalStateManager((state: GameState, action: GameStateAction) => {
-            ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
-
             if (action.n === 'T') {
                 gameMode.onTick(state, action, manager.dispatchGame.bind(manager));
+                ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
             }
 
             if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
