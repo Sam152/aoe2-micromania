@@ -12,6 +12,7 @@ import SinglePlayerGamePage from "./pages/SinglePlayerGame";
 import QuickJoin from "./pages/QuickJoin";
 import Replays from "./pages/Replays";
 import Replay from "./pages/Replay";
+import Hotkeys from "./pages/Hotkeys";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -39,6 +40,7 @@ export default function App() {
                                 <Route path="" element={<SinglePlayerGamePage/>}/>
                             </Route>
                             <Route path="room/:roomId" element={<Room/>}/>
+                            <Route path="/hotkeys" element={<Hotkeys />}/>
                         </Routes>
                     </BrowserRouter>
                 </RoomListContext.Provider>

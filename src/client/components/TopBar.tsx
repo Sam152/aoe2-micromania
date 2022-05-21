@@ -26,7 +26,7 @@ export default function TopBar() {
                     <Link variant="menu-link" as={RouterLink} to='/'>Lobby Browser</Link>
                     <Link variant="menu-link" as={RouterLink} to='/replays'>Replays</Link>
                     <Link variant="menu-link" padding="md" as={RouterLink} to='/single-player'>Single Player</Link>
-                    <Link variant="menu-link" as={RouterLink} to='/'>Hotkeys</Link>
+                    <Link variant="menu-link" as={RouterLink} to='/hotkeys'>Hotkeys</Link>
                 </Flex>
             </HStack>
 
