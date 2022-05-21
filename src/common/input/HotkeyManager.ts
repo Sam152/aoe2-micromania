@@ -2,6 +2,7 @@ import Hotkey from "./Hotkey";
 import hdHotkeyScheme from "./schemes/hdHotkeyScheme";
 import LocalStorageObject from "../util/LocalStorageObject";
 import {HotkeyScheme} from "../../types";
+import deepClone from "../util/deepClone";
 
 const defaultScheme = hdHotkeyScheme;
 
@@ -24,7 +25,7 @@ class HotkeyManager {
     }
 
     setScheme(scheme: HotkeyScheme): void {
-        this.binds = scheme;
+        this.binds = deepClone(scheme);
         this.storage.set(this.binds);
     }
 
