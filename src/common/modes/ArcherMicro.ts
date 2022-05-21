@@ -12,8 +12,8 @@ export default class ArcherMicro implements GameMode {
             unitType: Unit.Mangonel,
             position: grid.middleOfTile(7, 2),
         });
-        for (let x = 0; x < 50; x++) {
-            for (let y = 0; y < 50; y++) {
+        for (let x = 0; x < 5; x++) {
+            for (let y = 0; y < 5; y++) {
                 gameDispatcher({
                     n: 'SPAWN_UNIT',
                     forPlayer: 1,
