@@ -35,7 +35,7 @@ const config = {
     /**
      * How fast the camera should pan.
      */
-    cameraPanSpeed: 30,
+    cameraPanSpeed: 10,
 };
 
 export default config;

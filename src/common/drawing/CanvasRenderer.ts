@@ -100,7 +100,7 @@ export default class CanvasRenderer implements RendererInterface {
             return func(point.x) > point.y;
         }
 
-        arrayOfSize(15000).forEach(n => {
+        arrayOfSize(500).forEach(n => {
             circle(this.context, new Vector2(n, bottomLeft(n)), 1, 'green');
             circle(this.context, new Vector2(n, topRight(n)), 1, 'blue');
             circle(this.context, new Vector2(n, topLeft(n)), 1, 'red');
