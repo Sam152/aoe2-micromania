@@ -18,6 +18,10 @@ import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable";
 import hotkeyManager from "../../common/input/HotkeyManager";
 import Hotkey from "../../common/input/Hotkey";
 import BindableRow from "../components/BindableRow";
+import {HotkeyScheme} from "../../types";
+import hdHotkeyScheme from "../../common/input/schemes/hdHotkeyScheme";
+import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme";
+import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme";
 
 export default function Hotkeys() {
 
@@ -32,13 +36,18 @@ export default function Hotkeys() {
         rerender.increment();
     }
 
+    function setScheme(scheme: HotkeyScheme) {
+        hotkeyManager.setScheme(scheme);
+        rerender.increment();
+    }
+
     return (
         <Container>
             <VStack spacing={4}>
                 <ButtonGroup justifyContent="flex-end" width="full">
-                    <Button onClick={() => null}>HD Hotkeys</Button>
-                    <Button onClick={() => null}>DE Hotkeys</Button>
-                    <Button onClick={() => null}>AoC Hotkeys</Button>
+                    <Button onClick={() => setScheme(hdHotkeyScheme)}>HD Hotkeys</Button>
+                    <Button onClick={() => setScheme(deHotkeyScheme)}>DE Hotkeys</Button>
+                    <Button onClick={() => setScheme(aocHotkeyScheme)}>AoC Hotkeys</Button>
                     <Button variant='outline' onClick={clear}>Reset to default</Button>
                 </ButtonGroup>
 

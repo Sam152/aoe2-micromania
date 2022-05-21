@@ -1,6 +1,7 @@
 import Hotkey from "./Hotkey";
 import hdHotkeyScheme from "./schemes/hdHotkeyScheme";
 import LocalStorageObject from "../util/LocalStorageObject";
+import {HotkeyScheme} from "../../types";
 
 const defaultScheme = hdHotkeyScheme;
 
@@ -19,6 +20,11 @@ class HotkeyManager {
 
     setBindFor(hotkey: Hotkey, bind: number): void {
         this.binds[hotkey] = bind;
+        this.storage.set(this.binds);
+    }
+
+    setScheme(scheme: HotkeyScheme): void {
+        this.binds = scheme;
         this.storage.set(this.binds);
     }
 

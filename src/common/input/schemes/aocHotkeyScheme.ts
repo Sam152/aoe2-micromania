@@ -1,7 +1,7 @@
 import {HotkeyScheme} from "../../../types";
 import Hotkey from "../Hotkey";
 
-const hdHotkeyScheme: HotkeyScheme = {
+const aocHotkeyScheme: HotkeyScheme = {
     [Hotkey.LineFormation]: 90,
     [Hotkey.SpreadFormation]: 67,
     [Hotkey.SplitFormation]: 86,
@@ -18,4 +18,4 @@ const hdHotkeyScheme: HotkeyScheme = {
     [Hotkey.CameraRight]: 39,
 };
 
-export default hdHotkeyScheme;
+export default aocHotkeyScheme;
