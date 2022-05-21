@@ -3,6 +3,8 @@ import screenPositionToGamePosition, {gamePositionToScreenPosition} from '../uti
 import {Vector2} from 'three/src/math/Vector2';
 import FormationType from '../units/formations/FormationType';
 import screenManager from '../drawing/screenManager';
+import hotkeyManager from "./HotkeyManager";
+import Hotkey from "./Hotkey";
 
 const StInput = require('stinput');
 
@@ -70,7 +72,7 @@ export default class InputManager {
             this.dragging = false;
         }
 
-        if (this.input.pressed('f')) {
+        if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.Stop))) {
             this.dispatch({
                 n: 'HOTKEY_STOP',
             });
@@ -80,37 +82,37 @@ export default class InputManager {
                 n: 'HOTKEY_DELETE',
             });
         }
-        if (this.input.pressed('r')) {
+        if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.AttackGround))) {
             this.dispatch({
                 n: 'HOTKEY_ATTACK_GROUND',
             });
         }
-        if (this.input.pressed('q')) {
+        if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.Patrol))) {
             this.dispatch({
                 n: 'HOTKEY_PATROL',
                 position: this.mousePosition(cameraPosition),
             });
         }
-        if (this.input.pressed('z')) {
+        if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.LineFormation))) {
             this.dispatch({
                 n: 'HOTKEY_FORMATION_CHANGED',
                 formation: FormationType.Line,
             });
         }
-        if (this.input.pressed('c')) {
+        if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.SpreadFormation))) {
             this.dispatch({
                 n: 'HOTKEY_FORMATION_CHANGED',
                 formation: FormationType.Spread,
             });
         }
-        if (this.input.keyPressed(86)) {
+        if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.SplitFormation))) {
             this.dispatch({
                 n: 'HOTKEY_FORMATION_CHANGED',
                 formation: FormationType.Split,
             });
         }
 
-        if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
+        if (this.input.shiftDown && this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.DeleteUnit))) {
             this.dispatch({
                 n: 'HOTKEY_SHIFT_DELETE',
             });
@@ -122,22 +124,22 @@ export default class InputManager {
             });
         }
 
-        if (this.input.down('left_arrow') || this.input.down('a')) {
+        if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraLeft))) {
             this.dispatch({
                 n: 'ARROW_LEFT',
             });
         }
-        if (this.input.down('right_arrow') || this.input.down('d')) {
+        if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraRight))) {
             this.dispatch({
                 n: 'ARROW_RIGHT',
             });
         }
-        if (this.input.down('up_arrow') || this.input.down('w')) {
+        if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraUp))) {
             this.dispatch({
                 n: 'ARROW_UP',
             });
         }
-        if (this.input.down('down_arrow') || this.input.down('s')) {
+        if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraDown))) {
             this.dispatch({
                 n: 'ARROW_DOWN',
             });
