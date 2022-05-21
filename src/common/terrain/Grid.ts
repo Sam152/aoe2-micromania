@@ -2,6 +2,8 @@ import {Vector2} from 'three/src/math/Vector2';
 import config from '../config';
 import {GameState} from '../../types';
 
+const gridCache: {[key: number]: Grid} = {};
+
 export default class Grid {
     private readonly size: number;
     private readonly tileHalfHeight: number;
@@ -16,7 +18,11 @@ export default class Grid {
     }
 
     static fromGameState(gameState: GameState) {
-        return new Grid(gameState.mapSize);
+        if (gridCache[gameState.mapSize]) {
+            return gridCache[gameState.mapSize];
+        }
+        gridCache[gameState.mapSize] = new Grid(gameState.mapSize);
+        return gridCache[gameState.mapSize];
     }
 
     tileDrawnAt(x: number, y: number): Vector2 {
