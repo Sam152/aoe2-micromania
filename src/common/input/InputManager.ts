@@ -103,6 +103,12 @@ export default class InputManager {
                 formation: FormationType.Spread,
             });
         }
+        if (this.input.pressed('v')) {
+            this.dispatch({
+                n: 'HOTKEY_FORMATION_CHANGED',
+                formation: FormationType.Split,
+            });
+        }
 
         if (this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
             this.dispatch({

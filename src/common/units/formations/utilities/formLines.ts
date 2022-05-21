@@ -8,7 +8,10 @@ export default function formLines(positions: Array<Vector2>, destination: Vector
         const row = Math.ceil((index + 1) / columns);
         return destination.clone().add(new Vector2((index % columns) * distanceBetween, row * distanceBetween));
     });
+    return translateAndRotate(positions, newPositions, destination, startingPoint);
+}
 
+export function translateAndRotate(positions: Array<Vector2>, newPositions: Array<Vector2>, destination: Vector2, startingPoint: Vector2) {
     // Move the units to the middle of the destination point.
     const offsetFromDestination = averageVector(newPositions).sub(destination);
     newPositions.map((newPosition) => newPosition.sub(offsetFromDestination));

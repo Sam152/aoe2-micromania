@@ -40,8 +40,8 @@ export default function changeFormation(state: GameState, action: { formation: F
         const positions = units.map(({position}) => position);
         formationManager.fromPopulation(units).form(positions, reformPosition).forEach((formationPosition, index) => {
             units[index].reformingTo = formationPosition;
-            setUnitMovementTowards(state, units[index], units[index].reformingTo);
             units[index].reformingArrivalTick = units[index].arrivalTick;
+            setUnitMovementTowards(state, units[index], units[index].reformingTo);
         });
         addUnitReformingSpeedFactor(state.ticks, units);
     }

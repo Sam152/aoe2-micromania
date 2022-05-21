@@ -2,6 +2,7 @@ import FormationType from './FormationType';
 import LineFormation from './types/LineFormation';
 import {FormationInterface, UnitInstance} from '../../../types';
 import SpreadFormation from './types/SpreadFormation';
+import SplitFormation from "./types/SplitFormation";
 
 class FormationManager {
     map: {[key: number]: FormationInterface };
@@ -10,7 +11,7 @@ class FormationManager {
         this.map = {
             [FormationType.Line]: new LineFormation(),
             [FormationType.Spread]: new SpreadFormation(),
-            [FormationType.Flank]: new LineFormation(),
+            [FormationType.Split]: new SplitFormation(),
         };
     }
 
