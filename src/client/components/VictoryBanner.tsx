@@ -51,12 +51,12 @@ function Banner({text, buttonText, onClick}: { text: string; buttonText: string;
 
 export function VictoryBanner() {
     const navigate = useNavigate();
-    return <Banner text={'You are victorious!'} buttonText={'Join another'} onClick={() => navigate('/quick-join')}/>;
+    return <Banner text={'You are victorious!'} buttonText={'Quick join another lobby'} onClick={() => navigate('/quick-join')}/>;
 }
 
 export function DefeatBanner() {
     const navigate = useNavigate();
-    return <Banner text={'You have been defeated!'} buttonText={'Join another'} onClick={() => navigate('/quick-join')}/>;
+    return <Banner text={'You have been defeated!'} buttonText={'Quick join another lobby'} onClick={() => navigate('/quick-join')}/>;
 }
 
 export function SinglePlayerVictoryBanner() {
