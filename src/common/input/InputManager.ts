@@ -77,11 +77,17 @@ export default class InputManager {
                 n: 'HOTKEY_STOP',
             });
         }
-        if (!this.input.shiftDown && this.input.keyPressed(StInput.KeyboardKeys.backspace)) {
+        if (!this.input.shiftDown && this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.DeleteUnit))) {
             this.dispatch({
                 n: 'HOTKEY_DELETE',
             });
         }
+        if (this.input.shiftDown && this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.DeleteUnit))) {
+            this.dispatch({
+                n: 'HOTKEY_SHIFT_DELETE',
+            });
+        }
+
         if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.AttackGround))) {
             this.dispatch({
                 n: 'HOTKEY_ATTACK_GROUND',
@@ -111,13 +117,6 @@ export default class InputManager {
                 formation: FormationType.Split,
             });
         }
-
-        if (this.input.shiftDown && this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.DeleteUnit))) {
-            this.dispatch({
-                n: 'HOTKEY_SHIFT_DELETE',
-            });
-        }
-
         if (this.input.keyPressed(StInput.KeyboardKeys.escape)) {
             this.dispatch({
                 n: 'HOTKEY_CANCEL',

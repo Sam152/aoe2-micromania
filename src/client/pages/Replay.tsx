@@ -1,14 +1,15 @@
 import {GameState, GameStateAction, ReplayItem} from '../../types';
 import {useParams} from 'react-router-dom';
 import useFetched from '../hooks/useFetched';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import {Box} from '@chakra-ui/react';
-import {SinglePlayerVictoryBanner} from '../components/VictoryBanner';
+import {ReplayOverBanner} from '../components/VictoryBanner';
 import GameCanvas from '../components/GameCanvas';
 import config from '../../common/config';
-import {calcRelativePosition} from 'framer-motion/types/projection/geometry/delta-calc';
 import {normalizeGameStateAction} from '../../common/util/normalizer';
+
+let interval: NodeJS.Timer;
 
 export default function Replay() {
     const {replayId} = useParams();
@@ -27,14 +28,13 @@ export default function Replay() {
 
         const playableActions = JSON.parse(JSON.stringify(replay.actions));
 
-        const interval = setInterval(playTick, 1000 / config.ticksPerSecond);
+        interval = setInterval(playTick, 1000 / config.ticksPerSecond);
         function playTick() {
             while (true) {
                 const action = playableActions.shift();
-                console.log(action);
                 manager.dispatchGame(normalizeGameStateAction(action));
 
-                if (action.length === 0) {
+                if (playableActions.length === 0) {
                     clearInterval(interval);
                     break;
                 }
@@ -46,10 +46,18 @@ export default function Replay() {
         return manager;
     }, [replay]);
 
+    useEffect(() => {
+        return () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+        }
+    }, []);
+
     return (
         <Box pos="relative">
             {replayOver && (
-                <SinglePlayerVictoryBanner/>
+                <ReplayOverBanner/>
             )}
             {stateManager && (
                 <GameCanvas stateManager={stateManager} />

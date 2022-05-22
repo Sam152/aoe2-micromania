@@ -70,3 +70,8 @@ export function SinglePlayerDefeatBanner() {
     const id = generateId(6);
     return <Banner text={'You have been defeated!'} buttonText={'Play again'} onClick={() => navigate(`/single-player/${id}`)}/>;
 }
+
+export function ReplayOverBanner() {
+    const navigate = useNavigate();
+    return <Banner text={'Replay complete'} buttonText={'Return to replays'} onClick={() => navigate(`/replays`)} />;
+}
