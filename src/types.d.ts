@@ -82,14 +82,18 @@ export type StateTransmitter = (clientState: ClientState, action: ClientStateAct
 export interface GameState {
     ticks: number;
     idAt: 0;
+
     units: UnitInstance[];
     projectiles: ProjectileInstance[];
     fallenUnits: FallenUnitInstance[];
-    mapSize: number;
+
     loadedPlayers: Array<PlayerId>;
     gameModeStarted: boolean;
     gameEnded: boolean;
     winner?: PlayerId;
+
+    mapSize: number;
+    mapTerrain: string;
 }
 
 export type UnitId = number;
@@ -147,6 +151,10 @@ type GameStateAction = {
     n: 'FORMATION_CHANGED';
     formation: FormationType;
     units: UnitId[];
+} | {
+    n: 'MAP_PARAMETERS_SET';
+    terrain: string;
+    size: number;
 };
 
 export interface ClientState {

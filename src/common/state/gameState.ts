@@ -95,6 +95,16 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
         ++state.ticks;
     }
+
+    if (action.n === 'MAP_PARAMETERS_SET') {
+        state.mapSize = action.size;
+        state.mapTerrain = action.terrain;
+
+        clientDispatcher({
+            n: 'FIXATE_CAMERA',
+        });
+    }
+
     return state;
 }
 
@@ -102,14 +112,18 @@ function defaultState(): GameState {
     return deepClone({
         ticks: 0,
         idAt: 0,
+
         units: [],
         projectiles: [],
         fallenUnits: [],
-        mapSize: 18,
+
         loadedPlayers: [],
         gameModeStarted: false,
         gameEnded: false,
         winner: null,
+
+        mapSize: 18,
+        mapTerrain: 'terrain/sandy',
     });
 }
 

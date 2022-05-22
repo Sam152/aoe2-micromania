@@ -4,7 +4,14 @@ import Grid from '../terrain/Grid';
 
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher, gameState: GameState): void {
-        const grid = Grid.fromGameState(gameState);
+
+        const grid = new Grid(13);
+
+        gameDispatcher({
+            n: 'MAP_PARAMETERS_SET',
+            size: grid.size,
+            terrain: 'terrain/sandy',
+        });
 
         gameDispatcher({
             n: 'SPAWN_UNIT',

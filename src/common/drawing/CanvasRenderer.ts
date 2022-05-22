@@ -98,7 +98,7 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawTerrain(gameState: GameState): void {
-        const terrain = this.slpManager.getAsset('terrain/green');
+        const terrain = this.slpManager.getAsset(gameState.mapTerrain);
         const grid = new Grid(gameState.mapSize);
 
         // Terrain drawing algo documented at https://simonsan.github.io/openage-webdocs/sphinx/doc/media/terrain.html.

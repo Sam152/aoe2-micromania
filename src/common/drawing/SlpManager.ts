@@ -92,6 +92,7 @@ export default class SlpManager {
             'projectiles/arrow',
             'projectiles/rocks',
             'interface/move-command',
+            'terrain/cobble',
             'terrain/green',
             'terrain/sandy',
         ];
