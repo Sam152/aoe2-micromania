@@ -16,7 +16,7 @@ import spawnUnit from './mutations/initiated/spawnUnit';
 import moveTo from './mutations/initiated/moveTo';
 import changeFormation from './mutations/initiated/changeFormation';
 import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
-import {snapToClamp} from "../util/snapToClamp";
+import {snapToClamp} from '../util/snapToClamp';
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.n === 'CLIENT_LOADED') {

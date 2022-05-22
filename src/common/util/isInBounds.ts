@@ -1,6 +1,6 @@
 import {Vector2} from 'three/src/math/Vector2';
 import Grid from '../terrain/Grid';
-import config from "../config";
+import config from '../config';
 
 // Precompute as many constants as possible.
 const tileGradient = config.tileHeight / config.tileWidth;
@@ -22,14 +22,14 @@ export function isAboveLine(func: gradientFunction, point: Vector2, mapSize: num
     return func(point.x, mapSize) > point.y;
 }
 
-export function isInBounds(point: Vector2, mapSize: number) {
-    return isBelowLine(topLeft, point, mapSize)
-        && isBelowLine(topRight, point, mapSize)
-        && isAboveLine(bottomLeft, point, mapSize)
-        && isAboveLine(bottomRight, point, mapSize);
+export default function isInBounds(point: Vector2, mapSize: number) {
+    return isBelowLine(topLeft, point, mapSize) &&
+        isBelowLine(topRight, point, mapSize) &&
+        isAboveLine(bottomLeft, point, mapSize) &&
+        isAboveLine(bottomRight, point, mapSize);
 }
 
-export default function addWithClamp(position: Vector2, addition: Vector2, mapSize: number) {
+export function addWithClamp(position: Vector2, addition: Vector2, mapSize: number) {
     if (isInBounds(position.clone().add(addition), mapSize)) {
         position.add(addition);
     }

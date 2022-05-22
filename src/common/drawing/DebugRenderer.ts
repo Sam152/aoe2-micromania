@@ -2,10 +2,10 @@ import {ClientDispatcher, ClientState, GameState, Line, Rectangle, RendererInter
 import {circle, square} from './shapes';
 import {Vector2} from 'three/src/math/Vector2';
 import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
-import arrayOfSize from "../util/arrayOfSize";
-import {bottomLeft, bottomRight, isInBounds, topLeft, topRight} from "../util/addWithClamp";
-import config from "../config";
-import {clampToLine, snapToClamp} from "../util/snapToClamp";
+import arrayOfSize from '../util/arrayOfSize';
+import isInBounds, {bottomLeft, bottomRight, topLeft, topRight} from '../util/isInBounds';
+import config from '../config';
+import {snapToClamp} from '../util/snapToClamp';
 
 export default class DebugRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -34,7 +34,7 @@ export default class DebugRenderer implements RendererInterface {
     }
 
     drawBoundary(gameState: GameState, clientState: ClientState) {
-        arrayOfSize(200).forEach(i => {
+        arrayOfSize(200).forEach((i) => {
             const n = i * 5;
             const offset = gameState.mapSize * config.tileHeight;
             circle(this.context, new Vector2(n, bottomLeft(n, gameState.mapSize)), 1, 'green');
@@ -47,10 +47,9 @@ export default class DebugRenderer implements RendererInterface {
             if (
                 isInBounds(clientState.lastLeftClick, gameState.mapSize)
             ) {
-                circle(this.context, clientState.lastLeftClick,10, 'green');
-            }
-            else {
-                circle(this.context, clientState.lastLeftClick,10, 'red');
+                circle(this.context, clientState.lastLeftClick, 10, 'green');
+            } else {
+                circle(this.context, clientState.lastLeftClick, 10, 'red');
             }
         }
     }

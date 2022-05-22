@@ -14,7 +14,7 @@ import getArrowPosition from './helpers/getArrowPosition';
 import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
 import unitsInGameState from '../util/unitsInGameState';
-import DebugRenderer from "./DebugRenderer";
+import DebugRenderer from './DebugRenderer';
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -41,7 +41,7 @@ export default class CanvasRenderer implements RendererInterface {
         window.ctx = this.context;
 
         this.lastCursor = null;
-        
+
         this.debugRenderer = new DebugRenderer(canvas);
 
         this.fit();

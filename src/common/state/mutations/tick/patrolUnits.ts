@@ -4,8 +4,6 @@ import calculateUnitMovementPerTick from '../../../units/calculateUnitMovementPe
 import swapProperties from '../../../util/swapProperties';
 import setUnitMovementTowards from '../initiated/setUnitMovementTowards';
 import UnitState from '../../../units/UnitState';
-import addWithClamp, {setWithClamp} from '../../../util/addWithClamp';
-import Grid from '../../../terrain/Grid';
 
 export default function patrolUnits(state: GameState) {
     state.units

@@ -1,7 +1,7 @@
-import {Vector2} from "three/src/math/Vector2";
-import {Line} from "../../types";
-import config from "../config";
-import {isInBounds} from "./addWithClamp";
+import {Vector2} from 'three/src/math/Vector2';
+import {Line} from '../../types';
+import config from '../config';
+import isInBounds from "./isInBounds";
 
 export function snapToClamp(point: Vector2, mapSize: number) {
     if (isInBounds(point, mapSize)) {
@@ -14,7 +14,7 @@ export function snapToClamp(point: Vector2, mapSize: number) {
 
     // Find the shortest distance to a point clamped along the four lines
     // that border the map.
-    lines.forEach(line => {
+    lines.forEach((line) => {
         const insideBoundaryPoint = clampToLine(line, point);
         if (smallestDistanceToLine === null) {
             resolvedInsideBoundaryPoint = insideBoundaryPoint;
@@ -56,7 +56,7 @@ function interpolate(p1: Vector2, p2: Vector2, t: number) {
 }
 
 function project(p1: Vector2, p2: Vector2, p3: Vector2) {
-    const x21 = p2.x - p1.x, y21 = p2.y - p1.y;
-    const x31 = p3.x - p1.x, y31 = p3.y - p1.y;
+    const x21 = p2.x - p1.x; const y21 = p2.y - p1.y;
+    const x31 = p3.x - p1.x; const y31 = p3.y - p1.y;
     return (x31 * x21 + y31 * y21) / (x21 * x21 + y21 * y21);
 }
