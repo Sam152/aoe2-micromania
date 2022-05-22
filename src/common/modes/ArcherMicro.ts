@@ -5,7 +5,7 @@ import Grid from '../terrain/Grid';
 export default class ArcherMicro implements GameMode {
     start(gameDispatcher: GameDispatcher, gameState: GameState): void {
 
-        const grid = new Grid(13);
+        const grid = new Grid(18);
 
         gameDispatcher({
             n: 'MAP_PARAMETERS_SET',
