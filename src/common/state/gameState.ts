@@ -16,6 +16,7 @@ import spawnUnit from './mutations/initiated/spawnUnit';
 import moveTo from './mutations/initiated/moveTo';
 import changeFormation from './mutations/initiated/changeFormation';
 import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
+import {snapToClamp} from "../util/snapToClamp";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.n === 'CLIENT_LOADED') {
@@ -39,7 +40,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.n === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
-        moveTo(state, units, action.position);
+        moveTo(state, units, snapToClamp(action.position, state.mapSize));
     }
     if (action.n === 'ADD_WAYPOINT') {
         const units = unitsInGameState(state, action.units);

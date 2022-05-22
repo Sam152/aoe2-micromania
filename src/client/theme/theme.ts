@@ -40,7 +40,11 @@ const theme = extendTheme({
             },
         },
         Button: {
-            baseStyle: {},
+            baseStyle: {
+                _focus: {
+                    boxShadow: 'none'
+                }
+            },
             defaultProps: {
                 size: 'sm',
             },
@@ -84,6 +88,9 @@ const theme = extendTheme({
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
                     fontSize: 'sm',
+                    _focus: {
+                        boxShadow: 'none'
+                    }
                 },
             },
         },

@@ -2,7 +2,7 @@ const config = {
     /**
      * If the game should render debug information.
      */
-    debug: false,
+    debug: true,
     /**
      * A constant used in some calculations for converting unit/game stats into real-time.
      */

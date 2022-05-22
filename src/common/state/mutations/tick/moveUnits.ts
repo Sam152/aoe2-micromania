@@ -11,10 +11,10 @@ export default function moveUnits(state: GameState) {
     state.units
         .filter(({waypoints, reformingTo}) => waypoints.length > 0 && !hasValue(reformingTo))
         .forEach(function(unit) {
-            addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
+            unit.position.add(calculateUnitMovementPerTick(unit));
 
             if (state.ticks === unit.arrivalTick) {
-                setWithClamp(unit.position, unit.waypoints.shift(), Grid.fromGameState(state));
+                unit.position = unit.waypoints.shift().clone();
 
                 if (unit.waypoints.length) {
                     setUnitMovementTowardsCurrentWaypoint(state, unit);

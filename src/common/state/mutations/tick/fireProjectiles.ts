@@ -24,7 +24,7 @@ export default function fireProjectiles(state: GameState) {
 
             if (inMinimumRange(unit, targetingPosition)) {
                 setUnitMovementAwayFrom(state, unit, targetingPosition);
-                addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
+                unit.position.add(calculateUnitMovementPerTick(unit));
             } else if (inAttackRange(unit, targetingPosition)) {
                 unit.movingDirection = null;
 
@@ -37,7 +37,7 @@ export default function fireProjectiles(state: GameState) {
                 }
             } else {
                 setUnitMovementTowards(state, unit, targetingPosition);
-                addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
+                unit.position.add(calculateUnitMovementPerTick(unit));
             }
         });
 

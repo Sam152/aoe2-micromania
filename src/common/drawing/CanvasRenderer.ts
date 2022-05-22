@@ -1,7 +1,7 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from './shapes';
+import {square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three/src/math/Vector2';
 import config from '../config';
@@ -13,9 +13,8 @@ import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick'
 import getArrowPosition from './helpers/getArrowPosition';
 import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
-import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
 import unitsInGameState from '../util/unitsInGameState';
-import arrayOfSize from "../util/arrayOfSize";
+import DebugRenderer from "./DebugRenderer";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -26,6 +25,7 @@ export default class CanvasRenderer implements RendererInterface {
     framesPerTick: number;
     fractionOfTickRendered: number;
     private lastCursor: number | null;
+    private debugRenderer: RendererInterface;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -41,6 +41,8 @@ export default class CanvasRenderer implements RendererInterface {
         window.ctx = this.context;
 
         this.lastCursor = null;
+        
+        this.debugRenderer = new DebugRenderer(canvas);
 
         this.fit();
         screenManager.onChange(this.fit.bind(this));
@@ -84,43 +86,9 @@ export default class CanvasRenderer implements RendererInterface {
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
         this.renderMouse(clientState);
 
-
-        const tileGradient = config.tileHeight / config.tileWidth;
-
-        const bottomLeft = (x: number) => tileGradient * x + ((gameState.mapSize * config.tileHeight) / 2);
-        const topRight = (x: number) => tileGradient * x - ((gameState.mapSize * config.tileHeight) / 2);
-
-        const topLeft = (x: number) => -1 * tileGradient * x + ((gameState.mapSize * config.tileHeight) / 2);
-        const bottomRight = (x: number) => -1 * tileGradient * x + ((gameState.mapSize * config.tileHeight) * 1.5);
-
-        function isBelowLine(func: (x: number) => number, point: Vector2) {
-            return func(point.x) < point.y;
+        if (config.debug) {
+            this.debugRenderer.render(gameState, clientState, clientStateDispatcher);
         }
-        function isAboveLine(func: (x: number) => number, point: Vector2) {
-            return func(point.x) > point.y;
-        }
-
-        arrayOfSize(1500).forEach(n => {
-            circle(this.context, new Vector2(n, bottomLeft(n)), 1, 'green');
-            circle(this.context, new Vector2(n, topRight(n)), 1, 'blue');
-            circle(this.context, new Vector2(n, topLeft(n)), 1, 'red');
-            circle(this.context, new Vector2(n, bottomRight(n)), 1, 'yellow');
-        });
-
-        if (clientState.lastLeftClick) {
-            if (
-                isBelowLine(topLeft, clientState.lastLeftClick)
-                && isBelowLine(topRight, clientState.lastLeftClick)
-                && isAboveLine(bottomLeft, clientState.lastLeftClick)
-                && isAboveLine(bottomRight, clientState.lastLeftClick)
-            ) {
-                circle(this.context, clientState.lastLeftClick,3, 'green');
-            }
-            else {
-                circle(this.context, clientState.lastLeftClick,3, 'red');
-            }
-        }
-
 
         this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
@@ -230,15 +198,6 @@ export default class CanvasRenderer implements RendererInterface {
                 this.context.beginPath();
                 this.context.fillStyle = 'green';
                 this.context.fillRect(anchoredAt.x - (hpBarWidth / 2) + 1, anchoredAt.y + unitMetadata.hitPointsBarAnchor + 1, (hpBarWidth - 2) * hpLeft, 4);
-            }
-
-            if (config.debug) {
-                // Draw the unit number.
-                this.context.fillStyle = 'black';
-                this.context.font = '11px Arial';
-                this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 40);
-                // Draw the units hit box.
-                square(this.context, getUnitInstanceHitBox(unitInstance));
             }
 
             clientStateDispatcher({

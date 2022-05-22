@@ -331,6 +331,7 @@ export type HotkeyScheme = {
     [key in Hotkey]: number;
 };
 
+export type Line = [Vector2, Vector2];
 
 declare global {
     interface Window {

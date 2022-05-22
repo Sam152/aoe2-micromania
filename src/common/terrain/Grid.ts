@@ -5,7 +5,7 @@ import {GameState} from '../../types';
 const gridCache: {[key: number]: Grid} = {};
 
 export default class Grid {
-    private readonly size: number;
+    public readonly size: number;
     private readonly tileHalfHeight: number;
     private readonly tileHalfWidth: number;
     private gridMiddle: Vector2;

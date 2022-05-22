@@ -19,10 +19,10 @@ export default class PatrollingAi implements Ai {
             .filter(({ownedByPlayer}) => ownedByPlayer !== this.playingAs)
             .map(({position}) => position));
 
-        dispatcher({
-            n: 'PATROL',
-            position: patrolTo,
-            units: state.units.filter(({ownedByPlayer}) => ownedByPlayer === this.playingAs).map(({id}) => id),
-        });
+        // dispatcher({
+        //     n: 'PATROL',
+        //     position: patrolTo,
+        //     units: state.units.filter(({ownedByPlayer}) => ownedByPlayer === this.playingAs).map(({id}) => id),
+        // });
     }
 }

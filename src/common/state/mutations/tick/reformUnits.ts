@@ -12,7 +12,7 @@ export default function reformUnits(state: GameState) {
     state.units
         .filter(({reformingTo, unitState, targetingUnit}) => hasValue(reformingTo) && !hasValue(targetingUnit) && unitState === UnitState.Moving)
         .forEach(function(unit) {
-            addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
+            unit.position.add(calculateUnitMovementPerTick(unit));
         });
 
     // Get units moving again, after falling idle in the middle of reforming (ie they stopped to fire at something).

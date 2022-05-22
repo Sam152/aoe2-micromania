@@ -11,10 +11,10 @@ export default function patrolUnits(state: GameState) {
     state.units
         .filter((unit) => hasValue(unit.patrollingTo) && !hasValue(unit.reformingArrivalTick) && !hasValue(unit.targetingUnit) && unit.unitState === UnitState.Moving)
         .forEach((unit) => {
-            addWithClamp(unit.position, calculateUnitMovementPerTick(unit), Grid.fromGameState(state));
+            unit.position.add(calculateUnitMovementPerTick(unit));
 
             if (state.ticks === unit.arrivalTick) {
-                setWithClamp(unit.position, unit.patrollingTo.clone(), Grid.fromGameState(state));
+                unit.position = unit.patrollingTo.clone();
                 swapProperties(unit, 'patrollingTo', 'patrollingToReturn');
                 setUnitMovementTowards(state, unit, unit.patrollingTo);
             }
