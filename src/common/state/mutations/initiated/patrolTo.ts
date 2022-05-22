@@ -6,6 +6,7 @@ import setUnitMovementTowards from './setUnitMovementTowards';
 import addUnitReformingSpeedFactor from '../../../util/addUnitReformingSpeedFactor';
 import {GameState, GameStateAction, UnitId, UnitInstance} from '../../../../types';
 import {Vector2} from 'three/src/math/Vector2';
+import {snapToClamp} from "../../../util/snapToClamp";
 
 export default function patrolTo(state: GameState, units: UnitInstance[], position: Vector2) {
     units.forEach((unit) => stopUnit(unit));
@@ -15,7 +16,7 @@ export default function patrolTo(state: GameState, units: UnitInstance[], positi
         patrolGroupTo(state, units, positions, position);
     } else if (units.length === 1) {
         // units[0].patrollingToReturn = units[0].patrollingTo.clone().sub(groupTravelledVector);
-        units[0].patrollingTo = position.clone();
+        units[0].patrollingTo = snapToClamp(position, state.mapSize);
         units[0].patrollingToReturn = units[0].position.clone();
         setUnitMovementTowards(state, units[0], units[0].patrollingTo);
     }
@@ -26,7 +27,7 @@ export function patrolGroupTo(state: GameState, units: UnitInstance[], startingP
 
     // Find the formation the units will make at their patrol destination.
     formationManager.fromPopulation(units).form(startingPositions, destination).forEach((formationPosition, index) => {
-        units[index].patrollingToReturn = formationPosition;
+        units[index].patrollingToReturn = snapToClamp(formationPosition, state.mapSize);
     });
 
     // Translate their destinations back to their average starting position, then reform and return the
