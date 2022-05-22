@@ -11,8 +11,6 @@ import {Vector2} from 'three/src/math/Vector2';
 import inAttackRange, {inMinimumRange} from '../../../util/inAttackRange';
 import setUnitMovementTowards, {setUnitMovementAwayFrom} from '../initiated/setUnitMovementTowards';
 import compassDirectionCalculator from '../../../units/compassDirectionCalculator';
-import addWithClamp from '../../../util/addWithClamp';
-import Grid from '../../../terrain/Grid';
 
 
 export default function fireProjectiles(state: GameState) {
