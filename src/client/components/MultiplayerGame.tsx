@@ -9,11 +9,14 @@ const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
     const [winner, setWinner] = useState<number>();
 
     const connection = useConnection();
-    const state = new NetworkedStateManager(connection, playingAs, (action, state) => {
+
+    const state = new NetworkedStateManager(connection, playingAs);
+    state.addGameStateListener((state, action) => {
         if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
             setWinner(state.winner);
         }
     });
+
     state.init();
 
     return (

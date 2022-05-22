@@ -99,10 +99,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     if (action.n === 'MAP_PARAMETERS_SET') {
         state.mapSize = action.size;
         state.mapTerrain = action.terrain;
-
-        clientDispatcher({
-            n: 'FIXATE_CAMERA',
-        });
     }
 
     return state;

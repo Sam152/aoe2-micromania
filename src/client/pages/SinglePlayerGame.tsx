@@ -25,7 +25,8 @@ function SinglePlayerGame() {
         const ai = new PatrollingAi(2);
         const gameMode = new ArcherMicro();
 
-        const manager = new LocalStateManager((state: GameState, action: GameStateAction) => {
+        const manager = new LocalStateManager();
+        manager.addGameStateListener((state: GameState, action: GameStateAction) => {
             if (action.n === 'T') {
                 gameMode.onTick(state, action, manager.dispatchGame.bind(manager));
                 ai.makeDecisions(state, action, manager.dispatchGame.bind(manager));
@@ -39,6 +40,7 @@ function SinglePlayerGame() {
                 manager.cleanUp();
             }
         });
+
         manager.init();
         gameMode.start(manager.dispatchGame.bind(manager), manager.getGameState());
 

@@ -90,7 +90,8 @@ export default class Room {
 
         this.recordedGame = new RecordedGame(this.players.map((player) => player.getNickname()));
 
-        this.state = new LocalStateManager((gameState, action) => {
+        this.state = new LocalStateManager();
+        this.state.addGameStateListener((gameState, action) => {
             // The network could either dispatch the whole units state OR the action, letting the clients
             // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
             // where clients could drift out of sync and require syncing back up?

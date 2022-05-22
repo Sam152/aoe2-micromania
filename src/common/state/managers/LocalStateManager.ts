@@ -9,13 +9,17 @@ import config from '../../config';
 export default class LocalStateManager implements StateManagerInterface {
     private gameState: GameState;
     private clientState: ClientState;
-    private gameStateListener: (state: GameState, action: GameStateAction) => void;
+    private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
     private ticker: NodeJS.Timer;
 
-    constructor(gameStateListener: (state: GameState, action: GameStateAction) => void = null, playingAs: number | null = 1) {
+    constructor(playingAs: number | null = 1) {
         this.gameState = defaultGameState();
         this.clientState = defaultClientState(playingAs);
-        this.gameStateListener = gameStateListener;
+        this.gameStateListeners = [];
+    }
+
+    addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void {
+        this.gameStateListeners.push(listener);
     }
 
     dispatchClient(action: ClientStateAction): void {
@@ -24,9 +28,9 @@ export default class LocalStateManager implements StateManagerInterface {
 
     dispatchGame(action: GameStateAction): void {
         this.gameState = gameStateMutator(this.gameState, action);
-        if (this.gameStateListener) {
-            this.gameStateListener(this.gameState, action);
-        }
+        this.gameStateListeners.forEach(gameStateListener => {
+            gameStateListener(this.gameState, action);
+        });
     }
 
     getClientState(): ClientState {

@@ -20,11 +20,12 @@ export default function Replay() {
         if (!replay) {
             return;
         }
-        const manager = new LocalStateManager((state: GameState, action: GameStateAction) => {
+        const manager = new LocalStateManager(null);
+        manager.addGameStateListener((state: GameState, action: GameStateAction) => {
             if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
                 setReplayOver(true);
             }
-        }, null);
+        });
 
         const playableActions = JSON.parse(JSON.stringify(replay.actions));
 

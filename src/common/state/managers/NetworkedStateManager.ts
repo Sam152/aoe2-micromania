@@ -18,13 +18,17 @@ export default class NetworkedStateManager implements StateManagerInterface {
     private gameState: GameState;
     private clientState: ClientState;
     private socket: Socket;
-    private onActionCallback: (action: GameStateAction, state: GameState) => void;
+    private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
 
-    constructor(socket: Socket, playingAs: number, onActionCallback: ((action: GameStateAction, state: GameState) => void) | null = null) {
+    constructor(socket: Socket, playingAs: number) {
         this.gameState = defaultGameState();
         this.clientState = defaultClientState(playingAs);
         this.socket = socket;
-        this.onActionCallback = onActionCallback;
+        this.gameStateListeners = [];
+    }
+
+    addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void {
+        this.gameStateListeners.push(listener);
     }
 
     dispatchClient(action: ClientStateAction) {
@@ -54,9 +58,9 @@ export default class NetworkedStateManager implements StateManagerInterface {
             const action = normalizeGameStateAction(serverAction);
             this.gameState = gameStateMutator(this.gameState, action);
 
-            if (this.onActionCallback) {
-                this.onActionCallback(action, this.gameState);
-            }
+            this.gameStateListeners.forEach(gameStateListener => {
+                gameStateListener(this.gameState, action);
+            });
         });
     }
 

@@ -243,8 +243,9 @@ export interface StateManagerInterface {
     dispatchClient: ClientDispatcher;
 
     getGameState(): GameState;
-
     getClientState(): ClientState;
+
+    addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void;
 }
 
 export interface GameMode {
