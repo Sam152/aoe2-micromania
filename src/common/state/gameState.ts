@@ -16,7 +16,7 @@ import spawnUnit from './mutations/initiated/spawnUnit';
 import moveTo from './mutations/initiated/moveTo';
 import changeFormation from './mutations/initiated/changeFormation';
 import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
-import {snapToClamp} from '../util/snapToClamp';
+import {snapToClamp} from "../util/snapToClamp";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
     if (action.n === 'CLIENT_LOADED') {
@@ -40,7 +40,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 
     if (action.n === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
-        moveTo(state, units, snapToClamp(action.position, state.mapSize));
+        moveTo(state, units, action.position);
     }
     if (action.n === 'ADD_WAYPOINT') {
         const units = unitsInGameState(state, action.units);
@@ -50,7 +50,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         });
         const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
         formationManager.fromPopulation(units).form(positions, action.position).map((formationPosition, index) => {
-            units[index].waypoints.push(formationPosition);
+            units[index].waypoints.push(snapToClamp(formationPosition, state.mapSize));
             if (units[index].unitState === UnitState.Idle) {
                 setUnitMovementTowardsCurrentWaypoint(state, units[index]);
             }

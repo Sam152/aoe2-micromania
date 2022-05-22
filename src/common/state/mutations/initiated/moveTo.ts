@@ -7,13 +7,14 @@ import averageVector from '../../../util/averageVector';
 import populationVector from '../../../util/populationVector';
 import config from '../../../config';
 import addUnitReformingSpeedFactor from '../../../util/addUnitReformingSpeedFactor';
+import {snapToClamp} from "../../../util/snapToClamp";
 
 export default function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
     units.forEach((unit) => stopUnit(unit));
     const positions = units.map((unit) => unit.position);
 
     formationManager.fromPopulation(units).form(positions, destination).forEach((formationPosition, index) => {
-        units[index].waypoints = [formationPosition];
+        units[index].waypoints = [snapToClamp(formationPosition, state.mapSize)];
         setUnitMovementTowardsCurrentWaypoint(state, units[index]);
     });
 
@@ -23,8 +24,7 @@ export default function moveTo(state: GameState, units: UnitInstance[], destinat
     if (units.length > 2 && position.distanceTo(destination) > config.movingReformDistance * 1.5) {
         const reformAt = position.add(populationVector(units, 'movingDirection').multiplyScalar(config.movingReformDistance));
         formationManager.fromPopulation(units).form(positions, reformAt).forEach((formationPosition, index) => {
-            units[index].reformingTo = formationPosition;
-            setUnitMovementTowards(state, units[index], units[index].reformingTo);
+            units[index].reformingTo = setUnitMovementTowards(state, units[index], formationPosition);
             units[index].reformingArrivalTick = units[index].arrivalTick;
         });
         addUnitReformingSpeedFactor(state.ticks, units);

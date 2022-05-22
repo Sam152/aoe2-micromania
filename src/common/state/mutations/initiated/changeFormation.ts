@@ -39,9 +39,8 @@ export default function changeFormation(state: GameState, action: { formation: F
         const reformPosition = populationVector(units, 'position');
         const positions = units.map(({position}) => position);
         formationManager.fromPopulation(units).form(positions, reformPosition).forEach((formationPosition, index) => {
-            units[index].reformingTo = formationPosition;
+            units[index].reformingTo = setUnitMovementTowards(state, units[index], formationPosition);
             units[index].reformingArrivalTick = units[index].arrivalTick;
-            setUnitMovementTowards(state, units[index], units[index].reformingTo);
         });
         addUnitReformingSpeedFactor(state.ticks, units);
     }
