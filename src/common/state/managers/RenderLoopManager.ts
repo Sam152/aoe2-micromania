@@ -1,7 +1,7 @@
 import InputManager from '../../input/InputManager';
 import {clientStateTransmitter} from '../clientState';
 import CanvasRenderer from '../../drawing/CanvasRenderer';
-import {StateManagerInterface} from '../../../types';
+import {GameState, GameStateAction, StateManagerInterface} from '../../../types';
 import Grid from '../../terrain/Grid';
 
 export default class RenderLoopManager {
@@ -27,11 +27,22 @@ export default class RenderLoopManager {
                     n: 'SPECTATOR_LOADED',
                 });
             }
-            this.stateManager.dispatchClient({
-                n: 'FIXATE_CAMERA',
-                location: (new Grid(this.stateManager.getGameState().mapSize)).middleOfGrid().sub(this.renderer.getSize().divideScalar(2)),
-            });
+
+            this.fixateCamera(this.stateManager.getGameState().mapSize);
             this.render();
+        });
+
+        this.stateManager.addGameStateListener((state: GameState, action: GameStateAction) => {
+            if (action.n === 'MAP_PARAMETERS_SET') {
+                this.fixateCamera(state.mapSize);
+            }
+        })
+    }
+
+    fixateCamera(mapSize: number) {
+        this.stateManager.dispatchClient({
+            n: 'FIXATE_CAMERA',
+            location: (new Grid(mapSize)).middleOfGrid().sub(this.renderer.getSize().divideScalar(2)),
         });
     }
 
