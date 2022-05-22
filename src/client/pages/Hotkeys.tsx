@@ -81,8 +81,15 @@ export default function Hotkeys() {
                                     <Td><Kbd>shift</Kbd> + <Kbd>right click</Kbd></Td>
                                     <Td textAlign="right"/>
                                 </Tr>
+
+                                <Tr>
+                                    <Td colSpan={3}>
+                                        <Heading size="md">Combat</Heading>
+                                    </Td>
+                                </Tr>
                                 <BindableRow label="Patrol units" hotkey={Hotkey.Patrol} setBind={setBind}/>
                                 <BindableRow label="Stop units" hotkey={Hotkey.Stop} setBind={setBind}/>
+                                <BindableRow label="Attack ground" hotkey={Hotkey.AttackGround} setBind={setBind}/>
 
                                 <Tr>
                                     <Td colSpan={3}>
