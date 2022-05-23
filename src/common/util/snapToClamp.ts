@@ -39,6 +39,7 @@ export function clampToLine(line: Line, point: Vector2) {
 }
 
 function getMapBorderLines(mapSize: number): Line[] {
+    // @todo, can move these calcs to the grid, getRealPixelCoordinateOf(0,0), getRealPixelCoordinateOf(n,n) etc.
     const topLeftLine = [new Vector2(0, mapSize * config.tileHeight * 0.5), new Vector2(mapSize * config.tileWidth * 0.5, 0)] as Line;
     const bottomLeftLine = [new Vector2(0, mapSize * config.tileHeight * 0.5), new Vector2(mapSize * config.tileWidth * 0.5, mapSize * config.tileHeight)] as Line;
     const bottomRightLine = [new Vector2(mapSize * config.tileWidth * 0.5, mapSize * config.tileHeight), new Vector2(mapSize * config.tileWidth, mapSize * config.tileHeight * 0.5)] as Line;
