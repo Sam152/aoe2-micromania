@@ -46,6 +46,11 @@ export default class CanvasRenderer implements RendererInterface {
 
         this.fit();
         screenManager.onChange(this.fit.bind(this));
+
+        // this.canvas.addEventListener('click', element => {
+        //    // @ts-ignore
+        //     element.target.requestPointerLock();
+        // });
     }
 
     fit() {
