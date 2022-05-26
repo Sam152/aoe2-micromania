@@ -250,7 +250,7 @@ export default class CanvasRenderer implements RendererInterface {
         const anchorMap: {[key: number]: string} = {
             8: '0 0',
             18: '10 24',
-            0: '0 0',
+            0: '3 0',
             4: '0 0',
         };
 
