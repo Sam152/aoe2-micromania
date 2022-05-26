@@ -8,6 +8,7 @@ import FormationType from './common/units/formations/FormationType';
 import ProjectileType from './common/units/ProjectileType';
 import ActiveCommand from './common/input/ActiveCommand';
 import Hotkey from './common/input/Hotkey';
+import DamageType from "./common/units/DamageType";
 
 export interface UnitInstance {
     id: number;
@@ -297,6 +298,8 @@ export interface RenderedSlpFrame extends SlpFrame {
 export interface UnitStats {
     attackFrameDelay: number;
     firesProjectileType: ProjectileType;
+    damageType: DamageType;
+    armor: { [key in DamageType]: number };
     reloadTime: number;
     movementRate: number;
     hitPoints: number;

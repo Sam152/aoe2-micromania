@@ -4,6 +4,7 @@ import {UnitStats} from '../../types';
 import AnimationStyle from './AnimationStyle';
 import ProjectileType from './ProjectileType';
 import {Vector2} from 'three/src/math/Vector2';
+import DamageType from "./DamageType";
 
 /**
  * Definitions of units, mapped from AOC JSON file:
@@ -28,6 +29,11 @@ const unitDefinitions: {
         attackRange: 6,
         attackMinRange: 0,
         attackDamage: 4,
+        damageType: DamageType.Pierce,
+        armor: {
+            [DamageType.Pierce]: 0,
+            [DamageType.Melee]: 0,
+        },
         areaOfEffect: null,
         firingAnchor: new Vector2(14, -24),
         selectionRadius: 15,
@@ -72,6 +78,11 @@ const unitDefinitions: {
         attackRange: 7,
         attackMinRange: 3,
         attackDamage: 40,
+        damageType: DamageType.Pierce,
+        armor: {
+            [DamageType.Pierce]: 6,
+            [DamageType.Melee]: 0,
+        },
         areaOfEffect: [
             {distanceFromTarget: 30, percentageOfAttack: 1},
             {distanceFromTarget: 100, percentageOfAttack: 0.5},
