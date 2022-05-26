@@ -43,7 +43,6 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         }
         else {
             state.selectedUnits = foundUnit ? [foundUnit.unit.id] : [];
-
         }
     }
 
