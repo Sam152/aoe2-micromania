@@ -1,11 +1,11 @@
 import {ClientDispatcher, ClientState, GameState, Line, Rectangle, RendererInterface} from '../../types';
-import {circle, square} from './shapes';
+import {circle, emptyCircle, square} from './shapes';
 import {Vector2} from 'three/src/math/Vector2';
-import getUnitInstanceHitBox from '../util/getUnitInstanceHitBox';
 import arrayOfSize from '../util/arrayOfSize';
 import isInBounds, {bottomLeft, bottomRight, topLeft, topRight} from '../util/isInBounds';
 import config from '../config';
 import {snapToClamp} from '../util/snapToClamp';
+import unitMetadataFactory from "../units/unitMetadataFactory";
 
 export default class DebugRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -61,7 +61,9 @@ export default class DebugRenderer implements RendererInterface {
             this.context.font = '11px Arial';
             this.context.fillText(`${unitInstance.id}`, unitInstance.position.x - 20, unitInstance.position.y - 40);
             // Draw the units hit box.
-            square(this.context, getUnitInstanceHitBox(unitInstance));
+            const metadata = unitMetadataFactory.getUnit(unitInstance.unitType);
+            // square(this.context, getUnitInstanceHitBox(unitInstance));
+            emptyCircle(this.context, unitInstance.position, metadata.hitBox);
         });
     }
 }

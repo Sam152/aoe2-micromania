@@ -309,7 +309,7 @@ export interface UnitStats {
     areaOfEffect: Array<{ distanceFromTarget: number; percentageOfAttack: number; }> | null;
     firingAnchor: Vector2;
     selectionRadius: number;
-    hitBox: Rectangle;
+    hitBox: number;
     hitPointsBarAnchor: number;
     animations: {
         [key in UnitState]: {

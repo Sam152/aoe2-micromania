@@ -1,10 +1,9 @@
 import {GameState} from '../../../../types';
-import getUnitInstanceHitBox from '../../../util/getUnitInstanceHitBox';
-import pointInRect from '../../../util/pointInRect';
 import calculateDamage from '../../../units/calculateDamage';
 import registerUnitFallen from './registerUnitFallen';
 import unitMetadataFactory from '../../../units/unitMetadataFactory';
 import projectileMetadata from '../../../units/projectileMetadata';
+import pointInCircle from "../../../util/pointInCircle";
 
 export default function registerProjectileHits(state: GameState) {
     const landedProjectiles = state.projectiles.filter(({arrivingTick}) => arrivingTick === state.ticks);
@@ -14,7 +13,7 @@ export default function registerProjectileHits(state: GameState) {
     const standardProjectiles = damageProjectiles.filter(({type}) => !projectileMetadata[type].damageIsAreaOfEffect);
 
     standardProjectiles.forEach((projectile) => {
-        const hitUnit = state.units.find((unit) => pointInRect(getUnitInstanceHitBox(unit), projectile.destination));
+        const hitUnit = state.units.find((unit) => pointInCircle(unit.position, unitMetadataFactory.getUnit(unit.unitType).hitBox, projectile.destination));
         if (hitUnit) {
             const damage = calculateDamage(projectile.firedByType, hitUnit.unitType);
             // Only do half damage to units that weren't directly targeted.

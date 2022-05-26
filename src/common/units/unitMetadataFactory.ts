@@ -37,10 +37,7 @@ const unitDefinitions: {
         areaOfEffect: null,
         firingAnchor: new Vector2(14, -24),
         selectionRadius: 15,
-        hitBox: {
-            p1: new Vector2(-10, -35),
-            p2: new Vector2(10, 10),
-        },
+        hitBox: 10,
         hitPointsBarAnchor: -49,
         animations: {
             [UnitState.Idle]: {
@@ -90,10 +87,7 @@ const unitDefinitions: {
         firesProjectileType: ProjectileType.Rock,
         firingAnchor: new Vector2(0, -30),
         selectionRadius: 50,
-        hitBox: {
-            p1: new Vector2(-30, -40),
-            p2: new Vector2(30, 30),
-        },
+        hitBox: 30,
         hitPointsBarAnchor: -55,
         animations: {
             [UnitState.Idle]: {

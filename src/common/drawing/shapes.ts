@@ -8,6 +8,14 @@ export function circle(ctx: CanvasRenderingContext2D, position: Vector2 | {x: nu
     ctx.fill();
 }
 
+export function emptyCircle(ctx: CanvasRenderingContext2D, position: Vector2 | {x: number, y: number}, radius: number = 2, color: string = 'green') {
+    ctx.beginPath();
+    ctx.arc(position.x, position.y, radius, 0, 2 * Math.PI, false);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+}
+
 export function square(ctx: CanvasRenderingContext2D, rect: Rectangle, color: string = 'red', width: number = 2) {
     ctx.beginPath();
     ctx.lineWidth = width;
