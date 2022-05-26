@@ -38,7 +38,13 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         const foundUnit = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
-        state.selectedUnits = foundUnit ? [foundUnit.unit.id] : [];
+        if (action.shift && foundUnit) {
+            state.selectedUnits = Array.from(new Set([foundUnit.unit.id, ...state.selectedUnits]).values());
+        }
+        else {
+            state.selectedUnits = foundUnit ? [foundUnit.unit.id] : [];
+
+        }
     }
 
     if (action.n === 'DOUBLE_CLICK') {
@@ -86,7 +92,6 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     }
 
     if (action.n === 'DRAG_START' && state.activeCommand === ActiveCommand.Default) {
-        // state.activeCommand = ActiveCommand.Default;
         state.selectionRectangle = {
             p1: action.position,
             p2: action.position,
@@ -94,10 +99,16 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     }
     if (action.n === 'DRAGGING' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle.p2 = action.position;
-        state.selectedUnits = state.unitHitBoxes
+        const unitsInSelection = state.unitHitBoxes
             .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
             .filter((unitAndHitBox) => rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)))
             .map((unitAndHitBox) => unitAndHitBox.unit.id);
+        if (action.shift) {
+            state.selectedUnits = Array.from(new Set([...unitsInSelection, ...state.selectedUnits]).values());
+        }
+        else {
+            state.selectedUnits = unitsInSelection;
+        }
     }
     if (action.n === 'DRAG_END' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle = null;

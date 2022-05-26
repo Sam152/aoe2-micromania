@@ -197,15 +197,18 @@ export type ClientStateAction = {
     n: 'ARROW_DOWN',
 } | {
     n: 'DRAGGING',
+    shift: boolean,
     position: Vector2,
 } | {
     n: 'DRAG_END',
     position: Vector2,
 } | {
     n: 'LEFT_CLICK',
+    shift: boolean,
     position: Vector2,
 } | {
     n: 'DOUBLE_CLICK',
+    shift: boolean,
     position: Vector2,
 } | {
     n: 'RIGHT_CLICK',

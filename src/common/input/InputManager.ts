@@ -38,6 +38,7 @@ export default class InputManager {
             this.dispatch({
                 n: time - this.lastLeftClick < doubleClickDuration ? 'DOUBLE_CLICK' : 'LEFT_CLICK',
                 position: this.mousePosition(cameraPosition),
+                shift: this.input.shiftDown,
             });
             this.lastLeftClick = time;
         }
@@ -57,6 +58,7 @@ export default class InputManager {
             }
             this.dispatch({
                 n: 'DRAGGING',
+                shift: this.input.shiftDown,
                 position: this.mousePosition(cameraPosition),
             });
             this.dragging = true;
