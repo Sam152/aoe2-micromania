@@ -11,7 +11,7 @@ const projectileMetadata: {
     [ProjectileType.Arrow]: {
         speed: 30,
         asset: 'projectiles/p_arrow_x1',
-        frames: [10],
+        frames: [98],
         damageIsAreaOfEffect: false,
     },
     [ProjectileType.Rock]: {
