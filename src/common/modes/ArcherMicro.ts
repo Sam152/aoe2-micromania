@@ -10,7 +10,7 @@ export default class ArcherMicro implements GameMode {
         gameDispatcher({
             n: 'MAP_PARAMETERS_SET',
             size: grid.size,
-            terrain: 'terrain/sandy',
+            terrain: 'terrain/15008-grass-2',
         });
 
         gameDispatcher({

@@ -10,13 +10,13 @@ const projectileMetadata: {
 } = {
     [ProjectileType.Arrow]: {
         speed: 30,
-        asset: 'projectiles/arrow',
+        asset: 'projectiles/p_arrow_x1',
         frames: [10],
         damageIsAreaOfEffect: false,
     },
     [ProjectileType.Rock]: {
         speed: 15,
-        asset: 'projectiles/rocks',
+        asset: 'projectiles/p_mangonel_x1',
         frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
         damageIsAreaOfEffect: true,
     },

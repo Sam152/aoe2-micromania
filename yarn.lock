@@ -1505,7 +1505,7 @@ async@^2.6.2:
   dependencies:
     lodash "^4.17.14"
 
-awestruct@^1.0.0:
+awestruct@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/awestruct/-/awestruct-1.2.5.tgz#0e692e23e1052fd9be67786a8871d268f7040657"
   integrity sha512-++I2aJiC8cLdkbk1tKcwDMt8XLqsQwq3HixZefCJKSE6jtfgByLalD1HDyD7v0xLn92RVAnzoVyAYW/AoL+OZw==
@@ -2838,12 +2838,14 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.npmjs.org/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-genie-slp@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/genie-slp/-/genie-slp-1.1.0.tgz#2345695ccd18daf6b1685712b765f701dfaa8753"
-  integrity sha512-8lxSUXFwa0Nah1casM5zWuaOnU9eKcXt/F/QacoDy1QIzBPcc916MFpNsKgJTBLLSejc7noHxV37LOV/rHEK9A==
+genie-smx@^1.0.1:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/genie-smx/-/genie-smx-1.0.6.tgz#49a71a48787585c057021c7f35813a414d60f4dd"
+  integrity sha512-v0pIC980cFQ212CN4uTbt65Br4sxcqaCGd4vQEiKRl32g68EFz1IS4WnujlSY+BQGsQdysuPNzdVMHU4zpP2ng==
   dependencies:
-    awestruct "^1.0.0"
+    awestruct "^1.2.5"
+    buffer "^6.0.3"
+    jascpal "^0.1.4"
 
 get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1:
   version "1.1.1"
@@ -4665,7 +4667,7 @@ safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
 
 safe-buffer@5.2.1, safe-buffer@>=5.1.0, safe-buffer@^5.1.0, safe-buffer@^5.2.0, safe-buffer@~5.2.0:
   version "5.2.1"
-  resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
 
 "safer-buffer@>= 2.1.2 < 3":

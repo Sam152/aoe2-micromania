@@ -1,15 +1,12 @@
-import Slp from './Slp';
 import {Buffer} from 'buffer';
-import {SlpFrame} from '../../types';
+import Smx, {PaletteCollectionFactory} from "genie-smx";
+import SmxAnimation from "./SmxAnimation";
 
-const SLP = require('genie-slp');
-const Palette = require('jascpal');
-
-const renderedPlayers = [1, 2, 3, 4, 5, 6, 7, 8];
+const renderedPlayers = [1, 2];
 
 export default class SlpManager {
     private readonly assetPath: string;
-    private readonly slpList: { [key: string]: Slp; };
+    private readonly slpList: { [key: string]: SmxAnimation; };
 
     constructor(assetPath: string) {
         this.assetPath = assetPath;
@@ -17,36 +14,43 @@ export default class SlpManager {
     }
 
     async downloadPreRenderAll() {
-        const paletteArrayBuffer = await fetch(`${this.assetPath}/default-palette.pal`)
-            .then((response) => response.arrayBuffer());
 
-        const palette = new Palette(new Buffer(paletteArrayBuffer));
+        const palettes = await PaletteCollectionFactory.fromHttp(`${this.assetPath}/palettes`);
 
-        const downloadedSlps = await Promise.all(
+        const downloadedSmxFiles = await Promise.all(
             [...this.assetList(), ...this.assetPlayerList()]
-                .map((assetId) => fetch(`${this.assetPath}/${assetId}.slp`)
+                .map((assetId) => fetch(`${this.assetPath}/${assetId}.smx`)
                     .then((response) => response.arrayBuffer())
                     .then((arrayBuffer) => ({
                         id: assetId,
-                        slp: new SLP(new Buffer(arrayBuffer)),
+                        smx: new Smx(new Buffer(arrayBuffer), palettes),
                     })),
                 ),
         );
 
-        const renderedFrames = await Promise.all(downloadedSlps.map(async ({id, slp}) => {
-            const frames = await Promise.all(slp.frames.map(async (frame: SlpFrame, frameNumber: number) => {
+        const renderedSmxLibrary = await Promise.all(downloadedSmxFiles.map(async ({id, smx}) => {
+
+            const frames = await Promise.all(smx.getFrames().map(async (frame, frameNumber: number) => {
                 const rendersToBuild = this.assetPlayerList().includes(id) ? renderedPlayers : [1];
 
-                const rendered = await Promise.all(rendersToBuild.map((playerId) => {
-                    const imageData = slp.renderFrame(frameNumber, palette, {player: playerId});
+                const perPlayerRenders = await Promise.all(rendersToBuild.map((playerId) => {
+                    const imageData = smx.renderFrame(frameNumber, playerId);
                     return createImageBitmap(imageData).then((bitmap) => ({
                         playerId,
                         bitmap,
                     }));
                 }));
+
+                let shadow: ImageBitmap | null = null;
+                if (smx.hasShadow(frameNumber)) {
+                    const renderedShadow = smx.renderShadow(frameNumber);
+                    shadow = await createImageBitmap(renderedShadow);
+                }
+
                 return {
-                    ...frame,
-                    rendered: rendered.reduce((object, {playerId, bitmap}) => {
+                    frameDefinition: frame,
+                    shadowRender: shadow,
+                    playerRenders: perPlayerRenders.reduce((object, {playerId, bitmap}) => {
                         object[playerId] = bitmap;
                         return object;
                     }, {} as { [key: number]: ImageBitmap }),
@@ -54,17 +58,17 @@ export default class SlpManager {
             }));
             return {
                 id,
-                slp,
+                smx,
                 frames,
             };
         }));
 
-        renderedFrames.forEach(({id, slp, frames}) => {
-            this.slpList[id] = new Slp(id, slp, frames);
+        renderedSmxLibrary.forEach(({id, smx, frames}) => {
+            this.slpList[id] = new SmxAnimation(id, smx, frames);
         });
     }
 
-    getAsset(assetId: string): Slp {
+    getAsset(assetId: string): SmxAnimation {
         if (!(assetId in this.slpList)) {
             throw new Error(`Could not find asset in SLP manager ${assetId}`);
         }
@@ -73,28 +77,46 @@ export default class SlpManager {
 
     assetPlayerList(): string[] {
         return [
-            'units/xbow-death',
-            'units/xbow-decay',
-            'units/xbow-firing',
-            'units/xbow-moving',
-            'units/xbow-stand',
-            'units/mangonel-stand',
-            'units/mangonel-moving',
-            'units/mangonel-firing',
-            'units/mangonel-death',
-            'units/mangonel-decay',
-            'interface/waypoint-flag',
+            'units/u_arc_crossbowman_attackA_x1',
+            'units/u_arc_crossbowman_deathA_x1',
+            'units/u_arc_crossbowman_decayA_x1',
+            'units/u_arc_crossbowman_idleA_x1',
+            'units/u_arc_crossbowman_walkA_x1',
+
+            'units/u_sie_mangonel_attackA_x1',
+            'units/u_sie_mangonel_deathA_x1',
+            'units/u_sie_mangonel_decayA_x1',
+            'units/u_sie_mangonel_idleA_x1',
+            'units/u_sie_mangonel_walkA_x1',
+
+            // 'units/xbow-death',
+            // 'units/xbow-decay',
+            // 'units/xbow-firing',
+            // 'units/xbow-moving',
+            // 'units/xbow-stand',
+            // 'units/mangonel-stand',
+            // 'units/mangonel-moving',
+            // 'units/mangonel-firing',
+            // 'units/mangonel-death',
+            // 'units/mangonel-decay',
+            // 'interface/waypoint-flag',
+
+            'interface/dc_b_misc_waypoint_flag_x1',
         ];
     }
 
     assetList(): string[] {
         return [
-            'projectiles/arrow',
-            'projectiles/rocks',
-            'interface/move-command',
-            'terrain/cobble',
-            'terrain/green',
-            'terrain/sandy',
+            'interface/MOVETO',
+
+            'projectiles/p_mangonel_x1',
+            'projectiles/p_arrow_x1',
+
+            'terrain/15001-grass',
+            'terrain/15008-grass-2',
+            'terrain/15009-grass-dirt',
+            'terrain/15010-desert',
+            'terrain/15019-cobble',
         ];
     }
 }

@@ -41,28 +41,28 @@ const unitDefinitions: {
         hitPointsBarAnchor: -49,
         animations: {
             [UnitState.Idle]: {
-                slp: 'units/xbow-stand',
+                slp: 'units/u_arc_crossbowman_idleA_x1',
                 animationDuration: 2,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Firing]: {
-                slp: 'units/xbow-firing',
+                slp: 'units/u_arc_crossbowman_attackA_x1',
                 animationDuration: 0.7,
                 style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
-                slp: 'units/xbow-moving',
+                slp: 'units/u_arc_crossbowman_walkA_x1',
                 animationDuration: 1,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Falling]: {
-                slp: 'units/xbow-death',
+                slp: 'units/u_arc_crossbowman_deathA_x1',
                 animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Decaying]: {
-                slp: 'units/xbow-decay',
-                animationDuration: 20,
+                slp: 'units/u_arc_crossbowman_decayA_x1',
+                animationDuration: 30,
                 style: AnimationStyle.Play,
             },
         },
@@ -91,28 +91,27 @@ const unitDefinitions: {
         hitPointsBarAnchor: -55,
         animations: {
             [UnitState.Idle]: {
-                slp: 'units/mangonel-stand',
+                slp: 'units/u_sie_mangonel_idleA_x1',
                 animationDuration: 2,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Firing]: {
-                slp: 'units/mangonel-firing',
+                slp: 'units/u_sie_mangonel_attackA_x1',
                 animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Moving]: {
-                slp: 'units/mangonel-moving',
-                underSlp: 'units/mangonel-stand',
-                animationDuration: 1,
+                slp: 'units/u_sie_mangonel_walkA_x1',
+                animationDuration: 5,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Falling]: {
-                slp: 'units/mangonel-death',
+                slp: 'units/u_sie_mangonel_deathA_x1',
                 animationDuration: 1,
                 style: AnimationStyle.Play,
             },
             [UnitState.Decaying]: {
-                slp: 'units/mangonel-decay',
+                slp: 'units/u_sie_mangonel_decayA_x1',
                 animationDuration: 20,
                 style: AnimationStyle.Play,
             },

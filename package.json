@@ -49,7 +49,7 @@
     "bufferutil": "^4.0.6",
     "d3-quadtree": "^3.0.1",
     "framer-motion": "^6",
-    "genie-slp": "^1.1.0",
+    "genie-smx": "^1.0.1",
     "humanize-duration": "^3.27.1",
     "jascpal": "^0.1.4",
     "just-standard-deviation": "^2.0.2",

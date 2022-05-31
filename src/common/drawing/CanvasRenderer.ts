@@ -30,7 +30,7 @@ export default class CanvasRenderer implements RendererInterface {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
-        this.slpManager = new SlpManager('/graphics');
+        this.slpManager = new SlpManager('/graphics'); // @todo a global slp manager could be reused?
 
         this.lastRenderedGameTick = 0;
         this.frameAtLastRenderedTick = 0;
@@ -115,12 +115,12 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawMovementCommandAnimations(gameState: GameState, clientState: ClientState): void {
-        const flag = this.slpManager.getAsset('interface/waypoint-flag');
+        const flag = this.slpManager.getAsset('interface/dc_b_misc_waypoint_flag_x1');
         unitsInGameState(gameState, clientState.selectedUnits).forEach((selectedUnit) => selectedUnit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
         if (clientState.lastMoveClick) {
-            const asset = this.slpManager.getAsset('interface/move-command');
+            const asset = this.slpManager.getAsset('interface/MOVETO');
             const [position, startedTick] = clientState.lastMoveClick;
             asset.animateAsset(this.context, position, 3, clientState.renderedFrames - startedTick, AnimationStyle.Play);
         }
@@ -148,28 +148,41 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawUnits(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) {
-        gameState.units.forEach((unitInstance) => {
+
+        const unitsAndPosition = gameState.units
+            // Compute positions in advance, so multiple loops can use them.
+            .map(unitInstance => {
+                const movementVector = calculateUnitMovementPerTick(unitInstance);
+                const interpolatedPosition = movementVector ?
+                    unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
+                    unitInstance.position;
+                return {
+                    unitInstance,
+                    interpolatedPosition,
+                };
+            })
+            // Sort by the units y position, so that units don't appear to stand on each others heads.
+            .sort((a, b) => a.interpolatedPosition.y - b.interpolatedPosition.y);
+
+        // Draw all selection circles first, so units appear on top of them.
+        unitsAndPosition.filter(({unitInstance}) => clientState.selectedUnits.includes(unitInstance.id)).forEach((unitAndPosition) => {
+            const unitMetadata = unitMetadataFactory.getUnit(unitAndPosition.unitInstance.unitType);
+
+            this.context.beginPath();
+            this.context.strokeStyle = 'rgba(0, 0, 0, 1)';
+            this.context.ellipse(unitAndPosition.interpolatedPosition.x, unitAndPosition.interpolatedPosition.y, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
+            this.context.ellipse(unitAndPosition.interpolatedPosition.x, unitAndPosition.interpolatedPosition.y - 1, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
+            this.context.stroke();
+        });
+
+        unitsAndPosition.forEach(({interpolatedPosition, unitInstance}) => {
             const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = this.slpManager.getAsset(animationMetadata.slp);
-
-            const movementVector = calculateUnitMovementPerTick(unitInstance);
-            const interpolatedPosition = movementVector ?
-                unitInstance.position.clone().add(movementVector.multiplyScalar(this.fractionOfTickRendered)) :
-                unitInstance.position;
-
-            // If the unit is selected, draw an oval around its base.
-            if (clientState.selectedUnits.includes(unitInstance.id)) {
-                this.context.beginPath();
-                this.context.strokeStyle = 'rgba(0, 0, 0, 1)';
-                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
-                this.context.stroke();
-
-                this.context.beginPath();
-                this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
-                this.context.ellipse(interpolatedPosition.x, interpolatedPosition.y - 1, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
-                this.context.stroke();
-            }
 
             const animationDuration = animationMetadata.animationDuration / (unitInstance.reformingSpeedFactor || 1);
 
@@ -257,7 +270,7 @@ export default class CanvasRenderer implements RendererInterface {
             [ActiveCommand.Patrol]: 18,
             [ActiveCommand.Default]: 0,
         };
-        const anchorMap: {[key: number]: string} = {
+        const anchorMap: { [key: number]: string } = {
             8: '0 0',
             18: '10 24',
             0: '3 0',

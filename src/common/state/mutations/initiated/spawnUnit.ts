@@ -26,7 +26,7 @@ export default function spawnUnit(state: GameState, action: {
         unitType: action.unitType,
         unitState: UnitState.Idle,
         unitStateStartedAt: state.ticks,
-        direction: action.direction ?? CompassDirection.South,
+        direction: action.direction ?? CompassDirection.StartD,
         hitPoints: stats.hitPoints,
     });
 }

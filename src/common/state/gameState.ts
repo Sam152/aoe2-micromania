@@ -119,7 +119,7 @@ function defaultState(): GameState {
         winner: null,
 
         mapSize: 18,
-        mapTerrain: 'terrain/sandy',
+        mapTerrain: 'terrain/15010-desert',
     });
 }
 

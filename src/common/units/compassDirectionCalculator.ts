@@ -12,20 +12,28 @@ class CompassDirectionCalculator {
 
     constructor() {
         this.circle = Math.PI * 2;
-        this.directions = 8;
+        this.directions = 16;
         this.quadrantSize = this.circle / this.directions;
         this.halfQuadrant = this.quadrantSize / 2;
         this.startingPoint = 0 - this.halfQuadrant;
         this.quadrants = this.computeQuadrants();
         this.quadrantMap = [
-            CompassDirection.West,
-            CompassDirection.NorthWest,
-            CompassDirection.North,
-            CompassDirection.NorthEast,
-            CompassDirection.East,
-            CompassDirection.SouthEast,
-            CompassDirection.South,
-            CompassDirection.SouthWest,
+            CompassDirection.Start,
+            CompassDirection.StartA,
+            CompassDirection.StartB,
+            CompassDirection.StartC,
+            CompassDirection.StartD,
+            CompassDirection.StartE,
+            CompassDirection.StartF,
+            CompassDirection.StartG,
+            CompassDirection.StartH,
+            CompassDirection.StartI,
+            CompassDirection.StartJ,
+            CompassDirection.StartK,
+            CompassDirection.StartL,
+            CompassDirection.StartM,
+            CompassDirection.StartN,
+            CompassDirection.StartO,
         ];
     }
 
@@ -39,7 +47,7 @@ class CompassDirectionCalculator {
         // The index of the quadrant may not be found since the first quadrant starts at a negative offset, which
         // the angle will not be computed to. The final quadrant will end at 2PI - halfQuadrant, where the negative
         // offset quadrant begins.
-        return quadrant === -1 ? 0 : quadrant;
+        return ((quadrant === -1 ? 0 : quadrant) + 8) % this.directions;
     }
 
     private computeQuadrants(): Array<[number, number]> {

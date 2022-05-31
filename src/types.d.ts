@@ -9,6 +9,9 @@ import ProjectileType from './common/units/ProjectileType';
 import ActiveCommand from './common/input/ActiveCommand';
 import Hotkey from './common/input/Hotkey';
 import DamageType from "./common/units/DamageType";
+import {SmxFrame, SmxStruct} from "genie-smx/lib/smx/struct";
+import Commands from "genie-smx/src/smx/Commands";
+import FourPlusOnePixelArray from "genie-smx/src/smx/FourPlusOnePixelArray";
 
 export interface UnitInstance {
     id: number;
@@ -289,8 +292,10 @@ export interface SlpFrame {
     width: number;
 }
 
-export interface RenderedSlpFrame extends SlpFrame {
-    rendered: {
+export interface RenderedSlpFrame {
+    frameDefinition: SmxFrame,
+    shadowRender: ImageBitmap | null,
+    playerRenders: {
         [key: number]: ImageBitmap;
     }
 }
