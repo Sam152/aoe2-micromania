@@ -15,6 +15,7 @@ import ActiveCommand from '../input/ActiveCommand';
 import unitsInGameState from '../util/unitsInGameState';
 import DebugRenderer from './DebugRenderer';
 import slpManager from "./SlpManager";
+import selectionCircle from "./helpers/selectionCircle";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -165,25 +166,22 @@ export default class CanvasRenderer implements RendererInterface {
         // Draw all selection circles first, so units appear on top of them.
         unitsAndPosition.filter(({unitInstance}) => clientState.selectedUnits.includes(unitInstance.id)).forEach((unitAndPosition) => {
             const unitMetadata = unitMetadataFactory.getUnit(unitAndPosition.unitInstance.unitType);
-
-            this.context.beginPath();
-            this.context.strokeStyle = 'rgba(0, 0, 0, 1)';
-            this.context.ellipse(unitAndPosition.interpolatedPosition.x, unitAndPosition.interpolatedPosition.y, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
-            this.context.stroke();
-
-            this.context.beginPath();
-            this.context.strokeStyle = 'rgba(255, 255, 255, 1)';
-            this.context.ellipse(unitAndPosition.interpolatedPosition.x, unitAndPosition.interpolatedPosition.y - 1, unitMetadata.selectionRadius, unitMetadata.selectionRadius / 3, 0, 0, 2 * Math.PI);
-            this.context.stroke();
+            selectionCircle(this.context, unitMetadata.selectionRadius, 'rgba(255, 255, 255, 1)', unitAndPosition.interpolatedPosition);
         });
 
         unitsAndPosition.forEach(({interpolatedPosition, unitInstance}) => {
             const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
+
+            if (clientState.lastAttackedUnit && clientState.lastAttackedUnit[0] === unitInstance.id) {
+                const framesSinceAttacked = clientState.renderedFrames - clientState.lastAttackedUnit[1];
+                if (Math.ceil(framesSinceAttacked / 8) % 2 !== 0 && framesSinceAttacked < 32) {
+                    selectionCircle(this.context, unitMetadata.selectionRadius, 'rgba(64, 189, 58, 1)', interpolatedPosition);
+                }
+            }
+
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
             const slp = slpManager.getAsset(animationMetadata.slp);
-
             const animationDuration = animationMetadata.animationDuration / (unitInstance.reformingSpeedFactor || 1);
-
             const hitBox = slp.animatePlayerAsset(
                 this.context,
                 interpolatedPosition,
@@ -193,10 +191,6 @@ export default class CanvasRenderer implements RendererInterface {
                 unitInstance.direction,
                 animationMetadata.style,
             );
-
-            if (clientState.lastAttackedUnit && clientState.lastAttackedUnit[0] === unitInstance.id) {
-                circle(this.context, unitInstance.position);
-            }
 
             if (unitInstance.hitPoints !== unitMetadata.hitPoints) {
                 const anchoredAt = unitInstance.position;
