@@ -12,8 +12,6 @@ export default class PatrollingAi implements Ai {
     }
 
     makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-        return;
-
         if (state.ticks !== 20) {
             return;
         }
