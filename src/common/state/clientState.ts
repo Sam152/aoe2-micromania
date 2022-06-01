@@ -2,7 +2,6 @@ import {ClientState, ClientStateAction, GameDispatcher} from '../../types';
 import deepClone from '../util/deepClone';
 import pointInRect from '../util/pointInRect';
 import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingWithRect';
-import FormationType from '../units/formations/FormationType';
 import config from '../config';
 import {Vector2} from 'three/src/math/Vector2';
 import ActiveCommand from '../input/ActiveCommand';
@@ -28,7 +27,10 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         const attacking = state.unitHitBoxes
             .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
-        if (!attacking) {
+        if (attacking) {
+            state.lastAttackedUnit = [attacking.unit.id, state.renderedFrames];
+        }
+        else {
             state.lastMoveClick = [action.position, state.renderedFrames];
         }
     }

@@ -174,6 +174,7 @@ export interface ClientState {
     mousePosition: Vector2;
     lastLeftClick: Vector2 | null;
     lastMoveClick: [Vector2, number] | null;
+    lastAttackedUnit: [UnitId, number] | null;
     camera: Vector2;
 }
 
@@ -319,7 +320,6 @@ export interface UnitStats {
     animations: {
         [key in UnitState]: {
             slp: string;
-            underSlp?: string;
             animationDuration: number;
             style: AnimationStyle;
         }

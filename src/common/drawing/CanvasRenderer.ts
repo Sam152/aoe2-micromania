@@ -1,6 +1,6 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {square} from './shapes';
+import {circle, square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three/src/math/Vector2';
 import config from '../config';
@@ -184,19 +184,6 @@ export default class CanvasRenderer implements RendererInterface {
 
             const animationDuration = animationMetadata.animationDuration / (unitInstance.reformingSpeedFactor || 1);
 
-            if (animationMetadata.underSlp) {
-                const underSlp = slpManager.getAsset(animationMetadata.underSlp);
-                underSlp.animatePlayerAsset(
-                    this.context,
-                    interpolatedPosition,
-                    animationDuration,
-                    gameState.ticks - unitInstance.unitStateStartedAt,
-                    unitInstance.ownedByPlayer,
-                    unitInstance.direction,
-                    animationMetadata.style,
-                );
-            }
-
             const hitBox = slp.animatePlayerAsset(
                 this.context,
                 interpolatedPosition,
@@ -206,6 +193,10 @@ export default class CanvasRenderer implements RendererInterface {
                 unitInstance.direction,
                 animationMetadata.style,
             );
+
+            if (clientState.lastAttackedUnit && clientState.lastAttackedUnit[0] === unitInstance.id) {
+                circle(this.context, unitInstance.position);
+            }
 
             if (unitInstance.hitPoints !== unitMetadata.hitPoints) {
                 const anchoredAt = unitInstance.position;
