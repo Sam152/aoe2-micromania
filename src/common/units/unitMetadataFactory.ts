@@ -62,7 +62,7 @@ const unitDefinitions: {
             },
             [UnitState.Decaying]: {
                 slp: 'units/u_arc_crossbowman_decayA_x1',
-                animationDuration: 30,
+                animationDuration: 60,
                 style: AnimationStyle.Play,
             },
         },
@@ -112,7 +112,7 @@ const unitDefinitions: {
             },
             [UnitState.Decaying]: {
                 slp: 'units/u_sie_mangonel_decayA_x1',
-                animationDuration: 20,
+                animationDuration: 60,
                 style: AnimationStyle.Play,
             },
         },

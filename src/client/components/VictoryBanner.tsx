@@ -17,7 +17,7 @@ function Banner({text, buttonText, onClick}: { text: string; buttonText: string;
             top={0}
             bottom={0}
             alignItems="center"
-            cursor='url("/graphics/interface/0.svg") 0 0, none'
+            cursor='url("/graphics/cursor/default32x32.cur") 0 0, none'
         >
             <Stack
                 borderColor={'#e0bf4f'}
