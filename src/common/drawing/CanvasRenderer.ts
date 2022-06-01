@@ -1,5 +1,4 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
-import SlpManager from './SlpManager';
 import unitMetadataFactory from '../units/unitMetadataFactory';
 import {square} from './shapes';
 import screenManager from './screenManager';
@@ -15,11 +14,11 @@ import projectileMetadata from '../units/projectileMetadata';
 import ActiveCommand from '../input/ActiveCommand';
 import unitsInGameState from '../util/unitsInGameState';
 import DebugRenderer from './DebugRenderer';
+import slpManager from "./SlpManager";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
-    private slpManager: SlpManager;
     lastRenderedGameTick: number;
     frameAtLastRenderedTick: number;
     framesPerTick: number;
@@ -30,7 +29,6 @@ export default class CanvasRenderer implements RendererInterface {
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.context = this.canvas.getContext('2d');
-        this.slpManager = new SlpManager('/graphics'); // @todo a global slp manager could be reused?
 
         this.lastRenderedGameTick = 0;
         this.frameAtLastRenderedTick = 0;
@@ -63,7 +61,7 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     bootUp(): Promise<void> {
-        return this.slpManager.downloadPreRenderAll();
+        return slpManager.downloadPreRenderAll();
     }
 
     render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
@@ -103,7 +101,7 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawTerrain(gameState: GameState): void {
-        const terrain = this.slpManager.getAsset(gameState.mapTerrain);
+        const terrain = slpManager.getAsset(gameState.mapTerrain);
         const grid = new Grid(gameState.mapSize);
 
         // Terrain drawing algo documented at https://simonsan.github.io/openage-webdocs/sphinx/doc/media/terrain.html.
@@ -115,12 +113,12 @@ export default class CanvasRenderer implements RendererInterface {
     }
 
     drawMovementCommandAnimations(gameState: GameState, clientState: ClientState): void {
-        const flag = this.slpManager.getAsset('interface/dc_b_misc_waypoint_flag_x1');
+        const flag = slpManager.getAsset('interface/dc_b_misc_waypoint_flag_x1');
         unitsInGameState(gameState, clientState.selectedUnits).forEach((selectedUnit) => selectedUnit.clickedWaypoints.forEach((waypoint) => {
             flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
         }));
         if (clientState.lastMoveClick) {
-            const asset = this.slpManager.getAsset('interface/MOVETO');
+            const asset = slpManager.getAsset('interface/MOVETO');
             const [position, startedTick] = clientState.lastMoveClick;
             asset.animateAsset(this.context, position, 3, clientState.renderedFrames - startedTick, AnimationStyle.Play);
         }
@@ -138,7 +136,7 @@ export default class CanvasRenderer implements RendererInterface {
             const position = getArrowPosition(projectile, percentageComplete);
             const angle = position.clone().sub(positionPrevious).angle();
 
-            this.slpManager.getAsset(projectileInfo.asset).drawFrame(
+            slpManager.getAsset(projectileInfo.asset).drawFrame(
                 this.context,
                 position,
                 projectileInfo.frames[projectile.id % projectileInfo.frames.length],
@@ -182,12 +180,12 @@ export default class CanvasRenderer implements RendererInterface {
         unitsAndPosition.forEach(({interpolatedPosition, unitInstance}) => {
             const unitMetadata = unitMetadataFactory.getUnit(unitInstance.unitType);
             const animationMetadata = unitMetadata.animations[unitInstance.unitState];
-            const slp = this.slpManager.getAsset(animationMetadata.slp);
+            const slp = slpManager.getAsset(animationMetadata.slp);
 
             const animationDuration = animationMetadata.animationDuration / (unitInstance.reformingSpeedFactor || 1);
 
             if (animationMetadata.underSlp) {
-                const underSlp = this.slpManager.getAsset(animationMetadata.underSlp);
+                const underSlp = slpManager.getAsset(animationMetadata.underSlp);
                 underSlp.animatePlayerAsset(
                     this.context,
                     interpolatedPosition,
@@ -239,7 +237,7 @@ export default class CanvasRenderer implements RendererInterface {
             const ticksSinceFallen = gameState.ticks - unitInstance.unitFallenAt;
             const animationMetadata = unitMetadata.animations[ticksSinceFallen < ticksUntilDecay ? UnitState.Falling : UnitState.Decaying];
 
-            const slp = this.slpManager.getAsset(animationMetadata.slp);
+            const slp = slpManager.getAsset(animationMetadata.slp);
             slp.animatePlayerAsset(
                 this.context,
                 unitInstance.position,

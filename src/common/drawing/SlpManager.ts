@@ -4,16 +4,21 @@ import SmxAnimation from "./SmxAnimation";
 
 const renderedPlayers = [1, 2];
 
-export default class SlpManager {
+class SlpManager {
     private readonly assetPath: string;
     private readonly slpList: { [key: string]: SmxAnimation; };
+    private loaded: boolean;
 
     constructor(assetPath: string) {
         this.assetPath = assetPath;
         this.slpList = {};
+        this.loaded = false;
     }
 
     async downloadPreRenderAll() {
+        if (this.loaded) {
+            return;
+        }
 
         const palettes = await PaletteCollectionFactory.fromHttp(`${this.assetPath}/palettes`);
 
@@ -66,6 +71,7 @@ export default class SlpManager {
         renderedSmxLibrary.forEach(({id, smx, frames}) => {
             this.slpList[id] = new SmxAnimation(id, smx, frames);
         });
+        this.loaded = true;
     }
 
     getAsset(assetId: string): SmxAnimation {
@@ -120,3 +126,6 @@ export default class SlpManager {
         ];
     }
 }
+
+const slpManager = new SlpManager('/graphics');
+export default slpManager;
