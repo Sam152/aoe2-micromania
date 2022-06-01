@@ -23,7 +23,7 @@ export default class CanvasRenderer implements RendererInterface {
     frameAtLastRenderedTick: number;
     framesPerTick: number;
     fractionOfTickRendered: number;
-    private lastCursor: number | null;
+    private lastCursor: string | null;
     private debugRenderer: RendererInterface;
 
     constructor(canvas: HTMLCanvasElement) {
@@ -264,15 +264,15 @@ export default class CanvasRenderer implements RendererInterface {
 
     renderMouse(state: ClientState) {
         const cursorMap = {
-            [ActiveCommand.AttackGround]: 8,
-            [ActiveCommand.Patrol]: 18,
-            [ActiveCommand.Default]: 0,
+            [ActiveCommand.AttackGround]: 'area_attack',
+            [ActiveCommand.Patrol]: 'patrol',
+            [ActiveCommand.Default]: 'default',
         };
-        const anchorMap: { [key: number]: string } = {
-            8: '0 0',
-            18: '10 24',
-            0: '3 0',
-            4: '0 0',
+        const anchorMap: { [key: string]: string } = {
+            'default': '0 0',
+            'area_attack': '0 0',
+            'patrol': '0 0',
+            'attack': '0 0',
         };
 
         let cursor;
@@ -280,14 +280,14 @@ export default class CanvasRenderer implements RendererInterface {
             const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
                 .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
                 .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
-            cursor = attacking ? 4 : 0;
+            cursor = attacking ? 'attack' : 'default';
         } else {
             cursor = cursorMap[state.activeCommand];
         }
 
         if (cursor !== this.lastCursor) {
             const anchor = anchorMap[cursor];
-            this.canvas.style.cursor = `url("/graphics/interface/${cursor}.svg") ${anchor}, none`;
+            this.canvas.style.cursor = `url("/graphics/cursor/${cursor}32x32.cur") ${anchor}, none`;
             this.lastCursor = cursor;
         }
     }
