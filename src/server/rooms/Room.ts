@@ -115,7 +115,6 @@ export default class Room {
 
                 if (!this.state.getGameState().gameModeStarted && this.state.getGameState().loadedPlayers.length === this.players.length) {
                     this.state.init();
-
                     gameMode.start(this.state.dispatchGame.bind(this.state), this.state.getGameState());
                     this.state.dispatchGame({n: 'GAME_MODE_STARTED'});
                     this.status = RoomStatus.Started;

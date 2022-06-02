@@ -102,7 +102,7 @@ const unitDefinitions: {
             },
             [UnitState.Moving]: {
                 slp: 'units/u_sie_mangonel_walkA_x1',
-                animationDuration: 5,
+                animationDuration: 3,
                 style: AnimationStyle.Loop,
             },
             [UnitState.Falling]: {
