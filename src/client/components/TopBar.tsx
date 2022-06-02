@@ -26,7 +26,7 @@ export default function TopBar() {
         <Flex px={6} bg={bg} alignItems={'center'} id="nav-bar" sx={{userSelect: 'none'}} justify={'space-between'}>
             <HStack>
                 <Box mr={6}>
-                    <Image src="/graphics/logo.svg" height="45px" />
+                    <Image src="/graphics/logo.svg" height="39px" />
                 </Box>
                 <Flex>
                     <Link {...linkProps} to='/'>Lobby Browser</Link>
