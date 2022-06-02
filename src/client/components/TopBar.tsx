@@ -2,7 +2,7 @@ import {
     Box,
     Button,
     Flex,
-    HStack,
+    HStack, Image,
     Input,
     InputGroup,
     InputRightElement,
@@ -26,7 +26,7 @@ export default function TopBar() {
         <Flex px={6} bg={bg} alignItems={'center'} id="nav-bar" sx={{userSelect: 'none'}} justify={'space-between'}>
             <HStack>
                 <Box mr={6}>
-                    MicroMania
+                    <Image src="/graphics/logo.svg" height="45px" />
                 </Box>
                 <Flex>
                     <Link {...linkProps} to='/'>Lobby Browser</Link>
