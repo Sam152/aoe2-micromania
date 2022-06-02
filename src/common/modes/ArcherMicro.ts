@@ -49,7 +49,7 @@ export default class ArcherMicro implements GameMode {
     }
 
     onTick(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
-        if (false === state.gameModeStarted && state.ticks % 10 !== 0) {
+        if (false === state.gameModeStarted || state.ticks % 10 !== 0) {
             return;
         }
 
