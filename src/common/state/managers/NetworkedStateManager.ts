@@ -65,5 +65,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     cleanUp(): void {
+        this.socket.off(TransportEvent.GameStateActionTransmit);
+        this.socket.off(TransportEvent.WholeGameStateTransmit);
     }
 }

@@ -48,6 +48,7 @@ export default class RenderLoopManager {
 
     stop() {
         this.inputManager.cleanUp();
+        this.stateManager.cleanUp();
     }
 
     render() {
