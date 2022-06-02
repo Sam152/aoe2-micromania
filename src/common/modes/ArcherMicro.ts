@@ -46,6 +46,8 @@ export default class ArcherMicro implements GameMode {
             unitType: Unit.Mangonel,
             position: grid.middleOfTile(gameState.mapSize - 7, gameState.mapSize - 3),
         });
+
+        gameDispatcher({n: 'GAME_MODE_STARTED'});
     }
 
     onTick(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
