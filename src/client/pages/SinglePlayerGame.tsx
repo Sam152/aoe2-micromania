@@ -35,14 +35,15 @@ function SinglePlayerGame() {
             if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
                 setWinner(state.winner);
             }
-
+            if (action.n === 'CLIENT_LOADED') {
+                gameMode.start(manager.dispatchGame.bind(manager), manager.getGameState());
+            }
             if (state.gameEnded) {
                 manager.cleanUp();
             }
         });
 
         manager.init();
-        gameMode.start(manager.dispatchGame.bind(manager), manager.getGameState());
 
         return manager;
     }, []);
