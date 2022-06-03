@@ -11,6 +11,7 @@ import {Vector2} from 'three/src/math/Vector2';
 import inAttackRange, {inMinimumRange} from '../../../util/inAttackRange';
 import setUnitMovementTowards, {setUnitMovementAwayFrom} from '../initiated/setUnitMovementTowards';
 import compassDirectionCalculator from '../../../units/compassDirectionCalculator';
+import Sound from "../../../sounds/Sound";
 
 
 export default function fireProjectiles(state: GameState) {
@@ -70,6 +71,7 @@ export default function fireProjectiles(state: GameState) {
                     ] :
                     [targetingPosition.clone()];
 
+                state.soundQueue.push(unitData.firesProjectileType === ProjectileType.Rock ? Sound.MangonelFired : Sound.ArrowFired);
                 destinations.forEach((destination, index) => {
                     state.projectiles.push({
                         id: state.idAt++,

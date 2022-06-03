@@ -19,20 +19,29 @@ export default class NetworkedStateManager implements StateManagerInterface {
     private clientState: ClientState;
     private socket: Socket;
     private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
+    private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
 
     constructor(socket: Socket, playingAs: number) {
         this.gameState = defaultGameState();
         this.clientState = defaultClientState(playingAs);
         this.socket = socket;
         this.gameStateListeners = [];
+        this.clientStateListeners = [];
     }
 
     addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void {
         this.gameStateListeners.push(listener);
     }
 
+    addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void {
+        this.clientStateListeners.push(listener);
+    }
+
     dispatchClient(action: ClientStateAction) {
         this.clientState = clientStateMutator(this.clientState, action);
+        this.clientStateListeners.forEach(clientStateListener => {
+            clientStateListener(this.clientState, action);
+        });
     }
 
     dispatchGame(action: GameStateAction) {

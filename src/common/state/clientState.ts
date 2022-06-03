@@ -5,6 +5,9 @@ import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingW
 import config from '../config';
 import {Vector2} from 'three/src/math/Vector2';
 import ActiveCommand from '../input/ActiveCommand';
+import Sound from "../sounds/Sound";
+import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
+import Unit from "../units/Unit";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.n === 'FRAME_RENDERING_STARTED') {
@@ -146,6 +149,9 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
                 target: attacking.unit.id,
             });
         } else {
+            if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
+                clientState.soundQueue.push(Sound.ArcherMoved);
+            }
             gameDispatcher({
                 n: 'MOVE_UNITS_TO',
                 position: action.position,
@@ -226,6 +232,7 @@ function defaultState(playingAs: number): ClientState {
         lastMoveClick: null,
         selectionRectangle: null,
         controlGroups: {},
+        soundQueue: [],
     }) as ClientState;
     state.camera = new Vector2(0, 0);
     state.mousePosition = new Vector2(0, 0);

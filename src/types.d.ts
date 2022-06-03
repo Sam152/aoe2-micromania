@@ -10,8 +10,7 @@ import ActiveCommand from './common/input/ActiveCommand';
 import Hotkey from './common/input/Hotkey';
 import DamageType from "./common/units/DamageType";
 import {SmxFrame, SmxStruct} from "genie-smx/lib/smx/struct";
-import Commands from "genie-smx/src/smx/Commands";
-import FourPlusOnePixelArray from "genie-smx/src/smx/FourPlusOnePixelArray";
+import Sound from "./common/sounds/Sound";
 
 export interface UnitInstance {
     id: number;
@@ -90,6 +89,8 @@ export interface GameState {
     units: UnitInstance[];
     projectiles: ProjectileInstance[];
     fallenUnits: FallenUnitInstance[];
+
+    soundQueue: Sound[];
 
     loadedPlayers: Array<PlayerId>;
     gameModeStarted: boolean;
@@ -179,6 +180,7 @@ export interface ClientState {
     controlGroups: {
         [key: number]: Array<UnitId>
     }
+    soundQueue: Sound[];
 }
 
 export type ClientStateAction = {
@@ -263,6 +265,7 @@ export interface StateManagerInterface {
     getClientState(): ClientState;
 
     addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void;
+    addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void;
 }
 
 export interface GameMode {

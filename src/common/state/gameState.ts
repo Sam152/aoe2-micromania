@@ -86,6 +86,8 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     }
 
     if (action.n === 'T') {
+        state.soundQueue = [];
+
         moveUnits(state);
         reformUnits(state);
         patrolUnits(state);
@@ -117,6 +119,8 @@ function defaultState(): GameState {
         gameModeStarted: false,
         gameEnded: false,
         winner: null,
+
+        soundQueue: [],
 
         mapSize: 18,
         mapTerrain: 'terrain/15010-desert',

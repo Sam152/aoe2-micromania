@@ -1,7 +1,7 @@
 import InputManager from '../../input/InputManager';
 import {clientStateTransmitter} from '../clientState';
 import CanvasRenderer from '../../drawing/CanvasRenderer';
-import {GameState, GameStateAction, StateManagerInterface} from '../../../types';
+import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../../types';
 import Grid from '../../terrain/Grid';
 
 export default class RenderLoopManager {
@@ -41,7 +41,21 @@ export default class RenderLoopManager {
             if (action.n === 'MAP_PARAMETERS_SET') {
                 this.fixateCamera(state.mapSize);
             }
-        })
+            if (action.n === 'T') {
+                if (state.soundQueue.length > 0) {
+                    console.log(...state.soundQueue);
+                }
+            }
+        });
+        this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {
+            if (action.n === 'FRAME_RENDERING_STARTED') {
+                if (state.soundQueue.length > 0) {
+                    console.log(...state.soundQueue);
+                }
+                state.soundQueue = [];
+            }
+        });
+
     }
 
     fixateCamera(mapSize: number) {
