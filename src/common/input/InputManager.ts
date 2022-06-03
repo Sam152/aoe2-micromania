@@ -9,6 +9,18 @@ import Hotkey from './Hotkey';
 const StInput = require('stinput');
 
 const doubleClickDuration = 250;
+const controlGroups = [
+    StInput.KeyboardKeys.n0,
+    StInput.KeyboardKeys.n1,
+    StInput.KeyboardKeys.n2,
+    StInput.KeyboardKeys.n3,
+    StInput.KeyboardKeys.n4,
+    StInput.KeyboardKeys.n5,
+    StInput.KeyboardKeys.n6,
+    StInput.KeyboardKeys.n7,
+    StInput.KeyboardKeys.n8,
+    StInput.KeyboardKeys.n9,
+];
 
 export default class InputManager {
     input: typeof StInput;
@@ -143,6 +155,28 @@ export default class InputManager {
         if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraDown))) {
             this.dispatch({
                 n: 'ARROW_DOWN',
+            });
+        }
+
+
+        if (this.input.ctrlDown) {
+            controlGroups.forEach(keycode => {
+                if (this.input.keyPressed(keycode)) {
+                    this.dispatch({
+                        n: 'CONTROL_GROUP_ASSIGNED',
+                        group: keycode - StInput.KeyboardKeys.n0,
+                    });
+                }
+            });
+        }
+        else {
+            controlGroups.forEach(keycode => {
+                if (this.input.keyPressed(keycode)) {
+                    this.dispatch({
+                        n: 'CONTROL_GROUP_SELECTED',
+                        group: keycode - StInput.KeyboardKeys.n0,
+                    });
+                }
             });
         }
     }

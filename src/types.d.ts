@@ -176,6 +176,9 @@ export interface ClientState {
     lastMoveClick: [Vector2, number] | null;
     lastAttackedUnit: [UnitId, number] | null;
     camera: Vector2;
+    controlGroups: {
+        [key: number]: Array<UnitId>
+    }
 }
 
 export type ClientStateAction = {
@@ -238,6 +241,12 @@ export type ClientStateAction = {
 } | {
     n: 'HOTKEY_FORMATION_CHANGED',
     formation: FormationType,
+} | {
+    n: 'CONTROL_GROUP_ASSIGNED',
+    group: number,
+} | {
+    n: 'CONTROL_GROUP_SELECTED',
+    group: number,
 };
 
 export type GameDispatcher = (action: GameStateAction) => void;

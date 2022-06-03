@@ -115,6 +115,17 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         state.selectionRectangle = null;
     }
 
+    if (action.n === 'CONTROL_GROUP_ASSIGNED') {
+        // Remove units in the selection from other control groups, before assigning them to a new one.
+        Object.keys(state.controlGroups).forEach((controlGroup) => {
+            state.controlGroups[parseInt(controlGroup)] = state.controlGroups[parseInt(controlGroup)].filter(unit => !state.selectedUnits.includes(unit));
+        });
+        state.controlGroups[action.group] = state.selectedUnits;
+    }
+    if (action.n === 'CONTROL_GROUP_SELECTED' && state.controlGroups[action.group]) {
+        state.selectedUnits = state.controlGroups[action.group];
+    }
+
     return state;
 }
 
@@ -214,6 +225,7 @@ function defaultState(playingAs: number): ClientState {
         lastLeftClick: null,
         lastMoveClick: null,
         selectionRectangle: null,
+        controlGroups: {},
     }) as ClientState;
     state.camera = new Vector2(0, 0);
     state.mousePosition = new Vector2(0, 0);

@@ -103,6 +103,22 @@ export default function Hotkeys() {
 
                                 <Tr>
                                     <Td colSpan={3}>
+                                        <Heading size="md">Control Groups</Heading>
+                                    </Td>
+                                </Tr>
+                                <Tr>
+                                    <Td>Assign control group</Td>
+                                    <Td><Kbd>ctrl</Kbd> + <Kbd>1</Kbd> / <Kbd>2</Kbd> / <Kbd>3</Kbd> / <Kbd>4</Kbd> / <Kbd>5</Kbd> / <Kbd>6</Kbd> / <Kbd>7</Kbd> / <Kbd>8</Kbd> / <Kbd>9</Kbd> / <Kbd>0</Kbd></Td>
+                                    <Td textAlign="right"/>
+                                </Tr>
+                                <Tr>
+                                    <Td>Select control group</Td>
+                                    <Td><Kbd>1</Kbd> / <Kbd>2</Kbd> / <Kbd>3</Kbd> / <Kbd>4</Kbd> / <Kbd>5</Kbd> / <Kbd>6</Kbd> / <Kbd>7</Kbd> / <Kbd>8</Kbd> / <Kbd>9</Kbd> / <Kbd>0</Kbd></Td>
+                                    <Td textAlign="right"/>
+                                </Tr>
+
+                                <Tr>
+                                    <Td colSpan={3}>
                                         <Heading size="md">Other</Heading>
                                     </Td>
                                 </Tr>
