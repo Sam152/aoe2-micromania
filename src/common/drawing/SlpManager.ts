@@ -95,18 +95,6 @@ class SlpManager {
             'units/u_sie_mangonel_idleA_x1',
             'units/u_sie_mangonel_walkA_x1',
 
-            // 'units/xbow-death',
-            // 'units/xbow-decay',
-            // 'units/xbow-firing',
-            // 'units/xbow-moving',
-            // 'units/xbow-stand',
-            // 'units/mangonel-stand',
-            // 'units/mangonel-moving',
-            // 'units/mangonel-firing',
-            // 'units/mangonel-death',
-            // 'units/mangonel-decay',
-            // 'interface/waypoint-flag',
-
             'interface/dc_b_misc_waypoint_flag_x1',
         ];
     }
