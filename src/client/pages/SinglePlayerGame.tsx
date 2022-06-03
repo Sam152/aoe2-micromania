@@ -43,8 +43,6 @@ function SinglePlayerGame() {
             }
         });
 
-        manager.init();
-
         return manager;
     }, []);
 

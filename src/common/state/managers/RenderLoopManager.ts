@@ -8,14 +8,19 @@ export default class RenderLoopManager {
     private stateManager: StateManagerInterface;
     private renderer: CanvasRenderer;
     private inputManager: InputManager;
+    private running: boolean;
 
     constructor(stateManager: StateManagerInterface, canvas: HTMLCanvasElement) {
         this.stateManager = stateManager;
         this.renderer = new CanvasRenderer(canvas);
         this.inputManager = new InputManager(canvas, stateManager, clientStateTransmitter);
+        this.running = false;
     }
 
     start() {
+        this.running = true;
+        this.stateManager.init();
+
         this.renderer.bootUp().then(() => {
             if (this.stateManager.getClientState().playingAs) {
                 this.stateManager.dispatchGame({
@@ -47,6 +52,7 @@ export default class RenderLoopManager {
     }
 
     stop() {
+        this.running = false;
         this.inputManager.cleanUp();
         this.stateManager.cleanUp();
     }
@@ -60,6 +66,8 @@ export default class RenderLoopManager {
 
         this.inputManager.clearInput();
 
-        window.requestAnimationFrame(this.render.bind(this));
+        if (this.running) {
+            window.requestAnimationFrame(this.render.bind(this));
+        }
     }
 }
