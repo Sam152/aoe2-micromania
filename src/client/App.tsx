@@ -13,6 +13,7 @@ import QuickJoin from './pages/QuickJoin';
 import Replays from './pages/Replays';
 import Replay from './pages/Replay';
 import Hotkeys from './pages/Hotkeys';
+import Sounds from "./pages/Sounds";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -41,6 +42,7 @@ export default function App() {
                             </Route>
                             <Route path="room/:roomId" element={<Room/>}/>
                             <Route path="/hotkeys" element={<Hotkeys />}/>
+                            <Route path="/sounds" element={<Sounds />}/>
                         </Routes>
                     </BrowserRouter>
                 </RoomListContext.Provider>

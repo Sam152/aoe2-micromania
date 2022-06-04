@@ -2,6 +2,7 @@
 /node_modules
 /dist/js
 /dist/recs
+/dist/sounds
 /dist/*.js
 /dist/*.txt
 /dist/*.html

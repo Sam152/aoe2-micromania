@@ -3,6 +3,7 @@ import {clientStateTransmitter} from '../clientState';
 import CanvasRenderer from '../../drawing/CanvasRenderer';
 import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../../types';
 import Grid from '../../terrain/Grid';
+import soundManager from "../../sounds/SoundManager";
 
 export default class RenderLoopManager {
     private stateManager: StateManagerInterface;
@@ -43,14 +44,14 @@ export default class RenderLoopManager {
             }
             if (action.n === 'T') {
                 if (state.soundQueue.length > 0) {
-                    console.log(...state.soundQueue);
+                    soundManager.playSounds(state.soundQueue);
                 }
             }
         });
         this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {
             if (action.n === 'FRAME_RENDERING_STARTED') {
                 if (state.soundQueue.length > 0) {
-                    console.log(...state.soundQueue);
+                    soundManager.playSounds(state.soundQueue);
                 }
                 state.soundQueue = [];
             }

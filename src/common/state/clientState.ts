@@ -143,6 +143,9 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
         if (attacking) {
+            if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
+                clientState.soundQueue.push(Sound.ArcherAttack);
+            }
             gameDispatcher({
                 n: 'ATTACK',
                 units: clientState.selectedUnits,
@@ -151,6 +154,9 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         } else {
             if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
                 clientState.soundQueue.push(Sound.ArcherMoved);
+            }
+            if (selectedTypesFromClientState(clientState).includes(Unit.Mangonel)) {
+                clientState.soundQueue.push(Sound.MangonelMoved);
             }
             gameDispatcher({
                 n: 'MOVE_UNITS_TO',
@@ -170,6 +176,9 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     }
 
     if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.n) && clientState.selectedUnits.length > 0) {
+        if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
+            clientState.soundQueue.push(Sound.ArcherMoved);
+        }
         gameDispatcher({
             n: 'PATROL',
             units: clientState.selectedUnits,
