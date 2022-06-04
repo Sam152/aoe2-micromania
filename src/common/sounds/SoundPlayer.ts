@@ -1,5 +1,6 @@
 import Sound from "./Sound";
 import randomArray from "../util/randomArray";
+import {Howl, Howler} from 'howler';
 
 type SoundMap = {
     [key: string]: {
@@ -11,13 +12,12 @@ type SoundMap = {
 
 class SoundPlayer {
 
-    private audio: { [key: string]: HTMLAudioElement };
-    private playing: { [key: string]: HTMLAudioElement } = {};
+    private audio: { [key: string]: Howl };
 
     private soundMap: SoundMap = {
         [Sound.ArrowFired]: {
             canOverlap: true,
-            maxFromOneTick: 3,
+            maxFromOneTick: 4,
             files: [
                 'de/355890077',
                 'de/144052104',
@@ -52,9 +52,21 @@ class SoundPlayer {
                 'hd/6274',
             ],
         },
-        [Sound.MangonelFired]: {
+        [Sound.SoldierFallen]: {
             canOverlap: true,
             maxFromOneTick: 2,
+            files: [
+                'hd/5309',
+                'hd/5310',
+                'hd/6271',
+                'hd/6272',
+                'hd/6273',
+            ],
+        },
+
+        [Sound.MangonelFired]: {
+            canOverlap: true,
+            maxFromOneTick: 4,
             files: [
                 'de/1042749072',
                 'de/1030796533',
@@ -68,6 +80,12 @@ class SoundPlayer {
                 'de/450918993',
             ],
         },
+        [Sound.MangonelDestroyed]: {
+            canOverlap: true,
+            files: [
+                'de/576386269',
+            ],
+        }
     };
     private framePlayCounts: {[key: string]: number} = {};
 
@@ -76,7 +94,11 @@ class SoundPlayer {
         Object.keys(this.soundMap).forEach(soundType => {
             this.soundMap[soundType].files.forEach(soundFile => {
                 const type = soundFile.indexOf('de/') !== -1 ? 'ogg' : 'wav';
-                this.audio[soundFile] = new Audio(`/sounds/${soundFile}.${type}`);
+
+                this.audio[soundFile] = new Howl({
+                    src: `/sounds/${soundFile}.${type}`,
+                    pool: 30,
+                });
             });
         });
     }
@@ -89,15 +111,14 @@ class SoundPlayer {
         const audioElement = this.audio[soundFile];
 
         if (soundMetadata.canOverlap) {
-            if (this.framePlayCounts[sound] < soundMetadata.maxFromOneTick) {
-                (audioElement.cloneNode()  as HTMLAudioElement).play();
+            if (this.framePlayCounts[sound] < soundMetadata.maxFromOneTick || typeof soundMetadata.maxFromOneTick === 'undefined') {
+                audioElement.play();
             }
         }
         else {
-            soundMetadata.files.map(file => file in this.playing ? this.playing[file] : null).filter(elem => elem).map(element => element.pause());
-            // Work around a bug in chrome, where .ogg files cannot be seeked and replayed.
-            this.playing[soundFile] = audioElement.cloneNode() as HTMLAudioElement;
-            this.playing[soundFile].play();
+            soundMetadata.files.map(file => this.audio[file]).map(element => element.pause());
+            audioElement.seek(0);
+            audioElement.play();
         }
     }
 

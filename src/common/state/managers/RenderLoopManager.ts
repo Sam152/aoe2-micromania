@@ -42,10 +42,8 @@ export default class RenderLoopManager {
             if (action.n === 'MAP_PARAMETERS_SET') {
                 this.fixateCamera(state.mapSize);
             }
-            if (action.n === 'T') {
-                if (state.soundQueue.length > 0) {
-                    soundPlayer.playSounds(state.soundQueue);
-                }
+            if (state.soundQueue.length > 0) {
+                soundPlayer.playSounds(state.soundQueue);
             }
         });
         this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {
