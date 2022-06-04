@@ -179,6 +179,9 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
             clientState.soundQueue.push(Sound.ArcherMoved);
         }
+        if (selectedTypesFromClientState(clientState).includes(Unit.Mangonel)) {
+            clientState.soundQueue.push(Sound.MangonelMoved);
+        }
         gameDispatcher({
             n: 'PATROL',
             units: clientState.selectedUnits,
