@@ -1,7 +1,7 @@
 enum Sound {
-    ArcherSelected = 'archer-moved',
-    ArcherAttack = 'archer-moved',
-    ArcherMoved = 'archer-moved',
+    SoldierSelected = 'archer-moved',
+    SoldierAttack = 'archer-moved',
+    SoldierMoved = 'archer-moved',
 
     ArrowFired = 'arrow-fired',
 

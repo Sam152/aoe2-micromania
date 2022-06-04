@@ -8,6 +8,8 @@ import ActiveCommand from '../input/ActiveCommand';
 import Sound from "../sounds/Sound";
 import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
 import Unit from "../units/Unit";
+import soundManager from "../sounds/SoundManger";
+import soundManger from "../sounds/SoundManger";
 
 function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
     if (action.n === 'FRAME_RENDERING_STARTED') {
@@ -143,21 +145,14 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
         if (attacking) {
-            if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
-                clientState.soundQueue.push(Sound.ArcherAttack);
-            }
+            soundManager.attacking(clientState);
             gameDispatcher({
                 n: 'ATTACK',
                 units: clientState.selectedUnits,
                 target: attacking.unit.id,
             });
         } else {
-            if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
-                clientState.soundQueue.push(Sound.ArcherMoved);
-            }
-            if (selectedTypesFromClientState(clientState).includes(Unit.Mangonel)) {
-                clientState.soundQueue.push(Sound.MangonelMoved);
-            }
+            soundManager.moving(clientState);
             gameDispatcher({
                 n: 'MOVE_UNITS_TO',
                 position: action.position,
@@ -176,12 +171,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     }
 
     if (clientState.activeCommand === ActiveCommand.Patrol && ['RIGHT_CLICK', 'LEFT_CLICK', 'DRAG_END'].includes(action.n) && clientState.selectedUnits.length > 0) {
-        if (selectedTypesFromClientState(clientState).includes(Unit.Archer)) {
-            clientState.soundQueue.push(Sound.ArcherMoved);
-        }
-        if (selectedTypesFromClientState(clientState).includes(Unit.Mangonel)) {
-            clientState.soundQueue.push(Sound.MangonelMoved);
-        }
+        soundManger.moving(clientState);
         gameDispatcher({
             n: 'PATROL',
             units: clientState.selectedUnits,

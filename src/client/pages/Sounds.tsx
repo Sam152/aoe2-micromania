@@ -13,7 +13,7 @@ import Section from '../components/Section';
 import soundList from "../../common/sounds/soundList";
 
 function playSound(soundName: string) {
-    var audio = new Audio(`/de-sounds/${soundName}.ogg`);
+    var audio = new Audio(`/sounds/de/${soundName}.ogg`);
     audio.play();
 
 }

@@ -12,6 +12,7 @@ import inAttackRange, {inMinimumRange} from '../../../util/inAttackRange';
 import setUnitMovementTowards, {setUnitMovementAwayFrom} from '../initiated/setUnitMovementTowards';
 import compassDirectionCalculator from '../../../units/compassDirectionCalculator';
 import Sound from "../../../sounds/Sound";
+import soundManager from "../../../sounds/SoundManger";
 
 
 export default function fireProjectiles(state: GameState) {
@@ -52,10 +53,10 @@ export default function fireProjectiles(state: GameState) {
             unit.direction = compassDirectionCalculator.getDirection(unit.position, targetingPosition);
 
             if (state.ticks - unit.unitStateStartedAt === firingFrame) {
+                soundManager.projectileLaunched(state, unitData.firesProjectileType);
+
                 const targetingUnit = state.units.find(({id}) => id === unit.targetingUnit);
-
                 const distance = unit.position.distanceTo(targetingPosition);
-
                 const startingPoint = unit.position.clone().add(unitData.firingAnchor);
 
                 const destinations = unitData.firesProjectileType === ProjectileType.Rock ?
@@ -71,7 +72,6 @@ export default function fireProjectiles(state: GameState) {
                     ] :
                     [targetingPosition.clone()];
 
-                state.soundQueue.push(unitData.firesProjectileType === ProjectileType.Rock ? Sound.MangonelFired : Sound.ArrowFired);
                 destinations.forEach((destination, index) => {
                     state.projectiles.push({
                         id: state.idAt++,
