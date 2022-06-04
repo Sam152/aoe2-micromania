@@ -54,13 +54,14 @@ class SoundPlayer {
         },
         [Sound.SoldierFallen]: {
             canOverlap: true,
-            maxFromOneTick: 2,
+            maxFromOneTick: 6,
             files: [
                 'hd/5309',
                 'hd/5310',
-                'hd/6271',
-                'hd/6272',
-                'hd/6273',
+                'hd/5311',
+                'hd/5312',
+                'hd/5313',
+                'hd/5314',
             ],
         },
 
@@ -85,7 +86,15 @@ class SoundPlayer {
             files: [
                 'de/576386269',
             ],
-        }
+        },
+
+        [Sound.RocksLanded]: {
+            canOverlap: true,
+            files: [
+                'de/1034594737',
+                'de/270594082',
+            ],
+        },
     };
     private framePlayCounts: {[key: string]: number} = {};
 

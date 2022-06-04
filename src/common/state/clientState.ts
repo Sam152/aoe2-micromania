@@ -180,7 +180,8 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
         clientState.activeCommand = ActiveCommand.Default;
     }
 
-    if (action.n === 'HOTKEY_FORMATION_CHANGED') {
+    if (action.n === 'HOTKEY_FORMATION_CHANGED' && clientState.selectedUnits.length > 0) {
+        soundManger.moving(clientState);
         gameDispatcher({
             n: 'FORMATION_CHANGED',
             formation: action.formation,

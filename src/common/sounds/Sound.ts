@@ -1,10 +1,11 @@
 enum Sound {
-    SoldierSelected = 'archer-moved',
-    SoldierAttack = 'archer-moved',
-    SoldierFallen = 'archer-fallen',
-    SoldierMoved = 'archer-moved',
+    SoldierSelected = 'soldier-moved',
+    SoldierAttack = 'soldier-moved',
+    SoldierFallen = 'soldier-fallen',
+    SoldierMoved = 'soldier-moved',
 
     ArrowFired = 'arrow-fired',
+    RocksLanded = 'rocks-landed',
 
     MangonelMoved = 'mango-moved',
     MangonelFired = 'mango-fired',

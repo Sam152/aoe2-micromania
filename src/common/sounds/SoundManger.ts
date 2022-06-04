@@ -1,4 +1,4 @@
-import {ClientState, GameState, UnitInstance} from "../../types";
+import {ClientState, GameState, ProjectileInstance, UnitInstance} from "../../types";
 import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
 import Unit from "../units/Unit";
 import Sound from "./Sound";
@@ -23,6 +23,12 @@ class SoundManager {
 
     projectileLaunched(state: GameState, type: ProjectileType) {
         state.soundQueue.push(type === ProjectileType.Rock ? Sound.MangonelFired : Sound.ArrowFired);
+    }
+
+    projectileLanded(state: GameState, projectile: ProjectileInstance) {
+        if (projectile.type === ProjectileType.Rock) {
+            state.soundQueue.push(Sound.RocksLanded);
+        }
     }
 
     unitFallen(state: GameState, unit: UnitInstance) {

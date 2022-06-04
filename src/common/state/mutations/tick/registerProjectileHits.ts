@@ -4,6 +4,7 @@ import registerUnitFallen from './registerUnitFallen';
 import unitMetadataFactory from '../../../units/unitMetadataFactory';
 import projectileMetadata from '../../../units/projectileMetadata';
 import pointInCircle from "../../../util/pointInCircle";
+import soundManager from "../../../sounds/SoundManger";
 
 export default function registerProjectileHits(state: GameState) {
     const landedProjectiles = state.projectiles.filter(({arrivingTick}) => arrivingTick === state.ticks);
@@ -11,6 +12,8 @@ export default function registerProjectileHits(state: GameState) {
     const damageProjectiles = landedProjectiles.filter(({hasDamage}) => hasDamage);
     const areaProjectiles = damageProjectiles.filter(({type}) => projectileMetadata[type].damageIsAreaOfEffect);
     const standardProjectiles = damageProjectiles.filter(({type}) => !projectileMetadata[type].damageIsAreaOfEffect);
+
+    damageProjectiles.map(damageProjectile => soundManager.projectileLanded(state, damageProjectile));
 
     standardProjectiles.forEach((projectile) => {
         const hitUnit = state.units.find((unit) => pointInCircle(unit.position, unitMetadataFactory.getUnit(unit.unitType).hitBox, projectile.destination));
