@@ -67,7 +67,7 @@ export default class CanvasRenderer implements RendererInterface {
 
     render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
         // Attempt to smooth out the rendering of game ticks, which are slower than how often a frame is rendered, by
-        // caclulating what fraction of a game tick we are through. This requires us to record what frame we were at
+        // calculating what fraction of a game tick we are through. This requires us to record what frame we were at
         // when a new tick is started, how many have passed since the last tick and an estimate of the total frames that
         // are rendered for each tick.
         if (gameState.ticks !== this.lastRenderedGameTick) {
