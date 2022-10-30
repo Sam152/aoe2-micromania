@@ -106,6 +106,7 @@ class SoundPlayer {
 
                 this.audio[soundFile] = new Howl({
                     src: `/sounds/${soundFile}.${type}`,
+                    volume: 0.3,
                     pool: 30,
                 });
             });
