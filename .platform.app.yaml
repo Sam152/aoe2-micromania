@@ -32,8 +32,8 @@ mounts:
 
 hooks:
   build: |
-    yarn install
-    npm run build-prod
+    corepack yarn install
+    corepack yarn run build-prod
 
 source:
   operations:
