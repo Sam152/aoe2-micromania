@@ -21,6 +21,11 @@ relationships: { }
 web:
   commands:
    start: "cd dist-server && node bundle.js"
+  locations:
+    '/':
+      root: 'dist'
+      index: 'index.html'
+
 
 # The size of the persistent disk of the application (in MB).
 disk: 512
@@ -29,6 +34,9 @@ mounts:
     'run':
         source: local
         source_path: run
+
+build:
+  flavor: none
 
 hooks:
   build: |
