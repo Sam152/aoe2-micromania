@@ -7,6 +7,12 @@
     type: upstream
     upstream: "app:http"
 
+"https://{default}/socket.io":
+    type: upstream
+    upstream: "ws-app:http"
+    cache:
+        enabled: false
+
 "https://www.{default}/":
     type: redirect
     to: "https://{default}/"
