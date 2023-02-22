@@ -4,7 +4,7 @@
 # See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
 
 # The name of this app. Must be unique within a project.
-name: app
+name: ws-app
 
 # The runtime the application uses.
 type: nodejs:16
@@ -20,12 +20,12 @@ relationships: { }
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-   start: "sleep infinity"
+   start: "cd dist-server && node bundle.js"
   locations:
     '/':
-      root: 'dist'
-      index: ['index.html']
-
+      passthru: true
+      request_buffering:
+        enabled: false
 
 # The size of the persistent disk of the application (in MB).
 disk: 512
