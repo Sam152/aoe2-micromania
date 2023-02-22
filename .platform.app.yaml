@@ -22,6 +22,8 @@ web:
   commands:
    start: "cd dist-server && node bundle.js"
   locations:
+    '/socket.io':
+      passthru: true
     '/':
       root: 'dist'
       index: ['index.html']
