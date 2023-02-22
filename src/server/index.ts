@@ -95,4 +95,4 @@ setInterval(() => {
     roomManager.emitRooms(io);
 }, 30000);
 
-httpServer.listen(8888);
+httpServer.listen(process.env.PORT || 3000);

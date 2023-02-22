@@ -7,7 +7,7 @@ import {ConnectionContext} from './hooks/useConnection';
 const config = {
     transports: ['websocket'],
 };
-const connection = window.location.hostname === 'localhost' ? io(config) : io(`wss://${window.location.hostname}:3000`, config);
+const connection = io(config);
 
 const root = createRoot(document.getElementById('ui'));
 root.render(
