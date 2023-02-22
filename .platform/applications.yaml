@@ -35,7 +35,7 @@
   hooks:
     build: |
       corepack yarn install
-      corepack yarn run build-prod
+      corepack yarn run build-client-prod
 
   source:
     operations:
@@ -80,7 +80,7 @@
   hooks:
     build: |
       corepack yarn install
-      corepack yarn run build-prod
+      corepack yarn run build-server-prod
 
   source:
     operations:
