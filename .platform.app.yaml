@@ -24,7 +24,7 @@ web:
   locations:
     '/':
       root: 'dist'
-      index: 'index.html'
+      index: ['index.html']
 
 
 # The size of the persistent disk of the application (in MB).
