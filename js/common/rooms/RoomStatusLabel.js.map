@@ -1,0 +1,1 @@
+{"version":3,"file":"RoomStatusLabel.js","sourceRoot":"","sources":["../../../../src/common/rooms/RoomStatusLabel.ts"],"names":[],"mappings":"AAAA,OAAO,UAAU,MAAM,cAAc,CAAC;AAEtC,IAAM,eAAe,GAAG,IAAI,GAAG,CAAqB;IAChD,CAAC,UAAU,CAAC,OAAO,EAAE,SAAS,CAAC;IAC/B,CAAC,UAAU,CAAC,SAAS,EAAE,WAAW,CAAC;IACnC,CAAC,UAAU,CAAC,SAAS,EAAE,UAAU,CAAC;CACrC,CAAC,CAAC;AAEH,eAAe,eAAe,CAAC"}

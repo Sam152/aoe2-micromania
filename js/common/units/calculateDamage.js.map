@@ -1,0 +1,1 @@
+{"version":3,"file":"calculateDamage.js","sourceRoot":"","sources":["../../../../src/common/units/calculateDamage.ts"],"names":[],"mappings":"AACA,OAAO,mBAAmB,MAAM,uBAAuB,CAAC;AAExD,MAAM,CAAC,OAAO,UAAU,eAAe,CAAC,SAAe,EAAE,SAAe;IACpE,IAAM,QAAQ,GAAG,mBAAmB,CAAC,OAAO,CAAC,SAAS,CAAC,CAAC;IACxD,OAAO,QAAQ,CAAC,YAAY,CAAC;AACjC,CAAC"}

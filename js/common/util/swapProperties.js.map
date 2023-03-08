@@ -1,0 +1,1 @@
+{"version":3,"file":"swapProperties.js","sourceRoot":"","sources":["../../../../src/common/util/swapProperties.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,UAAU,cAAc,CAAI,MAAS,EAAE,SAAkB,EAAE,SAAkB;IACvF,IAAM,IAAI,GAAG,MAAM,CAAC,SAAS,CAAC,CAAC;IAC/B,MAAM,CAAC,SAAS,CAAC,GAAG,MAAM,CAAC,SAAS,CAAC,CAAC;IACtC,MAAM,CAAC,SAAS,CAAC,GAAG,IAAI,CAAC;AAC7B,CAAC"}
