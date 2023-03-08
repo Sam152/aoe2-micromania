@@ -1,6 +1,7 @@
 import Sound from "./Sound";
 import randomArray from "../util/randomArray";
 import {Howl, Howler} from 'howler';
+import assetUrl from "../../client/util/assetUrl";
 
 type SoundMap = {
     [key: string]: {
@@ -105,7 +106,7 @@ class SoundPlayer {
                 const type = soundFile.indexOf('de/') !== -1 ? 'ogg' : 'wav';
 
                 this.audio[soundFile] = new Howl({
-                    src: `/sounds/${soundFile}.${type}`,
+                    src: assetUrl(`sounds/${soundFile}.${type}`),
                     volume: 0.25,
                     pool: 30,
                 });
