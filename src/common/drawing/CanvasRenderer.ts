@@ -16,6 +16,7 @@ import unitsInGameState from '../util/unitsInGameState';
 import DebugRenderer from './DebugRenderer';
 import slpManager from "./SlpManager";
 import selectionCircle from "./helpers/selectionCircle";
+import assetUrl from "../../client/util/assetUrl";
 
 export default class CanvasRenderer implements RendererInterface {
     private canvas: HTMLCanvasElement;
@@ -272,7 +273,7 @@ export default class CanvasRenderer implements RendererInterface {
 
         if (cursor !== this.lastCursor) {
             const anchor = anchorMap[cursor];
-            this.canvas.style.cursor = `url("/graphics/cursor/${cursor}32x32.cur") ${anchor}, none`;
+            this.canvas.style.cursor = `url("${assetUrl(`/graphics/cursor/${cursor}32x32.cur`)}") ${anchor}, none`;
             this.lastCursor = cursor;
         }
     }

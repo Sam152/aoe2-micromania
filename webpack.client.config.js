@@ -24,7 +24,7 @@ module.exports = {
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '',
+        publicPath: '/',
     },
     plugins: [
         // Shim the Buffer object, required by jascpal.
@@ -34,6 +34,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Micro Mania',
             template: "./src/client/template.html"
+        }),
+        new webpack.DefinePlugin({
+            'process.env.ASSET_BASE_URL': JSON.stringify(process.env.ASSET_BASE_URL || '/')
         }),
     ],
     optimization: {

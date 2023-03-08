@@ -1,17 +1,14 @@
 import {
     Box,
-    Button,
     Flex,
     HStack, Image,
-    Input,
-    InputGroup,
-    InputRightElement,
     Link,
     useColorModeValue,
 } from '@chakra-ui/react';
 import React from 'react';
 import {NavLink as RouterLink} from 'react-router-dom';
 import EditableNickname from './EditableNickname';
+import assetUrl from "../util/assetUrl";
 
 export default function TopBar() {
     const bg = useColorModeValue('gray.100', 'gray.900');
@@ -26,7 +23,7 @@ export default function TopBar() {
         <Flex px={6} bg={bg} alignItems={'center'} id="nav-bar" sx={{userSelect: 'none'}} justify={'space-between'}>
             <HStack>
                 <Box mr={6}>
-                    <Link _focus={{boxShadow: 'none'}} as={RouterLink} to='/'><Image src="/graphics/logo.svg" height="39px" /></Link>
+                    <Link _focus={{boxShadow: 'none'}} as={RouterLink} to='/'><Image src={assetUrl('graphics/logo.svg')} height="39px" /></Link>
                 </Box>
                 <Flex>
                     <Link {...linkProps} to='/'>Lobby Browser</Link>

@@ -36,6 +36,10 @@ const config = {
      * How fast the camera should pan.
      */
     cameraPanSpeed: 10,
+    /**
+     * Asset base URL.
+     */
+    assetBaseUrl: process.env.ASSET_BASE_URL,
 };
 
 export default config;

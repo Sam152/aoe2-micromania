@@ -1,6 +1,7 @@
 import {Buffer} from 'buffer';
 import Smx, {PaletteCollectionFactory} from "genie-smx";
 import SmxAnimation from "./SmxAnimation";
+import assetUrl from "../../client/util/assetUrl";
 
 const renderedPlayers = [1, 2];
 
@@ -115,5 +116,5 @@ class SlpManager {
     }
 }
 
-const slpManager = new SlpManager('/graphics');
+const slpManager = new SlpManager(assetUrl('graphics'));
 export default slpManager;
