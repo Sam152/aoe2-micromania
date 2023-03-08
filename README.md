@@ -10,6 +10,7 @@ Implemented features include:
 * Single player and multiplayer
 * Attack move
 * Formations
+* Control groups
 * Shift-queue
 * Isometric map with terrain
 * Configurable hotkeys
@@ -38,13 +39,26 @@ The orchestration of state can happen locally for single player or be coordinate
 will receive actions that clients wish to dispatch, validate them and send them back to each connected client
 to run against their own local simulation.
 
-This keeps all clients in sync, since even for their own actions
+This keeps all clients in sync (given the simulation remains totally deterministic), since even for their own actions
 they must wait for the action received by the server to commit them to the simulation (ie the order of actions
 relative to ticks is the same for all clients).
 
 ![](docs/networking.png)
 
 ### Client state and rendering
+
+In addition to the game state, each client has its own client state, which is information that is non-essential
+for other clients to recreate the game state. It may include things like, the units that are selected, the position
+of the mouse, control groups and the camera viewport. This object works in a similar way in that actions made by the client
+(panning the camera, clicking a unit etc.) are dispatched into a function which mutates the local state.
+
+The renderer takes both the client state and the game state and produces the visual representation of both
+that is ultimately displayed to the user.
+
+![](docs/canvas-renderer.png)
+
+Since the game simulation runs at a low fixed number of ticks per second (20), the renderer will also estimate the
+framerate of the client and advance the position of on-screen items by  
 
 # Legal
 
