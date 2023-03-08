@@ -24,7 +24,7 @@ module.exports = {
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
+        publicPath: process.env.ASSET_BASE_URL,
     },
     plugins: [
         // Shim the Buffer object, required by jascpal.
@@ -36,7 +36,7 @@ module.exports = {
             template: "./src/client/template.html"
         }),
         new webpack.DefinePlugin({
-            'process.env.ASSET_BASE_URL': JSON.stringify(process.env.ASSET_BASE_URL || '/')
+            'process.env.ASSET_BASE_URL': JSON.stringify(process.env.ASSET_BASE_URL || '')
         }),
     ],
     optimization: {

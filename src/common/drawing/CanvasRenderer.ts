@@ -273,7 +273,7 @@ export default class CanvasRenderer implements RendererInterface {
 
         if (cursor !== this.lastCursor) {
             const anchor = anchorMap[cursor];
-            this.canvas.style.cursor = `url("${assetUrl(`/graphics/cursor/${cursor}32x32.cur`)}") ${anchor}, none`;
+            this.canvas.style.cursor = `url("${assetUrl(`graphics/cursor/${cursor}32x32.cur`)}") ${anchor}, none`;
             this.lastCursor = cursor;
         }
     }

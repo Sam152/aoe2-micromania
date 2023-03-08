@@ -14,6 +14,7 @@ import Replays from './pages/Replays';
 import Replay from './pages/Replay';
 import Hotkeys from './pages/Hotkeys';
 import Sounds from "./pages/Sounds";
+import config from "../common/config";
 
 export default function App() {
     const playerInfo = useEmittedData<EmittedPlayerLobbyMetadata>('playerInfo', {
@@ -27,7 +28,7 @@ export default function App() {
         <ChakraProvider theme={theme} resetCSS={true}>
             <PlayerInfoContext.Provider value={playerInfo}>
                 <RoomListContext.Provider value={roomList}>
-                    <BrowserRouter>
+                    <BrowserRouter basename={config.assetBaseUrl}>
                         <TopBar/>
                         <Routes>
                             <Route path="/" element={<Lobby/>}/>

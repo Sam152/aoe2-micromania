@@ -31,7 +31,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "scripts": {
-    "predeploy": "ASSET_BASE_URL='https://sam152.github.io/aoe2-micromania/' yarn run build",
+    "predeploy": "ASSET_BASE_URL='/aoe2-micromania' yarn run build",
     "deploy-gh": "gh-pages -d dist",
     "build": "webpack -c webpack.client.config.js --mode=development && webpack -c webpack.server.config.js --mode=development",
     "build-prod": "webpack -c webpack.client.config.js --mode=production && webpack -c webpack.server.config.js --mode=production",
