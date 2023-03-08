@@ -8,15 +8,15 @@ inspired by the classic scenario [MicroMania](https://www.voobly.com/gamemods/mo
 Implemented features include:
 
 * Single player and multiplayer
+* Lobby system
+* Configurable hotkeys
+* Recorded games
+* Spectating
 * Attack move
 * Formations
 * Control groups
 * Shift-queue
 * Isometric map with terrain
-* Configurable hotkeys
-* Lobby system
-* Recorded games
-* Spectating
 
 ## Demos
 
