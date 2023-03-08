@@ -55,10 +55,13 @@ of the mouse, control groups and the camera viewport. This object works in a sim
 The renderer takes both the client state and the game state and produces the visual representation of both
 that is ultimately displayed to the user.
 
-![](docs/canvas-renderer.png)
+![](docs/rendering.png)
 
 Since the game simulation runs at a low fixed number of ticks per second (20), the renderer will also estimate the
-framerate of the client and advance the position of on-screen items by  
+framerate of the client and interpolate the position of on-screen items by the fraction of the tick each frame has
+progressed. This allows the game to run at the maximum fps supported by the display while maintaining the same deterministic
+game state across clients.
+
 
 # Legal
 
