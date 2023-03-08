@@ -43,6 +43,11 @@ This keeps all clients in sync (given the simulation remains totally determinist
 they must wait for the action received by the server to commit them to the simulation (ie the order of actions
 relative to ticks is the same for all clients).
 
+All the code (outside of the `./server` and `./client` folders) can be run on both the server and the
+client. The server currently runs the game simulation, for the sole purpose of syncing the entire state 
+object to spectators that observe games in progress, but it could also store and send a buffer of actions
+to achieve the same effect, if running many simultaneous game simulations became problematic. 
+
 ![](docs/networking.png)
 
 ### Client state and rendering
