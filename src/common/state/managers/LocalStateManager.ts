@@ -12,12 +12,14 @@ export default class LocalStateManager implements StateManagerInterface {
     private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
     private ticker: NodeJS.Timer;
     private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
+    private tickFn: () => void;
 
-    constructor(playingAs: number | null = 1) {
+    constructor(playingAs: number | null = 1, tickFn?: () => void) {
         this.gameState = defaultGameState();
         this.clientState = defaultClientState(playingAs);
         this.gameStateListeners = [];
         this.clientStateListeners = [];
+        this.tickFn = tickFn || (() => this.dispatchGame({n: 'T'}));
     }
 
     addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void {
@@ -51,7 +53,7 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     init(): void {
-        this.ticker = setInterval(() => this.dispatchGame({n: 'T'}), 1000 / config.ticksPerSecond);
+        this.ticker = setInterval(this.tickFn, 1000 / config.ticksPerSecond);
     }
 
     cleanUp(): void {

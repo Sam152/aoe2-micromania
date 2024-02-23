@@ -20,30 +20,29 @@ export default function Replay() {
         if (!replay) {
             return;
         }
-        const manager = new LocalStateManager(null);
-        manager.addGameStateListener((state: GameState, action: GameStateAction) => {
-            if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
-                setReplayOver(true);
-            }
-        });
 
         const playableActions = JSON.parse(JSON.stringify(replay.actions));
-
-        interval = setInterval(playTick, 1000 / config.ticksPerSecond);
-        function playTick() {
+        const manager = new LocalStateManager(null, () => {
             while (true) {
                 const action = playableActions.shift();
                 manager.dispatchGame(normalizeGameStateAction(action));
 
                 if (playableActions.length === 0) {
-                    clearInterval(interval);
+                    manager.cleanUp();
                     break;
                 }
                 if (action.n === 'T') {
                     break;
                 }
             }
-        }
+        });
+
+        manager.addGameStateListener((state: GameState, action: GameStateAction) => {
+            if (action.n === 'GAME_ENDED' || action.n === 'PLAYER_DISCONNECTED') {
+                setReplayOver(true);
+            }
+        });
+
         return manager;
     }, [replay]);
 
