@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /var/www/mm/recs
+cd ${RECORDED_GAMES_DIRECTORY}
 jq -s . *.metadata.json > index.json

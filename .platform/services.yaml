@@ -6,3 +6,7 @@
 #db:
 #    type: mariadb:10.4
 #    disk: 1024
+
+dmount:
+  type: network-storage:2.0
+  disk: 256

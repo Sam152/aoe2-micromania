@@ -2,6 +2,7 @@
 
   # The runtime the application uses.
   type: nodejs:16
+  size: S
 
   # The relationships of the application with services or other applications.
   #
@@ -18,15 +19,21 @@
     locations:
       '/':
         root: 'dist'
+        passthru: '/index.html'
         index: [ 'index.html' ]
 
+
+  variables:
+    env:
+      ASSET_BASE_URL: '/'
 
   # The size of the persistent disk of the application (in MB).
   disk: 512
 
   mounts:
-    'run':
-      source: local
+    'dist/recs':
+      source: service
+      service: dmount
       source_path: run
 
   build:
@@ -47,6 +54,7 @@
 
   # The runtime the application uses.
   type: nodejs:16
+  size: AUTO
 
   # The relationships of the application with services or other applications.
   #
@@ -69,9 +77,20 @@
   # The size of the persistent disk of the application (in MB).
   disk: 512
 
+  variables:
+    env:
+      RECORDED_GAMES_DIRECTORY: '/app/run'
+
+  crons:
+    compute-recs:
+      spec: '* * * * *'
+      commands:
+        start: '/app/dist-server/compute-recs.sh'
+
   mounts:
     'run':
-      source: local
+      source: service
+      service: dmount
       source_path: run
 
   build:
