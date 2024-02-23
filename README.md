@@ -21,7 +21,7 @@ Implemented features include:
 ## Demos
 
 * [Static demo](https://sam152.github.io/aoe2-micromania) (no server component)
-* [Live demo](https://main-bvxea6i-5gx6ejvclv6ua.au.platformsh.site/) (running server but may go offline)
+* [Live demo](https://main-bvxea6i-tariycsvow5ae.au.platformsh.site/) (running server but may go offline)
 
 ## Architecture
 
