@@ -1,42 +1,18 @@
 import {GameState, GameStateAction} from "../../../../types";
-import spawnUnit from "../initiated/spawnUnit";
-import Unit from "../../../units/Unit";
-import Grid from "../../../terrain/Grid";
+import registerUnitFallen from "../tick/registerUnitFallen";
 
 export default function deprovisionPlayer(state: GameState, action: Extract<GameStateAction, {
     n: 'CLIENT_DISCONNECTED_WITH_ID'
 }>) {
-    if (state.activePlayers[action.playerId]) {
+    // Players that are not active do not need de-previsioning.
+    if (!state.activePlayers[action.playerId]) {
         return;
     }
 
-    const newPlayerNumber = getPlayerNumber(state.activePlayers);
-    state.activePlayers[action.playerId] = newPlayerNumber;
+    // Remove the disconnected player from the active player pool.
+    const disconnectedPlayer = state.activePlayers[action.playerId];
+    delete state.activePlayers[action.playerId];
 
-    const grid = new Grid(state.mapSize);
-    spawnUnit(state, {
-        forPlayer: newPlayerNumber,
-        unitType: Unit.Mangonel,
-        position: grid.middleOfTile(7, 2),
-    });
-    for (let x = 0; x < 5; x++) {
-        for (let y = 0; y < 5; y++) {
-            spawnUnit(state, {
-                forPlayer: newPlayerNumber,
-                unitType: Unit.Archer,
-                position: grid.middleOfTile(x, y),
-            });
-        }
-    }
-
-}
-
-function getPlayerNumber(activePlayers: Record<string, number>): number {
-    const usedNumbers = Object.values(activePlayers);
-    for (let i = 1; i <= 8; i++) {
-        if (!usedNumbers.includes(i)) {
-            return i;
-        }
-    }
-    throw new Error('Could not assign a player number');
+    // Remove units from disconnected players.
+    state.units.filter(unit => unit.ownedByPlayer === disconnectedPlayer).forEach((removed) => registerUnitFallen(state, removed));
 }
