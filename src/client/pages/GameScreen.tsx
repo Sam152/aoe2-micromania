@@ -1,5 +1,5 @@
 import MultiplayerGame from "../components/MultiplayerGame";
 
 export function GameScreen() {
-    return <MultiplayerGame playingAs={1}/>
+    return <MultiplayerGame/>
 }
