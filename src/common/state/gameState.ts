@@ -19,6 +19,7 @@ import { setUnitMovementTowardsCurrentWaypoint } from "./mutations/initiated/set
 import { snapToClamp } from "../util/snapToClamp";
 import provisionPlayer from "./mutations/players/provisionPlayer";
 import deprovisionPlayer from "./mutations/players/deprovisionPlayer";
+import { cyclePlayers } from "./mutations/players/cyclePlayers";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
   if (action.n === "CLIENT_LOADED_WITH_ID") {
@@ -27,6 +28,10 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
   if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
     deprovisionPlayer(state, action.playerId);
   }
+  if (action.n === "T") {
+    cyclePlayers(state);
+  }
+
   if (action.n === "SPAWN_UNIT") {
     spawnUnit(state, action);
   }
