@@ -3,9 +3,8 @@ import NetworkedStateManager from '../../common/state/managers/NetworkedStateMan
 import React, {useMemo, useState} from 'react';
 import useConnection from '../hooks/useConnection';
 import {Box} from '@chakra-ui/react';
-import {DefeatBanner, VictoryBanner} from './VictoryBanner';
 
-const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
+const MultiplayerGame = React.memo(function ({playingAs}: { playingAs: number }) {
     const [winner, setWinner] = useState<number>();
 
     const connection = useConnection();
@@ -22,15 +21,11 @@ const MultiplayerGame = React.memo(function({playingAs}: {playingAs: number}) {
 
     return (
         <Box position="relative">
-            {winner && (state.getClientState().playingAs === winner ? (
-                <VictoryBanner/>
-            ) : (
-                <DefeatBanner/>
-            ))}
-            <GameCanvas stateManager={state} />
+            <GameCanvas stateManager={state}/>
         </Box>
     );
 });
+
 MultiplayerGame.displayName = 'MultiplayerGame';
 
 export default MultiplayerGame;

@@ -4,9 +4,7 @@ import useFetched from '../hooks/useFetched';
 import React, {useEffect, useMemo, useState} from 'react';
 import LocalStateManager from '../../common/state/managers/LocalStateManager';
 import {Box} from '@chakra-ui/react';
-import {ReplayOverBanner} from '../components/VictoryBanner';
 import GameCanvas from '../components/GameCanvas';
-import config from '../../common/config';
 import {normalizeGameStateAction} from '../../common/util/normalizer';
 
 let interval: NodeJS.Timer;
@@ -56,11 +54,8 @@ export default function Replay() {
 
     return (
         <Box pos="relative">
-            {replayOver && (
-                <ReplayOverBanner/>
-            )}
             {stateManager && (
-                <GameCanvas stateManager={stateManager} />
+                <GameCanvas stateManager={stateManager}/>
             )}
         </Box>
     );

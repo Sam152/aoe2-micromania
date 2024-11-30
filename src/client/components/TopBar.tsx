@@ -1,10 +1,4 @@
-import {
-    Box,
-    Flex,
-    HStack, Image,
-    Link,
-    useColorModeValue,
-} from '@chakra-ui/react';
+import {Box, Flex, HStack, Image, Link, useColorModeValue,} from '@chakra-ui/react';
 import React from 'react';
 import {NavLink as RouterLink} from 'react-router-dom';
 import EditableNickname from './EditableNickname';
@@ -23,17 +17,16 @@ export default function TopBar() {
         <Flex px={6} bg={bg} alignItems={'center'} id="nav-bar" sx={{userSelect: 'none'}} justify={'space-between'}>
             <HStack>
                 <Box mr={6}>
-                    <Link _focus={{boxShadow: 'none'}} as={RouterLink} to='/'><Image src={assetUrl('graphics/logo.svg')} height="39px" /></Link>
+                    <Link _focus={{boxShadow: 'none'}} as={RouterLink} to='/'><Image src={assetUrl('graphics/logo.svg')}
+                                                                                     height="39px"/></Link>
                 </Box>
                 <Flex>
-                    <Link {...linkProps} to='/'>Lobby Browser</Link>
-                    <Link {...linkProps} to='/replays'>Replays</Link>
-                    <Link {...linkProps} to='/single-player'>Single Player</Link>
+                    <Link {...linkProps} to='/'>Play</Link>
                     <Link {...linkProps} to='/hotkeys'>Hotkeys</Link>
                 </Flex>
             </HStack>
 
-            <EditableNickname />
+            <EditableNickname/>
         </Flex>
     );
 }

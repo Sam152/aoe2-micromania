@@ -17,14 +17,9 @@ import moveTo from './mutations/initiated/moveTo';
 import changeFormation from './mutations/initiated/changeFormation';
 import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
 import {snapToClamp} from "../util/snapToClamp";
+import provisionPlayer from "./mutations/players/provisionPlayer";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
-    if (action.n === 'CLIENT_LOADED') {
-        state.loadedPlayers.push(action.player);
-    }
-    if (action.n === 'GAME_MODE_STARTED') {
-        state.gameModeStarted = true;
-    }
     if (action.n === 'GAME_ENDED') {
         state.gameEnded = true;
         state.winner = action.winner;
@@ -33,7 +28,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
         state.gameEnded = true;
         state.winner = action.player === 1 ? 2 : 1;
     }
-
+    if (action.n === 'CLIENT_LOADED_WITH_ID') {
+        provisionPlayer(state, action);
+    }
     if (action.n === 'SPAWN_UNIT') {
         spawnUnit(state, action);
     }
@@ -111,12 +108,13 @@ function defaultState(): GameState {
         ticks: 0,
         idAt: 0,
 
+        activePlayers: {},
+        queuedPlayers: [],
+
         units: [],
         projectiles: [],
         fallenUnits: [],
 
-        loadedPlayers: [],
-        gameModeStarted: false,
         gameEnded: false,
         winner: null,
 

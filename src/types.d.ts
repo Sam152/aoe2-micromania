@@ -1,4 +1,3 @@
-import RoomStatus from './server/rooms/RoomStatus';
 import UnitState from './common/units/UnitState';
 import Unit from './common/units/Unit';
 import CompassDirection from './common/units/CompassDirection';
@@ -9,7 +8,7 @@ import ProjectileType from './common/units/ProjectileType';
 import ActiveCommand from './common/input/ActiveCommand';
 import Hotkey from './common/input/Hotkey';
 import DamageType from "./common/units/DamageType";
-import {SmxFrame, SmxStruct} from "genie-smx/lib/smx/struct";
+import {SmxFrame} from "genie-smx/lib/smx/struct";
 import Sound from "./common/sounds/Sound";
 
 export interface UnitInstance {
@@ -86,14 +85,15 @@ export interface GameState {
     ticks: number;
     idAt: 0;
 
+    activePlayers: Record<string, number>;
+    queuedPlayers: string[];
+
     units: UnitInstance[];
     projectiles: ProjectileInstance[];
     fallenUnits: FallenUnitInstance[];
 
     soundQueue: Sound[];
 
-    loadedPlayers: Array<PlayerId>;
-    gameModeStarted: boolean;
     gameEnded: boolean;
     winner?: PlayerId;
 
@@ -109,8 +109,15 @@ type GameStateAction = {
     n: 'T'; // Tick, reduced in size for a smaller transmission, could be an enum in the future.
 } | {
     n: 'CLIENT_LOADED';
-    player: number;
 } | {
+    n: 'CLIENT_LOADED_WITH_ID';
+    playerId: string;
+}
+    | {
+    n: 'CLIENT_DISCONNECTED_WITH_ID',
+    playerId: string;
+}
+    | {
     n: 'PLAYER_DISCONNECTED';
     player: number;
 } | {
@@ -199,11 +206,11 @@ export type ClientStateAction = {
     n: 'HOTKEY_SHIFT_DELETE',
 } | {
     n: 'ARROW_LEFT',
-}| {
+} | {
     n: 'ARROW_RIGHT',
-}| {
+} | {
     n: 'ARROW_UP',
-}| {
+} | {
     n: 'ARROW_DOWN',
 } | {
     n: 'DRAGGING',
@@ -256,43 +263,27 @@ export type ClientDispatcher = (action: ClientStateAction) => void;
 
 export interface StateManagerInterface {
     init(): void;
+
     cleanUp(): void;
 
     dispatchGame: GameDispatcher;
     dispatchClient: ClientDispatcher;
 
     getGameState(): GameState;
+
     getClientState(): ClientState;
 
     addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void;
+
     addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void;
 }
 
 export interface GameMode {
-    start(dispatcher: GameDispatcher, gameState: GameState): void;
+    start(stateManager: StateManagerInterface): void;
 }
 
 export interface Ai {
     makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void;
-}
-
-export interface EmittedPlayerLobbyMetadata {
-    inRoom?: EmittedRoom;
-    isSpectator?: boolean;
-    playingAs?: number;
-}
-
-export interface EmittedRoom {
-    id: RoomId;
-    players: number;
-    spectators: number;
-    slots: number;
-    status: RoomStatus;
-    joinable: boolean;
-    playersList: Array<{
-        id: string;
-        name: string;
-    }>
 }
 
 export interface SlpFrame {
