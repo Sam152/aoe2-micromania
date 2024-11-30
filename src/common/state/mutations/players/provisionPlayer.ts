@@ -38,7 +38,6 @@ export default function provisionPlayer(state: GameState, action: Extract<GameSt
             });
         }
     }
-
 }
 
 function getPlayerNumber(activePlayers: Record<string, number>): number {
