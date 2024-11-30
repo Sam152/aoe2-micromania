@@ -246,6 +246,8 @@ export type ClientStateAction = {
 } | {
     n: 'CONTROL_GROUP_SELECTED',
     group: number,
+} | {
+    n: 'GAME_STATE_REHYDRATED',
 };
 
 export type GameDispatcher = (action: GameStateAction) => void;

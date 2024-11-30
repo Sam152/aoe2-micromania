@@ -4,6 +4,7 @@ import CanvasRenderer from '../../drawing/CanvasRenderer';
 import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from '../../../types';
 import Grid from '../../terrain/Grid';
 import soundPlayer from "../../sounds/SoundPlayer";
+import averageVector from "../../util/averageVector";
 
 export default class RenderLoopManager {
     private stateManager: StateManagerInterface;
@@ -27,16 +28,22 @@ export default class RenderLoopManager {
                 n: 'CLIENT_LOADED',
             });
 
-            this.fixateCamera(this.stateManager.getGameState().mapSize);
             this.render();
         });
 
         this.stateManager.addGameStateListener((state: GameState, action: GameStateAction) => {
-            if (action.n === 'MAP_PARAMETERS_SET') {
-                this.fixateCamera(state.mapSize);
-            }
             if (state.soundQueue.length > 0) {
                 soundPlayer.playSounds(state.soundQueue);
+            }
+
+            // Fixate on a logical part of the map, when significant actions occur.
+            const clientId = this.stateManager.getClientState().clientId;
+            if (action.n === 'CLIENT_LOADED_WITH_ID' && action.playerId === this.stateManager.getClientState().clientId) {
+                if (state.activePlayers[clientId]) {
+                    this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
+                } else {
+                    this.fixateCameraOnMiddleOfMap(state.mapSize);
+                }
             }
         });
         this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {
@@ -49,7 +56,14 @@ export default class RenderLoopManager {
         });
     }
 
-    fixateCamera(mapSize: number) {
+    fixateCameraOnPlayerUnits(state: GameState, player: number) {
+        this.stateManager.dispatchClient({
+            n: 'FIXATE_CAMERA',
+            location: averageVector(state.units.filter(unit => unit.ownedByPlayer === player).map(unit => unit.position)).sub(this.renderer.getSize().divideScalar(2)),
+        });
+    }
+
+    fixateCameraOnMiddleOfMap(mapSize: number) {
         this.stateManager.dispatchClient({
             n: 'FIXATE_CAMERA',
             location: (new Grid(mapSize)).middleOfGrid().sub(this.renderer.getSize().divideScalar(2)),

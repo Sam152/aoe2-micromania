@@ -60,7 +60,9 @@ export default class NetworkedStateManager implements StateManagerInterface {
         this.socket.on(TransportEvent.GameStateActionTransmit, (serverAction) => {
             const action = normalizeGameStateAction(serverAction);
             this.gameState = gameStateMutator(this.gameState, action);
-
+            this.dispatchClient({
+                n: 'GAME_STATE_REHYDRATED',
+            });
             this.gameStateListeners.forEach(gameStateListener => {
                 gameStateListener(this.gameState, action);
             });
