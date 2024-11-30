@@ -6,6 +6,8 @@ import Grid from "../../../terrain/Grid";
 export default function provisionPlayer(state: GameState, action: Extract<GameStateAction, {
     n: 'CLIENT_LOADED_WITH_ID'
 }>) {
+
+    // If the client ID is already active, no need to provision them.
     if (state.activePlayers[action.playerId]) {
         return;
     }

@@ -1,7 +1,6 @@
 import {Box, Flex, HStack, Image, Link, useColorModeValue,} from '@chakra-ui/react';
 import React from 'react';
 import {NavLink as RouterLink} from 'react-router-dom';
-import EditableNickname from './EditableNickname';
 import assetUrl from "../util/assetUrl";
 
 export default function TopBar() {
@@ -26,7 +25,7 @@ export default function TopBar() {
                 </Flex>
             </HStack>
 
-            <EditableNickname/>
+            {/*<EditableNickname/>*/}
         </Flex>
     );
 }
