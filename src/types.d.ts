@@ -118,16 +118,6 @@ type GameStateAction = {
     playerId: string;
 }
     | {
-    n: 'PLAYER_DISCONNECTED';
-    player: number;
-} | {
-    n: 'SPECTATOR_LOADED';
-} | {
-    n: 'GAME_MODE_STARTED';
-} | {
-    n: 'GAME_ENDED';
-    winner: PlayerId;
-} | {
     n: 'SPAWN_UNIT';
     position: Vector2;
     unitType: Unit,

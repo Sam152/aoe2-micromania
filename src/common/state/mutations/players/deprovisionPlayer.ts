@@ -3,8 +3,8 @@ import spawnUnit from "../initiated/spawnUnit";
 import Unit from "../../../units/Unit";
 import Grid from "../../../terrain/Grid";
 
-export default function provisionPlayer(state: GameState, action: Extract<GameStateAction, {
-    n: 'CLIENT_LOADED_WITH_ID'
+export default function deprovisionPlayer(state: GameState, action: Extract<GameStateAction, {
+    n: 'CLIENT_DISCONNECTED_WITH_ID'
 }>) {
     if (state.activePlayers[action.playerId]) {
         return;

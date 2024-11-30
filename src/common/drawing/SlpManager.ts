@@ -3,7 +3,7 @@ import Smx, {PaletteCollectionFactory} from "genie-smx";
 import SmxAnimation from "./SmxAnimation";
 import assetUrl from "../../client/util/assetUrl";
 
-const renderedPlayers = [1, 2];
+const renderedPlayers = [1, 2, 3, 4, 5, 6, 7, 8];
 
 class SlpManager {
     private readonly assetPath: string;

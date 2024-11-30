@@ -18,23 +18,18 @@ import changeFormation from './mutations/initiated/changeFormation';
 import {setUnitMovementTowardsCurrentWaypoint} from './mutations/initiated/setUnitMovementTowards';
 import {snapToClamp} from "../util/snapToClamp";
 import provisionPlayer from "./mutations/players/provisionPlayer";
+import deprovisionPlayer from "./mutations/players/deprovisionPlayer";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
-    if (action.n === 'GAME_ENDED') {
-        state.gameEnded = true;
-        state.winner = action.winner;
-    }
-    if (action.n === 'PLAYER_DISCONNECTED') {
-        state.gameEnded = true;
-        state.winner = action.player === 1 ? 2 : 1;
-    }
     if (action.n === 'CLIENT_LOADED_WITH_ID') {
         provisionPlayer(state, action);
+    }
+    if (action.n === 'CLIENT_DISCONNECTED_WITH_ID') {
+        deprovisionPlayer(state, action);
     }
     if (action.n === 'SPAWN_UNIT') {
         spawnUnit(state, action);
     }
-
     if (action.n === 'MOVE_UNITS_TO') {
         const units = unitsInGameState(state, action.units);
         moveTo(state, units, action.position);

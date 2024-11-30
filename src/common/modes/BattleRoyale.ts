@@ -14,7 +14,6 @@ export default class BattleRoyale implements GameMode {
             size: grid.size,
             terrain: 'terrain/15008-grass-2',
         });
-        manager.dispatchGame({n: 'GAME_MODE_STARTED'});
     }
 
     onTick(manager: StateManagerInterface, action: GameStateAction): void {
