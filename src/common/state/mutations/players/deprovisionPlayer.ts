@@ -5,14 +5,16 @@ export default function deprovisionPlayer(state: GameState, action: Extract<Game
     n: 'CLIENT_DISCONNECTED_WITH_ID'
 }>) {
     // Players that are not active do not need de-previsioning.
-    if (!state.activePlayers[action.playerId]) {
-        return;
+    if (state.activePlayers[action.playerId]) {
+        // Remove the disconnected player from the active player pool.
+        const disconnectedPlayer = state.activePlayers[action.playerId];
+        delete state.activePlayers[action.playerId];
+
+        // Remove units from disconnected players.
+        state.units.filter(unit => unit.ownedByPlayer === disconnectedPlayer).forEach((removed) => registerUnitFallen(state, removed));
     }
 
-    // Remove the disconnected player from the active player pool.
-    const disconnectedPlayer = state.activePlayers[action.playerId];
-    delete state.activePlayers[action.playerId];
-
-    // Remove units from disconnected players.
-    state.units.filter(unit => unit.ownedByPlayer === disconnectedPlayer).forEach((removed) => registerUnitFallen(state, removed));
+    if (state.queuedPlayers.includes(action.playerId)) {
+        state.queuedPlayers = state.queuedPlayers.filter(playerId => playerId !== action.playerId);
+    }
 }

@@ -12,6 +12,14 @@ export default function provisionPlayer(state: GameState, action: Extract<GameSt
         return;
     }
 
+    // If we reach the max size for the room, add them to the queue of players
+    // wanting to play.
+    if (Object.keys(state.activePlayers).length >= 8 && !state.queuedPlayers.includes(action.playerId)) {
+        state.queuedPlayers.push(action.playerId);
+        return;
+    }
+
+    // Otherwise, spawn some units and 14.
     const newPlayerNumber = getPlayerNumber(state.activePlayers);
     state.activePlayers[action.playerId] = newPlayerNumber;
 
