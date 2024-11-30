@@ -1,17 +1,16 @@
-import {ClientState, ClientStateAction, GameDispatcher} from '../../types';
+import {ClientState, ClientStateAction, GameDispatcher, GameState} from '../../types';
 import deepClone from '../util/deepClone';
 import pointInRect from '../util/pointInRect';
 import rectIntersectingWithRect, {normalizeRect} from '../util/rectIntersectingWithRect';
 import config from '../config';
 import {Vector2} from 'three/src/math/Vector2';
 import ActiveCommand from '../input/ActiveCommand';
-import Sound from "../sounds/Sound";
-import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
-import Unit from "../units/Unit";
 import soundManager from "../sounds/SoundManger";
 import soundManger from "../sounds/SoundManger";
 
-function clientStateMutator(state: ClientState, action: ClientStateAction): ClientState {
+function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
+    const playingAs = gameState.activePlayers[state.clientId] ?? -1;
+
     if (action.n === 'FRAME_RENDERING_STARTED') {
         state.unitHitBoxes = [];
         state.renderedFrames++;
@@ -30,12 +29,11 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
 
     if (action.n === 'RIGHT_CLICK' && state.selectedUnits.length > 0 && state.activeCommand === ActiveCommand.Default) {
         const attacking = state.unitHitBoxes
-            .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
+            .filter(({unit}) => unit.ownedByPlayer !== playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
         if (attacking) {
             state.lastAttackedUnit = [attacking.unit.id, state.renderedFrames];
-        }
-        else {
+        } else {
             state.lastMoveClick = [action.position, state.renderedFrames];
         }
     }
@@ -43,18 +41,17 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     if (action.n === 'LEFT_CLICK' && state.activeCommand === ActiveCommand.Default) {
         state.lastLeftClick = action.position;
         const foundUnit = state.unitHitBoxes
-            .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
+            .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
         if (action.shift && foundUnit) {
             state.selectedUnits = Array.from(new Set([foundUnit.unit.id, ...state.selectedUnits]).values());
-        }
-        else {
+        } else {
             state.selectedUnits = foundUnit ? [foundUnit.unit.id] : [];
         }
     }
 
     if (action.n === 'DOUBLE_CLICK') {
-        const ownUnits = state.unitHitBoxes.filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs);
+        const ownUnits = state.unitHitBoxes.filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === playingAs);
         const foundUnit = ownUnits.find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, action.position));
         if (foundUnit) {
             state.selectedUnits = ownUnits
@@ -63,6 +60,7 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
         }
     }
 
+    // Allow all unit classes to attack ground, because it's more fun.
     if (action.n === 'HOTKEY_ATTACK_GROUND' && state.selectedUnits.length > 0/* && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)*/) {
         state.activeCommand = ActiveCommand.AttackGround;
     }
@@ -106,13 +104,12 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
     if (action.n === 'DRAGGING' && state.activeCommand === ActiveCommand.Default) {
         state.selectionRectangle.p2 = action.position;
         const unitsInSelection = state.unitHitBoxes
-            .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === state.playingAs)
+            .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === playingAs)
             .filter((unitAndHitBox) => rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)))
             .map((unitAndHitBox) => unitAndHitBox.unit.id);
         if (action.shift) {
             state.selectedUnits = Array.from(new Set([...unitsInSelection, ...state.selectedUnits]).values());
-        }
-        else {
+        } else {
             state.selectedUnits = unitsInSelection;
         }
     }
@@ -138,10 +135,12 @@ function clientStateMutator(state: ClientState, action: ClientStateAction): Clie
  * Dispatch into the game state, local actions which should be transmitted to the server (or handled locally via the
  * single player state manager).
  */
-function clientStateTransmitter(clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
+function clientStateTransmitter(clientState: ClientState, gameState: GameState, action: ClientStateAction, gameDispatcher: GameDispatcher): void {
+    const playingAs = gameState.activePlayers[clientState.clientId] ?? -1;
+
     if (action.n === 'RIGHT_CLICK' && clientState.selectedUnits.length > 0 && clientState.activeCommand === ActiveCommand.Default) {
         const attacking = clientState.unitHitBoxes
-            .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
+            .filter(({unit}) => unit.ownedByPlayer !== playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
         if (attacking) {
@@ -191,7 +190,7 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
 
     if (action.n === 'SHIFT_RIGHT_CLICK' && clientState.selectedUnits.length > 0) {
         const attacking = clientState.unitHitBoxes
-            .filter(({unit}) => unit.ownedByPlayer !== clientState.playingAs)
+            .filter(({unit}) => unit.ownedByPlayer !== playingAs)
             .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
         if (!attacking) {
@@ -224,10 +223,10 @@ function clientStateTransmitter(clientState: ClientState, action: ClientStateAct
     }
 }
 
-function defaultState(playingAs: number): ClientState {
+function defaultState(clientId: string): ClientState {
     const state = deepClone({
         unitHitBoxes: [],
-        playingAs: playingAs,
+        clientId,
         renderedFrames: 0,
         selectedUnits: [],
         activeCommand: ActiveCommand.Default,

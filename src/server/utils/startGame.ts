@@ -11,7 +11,7 @@ export function startGame(io: Server): {
 } {
 
     const gameMode = new BattleRoyale();
-    const state = new LocalStateManager();
+    const state = new LocalStateManager('server');
 
     state.addGameStateListener((gameState, action) => {
         // The network could either dispatch the whole units state OR the action, letting the clients

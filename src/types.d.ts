@@ -79,7 +79,7 @@ export interface RendererInterface {
     bootUp: () => Promise<void>;
 }
 
-export type StateTransmitter = (clientState: ClientState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void;
+export type StateTransmitter = (clientState: ClientState, gameState: GameState, action: ClientStateAction, gameDispatcher: GameDispatcher) => void;
 
 export interface GameState {
     ticks: number;
@@ -164,7 +164,7 @@ export interface ClientState {
         hitBox: Rectangle,
         unit: UnitInstance,
     }>;
-    playingAs: number;
+    clientId: string;
     renderedFrames: number;
     selectedUnits: Array<UnitId>;
     activeCommand: ActiveCommand;

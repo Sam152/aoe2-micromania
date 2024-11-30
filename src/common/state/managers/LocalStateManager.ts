@@ -14,9 +14,9 @@ export default class LocalStateManager implements StateManagerInterface {
     private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
     private tickFn: () => void;
 
-    constructor(playingAs: number | null = 1, tickFn?: () => void) {
+    constructor(clientId: string | undefined, tickFn?: () => void) {
         this.gameState = defaultGameState();
-        this.clientState = defaultClientState(playingAs);
+        this.clientState = defaultClientState(clientId);
         this.gameStateListeners = [];
         this.clientStateListeners = [];
         this.tickFn = tickFn || (() => this.dispatchGame({n: 'T'}));
@@ -31,7 +31,7 @@ export default class LocalStateManager implements StateManagerInterface {
     }
 
     dispatchClient(action: ClientStateAction): void {
-        this.clientState = clientStateMutator(this.clientState, action);
+        this.clientState = clientStateMutator(this.clientState, this.gameState, action);
         this.clientStateListeners.forEach(clientStateListener => {
             clientStateListener(this.clientState, action);
         });

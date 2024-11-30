@@ -1,12 +1,6 @@
 import {defaultState as defaultGameState, gameStateMutator} from '../gameState';
 import {clientStateMutator, defaultState as defaultClientState} from '../clientState';
-import {
-    ClientState,
-    ClientStateAction,
-    GameState,
-    GameStateAction,
-    StateManagerInterface,
-} from '../../../types';
+import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface,} from '../../../types';
 import {Socket} from 'socket.io-client';
 import {normalizeGameStateAction, normalizeGameStateObject} from '../../util/normalizer';
 import TransportEvent from '../transport/TransportEvent';
@@ -21,9 +15,9 @@ export default class NetworkedStateManager implements StateManagerInterface {
     private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
     private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
 
-    constructor(socket: Socket, playingAs: number) {
+    constructor(socket: Socket) {
         this.gameState = defaultGameState();
-        this.clientState = defaultClientState(playingAs);
+        this.clientState = defaultClientState(socket.id);
         this.socket = socket;
         this.gameStateListeners = [];
         this.clientStateListeners = [];
@@ -38,7 +32,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
     }
 
     dispatchClient(action: ClientStateAction) {
-        this.clientState = clientStateMutator(this.clientState, action);
+        this.clientState = clientStateMutator(this.clientState, this.gameState, action);
         this.clientStateListeners.forEach(clientStateListener => {
             clientStateListener(this.clientState, action);
         });

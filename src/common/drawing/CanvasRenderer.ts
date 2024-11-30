@@ -1,6 +1,6 @@
 import {ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface} from '../../types';
 import unitMetadataFactory from '../units/unitMetadataFactory';
-import {circle, square} from './shapes';
+import {square} from './shapes';
 import screenManager from './screenManager';
 import {Vector2} from 'three/src/math/Vector2';
 import config from '../config';
@@ -89,7 +89,7 @@ export default class CanvasRenderer implements RendererInterface {
         this.drawProjectiles(gameState, clientState, clientStateDispatcher);
         this.drawMovementCommandAnimations(gameState, clientState);
         this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
-        this.renderMouse(clientState);
+        this.renderMouse(clientState, gameState);
 
         if (config.debug) {
             this.debugRenderer.render(gameState, clientState, clientStateDispatcher);
@@ -248,7 +248,9 @@ export default class CanvasRenderer implements RendererInterface {
         }, 'white', 1);
     }
 
-    renderMouse(state: ClientState) {
+    renderMouse(state: ClientState, gameState: GameState) {
+        const playingAs = gameState.activePlayers[state.clientId] ?? -1;
+
         const cursorMap = {
             [ActiveCommand.AttackGround]: 'area_attack',
             [ActiveCommand.Patrol]: 'patrol',
@@ -264,7 +266,7 @@ export default class CanvasRenderer implements RendererInterface {
         let cursor;
         if (state.activeCommand === ActiveCommand.Default) {
             const attacking = state.selectedUnits.length > 0 && state.unitHitBoxes
-                .filter(({unit}) => unit.ownedByPlayer !== state.playingAs)
+                .filter(({unit}) => unit.ownedByPlayer !== playingAs)
                 .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
             cursor = attacking ? 'attack' : 'default';
         } else {

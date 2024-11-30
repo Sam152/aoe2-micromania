@@ -168,8 +168,7 @@ export default class InputManager {
                     });
                 }
             });
-        }
-        else {
+        } else {
             controlGroups.forEach(keycode => {
                 if (this.input.keyPressed(keycode)) {
                     this.dispatch({
@@ -189,7 +188,7 @@ export default class InputManager {
 
     dispatch(action: ClientStateAction) {
         this.stateManager.dispatchClient(action);
-        this.clientStateTransmitter(this.stateManager.getClientState(), action, this.stateManager.dispatchGame.bind(this.stateManager));
+        this.clientStateTransmitter(this.stateManager.getClientState(), this.stateManager.getGameState(), action, this.stateManager.dispatchGame.bind(this.stateManager));
     }
 
     clearInput(): void {

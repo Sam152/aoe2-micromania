@@ -7,7 +7,7 @@ import {Box} from '@chakra-ui/react';
 const MultiplayerGame = React.memo(function () {
     const connection = useConnection();
     const state = useMemo(() => {
-        return new NetworkedStateManager(connection, 1);
+        return new NetworkedStateManager(connection);
     }, []);
 
     return (
