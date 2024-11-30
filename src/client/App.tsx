@@ -1,22 +1,22 @@
-import {ChakraProvider} from '@chakra-ui/react';
-import theme from './theme/theme';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import React from 'react';
-import TopBar from './components/TopBar';
-import Hotkeys from './pages/Hotkeys';
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./theme/theme";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React from "react";
+import TopBar from "./components/TopBar";
+import Hotkeys from "./pages/Hotkeys";
 import config from "../common/config";
-import {GameScreen} from "./pages/GameScreen";
+import { GameScreen } from "./pages/GameScreen";
 
 export default function App() {
-    return (
-        <ChakraProvider theme={theme} resetCSS={true}>
-            <BrowserRouter basename={config.assetBaseUrl}>
-                <TopBar/>
-                <Routes>
-                    <Route path="/" element={<GameScreen/>}/>
-                    <Route path="/hotkeys" element={<Hotkeys/>}/>
-                </Routes>
-            </BrowserRouter>
-        </ChakraProvider>
-    );
+  return (
+    <ChakraProvider theme={theme} resetCSS={true}>
+      <BrowserRouter basename={config.assetBaseUrl}>
+        <TopBar />
+        <Routes>
+          <Route path="/" element={<GameScreen />} />
+          <Route path="/hotkeys" element={<Hotkeys />} />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
+  );
 }

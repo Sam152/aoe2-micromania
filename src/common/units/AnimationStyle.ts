@@ -1,6 +1,6 @@
 enum AnimationStyle {
-    Loop,
-    Play,
+  Loop,
+  Play,
 }
 
 export default AnimationStyle;

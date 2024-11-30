@@ -8,11 +8,11 @@
  * 3    7    11    15    19
  */
 export default function columnize<T>(input: Array<T>, columns: number): Array<T> {
-    const newArray: Array<T> = [];
-    const indexMax = input.length - 1;
-    input.forEach((item, index) => {
-        const newIndex = index === indexMax ? indexMax : ((index * columns) % indexMax);
-        newArray[newIndex] = item;
-    });
-    return newArray;
+  const newArray: Array<T> = [];
+  const indexMax = input.length - 1;
+  input.forEach((item, index) => {
+    const newIndex = index === indexMax ? indexMax : (index * columns) % indexMax;
+    newArray[newIndex] = item;
+  });
+  return newArray;
 }

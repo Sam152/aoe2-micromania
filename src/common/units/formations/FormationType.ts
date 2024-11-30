@@ -1,6 +1,6 @@
 enum FormationType {
-    Line,
-    Spread,
-    Split,
+  Line,
+  Spread,
+  Split,
 }
 export default FormationType;

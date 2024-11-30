@@ -1,18 +1,18 @@
 enum Hotkey {
-    LineFormation,
-    SpreadFormation,
-    SplitFormation,
+  LineFormation,
+  SpreadFormation,
+  SplitFormation,
 
-    Patrol,
-    AttackGround,
+  Patrol,
+  AttackGround,
 
-    Stop,
-    DeleteUnit,
+  Stop,
+  DeleteUnit,
 
-    CameraUp,
-    CameraDown,
-    CameraLeft,
-    CameraRight,
+  CameraUp,
+  CameraDown,
+  CameraLeft,
+  CameraRight,
 }
 
 export default Hotkey;

@@ -1,6 +1,6 @@
 enum ProjectileType {
-    Arrow,
-    Rock,
+  Arrow,
+  Rock,
 }
 
 export default ProjectileType;

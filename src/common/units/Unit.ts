@@ -1,6 +1,6 @@
 enum Unit {
-    Archer,
-    Mangonel,
+  Archer,
+  Mangonel,
 }
 
 export default Unit;

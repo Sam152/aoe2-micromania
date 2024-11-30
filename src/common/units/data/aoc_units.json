@@ -19,7 +19,8 @@
       "note": "Wild boar",
       "extra": {
         "Food": "340F",
-        "Resource decay": "0.4"},
+        "Resource decay": "0.4"
+      },
       "civb": {},
       "t": "animal0 boar gaia melee"
     },
@@ -89,7 +90,8 @@
       "note": "Wild deers running around",
       "extra": {
         "Food": "140F",
-        "Resource decay": "0.25"},
+        "Resource decay": "0.25"
+      },
       "civb": {},
       "t": "animal1 deer gaia"
     },
@@ -111,7 +113,8 @@
       "note": "Alternatives to sheep",
       "extra": {
         "Food": "100F",
-        "Resource decay": "0.25"},
+        "Resource decay": "0.25"
+      },
       "civb": {},
       "t": "livestock1 turkey gaia"
     },
@@ -133,7 +136,8 @@
       "note": "Can be picked up by player and used to scout.",
       "extra": {
         "Food": "100F",
-        "Resource decay": "0.25"},
+        "Resource decay": "0.25"
+      },
       "civb": {},
       "t": "livestock0 sheep gaia"
     },
@@ -950,7 +954,7 @@
         "Aztec": "0:39.1 BT (15% creation time bonus)",
         "Celts": "4.8 RT (0.8*6 - 20 % bonus)",
         "Celts and allies": "38.33 BT (1.2 work rate)",
-        "Koreans and allies":"+1 range +1 LOS +1 search radius"
+        "Koreans and allies": "+1 range +1 LOS +1 search radius"
       },
       "note": "Wheeled siege weapon used to attack a small mass of units. Area of effect attack. Can attack ground. Weak vs. close nonranged units. ",
       "t": "mango ma0 siege weapon melee"
@@ -978,7 +982,7 @@
         "Aztec": "0:39.1 BT (15% bonus)",
         "Celts": "4.8 RT (0.8*6 - 20 % bonus)",
         "Celts and allies": "38.33 BT (1.2 work rate)",
-        "Koreans and allies":"+1 range +1 LOS +1 search radius"
+        "Koreans and allies": "+1 range +1 LOS +1 search radius"
       },
       "note": "Stronger than mangonel",
       "t": "mango ma1 siege weapon melee"
@@ -1006,7 +1010,7 @@
         "Aztec": "0:39.1 BT (15% bonus)",
         "Celts": "4.8 RT (0.8*6 = 20 % bonus)",
         "Celts and allies": "38.33 BT (1.2 work rate)",
-        "Koreans and allies":"+1 range +1 LOS +1 search radius"
+        "Koreans and allies": "+1 range +1 LOS +1 search radius"
       },
       "note": "Stronger than onager",
       "t": "mango ma2 siege weapon melee"
@@ -1248,10 +1252,8 @@
       "ra": "-",
       "at": "-",
       "ar": "0/0",
-      "extra": {
-      },
-      "civb": {
-      },
+      "extra": {},
+      "civb": {},
       "note": "Cannot be produced, so cost and build time just for the sake of interest.",
       "t": "king"
     },

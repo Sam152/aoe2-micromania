@@ -6,22 +6,22 @@
  * the horizontal axis and rendered as with its absolute counterpart.
  */
 enum CompassDirection {
-    Start,
-    StartA,
-    StartB,
-    StartC,
-    StartD,
-    StartE,
-    StartF,
-    StartG,
-    StartH,
-    StartI,
-    StartJ,
-    StartK,
-    StartL,
-    StartM,
-    StartN,
-    StartO,
+  Start,
+  StartA,
+  StartB,
+  StartC,
+  StartD,
+  StartE,
+  StartF,
+  StartG,
+  StartH,
+  StartI,
+  StartJ,
+  StartK,
+  StartL,
+  StartM,
+  StartN,
+  StartO,
 }
 
 export default CompassDirection;

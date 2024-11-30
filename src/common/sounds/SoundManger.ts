@@ -1,45 +1,43 @@
-import {ClientState, GameState, ProjectileInstance, UnitInstance} from "../../types";
+import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types";
 import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
 import Unit from "../units/Unit";
 import Sound from "./Sound";
 import ProjectileType from "../units/ProjectileType";
 
 class SoundManager {
-
-    attacking(state: ClientState) {
-        if (selectedTypesFromClientState(state).includes(Unit.Archer)) {
-            state.soundQueue.push(Sound.SoldierAttack);
-        }
+  attacking(state: ClientState) {
+    if (selectedTypesFromClientState(state).includes(Unit.Archer)) {
+      state.soundQueue.push(Sound.SoldierAttack);
     }
+  }
 
-    moving(state: ClientState) {
-        if (selectedTypesFromClientState(state).includes(Unit.Archer)) {
-            state.soundQueue.push(Sound.SoldierMoved);
-        }
-        if (selectedTypesFromClientState(state).includes(Unit.Mangonel)) {
-            state.soundQueue.push(Sound.MangonelMoved);
-        }
+  moving(state: ClientState) {
+    if (selectedTypesFromClientState(state).includes(Unit.Archer)) {
+      state.soundQueue.push(Sound.SoldierMoved);
     }
-
-    projectileLaunched(state: GameState, type: ProjectileType) {
-        state.soundQueue.push(type === ProjectileType.Rock ? Sound.MangonelFired : Sound.ArrowFired);
+    if (selectedTypesFromClientState(state).includes(Unit.Mangonel)) {
+      state.soundQueue.push(Sound.MangonelMoved);
     }
+  }
 
-    projectileLanded(state: GameState, projectile: ProjectileInstance) {
-        if (projectile.type === ProjectileType.Rock) {
-            state.soundQueue.push(Sound.RocksLanded);
-        }
+  projectileLaunched(state: GameState, type: ProjectileType) {
+    state.soundQueue.push(type === ProjectileType.Rock ? Sound.MangonelFired : Sound.ArrowFired);
+  }
+
+  projectileLanded(state: GameState, projectile: ProjectileInstance) {
+    if (projectile.type === ProjectileType.Rock) {
+      state.soundQueue.push(Sound.RocksLanded);
     }
+  }
 
-    unitFallen(state: GameState, unit: UnitInstance) {
-        if (unit.unitType === Unit.Mangonel) {
-            state.soundQueue.push(Sound.MangonelDestroyed);
-        }
-        if (unit.unitType === Unit.Archer) {
-            state.soundQueue.push(Sound.SoldierFallen);
-        }
+  unitFallen(state: GameState, unit: UnitInstance) {
+    if (unit.unitType === Unit.Mangonel) {
+      state.soundQueue.push(Sound.MangonelDestroyed);
     }
-
+    if (unit.unitType === Unit.Archer) {
+      state.soundQueue.push(Sound.SoldierFallen);
+    }
+  }
 }
 
 const soundManager = new SoundManager();

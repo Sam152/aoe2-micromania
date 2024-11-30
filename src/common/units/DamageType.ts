@@ -1,6 +1,6 @@
 enum DamageType {
-    Pierce,
-    Melee,
+  Pierce,
+  Melee,
 }
 
 export default DamageType;

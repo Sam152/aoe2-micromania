@@ -1,10 +1,8 @@
-import calculateUnitMovementPerTick from '../units/calculateUnitMovementPerTick';
-import {Vector2} from 'three/src/math/Vector2';
-import {UnitInstance} from '../../types';
+import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
+import { Vector2 } from "three/src/math/Vector2";
+import { UnitInstance } from "../../types";
 
 export default function ticksToDestination(unit: UnitInstance, destination: Vector2) {
-    const distance = unit.position.distanceTo(destination);
-    return distance === 0 ?
-        0 :
-        Math.ceil(distance / calculateUnitMovementPerTick(unit).length());
+  const distance = unit.position.distanceTo(destination);
+  return distance === 0 ? 0 : Math.ceil(distance / calculateUnitMovementPerTick(unit).length());
 }
