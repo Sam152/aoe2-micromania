@@ -25,7 +25,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     provisionPlayer(state, action);
   }
   if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
-    deprovisionPlayer(state, action);
+    deprovisionPlayer(state, action.playerId);
   }
   if (action.n === "SPAWN_UNIT") {
     spawnUnit(state, action);
