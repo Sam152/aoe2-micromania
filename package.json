@@ -28,7 +28,6 @@
     "build-prod": "webpack -c webpack.client.config.js --mode=production && webpack -c webpack.server.config.js --mode=production",
     "build-client-prod": "webpack -c webpack.client.config.js --mode=production",
     "build-server-prod": "webpack -c webpack.server.config.js --mode=production",
-    "lint": "eslint \"src/**\"  --fix",
     "watch-client": "webpack serve -c webpack.client.config.js --mode=development",
     "watch-server": "webpack watch -c webpack.server.config.js --mode=development",
     "start-server": "nodemon ./dist-server/bundle.js",
