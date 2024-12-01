@@ -1,7 +1,5 @@
 import { GameState } from "../../../../types";
-import spawnUnit from "../initiated/spawnUnit";
-import Unit from "../../../units/Unit";
-import Grid from "../../../terrain/Grid";
+import { spawnStartingUnits } from "./spawnStartingUnits";
 
 export default function provisionPlayer(state: GameState, playerId: string) {
   // If the client ID is already active, no need to provision them.
@@ -19,22 +17,7 @@ export default function provisionPlayer(state: GameState, playerId: string) {
   // Otherwise, spawn some units and 14.
   const newPlayerNumber = getPlayerNumber(state.activePlayers);
   state.activePlayers[playerId] = newPlayerNumber;
-
-  const grid = new Grid(state.mapSize);
-  spawnUnit(state, {
-    forPlayer: newPlayerNumber,
-    unitType: Unit.Mangonel,
-    position: grid.middleOfTile(7, 2),
-  });
-  for (let x = 0; x < 5; x++) {
-    for (let y = 0; y < 5; y++) {
-      spawnUnit(state, {
-        forPlayer: newPlayerNumber,
-        unitType: Unit.Archer,
-        position: grid.middleOfTile(x, y),
-      });
-    }
-  }
+  spawnStartingUnits(state, newPlayerNumber);
 }
 
 function getPlayerNumber(activePlayers: Record<string, number>): number {

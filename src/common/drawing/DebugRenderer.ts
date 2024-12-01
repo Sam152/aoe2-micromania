@@ -1,11 +1,13 @@
-import { ClientDispatcher, ClientState, GameState, Line, Rectangle, RendererInterface } from "../../types";
-import { circle, emptyCircle, square } from "./shapes";
+import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types";
+import { circle, emptyCircle } from "./shapes";
 import { Vector2 } from "three/src/math/Vector2";
 import arrayOfSize from "../util/arrayOfSize";
 import isInBounds, { bottomLeft, bottomRight, topLeft, topRight } from "../util/isInBounds";
 import config from "../config";
 import { snapToClamp } from "../util/snapToClamp";
 import unitMetadataFactory from "../units/unitMetadataFactory";
+import Grid from "../terrain/Grid";
+import { getStartingSpawnCandidates } from "../state/mutations/players/spawnStartingUnits";
 
 export default class DebugRenderer implements RendererInterface {
   private canvas: HTMLCanvasElement;
@@ -25,6 +27,24 @@ export default class DebugRenderer implements RendererInterface {
     this.drawUnits(gameState);
     this.drawClampSnap(gameState, clientState);
     this.drawBoundary(gameState, clientState);
+    this.drawGridTiles(gameState, clientState);
+  }
+
+  drawGridTiles(gameState: GameState, clientState: ClientState) {
+    const grid = new Grid(gameState.mapSize);
+    for (let x = 0; x < gameState.mapSize; x++) {
+      for (let y = 0; y < gameState.mapSize; y++) {
+        const middle = grid.middleOfTile(x, y);
+        this.context.fillStyle = "black";
+        this.context.font = "11px Arial";
+        this.context.fillText(`${x},${y}`, middle.x, middle.y);
+      }
+    }
+
+    getStartingSpawnCandidates(gameState).map((tile) => {
+      const middle = grid.middleOfTile(tile.x, tile.y);
+      circle(this.context, middle, 30, "red");
+    });
   }
 
   drawClampSnap(gameState: GameState, clientState: ClientState) {
