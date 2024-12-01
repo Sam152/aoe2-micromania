@@ -6,7 +6,6 @@ import { ComputedFrameState } from "../../computed/createComputedFrameState";
 import { Vector2 } from "three/src/math/Vector2";
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
-  const grid = new Grid(state.mapSize);
   const location = getBestSpawnLocation(state, computed);
 
   spawnUnit(state, {
