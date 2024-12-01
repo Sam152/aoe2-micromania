@@ -20,8 +20,11 @@ import { snapToClamp } from "../util/snapToClamp";
 import provisionPlayer from "./mutations/players/provisionPlayer";
 import deprovisionPlayer from "./mutations/players/deprovisionPlayer";
 import { cyclePlayers } from "./mutations/players/cyclePlayers";
+import { createComputedFrameState } from "./computed/createComputedFrameState";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
+  const computed = createComputedFrameState(state);
+
   if (action.n === "CLIENT_LOADED_WITH_ID") {
     provisionPlayer(state, action.playerId);
   }
@@ -92,7 +95,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     reformUnits(state);
     patrolUnits(state);
     fireProjectiles(state);
-    autoAttack(state);
+    autoAttack(state, computed);
     registerProjectileHits(state);
 
     ++state.ticks;

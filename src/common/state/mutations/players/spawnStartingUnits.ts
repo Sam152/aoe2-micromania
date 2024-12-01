@@ -5,6 +5,7 @@ import { GameState } from "../../../../types";
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number) {
   const grid = new Grid(state.mapSize);
+  const location = getBestSpawnLocation(state);
 
   spawnUnit(state, {
     forPlayer: newPlayerNumber,
@@ -22,8 +23,16 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number) {
   }
 }
 
+export function getBestSpawnLocation(state: GameState): { x: number; y: number } {
+  const candidates = getStartingSpawnCandidates(state);
+
+  return {
+    x: 1,
+    y: 1,
+  };
+}
+
 export function getStartingSpawnCandidates(state: GameState): { x: number; y: number }[] {
-  const grid = new Grid(state.mapSize);
   const buffer = 3;
   return [
     { x: buffer, y: buffer },
