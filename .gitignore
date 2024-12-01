@@ -7,5 +7,5 @@
 /dist/*.txt
 /dist/*.html
 /dist/*.woff*
-/dist-server/bundle.*
+/dist-server/*
 .DS_Store
