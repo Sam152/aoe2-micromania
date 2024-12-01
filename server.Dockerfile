@@ -16,8 +16,6 @@ FROM --platform=linux/amd64 node:22-slim
 WORKDIR /usr/app
 
 # Copy only the necessary files from the build stage
-COPY --from=build /usr/app/build ./build
-COPY --from=build /usr/app/node_modules ./node_modules
-COPY *.json ./
+COPY --from=build /usr/app/dist-server/bundle.js .
 
-CMD ["node", "build/index.js"]
+CMD ["node", "bundle.js"]
