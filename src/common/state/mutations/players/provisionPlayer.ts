@@ -1,7 +1,8 @@
 import { GameState } from "../../../../types";
 import { spawnStartingUnits } from "./spawnStartingUnits";
+import { ComputedFrameState } from "../../computed/createComputedFrameState";
 
-export default function provisionPlayer(state: GameState, playerId: string) {
+export default function provisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
   // If the client ID is already active, no need to provision them.
   if (state.activePlayers[playerId]) {
     return;
@@ -17,7 +18,7 @@ export default function provisionPlayer(state: GameState, playerId: string) {
   // Otherwise, spawn some units and 14.
   const newPlayerNumber = getPlayerNumber(state.activePlayers);
   state.activePlayers[playerId] = newPlayerNumber;
-  spawnStartingUnits(state, newPlayerNumber);
+  spawnStartingUnits(state, newPlayerNumber, computed);
 }
 
 function getPlayerNumber(activePlayers: Record<string, number>): number {

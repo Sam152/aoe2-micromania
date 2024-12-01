@@ -1,8 +1,9 @@
 import { GameState } from "../../../../types";
 import deprovisionPlayer from "./deprovisionPlayer";
 import provisionPlayer from "./provisionPlayer";
+import { ComputedFrameState } from "../../computed/createComputedFrameState";
 
-export function cyclePlayers(state: GameState) {
+export function cyclePlayers(state: GameState, computed: ComputedFrameState) {
   const activePlayers = Object.keys(state.activePlayers).length;
   if (activePlayers === 0) {
     return;
@@ -19,10 +20,10 @@ export function cyclePlayers(state: GameState) {
     // Provision any queued players first.
     if (state.queuedPlayers.length > 0) {
       const nextInQueuePlayerId = state.queuedPlayers.shift();
-      provisionPlayer(state, nextInQueuePlayerId);
+      provisionPlayer(state, nextInQueuePlayerId, computed);
     }
 
     // Then re-provision the player that just lost.
-    provisionPlayer(state, playerId);
+    provisionPlayer(state, playerId, computed);
   }
 }

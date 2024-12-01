@@ -26,13 +26,13 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
   const computed = createComputedFrameState(state);
 
   if (action.n === "CLIENT_LOADED_WITH_ID") {
-    provisionPlayer(state, action.playerId);
+    provisionPlayer(state, action.playerId, computed);
   }
   if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
     deprovisionPlayer(state, action.playerId);
   }
   if (action.n === "T") {
-    cyclePlayers(state);
+    cyclePlayers(state, computed);
   }
 
   if (action.n === "SPAWN_UNIT") {
