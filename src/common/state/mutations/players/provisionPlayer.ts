@@ -1,32 +1,24 @@
-import { GameState, GameStateAction } from "../../../../types";
+import { GameState } from "../../../../types";
 import spawnUnit from "../initiated/spawnUnit";
 import Unit from "../../../units/Unit";
 import Grid from "../../../terrain/Grid";
 
-export default function provisionPlayer(
-  state: GameState,
-  action: Extract<
-    GameStateAction,
-    {
-      n: "CLIENT_LOADED_WITH_ID";
-    }
-  >,
-) {
+export default function provisionPlayer(state: GameState, playerId: string) {
   // If the client ID is already active, no need to provision them.
-  if (state.activePlayers[action.playerId]) {
+  if (state.activePlayers[playerId]) {
     return;
   }
 
   // If we reach the max size for the room, add them to the queue of players
   // wanting to play.
-  if (Object.keys(state.activePlayers).length >= 8 && !state.queuedPlayers.includes(action.playerId)) {
-    state.queuedPlayers.push(action.playerId);
+  if (Object.keys(state.activePlayers).length >= 8 && !state.queuedPlayers.includes(playerId)) {
+    state.queuedPlayers.push(playerId);
     return;
   }
 
   // Otherwise, spawn some units and 14.
   const newPlayerNumber = getPlayerNumber(state.activePlayers);
-  state.activePlayers[action.playerId] = newPlayerNumber;
+  state.activePlayers[playerId] = newPlayerNumber;
 
   const grid = new Grid(state.mapSize);
   spawnUnit(state, {

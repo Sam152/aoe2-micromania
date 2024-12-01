@@ -23,7 +23,7 @@ import { cyclePlayers } from "./mutations/players/cyclePlayers";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
   if (action.n === "CLIENT_LOADED_WITH_ID") {
-    provisionPlayer(state, action);
+    provisionPlayer(state, action.playerId);
   }
   if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
     deprovisionPlayer(state, action.playerId);
