@@ -2394,9 +2394,9 @@ function-bind@^1.1.1:
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
 genie-smx@^1.0.1:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/genie-smx/-/genie-smx-1.0.6.tgz#49a71a48787585c057021c7f35813a414d60f4dd"
-  integrity sha512-v0pIC980cFQ212CN4uTbt65Br4sxcqaCGd4vQEiKRl32g68EFz1IS4WnujlSY+BQGsQdysuPNzdVMHU4zpP2ng==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/genie-smx/-/genie-smx-1.1.0.tgz#0fcdc81e15cdabfbaf5979e968be30b12780810a"
+  integrity sha512-gYyarU5GsNM9Hgan4Lk5aJM05Swi7svp1Fhyu9D+zMPburY9PGSOQu2pW/VaoY30iLBu/e25F3m+95M4tSPiDA==
   dependencies:
     awestruct "^1.2.5"
     buffer "^6.0.3"
