@@ -18,11 +18,8 @@ export default class BattleRoyale implements GameMode {
 
   onTick(manager: StateManagerInterface, action: GameStateAction): void {
     if (action.n === "CLIENT_LOADED_WITH_ID") {
-      console.log("SPAWNING!!!");
-      // spawnStartingUnits(manager);
     }
     if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
-      console.log("DESPAWNING!!");
     }
   }
 }
