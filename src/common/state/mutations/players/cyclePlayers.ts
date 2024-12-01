@@ -4,6 +4,10 @@ import provisionPlayer from "./provisionPlayer";
 
 export function cyclePlayers(state: GameState) {
   const activePlayers = Object.keys(state.activePlayers).length;
+  if (activePlayers === 0) {
+    return;
+  }
+
   const checkPlayer = (state.ticks % activePlayers) + 1;
 
   // If the player has no units, they are at the end of their turn.
