@@ -41,9 +41,8 @@ export default class DebugRenderer implements RendererInterface {
       }
     }
 
-    getStartingSpawnCandidates(gameState).map((tile) => {
-      const middle = grid.middleOfTile(tile.x, tile.y);
-      circle(this.context, middle, 30, "red");
+    getStartingSpawnCandidates(gameState).map((location) => {
+      circle(this.context, location, 30, "red");
     });
   }
 

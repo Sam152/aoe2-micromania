@@ -34,13 +34,13 @@ export function getBestSpawnLocation(state: GameState, computed: ComputedFrameSt
     const nearestUnit = computed.quadTreeAllUnits.find(candidate.x, candidate.y);
     if (!nearestUnit) {
       startingLocation = candidate;
-      break;
+      continue;
     }
     const nearestUnitDistance = computed.quadTreeAllUnits.find(candidate.x, candidate.y).position.distanceTo(candidate);
     if (!largestDistance) {
       largestDistance = nearestUnitDistance;
       startingLocation = candidate;
-      break;
+      continue;
     }
     if (nearestUnitDistance > largestDistance) {
       largestDistance = nearestUnitDistance;
