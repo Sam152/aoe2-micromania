@@ -10,14 +10,14 @@ export class InfraStack extends cdk.Stack {
 
     // Deploy the client.
     // @todo
-    // client cert arn: arn:aws:acm:us-east-2:390772177583:certificate/9553d752-255a-467a-87c7-1d4b76fa2c53
+    // client cert arn: arn:aws:acm:us-east-1:390772177583:certificate/5dc7585b-e6d4-4a86-bed9-fdc6172ac66f
 
     // Create as many regional servers as required.
     new MicroManiaServer(this, "us-east", {
       account: "390772177583",
       apiDomain: "us-east.aoe.cx",
       region: "us-east-2",
-      certArn: "arn:aws:acm:us-east-2:390772177583:certificate/0f4459c1-7dcd-42ec-aeaf-6795c4472840",
+      certArn: "arn:aws:acm:us-east-1:390772177583:certificate/6392c94f-f8f0-4e74-82dd-d1b9d9bed683",
       apiKeypairName: "aoe-cx",
       container: new DockerImageAsset(this, "server-container", {
         directory: path.resolve(__dirname, "../../"),
