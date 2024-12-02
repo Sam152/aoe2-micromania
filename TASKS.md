@@ -14,4 +14,5 @@ Tasks
 - [ ] Terrain decor
 - [ ] Loading spinner
 - [ ] Cached cursors
+- [ ] Slower mango volleys
 
