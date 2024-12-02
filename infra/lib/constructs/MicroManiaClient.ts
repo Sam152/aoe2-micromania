@@ -1,6 +1,8 @@
 import { aws_s3_deployment, BundlingOptions, DockerImage, RemovalPolicy, Tags } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Bucket, BucketEncryption, ObjectOwnership } from "aws-cdk-lib/aws-s3";
+import * as route53 from "aws-cdk-lib/aws-route53";
+import * as targets from "aws-cdk-lib/aws-route53-targets";
 import { spawnSync } from "child_process";
 import * as path from "path";
 import {
@@ -18,6 +20,7 @@ type ClientProps = {
   domain: string;
   certArn: string;
   socketHost: string;
+  zoneId: string;
 };
 
 export class MicroManiaClient extends Construct {
@@ -88,7 +91,7 @@ export class MicroManiaClient extends Construct {
   }
 
   addCloudfrontDistribution() {
-    new Distribution(this, `distro`, {
+    const distro = new Distribution(this, `distro`, {
       domainNames: [this.props.domain],
       certificate: Certificate.fromCertificateArn(this, "cert", this.props.certArn),
       defaultBehavior: {
@@ -122,6 +125,12 @@ export class MicroManiaClient extends Construct {
       ],
       // In the future, add additional behaviour that caches hashed assets for longer.
       additionalBehaviors: {},
+    });
+
+    new route53.ARecord(this, "distro-a", {
+      zone: route53.HostedZone.fromHostedZoneId(this, "zone", this.props.zoneId),
+      recordName: this.props.domain,
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
     });
   }
 

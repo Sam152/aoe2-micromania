@@ -19,6 +19,8 @@ import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { ManagedPolicy, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { Distribution, OriginProtocolPolicy, ViewerProtocolPolicy } from "aws-cdk-lib/aws-cloudfront";
 import { HttpOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
+import * as route53 from "aws-cdk-lib/aws-route53";
+import * as targets from "aws-cdk-lib/aws-route53-targets";
 
 type ServerProps = {
   region: string;
@@ -27,6 +29,7 @@ type ServerProps = {
   apiKeypairName: string;
   account: string;
   container: DockerImageAsset;
+  zoneId: string;
 };
 
 export class MicroManiaServer extends Construct {
@@ -75,7 +78,7 @@ export class MicroManiaServer extends Construct {
       ],
     });
 
-    new Distribution(this, `distro`, {
+    const distro = new Distribution(this, `distro`, {
       domainNames: [this.props.apiDomain],
       certificate: Certificate.fromCertificateArn(this, "cert", this.props.certArn),
       defaultBehavior: {
@@ -84,6 +87,11 @@ export class MicroManiaServer extends Construct {
         }),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
+    });
+    new route53.ARecord(this, "distro-a", {
+      zone: route53.HostedZone.fromHostedZoneId(this, "zone", this.props.zoneId),
+      recordName: this.props.domain,
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distro)),
     });
 
     new CfnOutput(this, "kick", {

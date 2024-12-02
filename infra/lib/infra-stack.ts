@@ -12,6 +12,7 @@ export class InfraStack extends cdk.Stack {
     // Deploy the client.
     new MicroManiaClient(this, "client", {
       domain: "aoe.cx",
+      zoneId: "Z08280773DHMHUR6KDGGL",
       certArn: "arn:aws:acm:us-east-1:390772177583:certificate/5dc7585b-e6d4-4a86-bed9-fdc6172ac66f",
       socketHost: "https://us-east.aoe.cx",
     });
@@ -20,6 +21,7 @@ export class InfraStack extends cdk.Stack {
     new MicroManiaServer(this, "us-east", {
       account: "390772177583",
       apiDomain: "us-east.aoe.cx",
+      zoneId: "Z08280773DHMHUR6KDGGL",
       region: "us-east-2",
       certArn: "arn:aws:acm:us-east-1:390772177583:certificate/6392c94f-f8f0-4e74-82dd-d1b9d9bed683",
       apiKeypairName: "aoe-cx",
