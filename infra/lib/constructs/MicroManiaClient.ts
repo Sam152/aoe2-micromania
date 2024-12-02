@@ -128,9 +128,12 @@ export class MicroManiaClient extends Construct {
     });
 
     new route53.ARecord(this, "distro-a", {
-      zone: route53.HostedZone.fromHostedZoneId(this, "zone", this.props.zoneId),
+      zone: route53.HostedZone.fromHostedZoneAttributes(this, "zone", {
+        hostedZoneId: this.props.zoneId,
+        zoneName: "aoe.cx",
+      }),
       recordName: this.props.domain,
-      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distro)),
     });
   }
 
