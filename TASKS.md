@@ -15,4 +15,5 @@ Tasks
 - [ ] Loading spinner
 - [ ] Cached cursors
 - [ ] Slower mango volleys
+- [ ] Nearest server selection by ping
 
