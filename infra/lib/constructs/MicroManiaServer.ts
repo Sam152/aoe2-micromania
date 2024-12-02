@@ -90,7 +90,7 @@ export class MicroManiaServer extends Construct {
     });
     new route53.ARecord(this, "distro-a", {
       zone: route53.HostedZone.fromHostedZoneId(this, "zone", this.props.zoneId),
-      recordName: this.props.domain,
+      recordName: this.props.apiDomain,
       target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distro)),
     });
 
