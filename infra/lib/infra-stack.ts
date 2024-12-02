@@ -3,14 +3,17 @@ import { Construct } from "constructs";
 import { MicroManiaServer } from "./constructs/MicroManiaServer";
 import { DockerImageAsset, Platform } from "aws-cdk-lib/aws-ecr-assets";
 import * as path from "path";
+import { MicroManiaClient } from "./constructs/MicroManiaClient";
 
 export class InfraStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     // Deploy the client.
-    // @todo
-    // client cert arn: arn:aws:acm:us-east-1:390772177583:certificate/5dc7585b-e6d4-4a86-bed9-fdc6172ac66f
+    new MicroManiaClient(this, "client", {
+      domain: "aoe.cx",
+      certArn: "arn:aws:acm:us-east-1:390772177583:certificate/5dc7585b-e6d4-4a86-bed9-fdc6172ac66f",
+    });
 
     // Create as many regional servers as required.
     new MicroManiaServer(this, "us-east", {
