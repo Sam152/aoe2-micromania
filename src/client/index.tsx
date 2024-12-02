@@ -8,9 +8,8 @@ import { SocketOptions } from "socket.io-client/build/esm/socket";
 
 const config: Partial<ManagerOptions & SocketOptions> = {
   transports: ["websocket"],
-  host: process.env.SOCKET_HOST ?? undefined,
 };
-const connection = io(config);
+const connection = process.env.SOCKET_HOST ? io(process.env.SOCKET_HOST, config) : io(config);
 
 const root = createRoot(document.getElementById("ui"));
 root.render(
