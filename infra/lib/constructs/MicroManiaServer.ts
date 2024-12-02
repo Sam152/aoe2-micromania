@@ -98,7 +98,7 @@ export class MicroManiaServer extends Construct {
     });
 
     new CfnOutput(this, "kick", {
-      value: `ssh -i ~/.ssh/tp-prod.pem ec2-user@${instance.instancePublicDnsName} sudo /var/lib/cloud/instance/scripts/part-001`,
+      value: `ssh -i ~/.ssh/aoe-cx.pem ec2-user@${instance.instancePublicDnsName} sudo /var/lib/cloud/instance/scripts/part-001`,
     });
   }
 
@@ -113,7 +113,7 @@ export class MicroManiaServer extends Construct {
       `aws ecr get-login-password --region ${this.props.region} | docker login --username AWS --password-stdin ${this.props.account}.dkr.ecr.${this.props.region}.amazonaws.com`,
       `docker system prune -a -f`,
       `docker pull ${this.props.container.imageUri}`,
-      `docker container run -d -e --publish 80:80 --restart always ${this.props.container.imageUri}`,
+      `docker container run -d -e PORT=80 --publish 80:80 --restart always ${this.props.container.imageUri}`,
     );
     return data;
   }
