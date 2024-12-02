@@ -12,4 +12,6 @@ Tasks
 - [ ] Knockout reward
 - [ ] Replace default sand terrain with less jank switch
 - [ ] Terrain decor
+- [ ] Loading spinner
+- [ ] Cached cursors
 
