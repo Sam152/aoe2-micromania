@@ -1,4 +1,4 @@
-import { CfnOutput, Tags } from "aws-cdk-lib";
+import { aws_cloudfront, CfnOutput, Tags } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import {
@@ -86,6 +86,9 @@ export class MicroManiaServer extends Construct {
           protocolPolicy: OriginProtocolPolicy.HTTP_ONLY,
         }),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        // Ensure all headers, like the ones that power websockets, are forwarded to
+        // the origin.
+        originRequestPolicy: aws_cloudfront.OriginRequestPolicy.ALL_VIEWER,
       },
     });
     new route53.ARecord(this, "distro-a", {
