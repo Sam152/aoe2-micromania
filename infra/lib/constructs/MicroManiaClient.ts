@@ -31,7 +31,7 @@ export class MicroManiaClient extends Construct {
     this.resolveRoot = (input: string) => path.resolve(__dirname, "../../../", input);
 
     this.bucket = this.deployFrontEndToBucket();
-    this.addCloudfrontDistribution();
+    // this.addCloudfrontDistribution();
 
     Tags.of(this).add("CostCenter", "Client");
   }
@@ -72,7 +72,7 @@ export class MicroManiaClient extends Construct {
                   shell: true,
                   cwd: stack.resolveRoot(""),
                 });
-                spawnSync(`mv dist/* ${outputDir} && rm -rf out`, {
+                spawnSync(`cp -a dist/* ${outputDir} && rm -rf out`, {
                   shell: true,
                   cwd: stack.resolveRoot(""),
                 });

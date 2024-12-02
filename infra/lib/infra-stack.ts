@@ -1,8 +1,5 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { MicroManiaServer } from "./constructs/MicroManiaServer";
-import { DockerImageAsset, Platform } from "aws-cdk-lib/aws-ecr-assets";
-import * as path from "path";
 import { MicroManiaClient } from "./constructs/MicroManiaClient";
 
 export class InfraStack extends cdk.Stack {
@@ -16,17 +13,17 @@ export class InfraStack extends cdk.Stack {
     });
 
     // Create as many regional servers as required.
-    new MicroManiaServer(this, "us-east", {
-      account: "390772177583",
-      apiDomain: "us-east.aoe.cx",
-      region: "us-east-2",
-      certArn: "arn:aws:acm:us-east-1:390772177583:certificate/6392c94f-f8f0-4e74-82dd-d1b9d9bed683",
-      apiKeypairName: "aoe-cx",
-      container: new DockerImageAsset(this, "server-container", {
-        directory: path.resolve(__dirname, "../../"),
-        file: "server.Dockerfile",
-        platform: Platform.LINUX_AMD64,
-      }),
-    });
+    // new MicroManiaServer(this, "us-east", {
+    //   account: "390772177583",
+    //   apiDomain: "us-east.aoe.cx",
+    //   region: "us-east-2",
+    //   certArn: "arn:aws:acm:us-east-1:390772177583:certificate/6392c94f-f8f0-4e74-82dd-d1b9d9bed683",
+    //   apiKeypairName: "aoe-cx",
+    //   container: new DockerImageAsset(this, "server-container", {
+    //     directory: path.resolve(__dirname, "../../"),
+    //     file: "server.Dockerfile",
+    //     platform: Platform.LINUX_AMD64,
+    //   }),
+    // });
   }
 }
