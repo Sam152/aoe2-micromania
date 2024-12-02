@@ -32,7 +32,7 @@ export class MicroManiaClient extends Construct {
     this.resolveRoot = (input: string) => path.resolve(__dirname, "../../../", input);
 
     this.bucket = this.deployFrontEndToBucket();
-    // this.addCloudfrontDistribution();
+    this.addCloudfrontDistribution();
 
     Tags.of(this).add("CostCenter", "Client");
   }
