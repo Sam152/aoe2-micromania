@@ -10,4 +10,6 @@ Tasks
 - [ ] Monks
 - [ ] Spawn formation
 - [ ] Knockout reward
+- [ ] Replace default sand terrain with less jank switch
+- [ ] Terrain decor
 
