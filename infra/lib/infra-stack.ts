@@ -10,6 +10,7 @@ export class InfraStack extends cdk.Stack {
     new MicroManiaClient(this, "client", {
       domain: "aoe.cx",
       certArn: "arn:aws:acm:us-east-1:390772177583:certificate/5dc7585b-e6d4-4a86-bed9-fdc6172ac66f",
+      socketHost: "https://us-east.aoe.cx",
     });
 
     // Create as many regional servers as required.

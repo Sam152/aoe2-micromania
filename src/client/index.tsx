@@ -3,9 +3,12 @@ import React from "react";
 import App from "./App";
 import { io } from "socket.io-client";
 import { ConnectionContext } from "./hooks/useConnection";
+import { ManagerOptions } from "socket.io-client/build/esm/manager";
+import { SocketOptions } from "socket.io-client/build/esm/socket";
 
-const config = {
+const config: Partial<ManagerOptions & SocketOptions> = {
   transports: ["websocket"],
+  host: process.env.SOCKET_HOST ?? undefined,
 };
 const connection = io(config);
 

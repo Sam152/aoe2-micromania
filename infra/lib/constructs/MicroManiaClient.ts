@@ -17,6 +17,7 @@ import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 type ClientProps = {
   domain: string;
   certArn: string;
+  socketHost: string;
 };
 
 export class MicroManiaClient extends Construct {
@@ -68,7 +69,7 @@ export class MicroManiaClient extends Construct {
             image: DockerImage.fromRegistry("node:22"),
             local: {
               tryBundle(outputDir: string, options: BundlingOptions): boolean {
-                spawnSync(`npm ci && npm run build-client-prod`, {
+                spawnSync(`npm ci && SOCKET_HOST=${stack.props.socketHost} npm run build-client-prod`, {
                   shell: true,
                   cwd: stack.resolveRoot(""),
                 });
