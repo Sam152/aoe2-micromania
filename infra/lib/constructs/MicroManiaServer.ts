@@ -17,14 +17,7 @@ import {
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { ManagedPolicy, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import {
-  CacheCookieBehavior,
-  CacheHeaderBehavior,
-  CacheQueryStringBehavior,
-  Distribution,
-  OriginProtocolPolicy,
-  ViewerProtocolPolicy,
-} from "aws-cdk-lib/aws-cloudfront";
+import { Distribution, OriginProtocolPolicy, ViewerProtocolPolicy } from "aws-cdk-lib/aws-cloudfront";
 import { HttpOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
@@ -97,9 +90,6 @@ export class MicroManiaServer extends Construct {
           minTtl: Duration.seconds(0),
           maxTtl: Duration.seconds(0),
           defaultTtl: Duration.seconds(0),
-          headerBehavior: CacheHeaderBehavior.allowList("*"),
-          queryStringBehavior: CacheQueryStringBehavior.all(),
-          cookieBehavior: CacheCookieBehavior.all(),
         }),
       },
     });
