@@ -33,7 +33,7 @@ export class InfraStack extends cdk.Stack {
       apiKeypairName: "aoe-cx",
       container: serverContainer,
     });
-    new MicroManiaServer(this, "us-east", {
+    new MicroManiaServer(this, "ap-south", {
       account: "390772177583",
       zoneId: "Z08280773DHMHUR6KDGGL",
       apiDomain: "ap-south.aoe.cx",
