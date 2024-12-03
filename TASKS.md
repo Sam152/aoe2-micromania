@@ -16,4 +16,6 @@ Tasks
 - [ ] Cached cursors
 - [ ] Slower mango volleys
 - [ ] Nearest server selection by ping
+- [ ] Admin tools
+- [ ] Boot on idle
 
