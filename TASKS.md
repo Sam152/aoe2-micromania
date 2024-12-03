@@ -7,6 +7,7 @@ Tasks
 - [ ] Nearest server selection by ping
 - [ ] Admin tools
 - [ ] Boot on idle
+- [ ] Logging/observability
 
 ## Gameplay/interface
 
