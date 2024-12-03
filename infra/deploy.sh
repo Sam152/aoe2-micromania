@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cdk deploy --hotswap-fallback -e UsEastServer
-cdk deploy --hotswap-fallback -e ApSouthServer
-cdk deploy --hotswap-fallback -e ClientStack
+cdk deploy -e ClientStack
+cdk deploy -e UsEastServer
+cdk deploy -e ApSouthServer
