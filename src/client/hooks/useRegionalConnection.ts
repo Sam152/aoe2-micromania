@@ -29,7 +29,7 @@ async function createRegionalConnection(): Promise<Socket> {
 async function measurePing(host: string) {
   const start = Date.now();
   try {
-    await fetch(`${host}/ping`);
+    await fetch(`${host}/ping`, { mode: "no-cors" });
   } finally {
     return Date.now() - start;
   }
