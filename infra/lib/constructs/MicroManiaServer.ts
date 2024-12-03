@@ -96,7 +96,7 @@ export class MicroManiaServer extends Construct {
     });
 
     new CfnOutput(this, "kick", {
-      value: `ssh -i ~/.ssh/aoe-cx.pem ec2-user@${instance.instancePublicDnsName} sudo /var/lib/cloud/instance/scripts/part-001`,
+      value: `ssh -i ~/.ssh/${this.props.apiKeypairName}.pem ec2-user@${instance.instancePublicDnsName} sudo /var/lib/cloud/instance/scripts/part-001`,
     });
   }
 
