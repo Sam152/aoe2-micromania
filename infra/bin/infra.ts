@@ -13,8 +13,8 @@ new ServerStack(app, "UsEastServer", {
   region: "us-east-2",
   account: "390772177583",
   zoneId: "Z08280773DHMHUR6KDGGL",
-  apiDomain: "ap-south.aoe.cx",
-  certArn: "arn:aws:acm:us-east-1:390772177583:certificate/4ec1d899-34f3-4146-a155-fd7462d904cc",
+  apiDomain: "us-east.aoe.cx",
+  certArn: "arn:aws:acm:us-east-1:390772177583:certificate/6392c94f-f8f0-4e74-82dd-d1b9d9bed683",
   apiKeypairName: "aoe-cx",
 });
 new ServerStack(app, "ApSouthServer", {

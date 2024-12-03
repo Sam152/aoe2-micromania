@@ -12,12 +12,15 @@ async function createRegionalConnection(): Promise<Socket> {
     return io(socketConfig);
   }
 
-  const pings = Promise.all(
+  const pings = await Promise.all(
     regionalServers.map(async (server) => ({
       server,
       ping: await measurePing(server),
     })),
   );
+
+  console.table(`---- MEASURED PINGS ----`);
+  console.table(`------------------------`);
   console.table(pings);
 }
 
