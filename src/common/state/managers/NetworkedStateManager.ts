@@ -1,8 +1,8 @@
-import { defaultState as defaultGameState, gameStateMutator } from "../gameState";
-import { clientStateMutator, defaultState as defaultClientState } from "../clientState";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types";
-import { Socket } from "socket.io-client";
-import { normalizeGameStateAction, normalizeGameStateObject } from "../../util/normalizer";
+import {defaultState as defaultGameState, gameStateMutator} from "../gameState";
+import {clientStateMutator, defaultState as defaultClientState} from "../clientState";
+import {ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface} from "../../../types";
+import {Socket} from "socket.io-client";
+import {normalizeGameStateAction, normalizeGameStateObject} from "../../util/normalizer";
 import TransportEvent from "../transport/TransportEvent";
 
 /**

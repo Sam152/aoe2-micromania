@@ -37,7 +37,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env.ASSET_BASE_URL": JSON.stringify(process.env.ASSET_BASE_URL || ""),
-      "process.env.SOCKET_HOST": JSON.stringify(process.env.SOCKET_HOST || null),
+      "process.env.IS_AWS_DEPLOYMENT": JSON.stringify(process.env.IS_AWS_DEPLOYMENT || null),
     }),
   ],
   optimization: {

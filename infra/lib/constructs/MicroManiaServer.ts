@@ -70,12 +70,7 @@ export class MicroManiaServer extends Construct {
       },
       userData: this.buildInstanceUserData(),
       role: instanceRole,
-      blockDevices: [
-        // {
-        //   deviceName: "/dev/xvda",
-        //   volume: ec2.BlockDeviceVolume.ebs(8),
-        // },
-      ],
+      blockDevices: [],
     });
 
     const distro = new Distribution(this, `distro`, {

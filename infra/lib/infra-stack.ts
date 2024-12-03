@@ -9,7 +9,6 @@ export class InfraStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
 
-    // Deploy the client.
     new MicroManiaClient(this, "client", {
       domain: "aoe.cx",
       zoneId: "Z08280773DHMHUR6KDGGL",
@@ -23,7 +22,6 @@ export class InfraStack extends cdk.Stack {
       platform: Platform.LINUX_AMD64,
     });
 
-    // Regional servers.
     new MicroManiaServer(this, "us-east", {
       account: "390772177583",
       zoneId: "Z08280773DHMHUR6KDGGL",
