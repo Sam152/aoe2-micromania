@@ -85,8 +85,8 @@ export class MicroManiaServer extends Construct {
         // Ensure all headers, like the ones that power websockets, are forwarded to
         // the origin.
         originRequestPolicy: aws_cloudfront.OriginRequestPolicy.ALL_VIEWER,
-        cachePolicy: new aws_cloudfront.CachePolicy(this, "NoCachePolicy", {
-          cachePolicyName: "NoCachePolicy",
+        cachePolicy: new aws_cloudfront.CachePolicy(this, `NoCachePolicy-${this.props.region}`, {
+          cachePolicyName: `NoCachePolicy-${this.props.region}`,
           minTtl: Duration.seconds(0),
           maxTtl: Duration.seconds(0),
           defaultTtl: Duration.seconds(0),
