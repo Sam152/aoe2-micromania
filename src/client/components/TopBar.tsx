@@ -17,7 +17,7 @@ export default function TopBar() {
       <HStack>
         <Box mr={6}>
           <Link _focus={{ boxShadow: "none" }} as={RouterLink} to="/">
-            <Image src={assetUrl("graphics/logo.svg")} height="39px" />
+            <Image src={assetUrl("graphics/logo.svg")} height="39px" width="125px" />
           </Link>
         </Box>
         <Flex>
