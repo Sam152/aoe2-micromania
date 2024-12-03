@@ -17,10 +17,18 @@ import {
 import { DockerImageAsset } from "aws-cdk-lib/aws-ecr-assets";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { ManagedPolicy, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import { Distribution, OriginProtocolPolicy, ViewerProtocolPolicy } from "aws-cdk-lib/aws-cloudfront";
+import {
+  CacheCookieBehavior,
+  CacheHeaderBehavior,
+  CacheQueryStringBehavior,
+  Distribution,
+  OriginProtocolPolicy,
+  ViewerProtocolPolicy,
+} from "aws-cdk-lib/aws-cloudfront";
 import { HttpOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
+import { Duration } from "aws-cdk-lib/core";
 
 export type ServerProps = {
   region: string;
@@ -84,6 +92,15 @@ export class MicroManiaServer extends Construct {
         // Ensure all headers, like the ones that power websockets, are forwarded to
         // the origin.
         originRequestPolicy: aws_cloudfront.OriginRequestPolicy.ALL_VIEWER,
+        cachePolicy: new aws_cloudfront.CachePolicy(this, "NoCachePolicy", {
+          cachePolicyName: "NoCachePolicy",
+          minTtl: Duration.seconds(0),
+          maxTtl: Duration.seconds(0),
+          defaultTtl: Duration.seconds(0),
+          headerBehavior: CacheHeaderBehavior.allowList("*"),
+          queryStringBehavior: CacheQueryStringBehavior.all(),
+          cookieBehavior: CacheCookieBehavior.all(),
+        }),
       },
     });
     new route53.ARecord(this, "distro-a", {
