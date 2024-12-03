@@ -22,7 +22,7 @@ import { HttpOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 
-type ServerProps = {
+export type ServerProps = {
   region: string;
   certArn: string;
   apiDomain: string;
@@ -47,7 +47,7 @@ export class MicroManiaServer extends Construct {
   }
 
   deployContainerEc2() {
-    const vpc = Vpc.fromLookup(this, "default-vpc", { isDefault: true });
+    const vpc = Vpc.fromLookup(this, "default-vpc", { isDefault: true, region: this.props.region });
     const securityGroup = new SecurityGroup(this, "sec-group", {
       vpc: vpc,
     });

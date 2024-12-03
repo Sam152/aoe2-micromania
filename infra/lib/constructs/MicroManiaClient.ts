@@ -19,7 +19,6 @@ import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 type ClientProps = {
   domain: string;
   certArn: string;
-  socketHost: string;
   zoneId: string;
 };
 
@@ -138,6 +137,6 @@ export class MicroManiaClient extends Construct {
   }
 
   getBucketName(): string {
-    return `micromania-client-bucket-5f296a3df`;
+    return `micromania-client-bucket-36a0d65`;
   }
 }

@@ -4,7 +4,35 @@ import { SocketOptions } from "socket.io-client/build/esm/socket";
 import { useHasConnected } from "./useHasConnected";
 import { useEffect, useState } from "react";
 
-const regionalServers = [];
+const regionalServers = ["https://us-east.aoe.cx", "https://ap-south.aoe.cx"];
+
+async function createRegionalConnection(): Promise<Socket> {
+  // Local development has no host to configure.
+  if (!process.env.IS_AWS_DEPLOYMENT) {
+    return io(socketConfig);
+  }
+
+  const pings = Promise.all(
+    regionalServers.map(async (server) => ({
+      server,
+      ping: await measurePing(server),
+    })),
+  );
+  console.table(pings);
+}
+
+async function measurePing(host: string) {
+  const start = Date.now();
+  try {
+    await fetch(`${host}/socket.io/`);
+  } finally {
+    return Date.now() - start;
+  }
+}
+
+const socketConfig: Partial<ManagerOptions & SocketOptions> = {
+  transports: ["websocket"],
+};
 
 type UseRegionalConnectionReturn =
   | {
@@ -12,17 +40,6 @@ type UseRegionalConnectionReturn =
       connection: Socket;
     }
   | { hasConnected: false };
-
-const config: Partial<ManagerOptions & SocketOptions> = {
-  transports: ["websocket"],
-};
-
-const createRegionalConnection: () => Promise<Socket> = async () => {
-  // Local development has no host to configure.
-  if (!process.env.IS_AWS_DEPLOYMENT) {
-    return io(config);
-  }
-};
 
 export function useRegionalConnection(): UseRegionalConnectionReturn {
   const [hookConnection, setConnection] = useState<Socket | undefined>();
