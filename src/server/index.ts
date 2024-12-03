@@ -20,7 +20,10 @@ httpServer.on("request", (req, res) => {
   if (req.method === "GET" && req.url === "/ping") {
     res.writeHead(200, { "Content-Type": "text/plain" });
     res.end("1");
+    return;
   }
+  res.writeHead(404, { "Content-Type": "text/plain" });
+  res.end("Not Found");
 });
 
 const { registerPlayer } = startGame(io);
