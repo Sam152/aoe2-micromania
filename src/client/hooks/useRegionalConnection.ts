@@ -22,8 +22,8 @@ async function createRegionalConnection(): Promise<Socket> {
   ).sort((a, b) => a.ping - b.ping);
 
   console.table(`---- MEASURED PINGS ----`);
-  console.table(`------------------------`);
   console.table(pings);
+  console.table(`------------------------`);
 }
 
 async function measurePing(host: string) {
