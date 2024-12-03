@@ -9,18 +9,21 @@ Tasks
 - [ ] Boot on idle
 - [ ] Logging/observability
 
-## Gameplay/interface
+## Gameplay
 
 - [x] Auto attack only works for two players, see `autoAttack`
 - [ ] Formations with multiple types of units
-- [ ] "Playing as" top banner
-- [ ] Main thread blocking perf for graphics render
-- [ ] GH/Discord links
 - [ ] Knockout reward
 - [ ] Monks
 - [ ] Spawn formation
 - [ ] Replace default sand terrain with less jank switch
 - [ ] Terrain decor
-- [ ] Loading spinner
-- [ ] Cached cursors
 - [ ] Slower mango volleys
+
+# Interface
+
+- [ ] "Playing as" top banner
+- [ ] Main thread blocking perf for graphics render
+- [ ] GH/Discord links
+- [ ] Cached cursors
+- [ ] Loading spinner
