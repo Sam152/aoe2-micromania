@@ -24,5 +24,5 @@ new ServerStack(app, "ApSouthServer", {
   zoneId: "Z08280773DHMHUR6KDGGL",
   apiDomain: "ap-south.aoe.cx",
   certArn: "arn:aws:acm:us-east-1:390772177583:certificate/4ec1d899-34f3-4146-a155-fd7462d904cc",
-  apiKeypairName: "aoe-cx",
+  apiKeypairName: "aoe-cx-au",
 });
