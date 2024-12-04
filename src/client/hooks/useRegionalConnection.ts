@@ -24,6 +24,8 @@ async function createRegionalConnection(): Promise<Socket> {
   console.table(`---- MEASURED PINGS ----`);
   console.table(pings);
   console.table(`------------------------`);
+
+  return io(pings.at(1).server, socketConfig);
 }
 
 async function measurePing(host: string) {
