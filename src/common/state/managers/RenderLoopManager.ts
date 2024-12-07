@@ -39,11 +39,11 @@ export default class RenderLoopManager {
       // Fixate on a logical part of the map, when significant actions occur.
       const clientId = this.stateManager.getClientState().clientId;
       if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === this.stateManager.getClientState().clientId) {
-        if (state.activePlayers[clientId]) {
-          this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
-        } else {
-          this.fixateCameraOnMiddleOfMap(state.mapSize);
-        }
+        // if (state.activePlayers[clientId]) {
+        //   this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
+        // } else {
+        this.fixateCameraOnMiddleOfMap(state.mapSize);
+        // }
       }
     });
     this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {

@@ -17,7 +17,7 @@ export default function TopBar() {
   };
 
   return (
-    <Flex px={6} bg={bg} alignItems={"center"} id="nav-bar" sx={{ userSelect: "none" }} justify={"space-between"}>
+    <Flex pl={6} bg={bg} alignItems={"center"} id="nav-bar" sx={{ userSelect: "none" }} justify={"space-between"}>
       <HStack w="full">
         <Box mr={6}>
           <Link _focus={{ boxShadow: "none" }} as={RouterLink} to="/">

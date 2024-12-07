@@ -1,6 +1,7 @@
 import { ConnectedState } from "../hooks/useConnectedState";
-import { Text } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import { HStack, Image, Text } from "@chakra-ui/react";
+import React, { ReactNode } from "react";
+import assetUrl from "../util/assetUrl";
 
 export function PlayingAs({ connectedState }: { connectedState: ConnectedState }) {
   const queued = connectedState.queuedPlayers.includes(connectedState.clientId);
@@ -16,7 +17,16 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
   }
 
   if (connectedState.activePlayers[connectedState.clientId]) {
-    return <Label>Playing as {connectedState.activePlayers[connectedState.clientId]}</Label>;
+    return (
+      <HStack spacing={6}>
+        <Label>Playing as</Label>
+        <Image
+          src={assetUrl(`graphics/players/p-${connectedState.activePlayers[connectedState.clientId]}.png`)}
+          sx={{ aspectRatio: `${256 / 107}` }}
+          height="53px"
+        />
+      </HStack>
+    );
   }
 
   return null;

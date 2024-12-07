@@ -13,10 +13,10 @@ const MultiplayerGame = React.memo(function () {
     if (connection.hasConnected) {
       const stateManager = new NetworkedStateManager(connection.connection);
 
-      stateManager.addGameStateListener((state) => {
+      stateManager.addGameStateListener((state, action) => {
         // Only update connected state every so often, to prevent trashing
         // react.
-        if (state.ticks % 60 === 0) {
+        if (state.ticks % 60 === 0 || action.n === "CLIENT_LOADED_WITH_ID") {
           setConnectedState({
             clientId: connection.connection.id,
             activePlayers: state.activePlayers,
