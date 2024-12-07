@@ -1,6 +1,6 @@
 import Sound from "./Sound";
 import randomArray from "../util/randomArray";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import assetUrl from "../../client/util/assetUrl";
 
 type SoundMap = {
@@ -8,6 +8,7 @@ type SoundMap = {
     canOverlap: boolean;
     maxFromOneTick?: number;
     files: Array<string>;
+    volume?: number;
   };
 };
 
@@ -34,8 +35,9 @@ class SoundPlayer {
     },
     [Sound.SoldierFallen]: {
       canOverlap: true,
-      maxFromOneTick: 6,
+      maxFromOneTick: 3,
       files: ["hd/5309", "hd/5310", "hd/5311", "hd/5312", "hd/5313", "hd/5314"],
+      volume: 0.1,
     },
 
     [Sound.MangonelFired]: {
@@ -67,7 +69,7 @@ class SoundPlayer {
 
         this.audio[soundFile] = new Howl({
           src: assetUrl(`sounds/${soundFile}.${type}`),
-          volume: 0.25,
+          volume: this.soundMap[soundType].volume ?? 0.25,
           pool: 30,
         });
       });

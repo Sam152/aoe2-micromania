@@ -23,6 +23,7 @@ class SlpManager {
 
     const downloadedSmxFiles = await downloadAssets(this.assetPath);
 
+    console.time("Rendering Frames");
     const renderedSmxLibrary = await Promise.all(
       downloadedSmxFiles.map(async ({ id, smx }) => {
         const frames = await Promise.all(
@@ -59,7 +60,7 @@ class SlpManager {
               } else {
                 const renderedShadow = smx.renderShadow(frameNumber);
                 shadow = await createImageBitmap(renderedShadow);
-                await setCached(key, renderedShadow);
+                setCached(key, renderedShadow);
               }
             }
 
@@ -83,6 +84,7 @@ class SlpManager {
         };
       }),
     );
+    console.timeEnd("Rendering Frames");
 
     renderedSmxLibrary.forEach(({ id, smx, frames }) => {
       this.slpList[id] = new SmxAnimation(id, smx, frames);
