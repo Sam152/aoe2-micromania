@@ -3,38 +3,15 @@ import { ManagerOptions } from "socket.io-client/build/esm/manager";
 import { SocketOptions } from "socket.io-client/build/esm/socket";
 import { useHasConnected } from "./useHasConnected";
 import { useEffect, useState } from "react";
-
-const regionalServers = ["https://us-east.aoe.cx", "https://ap-south.aoe.cx"];
+import { resolveServerFromCache } from "../servers/resolveServerFromCache";
 
 async function createRegionalConnection(): Promise<Socket> {
   // Local development has no host to configure.
   if (!process.env.IS_AWS_DEPLOYMENT) {
     return io(socketConfig);
   }
-
-  const pings = (
-    await Promise.all(
-      regionalServers.map(async (server) => ({
-        server,
-        ping: await measurePing(server),
-      })),
-    )
-  ).sort((a, b) => a.ping - b.ping);
-
-  console.table(`---- MEASURED PINGS ----`);
-  console.table(pings);
-  console.table(`------------------------`);
-
-  return io(pings.at(0).server, socketConfig);
-}
-
-async function measurePing(host: string) {
-  const start = Date.now();
-  try {
-    await fetch(`${host}/ping`, { mode: "no-cors" });
-  } finally {
-    return Date.now() - start;
-  }
+  const server = await resolveServerFromCache();
+  return io(server, socketConfig);
 }
 
 const socketConfig: Partial<ManagerOptions & SocketOptions> = {

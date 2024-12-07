@@ -27,6 +27,9 @@ export default function TopBar() {
           <Link {...linkProps} to="/hotkeys">
             Hotkeys
           </Link>
+          <Link {...linkProps} to="/servers">
+            Servers
+          </Link>
         </Flex>
       </HStack>
 

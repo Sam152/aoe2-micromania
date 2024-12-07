@@ -6,6 +6,7 @@ import TopBar from "./components/TopBar";
 import Hotkeys from "./pages/Hotkeys";
 import config from "../common/config";
 import { GameScreen } from "./pages/GameScreen";
+import Servers from "./pages/Servers";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<GameScreen />} />
           <Route path="/hotkeys" element={<Hotkeys />} />
+          <Route path="/servers" element={<Servers />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
