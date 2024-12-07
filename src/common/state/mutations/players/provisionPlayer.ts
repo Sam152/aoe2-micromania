@@ -2,6 +2,8 @@ import { GameState } from "../../../../types";
 import { spawnStartingUnits } from "./spawnStartingUnits";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
 
+export const MAX_PLAYERS_PER_SERVER = 4;
+
 export default function provisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
   // If the client ID is already active, no need to provision them.
   if (state.activePlayers[playerId]) {
@@ -10,7 +12,7 @@ export default function provisionPlayer(state: GameState, playerId: string, comp
 
   // If we reach the max size for the room, add them to the queue of players
   // wanting to play.
-  if (Object.keys(state.activePlayers).length >= 8 && !state.queuedPlayers.includes(playerId)) {
+  if (Object.keys(state.activePlayers).length >= MAX_PLAYERS_PER_SERVER && !state.queuedPlayers.includes(playerId)) {
     state.queuedPlayers.push(playerId);
     return;
   }
@@ -23,7 +25,7 @@ export default function provisionPlayer(state: GameState, playerId: string, comp
 
 function getPlayerNumber(activePlayers: Record<string, number>): number {
   const usedNumbers = Object.values(activePlayers);
-  for (let i = 1; i <= 8; i++) {
+  for (let i = 1; i <= MAX_PLAYERS_PER_SERVER; i++) {
     if (!usedNumbers.includes(i)) {
       return i;
     }

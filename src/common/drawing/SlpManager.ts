@@ -1,8 +1,9 @@
 import SmxAnimation from "./SmxAnimation";
 import assetUrl from "../../client/util/assetUrl";
 import { downloadAssets, playerAssets } from "./assets/downloadAssets";
+import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer";
 
-const renderedPlayers = [1, 2, 3, 4, 5, 6, 7, 8];
+const renderedPlayers = Array.from({ length: MAX_PLAYERS_PER_SERVER }, (_, i) => i + 1);
 
 class SlpManager {
   private readonly assetPath: string;

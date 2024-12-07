@@ -8,7 +8,7 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
 
     return (
       <>
-        Queued ${positionInQueue} out of ${connectedState.queuedPlayers.length}
+        Queued {positionInQueue} out of {connectedState.queuedPlayers.length}
       </>
     );
   }

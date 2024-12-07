@@ -3,6 +3,8 @@ import randomArray from "../util/randomArray";
 import { Howl } from "howler";
 import assetUrl from "../../client/util/assetUrl";
 
+const DEFAULT_VOLUME = 0.25;
+
 type SoundMap = {
   [key: string]: {
     canOverlap: boolean;
@@ -69,7 +71,7 @@ class SoundPlayer {
 
         this.audio[soundFile] = new Howl({
           src: assetUrl(`sounds/${soundFile}.${type}`),
-          volume: this.soundMap[soundType].volume ?? 0.25,
+          volume: this.soundMap[soundType].volume ?? DEFAULT_VOLUME,
           pool: 30,
         });
       });
