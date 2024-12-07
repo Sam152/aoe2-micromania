@@ -11,10 +11,17 @@ export function cyclePlayers(state: GameState, computed: ComputedFrameState) {
 
   const checkPlayer = (state.ticks % activePlayers) + 1;
 
+  console.log("Checking", checkPlayer);
+
   // If the player has no units, they are at the end of their turn.
   const unitsOwned = state.units.filter((unit) => unit.ownedByPlayer === checkPlayer).length;
   if (unitsOwned === 0) {
-    const playerId = Object.entries(state.activePlayers).find((entry) => entry[1] === checkPlayer)[0];
+    const found = Object.entries(state.activePlayers).find((entry) => entry[1] === checkPlayer);
+    if (!found) {
+      return;
+    }
+
+    const playerId = found[0];
     deprovisionPlayer(state, playerId);
 
     // Provision any queued players first.
