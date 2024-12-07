@@ -10,7 +10,7 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
 
     return (
       <Label>
-        Queued {positionInQueue} out of {connectedState.queuedPlayers.length}
+        Queued {numberToOrdinal(positionInQueue)} of {connectedState.queuedPlayers.length}
       </Label>
     );
   }
@@ -28,4 +28,11 @@ function Label({ children }: { children: ReactNode }) {
       {children}
     </Text>
   );
+}
+
+function numberToOrdinal(n: number): string {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  const suffix = v >= 11 && v <= 13 ? "th" : suffixes[Math.min(v % 10, 4)];
+  return `${n}${suffix}`;
 }
