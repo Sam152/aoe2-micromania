@@ -1,7 +1,7 @@
-import { Buffer } from "buffer";
-import Smx, { PaletteCollectionFactory } from "genie-smx";
 import SmxAnimation from "./SmxAnimation";
 import assetUrl from "../../client/util/assetUrl";
+import { downloadAssets, playerAssets } from "./assets/downloadAssets";
+import { getCached, setCached } from "./assets/assetCache";
 
 const renderedPlayers = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -21,29 +21,28 @@ class SlpManager {
       return;
     }
 
-    const palettes = await PaletteCollectionFactory.fromHttp(`${this.assetPath}/palettes`);
-
-    const downloadedSmxFiles = await Promise.all(
-      [...this.assetList(), ...this.assetPlayerList()].map((assetId) =>
-        fetch(`${this.assetPath}/${assetId}.smx`)
-          .then((response) => response.arrayBuffer())
-          .then((arrayBuffer) => ({
-            id: assetId,
-            smx: new Smx(new Buffer(arrayBuffer), palettes),
-          })),
-      ),
-    );
+    const downloadedSmxFiles = await downloadAssets(this.assetPath);
 
     const renderedSmxLibrary = await Promise.all(
       downloadedSmxFiles.map(async ({ id, smx }) => {
         const frames = await Promise.all(
           smx.getFrames().map(async (frame, frameNumber: number) => {
-            const rendersToBuild = this.assetPlayerList().includes(id) ? renderedPlayers : [1];
+            const rendersToBuild = playerAssets.includes(id) ? renderedPlayers : [1];
 
             const perPlayerRenders = await Promise.all(
-              rendersToBuild.map((playerId) => {
+              rendersToBuild.map(async (playerId) => {
+                const key = `${id}:${frameNumber}:${playerId}`;
+
+                const cached = await getCached(key);
+                if (cached) {
+                  return await createImageBitmap(cached).then((bitmap) => ({
+                    playerId,
+                    bitmap,
+                  }));
+                }
                 const imageData = smx.renderFrame(frameNumber, playerId);
-                return createImageBitmap(imageData).then((bitmap) => ({
+                await setCached(key, imageData);
+                return await createImageBitmap(imageData).then((bitmap) => ({
                   playerId,
                   bitmap,
                 }));
@@ -52,8 +51,16 @@ class SlpManager {
 
             let shadow: ImageBitmap | null = null;
             if (smx.hasShadow(frameNumber)) {
-              const renderedShadow = smx.renderShadow(frameNumber);
-              shadow = await createImageBitmap(renderedShadow);
+              const key = `${id}:${frameNumber}:shadow`;
+
+              const cached = await getCached(key);
+              if (cached) {
+                shadow = await createImageBitmap(cached);
+              } else {
+                const renderedShadow = smx.renderShadow(frameNumber);
+                shadow = await createImageBitmap(renderedShadow);
+                await setCached(key, renderedShadow);
+              }
             }
 
             return {
@@ -88,39 +95,6 @@ class SlpManager {
       throw new Error(`Could not find asset in SLP manager ${assetId}`);
     }
     return this.slpList[assetId];
-  }
-
-  assetPlayerList(): string[] {
-    return [
-      "units/u_arc_crossbowman_attackA_x1",
-      "units/u_arc_crossbowman_deathA_x1",
-      "units/u_arc_crossbowman_decayA_x1",
-      "units/u_arc_crossbowman_idleA_x1",
-      "units/u_arc_crossbowman_walkA_x1",
-
-      "units/u_sie_mangonel_attackA_x1",
-      "units/u_sie_mangonel_deathA_x1",
-      "units/u_sie_mangonel_decayA_x1",
-      "units/u_sie_mangonel_idleA_x1",
-      "units/u_sie_mangonel_walkA_x1",
-
-      "interface/dc_b_misc_waypoint_flag_x1",
-    ];
-  }
-
-  assetList(): string[] {
-    return [
-      "interface/MOVETO",
-
-      "projectiles/p_mangonel_x1",
-      "projectiles/p_arrow_x1",
-
-      "terrain/15001-grass",
-      "terrain/15008-grass-2",
-      "terrain/15009-grass-dirt",
-      "terrain/15010-desert",
-      "terrain/15019-cobble",
-    ];
   }
 }
 

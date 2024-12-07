@@ -8,6 +8,7 @@ Tasks
 - [ ] Admin tools
 - [ ] Boot on idle
 - [ ] Logging/observability
+- [ ] Better CDN caching for static assets
 
 ## Gameplay
 
