@@ -7,18 +7,21 @@ import Hotkeys from "./pages/Hotkeys";
 import config from "../common/config";
 import { GameScreen } from "./pages/GameScreen";
 import Servers from "./pages/Servers";
+import { ConnectedStateProvider } from "./hooks/useConnectedState";
 
 export default function App() {
   return (
     <ChakraProvider theme={theme} resetCSS={true}>
-      <BrowserRouter basename={config.assetBaseUrl}>
-        <TopBar />
-        <Routes>
-          <Route path="/" element={<GameScreen />} />
-          <Route path="/hotkeys" element={<Hotkeys />} />
-          <Route path="/servers" element={<Servers />} />
-        </Routes>
-      </BrowserRouter>
+      <ConnectedStateProvider>
+        <BrowserRouter basename={config.assetBaseUrl}>
+          <TopBar />
+          <Routes>
+            <Route path="/" element={<GameScreen />} />
+            <Route path="/hotkeys" element={<Hotkeys />} />
+            <Route path="/servers" element={<Servers />} />
+          </Routes>
+        </BrowserRouter>
+      </ConnectedStateProvider>
     </ChakraProvider>
   );
 }

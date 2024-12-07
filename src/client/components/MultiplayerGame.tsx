@@ -3,13 +3,29 @@ import NetworkedStateManager from "../../common/state/managers/NetworkedStateMan
 import React, { useMemo } from "react";
 import { Box } from "@chakra-ui/react";
 import { useRegionalConnection } from "../hooks/useRegionalConnection";
+import { useConnectedState } from "../hooks/useConnectedState";
 
 const MultiplayerGame = React.memo(function () {
   const connection = useRegionalConnection();
+  const [, setConnectedState] = useConnectedState();
 
   const state = useMemo<NetworkedStateManager | undefined>(() => {
     if (connection.hasConnected) {
-      return new NetworkedStateManager(connection.connection);
+      const stateManager = new NetworkedStateManager(connection.connection);
+
+      stateManager.addGameStateListener((state) => {
+        // Only update connected state every so often, to prevent trashing
+        // react.
+        if (state.ticks % 60 === 0) {
+          setConnectedState({
+            clientId: connection.connection.id,
+            activePlayers: state.activePlayers,
+            queuedPlayers: state.queuedPlayers,
+          });
+        }
+      });
+
+      return stateManager;
     }
   }, [connection.hasConnected]);
 
