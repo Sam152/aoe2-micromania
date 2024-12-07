@@ -1,5 +1,5 @@
 import { ConnectedState } from "../hooks/useConnectedState";
-import { HStack, Image, Text } from "@chakra-ui/react";
+import { HStack, Image, Text, TextProps } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 import assetUrl from "../util/assetUrl";
 
@@ -10,7 +10,7 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
     const positionInQueue = connectedState.queuedPlayers.findIndex((item) => item === connectedState.clientId) + 1;
 
     return (
-      <Label>
+      <Label pr={6}>
         Queued {numberToOrdinal(positionInQueue)} of {connectedState.queuedPlayers.length}
       </Label>
     );
@@ -32,9 +32,9 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
   return null;
 }
 
-function Label({ children }: { children: ReactNode }) {
+function Label({ children, ...props }: { children: ReactNode } & TextProps) {
   return (
-    <Text textTransform="uppercase" fontWeight="bold" fontSize="sm">
+    <Text display="block" textTransform="uppercase" fontWeight="bold" fontSize="sm" {...props}>
       {children}
     </Text>
   );
