@@ -4,7 +4,7 @@ Tasks
 ## Infra
 
 - [x] Deploy and infra
-- [ ] Nearest server selection by ping
+- [x] Nearest server selection by ping
 - [ ] Admin tools
 - [ ] Boot on idle
 - [ ] Logging/observability
@@ -25,6 +25,7 @@ Tasks
 
 - [ ] "Playing as" top banner
 - [ ] Main thread blocking perf for graphics render
+- [ ] Loading progress
 - [ ] GH/Discord links
 - [ ] Cached cursors
 - [ ] Loading spinner
