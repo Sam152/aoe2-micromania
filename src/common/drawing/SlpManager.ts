@@ -1,7 +1,6 @@
 import SmxAnimation from "./SmxAnimation";
 import assetUrl from "../../client/util/assetUrl";
 import { downloadAssets, playerAssets } from "./assets/downloadAssets";
-import { getCached, setCached } from "./assets/assetCache";
 
 const renderedPlayers = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -21,7 +20,9 @@ class SlpManager {
       return;
     }
 
+    console.time("Creating SMX");
     const downloadedSmxFiles = await downloadAssets(this.assetPath);
+    console.timeEnd("Creating SMX");
 
     console.time("Rendering Frames");
     const renderedSmxLibrary = await Promise.all(
@@ -32,17 +33,7 @@ class SlpManager {
 
             const perPlayerRenders = await Promise.all(
               rendersToBuild.map(async (playerId) => {
-                const key = `${id}:${frameNumber}:${playerId}`;
-
-                const cached = await getCached(key);
-                if (cached) {
-                  return await createImageBitmap(cached).then((bitmap) => ({
-                    playerId,
-                    bitmap,
-                  }));
-                }
                 const imageData = smx.renderFrame(frameNumber, playerId);
-                await setCached(key, imageData);
                 return await createImageBitmap(imageData).then((bitmap) => ({
                   playerId,
                   bitmap,
@@ -52,16 +43,8 @@ class SlpManager {
 
             let shadow: ImageBitmap | null = null;
             if (smx.hasShadow(frameNumber)) {
-              const key = `${id}:${frameNumber}:shadow`;
-
-              const cached = await getCached(key);
-              if (cached) {
-                shadow = await createImageBitmap(cached);
-              } else {
-                const renderedShadow = smx.renderShadow(frameNumber);
-                shadow = await createImageBitmap(renderedShadow);
-                setCached(key, renderedShadow);
-              }
+              const renderedShadow = smx.renderShadow(frameNumber);
+              shadow = await createImageBitmap(renderedShadow);
             }
 
             return {
