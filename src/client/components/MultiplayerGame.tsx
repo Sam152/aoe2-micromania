@@ -1,6 +1,6 @@
 import GameCanvas from "./GameCanvas";
 import NetworkedStateManager from "../../common/state/managers/NetworkedStateManager";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Box } from "@chakra-ui/react";
 import { useRegionalConnection } from "../hooks/useRegionalConnection";
 import { connectedEvents, gameStateToConnectedState, useConnectedState } from "../hooks/useConnectedState";
@@ -24,6 +24,12 @@ const MultiplayerGame = React.memo(function () {
       return stateManager;
     }
   }, [connection.hasConnected]);
+
+  useEffect(() => {
+    return () => {
+      setConnectedState(undefined);
+    };
+  }, []);
 
   return <Box position="relative">{state && <GameCanvas stateManager={state} />}</Box>;
 });
