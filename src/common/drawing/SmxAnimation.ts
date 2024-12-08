@@ -4,24 +4,23 @@ import anchorAt from "../util/anchorAt";
 import AnimationStyle from "../units/AnimationStyle";
 import { Vector2 } from "three/src/math/Vector2";
 import ticksForAnimation from "../util/ticksForAnimation";
-import Smx from "genie-smx";
 
 export default class SmxAnimation {
   private id: string;
   private directions: number = 16;
+  private smxFramesCount: number;
   framesPerAngle: number;
-  private smx: Smx;
   private rendered: RenderedSlpFrame[];
 
-  constructor(id: string, smx: Smx, rendered: RenderedSlpFrame[]) {
+  constructor(id: string, smxFramesCount: number, rendered: RenderedSlpFrame[]) {
     this.id = id;
     this.rendered = rendered;
-    this.smx = smx;
-    this.framesPerAngle = Math.floor(this.smx.getFramesCount() / this.directions);
+    this.smxFramesCount = smxFramesCount;
+    this.framesPerAngle = Math.floor(this.smxFramesCount / this.directions);
   }
 
   drawFrame(context: CanvasRenderingContext2D, at: Vector2, frameIndex: number, rotate: number | null = null) {
-    const frame = this.rendered[frameIndex % this.smx.getFramesCount()];
+    const frame = this.rendered[frameIndex % this.smxFramesCount];
     const bitmap = frame.playerRenders[1];
 
     if (rotate) {
@@ -50,7 +49,7 @@ export default class SmxAnimation {
         : Math.min(unitStateTickCount / totalTicksForAnimation, 1);
 
     // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
-    const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.smx.getFramesCount() - 1));
+    const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.smxFramesCount - 1));
 
     const frame = this.rendered[frameIndexToRender];
     const bitmap = frame.playerRenders[1];

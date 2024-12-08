@@ -48,6 +48,16 @@ class SlpManager {
               shadow = await createImageBitmap(renderedShadow);
             }
 
+            // Clean up some unused properties for memory.
+            delete frame.layers[0].commands;
+            delete frame.layers[0].pixelData;
+            // @ts-ignore
+            delete frame.layers[0].layerData;
+            if (frame.layers[1]) {
+              // @ts-ignore
+              delete frame.layers[1].layerData;
+            }
+
             return {
               frameDefinition: frame,
               shadowRender: shadow,
@@ -71,7 +81,7 @@ class SlpManager {
     console.timeEnd("Rendering Frames");
 
     renderedSmxLibrary.forEach(({ id, smx, frames }) => {
-      this.slpList[id] = new SmxAnimation(id, smx, frames);
+      this.slpList[id] = new SmxAnimation(id, smx.getFramesCount(), frames);
     });
     this.loaded = true;
   }
