@@ -279,18 +279,6 @@ export default class CanvasRenderer implements RendererInterface {
   renderMouse(state: ClientState, gameState: GameState) {
     const playingAs = gameState.activePlayers[state.clientId] ?? -1;
 
-    const cursorMap = {
-      [ActiveCommand.AttackGround]: "area_attack",
-      [ActiveCommand.Patrol]: "patrol",
-      [ActiveCommand.Default]: "default",
-    };
-    const anchorMap: { [key: string]: string } = {
-      default: "0 0",
-      area_attack: "0 0",
-      patrol: "0 0",
-      attack: "0 0",
-    };
-
     let cursor;
     if (state.activeCommand === ActiveCommand.Default) {
       const attacking =
@@ -310,3 +298,15 @@ export default class CanvasRenderer implements RendererInterface {
     }
   }
 }
+
+const cursorMap = {
+  [ActiveCommand.AttackGround]: "area_attack",
+  [ActiveCommand.Patrol]: "patrol",
+  [ActiveCommand.Default]: "default",
+};
+const anchorMap: { [key: string]: string } = {
+  default: "0 0",
+  area_attack: "0 0",
+  patrol: "0 0",
+  attack: "0 0",
+};

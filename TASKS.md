@@ -27,9 +27,8 @@ Tasks
 
 # Interface
 
-- [ ] "Playing as" top banner
+- [x] "Playing as" top banner
 - [ ] Main thread blocking perf for graphics render
 - [ ] Loading progress
 - [ ] GH/Discord links
 - [ ] Cached cursors
-- [ ] Loading spinner
