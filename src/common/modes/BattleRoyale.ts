@@ -6,6 +6,9 @@ const grid = new Grid(30);
 /**
  * Game modes may: respond to state or actions by dispatching more actions,
  * but never modify state directly.
+ *
+ * This essentially creates a server-only computation of actions as a function of game
+ * state, in order to control what is happening.
  */
 export default class BattleRoyale implements GameMode {
   start(manager: StateManagerInterface): void {

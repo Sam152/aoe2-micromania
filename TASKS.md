@@ -3,7 +3,7 @@ Tasks
 
 ## Critical
 
-- [ ] Queued players do not get provisioned when active player disconnects
+- [x] Queued players do not get provisioned when active player disconnects
 
 ## Infra
 
