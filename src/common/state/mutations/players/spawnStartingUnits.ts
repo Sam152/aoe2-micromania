@@ -13,6 +13,16 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
     unitType: Unit.Mangonel,
     position: location,
   });
+  spawnUnit(state, {
+    forPlayer: newPlayerNumber,
+    unitType: Unit.Monk,
+    position: location,
+  });
+  spawnUnit(state, {
+    forPlayer: newPlayerNumber,
+    unitType: Unit.Monk,
+    position: location,
+  });
   for (let x = 0; x < 5; x++) {
     for (let y = 0; y < 5; y++) {
       spawnUnit(state, {

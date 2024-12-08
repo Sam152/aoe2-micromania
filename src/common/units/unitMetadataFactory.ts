@@ -1,9 +1,9 @@
 import Unit from "./Unit";
 import UnitState from "./UnitState";
-import { UnitStats } from "../../types";
+import {UnitStats} from "../../types";
 import AnimationStyle from "./AnimationStyle";
 import ProjectileType from "./ProjectileType";
-import { Vector2 } from "three/src/math/Vector2";
+import {Vector2} from "three/src/math/Vector2";
 import DamageType from "./DamageType";
 
 /**
@@ -62,6 +62,53 @@ const unitDefinitions: {
       },
       [UnitState.Decaying]: {
         slp: "units/u_arc_crossbowman_decayA_x1",
+        animationDuration: 60,
+        style: AnimationStyle.Play,
+      },
+    },
+  },
+  [Unit.Monk]: {
+    firesProjectileType: ProjectileType.Arrow,
+    attackFrameDelay: 0.35,
+    reloadTime: 2,
+    movementRate: 0.7,
+    hitPoints: 30,
+    attackRange: 9,
+    attackMinRange: 0,
+    attackDamage: 4,
+    damageType: DamageType.Pierce,
+    armor: {
+      [DamageType.Pierce]: 0,
+      [DamageType.Melee]: 0,
+    },
+    areaOfEffect: null,
+    firingAnchor: new Vector2(14, -24),
+    selectionRadius: 15,
+    hitBox: 10,
+    hitPointsBarAnchor: -49,
+    animations: {
+      [UnitState.Idle]: {
+        slp: "units/u_monk_west_idleA_x1",
+        animationDuration: 2,
+        style: AnimationStyle.Loop,
+      },
+      [UnitState.Firing]: {
+        slp: "units/u_monk_west_attackA_x1",
+        animationDuration: 2,
+        style: AnimationStyle.Play,
+      },
+      [UnitState.Moving]: {
+        slp: "units/u_monk_west_walkA_x1",
+        animationDuration: 1,
+        style: AnimationStyle.Loop,
+      },
+      [UnitState.Falling]: {
+        slp: "units/u_monk_west_deathA_x1",
+        animationDuration: 1,
+        style: AnimationStyle.Play,
+      },
+      [UnitState.Decaying]: {
+        slp: "units/u_monk_west_decayA_x1",
         animationDuration: 60,
         style: AnimationStyle.Play,
       },

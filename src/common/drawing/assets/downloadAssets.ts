@@ -28,6 +28,12 @@ export const playerAssets = [
   "units/u_sie_mangonel_idleA_x1",
   "units/u_sie_mangonel_walkA_x1",
 
+  "units/u_monk_west_attackA_x1",
+  "units/u_monk_west_deathA_x1",
+  "units/u_monk_west_decayA_x1",
+  "units/u_monk_west_idleA_x1",
+  "units/u_monk_west_walkA_x1",
+
   "interface/dc_b_misc_waypoint_flag_x1",
 ];
 
