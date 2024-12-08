@@ -1,7 +1,11 @@
 import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types";
 import Grid from "../terrain/Grid";
+import config from "../config";
 
 const grid = new Grid(30);
+
+// Switch terrain every 3 minutes.
+const TERRAIN_TICK_DURATION = config.ticksPerSecond * 60 * 3;
 
 /**
  * Game modes may: respond to state or actions by dispatching more actions,
@@ -20,6 +24,16 @@ export default class BattleRoyale implements GameMode {
   }
 
   onTick(state: GameState, action: GameStateAction, manager: StateManagerInterface): void {
+    // Only respond on tick.
+    if (action.n !== "T") {
+      return;
+    }
+
+    this.cyclePlayers(state, action, manager);
+    this.cycleTerrain(state, action, manager);
+  }
+
+  cyclePlayers(state: GameState, action: GameStateAction, manager: StateManagerInterface) {
     const activePlayers = Object.keys(state.activePlayers).length;
     if (activePlayers === 0) {
       return;
@@ -36,6 +50,19 @@ export default class BattleRoyale implements GameMode {
         n: "CYCLE_PLAYER",
         playerId: found[0],
         playerNumber: found[1],
+      });
+    }
+  }
+
+  cycleTerrain(state: GameState, action: GameStateAction, manager: StateManagerInterface) {
+    const terrainOptions = ["terrain/15001-grass", "terrain/15008-grass-2", "terrain/15009-grass-dirt"];
+    const terrainIndex = Math.floor(state.ticks / TERRAIN_TICK_DURATION) % terrainOptions.length;
+    const newTerrain = terrainOptions[terrainIndex];
+    if (state.mapTerrain !== newTerrain) {
+      manager.dispatchGame({
+        n: "MAP_PARAMETERS_SET",
+        size: grid.size,
+        terrain: newTerrain,
       });
     }
   }

@@ -126,8 +126,8 @@ function defaultState(): GameState {
 
     soundQueue: [],
 
-    mapSize: 18,
-    mapTerrain: "terrain/15010-desert",
+    mapSize: 30,
+    mapTerrain: "terrain/15008-grass-2",
   });
 }
 

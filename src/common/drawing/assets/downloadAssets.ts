@@ -40,8 +40,8 @@ export const globalAssets = [
   "terrain/15001-grass",
   "terrain/15008-grass-2",
   "terrain/15009-grass-dirt",
-  "terrain/15010-desert",
-  "terrain/15019-cobble",
+  // "terrain/15010-desert",
+  // "terrain/15019-cobble",
 ];
 
 export const allAssets = [...playerAssets, ...globalAssets];
