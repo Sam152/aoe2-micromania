@@ -43,6 +43,6 @@ function Label({ children, ...props }: { children: ReactNode } & TextProps) {
 function numberToOrdinal(n: number): string {
   const suffixes = ["th", "st", "nd", "rd"];
   const v = n % 100;
-  const suffix = v >= 11 && v <= 13 ? "th" : suffixes[Math.min(v % 10, 4)];
+  const suffix = v >= 11 && v <= 13 ? "th" : suffixes[n % 10 < 4 ? n % 10 : 0];
   return `${n}${suffix}`;
 }

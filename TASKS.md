@@ -29,6 +29,7 @@ Tasks
 
 - [ ] GH/Discord links
 - [ ] Spectate mode
+- [ ] Favicon
 - [x] "Playing as" top banner
 - [x] Main thread blocking perf for graphics render
 - [x] Loading progress
