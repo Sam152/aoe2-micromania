@@ -23,6 +23,11 @@ export default class RenderLoopManager {
     this.running = true;
     this.stateManager.init();
 
+    this.renderer.context.font = "bold 125px Georgia";
+    this.renderer.context.strokeStyle = "#ffd568";
+    const half = this.renderer.getSize().divideScalar(2);
+    this.renderer.context.strokeText(`Loading...`, half.x + 3 - 310, half.y + 3);
+
     this.renderer.bootUp().then(() => {
       this.stateManager.dispatchGame({
         n: "CLIENT_LOADED",

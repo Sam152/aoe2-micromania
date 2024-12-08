@@ -19,8 +19,8 @@ import selectionCircle from "./helpers/selectionCircle";
 import assetUrl from "../../client/util/assetUrl";
 
 export default class CanvasRenderer implements RendererInterface {
-  private canvas: HTMLCanvasElement;
-  private context: CanvasRenderingContext2D;
+  public canvas: HTMLCanvasElement;
+  public context: CanvasRenderingContext2D;
   lastRenderedGameTick: number;
   frameAtLastRenderedTick: number;
   framesPerTick: number;
