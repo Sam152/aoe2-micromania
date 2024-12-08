@@ -134,7 +134,7 @@ const unitDefinitions: {
     firesProjectileType: ProjectileType.Rock,
     firingAnchor: new Vector2(0, -30),
     selectionRadius: 50,
-    hitBox: 30,
+    hitBox: 35,
     hitPointsBarAnchor: -55,
     animations: {
       [UnitState.Idle]: {
