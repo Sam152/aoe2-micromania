@@ -118,6 +118,11 @@ type GameStateAction =
       n: "CLIENT_LOADED";
     }
   | {
+      n: "CYCLE_PLAYER";
+      playerId: string;
+      playerNumber: number;
+    }
+  | {
       n: "CLIENT_LOADED_WITH_ID";
       playerId: string;
     }

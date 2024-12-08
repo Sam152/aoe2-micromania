@@ -17,7 +17,7 @@ export function startGame(io: Server): {
     // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
     // where clients could drift out of sync and require syncing back up?
     io.emit(TransportEvent.GameStateActionTransmit, action);
-    gameMode.onTick(state, action);
+    gameMode.onTick(gameState, action, state);
   });
 
   state.init();

@@ -51,7 +51,7 @@ export function getBestSpawnLocation(state: GameState, computed: ComputedFrameSt
 }
 
 export function getStartingSpawnCandidates(state: GameState): Vector2[] {
-  const buffer = 3;
+  const buffer = 7;
   const grid = new Grid(state.mapSize);
   return [
     { x: buffer, y: buffer },

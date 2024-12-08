@@ -1,7 +1,9 @@
 import { GameState } from "../../../../types";
 import registerUnitFallen from "../tick/registerUnitFallen";
+import provisionPlayer from "./provisionPlayer";
+import { ComputedFrameState } from "../../computed/createComputedFrameState";
 
-export default function deprovisionPlayer(state: GameState, playerId: string) {
+export function deprovisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
   // If the player is actually playing, remove them as an active player and despawn their units.
   if (state.activePlayers[playerId]) {
     // Remove the disconnected player from the active player pool.
@@ -17,5 +19,11 @@ export default function deprovisionPlayer(state: GameState, playerId: string) {
   // If they are in queue, remove them.
   if (state.queuedPlayers.includes(playerId)) {
     state.queuedPlayers = state.queuedPlayers.filter((playerId) => playerId !== playerId);
+  }
+
+  // Provision any queued players first.
+  if (state.queuedPlayers.length > 0) {
+    const nextInQueuePlayerId = state.queuedPlayers.shift();
+    provisionPlayer(state, nextInQueuePlayerId, computed);
   }
 }

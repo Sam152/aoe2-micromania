@@ -1,4 +1,16 @@
 import { createContext, Dispatch, ReactNode, useContext, useState } from "react";
+import { GameState } from "../../types";
+import { Socket } from "socket.io-client";
+
+export const connectedEvents = ["CLIENT_LOADED_WITH_ID", "CLIENT_DISCONNECTED_WITH_ID", "CYCLE_PLAYER"];
+
+export function gameStateToConnectedState(state: GameState, socket: Socket): ConnectedState {
+  return {
+    clientId: socket.id,
+    activePlayers: state.activePlayers,
+    queuedPlayers: state.queuedPlayers,
+  };
+}
 
 const ConnectedStateContext = createContext<[ConnectedState, Dispatch<ConnectedState>] | null>(null);
 

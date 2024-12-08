@@ -18,9 +18,9 @@ import changeFormation from "./mutations/initiated/changeFormation";
 import { setUnitMovementTowardsCurrentWaypoint } from "./mutations/initiated/setUnitMovementTowards";
 import { snapToClamp } from "../util/snapToClamp";
 import provisionPlayer from "./mutations/players/provisionPlayer";
-import deprovisionPlayer from "./mutations/players/deprovisionPlayer";
 import { cyclePlayers } from "./mutations/players/cyclePlayers";
 import { createComputedFrameState } from "./computed/createComputedFrameState";
+import { deprovisionPlayer } from "./mutations/players/deprovisionPlayer";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
   const computed = createComputedFrameState(state);
@@ -29,10 +29,10 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     provisionPlayer(state, action.playerId, computed);
   }
   if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
-    deprovisionPlayer(state, action.playerId);
+    deprovisionPlayer(state, action.playerId, computed);
   }
-  if (action.n === "T") {
-    cyclePlayers(state, computed);
+  if (action.n === "CYCLE_PLAYER") {
+    cyclePlayers(state, computed, action.playerId);
   }
 
   if (action.n === "SPAWN_UNIT") {

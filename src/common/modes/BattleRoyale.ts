@@ -1,4 +1,4 @@
-import { GameMode, GameStateAction, StateManagerInterface } from "../../types";
+import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types";
 import Grid from "../terrain/Grid";
 
 const grid = new Grid(30);
@@ -16,10 +16,24 @@ export default class BattleRoyale implements GameMode {
     });
   }
 
-  onTick(manager: StateManagerInterface, action: GameStateAction): void {
-    if (action.n === "CLIENT_LOADED_WITH_ID") {
+  onTick(state: GameState, action: GameStateAction, manager: StateManagerInterface): void {
+    const activePlayers = Object.keys(state.activePlayers).length;
+    if (activePlayers === 0) {
+      return;
     }
-    if (action.n === "CLIENT_DISCONNECTED_WITH_ID") {
+    const checkPlayer = (state.ticks % activePlayers) + 1;
+
+    const unitsOwned = state.units.filter((unit) => unit.ownedByPlayer === checkPlayer).length;
+    if (unitsOwned === 0) {
+      const found = Object.entries(state.activePlayers).find((entry) => entry[1] === checkPlayer);
+      if (!found) {
+        return;
+      }
+      manager.dispatchGame({
+        n: "CYCLE_PLAYER",
+        playerId: found[0],
+        playerNumber: found[1],
+      });
     }
   }
 }
