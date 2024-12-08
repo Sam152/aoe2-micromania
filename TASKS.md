@@ -21,14 +21,15 @@ Tasks
 - [ ] Knockout reward
 - [ ] Monks
 - [ ] Spawn formation
+- [ ] Slower mango volleys
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
-- [ ] Slower mango volleys
 
 # Interface
 
-- [x] "Playing as" top banner
-- [ ] Main thread blocking perf for graphics render
-- [x] Loading progress
 - [ ] GH/Discord links
-- [ ] Cached cursors
+- [ ] Spectate mode
+- [x] "Playing as" top banner
+- [x] Main thread blocking perf for graphics render
+- [x] Loading progress
+- [x] Cached cursors
