@@ -57,6 +57,7 @@ class SlpManager {
               // @ts-ignore
               delete frame.layers[1].layerData;
             }
+            delete frame.layers[2];
 
             return {
               frameDefinition: frame,
