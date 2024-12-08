@@ -29,6 +29,6 @@ Tasks
 
 - [x] "Playing as" top banner
 - [ ] Main thread blocking perf for graphics render
-- [ ] Loading progress
+- [x] Loading progress
 - [ ] GH/Discord links
 - [ ] Cached cursors
