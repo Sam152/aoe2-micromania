@@ -5,6 +5,7 @@ import LineFormation from "../../common/units/formations/types/LineFormation";
 import { UnitInstance } from "../../types";
 import { Vector2 } from "three/src/math/Vector2";
 import Unit from "../../common/units/Unit";
+import averageVector from "../../common/util/averageVector";
 
 export default function FormationDebugging() {
   const ref = createRef<HTMLCanvasElement>();
@@ -17,8 +18,10 @@ export default function FormationDebugging() {
     canvas.height = (window.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
 
     const line = new LineFormation();
-    const positions = line.form(units, new Vector2(500, 600));
-    // line.form();
+    const positions = line.form(units, new Vector2(900, 400));
+
+    const start = averageVector(units.map((unit) => unit.position));
+    circle(ctx, start, 5, "orange");
 
     positions.map((position, i) => {
       const unit = units[i];
