@@ -17,7 +17,9 @@ Tasks
 ## Gameplay
 
 - [x] Auto attack only works for two players, see `autoAttack`
-- [ ] Formations with multiple types of units
+- [x] Formations with multiple types of units
+  - [ ] Translate whole group into middle of destination
+  - [ ] Slow units to slowest in group
 - [ ] Knockout reward
 - [ ] Monks
 - [ ] Spawn formation

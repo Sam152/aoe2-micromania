@@ -1,6 +1,6 @@
 import { Vector2 } from "three/src/math/Vector2";
 
-const MIN_FORMATION_DEPTH = 0;
+const MIN_FORMATION_DEPTH = 20;
 const FIXED_FACTOR = 30;
 
 export function formationDepth(positions?: Vector2[]): number {
@@ -12,8 +12,6 @@ export function formationDepth(positions?: Vector2[]): number {
 
   const lowest = Math.min(...yValues);
   const highest = Math.max(...yValues);
-
-  console.log(positions);
 
   return Math.max(highest - lowest, MIN_FORMATION_DEPTH) + FIXED_FACTOR;
 }
