@@ -14,8 +14,6 @@ export default class LineFormation extends FormationBase {
     const positions = units.map((unit) => unit.position);
     let startingPoint = averageVector(positions);
 
-    const destinationWithOffset = destination.clone();
-
     const unitVectorDirectionMoving = destination.clone().sub(startingPoint).normalize();
     const cumulativeDepth = new Vector2();
 
@@ -28,8 +26,8 @@ export default class LineFormation extends FormationBase {
       const groupUnitsPositions = groupUnits.map((unit) => unit.position);
 
       if (groupUnits.length === 1) {
+        idsToPositions[groupUnits[0].id] = destination.add(cumulativeDepth);
         cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
-        idsToPositions[groupUnits[0].id] = groupUnits[0].position.add(cumulativeDepth);
         return;
       }
 
@@ -45,11 +43,10 @@ export default class LineFormation extends FormationBase {
         this.distanceBetween,
       );
 
-      cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
-
       const rotated = translateAndRotate(groupUnitsPositions, newPositions, destination, startingPoint).map((rotated) =>
         rotated.add(cumulativeDepth),
       );
+      cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
 
       rotated.forEach((position, i) => {
         idsToPositions[unitsWithId[i][1].id] = position;

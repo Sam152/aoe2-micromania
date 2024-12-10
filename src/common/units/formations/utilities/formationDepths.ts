@@ -1,7 +1,7 @@
 import { Vector2 } from "three/src/math/Vector2";
 
-const MIN_FORMATION_DEPTH = 0;
-const FIXED_FACTOR = 60;
+const MIN_FORMATION_DEPTH = 50;
+const FIXED_FACTOR = 30;
 
 export function formationDepth(positions?: Vector2[]): number {
   if (!positions) {
