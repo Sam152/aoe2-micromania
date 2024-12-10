@@ -374,7 +374,7 @@ export interface Rectangle {
 }
 
 export interface FormationInterface {
-  form(positions: Array<Vector2>, destination: Vector2): Array<Vector2>;
+  form(positions: UnitInstance[], destination: Vector2): Array<Vector2>;
 }
 
 export interface ReplayIndexItem {

@@ -51,7 +51,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
     formationManager
       .fromPopulation(units)
-      .form(positions, action.position)
+      .form(units, action.position)
       .map((formationPosition, index) => {
         units[index].waypoints.push(snapToClamp(formationPosition, state.mapSize));
         if (units[index].unitState === UnitState.Idle) {

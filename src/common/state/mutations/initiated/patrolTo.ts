@@ -33,7 +33,7 @@ export function patrolGroupTo(
   // Find the formation the units will make at their patrol destination.
   formationManager
     .fromPopulation(units)
-    .form(startingPositions, destination)
+    .form(units, destination)
     .forEach((formationPosition, index) => {
       units[index].patrollingToReturn = snapToClamp(formationPosition, state.mapSize);
     });

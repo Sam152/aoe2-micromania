@@ -11,16 +11,16 @@ import { snapToClamp } from "../../../util/snapToClamp";
 
 export default function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
   units.forEach((unit) => stopUnit(unit));
-  const positions = units.map((unit) => unit.position);
 
   formationManager
     .fromPopulation(units)
-    .form(positions, destination)
+    .form(units, destination)
     .forEach((formationPosition, index) => {
       units[index].waypoints = [snapToClamp(formationPosition, state.mapSize)];
       setUnitMovementTowardsCurrentWaypoint(state, units[index]);
     });
 
+  const positions = units.map((unit) => unit.position);
   const position = averageVector(positions);
   // While moving, if the units are travelling a reasonable distance, reform them in their current location before
   // continuing to their destination.
@@ -30,7 +30,7 @@ export default function moveTo(state: GameState, units: UnitInstance[], destinat
     );
     formationManager
       .fromPopulation(units)
-      .form(positions, reformAt)
+      .form(units, reformAt)
       .forEach((formationPosition, index) => {
         units[index].reformingTo = setUnitMovementTowards(state, units[index], formationPosition);
         units[index].reformingArrivalTick = units[index].arrivalTick;

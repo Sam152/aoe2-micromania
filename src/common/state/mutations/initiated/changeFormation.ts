@@ -37,10 +37,9 @@ export default function changeFormation(state: GameState, action: { formation: F
   } else {
     // Idle units should reform where they stand.
     const reformPosition = populationVector(units, "position");
-    const positions = units.map(({ position }) => position);
     formationManager
       .fromPopulation(units)
-      .form(positions, reformPosition)
+      .form(units, reformPosition)
       .forEach((formationPosition, index) => {
         units[index].reformingTo = setUnitMovementTowards(state, units[index], formationPosition);
         units[index].reformingArrivalTick = units[index].arrivalTick;
