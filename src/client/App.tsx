@@ -8,6 +8,7 @@ import config from "../common/config";
 import { GameScreen } from "./pages/GameScreen";
 import Servers from "./pages/Servers";
 import { ConnectedStateProvider } from "./hooks/useConnectedState";
+import FormationDebugging from "./pages/FormationDebugging";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/" element={<GameScreen />} />
             <Route path="/hotkeys" element={<Hotkeys />} />
             <Route path="/servers" element={<Servers />} />
+            <Route path="/formations" element={<FormationDebugging />} />
           </Routes>
         </BrowserRouter>
       </ConnectedStateProvider>
