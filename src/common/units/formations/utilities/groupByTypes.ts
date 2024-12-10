@@ -9,7 +9,7 @@ export function groupByTypes(units: UnitInstance[]): UnitMap {
   }, {});
 
   const entries = Object.entries(gathered) as any as UnitMap;
-  return entries.sort((typeA, typeB) => typeA[0] - typeB[0]);
+  return entries.sort((typeA, typeB) => typeB[0] - typeA[0]);
 }
 
 type GatheredUnits = Partial<Record<Unit, Record<number, UnitInstance>>>;
