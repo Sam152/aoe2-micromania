@@ -32,10 +32,20 @@ export default function FormationDebugging() {
       [
         ...arrayOfSize(10).map(createMonk({ x: 100, y: 100 })),
         ...arrayOfSize(5).map(createMango({ x: 100, y: 100 })),
-        ...arrayOfSize(30).map(createArcher({ x: 100, y: 100 })),
+        ...arrayOfSize(5).map(createArcher({ x: 100, y: 100 })),
       ],
       ctx,
       new Vector2(300, 300),
+    );
+
+    drawFormation(
+      [
+        ...arrayOfSize(50).map(createMonk({ x: 900, y: 100 })),
+        ...arrayOfSize(1).map(createMango({ x: 900, y: 100 })),
+        ...arrayOfSize(1).map(createArcher({ x: 900, y: 100 })),
+      ],
+      ctx,
+      new Vector2(900, 300),
     );
   }, []);
 
