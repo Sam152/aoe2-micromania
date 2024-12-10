@@ -4,6 +4,7 @@ import formLines, { translateAndRotate } from "../utilities/formLines";
 import FormationBase from "../FormationBase";
 import { UnitInstance } from "../../../../types";
 import { groupByTypes } from "../utilities/groupByTypes";
+import { formationDepth } from "../utilities/formationDepths";
 
 export default class LineFormation extends FormationBase {
   distanceBetween = 25;
@@ -28,7 +29,7 @@ export default class LineFormation extends FormationBase {
 
       if (groupUnits.length === 1) {
         idsToPositions[groupUnits[0].id] = destinationWithOffset.clone();
-        destinationWithOffset.add(unitVectorDirectionMoving.clone().multiplyScalar(100));
+        destinationWithOffset.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
         return;
       }
 
@@ -50,24 +51,13 @@ export default class LineFormation extends FormationBase {
         startingPoint,
       );
 
-      destinationWithOffset.add(unitVectorDirectionMoving.clone().multiplyScalar(100));
+      destinationWithOffset.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
 
       rotated.forEach((position, i) => {
         idsToPositions[unitsWithId[i][1].id] = position;
       });
-
-      // Object.entries(units).forEach(([unitId, unit]) => {
-      // });
     });
 
-    const realigned = units.map((unit) => idsToPositions[unit.id]);
-
-    // console.log(idsToPositions);
-    //
-    // const rows = Math.ceil(positions.length / this.unitsPerRow);
-    // const columns = Math.ceil(positions.length / rows);
-    //
-    // const newPositions = formLines(positions, destination, rows, columns, startingPoint, this.distanceBetween);
-    return realigned;
+    return units.map((unit) => idsToPositions[unit.id]);
   }
 }
