@@ -22,6 +22,7 @@ Tasks
 - [ ] Monks
 - [ ] Spawn formation
 - [ ] Slower mango volleys
+- [ ] Formations move at speed of slowest
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
 
