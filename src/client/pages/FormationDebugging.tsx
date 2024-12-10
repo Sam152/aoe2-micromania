@@ -20,9 +20,9 @@ export default function FormationDebugging() {
 
     drawFormation(
       [
-        ...arrayOfSize(10).map(createMonk({ x: 1104, y: 912 })),
-        ...arrayOfSize(5).map(createMango({ x: 1104, y: 912 })),
-        ...arrayOfSize(30).map(createArcher({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createArcher({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMango({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMonk({ x: 1104, y: 912 })),
       ],
       ctx,
       new Vector2(700, 700),
@@ -30,9 +30,9 @@ export default function FormationDebugging() {
 
     drawFormation(
       [
-        ...arrayOfSize(10).map(createMonk({ x: 100, y: 100 })),
-        ...arrayOfSize(5).map(createMango({ x: 100, y: 100 })),
-        ...arrayOfSize(5).map(createArcher({ x: 100, y: 100 })),
+        ...arrayOfSize(6 * 1).map(createArcher({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMango({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMonk({ x: 1104, y: 912 })),
       ],
       ctx,
       new Vector2(300, 300),
@@ -40,9 +40,9 @@ export default function FormationDebugging() {
 
     drawFormation(
       [
-        ...arrayOfSize(50).map(createMonk({ x: 900, y: 100 })),
-        ...arrayOfSize(1).map(createMango({ x: 900, y: 100 })),
-        ...arrayOfSize(1).map(createArcher({ x: 900, y: 100 })),
+        ...arrayOfSize(1).map(createMonk({ x: 1500, y: 100 })),
+        ...arrayOfSize(8).map(createMango({ x: 1500, y: 100 })),
+        ...arrayOfSize(10).map(createArcher({ x: 1500, y: 100 })),
       ],
       ctx,
       new Vector2(900, 300),
@@ -95,7 +95,7 @@ const defaultUnit: Omit<UnitInstance, "unitType" | "id"> = {
 function createArcher(position: { x: number; y: number }): () => UnitInstance {
   return () => ({
     ...defaultUnit,
-    position: position as Vector2,
+    position: new Vector2(position.x, position.y),
     id: Math.floor(Math.random() * 1000000000),
     unitType: Unit.Archer,
   });
@@ -104,7 +104,7 @@ function createArcher(position: { x: number; y: number }): () => UnitInstance {
 function createMango(position: { x: number; y: number }): () => UnitInstance {
   return () => ({
     ...defaultUnit,
-    position: position as Vector2,
+    position: new Vector2(position.x, position.y),
     id: Math.floor(Math.random() * 1000000000),
     unitType: Unit.Mangonel,
   });
@@ -113,7 +113,7 @@ function createMango(position: { x: number; y: number }): () => UnitInstance {
 function createMonk(position: { x: number; y: number }): () => UnitInstance {
   return () => ({
     ...defaultUnit,
-    position: position as Vector2,
+    position: new Vector2(position.x, position.y),
     id: Math.floor(Math.random() * 1000000000),
     unitType: Unit.Monk,
   });

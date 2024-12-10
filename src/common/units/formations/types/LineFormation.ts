@@ -17,6 +17,7 @@ export default class LineFormation extends FormationBase {
     const destinationWithOffset = destination.clone();
 
     const unitVectorDirectionMoving = destination.clone().sub(startingPoint).normalize();
+    const cumulativeDepth = new Vector2();
 
     const idsToPositions: Record<number, Vector2> = {};
 
@@ -27,8 +28,8 @@ export default class LineFormation extends FormationBase {
       const groupUnitsPositions = groupUnits.map((unit) => unit.position);
 
       if (groupUnits.length === 1) {
-        idsToPositions[groupUnits[0].id] = destinationWithOffset.clone();
-        destinationWithOffset.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
+        cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
+        idsToPositions[groupUnits[0].id] = groupUnits[0].position.add(cumulativeDepth);
         return;
       }
 
@@ -37,20 +38,18 @@ export default class LineFormation extends FormationBase {
 
       const newPositions = formLines(
         groupUnitsPositions,
-        destinationWithOffset.clone(),
+        destination,
         rows,
         columns,
         startingPoint,
         this.distanceBetween,
       );
-      const rotated = translateAndRotate(
-        groupUnitsPositions,
-        newPositions,
-        destinationWithOffset.clone(),
-        startingPoint,
-      );
 
-      destinationWithOffset.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
+      cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
+
+      const rotated = translateAndRotate(groupUnitsPositions, newPositions, destination, startingPoint).map((rotated) =>
+        rotated.add(cumulativeDepth),
+      );
 
       rotated.forEach((position, i) => {
         idsToPositions[unitsWithId[i][1].id] = position;
