@@ -23,14 +23,12 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
     unitType: Unit.Monk,
     position: location,
   });
-  for (let x = 0; x < 5; x++) {
-    for (let y = 0; y < 5; y++) {
-      spawnUnit(state, {
-        forPlayer: newPlayerNumber,
-        unitType: Unit.Archer,
-        position: location,
-      });
-    }
+  for (let x = 0; x < 24; x++) {
+    spawnUnit(state, {
+      forPlayer: newPlayerNumber,
+      unitType: Unit.Archer,
+      position: location,
+    });
   }
 }
 

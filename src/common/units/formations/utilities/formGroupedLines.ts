@@ -23,21 +23,29 @@ export function formGroupedLines(units: UnitInstance[], destination: Vector2, di
     const groupUnitsPositions = groupUnits.map((unit) => unit.position);
 
     if (groupUnits.length === 1) {
+      idsToPositions[groupUnits[0].id] = destination.clone().add(cumulativeDepth);
       cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
-      idsToPositions[groupUnits[0].id] = destination.add(cumulativeDepth);
       return;
     }
 
     const rows = Math.ceil(positions.length / UNITS_PER_ROW);
     const columns = Math.ceil(positions.length / rows);
 
-    const newPositions = formLines(groupUnitsPositions, destination, rows, columns, startingPoint, distanceBetween);
+    const newPositions = formLines(
+      groupUnitsPositions,
+      destination.clone(),
+      rows,
+      columns,
+      startingPoint,
+      distanceBetween,
+    );
 
-    const rotated = translateAndRotate(groupUnitsPositions, newPositions, destination, startingPoint).map((rotated) =>
-      rotated
-        // Don't ask me to explain this.
-        .add(cumulativeDepth)
-        .add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)).divideScalar(2)),
+    const rotated = translateAndRotate(groupUnitsPositions, newPositions, destination.clone(), startingPoint).map(
+      (rotated) =>
+        rotated
+          // Don't ask me to explain this.
+          .add(cumulativeDepth)
+          .add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)).divideScalar(2)),
     );
     cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
 

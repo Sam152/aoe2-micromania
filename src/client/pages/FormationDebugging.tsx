@@ -40,9 +40,9 @@ export default function FormationDebugging() {
 
     drawFormation(
       [
-        ...arrayOfSize(6).map(createMonk({ x: 1500, y: 100 })),
-        ...arrayOfSize(2).map(createMango({ x: 1500, y: 100 })),
-        ...arrayOfSize(25).map(createArcher({ x: 1500, y: 100 })),
+        ...arrayOfSize(1).map(createMonk({ x: 1500, y: 100 })),
+        ...arrayOfSize(1).map(createMango({ x: 1500, y: 100 })),
+        ...arrayOfSize(24).map(createArcher({ x: 1500, y: 100 })),
       ],
       ctx,
       new Vector2(900, 300),
