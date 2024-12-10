@@ -21,7 +21,6 @@ export default class LineFormation extends FormationBase {
     const idsToPositions: Record<number, Vector2> = {};
 
     groupByTypes(units).forEach(([unitType, units]) => {
-      console.log(units);
       const unitsWithId = Object.entries(units);
 
       const groupUnits = unitsWithId.map((unitsWithId) => unitsWithId[1]) as UnitInstance[];
