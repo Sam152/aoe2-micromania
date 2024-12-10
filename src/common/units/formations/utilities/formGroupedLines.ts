@@ -23,8 +23,8 @@ export function formGroupedLines(units: UnitInstance[], destination: Vector2, di
     const groupUnitsPositions = groupUnits.map((unit) => unit.position);
 
     if (groupUnits.length === 1) {
-      idsToPositions[groupUnits[0].id] = destination.add(cumulativeDepth);
       cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
+      idsToPositions[groupUnits[0].id] = destination.add(cumulativeDepth);
       return;
     }
 
@@ -34,7 +34,10 @@ export function formGroupedLines(units: UnitInstance[], destination: Vector2, di
     const newPositions = formLines(groupUnitsPositions, destination, rows, columns, startingPoint, distanceBetween);
 
     const rotated = translateAndRotate(groupUnitsPositions, newPositions, destination, startingPoint).map((rotated) =>
-      rotated.add(cumulativeDepth),
+      rotated
+        // Don't ask me to explain this.
+        .add(cumulativeDepth)
+        .add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)).divideScalar(2)),
     );
     cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth(newPositions)));
 
