@@ -7,7 +7,7 @@ import { Vector2 } from "three/src/math/Vector2";
 import ActiveCommand from "../input/ActiveCommand";
 import soundManager from "../sounds/SoundManger";
 import soundManger from "../sounds/SoundManger";
-import { hasAttackGroundUnitInList } from "../units/hasAttackGroundUnitInList";
+import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround";
 
 function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;
@@ -65,7 +65,7 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
   if (
     action.n === "HOTKEY_ATTACK_GROUND" &&
     state.selectedUnits.length > 0 &&
-    hasAttackGroundUnitInList(state.selectedUnits, gameState)
+    selectionShouldAttackGround(state.selectedUnits, gameState)
   ) {
     state.activeCommand = ActiveCommand.AttackGround;
   }
@@ -157,16 +157,16 @@ function clientStateTransmitter(
     clientState.selectedUnits.length > 0 &&
     clientState.activeCommand === ActiveCommand.Default
   ) {
-    const attacking = clientState.unitHitBoxes
+    const targeting = clientState.unitHitBoxes
       .filter(({ unit }) => unit.ownedByPlayer !== playingAs)
       .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
-    if (attacking) {
+    if (targeting) {
       soundManager.attacking(clientState);
       gameDispatcher({
         n: "ATTACK",
         units: clientState.selectedUnits,
-        target: attacking.unit.id,
+        target: targeting.unit.id,
       });
     } else {
       soundManager.moving(clientState);
