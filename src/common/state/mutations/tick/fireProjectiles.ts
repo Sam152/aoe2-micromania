@@ -23,7 +23,7 @@ export default function fireProjectiles(state: GameState) {
     )
     .forEach((unit) => {
       const targetingPosition = hasValue(unit.targetingUnit)
-        ? fireUnits.find(({ id }) => id === unit.targetingUnit).position
+        ? state.units.find(({ id }) => id === unit.targetingUnit).position
         : unit.targetingPosition;
 
       if (inMinimumRange(unit, targetingPosition)) {
