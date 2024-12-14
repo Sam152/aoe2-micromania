@@ -138,27 +138,31 @@ export default class CanvasRenderer implements RendererInterface {
       const ticksOfJourneyComplete = gameState.ticks - projectile.startingTick + this.fractionOfTickRendered;
       const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
 
-      const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
-      const position = getArrowPosition(projectile, percentageComplete);
-      const angle = position.clone().sub(positionPrevious).angle();
-
-      let drawAt: Vector2[] = [];
       if (projectile.type === ProjectileType.Rock) {
-        drawAt = [
-          position,
-          position.clone().add(new Vector2(20, 15)),
-          position.clone().add(new Vector2(-14, 12)),
-          position.clone().add(new Vector2(-22, -11)),
-          position.clone().add(new Vector2(-22, -11)),
-          position.clone().add(new Vector2(-13, 30)),
-          position.clone().add(new Vector2(30, 30)),
-          position.clone().add(new Vector2(15, 15)),
-        ];
-      } else {
-        drawAt = [position];
-      }
+        const position = getArrowPosition(projectile, percentageComplete);
 
-      drawAt.forEach((position) =>
+        [
+          position,
+          position.clone().add(new Vector2(-18, 0)),
+          position.clone().add(new Vector2(-18, -18)),
+          position.clone().add(new Vector2(-18, 18)),
+
+          position.clone().add(new Vector2(18, 0)),
+          position.clone().add(new Vector2(18, -18)),
+          position.clone().add(new Vector2(18, 18)),
+
+          position.clone().add(new Vector2(0, -18)),
+          position.clone().add(new Vector2(0, 18)),
+        ].map((position) => {
+          slpManager
+            .getAsset(projectileInfo.asset)
+            .drawFrame(this.context, position, projectileInfo.frames[projectile.id % projectileInfo.frames.length]);
+        });
+      } else {
+        const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
+        const position = getArrowPosition(projectile, percentageComplete);
+        const angle = position.clone().sub(positionPrevious).angle();
+
         slpManager
           .getAsset(projectileInfo.asset)
           .drawFrame(
@@ -166,8 +170,8 @@ export default class CanvasRenderer implements RendererInterface {
             position,
             projectileInfo.frames[projectile.id % projectileInfo.frames.length],
             angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
-          ),
-      );
+          );
+      }
     });
   }
 

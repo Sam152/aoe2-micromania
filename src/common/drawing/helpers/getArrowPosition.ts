@@ -1,7 +1,10 @@
 import { ProjectileInstance } from "../../../types";
 import { Vector2 } from "three/src/math/Vector2";
 
-export default function getArrowPosition(projectile: ProjectileInstance, percentageComplete: number): Vector2 {
+export default function getArrowPosition(
+  projectile: Pick<ProjectileInstance, "pathVector" | "startingPoint">,
+  percentageComplete: number,
+): Vector2 {
   const length = projectile.pathVector.length();
   const lengthComplete = percentageComplete * length;
 
