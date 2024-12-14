@@ -17,6 +17,7 @@ import DebugRenderer from "./DebugRenderer";
 import slpManager from "./SlpManager";
 import selectionCircle from "./helpers/selectionCircle";
 import ProjectileType from "../units/ProjectileType";
+import { rockPositionFactory } from "./helpers/rockPosition";
 
 export default class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -139,20 +140,29 @@ export default class CanvasRenderer implements RendererInterface {
       const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
 
       if (projectile.type === ProjectileType.Rock) {
-        const position = getArrowPosition(projectile, percentageComplete);
-
+        const rockPosition = rockPositionFactory(projectile, percentageComplete);
         [
-          position,
-          position.clone().add(new Vector2(-18, 0)),
-          position.clone().add(new Vector2(-18, -18)),
-          position.clone().add(new Vector2(-18, 18)),
+          rockPosition(0, 0),
 
-          position.clone().add(new Vector2(18, 0)),
-          position.clone().add(new Vector2(18, -18)),
-          position.clone().add(new Vector2(18, 18)),
+          rockPosition(-18, 0),
+          rockPosition(-18, -17),
+          rockPosition(-18, 15),
+          rockPosition(-20, 11),
 
-          position.clone().add(new Vector2(0, -18)),
-          position.clone().add(new Vector2(0, 18)),
+          rockPosition(-14, 19),
+          // rockPosition(-4, 14),
+
+          rockPosition(20, 0),
+          rockPosition(14, -15),
+          rockPosition(18, 19),
+
+          rockPosition(13, 20),
+
+          rockPosition(0, -16),
+          rockPosition(0, 19),
+
+          rockPosition(11, 15),
+          // rockPosition(3, 13),
         ].map((position) => {
           slpManager
             .getAsset(projectileInfo.asset)
