@@ -16,6 +16,7 @@ import unitsInGameState from "../util/unitsInGameState";
 import DebugRenderer from "./DebugRenderer";
 import slpManager from "./SlpManager";
 import selectionCircle from "./helpers/selectionCircle";
+import ProjectileType from "../units/ProjectileType";
 
 export default class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -147,7 +148,7 @@ export default class CanvasRenderer implements RendererInterface {
           this.context,
           position,
           projectileInfo.frames[projectile.id % projectileInfo.frames.length],
-          angle + Math.PI * 1.5,
+          angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
         );
     });
   }
