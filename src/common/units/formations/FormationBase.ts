@@ -8,6 +8,7 @@ export default abstract class FormationBase implements FormationInterface {
       return [];
     }
     if (units.length === 1) {
+      units[0].groupMovementSpeed = undefined;
       return [destination.clone()];
     }
 
