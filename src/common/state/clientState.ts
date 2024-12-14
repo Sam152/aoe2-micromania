@@ -7,6 +7,9 @@ import { Vector2 } from "three/src/math/Vector2";
 import ActiveCommand from "../input/ActiveCommand";
 import soundManager from "../sounds/SoundManger";
 import soundManger from "../sounds/SoundManger";
+import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround";
+import { unitsById } from "../units/unitsById";
+import Unit from "../units/Unit";
 
 function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;
@@ -63,7 +66,8 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
   // Allow all unit classes to attack ground, because it's more fun.
   if (
     action.n === "HOTKEY_ATTACK_GROUND" &&
-    state.selectedUnits.length > 0 /* && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)*/
+    state.selectedUnits.length > 0 &&
+    selectionShouldAttackGround(state.selectedUnits, gameState)
   ) {
     state.activeCommand = ActiveCommand.AttackGround;
   }
@@ -155,17 +159,36 @@ function clientStateTransmitter(
     clientState.selectedUnits.length > 0 &&
     clientState.activeCommand === ActiveCommand.Default
   ) {
-    const attacking = clientState.unitHitBoxes
+    const targeting = clientState.unitHitBoxes
       .filter(({ unit }) => unit.ownedByPlayer !== playingAs)
       .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
-    if (attacking) {
-      soundManager.attacking(clientState);
-      gameDispatcher({
-        n: "ATTACK",
-        units: clientState.selectedUnits,
-        target: attacking.unit.id,
+    if (targeting) {
+      const byId = unitsById(gameState);
+      const attackingUnits = clientState.selectedUnits.filter((selectedUnit) => {
+        const unit = byId[selectedUnit];
+        return unit && unit.unitType !== Unit.Monk;
       });
+      if (attackingUnits.length > 0) {
+        soundManager.attacking(clientState);
+        gameDispatcher({
+          n: "ATTACK",
+          units: attackingUnits,
+          target: targeting.unit.id,
+        });
+      }
+
+      const convertingUnits = clientState.selectedUnits.filter((selectedUnit) => {
+        const unit = byId[selectedUnit];
+        return unit && unit.unitType === Unit.Monk;
+      });
+      if (convertingUnits.length > 0) {
+        gameDispatcher({
+          n: "START_CONVERSION",
+          units: convertingUnits,
+          target: targeting.unit.id,
+        });
+      }
     } else {
       soundManager.moving(clientState);
       gameDispatcher({

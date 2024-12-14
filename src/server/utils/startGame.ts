@@ -27,7 +27,9 @@ export function startGame(io: Server): {
     registerPlayer: (player: Player) => {
       // Connect the actions of the player to the game state.
       player.socket.on(TransportEvent.GameStateActionDispatch, (action: GameStateAction) => {
-        if (action.n === "CLIENT_LOADED") {
+        if (action.n === "SPECTATE_CLIENT_LOADED") {
+          player.socket.emit(TransportEvent.WholeGameStateTransmit, state.getGameState());
+        } else if (action.n === "CLIENT_LOADED") {
           // Transmit the whole game state after the client has loaded.
           player.socket.emit(TransportEvent.WholeGameStateTransmit, state.getGameState());
 

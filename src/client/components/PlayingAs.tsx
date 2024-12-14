@@ -11,7 +11,7 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
 
     return (
       <Label pr={6}>
-        Queued {numberToOrdinal(positionInQueue)} of {connectedState.queuedPlayers.length}
+        Queued {positionInQueue} of {connectedState.queuedPlayers.length}
       </Label>
     );
   }

@@ -48,6 +48,9 @@ export interface UnitInstance {
   position: Vector2;
   formation: FormationType;
 
+  // The speed of the slowest unit in a group.
+  groupMovementSpeed?: number;
+
   hitPoints: number;
 }
 
@@ -118,6 +121,9 @@ type GameStateAction =
       n: "CLIENT_LOADED";
     }
   | {
+      n: "SPECTATE_CLIENT_LOADED";
+    }
+  | {
       n: "CYCLE_PLAYER";
       playerId: string;
       playerNumber: number;
@@ -157,6 +163,11 @@ type GameStateAction =
     }
   | {
       n: "ATTACK";
+      units: UnitId[];
+      target: number;
+    }
+  | {
+      n: "START_CONVERSION";
       units: UnitId[];
       target: number;
     }
@@ -374,7 +385,7 @@ export interface Rectangle {
 }
 
 export interface FormationInterface {
-  form(positions: Array<Vector2>, destination: Vector2): Array<Vector2>;
+  form(positions: UnitInstance[], destination: Vector2): Array<Vector2>;
 }
 
 export interface ReplayIndexItem {

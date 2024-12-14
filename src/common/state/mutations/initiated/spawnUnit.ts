@@ -2,7 +2,7 @@ import unitMetadataFactory from "../../../units/unitMetadataFactory";
 import FormationType from "../../../units/formations/FormationType";
 import UnitState from "../../../units/UnitState";
 import CompassDirection from "../../../units/CompassDirection";
-import { GameState, PlayerId } from "../../../../types";
+import { GameState, PlayerId, UnitInstance } from "../../../../types";
 import { Vector2 } from "three/src/math/Vector2";
 import Unit from "../../../units/Unit";
 
@@ -14,9 +14,9 @@ export default function spawnUnit(
     forPlayer: PlayerId;
     direction?: CompassDirection;
   },
-) {
+): UnitInstance {
   const stats = unitMetadataFactory.getUnit(action.unitType);
-  state.units.push({
+  const unit: UnitInstance = {
     id: state.idAt++,
     position: action.position.clone(),
     waypoints: [],
@@ -30,5 +30,7 @@ export default function spawnUnit(
     unitStateStartedAt: state.ticks,
     direction: action.direction ?? CompassDirection.StartD,
     hitPoints: stats.hitPoints,
-  });
+  };
+  state.units.push(unit);
+  return unit;
 }

@@ -8,7 +8,7 @@ export default function calculateUnitMovementPerTick(unit: UnitInstance): Vector
     return unit.movingDirection
       .clone()
       .multiplyScalar(
-        unitMetadataFactory.getUnit(unit.unitType).movementRate *
+        (unit.groupMovementSpeed ?? unitMetadataFactory.getUnit(unit.unitType).movementRate) *
           config.unitSpeedFactor *
           (unit.reformingSpeedFactor || 1),
       );

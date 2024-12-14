@@ -19,7 +19,7 @@ export default class RenderLoopManager {
     this.running = false;
   }
 
-  start() {
+  start(startAs: "CLIENT" | "SPECTATOR") {
     this.running = true;
     this.stateManager.init();
 
@@ -30,8 +30,9 @@ export default class RenderLoopManager {
 
     this.renderer.bootUp().then(() => {
       this.stateManager.dispatchGame({
-        n: "CLIENT_LOADED",
+        n: startAs === "CLIENT" ? "CLIENT_LOADED" : "SPECTATE_CLIENT_LOADED",
       });
+      this.fixateCameraOnMiddleOfMap(this.stateManager.getGameState().mapSize);
 
       this.render();
     });
@@ -47,7 +48,7 @@ export default class RenderLoopManager {
         // if (state.activePlayers[clientId]) {
         //   this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
         // } else {
-        this.fixateCameraOnMiddleOfMap(state.mapSize);
+        // this.fixateCameraOnMiddleOfMap(state.mapSize);
         // }
       }
     });

@@ -1,9 +1,9 @@
 import Unit from "./Unit";
 import UnitState from "./UnitState";
-import {UnitStats} from "../../types";
+import { UnitStats } from "../../types";
 import AnimationStyle from "./AnimationStyle";
 import ProjectileType from "./ProjectileType";
-import {Vector2} from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2";
 import DamageType from "./DamageType";
 
 /**
@@ -68,21 +68,23 @@ const unitDefinitions: {
     },
   },
   [Unit.Monk]: {
-    firesProjectileType: ProjectileType.Arrow,
-    attackFrameDelay: 0.35,
-    reloadTime: 2,
-    movementRate: 0.7,
+    firesProjectileType: ProjectileType.Conversion,
+    // These don't apply to Monks.
+    attackFrameDelay: 0,
+    attackDamage: 0,
+    reloadTime: 0,
+    firingAnchor: new Vector2(14, -24),
+
+    attackMinRange: 0,
+    movementRate: 0.55,
     hitPoints: 30,
     attackRange: 9,
-    attackMinRange: 0,
-    attackDamage: 4,
     damageType: DamageType.Pierce,
     armor: {
       [DamageType.Pierce]: 0,
       [DamageType.Melee]: 0,
     },
     areaOfEffect: null,
-    firingAnchor: new Vector2(14, -24),
     selectionRadius: 15,
     hitBox: 10,
     hitPointsBarAnchor: -49,
