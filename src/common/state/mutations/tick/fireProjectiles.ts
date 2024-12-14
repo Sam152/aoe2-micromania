@@ -53,7 +53,7 @@ export default function fireProjectiles(state: GameState) {
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
       const idleFrame = ticksForAnimation(unitData.animations[UnitState.Firing].animationDuration);
       const targetingPosition = hasValue(unit.targetingUnit)
-        ? fireUnits.find(({ id }) => id === unit.targetingUnit).position
+        ? state.units.find(({ id }) => id === unit.targetingUnit).position
         : unit.targetingPosition;
 
       unit.direction = compassDirectionCalculator.getDirection(unit.position, targetingPosition);
