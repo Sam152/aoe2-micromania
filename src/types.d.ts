@@ -167,6 +167,11 @@ type GameStateAction =
       target: number;
     }
   | {
+      n: "START_CONVERSION";
+      units: UnitId[];
+      target: number;
+    }
+  | {
       n: "ATTACK_GROUND";
       units: UnitId[];
       position: Vector2;

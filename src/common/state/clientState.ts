@@ -8,6 +8,8 @@ import ActiveCommand from "../input/ActiveCommand";
 import soundManager from "../sounds/SoundManger";
 import soundManger from "../sounds/SoundManger";
 import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround";
+import { unitsById } from "../units/unitsById";
+import Unit from "../units/Unit";
 
 function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;
@@ -162,12 +164,31 @@ function clientStateTransmitter(
       .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, clientState.mousePosition));
 
     if (targeting) {
-      soundManager.attacking(clientState);
-      gameDispatcher({
-        n: "ATTACK",
-        units: clientState.selectedUnits,
-        target: targeting.unit.id,
+      const byId = unitsById(gameState);
+      const attackingUnits = clientState.selectedUnits.filter((selectedUnit) => {
+        const unit = byId[selectedUnit];
+        return unit && unit.unitType !== Unit.Monk;
       });
+      if (attackingUnits.length > 0) {
+        soundManager.attacking(clientState);
+        gameDispatcher({
+          n: "ATTACK",
+          units: attackingUnits,
+          target: targeting.unit.id,
+        });
+      }
+
+      const convertingUnits = clientState.selectedUnits.filter((selectedUnit) => {
+        const unit = byId[selectedUnit];
+        return unit && unit.unitType === Unit.Monk;
+      });
+      if (convertingUnits.length > 0) {
+        gameDispatcher({
+          n: "START_CONVERSION",
+          units: convertingUnits,
+          target: targeting.unit.id,
+        });
+      }
     } else {
       soundManager.moving(clientState);
       gameDispatcher({

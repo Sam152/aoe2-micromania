@@ -30,6 +30,7 @@ Tasks
 - [x] Better mango volleys
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
+- [ ] Selection panel
 
 # Interface
 
