@@ -26,6 +26,7 @@ Tasks
 - [ ] Monks
 - [ ] Monk speed
 - [ ] Monk convert icon
+- [ ] Patrolled monks
 - [x] Spawn formation
 - [x] Better mango volleys
 - [x] Replace default sand terrain with less jank switch
