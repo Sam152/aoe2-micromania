@@ -19,7 +19,7 @@ export default class RenderLoopManager {
     this.running = false;
   }
 
-  start() {
+  start(startAs: "CLIENT" | "SPECTATOR") {
     this.running = true;
     this.stateManager.init();
 
@@ -30,7 +30,7 @@ export default class RenderLoopManager {
 
     this.renderer.bootUp().then(() => {
       this.stateManager.dispatchGame({
-        n: "CLIENT_LOADED",
+        n: startAs === "CLIENT" ? "CLIENT_LOADED" : "SPECTATE_CLIENT_LOADED",
       });
 
       this.render();

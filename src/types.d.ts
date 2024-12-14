@@ -121,6 +121,9 @@ type GameStateAction =
       n: "CLIENT_LOADED";
     }
   | {
+      n: "SPECTATE_CLIENT_LOADED";
+    }
+  | {
       n: "CYCLE_PLAYER";
       playerId: string;
       playerNumber: number;

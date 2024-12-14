@@ -9,6 +9,7 @@ import { GameScreen } from "./pages/GameScreen";
 import Servers from "./pages/Servers";
 import { ConnectedStateProvider } from "./hooks/useConnectedState";
 import FormationDebugging from "./pages/FormationDebugging";
+import { SpectateGame } from "./pages/SpectateGame";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <TopBar />
           <Routes>
             <Route path="/" element={<GameScreen />} />
+            <Route path="/spectate" element={<SpectateGame />} />
             <Route path="/hotkeys" element={<Hotkeys />} />
             <Route path="/servers" element={<Servers />} />
             <Route path="/formations" element={<FormationDebugging />} />

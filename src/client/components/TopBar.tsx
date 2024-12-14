@@ -28,6 +28,9 @@ export default function TopBar() {
           <Link {...linkProps} to="/">
             Play
           </Link>
+          <Link {...linkProps} to="/spectate">
+            Spectate
+          </Link>
           <Link {...linkProps} to="/hotkeys">
             Hotkeys
           </Link>
