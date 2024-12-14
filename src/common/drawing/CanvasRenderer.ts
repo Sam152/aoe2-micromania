@@ -142,14 +142,32 @@ export default class CanvasRenderer implements RendererInterface {
       const position = getArrowPosition(projectile, percentageComplete);
       const angle = position.clone().sub(positionPrevious).angle();
 
-      slpManager
-        .getAsset(projectileInfo.asset)
-        .drawFrame(
-          this.context,
+      let drawAt: Vector2[] = [];
+      if (projectile.type === ProjectileType.Rock) {
+        drawAt = [
           position,
-          projectileInfo.frames[projectile.id % projectileInfo.frames.length],
-          angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
-        );
+          position.clone().add(new Vector2(20, 15)),
+          position.clone().add(new Vector2(-14, 12)),
+          position.clone().add(new Vector2(-22, -11)),
+          position.clone().add(new Vector2(-22, -11)),
+          position.clone().add(new Vector2(-13, 30)),
+          position.clone().add(new Vector2(30, 30)),
+          position.clone().add(new Vector2(15, 15)),
+        ];
+      } else {
+        drawAt = [position];
+      }
+
+      drawAt.forEach((position) =>
+        slpManager
+          .getAsset(projectileInfo.asset)
+          .drawFrame(
+            this.context,
+            position,
+            projectileInfo.frames[projectile.id % projectileInfo.frames.length],
+            angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
+          ),
+      );
     });
   }
 
