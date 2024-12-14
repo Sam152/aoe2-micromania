@@ -1,13 +1,18 @@
 import ProjectileType from "./ProjectileType";
 
-const projectileMetadata: {
-  [key in ProjectileType]: {
+type PartialRecord<K extends keyof any, T> = {
+  [P in K]?: T;
+};
+
+const projectileMetadata: PartialRecord<
+  ProjectileType,
+  {
     speed: number;
     asset: string;
     frames: Array<number>;
     damageIsAreaOfEffect: boolean;
-  };
-} = {
+  }
+> = {
   [ProjectileType.Arrow]: {
     speed: 30,
     asset: "projectiles/p_arrow_x1",
