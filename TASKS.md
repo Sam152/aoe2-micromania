@@ -23,9 +23,8 @@ Tasks
   - [x] Slow units to slowest in group
 - [ ] Knockout reward
 - [ ] Monks
-- [ ] Spawn formation
-- [ ] Slower mango volleys
-- [ ] Formations move at speed of slowest
+- [x] Spawn formation
+- [ ] Better mango volleys
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
 
