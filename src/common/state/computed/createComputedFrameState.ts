@@ -1,10 +1,12 @@
 import { Quadtree } from "d3-quadtree";
 import { GameState, UnitInstance } from "../../../types";
 import { createUnitQuadtree } from "../../util/buildQuadTree";
+import Grid from "../../terrain/Grid";
 
 export type ComputedFrameState = {
   quadTreeAllUnits: Quadtree<UnitInstance>;
   playerUnitQuadTrees: Record<number, Quadtree<UnitInstance>>;
+  grid: Grid;
 };
 
 export function createComputedFrameState(state: GameState): ComputedFrameState {
@@ -21,5 +23,6 @@ export function createComputedFrameState(state: GameState): ComputedFrameState {
       },
       {} as Record<number, Quadtree<UnitInstance>>,
     ),
+    grid: new Grid(state.mapSize),
   };
 }

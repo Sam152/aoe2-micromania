@@ -1,35 +1,54 @@
 import Grid from "../../../terrain/Grid";
 import spawnUnit from "../initiated/spawnUnit";
 import Unit from "../../../units/Unit";
-import { GameState } from "../../../../types";
+import { GameState, UnitInstance } from "../../../../types";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
 import { Vector2 } from "three/src/math/Vector2";
+import formationManager from "../../../units/formations/FormationManager";
+import FormationType from "../../../units/formations/FormationType";
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
   const location = getBestSpawnLocation(state, computed);
+  const facingMiddle = location.clone().sub(computed.grid.middleOfGrid()).normalize();
+  const buffered = location.clone().sub(facingMiddle.multiplyScalar(5));
 
-  spawnUnit(state, {
-    forPlayer: newPlayerNumber,
-    unitType: Unit.Mangonel,
-    position: location,
-  });
-  spawnUnit(state, {
-    forPlayer: newPlayerNumber,
-    unitType: Unit.Monk,
-    position: location,
-  });
-  spawnUnit(state, {
-    forPlayer: newPlayerNumber,
-    unitType: Unit.Monk,
-    position: location,
-  });
-  for (let x = 0; x < 24; x++) {
+  const units: UnitInstance[] = [];
+
+  units.push(
     spawnUnit(state, {
       forPlayer: newPlayerNumber,
-      unitType: Unit.Archer,
+      unitType: Unit.Mangonel,
       position: location,
-    });
+    }),
+  );
+  units.push(
+    spawnUnit(state, {
+      forPlayer: newPlayerNumber,
+      unitType: Unit.Monk,
+      position: location,
+    }),
+  );
+  units.push(
+    spawnUnit(state, {
+      forPlayer: newPlayerNumber,
+      unitType: Unit.Monk,
+      position: location,
+    }),
+  );
+  for (let x = 0; x < 24; x++) {
+    units.push(
+      spawnUnit(state, {
+        forPlayer: newPlayerNumber,
+        unitType: Unit.Archer,
+        position: location,
+      }),
+    );
   }
+
+  formationManager
+    .get(FormationType.Line)
+    .form(units, buffered)
+    .map((position, idx) => (units[idx].position = position));
 }
 
 export function getBestSpawnLocation(state: GameState, computed: ComputedFrameState): Vector2 {
@@ -59,8 +78,9 @@ export function getBestSpawnLocation(state: GameState, computed: ComputedFrameSt
 }
 
 export function getStartingSpawnCandidates(state: GameState): Vector2[] {
-  const buffer = 7;
+  const buffer = 4;
   const grid = new Grid(state.mapSize);
+  // Clock face positions, see debug renderer.
   return [
     { x: buffer, y: buffer },
     { x: Math.ceil(state.mapSize / 2), y: buffer },
