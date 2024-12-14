@@ -25,7 +25,7 @@ Tasks
 - [ ] Knockout reward
 - [ ] Monks
 - [x] Spawn formation
-- [ ] Better mango volleys
+- [x] Better mango volleys
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
 
