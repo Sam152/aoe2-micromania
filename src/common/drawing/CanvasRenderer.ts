@@ -142,27 +142,20 @@ export default class CanvasRenderer implements RendererInterface {
       if (projectile.type === ProjectileType.Rock) {
         const rockPosition = rockPositionFactory(projectile, percentageComplete);
         [
-          rockPosition(0, 0),
+          rockPosition(1, -2),
 
-          rockPosition(-18, 0),
+          rockPosition(-18, -1),
           rockPosition(-18, -17),
           rockPosition(-18, 15),
-          rockPosition(-20, 11),
+          rockPosition(-5, 5),
 
-          rockPosition(-14, 19),
-          // rockPosition(-4, 14),
+          rockPosition(18, 2),
+          rockPosition(16, -15),
+          rockPosition(17, 19),
+          rockPosition(12, 4),
 
-          rockPosition(20, 0),
-          rockPosition(14, -15),
-          rockPosition(18, 19),
-
-          rockPosition(13, 20),
-
-          rockPosition(0, -16),
-          rockPosition(0, 19),
-
-          rockPosition(11, 15),
-          // rockPosition(3, 13),
+          rockPosition(3, -14),
+          rockPosition(-1, 17),
         ].map((position) => {
           slpManager
             .getAsset(projectileInfo.asset)
