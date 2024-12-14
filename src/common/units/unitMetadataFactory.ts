@@ -1,9 +1,9 @@
 import Unit from "./Unit";
 import UnitState from "./UnitState";
-import {UnitStats} from "../../types";
+import { UnitStats } from "../../types";
 import AnimationStyle from "./AnimationStyle";
 import ProjectileType from "./ProjectileType";
-import {Vector2} from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2";
 import DamageType from "./DamageType";
 
 /**
@@ -71,7 +71,7 @@ const unitDefinitions: {
     firesProjectileType: ProjectileType.Arrow,
     attackFrameDelay: 0.35,
     reloadTime: 2,
-    movementRate: 0.7,
+    movementRate: 0.55,
     hitPoints: 30,
     attackRange: 9,
     attackMinRange: 0,
