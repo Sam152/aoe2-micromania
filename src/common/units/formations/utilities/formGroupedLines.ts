@@ -32,7 +32,7 @@ export function formGroupedLines(units: UnitInstance[], destination: Vector2, di
     const groupUnitsPositions = groupUnits.map((unit) => unit.position);
 
     if (groupUnits.length === 1) {
-      idsToPositions[groupUnits[0].id] = destination.clone().add(cumulativeDepth);
+      idsToPositions[groupUnits[0].id] = destination.clone().add(cumulativeDepth.clone().multiplyScalar(1.5));
       cumulativeDepth.add(unitVectorDirectionMoving.clone().multiplyScalar(formationDepth()));
       return;
     }
