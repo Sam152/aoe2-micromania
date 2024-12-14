@@ -6,6 +6,7 @@ import { ComputedFrameState } from "../../computed/createComputedFrameState";
 import { Vector2 } from "three/src/math/Vector2";
 import formationManager from "../../../units/formations/FormationManager";
 import FormationType from "../../../units/formations/FormationType";
+import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
   const location = getBestSpawnLocation(state, computed);
@@ -44,11 +45,13 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
       }),
     );
   }
-
   formationManager
     .get(FormationType.Line)
     .form(units, buffered)
-    .map((position, idx) => (units[idx].position = position));
+    .map((position, idx) => {
+      units[idx].position = position;
+      units[idx].direction = compassDirectionCalculator.getDirection(position, computed.grid.middleOfGrid());
+    });
 }
 
 export function getBestSpawnLocation(state: GameState, computed: ComputedFrameState): Vector2 {
