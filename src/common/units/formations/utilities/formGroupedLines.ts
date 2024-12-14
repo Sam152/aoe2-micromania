@@ -16,7 +16,16 @@ export function formGroupedLines(units: UnitInstance[], destination: Vector2, di
 
   const idsToPositions: Record<number, Vector2> = {};
 
-  groupByTypes(units).forEach(([unitType, units]) => {
+  const grouped = groupByTypes(units);
+
+  if (grouped.length === 1) {
+    const rows = Math.ceil(positions.length / UNITS_PER_ROW);
+    const columns = Math.ceil(positions.length / rows);
+    const newPositions = formLines(positions, destination, rows, columns, startingPoint, distanceBetween);
+    return translateAndRotate(positions, newPositions, destination, startingPoint);
+  }
+
+  grouped.forEach(([unitType, units]) => {
     const unitsWithId = Object.entries(units);
 
     const groupUnits = unitsWithId.map((unitsWithId) => unitsWithId[1]) as UnitInstance[];
