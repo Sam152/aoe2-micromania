@@ -18,8 +18,8 @@ Tasks
 
 - [x] Auto attack only works for two players, see `autoAttack`
 - [x] Formations with multiple types of units
-  - [ ] Translate whole group into middle of destination
-  - [ ] Slow units to slowest in group
+  - [x] Translate whole group into middle of destination
+  - [x] Slow units to slowest in group
 - [ ] Knockout reward
 - [ ] Monks
 - [ ] Spawn formation
