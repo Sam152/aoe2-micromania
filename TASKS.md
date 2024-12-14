@@ -33,7 +33,7 @@ Tasks
 # Interface
 
 - [ ] GH/Discord links
-- [ ] Spectate mode
+- [x] Spectate mode
 - [x] "Playing as" top banner
 - [x] Main thread blocking perf for graphics render
 - [x] Loading progress
