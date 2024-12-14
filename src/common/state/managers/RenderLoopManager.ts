@@ -32,6 +32,7 @@ export default class RenderLoopManager {
       this.stateManager.dispatchGame({
         n: startAs === "CLIENT" ? "CLIENT_LOADED" : "SPECTATE_CLIENT_LOADED",
       });
+      this.fixateCameraOnMiddleOfMap(this.stateManager.getGameState().mapSize);
 
       this.render();
     });
@@ -47,7 +48,7 @@ export default class RenderLoopManager {
         // if (state.activePlayers[clientId]) {
         //   this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
         // } else {
-        this.fixateCameraOnMiddleOfMap(state.mapSize);
+        // this.fixateCameraOnMiddleOfMap(state.mapSize);
         // }
       }
     });
