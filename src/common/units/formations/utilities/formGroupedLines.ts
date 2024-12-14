@@ -63,5 +63,7 @@ export function formGroupedLines(units: UnitInstance[], destination: Vector2, di
     });
   });
 
-  return units.map((unit) => idsToPositions[unit.id]);
+  return units.map((unit) =>
+    idsToPositions[unit.id].sub(unitVectorDirectionMoving.clone().multiplyScalar(cumulativeDepth.length() / 2)),
+  );
 }
