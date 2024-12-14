@@ -47,6 +47,8 @@ export default function FormationDebugging() {
       ctx,
       new Vector2(900, 300),
     );
+
+    drawFormation([...arrayOfSize(24).map(createArcher({ x: 1500, y: 100 }))], ctx, new Vector2(1200, 500));
   }, []);
 
   return (
@@ -62,7 +64,8 @@ function drawFormation(units: UnitInstance[], ctx: CanvasRenderingContext2D, des
   const positions = line.form(units, destination);
 
   const start = averageVector(units.map((unit) => unit.position));
-  circle(ctx, start, 5, "orange");
+  circle(ctx, start, 3, "orange");
+  circle(ctx, destination, 7, "orange");
 
   positions.map((position, i) => {
     const unit = units[i];
