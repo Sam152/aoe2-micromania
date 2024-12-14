@@ -7,6 +7,7 @@ import { Vector2 } from "three/src/math/Vector2";
 import ActiveCommand from "../input/ActiveCommand";
 import soundManager from "../sounds/SoundManger";
 import soundManger from "../sounds/SoundManger";
+import { hasAttackGroundUnitInList } from "../units/hasAttackGroundUnitInList";
 
 function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;
@@ -63,7 +64,8 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
   // Allow all unit classes to attack ground, because it's more fun.
   if (
     action.n === "HOTKEY_ATTACK_GROUND" &&
-    state.selectedUnits.length > 0 /* && state.selectedUnits.every(({unitType}) => unitType === Unit.Mangonel)*/
+    state.selectedUnits.length > 0 &&
+    hasAttackGroundUnitInList(state.selectedUnits, gameState)
   ) {
     state.activeCommand = ActiveCommand.AttackGround;
   }
