@@ -48,6 +48,9 @@ export interface UnitInstance {
   position: Vector2;
   formation: FormationType;
 
+  // The speed of the slowest unit in a group.
+  groupMovementSpeed?: number;
+
   hitPoints: number;
 }
 
