@@ -14,6 +14,7 @@ Tasks
 - [ ] Logging/observability
 - [ ] Persisting events
 - [ ] Better CDN caching for static assets
+- [ ] Validated dispatch
 
 ## Gameplay
 
