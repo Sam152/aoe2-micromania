@@ -113,6 +113,7 @@ export class MicroManiaServer extends Construct {
    */
   buildInstanceUserData(): UserData {
     const data = ec2.UserData.forLinux();
+    const logsFlags = `--log-driver=awslogs --log-opt awslogs-region=${this.props.region} --log-opt awslogs-group=microManiaServer --log-opt awslogs-create-group=true`;
     data.addCommands(
       `yum install -y docker`,
       `systemctl start docker`,
@@ -120,7 +121,7 @@ export class MicroManiaServer extends Construct {
       `docker stop $(docker ps -a -q)`,
       `docker system prune -a -f`,
       `docker pull ${this.props.container.imageUri}`,
-      `docker container run -d -e PORT=80 --publish 80:80 --restart always ${this.props.container.imageUri}`,
+      `docker container run ${logsFlags} -d -e PORT=80 --publish 80:80 --restart always ${this.props.container.imageUri}`,
     );
     return data;
   }
