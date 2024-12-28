@@ -61,7 +61,7 @@ export default function fireProjectiles(state: GameState) {
       if (state.ticks - unit.unitStateStartedAt === firingFrame) {
         soundManager.projectileLaunched(state, unitData.firesProjectileType);
 
-        const targetingUnit = fireUnits.find(({ id }) => id === unit.targetingUnit);
+        const targetingUnit = state.units.find(({ id }) => id === unit.targetingUnit);
         const distance = unit.position.distanceTo(targetingPosition);
         const startingPoint = unit.position.clone().add(unitData.firingAnchor);
 
