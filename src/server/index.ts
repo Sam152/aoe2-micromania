@@ -4,6 +4,9 @@ import { Server } from "socket.io";
 import Player from "./rooms/Player";
 import * as fs from "fs";
 import { startGame } from "./utils/startGame";
+import { logErrors } from "./utils/logErrors";
+
+logErrors();
 
 const httpServer =
   process.env.KEY_FILE && process.env.CERT_FILE

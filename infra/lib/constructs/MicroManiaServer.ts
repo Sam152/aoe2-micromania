@@ -59,6 +59,7 @@ export class MicroManiaServer extends Construct {
       assumedBy: new ServicePrincipal("ec2.amazonaws.com"),
     });
     instanceRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("AmazonEC2ContainerRegistryReadOnly"));
+    instanceRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("CloudWatchFullAccessV2"));
 
     const instance = new ec2.Instance(this, "instance", {
       keyPair: KeyPair.fromKeyPairName(this, "key-pair", this.props.apiKeypairName),
