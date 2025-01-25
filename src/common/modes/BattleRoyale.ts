@@ -4,8 +4,7 @@ import config from "../config";
 
 const grid = new Grid(30);
 
-// Switch terrain every 3 minutes.
-const TERRAIN_TICK_DURATION = config.ticksPerSecond * 60 * 3;
+const TERRAIN_TICK_DURATION = 30 * 60 * config.ticksPerSecond;
 
 /**
  * Game modes may: respond to state or actions by dispatching more actions,

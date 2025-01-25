@@ -32,7 +32,7 @@ module.exports = {
       Buffer: ["buffer", "Buffer"],
     }),
     new HtmlWebpackPlugin({
-      title: "Micro Mania",
+      title: "MicroMania",
       template: "./src/client/template.html",
     }),
     new webpack.DefinePlugin({
