@@ -16,6 +16,7 @@ Tasks
 - [ ] Better CDN caching for static assets
 - [ ] Validated dispatch
 - [ ] Desync validation
+- [ ] Analytics/stats
 
 ## Gameplay
 
