@@ -4,15 +4,16 @@ import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPe
 import inAttackRange from "../../../util/inAttackRange";
 import setUnitMovementTowards from "../initiated/setUnitMovementTowards";
 import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
+import { ComputedFrameState } from "../../computed/createComputedFrameState";
 
-export default function convertUnits(state: GameState) {
+export default function convertUnits(state: GameState, computed: ComputedFrameState) {
   const convertingUnits = state.units.filter((unit) => unit.convertingUnit !== undefined);
 
   // Check if a unit should be firing or moving towards its target.
   convertingUnits
     // .filter((unit) => unit.unitState !== UnitState.Firing)
     .forEach((monk) => {
-      const convertingUnit = state.units.find(({ id }) => id === monk.convertingUnit);
+      const convertingUnit = computed.unitIndex[monk.convertingUnit];
       if (!convertingUnit) {
         monk.convertingUnit = undefined;
         return;
@@ -39,8 +40,6 @@ export default function convertUnits(state: GameState) {
         }
       }
     });
-
-  // convertingUnits.filter((unit) => unit.unitState === UnitState.Firing).forEach((monk) => {});
 }
 
 function lockConversionSuccessInNumberTicks(state: GameState, monk: UnitInstance) {

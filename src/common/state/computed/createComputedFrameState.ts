@@ -7,6 +7,7 @@ export type ComputedFrameState = {
   quadTreeAllUnits: Quadtree<UnitInstance>;
   playerUnitQuadTrees: Record<number, Quadtree<UnitInstance>>;
   grid: Grid;
+  unitIndex: Record<number, UnitInstance>;
 };
 
 export function createComputedFrameState(state: GameState): ComputedFrameState {
@@ -24,5 +25,16 @@ export function createComputedFrameState(state: GameState): ComputedFrameState {
       {} as Record<number, Quadtree<UnitInstance>>,
     ),
     grid: new Grid(state.mapSize),
+    unitIndex: createUnitIndex(state.units),
   };
+}
+
+function createUnitIndex(units: UnitInstance[]): Record<number, UnitInstance> {
+  return units.reduce(
+    (acc, unit) => {
+      acc[unit.id] = unit;
+      return acc;
+    },
+    {} as Record<number, UnitInstance>,
+  );
 }

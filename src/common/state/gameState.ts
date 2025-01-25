@@ -101,7 +101,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     reformUnits(state);
     patrolUnits(state);
     fireProjectiles(state);
-    convertUnits(state);
+    convertUnits(state, computed);
     autoAttack(state, computed);
     registerProjectileHits(state);
     cleanFallen(state);
