@@ -76,7 +76,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     });
   }
   if (action.n === "START_CONVERSION") {
-    action.units.map((monk) => startConversion(state, monk, action.target));
+    action.units.map((monkId) => startConversion(state, computed, monkId, action.target));
   }
   if (action.n === "ATTACK_GROUND") {
     unitsInGameState(state, action.units).forEach((attackingUnit) => {
@@ -100,7 +100,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     moveUnits(state);
     reformUnits(state);
     patrolUnits(state);
-    fireProjectiles(state);
+    fireProjectiles(state, computed);
     convertUnits(state, computed);
     autoAttack(state, computed);
     registerProjectileHits(state);
