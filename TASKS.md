@@ -36,6 +36,7 @@ Tasks
 
 # Interface
 
+- [ ] Asset rendering off main thread
 - [x] GH/Discord links
 - [x] Spectate mode
 - [ ] Favicon
