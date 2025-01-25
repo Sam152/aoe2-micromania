@@ -15,6 +15,7 @@ Tasks
 - [ ] Persisting events
 - [ ] Better CDN caching for static assets
 - [ ] Validated dispatch
+- [ ] Desync validation
 
 ## Gameplay
 
