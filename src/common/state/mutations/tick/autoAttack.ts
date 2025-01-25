@@ -3,9 +3,11 @@ import UnitState from "../../../units/UnitState";
 import { getAttackRange } from "../../../util/inAttackRange";
 import { hasScalarValue } from "../../../util/hasValue";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
+import Unit from "../../../units/Unit";
 
 export default function autoAttack(state: GameState, computed: ComputedFrameState) {
-  const autoAttackingUnits = state.units.filter((unit) => {
+  const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
+  const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
       (unit.unitState === UnitState.Idle || hasScalarValue(unit.patrollingTo)) &&
       (!hasScalarValue(unit.targetingUnit) || !hasScalarValue(unit.targetingPosition))
