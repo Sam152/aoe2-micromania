@@ -239,7 +239,8 @@ export default class CanvasRenderer implements RendererInterface {
         };
         const width = 40;
 
-        const percentLeft = (unitInstance.conversionJuiceFullAt - gameState.ticks) / CONVERSION_JUICE_TICKS_RECHARGE;
+        const percentFilled =
+          1 - (unitInstance.conversionJuiceFullAt - gameState.ticks) / CONVERSION_JUICE_TICKS_RECHARGE;
 
         this.context.beginPath();
         this.context.fillStyle = "black";
@@ -250,7 +251,7 @@ export default class CanvasRenderer implements RendererInterface {
         this.context.fillRect(
           anchoredAt.x - width / 2 + 1,
           anchoredAt.y + unitMetadata.hitPointsBarAnchor + 1,
-          (width - 2) * percentLeft,
+          (width - 2) * percentFilled,
           4,
         );
       }
