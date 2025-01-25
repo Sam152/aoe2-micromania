@@ -19,6 +19,7 @@ import selectionCircle from "./helpers/selectionCircle";
 import ProjectileType from "../units/ProjectileType";
 import { rockPositionFactory } from "./helpers/rockPosition";
 import { selectionRightClickAction } from "../units/selectionRightClickAction";
+import { CONVERSION_JUICE_TICKS_RECHARGE } from "../state/mutations/tick/convertUnits";
 
 export default class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -230,6 +231,29 @@ export default class CanvasRenderer implements RendererInterface {
         unitInstance.direction,
         animationMetadata.style,
       );
+
+      if (unitInstance.conversionJuiceFullAt && unitInstance.conversionJuiceFullAt > gameState.ticks) {
+        const anchoredAt = {
+          x: unitInstance.position.x,
+          y: unitInstance.position.y + 8,
+        };
+        const width = 40;
+
+        const percentLeft = (unitInstance.conversionJuiceFullAt - gameState.ticks) / CONVERSION_JUICE_TICKS_RECHARGE;
+
+        this.context.beginPath();
+        this.context.fillStyle = "black";
+        this.context.fillRect(anchoredAt.x - width / 2, anchoredAt.y + unitMetadata.hitPointsBarAnchor, width, 6);
+
+        this.context.beginPath();
+        this.context.fillStyle = "white";
+        this.context.fillRect(
+          anchoredAt.x - width / 2 + 1,
+          anchoredAt.y + unitMetadata.hitPointsBarAnchor + 1,
+          (width - 2) * percentLeft,
+          4,
+        );
+      }
 
       if (unitInstance.hitPoints !== unitMetadata.hitPoints) {
         const anchoredAt = unitInstance.position;

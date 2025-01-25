@@ -9,5 +9,7 @@ export function startConversion(state: GameState, computed: ComputedFrameState, 
     return;
   }
   stopUnit(monk);
-  monk.convertingUnit = target;
+  if (monk.conversionJuiceFullAt === undefined || monk.conversionJuiceFullAt <= state.ticks) {
+    monk.convertingUnit = target;
+  }
 }

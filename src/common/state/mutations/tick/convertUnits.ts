@@ -7,6 +7,8 @@ import compassDirectionCalculator from "../../../units/compassDirectionCalculato
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
 import stopUnit from "../initiated/stopUnit";
 
+export const CONVERSION_JUICE_TICKS_RECHARGE = 100;
+
 export default function convertUnits(state: GameState, computed: ComputedFrameState) {
   const convertingUnits = state.units.filter((unit) => !!unit.convertingUnit);
 
@@ -41,6 +43,8 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
             // selections are lost.
             converted.id = state.idAt++;
             stopUnit(converted);
+
+            monk.conversionJuiceFullAt = state.ticks + CONVERSION_JUICE_TICKS_RECHARGE;
           }
           stopUnit(monk);
         }

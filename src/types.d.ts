@@ -26,6 +26,7 @@ export interface UnitInstance {
 
   convertingUnit?: number;
   conversionSucceedsAt?: number;
+  conversionJuiceFullAt?: number;
 
   // A movement state that is an instruction to move to a specific location.
   waypoints: Array<Vector2>;
