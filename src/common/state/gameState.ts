@@ -21,6 +21,7 @@ import provisionPlayer from "./mutations/players/provisionPlayer";
 import { cyclePlayers } from "./mutations/players/cyclePlayers";
 import { createComputedFrameState } from "./computed/createComputedFrameState";
 import { deprovisionPlayer } from "./mutations/players/deprovisionPlayer";
+import { cleanFallen } from "./mutations/tick/cleanFallen";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
   const computed = createComputedFrameState(state);
@@ -97,6 +98,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     fireProjectiles(state);
     autoAttack(state, computed);
     registerProjectileHits(state);
+    cleanFallen(state);
 
     ++state.ticks;
   }
