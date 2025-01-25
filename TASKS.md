@@ -24,10 +24,10 @@ Tasks
     - [x] Translate whole group into middle of destination
     - [x] Slow units to slowest in group
 - [ ] Knockout reward
-- [ ] Monks
-- [ ] Monk speed
-- [ ] Monk convert icon
-- [ ] Patrolled monks
+- [x] Monks
+- [x] Monk speed
+- [x] Monk convert icon
+- [x] Patrolled monks
 - [x] Spawn formation
 - [x] Better mango volleys
 - [x] Replace default sand terrain with less jank switch
@@ -43,3 +43,4 @@ Tasks
 - [x] Main thread blocking perf for graphics render
 - [x] Loading progress
 - [x] Cached cursors
+- [ ] Replace Chakra
