@@ -4,7 +4,7 @@ export function logErrors() {
 }
 
 function logAndExit(reason: unknown) {
-  const errorMessage = reason instanceof Error ? reason.message : JSON.stringify(reason);
+  const errorMessage = reason instanceof Error ? `${reason.message}: ${reason.stack}` : JSON.stringify(reason);
   console.error(`Unhandled error occurred: ${errorMessage}`);
   process.exit();
 }

@@ -24,6 +24,9 @@ export interface UnitInstance {
   targetingPosition?: Vector2;
   reloadsAt: number;
 
+  convertingUnit?: number;
+  conversionSucceedsAt?: number;
+
   // A movement state that is an instruction to move to a specific location.
   waypoints: Array<Vector2>;
   clickedWaypoints: Array<Vector2>;

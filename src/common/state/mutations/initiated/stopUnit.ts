@@ -8,6 +8,8 @@ export default function stopUnit(unit: UnitInstance): void {
   unit.clickedWaypoints = [];
   unit.targetingPosition = null;
   unit.targetingUnit = null;
+  unit.convertingUnit = null;
+  unit.conversionSucceedsAt = null;
   unit.patrollingTo = null;
   unit.patrollingToReturn = null;
   unit.reformingTo = null;

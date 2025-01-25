@@ -5,4 +5,5 @@ enum UnitState {
   Falling,
   Decaying,
 }
+
 export default UnitState;

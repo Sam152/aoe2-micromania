@@ -22,6 +22,8 @@ import { cyclePlayers } from "./mutations/players/cyclePlayers";
 import { createComputedFrameState } from "./computed/createComputedFrameState";
 import { deprovisionPlayer } from "./mutations/players/deprovisionPlayer";
 import { cleanFallen } from "./mutations/tick/cleanFallen";
+import { startConversion } from "./mutations/initiated/startConversion";
+import convertUnits from "./mutations/tick/convertUnits";
 
 function gameStateMutator(state: GameState, action: GameStateAction): GameState {
   const computed = createComputedFrameState(state);
@@ -73,6 +75,9 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
       attackingUnit.targetingUnit = action.target;
     });
   }
+  if (action.n === "START_CONVERSION") {
+    action.units.map((monk) => startConversion(state, monk, action.target));
+  }
   if (action.n === "ATTACK_GROUND") {
     unitsInGameState(state, action.units).forEach((attackingUnit) => {
       stopUnit(attackingUnit);
@@ -96,6 +101,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
     reformUnits(state);
     patrolUnits(state);
     fireProjectiles(state);
+    convertUnits(state);
     autoAttack(state, computed);
     registerProjectileHits(state);
     cleanFallen(state);

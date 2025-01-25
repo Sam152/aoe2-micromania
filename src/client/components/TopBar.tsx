@@ -48,7 +48,6 @@ export default function TopBar() {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
               viewBox="0 0 640 512"
               height="20px"
               width="20px"
@@ -70,7 +69,6 @@ export default function TopBar() {
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
               viewBox="0 0 496 512"
               height="20px"
               width="20px"
