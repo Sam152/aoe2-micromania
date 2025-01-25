@@ -4,10 +4,10 @@ import stopUnit from "./stopUnit";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
 
 export function startConversion(state: GameState, computed: ComputedFrameState, monkId: number, target: number) {
-  const monkUnit = computed.unitIndex[monkId];
-  if (!monkUnit || monkUnit.unitType !== Unit.Monk) {
+  const monk = computed.unitIndex[monkId];
+  if (!monk || monk.unitType !== Unit.Monk) {
     return;
   }
-  stopUnit(monkUnit);
-  monkUnit.convertingUnit = target;
+  stopUnit(monk);
+  monk.convertingUnit = target;
 }
