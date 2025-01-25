@@ -120,7 +120,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
 function defaultState(): GameState {
   return deepClone({
     ticks: 0,
-    idAt: 0,
+    idAt: 1,
 
     activePlayers: {},
     queuedPlayers: [],

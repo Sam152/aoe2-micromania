@@ -5,9 +5,10 @@ import inAttackRange from "../../../util/inAttackRange";
 import setUnitMovementTowards from "../initiated/setUnitMovementTowards";
 import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
+import stopUnit from "../initiated/stopUnit";
 
 export default function convertUnits(state: GameState, computed: ComputedFrameState) {
-  const convertingUnits = state.units.filter((unit) => unit.convertingUnit !== undefined);
+  const convertingUnits = state.units.filter((unit) => !!unit.convertingUnit);
 
   // Check if a unit should be firing or moving towards its target.
   convertingUnits
@@ -29,6 +30,15 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
         if (!monk.conversionSucceedsAt) {
           monk.conversionSucceedsAt = state.ticks + lockConversionSuccessInNumberTicks(state, monk);
           monk.unitStateStartedAt = state.ticks;
+        }
+
+        if (state.ticks === monk.conversionSucceedsAt) {
+          const converted = computed.unitIndex[monk.convertingUnit];
+          if (converted) {
+            converted.ownedByPlayer = monk.ownedByPlayer;
+            stopUnit(converted);
+          }
+          stopUnit(monk);
         }
       } else {
         setUnitMovementTowards(state, monk, targetingPosition);

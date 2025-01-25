@@ -94,7 +94,7 @@ export type StateTransmitter = (
 
 export interface GameState {
   ticks: number;
-  idAt: 0;
+  idAt: number;
 
   activePlayers: Record<string, number>;
   queuedPlayers: string[];

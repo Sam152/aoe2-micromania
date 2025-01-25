@@ -23,7 +23,12 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
         (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing,
     )
     .forEach((unit) => {
-      const targetingPosition = hasValue(unit.targetingUnit)
+      if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
+        unit.targetingUnit = undefined;
+        return;
+      }
+
+      const targetingPosition = unit.targetingUnit
         ? computed.unitIndex[unit.targetingUnit].position
         : unit.targetingPosition;
 
@@ -50,12 +55,19 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
   fireUnits
     .filter(({ unitState }) => unitState === UnitState.Firing)
     .forEach((unit) => {
+      if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
+        unit.targetingUnit = undefined;
+        unit.unitState = UnitState.Idle;
+        return;
+      }
+
+      const targetingPosition = unit.targetingUnit
+        ? computed.unitIndex[unit.targetingUnit].position
+        : unit.targetingPosition;
+
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
       const idleFrame = ticksForAnimation(unitData.animations[UnitState.Firing].animationDuration);
-      const targetingPosition = hasValue(unit.targetingUnit)
-        ? computed.unitIndex[unit.targetingUnit].position
-        : unit.targetingPosition;
 
       unit.direction = compassDirectionCalculator.getDirection(unit.position, targetingPosition);
 
