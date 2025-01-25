@@ -20,7 +20,7 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
   }
 
   if (action.n === "GAME_STATE_REHYDRATED") {
-    // Could filter out the converted units here.
+    // Could filter owned units here?
   }
 
   if (action.n === "MOUSE_POSITIONED") {

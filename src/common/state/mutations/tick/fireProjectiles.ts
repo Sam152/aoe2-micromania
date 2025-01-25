@@ -25,6 +25,7 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
     .forEach((unit) => {
       if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
         unit.targetingUnit = undefined;
+        unit.unitState = UnitState.Idle;
         return;
       }
 

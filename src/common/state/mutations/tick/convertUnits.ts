@@ -34,8 +34,12 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
 
         if (state.ticks === monk.conversionSucceedsAt) {
           const converted = computed.unitIndex[monk.convertingUnit];
+
           if (converted) {
             converted.ownedByPlayer = monk.ownedByPlayer;
+            // Give the converted unit a new ID, so existing targeting and client side
+            // selections are lost.
+            converted.id = state.idAt++;
             stopUnit(converted);
           }
           stopUnit(monk);
