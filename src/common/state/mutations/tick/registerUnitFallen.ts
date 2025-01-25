@@ -7,7 +7,7 @@ export default function registerUnitFallen(state: GameState, unit: UnitInstance)
 
   state.units = state.units.filter(({ id }) => unit.id !== id);
   state.units
-    .filter(({ targetingUnit }) => targetingUnit === unit.id)
+    .filter(({ targetingUnit, convertingUnit }) => targetingUnit === unit.id || convertingUnit === unit.id)
     .forEach((unit) => {
       unit.targetingUnit = null;
       unit.movingDirection = null;

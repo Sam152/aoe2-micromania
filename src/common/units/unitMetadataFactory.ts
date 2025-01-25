@@ -1,9 +1,9 @@
 import Unit from "./Unit";
 import UnitState from "./UnitState";
-import { UnitStats } from "../../types";
+import {UnitStats} from "../../types";
 import AnimationStyle from "./AnimationStyle";
 import ProjectileType from "./ProjectileType";
-import { Vector2 } from "three/src/math/Vector2";
+import {Vector2} from "three/src/math/Vector2";
 import DamageType from "./DamageType";
 
 /**
@@ -97,7 +97,7 @@ const unitDefinitions: {
       [UnitState.Firing]: {
         slp: "units/u_monk_west_attackA_x1",
         animationDuration: 2,
-        style: AnimationStyle.Play,
+        style: AnimationStyle.Loop,
       },
       [UnitState.Moving]: {
         slp: "units/u_monk_west_walkA_x1",
