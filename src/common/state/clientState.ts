@@ -19,6 +19,10 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
     state.renderedFrames++;
   }
 
+  if (action.n === "GAME_STATE_REHYDRATED") {
+    // Could filter out the converted units here.
+  }
+
   if (action.n === "MOUSE_POSITIONED") {
     state.mousePosition = action.position;
   }
