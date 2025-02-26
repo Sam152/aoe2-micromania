@@ -3,6 +3,8 @@ import UnitState from "../../../units/UnitState";
 import Unit from "../../../units/Unit";
 import soundManager from "../../../sounds/SoundManger";
 import spawnUnit from "../initiated/spawnUnit";
+import averageVector from "../../../util/averageVector";
+import { Vector2 } from "three/src/math/Vector2";
 
 export default function registerUnitFallen(state: GameState, unit: UnitInstance, killedByPlayer?: PlayerId) {
   soundManager.unitFallen(state, unit);
@@ -42,10 +44,22 @@ export default function registerUnitFallen(state: GameState, unit: UnitInstance,
     
     // Check if player has reached a kill milestone (every 5 kills)
     if (state.playerKills[killedByPlayer] % 5 === 0) {
-      // Spawn a monk near the unit's position
-      const spawnPosition = { x: unit.position.x, y: unit.position.y };
+      // Find all units owned by the player who made the kill
+      const playerUnits = state.units.filter(unit => unit.ownedByPlayer === killedByPlayer);
+      
+      // Determine the spawn position - use average position of player's units
+      let spawnPosition: Vector2;
+      
+      if (playerUnits.length > 0) {
+        // Use the average position of all the player's units
+        spawnPosition = averageVector(playerUnits.map(unit => unit.position));
+      } else {
+        // Fallback to the fallen unit's position if the player has no other units
+        spawnPosition = unit.position;
+      }
+      
+      // Spawn a monk at the calculated position
       spawnUnit(state, {
-        n: "SPAWN_UNIT",
         position: spawnPosition,
         unitType: Unit.Monk,
         forPlayer: killedByPlayer,
