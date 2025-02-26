@@ -128,6 +128,7 @@ function defaultState(): GameState {
     units: [],
     projectiles: [],
     fallenUnits: [],
+    playerKills: {},
 
     gameEnded: false,
     winner: null,

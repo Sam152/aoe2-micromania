@@ -24,7 +24,7 @@ export default function registerProjectileHits(state: GameState) {
       // Only do half damage to units that weren't directly targeted.
       hitUnit.hitPoints -= projectile.targeting && hitUnit.id === projectile.targeting ? damage : damage / 2;
       if (hitUnit.hitPoints <= 0) {
-        registerUnitFallen(state, hitUnit);
+        registerUnitFallen(state, hitUnit, projectile.ownedBy);
       }
     }
   });
@@ -42,7 +42,7 @@ export default function registerProjectileHits(state: GameState) {
         affectedUnit.hitPoints -= calculateDamage(projectile.firedByType, affectedUnit.unitType) * percentageOfAttack;
         damagedUnits.push(affectedUnit.id);
         if (affectedUnit.hitPoints <= 0) {
-          registerUnitFallen(state, affectedUnit);
+          registerUnitFallen(state, affectedUnit, projectile.ownedBy);
         }
       });
     });

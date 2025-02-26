@@ -65,6 +65,7 @@ export interface FallenUnitInstance {
   unitFallenAt: number;
   position: Vector2;
   direction: CompassDirection;
+  killedByPlayer?: PlayerId;
 }
 
 export interface ProjectileInstance {
@@ -103,6 +104,9 @@ export interface GameState {
   units: UnitInstance[];
   projectiles: ProjectileInstance[];
   fallenUnits: FallenUnitInstance[];
+  
+  // Track kills per player
+  playerKills: Record<PlayerId, number>;
 
   soundQueue: Sound[];
 
