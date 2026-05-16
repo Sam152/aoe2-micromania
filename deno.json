@@ -9,7 +9,8 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "npm:react@18",
-    "lib": ["dom", "dom.iterable", "esnext"]
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noImplicitAny": true
   },
   "imports": {
     "react": "npm:react@18",
