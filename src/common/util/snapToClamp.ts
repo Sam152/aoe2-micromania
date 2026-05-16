@@ -1,7 +1,7 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import { Line } from "../../types.d";
-import config from "../config";
-import isInBounds from "./isInBounds";
+import { Line } from "../../types.d.ts";
+import config from "../config.ts";
+import isInBounds from "./isInBounds.ts";
 
 export function snapToClamp(point: Vector2, mapSize: number) {
   if (isInBounds(point, mapSize)) {

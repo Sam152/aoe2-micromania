@@ -4,10 +4,10 @@ class ScreenManager {
   callbacks: Function[];
 
   constructor() {
-    this.scale = Math.min(1.5, window.devicePixelRatio);
+    this.scale = Math.min(1.5, globalThis.devicePixelRatio);
     this.callbacks = [];
 
-    window.addEventListener("resize", this.resize.bind(this));
+    globalThis.addEventListener("resize", this.resize.bind(this));
     this.resize();
   }
 

@@ -1,7 +1,7 @@
-import Sound from "./Sound";
-import randomArray from "../util/randomArray";
+import Sound from "./Sound.ts";
+import randomArray from "../util/randomArray.ts";
 import { Howl } from "howler";
-import assetUrl from "../../client/util/assetUrl";
+import assetUrl from "../../client/util/assetUrl.ts";
 
 const DEFAULT_VOLUME = 0.25;
 

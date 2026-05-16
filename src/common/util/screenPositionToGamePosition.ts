@@ -1,4 +1,4 @@
-import screenManager from "../drawing/screenManager";
+import screenManager from "../drawing/screenManager.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export default function screenPositionToGamePosition(screenPosition: Vector2): Vector2 {

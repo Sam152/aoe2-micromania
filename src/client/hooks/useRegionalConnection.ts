@@ -1,9 +1,7 @@
-import { io, Socket } from "socket.io-client";
-import { ManagerOptions } from "socket.io-client/build/esm/manager";
-import { SocketOptions } from "socket.io-client/build/esm/socket";
-import { useHasConnected } from "./useHasConnected";
+import { io, Socket, ManagerOptions, SocketOptions } from "socket.io-client";
+import { useHasConnected } from "./useHasConnected.ts";
 import { useEffect, useState } from "react";
-import { resolveServerFromCache } from "../servers/resolveServerFromCache";
+import { resolveServerFromCache } from "../servers/resolveServerFromCache.ts";
 
 async function createRegionalConnection(): Promise<Socket> {
   // Local development has no host to configure.

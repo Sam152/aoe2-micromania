@@ -1,10 +1,10 @@
-import InputManager from "../../input/InputManager";
-import { clientStateTransmitter } from "../clientState";
-import CanvasRenderer from "../../drawing/CanvasRenderer";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d";
-import Grid from "../../terrain/Grid";
-import soundPlayer from "../../sounds/SoundPlayer";
-import averageVector from "../../util/averageVector";
+import InputManager from "../../input/InputManager.ts";
+import { clientStateTransmitter } from "../clientState.ts";
+import CanvasRenderer from "../../drawing/CanvasRenderer.ts";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
+import Grid from "../../terrain/Grid.ts";
+import soundPlayer from "../../sounds/SoundPlayer.ts";
+import averageVector from "../../util/averageVector.ts";
 
 export default class RenderLoopManager {
   private stateManager: StateManagerInterface;
@@ -98,7 +98,7 @@ export default class RenderLoopManager {
     this.inputManager.clearInput();
 
     if (this.running) {
-      window.requestAnimationFrame(this.render.bind(this));
+      globalThis.requestAnimationFrame(this.render.bind(this));
     }
   }
 }

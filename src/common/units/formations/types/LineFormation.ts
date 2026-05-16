@@ -1,6 +1,6 @@
-import FormationBase from "../FormationBase";
-import { UnitInstance } from "../../../../types.d";
-import { formGroupedLines } from "../utilities/formGroupedLines";
+import FormationBase from "../FormationBase.ts";
+import { UnitInstance } from "../../../../types.d.ts";
+import { formGroupedLines } from "../utilities/formGroupedLines.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export default class LineFormation extends FormationBase {

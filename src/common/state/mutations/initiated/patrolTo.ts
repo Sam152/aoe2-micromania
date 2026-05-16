@@ -1,12 +1,12 @@
-import unitsInGameState from "../../../util/unitsInGameState";
-import stopUnit from "./stopUnit";
-import averageVector from "../../../util/averageVector";
-import formationManager from "../../../units/formations/FormationManager";
-import setUnitMovementTowards from "./setUnitMovementTowards";
-import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
-import { GameState, GameStateAction, UnitId, UnitInstance } from "../../../../types.d";
+import unitsInGameState from "../../../util/unitsInGameState.ts";
+import stopUnit from "./stopUnit.ts";
+import averageVector from "../../../util/averageVector.ts";
+import formationManager from "../../../units/formations/FormationManager.ts";
+import setUnitMovementTowards from "./setUnitMovementTowards.ts";
+import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor.ts";
+import { GameState, GameStateAction, UnitId, UnitInstance } from "../../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import { snapToClamp } from "../../../util/snapToClamp";
+import { snapToClamp } from "../../../util/snapToClamp.ts";
 
 export default function patrolTo(state: GameState, units: UnitInstance[], position: Vector2) {
   units.forEach((unit) => stopUnit(unit));

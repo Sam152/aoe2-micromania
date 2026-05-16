@@ -1,17 +1,17 @@
-import UnitState from "../../../units/UnitState";
-import unitMetadataFactory from "../../../units/unitMetadataFactory";
-import config from "../../../config";
-import { GameState } from "../../../../types.d";
-import projectileMetadata from "../../../units/projectileMetadata";
-import hasValue from "../../../util/hasValue";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
-import ticksForAnimation from "../../../util/ticksForAnimation";
-import inAttackRange, { inMinimumRange } from "../../../util/inAttackRange";
-import setUnitMovementTowards, { setUnitMovementAwayFrom } from "../initiated/setUnitMovementTowards";
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
-import soundManager from "../../../sounds/SoundManger";
-import Unit from "../../../units/Unit";
-import { ComputedFrameState } from "../../computed/createComputedFrameState";
+import UnitState from "../../../units/UnitState.ts";
+import unitMetadataFactory from "../../../units/unitMetadataFactory.ts";
+import config from "../../../config.ts";
+import { GameState } from "../../../../types.d.ts";
+import projectileMetadata from "../../../units/projectileMetadata.ts";
+import hasValue from "../../../util/hasValue.ts";
+import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
+import ticksForAnimation from "../../../util/ticksForAnimation.ts";
+import inAttackRange, { inMinimumRange } from "../../../util/inAttackRange.ts";
+import setUnitMovementTowards, { setUnitMovementAwayFrom } from "../initiated/setUnitMovementTowards.ts";
+import compassDirectionCalculator from "../../../units/compassDirectionCalculator.ts";
+import soundManager from "../../../sounds/SoundManger.ts";
+import Unit from "../../../units/Unit.ts";
+import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
 export default function fireProjectiles(state: GameState, computed: ComputedFrameState) {
   const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);

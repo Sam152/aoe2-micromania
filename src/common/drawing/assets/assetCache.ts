@@ -1,4 +1,4 @@
-import { deserializeResponseToImageData, serializeImageDataToResponse } from "./imageData";
+import { deserializeResponseToImageData, serializeImageDataToResponse } from "./imageData.ts";
 
 const cacheVersion = 1;
 const cacheName = `image-cache-v${cacheVersion}`;

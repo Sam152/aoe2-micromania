@@ -1,8 +1,8 @@
-import { useRegionalConnection } from "../hooks/useRegionalConnection";
-import { connectedEvents, gameStateToConnectedState, useConnectedState } from "../hooks/useConnectedState";
+import { useRegionalConnection } from "../hooks/useRegionalConnection.ts";
+import { connectedEvents, gameStateToConnectedState, useConnectedState } from "../hooks/useConnectedState.tsx";
 import React, { useEffect, useMemo } from "react";
-import NetworkedStateManager from "../../common/state/managers/NetworkedStateManager";
-import GameCanvas from "../components/GameCanvas";
+import NetworkedStateManager from "../../common/state/managers/NetworkedStateManager.ts";
+import GameCanvas from "../components/GameCanvas.tsx";
 
 export function GameScreen() {
   const connection = useRegionalConnection();

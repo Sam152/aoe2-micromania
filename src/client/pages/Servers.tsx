@@ -1,9 +1,9 @@
 import React from "react";
-import Section from "../components/Section";
-import { regionalServers, serversByPing } from "../servers/regionalServers";
-import { useMemoAsync } from "../hooks/useMemoAsync";
-import { resolveServerFromCache, setCachedServer } from "../servers/resolveServerFromCache";
-import arrayOfSize from "../../common/util/arrayOfSize";
+import Section from "../components/Section.tsx";
+import { regionalServers, serversByPing } from "../servers/regionalServers.ts";
+import { useMemoAsync } from "../hooks/useMemoAsync.ts";
+import { resolveServerFromCache, setCachedServer } from "../servers/resolveServerFromCache.ts";
+import arrayOfSize from "../../common/util/arrayOfSize.ts";
 
 export default function Servers() {
   const [servers] = useMemoAsync(serversByPing, [], []);
@@ -40,7 +40,7 @@ export default function Servers() {
                           className="btn"
                           onClick={() => {
                             setCachedServer(server.server);
-                            window.location.reload();
+                            globalThis.location.reload();
                           }}
                         >
                           Connect

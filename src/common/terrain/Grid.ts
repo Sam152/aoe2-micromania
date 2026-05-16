@@ -1,6 +1,6 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import config from "../config";
-import { GameState } from "../../types.d";
+import config from "../config.ts";
+import { GameState } from "../../types.d.ts";
 
 const gridCache: { [key: number]: Grid } = {};
 

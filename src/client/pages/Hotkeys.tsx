@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Section from "../components/Section";
-import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable";
-import hotkeyManager from "../../common/input/HotkeyManager";
-import Hotkey from "../../common/input/Hotkey";
-import BindableRow from "../components/BindableRow";
-import { HotkeyScheme } from "../../types.d";
-import hdHotkeyScheme from "../../common/input/schemes/hdHotkeyScheme";
-import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme";
-import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme";
+import Section from "../components/Section.tsx";
+import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable.ts";
+import hotkeyManager from "../../common/input/HotkeyManager.ts";
+import Hotkey from "../../common/input/Hotkey.ts";
+import BindableRow from "../components/BindableRow.tsx";
+import { HotkeyScheme } from "../../types.d.ts";
+import hdHotkeyScheme from "../../common/input/schemes/hdHotkeyScheme.ts";
+import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme.ts";
+import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme.ts";
 
 export default function Hotkeys() {
   const [, setCount] = useState(0);

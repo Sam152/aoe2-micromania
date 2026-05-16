@@ -1,14 +1,13 @@
-import "./styles.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
-import TopBar from "./components/TopBar";
-import Hotkeys from "./pages/Hotkeys";
-import config from "../common/config";
-import { GameScreen } from "./pages/GameScreen";
-import Servers from "./pages/Servers";
-import { ConnectedStateProvider } from "./hooks/useConnectedState";
-import FormationDebugging from "./pages/FormationDebugging";
-import { SpectateGame } from "./pages/SpectateGame";
+import TopBar from "./components/TopBar.tsx";
+import Hotkeys from "./pages/Hotkeys.tsx";
+import config from "../common/config.ts";
+import { GameScreen } from "./pages/GameScreen.tsx";
+import Servers from "./pages/Servers.tsx";
+import { ConnectedStateProvider } from "./hooks/useConnectedState.tsx";
+import FormationDebugging from "./pages/FormationDebugging.tsx";
+import { SpectateGame } from "./pages/SpectateGame.tsx";
 
 export default function App() {
   return (

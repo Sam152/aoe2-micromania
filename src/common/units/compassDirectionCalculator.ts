@@ -1,5 +1,5 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import CompassDirection from "./CompassDirection";
+import CompassDirection from "./CompassDirection.ts";
 
 class CompassDirectionCalculator {
   private circle: number;

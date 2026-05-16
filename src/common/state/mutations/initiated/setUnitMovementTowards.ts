@@ -1,9 +1,9 @@
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
-import UnitState from "../../../units/UnitState";
-import { GameState, UnitInstance } from "../../../../types.d";
+import compassDirectionCalculator from "../../../units/compassDirectionCalculator.ts";
+import UnitState from "../../../units/UnitState.ts";
+import { GameState, UnitInstance } from "../../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import ticksToDestination from "../../../util/ticksToDestination";
-import { snapToClamp } from "../../../util/snapToClamp";
+import ticksToDestination from "../../../util/ticksToDestination.ts";
+import { snapToClamp } from "../../../util/snapToClamp.ts";
 
 export default function setUnitMovementTowards(state: GameState, unit: UnitInstance, destination: Vector2): Vector2 {
   const snappedDestination = snapToClamp(destination, state.mapSize);

@@ -1,5 +1,5 @@
-import Unit from "./Unit";
-import unitMetadataFactory from "./unitMetadataFactory";
+import Unit from "./Unit.ts";
+import unitMetadataFactory from "./unitMetadataFactory.ts";
 
 export default function calculateDamage(attacking: Unit, receiving: Unit) {
   const attackingMetadata = unitMetadataFactory.getUnit(attacking);

@@ -1,4 +1,4 @@
-import { GameState, UnitInstance } from "../../types.d";
+import { GameState, UnitInstance } from "../../types.d.ts";
 
 export function unitsById(state: GameState) {
   return state.units.reduce((byId: Record<number, UnitInstance>, unit) => {

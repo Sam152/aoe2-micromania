@@ -1,9 +1,9 @@
-import setUnitMovementTowards, { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards";
-import { GameState } from "../../../../types.d";
-import hasValue from "../../../util/hasValue";
-import UnitState from "../../../units/UnitState";
-import stopUnit from "../initiated/stopUnit";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
+import setUnitMovementTowards, { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards.ts";
+import { GameState } from "../../../../types.d.ts";
+import hasValue from "../../../util/hasValue.ts";
+import UnitState from "../../../units/UnitState.ts";
+import stopUnit from "../initiated/stopUnit.ts";
+import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
 
 export default function reformUnits(state: GameState) {
   // Move units that are reforming.

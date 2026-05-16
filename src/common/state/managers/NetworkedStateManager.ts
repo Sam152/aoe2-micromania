@@ -1,9 +1,9 @@
-import { defaultState as defaultGameState, gameStateMutator } from "../gameState";
-import { clientStateMutator, defaultState as defaultClientState } from "../clientState";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d";
+import { defaultState as defaultGameState, gameStateMutator } from "../gameState.ts";
+import { clientStateMutator, defaultState as defaultClientState } from "../clientState.ts";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
 import { Socket } from "socket.io-client";
-import { normalizeGameStateAction, normalizeGameStateObject } from "../../util/normalizer";
-import TransportEvent from "../transport/TransportEvent";
+import { normalizeGameStateAction, normalizeGameStateObject } from "../../util/normalizer.ts";
+import TransportEvent from "../transport/TransportEvent.ts";
 
 /**
  * A state manager with a client => server relationship.

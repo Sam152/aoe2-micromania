@@ -1,12 +1,12 @@
 import { createRef, useEffect } from "react";
-import { circle } from "../../common/drawing/shapes";
-import screenManager from "../../common/drawing/screenManager";
-import LineFormation from "../../common/units/formations/types/LineFormation";
-import { UnitInstance } from "../../types.d";
+import { circle } from "../../common/drawing/shapes.ts";
+import screenManager from "../../common/drawing/screenManager.ts";
+import LineFormation from "../../common/units/formations/types/LineFormation.ts";
+import { UnitInstance } from "../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import Unit from "../../common/units/Unit";
-import averageVector from "../../common/util/averageVector";
-import arrayOfSize from "../../common/util/arrayOfSize";
+import Unit from "../../common/units/Unit.ts";
+import averageVector from "../../common/util/averageVector.ts";
+import arrayOfSize from "../../common/util/arrayOfSize.ts";
 
 export default function FormationDebugging() {
   const ref = createRef<HTMLCanvasElement>();
@@ -15,8 +15,8 @@ export default function FormationDebugging() {
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
 
-    canvas.width = window.innerWidth * screenManager.getCanvasScale();
-    canvas.height = (window.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
+    canvas.width = globalThis.innerWidth * screenManager.getCanvasScale();
+    canvas.height = (globalThis.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
 
     drawFormation(
       [

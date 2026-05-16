@@ -7,11 +7,11 @@ export default function BindSelection({ onChange }: { onChange: (keycode: number
     if (!listening) {
       return;
     }
-    window.addEventListener("keydown", function listener(e) {
+    globalThis.addEventListener("keydown", function listener(e) {
       e.preventDefault();
       onChange(e.keyCode);
       setListening(false);
-      window.removeEventListener("keydown", listener);
+      globalThis.removeEventListener("keydown", listener);
     });
   }, [listening]);
 

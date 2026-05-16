@@ -1,12 +1,12 @@
-import Grid from "../../../terrain/Grid";
-import spawnUnit from "../initiated/spawnUnit";
-import Unit from "../../../units/Unit";
-import { GameState, UnitInstance } from "../../../../types.d";
-import { ComputedFrameState } from "../../computed/createComputedFrameState";
+import Grid from "../../../terrain/Grid.ts";
+import spawnUnit from "../initiated/spawnUnit.ts";
+import Unit from "../../../units/Unit.ts";
+import { GameState, UnitInstance } from "../../../../types.d.ts";
+import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import formationManager from "../../../units/formations/FormationManager";
-import FormationType from "../../../units/formations/FormationType";
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
+import formationManager from "../../../units/formations/FormationManager.ts";
+import FormationType from "../../../units/formations/FormationType.ts";
+import compassDirectionCalculator from "../../../units/compassDirectionCalculator.ts";
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
   const location = getBestSpawnLocation(state, computed);

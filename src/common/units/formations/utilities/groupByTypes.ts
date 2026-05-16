@@ -1,5 +1,5 @@
-import { UnitInstance } from "../../../../types.d";
-import Unit from "../../Unit";
+import { UnitInstance } from "../../../../types.d.ts";
+import Unit from "../../Unit.ts";
 
 export function groupByTypes(units: UnitInstance[]): UnitMap {
   const gathered = units.reduce<GatheredUnits>((unitMap, unit) => {

@@ -1,6 +1,6 @@
-import { FormationInterface, UnitInstance } from "../../../types.d";
+import { FormationInterface, UnitInstance } from "../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import unitMetadataFactory from "../unitMetadataFactory";
+import unitMetadataFactory from "../unitMetadataFactory.ts";
 
 export default abstract class FormationBase implements FormationInterface {
   form(units: UnitInstance[], destination: Vector2): Array<Vector2> {

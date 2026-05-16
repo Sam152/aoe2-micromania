@@ -1,5 +1,5 @@
-import { HotkeyScheme } from "../../../types.d";
-import Hotkey from "../Hotkey";
+import { HotkeyScheme } from "../../../types.d.ts";
+import Hotkey from "../Hotkey.ts";
 
 const aocHotkeyScheme: HotkeyScheme = {
   [Hotkey.LineFormation]: 81,

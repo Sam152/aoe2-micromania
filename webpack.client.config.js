@@ -1,3 +1,4 @@
+import process from "node:process";
 const path = require("path");
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");

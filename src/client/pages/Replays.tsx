@@ -1,9 +1,9 @@
 import React from "react";
-import Section from "../components/Section";
-import { ReplayIndexItem } from "../../types.d";
+import Section from "../components/Section.tsx";
+import { ReplayIndexItem } from "../../types.d.ts";
 import { Link } from "react-router-dom";
 import humanizeDuration from "humanize-duration";
-import useFetched from "../hooks/useFetched";
+import useFetched from "../hooks/useFetched.ts";
 
 export default function Replays() {
   const games = useFetched<Array<ReplayIndexItem>>("/recs/index.json", []);

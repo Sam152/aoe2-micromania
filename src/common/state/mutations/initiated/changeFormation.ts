@@ -1,14 +1,14 @@
-import unitsInGameState from "../../../util/unitsInGameState";
-import populationHas from "../../../util/populationHas";
-import populationVector from "../../../util/populationVector";
-import { patrolGroupTo } from "./patrolTo";
-import averageVector from "../../../util/averageVector";
-import moveTo from "./moveTo";
-import formationManager from "../../../units/formations/FormationManager";
-import setUnitMovementTowards from "./setUnitMovementTowards";
-import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
-import FormationType from "../../../units/formations/FormationType";
-import { GameState, UnitId } from "../../../../types.d";
+import unitsInGameState from "../../../util/unitsInGameState.ts";
+import populationHas from "../../../util/populationHas.ts";
+import populationVector from "../../../util/populationVector.ts";
+import { patrolGroupTo } from "./patrolTo.ts";
+import averageVector from "../../../util/averageVector.ts";
+import moveTo from "./moveTo.ts";
+import formationManager from "../../../units/formations/FormationManager.ts";
+import setUnitMovementTowards from "./setUnitMovementTowards.ts";
+import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor.ts";
+import FormationType from "../../../units/formations/FormationType.ts";
+import { GameState, UnitId } from "../../../../types.d.ts";
 
 export default function changeFormation(state: GameState, action: { formation: FormationType; units: UnitId[] }) {
   const units = unitsInGameState(state, action.units);

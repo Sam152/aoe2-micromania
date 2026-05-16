@@ -1,8 +1,8 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import averageVector from "../../../util/averageVector";
-import formLines, { translateAndRotate } from "../utilities/formLines";
-import FormationBase from "../FormationBase";
-import { UnitInstance } from "../../../../types.d";
+import averageVector from "../../../util/averageVector.ts";
+import formLines, { translateAndRotate } from "../utilities/formLines.ts";
+import FormationBase from "../FormationBase.ts";
+import { UnitInstance } from "../../../../types.d.ts";
 
 export default class SplitFormation extends FormationBase {
   distanceBetween = 20;

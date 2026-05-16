@@ -4,9 +4,11 @@
     <meta charset="utf-8"/>
     <title>Micromania</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="/styles.css"/>
+    <script>var process = { env: { IS_AWS_DEPLOYMENT: null, ASSET_BASE_URL: "" } };</script>
 </head>
 <body>
 <div id="ui"></div>
+<script src="/bundle.js" type="module"></script>
 </body>
 </html>

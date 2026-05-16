@@ -1,6 +1,7 @@
-import { GameStateAction } from "../../types.d";
+import { GameStateAction } from "../../types.d.ts";
 import * as fs from "fs";
-import generateId from "../../common/util/generateId";
+import generateId from "../../common/util/generateId.ts";
+import process from "node:process";
 
 export default class RecordedGame {
   private players: Array<string>;

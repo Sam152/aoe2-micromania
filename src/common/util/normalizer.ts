@@ -5,7 +5,7 @@ import {
   PlayerId,
   ProjectileInstance,
   UnitInstance,
-} from "../../types.d";
+} from "../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export function normalizeGameStateAction(action: GameStateAction): GameStateAction {

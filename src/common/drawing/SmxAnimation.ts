@@ -1,9 +1,9 @@
-import { Rectangle, RenderedSlpFrame } from "../../types.d";
-import CompassDirection from "../units/CompassDirection";
-import anchorAt from "../util/anchorAt";
-import AnimationStyle from "../units/AnimationStyle";
+import { Rectangle, RenderedSlpFrame } from "../../types.d.ts";
+import CompassDirection from "../units/CompassDirection.ts";
+import anchorAt from "../util/anchorAt.ts";
+import AnimationStyle from "../units/AnimationStyle.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import ticksForAnimation from "../util/ticksForAnimation";
+import ticksForAnimation from "../util/ticksForAnimation.ts";
 
 export default class SmxAnimation {
   private id: string;

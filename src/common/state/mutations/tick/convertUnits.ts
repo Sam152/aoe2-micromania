@@ -1,11 +1,11 @@
-import UnitState from "../../../units/UnitState";
-import { GameState, UnitInstance } from "../../../../types.d";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
-import inAttackRange from "../../../util/inAttackRange";
-import setUnitMovementTowards from "../initiated/setUnitMovementTowards";
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
-import { ComputedFrameState } from "../../computed/createComputedFrameState";
-import stopUnit from "../initiated/stopUnit";
+import UnitState from "../../../units/UnitState.ts";
+import { GameState, UnitInstance } from "../../../../types.d.ts";
+import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
+import inAttackRange from "../../../util/inAttackRange.ts";
+import setUnitMovementTowards from "../initiated/setUnitMovementTowards.ts";
+import compassDirectionCalculator from "../../../units/compassDirectionCalculator.ts";
+import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import stopUnit from "../initiated/stopUnit.ts";
 
 export const CONVERSION_JUICE_TICKS_RECHARGE = 100;
 

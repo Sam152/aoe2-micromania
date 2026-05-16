@@ -1,10 +1,10 @@
-import unitMetadataFactory from "../../../units/unitMetadataFactory";
-import FormationType from "../../../units/formations/FormationType";
-import UnitState from "../../../units/UnitState";
-import CompassDirection from "../../../units/CompassDirection";
-import { GameState, PlayerId, UnitInstance } from "../../../../types.d";
+import unitMetadataFactory from "../../../units/unitMetadataFactory.ts";
+import FormationType from "../../../units/formations/FormationType.ts";
+import UnitState from "../../../units/UnitState.ts";
+import CompassDirection from "../../../units/CompassDirection.ts";
+import { GameState, PlayerId, UnitInstance } from "../../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import Unit from "../../../units/Unit";
+import Unit from "../../../units/Unit.ts";
 
 export default function spawnUnit(
   state: GameState,

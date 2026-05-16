@@ -1,4 +1,4 @@
-import { regionalServers, serversByPing } from "./regionalServers";
+import { regionalServers, serversByPing } from "./regionalServers.ts";
 
 export async function resolveServerFromCache(): Promise<string> {
   const cached = getCachedServer();

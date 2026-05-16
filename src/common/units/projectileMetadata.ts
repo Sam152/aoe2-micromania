@@ -1,4 +1,4 @@
-import ProjectileType from "./ProjectileType";
+import ProjectileType from "./ProjectileType.ts";
 
 type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T;

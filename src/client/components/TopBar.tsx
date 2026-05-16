@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import assetUrl from "../util/assetUrl";
-import { useConnectedState } from "../hooks/useConnectedState";
-import { PlayingAs } from "./PlayingAs";
+import assetUrl from "../util/assetUrl.ts";
+import { useConnectedState } from "../hooks/useConnectedState.tsx";
+import { PlayingAs } from "./PlayingAs.tsx";
 
 const navClass = ({ isActive }: { isActive: boolean }) => `menu-link${isActive ? " active" : ""}`;
 

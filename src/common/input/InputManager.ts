@@ -1,10 +1,10 @@
-import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types.d";
-import screenPositionToGamePosition, { gamePositionToScreenPosition } from "../util/screenPositionToGamePosition";
+import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types.d.ts";
+import screenPositionToGamePosition, { gamePositionToScreenPosition } from "../util/screenPositionToGamePosition.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import FormationType from "../units/formations/FormationType";
-import screenManager from "../drawing/screenManager";
-import hotkeyManager from "./HotkeyManager";
-import Hotkey from "./Hotkey";
+import FormationType from "../units/formations/FormationType.ts";
+import screenManager from "../drawing/screenManager.ts";
+import hotkeyManager from "./HotkeyManager.ts";
+import Hotkey from "./Hotkey.ts";
 
 const StInput = require("stinput");
 

@@ -1,6 +1,6 @@
-import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.d";
-import Grid from "../terrain/Grid";
-import config from "../config";
+import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.d.ts";
+import Grid from "../terrain/Grid.ts";
+import config from "../config.ts";
 
 const grid = new Grid(30);
 

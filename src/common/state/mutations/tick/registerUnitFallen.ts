@@ -1,6 +1,6 @@
-import { GameState, UnitInstance } from "../../../../types.d";
-import UnitState from "../../../units/UnitState";
-import soundManager from "../../../sounds/SoundManger";
+import { GameState, UnitInstance } from "../../../../types.d.ts";
+import UnitState from "../../../units/UnitState.ts";
+import soundManager from "../../../sounds/SoundManger.ts";
 
 export default function registerUnitFallen(state: GameState, unit: UnitInstance) {
   soundManager.unitFallen(state, unit);

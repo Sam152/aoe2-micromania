@@ -1,7 +1,7 @@
-import { GameState } from "../../../../types.d";
-import provisionPlayer from "./provisionPlayer";
-import { ComputedFrameState } from "../../computed/createComputedFrameState";
-import { deprovisionPlayer } from "./deprovisionPlayer";
+import { GameState } from "../../../../types.d.ts";
+import provisionPlayer from "./provisionPlayer.ts";
+import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { deprovisionPlayer } from "./deprovisionPlayer.ts";
 
 export function cyclePlayers(state: GameState, computed: ComputedFrameState, playerId: string) {
   deprovisionPlayer(state, playerId, computed);

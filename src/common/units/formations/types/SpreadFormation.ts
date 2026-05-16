@@ -1,7 +1,7 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import FormationBase from "../FormationBase";
-import { UnitInstance } from "../../../../types.d";
-import { formGroupedLines } from "../utilities/formGroupedLines";
+import FormationBase from "../FormationBase.ts";
+import { UnitInstance } from "../../../../types.d.ts";
+import { formGroupedLines } from "../utilities/formGroupedLines.ts";
 
 export default class SpreadFormation extends FormationBase {
   distanceBetween = 40;

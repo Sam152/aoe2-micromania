@@ -1,0 +1,32 @@
+{
+  "nodeModulesDir": "auto",
+  "tasks": {
+    "start": "deno run --unstable-sloppy-imports --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "npm:react@18",
+    "lib": ["dom", "dom.iterable", "esnext"]
+  },
+  "imports": {
+    "react": "npm:react@18",
+    "react/jsx-runtime": "npm:react@18/jsx-runtime",
+    "react-dom": "npm:react-dom@18",
+    "react-dom/client": "npm:react-dom@18/client",
+    "react-router-dom": "npm:react-router-dom@^6.3.0",
+    "react-icons/": "npm:react-icons@3/",
+    "socket.io": "npm:socket.io@^4.4.1",
+    "socket.io-client": "npm:socket.io-client@^4.4.1",
+    "socket.io-client/": "npm:socket.io-client@^4.4.1/",
+    "three/": "npm:three@~0.139.2/",
+    "howler": "npm:howler@^2.2.3",
+    "d3-quadtree": "npm:d3-quadtree@^3.0.1",
+    "genie-smx": "npm:genie-smx@^1.2.0",
+    "genie-smx/": "npm:genie-smx@^1.2.0/",
+    "humanize-duration": "npm:humanize-duration@^3.27.1",
+    "jascpal": "npm:jascpal@~0.1.4",
+    "just-standard-deviation": "npm:just-standard-deviation@^2.0.2",
+    "stinput": "npm:stinput@^2.0.2",
+    "buffer": "npm:buffer@^6.0.3"
+  }
+}

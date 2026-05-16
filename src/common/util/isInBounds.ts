@@ -1,6 +1,6 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import Grid from "../terrain/Grid";
-import config from "../config";
+import Grid from "../terrain/Grid.ts";
+import config from "../config.ts";
 
 // Precompute as many constants as possible.
 const tileGradient = config.tileHeight / config.tileWidth;

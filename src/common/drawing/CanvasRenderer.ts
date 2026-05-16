@@ -1,25 +1,25 @@
-import { ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface } from "../../types.d";
-import unitMetadataFactory from "../units/unitMetadataFactory";
-import { square } from "./shapes";
-import screenManager from "./screenManager";
+import { ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface } from "../../types.d.ts";
+import unitMetadataFactory from "../units/unitMetadataFactory.ts";
+import { square } from "./shapes.ts";
+import screenManager from "./screenManager.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import config from "../config";
-import AnimationStyle from "../units/AnimationStyle";
-import Grid from "../terrain/Grid";
-import UnitState from "../units/UnitState";
-import pointInRect from "../util/pointInRect";
-import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
-import getArrowPosition from "./helpers/getArrowPosition";
-import projectileMetadata from "../units/projectileMetadata";
-import ActiveCommand from "../input/ActiveCommand";
-import unitsInGameState from "../util/unitsInGameState";
-import DebugRenderer from "./DebugRenderer";
-import slpManager from "./SlpManager";
-import selectionCircle from "./helpers/selectionCircle";
-import ProjectileType from "../units/ProjectileType";
-import { rockPositionFactory } from "./helpers/rockPosition";
-import { selectionRightClickAction } from "../units/selectionRightClickAction";
-import { CONVERSION_JUICE_TICKS_RECHARGE } from "../state/mutations/tick/convertUnits";
+import config from "../config.ts";
+import AnimationStyle from "../units/AnimationStyle.ts";
+import Grid from "../terrain/Grid.ts";
+import UnitState from "../units/UnitState.ts";
+import pointInRect from "../util/pointInRect.ts";
+import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick.ts";
+import getArrowPosition from "./helpers/getArrowPosition.ts";
+import projectileMetadata from "../units/projectileMetadata.ts";
+import ActiveCommand from "../input/ActiveCommand.ts";
+import unitsInGameState from "../util/unitsInGameState.ts";
+import DebugRenderer from "./DebugRenderer.ts";
+import slpManager from "./SlpManager.ts";
+import selectionCircle from "./helpers/selectionCircle.ts";
+import ProjectileType from "../units/ProjectileType.ts";
+import { rockPositionFactory } from "./helpers/rockPosition.ts";
+import { selectionRightClickAction } from "../units/selectionRightClickAction.ts";
+import { CONVERSION_JUICE_TICKS_RECHARGE } from "../state/mutations/tick/convertUnits.ts";
 
 export default class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -41,7 +41,7 @@ export default class CanvasRenderer implements RendererInterface {
     this.framesPerTick = 0;
 
     // @ts-ignore
-    window.ctx = this.context;
+    globalThis.ctx = this.context;
 
     this.lastCursor = null;
 
@@ -57,8 +57,8 @@ export default class CanvasRenderer implements RendererInterface {
   }
 
   fit() {
-    this.context.canvas.width = window.innerWidth * screenManager.getCanvasScale();
-    this.context.canvas.height = (window.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
+    this.context.canvas.width = globalThis.innerWidth * screenManager.getCanvasScale();
+    this.context.canvas.height = (globalThis.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
   }
 
   getSize(): Vector2 {

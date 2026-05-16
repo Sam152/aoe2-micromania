@@ -1,10 +1,11 @@
 import { createServer as createServerHttps } from "node:https";
 import { createServer as createServerHttp } from "node:http";
 import { Server } from "socket.io";
-import Player from "./rooms/Player";
+import Player from "./rooms/Player.ts";
 import * as fs from "node:fs";
-import { startGame } from "./utils/startGame";
-import { logErrors } from "./utils/logErrors";
+import { startGame } from "./utils/startGame.ts";
+import { logErrors } from "./utils/logErrors.ts";
+import process from "node:process";
 
 logErrors();
 

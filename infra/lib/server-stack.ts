@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { MicroManiaServer, ServerProps } from "./constructs/MicroManiaServer";
+import { MicroManiaServer, ServerProps } from "./constructs/MicroManiaServer.ts";
 import { DockerImageAsset, Platform } from "aws-cdk-lib/aws-ecr-assets";
 import * as path from "path";
 

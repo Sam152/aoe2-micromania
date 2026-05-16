@@ -1,8 +1,8 @@
-import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types.d";
-import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
-import Unit from "../units/Unit";
-import Sound from "./Sound";
-import ProjectileType from "../units/ProjectileType";
+import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types.d.ts";
+import selectedTypesFromClientState from "../util/selectedTypesFromClientState.ts";
+import Unit from "../units/Unit.ts";
+import Sound from "./Sound.ts";
+import ProjectileType from "../units/ProjectileType.ts";
 
 class SoundManager {
   attacking(state: ClientState) {

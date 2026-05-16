@@ -1,5 +1,5 @@
-import { ClientState } from "../../types.d";
-import Unit from "../units/Unit";
+import { ClientState } from "../../types.d.ts";
+import Unit from "../units/Unit.ts";
 
 export default function selectedTypesFromClientState(state: ClientState) {
   const typeById = state.unitHitBoxes.reduce<{ [key: number]: Unit }>((obj, instance) => {

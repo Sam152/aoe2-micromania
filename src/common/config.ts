@@ -39,7 +39,7 @@ const config = {
   /**
    * Asset base URL.
    */
-  assetBaseUrl: process.env.ASSET_BASE_URL,
+  assetBaseUrl: "",
 };
 
 export default config;

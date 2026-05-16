@@ -1,8 +1,8 @@
-import stopUnit from "../initiated/stopUnit";
-import { GameState } from "../../../../types.d";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
-import { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards";
-import hasValue from "../../../util/hasValue";
+import stopUnit from "../initiated/stopUnit.ts";
+import { GameState } from "../../../../types.d.ts";
+import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
+import { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards.ts";
+import hasValue from "../../../util/hasValue.ts";
 
 export default function moveUnits(state: GameState) {
   // Move all units that have some active waypoint.

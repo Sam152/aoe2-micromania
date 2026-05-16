@@ -1,7 +1,7 @@
-import { defaultState as defaultGameState, gameStateMutator } from "../gameState";
-import { clientStateMutator, defaultState as defaultClientState } from "../clientState";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d";
-import config from "../../config";
+import { defaultState as defaultGameState, gameStateMutator } from "../gameState.ts";
+import { clientStateMutator, defaultState as defaultClientState } from "../clientState.ts";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
+import config from "../../config.ts";
 
 /**
  * A state manager that holds context locally, may either be a client or a server.

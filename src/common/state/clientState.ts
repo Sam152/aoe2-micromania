@@ -1,15 +1,15 @@
-import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types.d";
-import deepClone from "../util/deepClone";
-import pointInRect from "../util/pointInRect";
-import rectIntersectingWithRect, { normalizeRect } from "../util/rectIntersectingWithRect";
-import config from "../config";
+import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types.d.ts";
+import deepClone from "../util/deepClone.ts";
+import pointInRect from "../util/pointInRect.ts";
+import rectIntersectingWithRect, { normalizeRect } from "../util/rectIntersectingWithRect.ts";
+import config from "../config.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import ActiveCommand from "../input/ActiveCommand";
-import soundManager from "../sounds/SoundManger";
-import soundManger from "../sounds/SoundManger";
-import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround";
-import { unitsById } from "../units/unitsById";
-import Unit from "../units/Unit";
+import ActiveCommand from "../input/ActiveCommand.ts";
+import soundManager from "../sounds/SoundManger.ts";
+import soundManger from "../sounds/SoundManger.ts";
+import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround.ts";
+import { unitsById } from "../units/unitsById.ts";
+import Unit from "../units/Unit.ts";
 
 function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;

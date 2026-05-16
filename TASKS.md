@@ -45,4 +45,4 @@ Tasks
 - [x] Main thread blocking perf for graphics render
 - [x] Loading progress
 - [x] Cached cursors
-- [ ] Replace Chakra
+- [x] Replace Chakra

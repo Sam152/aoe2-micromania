@@ -1,6 +1,6 @@
-import { GameState } from "../../../../types.d";
-import { spawnStartingUnits } from "./spawnStartingUnits";
-import { ComputedFrameState } from "../../computed/createComputedFrameState";
+import { GameState } from "../../../../types.d.ts";
+import { spawnStartingUnits } from "./spawnStartingUnits.ts";
+import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
 export const MAX_PLAYERS_PER_SERVER = 5;
 

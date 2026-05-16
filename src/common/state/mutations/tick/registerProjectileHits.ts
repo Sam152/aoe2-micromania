@@ -1,10 +1,10 @@
-import { GameState } from "../../../../types.d";
-import calculateDamage from "../../../units/calculateDamage";
-import registerUnitFallen from "./registerUnitFallen";
-import unitMetadataFactory from "../../../units/unitMetadataFactory";
-import projectileMetadata from "../../../units/projectileMetadata";
-import pointInCircle from "../../../util/pointInCircle";
-import soundManager from "../../../sounds/SoundManger";
+import { GameState } from "../../../../types.d.ts";
+import calculateDamage from "../../../units/calculateDamage.ts";
+import registerUnitFallen from "./registerUnitFallen.ts";
+import unitMetadataFactory from "../../../units/unitMetadataFactory.ts";
+import projectileMetadata from "../../../units/projectileMetadata.ts";
+import pointInCircle from "../../../util/pointInCircle.ts";
+import soundManager from "../../../sounds/SoundManger.ts";
 
 export default function registerProjectileHits(state: GameState) {
   const landedProjectiles = state.projectiles.filter(({ arrivingTick }) => arrivingTick === state.ticks);

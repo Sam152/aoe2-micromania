@@ -1,6 +1,6 @@
-import unitMetadataFactory from "./unitMetadataFactory";
-import config from "../config";
-import { UnitInstance } from "../../types.d";
+import unitMetadataFactory from "./unitMetadataFactory.ts";
+import config from "../config.ts";
+import { UnitInstance } from "../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export default function calculateUnitMovementPerTick(unit: UnitInstance): Vector2 | null {

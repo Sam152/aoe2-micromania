@@ -1,6 +1,6 @@
 import React from "react";
-import Section from "../components/Section";
-import soundList from "../../common/sounds/soundList";
+import Section from "../components/Section.tsx";
+import soundList from "../../common/sounds/soundList.ts";
 
 function playSound(soundName: string) {
   var audio = new Audio(`/sounds/de/${soundName}.ogg`);

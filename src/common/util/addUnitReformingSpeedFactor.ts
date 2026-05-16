@@ -1,6 +1,6 @@
-import { UnitInstance } from "../../types.d";
-import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
-import config from "../config";
+import { UnitInstance } from "../../types.d.ts";
+import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick.ts";
+import config from "../config.ts";
 
 export default function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
   if (units.length < 2) {

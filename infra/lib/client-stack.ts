@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { MicroManiaClient } from "./constructs/MicroManiaClient";
+import { MicroManiaClient } from "./constructs/MicroManiaClient.ts";
 
 export class ClientStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: cdk.StackProps) {

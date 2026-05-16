@@ -7,15 +7,15 @@ export default class LocalStorageObject<T> {
 
   get(defaultValue: T): T {
     try {
-      const data = JSON.parse(window.localStorage.getItem(this.key));
+      const data = JSON.parse(globalThis.localStorage.getItem(this.key));
       return data || defaultValue;
     } catch (e) {
-      window.localStorage.removeItem(this.key);
+      globalThis.localStorage.removeItem(this.key);
       return defaultValue;
     }
   }
 
   set(object: T): void {
-    window.localStorage.setItem(this.key, JSON.stringify(object));
+    globalThis.localStorage.setItem(this.key, JSON.stringify(object));
   }
 }

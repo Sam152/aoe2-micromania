@@ -1,7 +1,7 @@
-import { useRegionalConnection } from "../hooks/useRegionalConnection";
+import { useRegionalConnection } from "../hooks/useRegionalConnection.ts";
 import React, { useMemo } from "react";
-import NetworkedStateManager from "../../common/state/managers/NetworkedStateManager";
-import GameCanvas from "../components/GameCanvas";
+import NetworkedStateManager from "../../common/state/managers/NetworkedStateManager.ts";
+import GameCanvas from "../components/GameCanvas.tsx";
 
 export function SpectateGame() {
   const connection = useRegionalConnection();

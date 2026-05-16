@@ -1,6 +1,6 @@
-import { ConnectedState } from "../hooks/useConnectedState";
+import { ConnectedState } from "../hooks/useConnectedState.tsx";
 import React, { CSSProperties, ReactNode } from "react";
-import assetUrl from "../util/assetUrl";
+import assetUrl from "../util/assetUrl.ts";
 
 export function PlayingAs({ connectedState }: { connectedState: ConnectedState }) {
   const queued = connectedState.queuedPlayers.includes(connectedState.clientId);

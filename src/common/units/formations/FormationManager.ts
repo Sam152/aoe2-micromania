@@ -1,8 +1,8 @@
-import FormationType from "./FormationType";
-import LineFormation from "./types/LineFormation";
-import { FormationInterface, UnitInstance } from "../../../types.d";
-import SpreadFormation from "./types/SpreadFormation";
-import SplitFormation from "./types/SplitFormation";
+import FormationType from "./FormationType.ts";
+import LineFormation from "./types/LineFormation.ts";
+import { FormationInterface, UnitInstance } from "../../../types.d.ts";
+import SpreadFormation from "./types/SpreadFormation.ts";
+import SplitFormation from "./types/SplitFormation.ts";
 
 class FormationManager {
   map: { [key: number]: FormationInterface };

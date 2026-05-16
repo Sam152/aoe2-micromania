@@ -1,13 +1,13 @@
-import stopUnit from "./stopUnit";
-import formationManager from "../../../units/formations/FormationManager";
-import setUnitMovementTowards, { setUnitMovementTowardsCurrentWaypoint } from "./setUnitMovementTowards";
-import { GameState, UnitInstance } from "../../../../types.d";
+import stopUnit from "./stopUnit.ts";
+import formationManager from "../../../units/formations/FormationManager.ts";
+import setUnitMovementTowards, { setUnitMovementTowardsCurrentWaypoint } from "./setUnitMovementTowards.ts";
+import { GameState, UnitInstance } from "../../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import averageVector from "../../../util/averageVector";
-import populationVector from "../../../util/populationVector";
-import config from "../../../config";
-import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
-import { snapToClamp } from "../../../util/snapToClamp";
+import averageVector from "../../../util/averageVector.ts";
+import populationVector from "../../../util/populationVector.ts";
+import config from "../../../config.ts";
+import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor.ts";
+import { snapToClamp } from "../../../util/snapToClamp.ts";
 
 export default function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
   units.forEach((unit) => stopUnit(unit));
