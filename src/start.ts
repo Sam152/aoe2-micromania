@@ -45,8 +45,28 @@ console.log("Client bundled.");
 
 const html = await Deno.readTextFile(new URL("./client/template.html", import.meta.url));
 const css = await Deno.readTextFile(new URL("./client/styles.css", import.meta.url));
+const assetsRoot = new URL("../assets", import.meta.url).pathname;
 
-const httpServer = createServer((req, res) => {
+const MIME_TYPES: Record<string, string> = {
+  ogg: "audio/ogg",
+  mp3: "audio/mpeg",
+  wav: "audio/wav",
+  png: "image/png",
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  gif: "image/gif",
+  svg: "image/svg+xml",
+  pal: "application/octet-stream",
+  smx: "application/octet-stream",
+  slp: "application/octet-stream",
+};
+
+function contentType(pathname: string): string {
+  const ext = pathname.split(".").pop()?.toLowerCase() ?? "";
+  return MIME_TYPES[ext] ?? "application/octet-stream";
+}
+
+const httpServer = createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -66,6 +86,19 @@ const httpServer = createServer((req, res) => {
   if (req.method === "GET" && pathname === "/styles.css") {
     res.writeHead(200, { "Content-Type": "text/css" });
     return res.end(css);
+  }
+
+  if (req.method === "GET") {
+    const assetPath = `${assetsRoot}${pathname}`;
+    if (assetPath.startsWith(assetsRoot + "/")) {
+      try {
+        const data = await Deno.readFile(assetPath);
+        res.writeHead(200, { "Content-Type": contentType(pathname) });
+        return res.end(data);
+      } catch {
+        // Not in assets — fall through to HTML.
+      }
+    }
   }
 
   // All other requests serve the client HTML (historyApiFallback).
