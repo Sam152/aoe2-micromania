@@ -1,5 +1,5 @@
 import UnitState from "../../../units/UnitState";
-import { GameState, UnitInstance } from "../../../../types";
+import { GameState, UnitInstance } from "../../../../types.d";
 import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
 import inAttackRange from "../../../util/inAttackRange";
 import setUnitMovementTowards from "../initiated/setUnitMovementTowards";

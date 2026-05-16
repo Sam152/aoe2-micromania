@@ -1,4 +1,4 @@
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export default function averageVector(vectors: Vector2[]): Vector2 {
   return new Vector2(

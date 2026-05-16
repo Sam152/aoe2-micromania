@@ -1,6 +1,6 @@
 import { Button, Container, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import Section from "../components/Section";
-import { ReplayIndexItem } from "../../types";
+import { ReplayIndexItem } from "../../types.d";
 import { Link } from "react-router-dom";
 import humanizeDuration from "humanize-duration";
 import useFetched from "../hooks/useFetched";
@@ -29,7 +29,12 @@ export default function Replays() {
                   <Tr key={game.id}>
                     <Td>{game.players.join(" vs ")}</Td>
                     <Td>{new Date(game.start).toLocaleString()}</Td>
-                    <Td>{humanizeDuration(game.end - game.start, { units: ["m", "s"], round: true })}</Td>
+                    <Td>
+                      {humanizeDuration(game.end - game.start, {
+                        units: ["m", "s"],
+                        round: true,
+                      })}
+                    </Td>
                     <Td>
                       <Button as={Link} to={game.id}>
                         Watch Replay

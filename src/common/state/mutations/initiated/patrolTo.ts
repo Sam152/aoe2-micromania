@@ -4,8 +4,8 @@ import averageVector from "../../../util/averageVector";
 import formationManager from "../../../units/formations/FormationManager";
 import setUnitMovementTowards from "./setUnitMovementTowards";
 import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
-import { GameState, GameStateAction, UnitId, UnitInstance } from "../../../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { GameState, GameStateAction, UnitId, UnitInstance } from "../../../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 import { snapToClamp } from "../../../util/snapToClamp";
 
 export default function patrolTo(state: GameState, units: UnitInstance[], position: Vector2) {

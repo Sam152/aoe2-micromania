@@ -1,7 +1,7 @@
 import compassDirectionCalculator from "../../../units/compassDirectionCalculator";
 import UnitState from "../../../units/UnitState";
-import { GameState, UnitInstance } from "../../../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { GameState, UnitInstance } from "../../../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 import ticksToDestination from "../../../util/ticksToDestination";
 import { snapToClamp } from "../../../util/snapToClamp";
 

@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import registerUnitFallen from "../tick/registerUnitFallen";
 import provisionPlayer from "./provisionPlayer";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";

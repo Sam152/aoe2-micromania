@@ -1,4 +1,4 @@
-import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types";
+import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types.d";
 import selectedTypesFromClientState from "../util/selectedTypesFromClientState";
 import Unit from "../units/Unit";
 import Sound from "./Sound";

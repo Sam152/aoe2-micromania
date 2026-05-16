@@ -1,7 +1,7 @@
 import UnitState from "../../../units/UnitState";
 import unitMetadataFactory from "../../../units/unitMetadataFactory";
 import config from "../../../config";
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import projectileMetadata from "../../../units/projectileMetadata";
 import hasValue from "../../../util/hasValue";
 import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";

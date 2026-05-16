@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import { spawnStartingUnits } from "./spawnStartingUnits";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
 

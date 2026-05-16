@@ -8,7 +8,7 @@ import formationManager from "../../../units/formations/FormationManager";
 import setUnitMovementTowards from "./setUnitMovementTowards";
 import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor";
 import FormationType from "../../../units/formations/FormationType";
-import { GameState, UnitId } from "../../../../types";
+import { GameState, UnitId } from "../../../../types.d";
 
 export default function changeFormation(state: GameState, action: { formation: FormationType; units: UnitId[] }) {
   const units = unitsInGameState(state, action.units);

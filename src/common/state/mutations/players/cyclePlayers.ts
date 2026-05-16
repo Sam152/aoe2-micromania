@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import provisionPlayer from "./provisionPlayer";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
 import { deprovisionPlayer } from "./deprovisionPlayer";

@@ -3,7 +3,7 @@ import TransportEvent from "../../common/state/transport/TransportEvent";
 import { normalizeGameStateAction } from "../../common/util/normalizer";
 import Player from "../rooms/Player";
 import { Server } from "socket.io";
-import { GameStateAction } from "../../types";
+import { GameStateAction } from "../../types.d";
 import BattleRoyale from "../../common/modes/BattleRoyale";
 
 export function startGame(io: Server): {

@@ -1,5 +1,5 @@
 import setUnitMovementTowards, { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards";
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import hasValue from "../../../util/hasValue";
 import UnitState from "../../../units/UnitState";
 import stopUnit from "../initiated/stopUnit";

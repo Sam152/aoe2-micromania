@@ -1,5 +1,5 @@
 import { Quadtree } from "d3-quadtree";
-import { GameState, UnitInstance } from "../../../types";
+import { GameState, UnitInstance } from "../../../types.d";
 import { createUnitQuadtree } from "../../util/buildQuadTree";
 import Grid from "../../terrain/Grid";
 

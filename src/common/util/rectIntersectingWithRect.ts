@@ -1,5 +1,5 @@
-import { Rectangle } from "../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { Rectangle } from "../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 import { circle } from "../drawing/shapes";
 
 export function normalizeRect(rect: Rectangle) {

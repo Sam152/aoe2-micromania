@@ -1,8 +1,8 @@
-import { createServer as createServerHttps } from "https";
-import { createServer as createServerHttp } from "http";
+import { createServer as createServerHttps } from "node:https";
+import { createServer as createServerHttp } from "node:http";
 import { Server } from "socket.io";
 import Player from "./rooms/Player";
-import * as fs from "fs";
+import * as fs from "node:fs";
 import { startGame } from "./utils/startGame";
 import { logErrors } from "./utils/logErrors";
 

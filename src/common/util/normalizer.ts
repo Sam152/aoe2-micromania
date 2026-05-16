@@ -5,8 +5,8 @@ import {
   PlayerId,
   ProjectileInstance,
   UnitInstance,
-} from "../../types";
-import { Vector2 } from "three/src/math/Vector2";
+} from "../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export function normalizeGameStateAction(action: GameStateAction): GameStateAction {
   const vectorKeys = ["position"];

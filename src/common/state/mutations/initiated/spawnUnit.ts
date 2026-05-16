@@ -2,8 +2,8 @@ import unitMetadataFactory from "../../../units/unitMetadataFactory";
 import FormationType from "../../../units/formations/FormationType";
 import UnitState from "../../../units/UnitState";
 import CompassDirection from "../../../units/CompassDirection";
-import { GameState, PlayerId, UnitInstance } from "../../../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { GameState, PlayerId, UnitInstance } from "../../../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 import Unit from "../../../units/Unit";
 
 export default function spawnUnit(

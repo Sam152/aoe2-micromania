@@ -19,13 +19,14 @@ import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable";
 import hotkeyManager from "../../common/input/HotkeyManager";
 import Hotkey from "../../common/input/Hotkey";
 import BindableRow from "../components/BindableRow";
-import { HotkeyScheme } from "../../types";
+import { HotkeyScheme } from "../../types.d";
 import hdHotkeyScheme from "../../common/input/schemes/hdHotkeyScheme";
 import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme";
 import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme";
 
 export default function Hotkeys() {
   const rerender = useCounter();
+
   function setBind(hotkey: Hotkey, code: number) {
     hotkeyManager.setBindFor(hotkey, code);
     rerender.increment();

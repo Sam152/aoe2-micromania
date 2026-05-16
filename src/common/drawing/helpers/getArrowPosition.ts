@@ -1,5 +1,5 @@
-import { ProjectileInstance } from "../../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { ProjectileInstance } from "../../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export default function getArrowPosition(
   projectile: Pick<ProjectileInstance, "pathVector" | "startingPoint">,

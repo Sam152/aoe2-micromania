@@ -1,4 +1,4 @@
-import { GameState, UnitInstance } from "../../../../types";
+import { GameState, UnitInstance } from "../../../../types.d";
 import UnitState from "../../../units/UnitState";
 import soundManager from "../../../sounds/SoundManger";
 

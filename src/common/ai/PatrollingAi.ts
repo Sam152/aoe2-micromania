@@ -1,4 +1,4 @@
-import { Ai, GameDispatcher, GameState, GameStateAction } from "../../types";
+import { Ai, GameDispatcher, GameState, GameStateAction } from "../../types.d";
 import averageVector from "../util/averageVector";
 
 /**

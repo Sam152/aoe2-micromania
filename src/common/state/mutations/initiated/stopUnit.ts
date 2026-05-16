@@ -1,5 +1,5 @@
 import UnitState from "../../../units/UnitState";
-import { UnitInstance } from "../../../../types";
+import { UnitInstance } from "../../../../types.d";
 
 export default function stopUnit(unit: UnitInstance): void {
   unit.unitState = UnitState.Idle;

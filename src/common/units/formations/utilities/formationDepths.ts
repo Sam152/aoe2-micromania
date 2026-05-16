@@ -1,4 +1,4 @@
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 const MIN_FORMATION_DEPTH = 0;
 const FIXED_FACTOR = 60;

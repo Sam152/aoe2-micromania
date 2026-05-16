@@ -1,4 +1,4 @@
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import averageVector from "../../../util/averageVector";
 import rotateAroundOrigin from "../../../util/rotateAroundOrigin";
 import standardDeviation from "just-standard-deviation";

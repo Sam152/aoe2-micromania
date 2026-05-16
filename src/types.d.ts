@@ -2,13 +2,13 @@ import UnitState from "./common/units/UnitState";
 import Unit from "./common/units/Unit";
 import CompassDirection from "./common/units/CompassDirection";
 import AnimationStyle from "./common/units/AnimationStyle";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import FormationType from "./common/units/formations/FormationType";
 import ProjectileType from "./common/units/ProjectileType";
 import ActiveCommand from "./common/input/ActiveCommand";
 import Hotkey from "./common/input/Hotkey";
 import DamageType from "./common/units/DamageType";
-import { SmxFrame } from "genie-smx/lib/smx/struct";
+import { SmxFrame } from "genie-smx/lib/smx/struct.js";
 import Sound from "./common/sounds/Sound";
 
 export interface UnitInstance {

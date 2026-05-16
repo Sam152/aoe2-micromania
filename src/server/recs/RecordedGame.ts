@@ -1,4 +1,4 @@
-import { GameStateAction } from "../../types";
+import { GameStateAction } from "../../types.d";
 import * as fs from "fs";
 import generateId from "../../common/util/generateId";
 

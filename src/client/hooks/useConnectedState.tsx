@@ -1,5 +1,5 @@
 import { createContext, Dispatch, ReactNode, useContext, useState } from "react";
-import { GameState } from "../../types";
+import { GameState } from "../../types.d";
 import { Socket } from "socket.io-client";
 
 export const connectedEvents = ["CLIENT_LOADED_WITH_ID", "CLIENT_DISCONNECTED_WITH_ID", "CYCLE_PLAYER"];

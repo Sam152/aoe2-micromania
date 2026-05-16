@@ -1,8 +1,8 @@
 import stopUnit from "./stopUnit";
 import formationManager from "../../../units/formations/FormationManager";
 import setUnitMovementTowards, { setUnitMovementTowardsCurrentWaypoint } from "./setUnitMovementTowards";
-import { GameState, UnitInstance } from "../../../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { GameState, UnitInstance } from "../../../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 import averageVector from "../../../util/averageVector";
 import populationVector from "../../../util/populationVector";
 import config from "../../../config";

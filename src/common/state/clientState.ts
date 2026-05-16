@@ -1,9 +1,9 @@
-import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types";
+import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types.d";
 import deepClone from "../util/deepClone";
 import pointInRect from "../util/pointInRect";
 import rectIntersectingWithRect, { normalizeRect } from "../util/rectIntersectingWithRect";
 import config from "../config";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import ActiveCommand from "../input/ActiveCommand";
 import soundManager from "../sounds/SoundManger";
 import soundManger from "../sounds/SoundManger";

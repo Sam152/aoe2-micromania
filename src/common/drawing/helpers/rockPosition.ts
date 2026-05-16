@@ -1,6 +1,6 @@
-import { ProjectileInstance } from "../../../types";
+import { ProjectileInstance } from "../../../types.d";
 import getArrowPosition from "./getArrowPosition";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export function rockPositionFactory(projectile: ProjectileInstance, percentageComplete: number) {
   return (x: number, y: number) =>

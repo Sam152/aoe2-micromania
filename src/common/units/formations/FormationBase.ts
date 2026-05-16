@@ -1,5 +1,5 @@
-import { FormationInterface, UnitInstance } from "../../../types";
-import { Vector2 } from "three/src/math/Vector2";
+import { FormationInterface, UnitInstance } from "../../../types.d";
+import { Vector2 } from "three/src/math/Vector2.js";
 import unitMetadataFactory from "../unitMetadataFactory";
 
 export default abstract class FormationBase implements FormationInterface {

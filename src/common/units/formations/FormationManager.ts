@@ -1,6 +1,6 @@
 import FormationType from "./FormationType";
 import LineFormation from "./types/LineFormation";
-import { FormationInterface, UnitInstance } from "../../../types";
+import { FormationInterface, UnitInstance } from "../../../types.d";
 import SpreadFormation from "./types/SpreadFormation";
 import SplitFormation from "./types/SplitFormation";
 

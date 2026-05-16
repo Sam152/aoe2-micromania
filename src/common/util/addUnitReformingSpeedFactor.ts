@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../types";
+import { UnitInstance } from "../../types.d";
 import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick";
 import config from "../config";
 

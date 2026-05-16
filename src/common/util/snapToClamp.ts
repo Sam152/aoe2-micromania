@@ -1,5 +1,5 @@
-import { Vector2 } from "three/src/math/Vector2";
-import { Line } from "../../types";
+import { Vector2 } from "three/src/math/Vector2.js";
+import { Line } from "../../types.d";
 import config from "../config";
 import isInBounds from "./isInBounds";
 

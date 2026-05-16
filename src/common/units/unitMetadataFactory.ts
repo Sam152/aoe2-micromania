@@ -1,9 +1,9 @@
 import Unit from "./Unit";
 import UnitState from "./UnitState";
-import {UnitStats} from "../../types";
+import { UnitStats } from "../../types.d";
 import AnimationStyle from "./AnimationStyle";
 import ProjectileType from "./ProjectileType";
-import {Vector2} from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import DamageType from "./DamageType";
 
 /**

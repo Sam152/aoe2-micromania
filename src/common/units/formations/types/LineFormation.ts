@@ -1,7 +1,7 @@
-import { Vector2 } from "three/src/math/Vector2";
 import FormationBase from "../FormationBase";
-import { UnitInstance } from "../../../../types";
+import { UnitInstance } from "../../../../types.d";
 import { formGroupedLines } from "../utilities/formGroupedLines";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export default class LineFormation extends FormationBase {
   distanceBetween = 25;

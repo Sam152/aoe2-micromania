@@ -1,8 +1,8 @@
-import { ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface } from "../../types";
+import { ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface } from "../../types.d";
 import unitMetadataFactory from "../units/unitMetadataFactory";
 import { square } from "./shapes";
 import screenManager from "./screenManager";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import config from "../config";
 import AnimationStyle from "../units/AnimationStyle";
 import Grid from "../terrain/Grid";

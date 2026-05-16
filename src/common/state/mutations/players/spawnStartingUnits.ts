@@ -1,9 +1,9 @@
 import Grid from "../../../terrain/Grid";
 import spawnUnit from "../initiated/spawnUnit";
 import Unit from "../../../units/Unit";
-import { GameState, UnitInstance } from "../../../../types";
+import { GameState, UnitInstance } from "../../../../types.d";
 import { ComputedFrameState } from "../../computed/createComputedFrameState";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import formationManager from "../../../units/formations/FormationManager";
 import FormationType from "../../../units/formations/FormationType";
 import compassDirectionCalculator from "../../../units/compassDirectionCalculator";

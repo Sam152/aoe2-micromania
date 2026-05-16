@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import calculateDamage from "../../../units/calculateDamage";
 import registerUnitFallen from "./registerUnitFallen";
 import unitMetadataFactory from "../../../units/unitMetadataFactory";

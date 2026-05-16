@@ -1,4 +1,4 @@
-import { GameState, GameStateAction } from "../../types";
+import { GameState, GameStateAction } from "../../types.d";
 import deepClone from "../util/deepClone";
 import UnitState from "../units/UnitState";
 import formationManager from "../units/formations/FormationManager";

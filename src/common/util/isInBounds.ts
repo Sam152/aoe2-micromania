@@ -1,4 +1,4 @@
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import Grid from "../terrain/Grid";
 import config from "../config";
 
@@ -18,6 +18,7 @@ export const bottomRight = (x: number, mapSize: number) => negativeTileGradient 
 export function isBelowLine(func: gradientFunction, point: Vector2, mapSize: number) {
   return func(point.x, mapSize) < point.y;
 }
+
 export function isAboveLine(func: gradientFunction, point: Vector2, mapSize: number) {
   return func(point.x, mapSize) > point.y;
 }

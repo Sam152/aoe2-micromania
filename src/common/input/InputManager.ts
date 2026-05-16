@@ -1,6 +1,6 @@
-import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types";
+import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types.d";
 import screenPositionToGamePosition, { gamePositionToScreenPosition } from "../util/screenPositionToGamePosition";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import FormationType from "../units/formations/FormationType";
 import screenManager from "../drawing/screenManager";
 import hotkeyManager from "./HotkeyManager";

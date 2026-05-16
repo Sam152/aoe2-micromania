@@ -1,7 +1,7 @@
 import averageVector from "../../../util/averageVector";
-import { Vector2 } from "three/src/math/Vector2";
-import { groupByTypes } from "./groupByTypes";
-import { UnitInstance } from "../../../../types";
+import { Vector2 } from "three/src/math/Vector2.js";
+import { groupByTypes } from "./groupBytypes";
+import { UnitInstance } from "../../../../types.d";
 import { formationDepth } from "./formationDepths";
 import formLines, { translateAndRotate } from "./formLines";
 

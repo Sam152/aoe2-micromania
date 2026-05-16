@@ -1,6 +1,6 @@
 import { defaultState as defaultGameState, gameStateMutator } from "../gameState";
 import { clientStateMutator, defaultState as defaultClientState } from "../clientState";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d";
 import config from "../../config";
 
 /**

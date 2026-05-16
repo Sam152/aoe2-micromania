@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../types";
+import { UnitInstance } from "../../types.d";
 import hasValue from "./hasValue";
 
 export default function populationHas(units: UnitInstance[], property: keyof UnitInstance) {

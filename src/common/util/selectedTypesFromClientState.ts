@@ -1,4 +1,4 @@
-import { ClientState } from "../../types";
+import { ClientState } from "../../types.d";
 import Unit from "../units/Unit";
 
 export default function selectedTypesFromClientState(state: ClientState) {

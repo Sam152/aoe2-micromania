@@ -1,7 +1,7 @@
 import InputManager from "../../input/InputManager";
 import { clientStateTransmitter } from "../clientState";
 import CanvasRenderer from "../../drawing/CanvasRenderer";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d";
 import Grid from "../../terrain/Grid";
 import soundPlayer from "../../sounds/SoundPlayer";
 import averageVector from "../../util/averageVector";

@@ -1,5 +1,5 @@
 import stopUnit from "../initiated/stopUnit";
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
 import { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards";
 import hasValue from "../../../util/hasValue";

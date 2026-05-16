@@ -1,6 +1,6 @@
-import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types";
+import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types.d";
 import { circle, emptyCircle } from "./shapes";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import arrayOfSize from "../util/arrayOfSize";
 import isInBounds, { bottomLeft, bottomRight, topLeft, topRight } from "../util/isInBounds";
 import config from "../config";

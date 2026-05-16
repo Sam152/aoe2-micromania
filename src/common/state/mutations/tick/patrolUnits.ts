@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 import hasValue from "../../../util/hasValue";
 import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick";
 import swapProperties from "../../../util/swapProperties";

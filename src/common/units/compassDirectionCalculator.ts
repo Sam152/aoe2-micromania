@@ -1,4 +1,4 @@
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import CompassDirection from "./CompassDirection";
 
 class CompassDirectionCalculator {

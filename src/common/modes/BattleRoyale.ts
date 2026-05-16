@@ -1,4 +1,4 @@
-import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types";
+import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.d";
 import Grid from "../terrain/Grid";
 import config from "../config";
 

@@ -1,7 +1,7 @@
-import { UnitInstance } from "../../types";
+import { UnitInstance } from "../../types.d";
 import hasValue from "./hasValue";
 import averageVector from "./averageVector";
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export default function populationVector(units: UnitInstance[], property: keyof UnitInstance): Vector2 {
   return averageVector(units.map((unit) => unit[property]).filter((vector) => hasValue(vector)) as Vector2[]);

@@ -1,9 +1,10 @@
-import { UnitInstance } from "../../types";
+import { UnitInstance } from "../../types.d";
 import { Quadtree, quadtree } from "d3-quadtree";
 
 function accessX(unit: UnitInstance) {
   return unit.position.x;
 }
+
 function accessY(unit: UnitInstance) {
   return unit.position.y;
 }

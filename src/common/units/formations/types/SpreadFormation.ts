@@ -1,6 +1,6 @@
-import { Vector2 } from "three/src/math/Vector2";
+import { Vector2 } from "three/src/math/Vector2.js";
 import FormationBase from "../FormationBase";
-import { UnitInstance } from "../../../../types";
+import { UnitInstance } from "../../../../types.d";
 import { formGroupedLines } from "../utilities/formGroupedLines";
 
 export default class SpreadFormation extends FormationBase {

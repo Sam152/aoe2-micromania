@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types";
+import { GameState } from "../../../../types.d";
 
 const CLEAN_AFTER_TICKS = 800;
 

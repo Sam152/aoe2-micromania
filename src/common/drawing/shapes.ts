@@ -1,5 +1,5 @@
-import { Vector2 } from "three/src/math/Vector2";
-import { Rectangle } from "../../types";
+import { Vector2 } from "three/src/math/Vector2.js";
+import { Rectangle } from "../../types.d";
 
 export function circle(
   ctx: CanvasRenderingContext2D,

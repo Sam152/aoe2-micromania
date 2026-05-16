@@ -1,4 +1,4 @@
-import { GameState, UnitInstance } from "../../../../types";
+import { GameState, UnitInstance } from "../../../../types.d";
 import UnitState from "../../../units/UnitState";
 import { getAttackRange } from "../../../util/inAttackRange";
 import { hasScalarValue } from "../../../util/hasValue";
