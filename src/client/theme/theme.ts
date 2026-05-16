@@ -1,5 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
-import "@fontsource/cinzel/500.css";
+// import "@fontsource/cinzel/500.css";
 
 const theme = extendTheme({
   config: {
