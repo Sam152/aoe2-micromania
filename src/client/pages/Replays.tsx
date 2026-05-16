@@ -1,4 +1,4 @@
-import { Button, Container, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import React from "react";
 import Section from "../components/Section";
 import { ReplayIndexItem } from "../../types.d";
 import { Link } from "react-router-dom";
@@ -9,43 +9,43 @@ export default function Replays() {
   const games = useFetched<Array<ReplayIndexItem>>("/recs/index.json", []);
 
   return (
-    <Container>
-      <Section width="full">
-        <TableContainer>
-          <Table>
-            <Thead>
-              <Tr>
-                <Th>Players</Th>
-                <Th>Started at</Th>
-                <Th>Duration</Th>
-                <Th width={1}></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
+    <div className="container">
+      <Section>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Players</th>
+                <th>Started at</th>
+                <th>Duration</th>
+                <th style={{ width: 1 }}></th>
+              </tr>
+            </thead>
+            <tbody>
               {games
                 .slice()
                 .reverse()
                 .map((game) => (
-                  <Tr key={game.id}>
-                    <Td>{game.players.join(" vs ")}</Td>
-                    <Td>{new Date(game.start).toLocaleString()}</Td>
-                    <Td>
+                  <tr key={game.id}>
+                    <td>{game.players.join(" vs ")}</td>
+                    <td>{new Date(game.start).toLocaleString()}</td>
+                    <td>
                       {humanizeDuration(game.end - game.start, {
                         units: ["m", "s"],
                         round: true,
                       })}
-                    </Td>
-                    <Td>
-                      <Button as={Link} to={game.id}>
+                    </td>
+                    <td>
+                      <Link className="btn" to={game.id}>
                         Watch Replay
-                      </Button>
-                    </Td>
-                  </Tr>
+                      </Link>
+                    </td>
+                  </tr>
                 ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+            </tbody>
+          </table>
+        </div>
       </Section>
-    </Container>
+    </div>
   );
 }

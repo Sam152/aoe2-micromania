@@ -1,19 +1,4 @@
-import {
-  Button,
-  ButtonGroup,
-  Container,
-  Heading,
-  Kbd,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  useCounter,
-  VStack,
-} from "@chakra-ui/react";
+import React, { useState } from "react";
 import Section from "../components/Section";
 import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable";
 import hotkeyManager from "../../common/input/HotkeyManager";
@@ -25,135 +10,143 @@ import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme";
 import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme";
 
 export default function Hotkeys() {
-  const rerender = useCounter();
+  const [, setCount] = useState(0);
+  const rerender = () => setCount((c) => c + 1);
 
   function setBind(hotkey: Hotkey, code: number) {
     hotkeyManager.setBindFor(hotkey, code);
-    rerender.increment();
+    rerender();
   }
 
   function clear() {
     hotkeyManager.clearStorage();
-    rerender.increment();
+    rerender();
   }
 
   function setScheme(scheme: HotkeyScheme) {
     hotkeyManager.setScheme(scheme);
-    rerender.increment();
+    rerender();
   }
 
   return (
-    <Container>
-      <VStack spacing={4}>
-        <ButtonGroup justifyContent="flex-end" width="full">
-          <Button onClick={() => setScheme(hdHotkeyScheme)}>HD Hotkeys</Button>
-          <Button onClick={() => setScheme(deHotkeyScheme)}>DE Hotkeys</Button>
-          <Button onClick={() => setScheme(aocHotkeyScheme)}>Classic Hotkeys</Button>
-          <Button variant="outline" onClick={clear}>
+    <div className="container">
+      <div className="vstack">
+        <div className="btn-group btn-group-right">
+          <button className="btn" onClick={() => setScheme(hdHotkeyScheme)}>
+            HD Hotkeys
+          </button>
+          <button className="btn" onClick={() => setScheme(deHotkeyScheme)}>
+            DE Hotkeys
+          </button>
+          <button className="btn" onClick={() => setScheme(aocHotkeyScheme)}>
+            Classic Hotkeys
+          </button>
+          <button className="btn btn-outline" onClick={clear}>
             Reset to default
-          </Button>
-        </ButtonGroup>
+          </button>
+        </div>
 
-        <Section width="full">
-          <TableContainer>
-            <Table sx={{ tableLayout: "fixed" }}>
-              <Thead>
-                <Tr>
-                  <Th>Hotkey name</Th>
-                  <Th>Bind</Th>
-                  <Th />
-                </Tr>
-              </Thead>
-              <Tbody>
-                <Tr>
-                  <Td colSpan={3}>
-                    <Heading size="md">Movement</Heading>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>Select units</Td>
-                  <Td>
-                    <Kbd>left click</Kbd> / <Kbd>left click</Kbd> + <Kbd>drag</Kbd>
-                  </Td>
-                  <Td textAlign="right" />
-                </Tr>
-                <Tr>
-                  <Td>Move unit(s)</Td>
-                  <Td>
-                    <Kbd>right click</Kbd>
-                  </Td>
-                  <Td textAlign="right" />
-                </Tr>
-                <Tr>
-                  <Td>Add waypoint</Td>
-                  <Td>
-                    <Kbd>shift</Kbd> + <Kbd>right click</Kbd>
-                  </Td>
-                  <Td textAlign="right" />
-                </Tr>
+        <Section>
+          <div className="table-wrap">
+            <table className="fixed">
+              <thead>
+                <tr>
+                  <th>Hotkey name</th>
+                  <th>Bind</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colSpan={3}>
+                    <h3 className="heading-md">Movement</h3>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Select units</td>
+                  <td>
+                    <kbd>left click</kbd> / <kbd>left click</kbd> + <kbd>drag</kbd>
+                  </td>
+                  <td className="text-right" />
+                </tr>
+                <tr>
+                  <td>Move unit(s)</td>
+                  <td>
+                    <kbd>right click</kbd>
+                  </td>
+                  <td className="text-right" />
+                </tr>
+                <tr>
+                  <td>Add waypoint</td>
+                  <td>
+                    <kbd>shift</kbd> + <kbd>right click</kbd>
+                  </td>
+                  <td className="text-right" />
+                </tr>
 
-                <Tr>
-                  <Td colSpan={3}>
-                    <Heading size="md">Combat</Heading>
-                  </Td>
-                </Tr>
+                <tr>
+                  <td colSpan={3}>
+                    <h3 className="heading-md">Combat</h3>
+                  </td>
+                </tr>
                 <BindableRow label="Patrol units" hotkey={Hotkey.Patrol} setBind={setBind} />
                 <BindableRow label="Stop units" hotkey={Hotkey.Stop} setBind={setBind} />
                 <BindableRow label="Attack ground" hotkey={Hotkey.AttackGround} setBind={setBind} />
 
-                <Tr>
-                  <Td colSpan={3}>
-                    <Heading size="md">Formations</Heading>
-                  </Td>
-                </Tr>
+                <tr>
+                  <td colSpan={3}>
+                    <h3 className="heading-md">Formations</h3>
+                  </td>
+                </tr>
                 <BindableRow label="Line formation" hotkey={Hotkey.LineFormation} setBind={setBind} />
                 <BindableRow label="Spread formation" hotkey={Hotkey.SpreadFormation} setBind={setBind} />
                 <BindableRow label="Split formation" hotkey={Hotkey.SplitFormation} setBind={setBind} />
 
-                <Tr>
-                  <Td colSpan={3}>
-                    <Heading size="md">Control Groups</Heading>
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td>Assign control group</Td>
-                  <Td>
-                    <Kbd>ctrl</Kbd> + <Kbd>1</Kbd> / <Kbd>2</Kbd> / <Kbd>3</Kbd> / <Kbd>4</Kbd> / <Kbd>5</Kbd> /{" "}
-                    <Kbd>6</Kbd> / <Kbd>7</Kbd> / <Kbd>8</Kbd> / <Kbd>9</Kbd> / <Kbd>0</Kbd>
-                  </Td>
-                  <Td textAlign="right" />
-                </Tr>
-                <Tr>
-                  <Td>Select control group</Td>
-                  <Td>
-                    <Kbd>1</Kbd> / <Kbd>2</Kbd> / <Kbd>3</Kbd> / <Kbd>4</Kbd> / <Kbd>5</Kbd> / <Kbd>6</Kbd> /{" "}
-                    <Kbd>7</Kbd> / <Kbd>8</Kbd> / <Kbd>9</Kbd> / <Kbd>0</Kbd>
-                  </Td>
-                  <Td textAlign="right" />
-                </Tr>
+                <tr>
+                  <td colSpan={3}>
+                    <h3 className="heading-md">Control Groups</h3>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Assign control group</td>
+                  <td>
+                    <kbd>ctrl</kbd> + <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> / <kbd>4</kbd> / <kbd>5</kbd> /{" "}
+                    <kbd>6</kbd> / <kbd>7</kbd> / <kbd>8</kbd> / <kbd>9</kbd> / <kbd>0</kbd>
+                  </td>
+                  <td className="text-right" />
+                </tr>
+                <tr>
+                  <td>Select control group</td>
+                  <td>
+                    <kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd> / <kbd>4</kbd> / <kbd>5</kbd> / <kbd>6</kbd> /{" "}
+                    <kbd>7</kbd> / <kbd>8</kbd> / <kbd>9</kbd> / <kbd>0</kbd>
+                  </td>
+                  <td className="text-right" />
+                </tr>
 
-                <Tr>
-                  <Td colSpan={3}>
-                    <Heading size="md">Other</Heading>
-                  </Td>
-                </Tr>
+                <tr>
+                  <td colSpan={3}>
+                    <h3 className="heading-md">Other</h3>
+                  </td>
+                </tr>
                 <BindableRow label="Delete unit" hotkey={Hotkey.DeleteUnit} setBind={setBind} />
-                <Tr>
-                  <Td>Delete selected units</Td>
-                  <Td>
-                    <Kbd>shift</Kbd> + <Kbd>{keycodeToHumanReadable(hotkeyManager.getBindFor(Hotkey.DeleteUnit))}</Kbd>
-                  </Td>
-                  <Td />
-                </Tr>
+                <tr>
+                  <td>Delete selected units</td>
+                  <td>
+                    <kbd>shift</kbd> +{" "}
+                    <kbd>{keycodeToHumanReadable(hotkeyManager.getBindFor(Hotkey.DeleteUnit))}</kbd>
+                  </td>
+                  <td />
+                </tr>
                 <BindableRow label="Pan up" hotkey={Hotkey.CameraUp} setBind={setBind} />
                 <BindableRow label="Pan down" hotkey={Hotkey.CameraDown} setBind={setBind} />
                 <BindableRow label="Pan left" hotkey={Hotkey.CameraLeft} setBind={setBind} />
                 <BindableRow label="Pan right" hotkey={Hotkey.CameraRight} setBind={setBind} />
-              </Tbody>
-            </Table>
-          </TableContainer>
+              </tbody>
+            </table>
+          </div>
         </Section>
-      </VStack>
-    </Container>
+      </div>
+    </div>
   );
 }

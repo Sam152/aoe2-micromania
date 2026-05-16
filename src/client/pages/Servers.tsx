@@ -1,17 +1,4 @@
-import {
-  Button,
-  Container,
-  Heading,
-  Skeleton,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  VStack,
-} from "@chakra-ui/react";
+import React from "react";
 import Section from "../components/Section";
 import { regionalServers, serversByPing } from "../servers/regionalServers";
 import { useMemoAsync } from "../hooks/useMemoAsync";
@@ -23,64 +10,66 @@ export default function Servers() {
   const [cached] = useMemoAsync(resolveServerFromCache, null, []);
 
   return (
-    <Container>
-      <VStack spacing={4}>
-        <Section width="full">
-          <TableContainer>
-            <Table sx={{ tableLayout: "fixed" }}>
-              <Thead>
-                <Tr>
-                  <Th>Server</Th>
-                  <Th>Ping</Th>
-                  <Th />
-                </Tr>
-              </Thead>
-              <Tbody>
+    <div className="container">
+      <div className="vstack">
+        <Section>
+          <div className="table-wrap">
+            <table className="fixed">
+              <thead>
+                <tr>
+                  <th>Server</th>
+                  <th>Ping</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
                 {servers.length === 0 && arrayOfSize(regionalServers.length).map((i) => <RowSkeleton key={i} />)}
-
                 {servers.map((server, i) => (
-                  <Tr key={i}>
-                    <Td>
-                      <Heading size="md">{server.server.replace("https://", "").replace(".aoe.cx", "")}</Heading>
-                    </Td>
-                    <Td>{server.ping}</Td>
-                    <Td>
+                  <tr key={i}>
+                    <td>
+                      <h3 className="heading-md">
+                        {server.server.replace("https://", "").replace(".aoe.cx", "")}
+                      </h3>
+                    </td>
+                    <td>{server.ping}</td>
+                    <td>
                       {cached === server.server ? (
                         <p>Connected</p>
                       ) : (
-                        <Button
+                        <button
+                          className="btn"
                           onClick={() => {
                             setCachedServer(server.server);
                             window.location.reload();
                           }}
                         >
                           Connect
-                        </Button>
+                        </button>
                       )}
-                    </Td>
-                  </Tr>
+                    </td>
+                  </tr>
                 ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+              </tbody>
+            </table>
+          </div>
         </Section>
-      </VStack>
-    </Container>
+      </div>
+    </div>
   );
 }
 
 function RowSkeleton() {
   return (
-    <Tr>
-      <Td>
-        <Skeleton w={"140px"} h={"24px"} />
-      </Td>
-      <Td>
-        <Skeleton w={"40px"} h={"24px"} />
-      </Td>
-      <Td>
-        <Skeleton w={"80px"} h={"24px"} />
-      </Td>
-    </Tr>
+    <tr>
+      <td>
+        <div className="skeleton" style={{ width: 140, height: 24 }} />
+      </td>
+      <td>
+        <div className="skeleton" style={{ width: 40, height: 24 }} />
+      </td>
+      <td>
+        <div className="skeleton" style={{ width: 80, height: 24 }} />
+      </td>
+    </tr>
   );
 }

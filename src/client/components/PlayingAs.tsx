@@ -1,6 +1,5 @@
 import { ConnectedState } from "../hooks/useConnectedState";
-import { HStack, Image, Text, TextProps } from "@chakra-ui/react";
-import React, { ReactNode } from "react";
+import React, { CSSProperties, ReactNode } from "react";
 import assetUrl from "../util/assetUrl";
 
 export function PlayingAs({ connectedState }: { connectedState: ConnectedState }) {
@@ -8,9 +7,8 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
 
   if (queued) {
     const positionInQueue = connectedState.queuedPlayers.findIndex((item) => item === connectedState.clientId) + 1;
-
     return (
-      <Label pr={6}>
+      <Label style={{ paddingRight: 24 }}>
         Queued {positionInQueue} of {connectedState.queuedPlayers.length}
       </Label>
     );
@@ -18,31 +16,25 @@ export function PlayingAs({ connectedState }: { connectedState: ConnectedState }
 
   if (connectedState.activePlayers[connectedState.clientId]) {
     return (
-      <HStack spacing={6}>
+      <div className="hstack hstack-6">
         <Label>Playing as</Label>
-        <Image
+        <img
           src={assetUrl(`graphics/players/p-${connectedState.activePlayers[connectedState.clientId]}.png`)}
-          sx={{ aspectRatio: `${256 / 107}` }}
-          height="53px"
+          style={{ aspectRatio: String(256 / 107) }}
+          height={53}
+          alt="player color"
         />
-      </HStack>
+      </div>
     );
   }
 
   return null;
 }
 
-function Label({ children, ...props }: { children: ReactNode } & TextProps) {
+function Label({ children, style }: { children: ReactNode; style?: CSSProperties }) {
   return (
-    <Text display="block" textTransform="uppercase" fontWeight="bold" fontSize="sm" {...props}>
+    <span className="playing-as-label" style={style}>
       {children}
-    </Text>
+    </span>
   );
-}
-
-function numberToOrdinal(n: number): string {
-  const suffixes = ["th", "st", "nd", "rd"];
-  const v = n % 100;
-  const suffix = v >= 11 && v <= 13 ? "th" : suffixes[n % 10 < 4 ? n % 10 : 0];
-  return `${n}${suffix}`;
 }

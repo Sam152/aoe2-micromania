@@ -1,4 +1,3 @@
-import { Button, list, Select } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export default function BindSelection({ onChange }: { onChange: (keycode: number) => void }) {
@@ -16,5 +15,9 @@ export default function BindSelection({ onChange }: { onChange: (keycode: number
     });
   }, [listening]);
 
-  return <Button onClick={() => setListening(true)}>{listening ? "Listening..." : "Rebind"}</Button>;
+  return (
+    <button className="btn" onClick={() => setListening(true)}>
+      {listening ? "Listening..." : "Rebind"}
+    </button>
+  );
 }

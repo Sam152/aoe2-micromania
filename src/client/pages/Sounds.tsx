@@ -1,4 +1,4 @@
-import { Button, Container, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import React from "react";
 import Section from "../components/Section";
 import soundList from "../../common/sounds/soundList";
 
@@ -9,31 +9,33 @@ function playSound(soundName: string) {
 
 export default function Sounds() {
   return (
-    <Container>
-      <Section width="full">
-        <TableContainer>
-          <Table>
-            <Thead>
-              <Tr>
-                <Th>Players</Th>
-                <Th>Started at</Th>
-                <Th>Play</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
+    <div className="container">
+      <Section>
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Players</th>
+                <th>Started at</th>
+                <th>Play</th>
+              </tr>
+            </thead>
+            <tbody>
               {soundList.map((sound) => (
-                <Tr key={sound[1]}>
-                  <Td>{sound[0]}</Td>
-                  <Td>{sound[1]}</Td>
-                  <Td>
-                    <Button onClick={() => playSound(sound[1])}>Play</Button>
-                  </Td>
-                </Tr>
+                <tr key={sound[1]}>
+                  <td>{sound[0]}</td>
+                  <td>{sound[1]}</td>
+                  <td>
+                    <button className="btn" onClick={() => playSound(sound[1])}>
+                      Play
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
+            </tbody>
+          </table>
+        </div>
       </Section>
-    </Container>
+    </div>
   );
 }

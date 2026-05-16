@@ -1,7 +1,6 @@
 import { useRegionalConnection } from "../hooks/useRegionalConnection";
 import React, { useMemo } from "react";
 import NetworkedStateManager from "../../common/state/managers/NetworkedStateManager";
-import { Box } from "@chakra-ui/react";
 import GameCanvas from "../components/GameCanvas";
 
 export function SpectateGame() {
@@ -13,5 +12,7 @@ export function SpectateGame() {
     }
   }, [connection.hasConnected]);
 
-  return <Box position="relative">{state && <GameCanvas startAs="SPECTATOR" stateManager={state} />}</Box>;
+  return (
+    <div style={{ position: "relative" }}>{state && <GameCanvas startAs="SPECTATOR" stateManager={state} />}</div>
+  );
 }
