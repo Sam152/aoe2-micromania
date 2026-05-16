@@ -1,13 +1,3 @@
 .idea
 /node_modules
-
-/dist/js
-/dist/sounds
-/dist/*.js
-/dist/*.txt
-/dist/*.html
-/dist/*.woff*
-
-/dist-server/*
-
 .DS_Store
