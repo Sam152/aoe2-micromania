@@ -21,12 +21,12 @@ const entrypoint = new URL("./client/index.tsx", import.meta.url).pathname;
 const nodePolyfillsPlugin: esbuild.Plugin = {
   name: "node-polyfills",
   setup(build) {
-    const bufferPath = `${Deno.cwd()}/node_modules/buffer/index.js`;
+    const bufferPath = new URL("../node_modules/buffer/index.js", import.meta.url).pathname;
     build.onResolve({ filter: /^buffer$/ }, () => ({ path: bufferPath }));
   },
 };
 
-const bufferShim = new URL("./client/buffer-shim.js", import.meta.url).pathname;
+const bufferShim = new URL("../assets/buffer-shim.js", import.meta.url).pathname;
 
 const result = await esbuild.build({
   plugins: [nodePolyfillsPlugin, ...denoPlugins({ configPath })],
