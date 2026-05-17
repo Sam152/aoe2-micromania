@@ -13,7 +13,6 @@ const staticAssets = {
   ...createStaticAssetMap(),
   "/bundle.js": { contentType: "application/javascript", file: js },
   "/styles.css": { contentType: "text/css", file: css },
-  "/index.html": { contentType: "text/html", file: html, noCache: true },
 };
 
 const httpServer = createServer(async (req, res) => {
@@ -24,15 +23,10 @@ const httpServer = createServer(async (req, res) => {
     const headers = {
       "Content-Type": asset.contentType,
     };
-    if (asset.noCache) {
-      headers["Cache-Control"] = "no-cache";
-    }
     res.writeHead(200, headers);
     return res.end(asset.file);
   }
 
-  // All other requests serve the client HTML (historyApiFallback).
-  // WebSocket upgrade requests bypass this handler entirely via socket.io.
   res.writeHead(200, { "Content-Type": "text/html", "Cache-Control": "no-cache" });
   res.end(html);
 });

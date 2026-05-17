@@ -20,7 +20,6 @@ function contentType(pathname: string): string {
 export type StaticAssetMap = Record<string, {
   contentType: string;
   file: Uint8Array | string;
-  noCache?: boolean;
 }>;
 
 export function createStaticAssetMap(): StaticAssetMap {
