@@ -4,10 +4,10 @@ import { Vector2 } from "three/src/math/Vector2.js";
 import FormationType from "../units/formations/FormationType.ts";
 import hotkeyManager from "./HotkeyManager.ts";
 import Hotkey from "./Hotkey.ts";
+import ActiveCommand from "./ActiveCommand.ts";
 
 const doubleClickDuration = 250;
 const digit0KeyCode = 48;
-const escapeKeyCode = 27;
 const controlGroups = Array.from({ length: 10 }, (_, i) => digit0KeyCode + i);
 
 export default class InputManager {
@@ -28,6 +28,7 @@ export default class InputManager {
   private onKeyDown: (e: KeyboardEvent) => void;
   private onKeyUp: (e: KeyboardEvent) => void;
   private onClick: (e: MouseEvent) => void;
+  private onContextMenu: (e: MouseEvent) => void;
 
   constructor(
     element: HTMLCanvasElement,
@@ -46,14 +47,7 @@ export default class InputManager {
     this.clientStateTransmitter = clientStateTransmitter;
 
     this.onPointerLockChange = () => {
-      const locked = document.pointerLockElement === element;
-      this.dispatch({ n: "CURSOR_LOCK_CHANGED", locked });
-      if (!locked) {
-        this.dispatch({
-          n: "MOUSE_POSITIONED",
-          position: this.stateManager.getClientState().mousePosition,
-        });
-      }
+      this.dispatch({ n: "CURSOR_LOCK_CHANGED", locked: document.pointerLockElement === element });
     };
 
     this.onMouseMove = (e) => {
@@ -128,10 +122,14 @@ export default class InputManager {
         this.dispatch({ n: e.shiftKey ? "HOTKEY_SHIFT_DELETE" : "HOTKEY_DELETE" });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.AttackGround)) {
-        this.dispatch({ n: "HOTKEY_ATTACK_GROUND" });
+        const { activeCommand } = this.stateManager.getClientState();
+        this.dispatch({ n: activeCommand === ActiveCommand.AttackGround ? "HOTKEY_CANCEL" : "HOTKEY_ATTACK_GROUND" });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.Patrol)) {
-        this.dispatch({ n: "HOTKEY_PATROL", position: this.stateManager.getClientState().mousePosition });
+        const { activeCommand, mousePosition } = this.stateManager.getClientState();
+        this.dispatch(activeCommand === ActiveCommand.Patrol
+          ? { n: "HOTKEY_CANCEL" }
+          : { n: "HOTKEY_PATROL", position: mousePosition });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.LineFormation)) {
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Line });
@@ -142,11 +140,7 @@ export default class InputManager {
       if (k === hotkeyManager.getBindFor(Hotkey.SplitFormation)) {
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Split });
       }
-      if (k === escapeKeyCode) {
-        this.dispatch({ n: "HOTKEY_CANCEL" });
-      }
-
-      controlGroups.forEach((keycode) => {
+controlGroups.forEach((keycode) => {
         if (k === keycode) {
           this.dispatch({
             n: this.ctrlDown ? "CONTROL_GROUP_ASSIGNED" : "CONTROL_GROUP_SELECTED",
@@ -162,6 +156,8 @@ export default class InputManager {
       this.ctrlDown = e.ctrlKey;
     };
 
+    this.onContextMenu = (e) => e.preventDefault();
+
     this.onClick = (e) => {
       const camera = this.stateManager.getClientState().camera;
       if (!this.stateManager.getClientState().cursorLocked) {
@@ -176,6 +172,7 @@ export default class InputManager {
     };
 
     document.addEventListener('pointerlockchange', this.onPointerLockChange);
+    document.addEventListener('contextmenu', this.onContextMenu);
     element.addEventListener('mousemove', this.onMouseMove);
     element.addEventListener('mousedown', this.onMouseDown);
     element.addEventListener('mouseup', this.onMouseUp);
@@ -211,6 +208,7 @@ export default class InputManager {
 
   cleanUp(): void {
     document.removeEventListener('pointerlockchange', this.onPointerLockChange);
+    document.removeEventListener('contextmenu', this.onContextMenu);
     this.element.removeEventListener('mousemove', this.onMouseMove);
     this.element.removeEventListener('mousedown', this.onMouseDown);
     this.element.removeEventListener('mouseup', this.onMouseUp);
