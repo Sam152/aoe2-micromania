@@ -99,15 +99,31 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
 
   if (action.n === "ARROW_DOWN") {
     state.camera.y += config.cameraPanSpeed;
+
+    if (state.cursorLocked) {
+      state.mousePosition.y += config.cameraPanSpeed;
+    }
   }
   if (action.n === "ARROW_UP") {
     state.camera.y -= config.cameraPanSpeed;
+
+    if (state.cursorLocked) {
+      state.mousePosition.y -= config.cameraPanSpeed;
+    }
   }
   if (action.n === "ARROW_LEFT") {
     state.camera.x -= config.cameraPanSpeed;
+
+    if (state.cursorLocked) {
+      state.mousePosition.x -= config.cameraPanSpeed;
+    }
   }
   if (action.n === "ARROW_RIGHT") {
     state.camera.x += config.cameraPanSpeed;
+
+    if (state.cursorLocked) {
+      state.mousePosition.x += config.cameraPanSpeed;
+    }
   }
 
   if (action.n === "DRAG_START" && state.activeCommand === ActiveCommand.Default) {
