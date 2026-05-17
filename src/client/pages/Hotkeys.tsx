@@ -11,7 +11,7 @@ import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme.ts";
 
 export default function Hotkeys() {
   const [, setCount] = useState(0);
-  const rerender = () => setCount((c) => c + 1);
+  const rerender = () => setCount((c: number) => c + 1);
 
   function setBind(hotkey: Hotkey, code: number) {
     hotkeyManager.setBindFor(hotkey, code);
