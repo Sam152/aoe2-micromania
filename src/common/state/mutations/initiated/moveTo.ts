@@ -10,7 +10,10 @@ import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFact
 import { snapToClamp } from "../../../util/snapToClamp.ts";
 
 export default function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
-  units.forEach((unit) => stopUnit(unit));
+  units.forEach((unit) => {
+      stopUnit(unit);
+      unit.lastCommandedDirection = destination;
+  });
 
   formationManager
     .fromPopulation(units)

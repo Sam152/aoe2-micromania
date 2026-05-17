@@ -49,6 +49,9 @@ export interface UnitInstance {
 
   // Basic vectors used in all movement states.
   movingDirection?: Vector2;
+  // Direction representing the last place that a specific move command was issued to,
+  // useful for changing formation of stationary units.
+  lastCommandedDirection?: Vector2;
   position: Vector2;
   formation: FormationType;
 
