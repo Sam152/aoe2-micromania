@@ -4,7 +4,8 @@
     "lineWidth": 120
   },
   "tasks": {
-    "start": "deno run --unstable-sloppy-imports --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts"
+    "start": "deno run --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
+    "start:watch": "deno run --watch=src/ --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
