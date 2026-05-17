@@ -108,7 +108,7 @@ export default class InputManager {
       this.ctrlDown = e.ctrlKey;
     });
 
-    element.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e) => {
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
       this.heldKeys.add(e.keyCode);
@@ -152,7 +152,7 @@ export default class InputManager {
       });
     });
 
-    element.addEventListener('keyup', (e) => {
+    document.addEventListener('keyup', (e) => {
       this.heldKeys.delete(e.keyCode);
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
