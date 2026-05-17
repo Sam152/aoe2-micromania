@@ -21,8 +21,8 @@
 
 - [x] Auto attack only works for two players, see `autoAttack`
 - [x] Formations with multiple types of units
-    - [x] Translate whole group into middle of destination
-    - [x] Slow units to slowest in group
+  - [x] Translate whole group into middle of destination
+  - [x] Slow units to slowest in group
 - [ ] Knockout reward
 - [x] Monks
 - [x] Monk speed

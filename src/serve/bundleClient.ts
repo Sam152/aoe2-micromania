@@ -1,6 +1,6 @@
 import * as esbuild from "npm:esbuild@0.28.0";
-import {denoPlugins} from "jsr:@luca/esbuild-deno-loader";
-import {createHash} from "node:crypto";
+import { denoPlugins } from "jsr:@luca/esbuild-deno-loader";
+import { createHash } from "node:crypto";
 
 export async function bundleClient() {
   const configPath = new URL("../../deno.json", import.meta.url).pathname;
