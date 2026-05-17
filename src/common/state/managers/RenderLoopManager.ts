@@ -85,7 +85,7 @@ export default class RenderLoopManager {
   }
 
   render() {
-    this.inputManager.dispatchInput(this.stateManager.getClientState().camera);
+    this.inputManager.dispatchInput();
 
     // Dispatch client state to indicate a frame is being rendered.
     this.stateManager.dispatchClient({ n: "FRAME_RENDERING_STARTED" });

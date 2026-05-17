@@ -215,6 +215,7 @@ export interface ClientState {
     [key: number]: Array<UnitId>;
   };
   soundQueue: Sound[];
+  cursorLocked: boolean;
 }
 
 export type ClientStateAction =
@@ -310,6 +311,10 @@ export type ClientStateAction =
   }
   | {
     n: "GAME_STATE_REHYDRATED";
+  }
+  | {
+    n: "CURSOR_LOCK_CHANGED";
+    locked: boolean;
   };
 
 export type GameDispatcher = (action: GameStateAction) => void;

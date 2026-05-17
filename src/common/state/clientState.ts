@@ -27,6 +27,10 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
     state.mousePosition = action.position;
   }
 
+  if (action.n === "CURSOR_LOCK_CHANGED") {
+    state.cursorLocked = action.locked;
+  }
+
   if (action.n === "UNIT_DRAWN") {
     state.unitHitBoxes.push({
       unit: action.unit,
@@ -289,6 +293,7 @@ function defaultState(clientId: string): ClientState {
   }) as ClientState;
   state.camera = new Vector2(0, 0);
   state.mousePosition = new Vector2(0, 0);
+  state.cursorLocked = false;
   return state;
 }
 

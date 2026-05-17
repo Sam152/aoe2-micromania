@@ -28,158 +28,164 @@ export default class InputManager {
   stateManager: StateManagerInterface;
   private clientStateTransmitter: StateTransmitter;
   private lastLeftClick: number;
+  private heldKeys: Set<number>;
+  private leftMouseDown: boolean;
+  private shiftDown: boolean;
+  private ctrlDown: boolean;
 
   constructor(
     element: HTMLCanvasElement,
     stateManager: StateManagerInterface,
     clientStateTransmitter: StateTransmitter,
   ) {
-    this.input = new StInput();
+    this.input = new StInput(element);
     this.input.disableContextMenu = true;
     this.dragging = false;
     this.lastLeftClick = 0;
+    this.heldKeys = new Set();
+    this.leftMouseDown = false;
+    this.shiftDown = false;
+    this.ctrlDown = false;
 
     this.stateManager = stateManager;
     this.clientStateTransmitter = clientStateTransmitter;
-  }
 
-  dispatchInput(cameraPosition: Vector2): void {
-    this.dispatch({
-      n: "MOUSE_POSITIONED",
-      position: this.mousePosition(cameraPosition),
+    document.addEventListener('pointerlockchange', () => {
+      this.dispatch({ n: "CURSOR_LOCK_CHANGED", locked: document.pointerLockElement === element });
     });
 
-    if (this.input.released("mouse_left") && !this.dragging) {
-      const time = new Date().getTime();
-      this.dispatch({
-        n: time - this.lastLeftClick < doubleClickDuration ? "DOUBLE_CLICK" : "LEFT_CLICK",
-        position: this.mousePosition(cameraPosition),
-        shift: this.input.shiftDown,
+    element.addEventListener('mousemove', (e) => {
+      const position = this.stateManager.getClientState().mousePosition.clone().add({
+        x: e.movementX,
+        y: e.movementY,
       });
-      this.lastLeftClick = time;
-    }
-    if (this.input.released("mouse_right") && !this.dragging) {
-      this.dispatch({
-        n: this.input.shiftDown ? "SHIFT_RIGHT_CLICK" : "RIGHT_CLICK",
-        position: this.mousePosition(cameraPosition),
-      });
-    }
+      this.dispatch({ n: "MOUSE_POSITIONED", position });
 
-    if (this.input.mouseMoving && this.input.mouseDown(this.input.MouseButtons.left)) {
-      if (!this.dragging) {
-        this.dispatch({
-          n: "DRAG_START",
-          position: this.mousePosition(cameraPosition),
-        });
+      if (this.leftMouseDown) {
+        if (!this.dragging) {
+          this.dispatch({ n: "DRAG_START", position });
+        }
+        this.dispatch({ n: "DRAGGING", shift: this.shiftDown, position });
+        this.dragging = true;
       }
-      this.dispatch({
-        n: "DRAGGING",
-        shift: this.input.shiftDown,
-        position: this.mousePosition(cameraPosition),
-      });
-      this.dragging = true;
-    }
+    });
 
-    if (this.input.released("mouse_left")) {
-      if (this.dragging) {
-        this.dispatch({
-          n: "DRAG_END",
-          position: this.mousePosition(cameraPosition),
-        });
+    element.addEventListener('mousedown', (e) => {
+      this.shiftDown = e.shiftKey;
+      this.ctrlDown = e.ctrlKey;
+      if (e.button === 0) {
+        this.leftMouseDown = true;
       }
-      this.dragging = false;
-    }
+    });
 
-    if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.Stop))) {
-      this.dispatch({
-        n: "HOTKEY_STOP",
-      });
-    }
-    if (!this.input.shiftDown && this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.DeleteUnit))) {
-      this.dispatch({
-        n: "HOTKEY_DELETE",
-      });
-    }
-    if (this.input.shiftDown && this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.DeleteUnit))) {
-      this.dispatch({
-        n: "HOTKEY_SHIFT_DELETE",
-      });
-    }
+    element.addEventListener('mouseup', (e) => {
+      const position = this.stateManager.getClientState().mousePosition;
 
-    if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.AttackGround))) {
-      this.dispatch({
-        n: "HOTKEY_ATTACK_GROUND",
-      });
-    }
-    if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.Patrol))) {
-      this.dispatch({
-        n: "HOTKEY_PATROL",
-        position: this.mousePosition(cameraPosition),
-      });
-    }
-    if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.LineFormation))) {
-      this.dispatch({
-        n: "HOTKEY_FORMATION_CHANGED",
-        formation: FormationType.Line,
-      });
-    }
-    if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.SpreadFormation))) {
-      this.dispatch({
-        n: "HOTKEY_FORMATION_CHANGED",
-        formation: FormationType.Spread,
-      });
-    }
-    if (this.input.keyPressed(hotkeyManager.getBindFor(Hotkey.SplitFormation))) {
-      this.dispatch({
-        n: "HOTKEY_FORMATION_CHANGED",
-        formation: FormationType.Split,
-      });
-    }
-    if (this.input.keyPressed(StInput.KeyboardKeys.escape)) {
-      this.dispatch({
-        n: "HOTKEY_CANCEL",
-      });
-    }
-
-    if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraLeft))) {
-      this.dispatch({
-        n: "ARROW_LEFT",
-      });
-    }
-    if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraRight))) {
-      this.dispatch({
-        n: "ARROW_RIGHT",
-      });
-    }
-    if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraUp))) {
-      this.dispatch({
-        n: "ARROW_UP",
-      });
-    }
-    if (this.input.keyDown(hotkeyManager.getBindFor(Hotkey.CameraDown))) {
-      this.dispatch({
-        n: "ARROW_DOWN",
-      });
-    }
-
-    if (this.input.ctrlDown) {
-      controlGroups.forEach((keycode) => {
-        if (this.input.keyPressed(keycode)) {
+      if (e.button === 0) {
+        this.leftMouseDown = false;
+        if (this.dragging) {
+          this.dispatch({ n: "DRAG_END", position });
+        } else {
+          const time = new Date().getTime();
           this.dispatch({
-            n: "CONTROL_GROUP_ASSIGNED",
+            n: time - this.lastLeftClick < doubleClickDuration ? "DOUBLE_CLICK" : "LEFT_CLICK",
+            position,
+            shift: e.shiftKey,
+          });
+          this.lastLeftClick = time;
+        }
+        this.dragging = false;
+      }
+
+      if (e.button === 2 && !this.dragging) {
+        this.dispatch({
+          n: e.shiftKey ? "SHIFT_RIGHT_CLICK" : "RIGHT_CLICK",
+          position,
+        });
+      }
+
+      this.shiftDown = e.shiftKey;
+      this.ctrlDown = e.ctrlKey;
+    });
+
+    element.addEventListener('keydown', (e) => {
+      this.shiftDown = e.shiftKey;
+      this.ctrlDown = e.ctrlKey;
+      this.heldKeys.add(e.keyCode);
+
+      if (e.repeat) return;
+
+      const k = e.keyCode;
+
+      if (k === hotkeyManager.getBindFor(Hotkey.Stop)) {
+        this.dispatch({ n: "HOTKEY_STOP" });
+      }
+      if (k === hotkeyManager.getBindFor(Hotkey.DeleteUnit)) {
+        this.dispatch({ n: e.shiftKey ? "HOTKEY_SHIFT_DELETE" : "HOTKEY_DELETE" });
+      }
+      if (k === hotkeyManager.getBindFor(Hotkey.AttackGround)) {
+        this.dispatch({ n: "HOTKEY_ATTACK_GROUND" });
+      }
+      if (k === hotkeyManager.getBindFor(Hotkey.Patrol)) {
+        this.dispatch({ n: "HOTKEY_PATROL", position: this.stateManager.getClientState().mousePosition });
+      }
+      if (k === hotkeyManager.getBindFor(Hotkey.LineFormation)) {
+        this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Line });
+      }
+      if (k === hotkeyManager.getBindFor(Hotkey.SpreadFormation)) {
+        this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Spread });
+      }
+      if (k === hotkeyManager.getBindFor(Hotkey.SplitFormation)) {
+        this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Split });
+      }
+      if (k === StInput.KeyboardKeys.escape) {
+        this.dispatch({ n: "HOTKEY_CANCEL" });
+      }
+
+      controlGroups.forEach((keycode) => {
+        if (k === keycode) {
+          this.dispatch({
+            n: this.ctrlDown ? "CONTROL_GROUP_ASSIGNED" : "CONTROL_GROUP_SELECTED",
             group: keycode - StInput.KeyboardKeys.n0,
           });
         }
       });
-    } else {
-      controlGroups.forEach((keycode) => {
-        if (this.input.keyPressed(keycode)) {
-          this.dispatch({
-            n: "CONTROL_GROUP_SELECTED",
-            group: keycode - StInput.KeyboardKeys.n0,
-          });
-        }
-      });
+    });
+
+    element.addEventListener('keyup', (e) => {
+      this.heldKeys.delete(e.keyCode);
+      this.shiftDown = e.shiftKey;
+      this.ctrlDown = e.ctrlKey;
+    });
+
+    element.addEventListener('click', (e) => {
+      const camera = this.stateManager.getClientState().camera;
+      if (!this.stateManager.getClientState().cursorLocked) {
+        this.dispatch({
+          n: "MOUSE_POSITIONED",
+          position: screenPositionToGamePosition(
+            new Vector2(e.offsetX, e.offsetY).add(
+              gamePositionToScreenPosition(camera),
+            ),
+          ),
+        });
+        element.requestPointerLock();
+      }
+    });
+  }
+
+  dispatchInput(): void {
+    if (this.heldKeys.has(hotkeyManager.getBindFor(Hotkey.CameraLeft))) {
+      this.dispatch({ n: "ARROW_LEFT" });
+    }
+    if (this.heldKeys.has(hotkeyManager.getBindFor(Hotkey.CameraRight))) {
+      this.dispatch({ n: "ARROW_RIGHT" });
+    }
+    if (this.heldKeys.has(hotkeyManager.getBindFor(Hotkey.CameraUp))) {
+      this.dispatch({ n: "ARROW_UP" });
+    }
+    if (this.heldKeys.has(hotkeyManager.getBindFor(Hotkey.CameraDown))) {
+      this.dispatch({ n: "ARROW_DOWN" });
     }
   }
 

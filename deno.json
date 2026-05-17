@@ -14,6 +14,7 @@
   },
   "imports": {
     "@std/crypto": "jsr:@std/crypto@^1.1.0",
+    "@types/three": "npm:@types/three@^0.184.1",
     "react": "npm:react@18",
     "react/jsx-runtime": "npm:react@18/jsx-runtime",
     "react-dom": "npm:react-dom@18",
@@ -21,7 +22,7 @@
     "react-router-dom": "npm:react-router-dom@^6.3.0",
     "socket.io": "npm:socket.io@^4.4.1",
     "socket.io-client": "npm:socket.io-client@^4.4.1",
-    "three/src/math/Vector2.js": "npm:three@~0.139.2/src/math/Vector2.js",
+    "three": "npm:three@~0.139.2",
     "howler": "npm:howler@^2.2.3",
     "d3-quadtree": "npm:d3-quadtree@^3.0.1",
     "genie-smx": "npm:genie-smx@^1.2.0",
