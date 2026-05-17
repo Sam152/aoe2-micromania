@@ -8,6 +8,7 @@ import { createStaticAssetMap } from "./serve/createStaticAssetMap.ts";
 
 logErrors();
 
+// Static assets are a combination of bundled code and assets on disk.
 const { html, css, js } = await bundleClient();
 const staticAssets = {
   ...createStaticAssetMap(),
@@ -18,16 +19,19 @@ const staticAssets = {
 const httpServer = createServer(async (req, res) => {
   const pathname = new URL(req.url ?? "/", "http://localhost").pathname;
 
-  const asset = staticAssets[pathname];
-  if (req.method === "GET" && asset) {
+  const staticAsset = staticAssets[pathname];
+  if (req.method === "GET" && staticAsset) {
     const headers = {
-      "Content-Type": asset.contentType,
+      "Content-Type": staticAsset.contentType,
     };
     res.writeHead(200, headers);
-    return res.end(asset.file);
+    return res.end(staticAsset.file);
   }
 
-  res.writeHead(200, { "Content-Type": "text/html", "Cache-Control": "no-cache" });
+  res.writeHead(200, {
+    "Content-Type": "text/html",
+    "Cache-Control": "no-cache",
+  });
   res.end(html);
 });
 
