@@ -186,7 +186,7 @@ class UnitMetadata {
   }
 
   getUnit(unit: Unit): UnitStats {
-    return this.units[unit]!;
+    return this.units[unit];
   }
 }
 

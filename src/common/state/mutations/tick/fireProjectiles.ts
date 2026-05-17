@@ -29,15 +29,15 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
         return;
       }
 
-      const targetingPosition = (unit.targetingUnit
-        ? computed.unitIndex[unit.targetingUnit!]!.position
-        : unit.targetingPosition)!;
+      const targetingPosition = unit.targetingUnit
+        ? computed.unitIndex[unit.targetingUnit].position
+        : unit.targetingPosition;
 
       if (inMinimumRange(unit, targetingPosition)) {
         setUnitMovementAwayFrom(state, unit, targetingPosition);
-        unit.position.add(calculateUnitMovementPerTick(unit)!);
+        unit.position.add(calculateUnitMovementPerTick(unit));
       } else if (inAttackRange(unit, targetingPosition)) {
-        unit.movingDirection = undefined;
+        unit.movingDirection = null;
 
         if (unit.reloadsAt <= state.ticks) {
           unit.unitStateStartedAt = state.ticks;
@@ -48,7 +48,7 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
         }
       } else {
         setUnitMovementTowards(state, unit, targetingPosition);
-        unit.position.add(calculateUnitMovementPerTick(unit)!);
+        unit.position.add(calculateUnitMovementPerTick(unit));
       }
     });
 
@@ -62,9 +62,9 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
         return;
       }
 
-      const targetingPosition = (unit.targetingUnit
-        ? computed.unitIndex[unit.targetingUnit!]!.position
-        : unit.targetingPosition)!;
+      const targetingPosition = unit.targetingUnit
+        ? computed.unitIndex[unit.targetingUnit].position
+        : unit.targetingPosition;
 
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
@@ -75,7 +75,7 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
       if (state.ticks - unit.unitStateStartedAt === firingFrame) {
         soundManager.projectileLaunched(state, unitData.firesProjectileType);
 
-        const targetingUnit = computed.unitIndex[unit.targetingUnit!];
+        const targetingUnit = computed.unitIndex[unit.targetingUnit];
         const distance = unit.position.distanceTo(targetingPosition);
         const startingPoint = unit.position.clone().add(unitData.firingAnchor);
 
@@ -86,9 +86,9 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
           startingPoint: startingPoint,
           destination: targetingPosition.clone(),
           startingTick: state.ticks,
-          arrivingTick: Math.floor(state.ticks + distance / projectileMetadata[unitData.firesProjectileType]!.speed),
+          arrivingTick: Math.floor(state.ticks + distance / projectileMetadata[unitData.firesProjectileType].speed),
           pathVector: targetingPosition.clone().sub(startingPoint),
-          targeting: targetingUnit ? targetingUnit.id : undefined,
+          targeting: targetingUnit ? targetingUnit.id : null,
           hasDamage: true,
           firedByType: unit.unitType,
         });

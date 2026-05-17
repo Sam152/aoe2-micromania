@@ -10,8 +10,8 @@ export default function registerProjectileHits(state: GameState) {
   const landedProjectiles = state.projectiles.filter(({ arrivingTick }) => arrivingTick === state.ticks);
 
   const damageProjectiles = landedProjectiles.filter(({ hasDamage }) => hasDamage);
-  const areaProjectiles = damageProjectiles.filter(({ type }) => projectileMetadata[type]!.damageIsAreaOfEffect);
-  const standardProjectiles = damageProjectiles.filter(({ type }) => !projectileMetadata[type]!.damageIsAreaOfEffect);
+  const areaProjectiles = damageProjectiles.filter(({ type }) => projectileMetadata[type].damageIsAreaOfEffect);
+  const standardProjectiles = damageProjectiles.filter(({ type }) => !projectileMetadata[type].damageIsAreaOfEffect);
 
   damageProjectiles.map((damageProjectile) => soundManager.projectileLanded(state, damageProjectile));
 
@@ -32,7 +32,7 @@ export default function registerProjectileHits(state: GameState) {
   areaProjectiles.forEach((projectile) => {
     const area = unitMetadataFactory.getUnit(projectile.firedByType).areaOfEffect;
     const damagedUnits: Array<number> = [];
-    area!.forEach(({ distanceFromTarget, percentageOfAttack }) => {
+    area.forEach(({ distanceFromTarget, percentageOfAttack }) => {
       const affectedUnits = state.units
         // Find units within the radius of the blast.
         .filter(({ position }) => position.distanceTo(projectile.destination) < distanceFromTarget)

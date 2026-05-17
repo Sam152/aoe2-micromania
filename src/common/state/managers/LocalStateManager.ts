@@ -10,13 +10,13 @@ export default class LocalStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
   private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
-  private ticker!: ReturnType<typeof setInterval>;
+  private ticker: NodeJS.Timer;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
   private tickFn: () => void;
 
   constructor(clientId: string | undefined, tickFn?: () => void) {
     this.gameState = defaultGameState();
-    this.clientState = defaultClientState(clientId!);
+    this.clientState = defaultClientState(clientId);
     this.gameStateListeners = [];
     this.clientStateListeners = [];
     this.tickFn = tickFn || (() => this.dispatchGame({ n: "T" }));

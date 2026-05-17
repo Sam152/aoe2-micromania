@@ -133,11 +133,11 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
     };
   }
   if (action.n === "DRAGGING" && state.activeCommand === ActiveCommand.Default) {
-    state.selectionRectangle!.p2 = action.position;
+    state.selectionRectangle.p2 = action.position;
     const unitsInSelection = state.unitHitBoxes
       .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === playingAs)
       .filter((unitAndHitBox) =>
-        rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle!))
+        rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle))
       )
       .map((unitAndHitBox) => unitAndHitBox.unit.id);
     if (action.shift) {

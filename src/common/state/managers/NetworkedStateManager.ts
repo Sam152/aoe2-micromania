@@ -17,7 +17,7 @@ export default class NetworkedStateManager implements StateManagerInterface {
 
   constructor(socket: Socket) {
     this.gameState = defaultGameState();
-    this.clientState = defaultClientState(socket.id!);
+    this.clientState = defaultClientState(socket.id);
     this.socket = socket;
     this.gameStateListeners = [];
     this.clientStateListeners = [];

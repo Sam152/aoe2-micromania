@@ -15,8 +15,8 @@ export default class DebugRenderer implements RendererInterface {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this.context = this.canvas.getContext("2d")!;
-    (globalThis as any).ctx = this.context;
+    this.context = this.canvas.getContext("2d");
+    globalThis.ctx = this.context;
   }
 
   bootUp(): Promise<void> {

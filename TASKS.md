@@ -33,8 +33,6 @@
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
 - [ ] Selection panel
-- [ ] Formation changing while units idle
-- [ ] Restoring stack patrol behaviour
 
 # Interface
 

@@ -34,5 +34,5 @@ export function useMemoAsync<T>(
     };
   }, dependencies);
 
-  return [state.value!, state.error, state.loading];
+  return [state.value, state.error, state.loading];
 }

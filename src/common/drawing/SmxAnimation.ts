@@ -102,8 +102,8 @@ export default class SmxAnimation {
     if (frame.shadowRender) {
       const anchoredShadow = anchorAt(
         {
-          x: frame.frameDefinition.layers[1]!.centerX,
-          y: frame.frameDefinition.layers[1]!.centerY,
+          x: frame.frameDefinition.layers[1].centerX,
+          y: frame.frameDefinition.layers[1].centerY,
         },
         at,
       );

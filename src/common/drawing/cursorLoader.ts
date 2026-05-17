@@ -31,7 +31,7 @@ export async function loadCursorFile(url: string): Promise<CursorAsset> {
 }
 
 async function loadPng(data: Uint8Array): Promise<ImageBitmap> {
-  return createImageBitmap(new Blob([data as unknown as BlobPart], { type: "image/png" }));
+  return createImageBitmap(new Blob([data], { type: "image/png" }));
 }
 
 async function loadDib(dib: Uint8Array): Promise<ImageBitmap> {

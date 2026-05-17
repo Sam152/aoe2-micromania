@@ -1,8 +1,7 @@
 import Smx, { PaletteCollectionFactory } from "genie-smx";
 import { Buffer } from "buffer";
 
-// deno-lint-ignore-file no-explicit-any
-export async function downloadAssets(assetPath: string): Promise<{ id: string; smx: any }[]> {
+export async function downloadAssets(assetPath: string): Promise<{ id: string; smx: Smx }[]> {
   const palettes = await PaletteCollectionFactory.fromHttp(`${assetPath}/palettes`);
   return await Promise.all(
     allAssets.map((assetId) =>
@@ -10,7 +9,6 @@ export async function downloadAssets(assetPath: string): Promise<{ id: string; s
         .then((response) => response.arrayBuffer())
         .then((arrayBuffer) => ({
           id: assetId,
-          // @ts-ignore - Smx module has no TypeScript construct signatures
           smx: new Smx(new Buffer(arrayBuffer), palettes),
         }))
     ),

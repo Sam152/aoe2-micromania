@@ -22,11 +22,11 @@ export default function changeFormation(state: GameState, action: { formation: F
     // Patrolling units can simply patrol again, since they already reform at their destination location.
     if (populationHas(units, "reformingTo")) {
       const destination = populationVector(units, "reformingTo");
-      const returningTo = units.map(({ patrollingTo }) => patrollingTo!);
+      const returningTo = units.map(({ patrollingTo }) => patrollingTo);
       patrolGroupTo(state, units, returningTo, destination);
     } else {
       const destination = populationVector(units, "patrollingTo");
-      const returningTo = units.map(({ patrollingToReturn }) => patrollingToReturn!);
+      const returningTo = units.map(({ patrollingToReturn }) => patrollingToReturn);
       patrolGroupTo(state, units, returningTo, destination);
     }
   } else if (populationHas(units, "waypoints")) {

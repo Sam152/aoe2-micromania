@@ -15,12 +15,12 @@ export default function patrolUnits(state: GameState) {
         unit.unitState === UnitState.Moving,
     )
     .forEach((unit) => {
-      unit.position.add(calculateUnitMovementPerTick(unit)!);
+      unit.position.add(calculateUnitMovementPerTick(unit));
 
       if (state.ticks === unit.arrivalTick) {
-        unit.position = unit.patrollingTo!.clone();
+        unit.position = unit.patrollingTo.clone();
         swapProperties(unit, "patrollingTo", "patrollingToReturn");
-        setUnitMovementTowards(state, unit, unit.patrollingTo!);
+        setUnitMovementTowards(state, unit, unit.patrollingTo);
       }
     });
 
@@ -31,6 +31,6 @@ export default function patrolUnits(state: GameState) {
         hasValue(unit.patrollingTo) && !hasValue(unit.reformingArrivalTick) && unit.unitState === UnitState.Idle,
     )
     .forEach((unit) => {
-      setUnitMovementTowards(state, unit, unit.patrollingTo!);
+      setUnitMovementTowards(state, unit, unit.patrollingTo);
     });
 }
