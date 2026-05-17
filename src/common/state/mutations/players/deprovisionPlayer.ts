@@ -24,6 +24,6 @@ export function deprovisionPlayer(state: GameState, playerId: string, computed: 
   // Provision any queued players first.
   if (state.queuedPlayers.length > 0) {
     const nextInQueuePlayerId = state.queuedPlayers.shift();
-    provisionPlayer(state, nextInQueuePlayerId, computed);
+    provisionPlayer(state, nextInQueuePlayerId!, computed);
   }
 }

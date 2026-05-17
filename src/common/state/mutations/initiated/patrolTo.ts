@@ -40,12 +40,12 @@ export function patrolGroupTo(
 
   // Translate their destinations back to their average starting position, then reform and return the
   // patrol to that location.
-  const groupTravelledVector = averageVector(units.map(({ patrollingToReturn }) => patrollingToReturn)).sub(
+  const groupTravelledVector = averageVector(units.map(({ patrollingToReturn }) => patrollingToReturn!)).sub(
     startingPosition,
   );
   units.map((unit) => {
-    unit.patrollingTo = unit.patrollingToReturn.clone().sub(groupTravelledVector);
-    unit.reformingTo = unit.patrollingToReturn.clone();
+    unit.patrollingTo = unit.patrollingToReturn!.clone().sub(groupTravelledVector);
+    unit.reformingTo = unit.patrollingToReturn!.clone();
     setUnitMovementTowards(state, unit, unit.reformingTo);
   });
   addUnitReformingSpeedFactor(state.ticks, units);

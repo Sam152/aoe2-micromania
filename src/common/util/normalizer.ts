@@ -25,14 +25,14 @@ export function normalizeGameStateObject(state: GameState): GameState {
   state.units = state.units.map((unit: UnitInstance) => ({
     ...unit,
     position: new Vector2(unit.position.x, unit.position.y),
-    targetingPosition: unit.targetingPosition ? new Vector2(unit.targetingPosition.x, unit.targetingPosition.y) : null,
-    movingDirection: unit.movingDirection ? new Vector2(unit.movingDirection.x, unit.movingDirection.y) : null,
+    targetingPosition: unit.targetingPosition ? new Vector2(unit.targetingPosition.x, unit.targetingPosition.y) : undefined,
+    movingDirection: unit.movingDirection ? new Vector2(unit.movingDirection.x, unit.movingDirection.y) : undefined,
     waypoints: unit.waypoints.map((waypoint) => new Vector2(waypoint.x, waypoint.y)),
-    reformingTo: unit.reformingTo ? new Vector2(unit.reformingTo.x, unit.reformingTo.y) : null,
-    patrollingTo: unit.patrollingTo ? new Vector2(unit.patrollingTo.x, unit.patrollingTo.y) : null,
+    reformingTo: unit.reformingTo ? new Vector2(unit.reformingTo.x, unit.reformingTo.y) : undefined,
+    patrollingTo: unit.patrollingTo ? new Vector2(unit.patrollingTo.x, unit.patrollingTo.y) : undefined,
     patrollingToReturn: unit.patrollingToReturn
       ? new Vector2(unit.patrollingToReturn.x, unit.patrollingToReturn.y)
-      : null,
+      : undefined,
   }));
   state.fallenUnits = state.fallenUnits.map((unit: FallenUnitInstance) => ({
     ...unit,

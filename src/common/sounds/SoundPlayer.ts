@@ -87,8 +87,8 @@ class SoundPlayer {
 
     if (soundMetadata.canOverlap) {
       if (
-        this.framePlayCounts[sound] < soundMetadata.maxFromOneTick ||
-        typeof soundMetadata.maxFromOneTick === "undefined"
+        typeof soundMetadata.maxFromOneTick === "undefined" ||
+        this.framePlayCounts[sound] < soundMetadata.maxFromOneTick
       ) {
         audioElement.play();
       }

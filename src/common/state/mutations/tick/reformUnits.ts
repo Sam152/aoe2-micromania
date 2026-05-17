@@ -13,14 +13,14 @@ export default function reformUnits(state: GameState) {
         hasValue(reformingTo) && !hasValue(targetingUnit) && unitState === UnitState.Moving,
     )
     .forEach(function (unit) {
-      unit.position.add(calculateUnitMovementPerTick(unit));
+      unit.position.add(calculateUnitMovementPerTick(unit)!);
     });
 
   // Get units moving again, after falling idle in the middle of reforming (ie they stopped to fire at something).
   state.units
     .filter(({ reformingTo, unitState }) => hasValue(reformingTo) && unitState === UnitState.Idle)
     .forEach(function (unit) {
-      setUnitMovementTowards(state, unit, unit.reformingTo);
+      setUnitMovementTowards(state, unit, unit.reformingTo!);
       // If a unit has stopped to fire at a target, give up on trying to uniformly arrive at a destination
       // at the same time as its peers, just get there eventually.
       unit.reformingArrivalTick = unit.arrivalTick;
@@ -29,9 +29,9 @@ export default function reformUnits(state: GameState) {
   state.units
     .filter(({ reformingArrivalTick }) => reformingArrivalTick === state.ticks)
     .forEach(function (unit) {
-      unit.reformingTo = null;
-      unit.reformingArrivalTick = null;
-      unit.reformingSpeedFactor = null;
+      unit.reformingTo = undefined;
+      unit.reformingArrivalTick = undefined;
+      unit.reformingSpeedFactor = undefined;
 
       if (unit.waypoints.length) {
         setUnitMovementTowardsCurrentWaypoint(state, unit);

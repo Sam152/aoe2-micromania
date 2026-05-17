@@ -29,7 +29,7 @@ class SlpManager {
     const renderedSmxLibrary = await Promise.all(
       downloadedSmxFiles.map(async ({ id, smx }) => {
         const frames = await Promise.all(
-          smx.getFrames().map(async (frame, frameNumber: number) => {
+          smx.getFrames().map(async (frame: any, frameNumber: number) => {
             const rendersToBuild = playerAssets.includes(id) ? renderedPlayers : [1];
 
             const perPlayerRenders = await Promise.all(

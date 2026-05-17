@@ -18,7 +18,7 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
     const distanceToReform = unit.reformingTo.distanceTo(unit.position);
     distances.push(distanceToReform);
     ticksForReform.push(
-      distanceToReform !== 0 ? Math.floor(distanceToReform / calculateUnitMovementPerTick(unit).length()) : 0,
+      distanceToReform !== 0 ? Math.floor(distanceToReform / calculateUnitMovementPerTick(unit)!.length()) : 0,
     );
   });
 
