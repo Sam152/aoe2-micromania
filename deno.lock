@@ -4,6 +4,7 @@
     "jsr:@deno/cache-dir@0.13.2": "0.13.2",
     "jsr:@deno/emit@*": "0.46.0",
     "jsr:@luca/esbuild-deno-loader@*": "0.11.1",
+    "jsr:@luca/esbuild-deno-loader@~0.11.1": "0.11.1",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/bytes@0.223": "0.223.0",
     "jsr:@std/bytes@^1.0.2": "1.0.6",
@@ -983,12 +984,14 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@luca/esbuild-deno-loader@~0.11.1",
       "jsr:@std/crypto@^1.1.0",
       "npm:@types/react-dom@18",
       "npm:@types/react@18",
       "npm:@types/three@~0.184.1",
       "npm:buffer@^6.0.3",
       "npm:d3-quadtree@^3.0.1",
+      "npm:esbuild@0.28.0",
       "npm:genie-smx@^1.2.0",
       "npm:howler@^2.2.3",
       "npm:humanize-duration@^3.27.1",
