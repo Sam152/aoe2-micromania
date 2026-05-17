@@ -7,19 +7,19 @@ import deepClone from "../util/deepClone.ts";
 const defaultScheme = hdHotkeyScheme;
 
 class HotkeyManager {
-  private storage: LocalStorageObject<{ [key in Hotkey]?: string }>;
-  private binds: { [key in Hotkey]?: string };
+  private storage: LocalStorageObject<{ [key in Hotkey]?: number }>;
+  private binds: { [key in Hotkey]?: number };
 
   constructor() {
-    this.storage = new LocalStorageObject<{ [key in Hotkey]: string }>("hotkeys");
+    this.storage = new LocalStorageObject<{ [key in Hotkey]: number }>("hotkeys");
     this.binds = this.storage.get({});
   }
 
-  getBindFor(hotkey: Hotkey): string {
+  getBindFor(hotkey: Hotkey): number {
     return this.binds[hotkey] || defaultScheme[hotkey];
   }
 
-  setBindFor(hotkey: Hotkey, bind: string): void {
+  setBindFor(hotkey: Hotkey, bind: number): void {
     this.binds[hotkey] = bind;
     this.storage.set(this.binds);
   }

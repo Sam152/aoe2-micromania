@@ -410,7 +410,7 @@ export interface ReplayItem extends ReplayIndexItem {
 }
 
 export type HotkeyScheme = {
-  [key in Hotkey]: string;
+  [key in Hotkey]: number;
 };
 
 export type Line = [Vector2, Vector2];
