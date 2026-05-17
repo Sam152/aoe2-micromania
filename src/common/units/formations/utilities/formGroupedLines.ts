@@ -1,9 +1,9 @@
 import averageVector from "../../../util/averageVector.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import { groupByTypes } from "./groupBytypes.ts";
 import { UnitInstance } from "../../../../types.d.ts";
 import { formationDepth } from "./formationDepths.ts";
 import formLines, { translateAndRotate } from "./formLines.ts";
+import {groupByTypes} from "./groupByTypes.ts";
 
 const UNITS_PER_ROW = 6;
 

@@ -7,6 +7,7 @@ export default class Player {
 
   constructor(socket: Socket) {
     this.socket = socket;
+    this.nickname = defaultNickname(this.socket.id);
   }
 
   setNickname(nickname: string): void {
@@ -16,6 +17,6 @@ export default class Player {
   }
 
   getNickname(): string {
-    return this.nickname || defaultNickname(this.socket.id);
+    return this.nickname;
   }
 }

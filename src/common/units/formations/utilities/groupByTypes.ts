@@ -4,7 +4,7 @@ import Unit from "../../Unit.ts";
 export function groupByTypes(units: UnitInstance[]): UnitMap {
   const gathered = units.reduce<GatheredUnits>((unitMap, unit) => {
     unitMap[unit.unitType] = unitMap[unit.unitType] || {};
-    unitMap[unit.unitType][unit.id] = unit;
+    unitMap[unit.unitType]![unit.id] = unit;
     return unitMap;
   }, {});
 

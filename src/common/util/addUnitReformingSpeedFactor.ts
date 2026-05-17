@@ -11,6 +11,10 @@ export default function addUnitReformingSpeedFactor(ticks: number, units: UnitIn
   const ticksForReform: Array<number> = [];
 
   units.forEach((unit) => {
+    if (!unit.reformingTo) {
+      return;
+    }
+
     const distanceToReform = unit.reformingTo.distanceTo(unit.position);
     distances.push(distanceToReform);
     ticksForReform.push(

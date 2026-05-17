@@ -9,8 +9,8 @@ export function snapToClamp(point: Vector2, mapSize: number) {
   }
 
   const lines = getMapBorderLines(mapSize);
-  let smallestDistanceToLine: number = null;
-  let resolvedInsideBoundaryPoint: Vector2 = null;
+  let smallestDistanceToLine: number;
+  let resolvedInsideBoundaryPoint: Vector2;
 
   // Find the shortest distance to a point clamped along the four lines
   // that border the map.
@@ -28,7 +28,7 @@ export function snapToClamp(point: Vector2, mapSize: number) {
     }
   });
 
-  return resolvedInsideBoundaryPoint;
+  return resolvedInsideBoundaryPoint!;
 }
 
 /**

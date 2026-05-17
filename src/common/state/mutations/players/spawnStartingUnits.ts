@@ -66,7 +66,7 @@ export function getBestSpawnLocation(state: GameState, computed: ComputedFrameSt
       continue;
     }
     const nearestUnitDistance = computed.quadTreeAllUnits.find(candidate.x, candidate.y).position.distanceTo(candidate);
-    if (!largestDistance) {
+    if (!largestDistance!) {
       largestDistance = nearestUnitDistance;
       startingLocation = candidate;
       continue;
@@ -77,10 +77,12 @@ export function getBestSpawnLocation(state: GameState, computed: ComputedFrameSt
     }
   }
 
-  return startingLocation;
+  return startingLocation!;
 }
 
-export function getStartingSpawnCandidates(state: GameState): Vector2[] {
+export function getStartingSpawnCandidates(
+  state: GameState,
+): [Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2] {
   const buffer = 4;
   const grid = new Grid(state.mapSize);
   // Clock face positions, see debug renderer.
@@ -93,5 +95,5 @@ export function getStartingSpawnCandidates(state: GameState): Vector2[] {
     { x: Math.ceil(state.mapSize / 2), y: state.mapSize - buffer },
     { x: buffer, y: state.mapSize - buffer },
     { x: buffer, y: Math.ceil(state.mapSize / 2) },
-  ].map((position) => grid.middleOfTile(position.x, position.y));
+  ].map((position) => grid.middleOfTile(position.x, position.y)) as [Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2];
 }
