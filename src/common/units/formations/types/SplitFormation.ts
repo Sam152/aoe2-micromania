@@ -8,7 +8,7 @@ export default class SplitFormation extends FormationBase {
   distanceBetween = 20;
   unitsPerRow = 3;
 
-  doForm(units: UnitInstance[], destination: Vector2): Array<Vector2> {
+  override doForm(units: UnitInstance[], destination: Vector2): Array<Vector2> {
     const positions = units.map((unit) => unit.position);
 
     const startingPoint = averageVector(positions);

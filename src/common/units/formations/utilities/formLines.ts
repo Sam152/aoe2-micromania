@@ -22,7 +22,7 @@ export function translateAndRotate(
   newPositions: Array<Vector2>,
   destination: Vector2,
   startingPoint: Vector2,
-) {
+): Vector2[] {
   // Move the units to the middle of the destination point.
   const offsetFromDestination = averageVector(newPositions).sub(destination);
   newPositions.map((newPosition) => newPosition.sub(offsetFromDestination));
@@ -43,6 +43,8 @@ export function translateAndRotate(
   if (bestFormationMapping === travelB) {
     return newPositionsB.reverse();
   }
+
+  throw new Error();
 }
 
 function sortIntoShortestDistance(newPositions: Array<Vector2>, positions: Array<Vector2>): [Array<Vector2>, number] {
