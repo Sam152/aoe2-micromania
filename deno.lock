@@ -32,7 +32,6 @@
     "npm:socket.io-client@^4.4.1": "4.8.3_bufferutil@4.1.0_utf-8-validate@5.0.10",
     "npm:socket.io@*": "4.8.3_bufferutil@4.1.0_utf-8-validate@5.0.10",
     "npm:socket.io@^4.4.1": "4.8.3_bufferutil@4.1.0_utf-8-validate@5.0.10",
-    "npm:stinput@^2.0.2": "2.0.2",
     "npm:three@~0.139.2": "0.139.2",
     "npm:webpack@5.106.2": "5.106.2"
   },
@@ -855,9 +854,6 @@
     "source-map@0.6.1": {
       "integrity": "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="
     },
-    "stinput@2.0.2": {
-      "integrity": "sha512-AThxZdQnC51Lw65dpWXe0DRNQhXHk/JXRPoOH0cdws4vzif7VOmPyIFNBzcwB0IohituCCK0J4DDZNLc5OcZLA=="
-    },
     "supports-color@8.1.1": {
       "integrity": "sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==",
       "dependencies": [
@@ -980,7 +976,6 @@
       "npm:react@18",
       "npm:socket.io-client@^4.4.1",
       "npm:socket.io@^4.4.1",
-      "npm:stinput@^2.0.2",
       "npm:three@~0.139.2"
     ]
   }

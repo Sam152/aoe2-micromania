@@ -2,28 +2,16 @@ import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../.
 import screenPositionToGamePosition, { gamePositionToScreenPosition } from "../util/screenPositionToGamePosition.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import FormationType from "../units/formations/FormationType.ts";
-import screenManager from "../drawing/screenManager.ts";
 import hotkeyManager from "./HotkeyManager.ts";
 import Hotkey from "./Hotkey.ts";
 
-const StInput = require("stinput");
-
 const doubleClickDuration = 250;
-const controlGroups = [
-  StInput.KeyboardKeys.n0,
-  StInput.KeyboardKeys.n1,
-  StInput.KeyboardKeys.n2,
-  StInput.KeyboardKeys.n3,
-  StInput.KeyboardKeys.n4,
-  StInput.KeyboardKeys.n5,
-  StInput.KeyboardKeys.n6,
-  StInput.KeyboardKeys.n7,
-  StInput.KeyboardKeys.n8,
-  StInput.KeyboardKeys.n9,
-];
+const digit0KeyCode = 48;
+const escapeKeyCode = 27;
+const controlGroups = Array.from({ length: 10 }, (_, i) => digit0KeyCode + i);
 
 export default class InputManager {
-  input: typeof StInput;
+  private element: HTMLCanvasElement;
   private dragging: boolean;
   stateManager: StateManagerInterface;
   private clientStateTransmitter: StateTransmitter;
@@ -33,13 +21,20 @@ export default class InputManager {
   private shiftDown: boolean;
   private ctrlDown: boolean;
 
+  private onPointerLockChange: () => void;
+  private onMouseMove: (e: MouseEvent) => void;
+  private onMouseDown: (e: MouseEvent) => void;
+  private onMouseUp: (e: MouseEvent) => void;
+  private onKeyDown: (e: KeyboardEvent) => void;
+  private onKeyUp: (e: KeyboardEvent) => void;
+  private onClick: (e: MouseEvent) => void;
+
   constructor(
     element: HTMLCanvasElement,
     stateManager: StateManagerInterface,
     clientStateTransmitter: StateTransmitter,
   ) {
-    this.input = new StInput(element);
-    this.input.disableContextMenu = true;
+    this.element = element;
     this.dragging = false;
     this.lastLeftClick = 0;
     this.heldKeys = new Set();
@@ -50,21 +45,17 @@ export default class InputManager {
     this.stateManager = stateManager;
     this.clientStateTransmitter = clientStateTransmitter;
 
-    document.addEventListener('pointerlockchange', () => {
+    this.onPointerLockChange = () => {
       this.dispatch({ n: "CURSOR_LOCK_CHANGED", locked: document.pointerLockElement === element });
-    });
+    };
 
-    element.addEventListener('mousemove', (e) => {
+    this.onMouseMove = (e) => {
       const clientState = this.stateManager.getClientState();
-
-      const position = clientState.cursorLocked ? clientState.mousePosition.clone().add({
-        x: e.movementX,
-        y: e.movementY,
-      }) : screenPositionToGamePosition(
-          new Vector2(e.offsetX, e.offsetY).add(
-              gamePositionToScreenPosition(clientState.camera),
-          ),
-      );
+      const position = clientState.cursorLocked
+        ? clientState.mousePosition.clone().add({ x: e.movementX, y: e.movementY })
+        : screenPositionToGamePosition(
+            new Vector2(e.offsetX, e.offsetY).add(gamePositionToScreenPosition(clientState.camera)),
+          );
       this.dispatch({ n: "MOUSE_POSITIONED", position });
 
       if (this.leftMouseDown) {
@@ -74,17 +65,17 @@ export default class InputManager {
         this.dispatch({ n: "DRAGGING", shift: this.shiftDown, position });
         this.dragging = true;
       }
-    });
+    };
 
-    element.addEventListener('mousedown', (e) => {
+    this.onMouseDown = (e) => {
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
       if (e.button === 0) {
         this.leftMouseDown = true;
       }
-    });
+    };
 
-    element.addEventListener('mouseup', (e) => {
+    this.onMouseUp = (e) => {
       const position = this.stateManager.getClientState().mousePosition;
 
       if (e.button === 0) {
@@ -112,9 +103,9 @@ export default class InputManager {
 
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
-    });
+    };
 
-    document.addEventListener('keydown', (e) => {
+    this.onKeyDown = (e) => {
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
       this.heldKeys.add(e.keyCode);
@@ -144,7 +135,7 @@ export default class InputManager {
       if (k === hotkeyManager.getBindFor(Hotkey.SplitFormation)) {
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Split });
       }
-      if (k === StInput.KeyboardKeys.escape) {
+      if (k === escapeKeyCode) {
         this.dispatch({ n: "HOTKEY_CANCEL" });
       }
 
@@ -152,32 +143,38 @@ export default class InputManager {
         if (k === keycode) {
           this.dispatch({
             n: this.ctrlDown ? "CONTROL_GROUP_ASSIGNED" : "CONTROL_GROUP_SELECTED",
-            group: keycode - StInput.KeyboardKeys.n0,
+            group: keycode - digit0KeyCode,
           });
         }
       });
-    });
+    };
 
-    document.addEventListener('keyup', (e) => {
+    this.onKeyUp = (e) => {
       this.heldKeys.delete(e.keyCode);
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
-    });
+    };
 
-    element.addEventListener('click', (e) => {
+    this.onClick = (e) => {
       const camera = this.stateManager.getClientState().camera;
       if (!this.stateManager.getClientState().cursorLocked) {
         this.dispatch({
           n: "MOUSE_POSITIONED",
           position: screenPositionToGamePosition(
-            new Vector2(e.offsetX, e.offsetY).add(
-              gamePositionToScreenPosition(camera),
-            ),
+            new Vector2(e.offsetX, e.offsetY).add(gamePositionToScreenPosition(camera)),
           ),
         });
         element.requestPointerLock();
       }
-    });
+    };
+
+    document.addEventListener('pointerlockchange', this.onPointerLockChange);
+    element.addEventListener('mousemove', this.onMouseMove);
+    element.addEventListener('mousedown', this.onMouseDown);
+    element.addEventListener('mouseup', this.onMouseUp);
+    document.addEventListener('keydown', this.onKeyDown);
+    document.addEventListener('keyup', this.onKeyUp);
+    element.addEventListener('click', this.onClick);
   }
 
   dispatchInput(): void {
@@ -195,14 +192,6 @@ export default class InputManager {
     }
   }
 
-  mousePosition(cameraPosition: Vector2) {
-    return screenPositionToGamePosition(
-      new Vector2(this.input.mousePosition.x, this.input.mousePosition.y - screenManager.getTopOffset()).add(
-        gamePositionToScreenPosition(cameraPosition),
-      ),
-    );
-  }
-
   dispatch(action: ClientStateAction) {
     this.stateManager.dispatchClient(action);
     this.clientStateTransmitter(
@@ -213,11 +202,14 @@ export default class InputManager {
     );
   }
 
-  clearInput(): void {
-    this.input.endFrame();
+  cleanUp(): void {
+    document.removeEventListener('pointerlockchange', this.onPointerLockChange);
+    this.element.removeEventListener('mousemove', this.onMouseMove);
+    this.element.removeEventListener('mousedown', this.onMouseDown);
+    this.element.removeEventListener('mouseup', this.onMouseUp);
+    document.removeEventListener('keydown', this.onKeyDown);
+    document.removeEventListener('keyup', this.onKeyUp);
+    this.element.removeEventListener('click', this.onClick);
   }
 
-  cleanUp() {
-    this.input.dispose();
-  }
 }

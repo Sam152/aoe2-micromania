@@ -30,7 +30,6 @@
     "humanize-duration": "npm:humanize-duration@^3.27.1",
     "jascpal": "npm:jascpal@~0.1.4",
     "just-standard-deviation": "npm:just-standard-deviation@^2.0.2",
-    "stinput": "npm:stinput@^2.0.2",
     "buffer": "npm:buffer@^6.0.3"
   }
 }

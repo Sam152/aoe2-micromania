@@ -95,8 +95,6 @@ export default class RenderLoopManager {
       this.stateManager.dispatchClient.bind(this.stateManager),
     );
 
-    this.inputManager.clearInput();
-
     if (this.running) {
       globalThis.requestAnimationFrame(this.render.bind(this));
     }
