@@ -46,3 +46,4 @@
 - [x] Cached cursors
 - [x] Replace Chakra
 - [ ] Add names back into the mix
+- [ ] Nudge camera when on edges

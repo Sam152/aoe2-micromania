@@ -46,7 +46,14 @@ export default class InputManager {
     this.clientStateTransmitter = clientStateTransmitter;
 
     this.onPointerLockChange = () => {
-      this.dispatch({ n: "CURSOR_LOCK_CHANGED", locked: document.pointerLockElement === element });
+      const locked = document.pointerLockElement === element;
+      this.dispatch({ n: "CURSOR_LOCK_CHANGED", locked });
+      if (!locked) {
+        this.dispatch({
+          n: "MOUSE_POSITIONED",
+          position: this.stateManager.getClientState().mousePosition,
+        });
+      }
     };
 
     this.onMouseMove = (e) => {
