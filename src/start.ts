@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { Server } from "npm:socket.io";
+import { Server } from "socket.io";
 import { startGame } from "./server/utils/startGame.ts";
 import Player from "./server/rooms/Player.ts";
 import { logErrors } from "./server/utils/logErrors.ts";

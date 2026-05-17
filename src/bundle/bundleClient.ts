@@ -18,7 +18,7 @@ export async function bundleClient() {
     Deno.readTextFile(new URL("../client/template.html", import.meta.url)),
     Deno.readTextFile(new URL("../client/styles.css", import.meta.url)),
     esbuild.build({
-      plugins: [nodePolyfillsPlugin, ...denoPlugins({ configPath })],
+      plugins: [nodePolyfillsPlugin, ...(denoPlugins({ configPath }) as esbuild.Plugin[])],
       entryPoints: [entrypoint],
       inject: [new URL("../../assets/buffer-shim.js", import.meta.url).pathname],
       bundle: true,
@@ -32,6 +32,10 @@ export async function bundleClient() {
 
   // Do not bother awaiting terminating the child process.
   esbuild.stop();
+
+  if (!esbuildResult.outputFiles) {
+    throw new Error('No output files in build');
+  }
 
   const js = new TextDecoder().decode(esbuildResult.outputFiles[0].contents);
 
