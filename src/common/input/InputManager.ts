@@ -55,10 +55,16 @@ export default class InputManager {
     });
 
     element.addEventListener('mousemove', (e) => {
-      const position = this.stateManager.getClientState().mousePosition.clone().add({
+      const clientState = this.stateManager.getClientState();
+
+      const position = clientState.cursorLocked ? clientState.mousePosition.clone().add({
         x: e.movementX,
         y: e.movementY,
-      });
+      }) : screenPositionToGamePosition(
+          new Vector2(e.offsetX, e.offsetY).add(
+              gamePositionToScreenPosition(clientState.camera),
+          ),
+      );
       this.dispatch({ n: "MOUSE_POSITIONED", position });
 
       if (this.leftMouseDown) {

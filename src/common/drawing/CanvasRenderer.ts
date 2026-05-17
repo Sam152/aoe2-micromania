@@ -20,6 +20,8 @@ import ProjectileType from "../units/ProjectileType.ts";
 import { rockPositionFactory } from "./helpers/rockPosition.ts";
 import { selectionRightClickAction } from "../units/selectionRightClickAction.ts";
 import { CONVERSION_JUICE_TICKS_RECHARGE } from "../state/mutations/tick/convertUnits.ts";
+import { CursorAsset, loadCursorFile } from "./cursorLoader.ts";
+import assetUrl from "../../client/util/assetUrl.ts";
 
 export default class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
