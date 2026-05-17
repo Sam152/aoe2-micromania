@@ -2,20 +2,20 @@ import { HotkeyScheme } from "../../../types.d.ts";
 import Hotkey from "../Hotkey.ts";
 
 const hdHotkeyScheme: HotkeyScheme = {
-  [Hotkey.LineFormation]: 90,
-  [Hotkey.SpreadFormation]: 67,
-  [Hotkey.SplitFormation]: 86,
+  [Hotkey.LineFormation]: "KeyZ",
+  [Hotkey.SpreadFormation]: "KeyC",
+  [Hotkey.SplitFormation]: "KeyV",
 
-  [Hotkey.Patrol]: 81,
-  [Hotkey.AttackGround]: 82,
+  [Hotkey.Patrol]: "KeyQ",
+  [Hotkey.AttackGround]: "KeyR",
 
-  [Hotkey.Stop]: 70,
-  [Hotkey.DeleteUnit]: 46,
+  [Hotkey.Stop]: "KeyF",
+  [Hotkey.DeleteUnit]: "Delete",
 
-  [Hotkey.CameraUp]: 38,
-  [Hotkey.CameraDown]: 40,
-  [Hotkey.CameraLeft]: 37,
-  [Hotkey.CameraRight]: 39,
+  [Hotkey.CameraUp]: "ArrowUp",
+  [Hotkey.CameraDown]: "ArrowDown",
+  [Hotkey.CameraLeft]: "ArrowLeft",
+  [Hotkey.CameraRight]: "ArrowRight",
 };
 
 export default hdHotkeyScheme;

@@ -7,8 +7,7 @@ import Hotkey from "./Hotkey.ts";
 import ActiveCommand from "./ActiveCommand.ts";
 
 const doubleClickDuration = 250;
-const digit0KeyCode = 48;
-const controlGroups = Array.from({ length: 10 }, (_, i) => digit0KeyCode + i);
+const controlGroups = Array.from({ length: 10 }, (_, i) => `Digit${i}`);
 
 export default class InputManager {
   private element: HTMLCanvasElement;
@@ -16,7 +15,7 @@ export default class InputManager {
   stateManager: StateManagerInterface;
   private clientStateTransmitter: StateTransmitter;
   private lastLeftClick: number;
-  private heldKeys: Set<number>;
+  private heldKeys: Set<string>;
   private leftMouseDown: boolean;
   private shiftDown: boolean;
   private ctrlDown: boolean;
@@ -109,11 +108,11 @@ export default class InputManager {
     this.onKeyDown = (e) => {
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
-      this.heldKeys.add(e.keyCode);
+      this.heldKeys.add(e.code);
 
       if (e.repeat) return;
 
-      const k = e.keyCode;
+      const k = e.code;
 
       if (k === hotkeyManager.getBindFor(Hotkey.Stop)) {
         this.dispatch({ n: "HOTKEY_STOP" });
@@ -144,14 +143,14 @@ controlGroups.forEach((keycode) => {
         if (k === keycode) {
           this.dispatch({
             n: this.ctrlDown ? "CONTROL_GROUP_ASSIGNED" : "CONTROL_GROUP_SELECTED",
-            group: keycode - digit0KeyCode,
+            group: parseInt(keycode[5]),
           });
         }
       });
     };
 
     this.onKeyUp = (e) => {
-      this.heldKeys.delete(e.keyCode);
+      this.heldKeys.delete(e.code);
       this.shiftDown = e.shiftKey;
       this.ctrlDown = e.ctrlKey;
     };
