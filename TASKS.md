@@ -35,6 +35,7 @@
 - [ ] Selection panel
 - [ ] Formation changing while units idle
 - [ ] Restoring stack patrol behaviour
+- [ ] Start in formation
 
 # Interface
 
@@ -49,3 +50,5 @@
 - [x] Replace Chakra
 - [ ] Add names back into the mix
 - [ ] Nudge camera when on edges
+- [ ] Restore nicknames
+- [ ] Start with default control groups
