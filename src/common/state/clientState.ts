@@ -306,7 +306,7 @@ function defaultState(clientId: string): ClientState {
     selectionRectangle: null,
     controlGroups: {},
     soundQueue: [],
-  }) as ClientState;
+  }) as unknown as ClientState;
   state.camera = new Vector2(0, 0);
   state.mousePosition = new Vector2(0, 0);
   state.cursorLocked = false;
