@@ -36,6 +36,7 @@
 - [ ] Formation changing while units idle
 - [ ] Restoring stack patrol behaviour
 - [ ] Start in formation
+- [ ] Leave arrows on the field
 
 # Interface
 
