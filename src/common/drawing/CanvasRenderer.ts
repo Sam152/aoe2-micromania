@@ -33,7 +33,7 @@ export default class CanvasRenderer implements RendererInterface {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this.context = this.canvas.getContext("2d");
+    this.context = this.canvas.getContext("2d")!;
 
     this.lastRenderedGameTick = 0;
     this.frameAtLastRenderedTick = 0;
@@ -136,7 +136,7 @@ export default class CanvasRenderer implements RendererInterface {
 
   drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
     gameState.projectiles.forEach((projectile) => {
-      const projectileInfo = projectileMetadata[projectile.type];
+      const projectileInfo = projectileMetadata[projectile.type]!;
 
       const totalTicksInJourney = projectile.arrivingTick - projectile.startingTick;
       const ticksOfJourneyComplete = gameState.ticks - projectile.startingTick + this.fractionOfTickRendered;
