@@ -130,7 +130,7 @@ function defaultState(): GameState {
     fallenUnits: [],
 
     gameEnded: false,
-    winner: null,
+    winner: undefined,
 
     soundQueue: [],
 

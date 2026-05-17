@@ -14,7 +14,7 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
 
   // Check if a unit should be firing or moving towards its target.
   convertingUnits.forEach((monk) => {
-    const convertingUnit = computed.unitIndex[monk.convertingUnit];
+    const convertingUnit = computed.unitIndex[monk.convertingUnit!];
 
     // Either the target of a conversion was already converted, or it cycled out
     // of the unit list.
@@ -26,7 +26,7 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
     const targetingPosition = convertingUnit.position;
 
     if (inAttackRange(monk, targetingPosition)) {
-      monk.movingDirection = null;
+      monk.movingDirection = undefined;
       monk.unitState = UnitState.Firing;
       monk.direction = compassDirectionCalculator.getDirection(monk.position, targetingPosition);
 
@@ -36,7 +36,7 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
       }
 
       if (state.ticks === monk.conversionSucceedsAt) {
-        const converted = computed.unitIndex[monk.convertingUnit];
+        const converted = computed.unitIndex[monk.convertingUnit!];
 
         if (converted) {
           converted.ownedByPlayer = monk.ownedByPlayer;
@@ -51,7 +51,7 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
       }
     } else {
       setUnitMovementTowards(state, monk, targetingPosition);
-      monk.position.add(calculateUnitMovementPerTick(monk));
+      monk.position.add(calculateUnitMovementPerTick(monk)!);
 
       // When out of range, do not count towards a conversion tick.
       if (monk.conversionSucceedsAt) {

@@ -35,8 +35,8 @@ export function useRegionalConnection(): UseRegionalConnectionReturn {
   }, []);
 
   const hasConnected = useHasConnected(hookConnection);
-  return {
-    connection: hookConnection,
-    hasConnected: hasConnected,
-  };
+  if (!hookConnection) {
+    return { hasConnected: false };
+  }
+  return { connection: hookConnection, hasConnected };
 }

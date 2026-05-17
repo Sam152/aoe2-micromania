@@ -22,7 +22,7 @@ export default function spawnUnit(
     waypoints: [],
     formation: FormationType.Line,
     clickedWaypoints: [],
-    movingDirection: null,
+    movingDirection: undefined,
     reloadsAt: 0,
     ownedByPlayer: action.forPlayer,
     unitType: action.unitType,

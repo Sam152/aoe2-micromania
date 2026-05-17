@@ -7,8 +7,8 @@ export async function resolveServerFromCache(): Promise<string> {
   }
   const servers = await serversByPing();
   const server = servers.at(0);
-  setCachedServer(server.server);
-  return server.server;
+  setCachedServer(server!.server);
+  return server!.server;
 }
 
 export function setCachedServer(server: string) {
@@ -17,7 +17,7 @@ export function setCachedServer(server: string) {
 
 export function getCachedServer(): string | undefined {
   const stored = localStorage.getItem("selectedServer");
-  if (regionalServers.includes(stored)) {
+  if (stored && regionalServers.includes(stored)) {
     return stored;
   }
   return undefined;
