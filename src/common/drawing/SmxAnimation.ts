@@ -43,10 +43,9 @@ export default class SmxAnimation {
     style: AnimationStyle = AnimationStyle.Loop,
   ) {
     const totalTicksForAnimation = ticksForAnimation(animationDuration);
-    const percentageOfAnimationComplete =
-      style === AnimationStyle.Loop
-        ? (unitStateTickCount % totalTicksForAnimation) / totalTicksForAnimation
-        : Math.min(unitStateTickCount / totalTicksForAnimation, 1);
+    const percentageOfAnimationComplete = style === AnimationStyle.Loop
+      ? (unitStateTickCount % totalTicksForAnimation) / totalTicksForAnimation
+      : Math.min(unitStateTickCount / totalTicksForAnimation, 1);
 
     // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
     const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.smxFramesCount - 1));
@@ -81,10 +80,9 @@ export default class SmxAnimation {
   ): Rectangle {
     const totalTicksForAnimation = ticksForAnimation(animationDuration);
 
-    const percentageOfAnimationComplete =
-      style === AnimationStyle.Loop
-        ? (unitStateTickCount % totalTicksForAnimation) / totalTicksForAnimation
-        : Math.min(unitStateTickCount / totalTicksForAnimation, 1);
+    const percentageOfAnimationComplete = style === AnimationStyle.Loop
+      ? (unitStateTickCount % totalTicksForAnimation) / totalTicksForAnimation
+      : Math.min(unitStateTickCount / totalTicksForAnimation, 1);
 
     // For a total of N frames to render, pick a number between 0 to N-1 as an index for the frame to select.
     const frameIndexToRender = Math.floor(percentageOfAnimationComplete * (this.framesPerAngle - 1));

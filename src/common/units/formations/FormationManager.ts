@@ -31,7 +31,7 @@ class FormationManager {
     }, {});
 
     const populationFormation = Object.keys(counts).reduce((a, b) =>
-      counts[a as unknown as number] > counts[a as unknown as number] ? a : b,
+      counts[a as unknown as number] > counts[a as unknown as number] ? a : b
     );
     // @ts-ignore
     return this.map[populationFormation];

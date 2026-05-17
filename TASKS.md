@@ -1,5 +1,4 @@
-Tasks
-===
+# Tasks
 
 ## Critical
 
@@ -46,3 +45,4 @@ Tasks
 - [x] Loading progress
 - [x] Cached cursors
 - [x] Replace Chakra
+- [ ] Add names back into the mix

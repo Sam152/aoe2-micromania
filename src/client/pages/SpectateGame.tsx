@@ -12,7 +12,5 @@ export function SpectateGame() {
     }
   }, [connection.hasConnected]);
 
-  return (
-    <div style={{ position: "relative" }}>{state && <GameCanvas startAs="SPECTATOR" stateManager={state} />}</div>
-  );
+  return <div style={{ position: "relative" }}>{state && <GameCanvas startAs="SPECTATOR" stateManager={state} />}</div>;
 }

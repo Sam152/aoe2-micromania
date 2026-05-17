@@ -10,7 +10,7 @@ export async function downloadAssets(assetPath: string): Promise<{ id: string; s
         .then((arrayBuffer) => ({
           id: assetId,
           smx: new Smx(new Buffer(arrayBuffer), palettes),
-        })),
+        }))
     ),
   );
 }

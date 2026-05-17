@@ -169,9 +169,11 @@ const unitDefinitions: {
 };
 
 class UnitMetadata {
-  units: Partial<{
-    [key in Unit]: UnitStats;
-  }> = {};
+  units: Partial<
+    {
+      [key in Unit]: UnitStats;
+    }
+  > = {};
 
   constructor() {
     this.units = {};

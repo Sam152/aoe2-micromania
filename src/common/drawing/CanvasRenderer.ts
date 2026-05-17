@@ -58,7 +58,8 @@ export default class CanvasRenderer implements RendererInterface {
 
   fit() {
     this.context.canvas.width = globalThis.innerWidth * screenManager.getCanvasScale();
-    this.context.canvas.height = (globalThis.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
+    this.context.canvas.height = (globalThis.innerHeight - screenManager.getTopOffset()) *
+      screenManager.getCanvasScale();
   }
 
   getSize(): Vector2 {
@@ -124,7 +125,7 @@ export default class CanvasRenderer implements RendererInterface {
     unitsInGameState(gameState, clientState.selectedUnits).forEach((selectedUnit) =>
       selectedUnit.clickedWaypoints.forEach((waypoint) => {
         flag.animateAsset(this.context, new Vector2(waypoint.x, waypoint.y), 3, gameState.ticks);
-      }),
+      })
     );
     if (clientState.lastMoveClick) {
       const asset = slpManager.getAsset("interface/MOVETO");
@@ -239,8 +240,8 @@ export default class CanvasRenderer implements RendererInterface {
         };
         const width = 40;
 
-        const percentFilled =
-          1 - (unitInstance.conversionJuiceFullAt - gameState.ticks) / CONVERSION_JUICE_TICKS_RECHARGE;
+        const percentFilled = 1 -
+          (unitInstance.conversionJuiceFullAt - gameState.ticks) / CONVERSION_JUICE_TICKS_RECHARGE;
 
         this.context.beginPath();
         this.context.fillStyle = "black";
@@ -332,8 +333,7 @@ export default class CanvasRenderer implements RendererInterface {
 
     let cursor: Cursor;
     if (state.activeCommand === ActiveCommand.Default) {
-      const attacking =
-        state.selectedUnits.length > 0 &&
+      const attacking = state.selectedUnits.length > 0 &&
         state.unitHitBoxes
           .filter(({ unit }) => unit.ownedByPlayer !== playingAs)
           .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));

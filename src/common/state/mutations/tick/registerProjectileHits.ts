@@ -17,7 +17,7 @@ export default function registerProjectileHits(state: GameState) {
 
   standardProjectiles.forEach((projectile) => {
     const hitUnit = state.units.find((unit) =>
-      pointInCircle(unit.position, unitMetadataFactory.getUnit(unit.unitType).hitBox, projectile.destination),
+      pointInCircle(unit.position, unitMetadataFactory.getUnit(unit.unitType).hitBox, projectile.destination)
     );
     if (hitUnit) {
       const damage = calculateDamage(projectile.firedByType, hitUnit.unitType);

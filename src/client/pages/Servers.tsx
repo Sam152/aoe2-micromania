@@ -33,9 +33,7 @@ export default function Servers() {
                     </td>
                     <td>{server.ping}</td>
                     <td>
-                      {cached === server.server ? (
-                        <p>Connected</p>
-                      ) : (
+                      {cached === server.server ? <p>Connected</p> : (
                         <button
                           className="btn"
                           onClick={() => {

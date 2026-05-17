@@ -117,7 +117,7 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
     const unitsInSelection = state.unitHitBoxes
       .filter((unitAndHitBox) => unitAndHitBox.unit.ownedByPlayer === playingAs)
       .filter((unitAndHitBox) =>
-        rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle)),
+        rectIntersectingWithRect(unitAndHitBox.hitBox, normalizeRect(state.selectionRectangle))
       )
       .map((unitAndHitBox) => unitAndHitBox.unit.id);
     if (action.shift) {
@@ -292,4 +292,4 @@ function defaultState(clientId: string): ClientState {
   return state;
 }
 
-export { defaultState, clientStateMutator, clientStateTransmitter };
+export { clientStateMutator, clientStateTransmitter, defaultState };

@@ -133,8 +133,7 @@ export default function Hotkeys() {
                 <tr>
                   <td>Delete selected units</td>
                   <td>
-                    <kbd>shift</kbd> +{" "}
-                    <kbd>{keycodeToHumanReadable(hotkeyManager.getBindFor(Hotkey.DeleteUnit))}</kbd>
+                    <kbd>shift</kbd> + <kbd>{keycodeToHumanReadable(hotkeyManager.getBindFor(Hotkey.DeleteUnit))}</kbd>
                   </td>
                   <td />
                 </tr>

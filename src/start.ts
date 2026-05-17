@@ -1,50 +1,14 @@
-import { createServer } from "node:http";
-import { Server } from "npm:socket.io";
-import * as esbuild from "npm:esbuild";
-import { denoPlugins } from "jsr:@luca/esbuild-deno-loader";
-import { startGame } from "./server/utils/startGame.ts";
+import {createServer} from "node:http";
+import {Server} from "npm:socket.io";
+import {startGame} from "./server/utils/startGame.ts";
 import Player from "./server/rooms/Player.ts";
-import { logErrors } from "./server/utils/logErrors.ts";
+import {logErrors} from "./server/utils/logErrors.ts";
+import {bundleClient} from "./serve/bundleClient.ts";
 
 logErrors();
 
 const port = parseInt(Deno.env.get("PORT") ?? "3000");
-
-console.log("Bundling client...");
-const configPath = new URL("../deno.json", import.meta.url).pathname;
-const entrypoint = new URL("./client/index.tsx", import.meta.url).pathname;
-
-// esbuild with platform:"browser" externalises bare specifiers that share a
-// name with a Node built-in (including "buffer") before deno-loader can
-// intercept them. This plugin runs first and redirects them to the npm polyfill
-// already present in node_modules.
-const nodePolyfillsPlugin: esbuild.Plugin = {
-  name: "node-polyfills",
-  setup(build) {
-    const bufferPath = new URL("../node_modules/buffer/index.js", import.meta.url).pathname;
-    build.onResolve({ filter: /^buffer$/ }, () => ({ path: bufferPath }));
-  },
-};
-
-const bufferShim = new URL("../assets/buffer-shim.js", import.meta.url).pathname;
-
-const result = await esbuild.build({
-  plugins: [nodePolyfillsPlugin, ...denoPlugins({ configPath })],
-  entryPoints: [entrypoint],
-  inject: [bufferShim],
-  bundle: true,
-  format: "esm",
-  platform: "browser",
-  jsx: "automatic",
-  jsxImportSource: "react",
-  write: false,
-});
-const clientBundle = new TextDecoder().decode(result.outputFiles[0].contents);
-await esbuild.stop();
-console.log("Client bundled.");
-
-const html = await Deno.readTextFile(new URL("./client/template.html", import.meta.url));
-const css = await Deno.readTextFile(new URL("./client/styles.css", import.meta.url));
+const { html, css, js } = await bundleClient();
 const assetsRoot = new URL("../assets", import.meta.url).pathname;
 
 const MIME_TYPES: Record<string, string> = {
@@ -67,9 +31,9 @@ function contentType(pathname: string): string {
 }
 
 const httpServer = createServer(async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  // res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   const pathname = new URL(req.url ?? "/", "http://localhost").pathname;
 
@@ -80,7 +44,7 @@ const httpServer = createServer(async (req, res) => {
 
   if (req.method === "GET" && pathname === "/bundle.js") {
     res.writeHead(200, { "Content-Type": "application/javascript" });
-    return res.end(clientBundle);
+    return res.end(js);
   }
 
   if (req.method === "GET" && pathname === "/styles.css") {

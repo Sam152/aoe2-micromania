@@ -1,4 +1,4 @@
-import { io, Socket, ManagerOptions, SocketOptions } from "socket.io-client";
+import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 import { useHasConnected } from "./useHasConnected.ts";
 import { useEffect, useState } from "react";
 import { resolveServerFromCache } from "../servers/resolveServerFromCache.ts";
@@ -18,9 +18,9 @@ const socketConfig: Partial<ManagerOptions & SocketOptions> = {
 
 type UseRegionalConnectionReturn =
   | {
-      hasConnected: boolean;
-      connection: Socket;
-    }
+    hasConnected: boolean;
+    connection: Socket;
+  }
   | { hasConnected: false };
 
 export function useRegionalConnection(): UseRegionalConnectionReturn {
