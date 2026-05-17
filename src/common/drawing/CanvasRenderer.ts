@@ -30,7 +30,9 @@ export default class CanvasRenderer implements RendererInterface {
   frameAtLastRenderedTick: number;
   framesPerTick: number;
   fractionOfTickRendered: number;
-  private lastCursor: string | null;
+  private cursorAssets: Partial<Record<Cursor, CursorAsset>>;
+  private activeCursor: Cursor;
+  private lastCursor: Cursor | null;
   private debugRenderer: RendererInterface;
 
   constructor(canvas: HTMLCanvasElement) {
@@ -45,6 +47,8 @@ export default class CanvasRenderer implements RendererInterface {
     // @ts-ignore
     globalThis.ctx = this.context;
 
+    this.cursorAssets = {};
+    this.activeCursor = "default";
     this.lastCursor = null;
 
     this.debugRenderer = new DebugRenderer(canvas);
@@ -63,8 +67,19 @@ export default class CanvasRenderer implements RendererInterface {
     return new Vector2(this.context.canvas.width, this.context.canvas.height);
   }
 
-  bootUp(): Promise<void> {
-    return slpManager.downloadPreRenderAll();
+  async bootUp(): Promise<void> {
+    await slpManager.downloadPreRenderAll();
+    const cursorFiles: Partial<Record<Cursor, string>> = {
+      default: assetUrl("graphics/cursor/default32x32.cur"),
+      attack: assetUrl("graphics/cursor/attack32x32.cur"),
+      area_attack: assetUrl("graphics/cursor/area_attack32x32.cur"),
+      patrol: assetUrl("graphics/cursor/patrol32x32.cur"),
+    };
+    await Promise.all(
+      (Object.entries(cursorFiles) as [Cursor, string][]).map(async ([cursor, url]) => {
+        this.cursorAssets[cursor] = await loadCursorFile(url);
+      }),
+    );
   }
 
   render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
@@ -92,13 +107,14 @@ export default class CanvasRenderer implements RendererInterface {
     this.drawProjectiles(gameState, clientState, clientStateDispatcher);
     this.drawMovementCommandAnimations(gameState, clientState);
     this.drawSelectionRectangle(this.context, clientState.selectionRectangle);
-    this.renderMouse(clientState, gameState);
+    this.resolveCursor(clientState, gameState);
 
     if (config.debug) {
       this.debugRenderer.render(gameState, clientState, clientStateDispatcher);
     }
 
     this.context.setTransform(1, 0, 0, 1, 0, 0);
+    this.drawCursor(clientState);
   }
 
   translateCamera(camera: Vector2): void {
@@ -325,28 +341,35 @@ export default class CanvasRenderer implements RendererInterface {
     );
   }
 
-  renderMouse(state: ClientState, gameState: GameState) {
+  resolveCursor(state: ClientState, gameState: GameState): void {
     const playingAs = gameState.activePlayers[state.clientId] ?? -1;
 
-    let cursor: Cursor;
     if (state.activeCommand === ActiveCommand.Default) {
       const attacking = state.selectedUnits.length > 0 &&
         state.unitHitBoxes
           .filter(({ unit }) => unit.ownedByPlayer !== playingAs)
           .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
 
-      if (attacking) {
-        cursor = selectionRightClickAction(state.selectedUnits, gameState) === "ATTACK" ? "attack" : "convert";
-      } else {
-        cursor = "default";
-      }
+      this.activeCursor = attacking
+        ? (selectionRightClickAction(state.selectedUnits, gameState) === "ATTACK" ? "attack" : "default")
+        : "default";
     } else {
-      cursor = activeCommandMap[state.activeCommand];
+      this.activeCursor = activeCommandMap[state.activeCommand];
+    }
+  }
+
+  drawCursor(state: ClientState): void {
+    if (this.activeCursor !== this.lastCursor) {
+      this.canvas.style.cursor = `url("data:image/png;base64,${cursorFiles[this.activeCursor]}") ${anchorMap[this.activeCursor]}, none`;
+      this.lastCursor = this.activeCursor;
     }
 
-    if (cursor !== this.lastCursor) {
-      this.canvas.style.cursor = `url("data:image/png;base64,${cursorFiles[cursor]}") ${anchorMap[cursor]}, none`;
-      this.lastCursor = cursor;
+    if (state.cursorLocked) {
+      const asset = this.cursorAssets[this.activeCursor] ?? this.cursorAssets["default"];
+      if (!asset) return;
+      const x = state.mousePosition.x - state.camera.x - asset.hotspot.x;
+      const y = state.mousePosition.y - state.camera.y - asset.hotspot.y;
+      this.context.drawImage(asset.image, x, y);
     }
   }
 }
