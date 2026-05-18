@@ -9,7 +9,7 @@ export default class LocalStorageObject<T> {
     try {
       const data = JSON.parse(globalThis.localStorage.getItem(this.key)!);
       return data || defaultValue;
-    } catch (e) {
+    } catch {
       globalThis.localStorage.removeItem(this.key);
       return defaultValue;
     }

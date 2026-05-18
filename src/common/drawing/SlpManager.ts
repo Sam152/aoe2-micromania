@@ -51,10 +51,10 @@ class SlpManager {
             // Clean up some unused properties for memory.
             delete frame.layers[0].commands;
             delete frame.layers[0].pixelData;
-            // @ts-ignore
+            // @ts-ignore: layerData exists at runtime but is not in the type definition
             delete frame.layers[0].layerData;
             if (frame.layers[1]) {
-              // @ts-ignore
+              // @ts-ignore: layerData exists at runtime but is not in the type definition
               delete frame.layers[1].layerData;
             }
             delete frame.layers[2];

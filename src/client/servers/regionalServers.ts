@@ -15,7 +15,8 @@ async function measurePing(host: string) {
   const start = Date.now();
   try {
     await fetch(`${host}/ping`, { mode: "no-cors" });
-  } finally {
-    return Date.now() - start;
+  } catch {
+    // ignore network errors, just measure elapsed time
   }
+  return Date.now() - start;
 }

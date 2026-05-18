@@ -51,7 +51,6 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
       unit.clickedWaypoints.push(action.position);
       stopUnitExceptForWaypoints(unit);
     });
-    const positions = units.map((unit) => unit.waypoints.at(-1) ?? unit.position);
     formationManager
       .fromPopulation(units)
       .form(units, action.position)

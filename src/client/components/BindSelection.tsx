@@ -16,7 +16,7 @@ export default function BindSelection({ onChange }: { onChange: (keycode: number
   }, [listening]);
 
   return (
-    <button className="btn" onClick={() => setListening(true)}>
+    <button type="button" className="btn" onClick={() => setListening(true)}>
       {listening ? "Listening..." : "Rebind"}
     </button>
   );

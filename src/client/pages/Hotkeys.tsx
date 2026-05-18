@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Section from "../components/Section.tsx";
 import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable.ts";
 import hotkeyManager from "../../common/input/HotkeyManager.ts";
@@ -32,16 +32,16 @@ export default function Hotkeys() {
     <div className="container">
       <div className="vstack">
         <div className="btn-group btn-group-right">
-          <button className="btn" onClick={() => setScheme(hdHotkeyScheme)}>
+          <button type="button" className="btn" onClick={() => setScheme(hdHotkeyScheme)}>
             HD Hotkeys
           </button>
-          <button className="btn" onClick={() => setScheme(deHotkeyScheme)}>
+          <button type="button" className="btn" onClick={() => setScheme(deHotkeyScheme)}>
             DE Hotkeys
           </button>
-          <button className="btn" onClick={() => setScheme(aocHotkeyScheme)}>
+          <button type="button" className="btn" onClick={() => setScheme(aocHotkeyScheme)}>
             Classic Hotkeys
           </button>
-          <button className="btn btn-outline" onClick={clear}>
+          <button type="button" className="btn btn-outline" onClick={clear}>
             Reset to default
           </button>
         </div>

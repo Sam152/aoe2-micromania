@@ -42,7 +42,7 @@ export function startGame(io: Server): {
         }
       });
 
-      player.socket.on("disconnect", (reason) => {
+      player.socket.on("disconnect", (_reason) => {
         state.dispatchGame({
           n: "CLIENT_DISCONNECTED_WITH_ID",
           playerId: player.socket.id,

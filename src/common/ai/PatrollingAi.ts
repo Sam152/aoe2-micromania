@@ -11,7 +11,7 @@ export default class PatrollingAi implements Ai {
     this.playingAs = playingAs;
   }
 
-  makeDecisions(state: GameState, action: GameStateAction, dispatcher: GameDispatcher): void {
+  makeDecisions(state: GameState, _action: GameStateAction, dispatcher: GameDispatcher): void {
     if (state.ticks % 60 !== 0) {
       return;
     }

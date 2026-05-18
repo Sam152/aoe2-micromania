@@ -34,6 +34,7 @@ export default function Servers() {
                     <td>
                       {cached === server.server ? <p>Connected</p> : (
                         <button
+                          type="button"
                           className="btn"
                           onClick={() => {
                             setCachedServer(server.server);

@@ -5,7 +5,7 @@ export function normalizeGameStateAction(action: GameStateAction): GameStateActi
   const vectorKeys = ["position"];
   vectorKeys.map((key) => {
     if (key in action) {
-      // @ts-ignore
+      // @ts-ignore: GameStateAction doesn't have an index signature but key is always present
       action[key] = new Vector2(action[key].x, action[key].y);
     }
   });

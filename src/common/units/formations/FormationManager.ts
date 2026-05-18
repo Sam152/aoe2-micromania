@@ -16,7 +16,7 @@ class FormationManager {
   }
 
   get(type: FormationType): FormationInterface {
-    // @ts-ignore
+    // @ts-ignore: FormationType enum values are used as numeric keys
     return this.map[type];
   }
 
@@ -33,7 +33,7 @@ class FormationManager {
     const populationFormation = Object.keys(counts).reduce((a, b) =>
       counts[a as unknown as number] > counts[a as unknown as number] ? a : b
     );
-    // @ts-ignore
+    // @ts-ignore: FormationType enum values are used as numeric keys
     return this.map[populationFormation];
   }
 }

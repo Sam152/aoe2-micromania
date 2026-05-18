@@ -2,7 +2,7 @@ import Section from "../components/Section.tsx";
 import soundList from "../../common/sounds/soundList.ts";
 
 function playSound(soundName: string) {
-  var audio = new Audio(`/sounds/de/${soundName}.ogg`);
+  const audio = new Audio(`/sounds/de/${soundName}.ogg`);
   audio.play();
 }
 
@@ -25,7 +25,7 @@ export default function Sounds() {
                   <td>{sound[0]}</td>
                   <td>{sound[1]}</td>
                   <td>
-                    <button className="btn" onClick={() => playSound(sound[1])}>
+                    <button type="button" className="btn" onClick={() => playSound(sound[1])}>
                       Play
                     </button>
                   </td>

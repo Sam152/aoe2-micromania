@@ -1,5 +1,5 @@
 import { ConnectedState } from "../hooks/useConnectedState.tsx";
-import React, { CSSProperties, ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import assetUrl from "../util/assetUrl.ts";
 
 export function PlayingAs({ connectedState }: { connectedState: ConnectedState }) {

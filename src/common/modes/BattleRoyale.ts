@@ -32,7 +32,7 @@ export default class BattleRoyale implements GameMode {
     this.cycleTerrain(state, action, manager);
   }
 
-  cyclePlayers(state: GameState, action: GameStateAction, manager: StateManagerInterface) {
+  cyclePlayers(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
     const activePlayers = Object.keys(state.activePlayers).length;
     if (activePlayers === 0) {
       return;
@@ -53,7 +53,7 @@ export default class BattleRoyale implements GameMode {
     }
   }
 
-  cycleTerrain(state: GameState, action: GameStateAction, manager: StateManagerInterface) {
+  cycleTerrain(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
     const terrainOptions = ["terrain/15001-grass", "terrain/15008-grass-2", "terrain/15009-grass-dirt"];
     const terrainIndex = Math.floor(state.ticks / TERRAIN_TICK_DURATION) % terrainOptions.length;
     const newTerrain = terrainOptions[terrainIndex];

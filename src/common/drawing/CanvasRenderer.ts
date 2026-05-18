@@ -44,7 +44,7 @@ export default class CanvasRenderer implements RendererInterface {
     this.fractionOfTickRendered = 0;
     this.framesPerTick = 0;
 
-    // @ts-ignore
+    // @ts-ignore: exposing ctx on globalThis for debugging
     globalThis.ctx = this.context;
 
     this.cursorAssets = {};
@@ -147,7 +147,7 @@ export default class CanvasRenderer implements RendererInterface {
     }
   }
 
-  drawProjectiles(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
+  drawProjectiles(gameState: GameState, _clientState: ClientState, _clientStateDispatcher: ClientDispatcher): void {
     gameState.projectiles.forEach((projectile) => {
       const projectileInfo = projectileMetadata[projectile.type]!;
 

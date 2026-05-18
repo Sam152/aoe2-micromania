@@ -61,6 +61,6 @@ export default function convertUnits(state: GameState, computed: ComputedFrameSt
   });
 }
 
-function lockConversionSuccessInNumberTicks(state: GameState, monk: UnitInstance) {
+function lockConversionSuccessInNumberTicks(_state: GameState, _monk: UnitInstance) {
   return 100;
 }

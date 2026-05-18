@@ -23,14 +23,14 @@ export default class DebugRenderer implements RendererInterface {
     return Promise.resolve();
   }
 
-  render(gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher): void {
+  render(gameState: GameState, clientState: ClientState, _clientStateDispatcher: ClientDispatcher): void {
     this.drawUnits(gameState);
     this.drawClampSnap(gameState, clientState);
     this.drawBoundary(gameState, clientState);
     this.drawGridTiles(gameState, clientState);
   }
 
-  drawGridTiles(gameState: GameState, clientState: ClientState) {
+  drawGridTiles(gameState: GameState, _clientState: ClientState) {
     const grid = new Grid(gameState.mapSize);
     for (let x = 0; x < gameState.mapSize; x++) {
       for (let y = 0; y < gameState.mapSize; y++) {

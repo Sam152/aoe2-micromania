@@ -1,7 +1,7 @@
 class ScreenManager {
   private scale: number;
   private topOffset: number;
-  callbacks: Function[];
+  callbacks: (() => void)[];
 
   constructor() {
     this.scale = Math.min(1.3, globalThis.devicePixelRatio);
@@ -13,7 +13,7 @@ class ScreenManager {
     this.resize();
   }
 
-  onChange(callback: Function) {
+  onChange(callback: () => void) {
     this.callbacks.push(callback);
   }
 

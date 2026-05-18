@@ -89,7 +89,7 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
   }
 
   if (["RIGHT_CLICK", "LEFT_CLICK", "DRAG_END"].includes(action.n) && state.activeCommand === ActiveCommand.Patrol) {
-    // @ts-ignore
+    // @ts-ignore: action.position is present for click actions but not in the union type
     state.lastMoveClick = [action.position, state.renderedFrames];
   }
 

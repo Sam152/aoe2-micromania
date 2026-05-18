@@ -20,7 +20,7 @@ export default abstract class FormationBase implements FormationInterface {
     return this.doForm(units, destination);
   }
 
-  doForm(units: UnitInstance[], destination: Vector2): Array<Vector2> {
+  doForm(_units: UnitInstance[], _destination: Vector2): Array<Vector2> {
     return [];
   }
 }
