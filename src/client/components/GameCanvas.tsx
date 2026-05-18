@@ -12,7 +12,7 @@ export default function GameCanvas({
   const ref = createRef<HTMLCanvasElement>();
 
   useEffect(() => {
-    const renderLoop = new RenderLoopManager(stateManager, ref.current);
+    const renderLoop = new RenderLoopManager(stateManager, ref.current!);
     renderLoop.start(startAs);
     return () => {
       renderLoop.stop();

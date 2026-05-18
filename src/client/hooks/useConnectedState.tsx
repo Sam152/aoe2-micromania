@@ -6,13 +6,13 @@ export const connectedEvents = ["CLIENT_LOADED_WITH_ID", "CLIENT_DISCONNECTED_WI
 
 export function gameStateToConnectedState(state: GameState, socket: Socket): ConnectedState {
   return {
-    clientId: socket.id,
+    clientId: socket.id!,
     activePlayers: state.activePlayers,
     queuedPlayers: state.queuedPlayers,
   };
 }
 
-const ConnectedStateContext = createContext<[ConnectedState, Dispatch<ConnectedState>] | null>(null);
+const ConnectedStateContext = createContext<[ConnectedState | undefined, Dispatch<ConnectedState | undefined>] | null>(null);
 
 export type ConnectedState = {
   clientId: string;

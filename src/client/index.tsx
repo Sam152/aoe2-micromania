@@ -2,5 +2,5 @@ import { createRoot } from "react-dom/client";
 import React from "react";
 import App from "./App.tsx";
 
-const root = createRoot(document.getElementById("ui"));
+const root = createRoot(document.getElementById("ui")!);
 root.render(<App />);

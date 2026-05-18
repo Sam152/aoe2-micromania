@@ -1,6 +1,6 @@
 enum Sound {
-  SoldierSelected = "soldier-moved",
-  SoldierAttack = "soldier-moved",
+  SoldierSelected = "soldier-selected",
+  SoldierAttack = "soldier-attack",
   SoldierFallen = "soldier-fallen",
   SoldierMoved = "soldier-moved",
 
