@@ -2,6 +2,7 @@ import { io, ManagerOptions, Socket, SocketOptions } from "socket.io-client";
 import { useHasConnected } from "./useHasConnected.ts";
 import { useEffect, useState } from "react";
 import { resolveServerFromCache } from "../servers/resolveServerFromCache.ts";
+import process from "node:process";
 
 async function createRegionalConnection(): Promise<Socket> {
   // Local development has no host to configure.

@@ -6,12 +6,12 @@ import standardDeviation from "just-standard-deviation";
 export default function formLines(
   positions: Array<Vector2>,
   destination: Vector2,
-  rows: number,
+  _rows: number,
   columns: number,
-  startingPoint: Vector2,
+  _startingPoint: Vector2,
   distanceBetween: number,
 ) {
-  return positions.map((position, index) => {
+  return positions.map((_position, index) => {
     const row = Math.ceil((index + 1) / columns);
     return destination.clone().add(new Vector2((index % columns) * distanceBetween, row * distanceBetween));
   });
@@ -52,7 +52,7 @@ function sortIntoShortestDistance(newPositions: Array<Vector2>, positions: Array
   const usedIndexes: number[] = [];
   const distancesTraveled: number[] = [];
 
-  const sortedIntoShortestTravel = positions.map((position, positionIndex) => {
+  const sortedIntoShortestTravel = positions.map((position, _positionIndex) => {
     const candidates = newPositionIndexes.filter((candidate) => usedIndexes.indexOf(candidate) === -1);
     const distances = candidates.map((candidate) => newPositions[candidate].distanceTo(position));
     const shortestDistance = Math.min(...distances);

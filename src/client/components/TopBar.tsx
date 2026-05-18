@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import assetUrl from "../util/assetUrl.ts";
 import { useConnectedState } from "../hooks/useConnectedState.tsx";

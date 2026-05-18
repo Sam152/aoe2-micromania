@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React from "react";
+
 import TopBar from "./components/TopBar.tsx";
 import Hotkeys from "./pages/Hotkeys.tsx";
 import config from "../common/config.ts";

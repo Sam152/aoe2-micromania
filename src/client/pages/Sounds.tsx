@@ -1,4 +1,3 @@
-import React from "react";
 import Section from "../components/Section.tsx";
 import soundList from "../../common/sounds/soundList.ts";
 

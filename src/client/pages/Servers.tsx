@@ -1,4 +1,3 @@
-import React from "react";
 import Section from "../components/Section.tsx";
 import { regionalServers, serversByPing } from "../servers/regionalServers.ts";
 import { useMemoAsync } from "../hooks/useMemoAsync.ts";

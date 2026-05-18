@@ -1,10 +1,9 @@
-import unitsInGameState from "../../../util/unitsInGameState.ts";
 import stopUnit from "./stopUnit.ts";
 import averageVector from "../../../util/averageVector.ts";
 import formationManager from "../../../units/formations/FormationManager.ts";
 import setUnitMovementTowards from "./setUnitMovementTowards.ts";
 import addUnitReformingSpeedFactor from "../../../util/addUnitReformingSpeedFactor.ts";
-import { GameState, GameStateAction, UnitId, UnitInstance } from "../../../../types.d.ts";
+import { GameState, UnitInstance } from "../../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { snapToClamp } from "../../../util/snapToClamp.ts";
 

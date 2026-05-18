@@ -1,4 +1,3 @@
-import React from "react";
 import Section from "../components/Section.tsx";
 import { ReplayIndexItem } from "../../types.d.ts";
 import { Link } from "react-router-dom";
