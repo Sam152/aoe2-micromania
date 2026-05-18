@@ -4,7 +4,7 @@ import { startGame } from "./server/utils/startGame.ts";
 import Player from "./server/rooms/Player.ts";
 import { logErrors } from "./server/utils/logErrors.ts";
 import { bundleClient } from "./bundle/bundleClient.ts";
-import {createStaticAssetMap, StaticAssetMap} from "./bundle/createStaticAssetMap.ts";
+import { createStaticAssetMap, StaticAssetMap } from "./bundle/createStaticAssetMap.ts";
 
 logErrors();
 

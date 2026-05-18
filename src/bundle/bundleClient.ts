@@ -34,7 +34,7 @@ export async function bundleClient() {
   esbuild.stop();
 
   if (!esbuildResult.outputFiles) {
-    throw new Error('No output files in build');
+    throw new Error("No output files in build");
   }
 
   const js = new TextDecoder().decode(esbuildResult.outputFiles[0].contents);

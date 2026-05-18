@@ -360,13 +360,15 @@ export default class CanvasRenderer implements RendererInterface {
 
   drawCursor(state: ClientState): void {
     if (this.activeCursor !== this.lastCursor) {
-      this.canvas.style.cursor = `url("data:image/png;base64,${cursorFiles[this.activeCursor]}") ${anchorMap[this.activeCursor]}, none`;
+      this.canvas.style.cursor = `url("data:image/png;base64,${cursorFiles[this.activeCursor]}") ${
+        anchorMap[this.activeCursor]
+      }, none`;
       this.lastCursor = this.activeCursor;
     }
 
     if (state.cursorLocked) {
       const asset = this.cursorAssets[this.activeCursor] ?? this.cursorAssets["default"];
-      if (!asset) return;
+      if (!asset) { return; }
       const x = state.mousePosition.x - state.camera.x - asset.hotspot.x;
       const y = state.mousePosition.y - state.camera.y - asset.hotspot.y;
       this.context.drawImage(asset.image, x, y);

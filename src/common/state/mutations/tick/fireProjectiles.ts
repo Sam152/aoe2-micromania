@@ -29,9 +29,8 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
         return;
       }
 
-      const targetingPosition = (unit.targetingUnit
-        ? computed.unitIndex[unit.targetingUnit!]!.position
-        : unit.targetingPosition)!;
+      const targetingPosition =
+        (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
 
       if (inMinimumRange(unit, targetingPosition)) {
         setUnitMovementAwayFrom(state, unit, targetingPosition);
@@ -62,9 +61,8 @@ export default function fireProjectiles(state: GameState, computed: ComputedFram
         return;
       }
 
-      const targetingPosition = (unit.targetingUnit
-        ? computed.unitIndex[unit.targetingUnit!]!.position
-        : unit.targetingPosition)!;
+      const targetingPosition =
+        (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
 
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);

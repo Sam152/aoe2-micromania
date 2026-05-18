@@ -55,8 +55,8 @@ export default class InputManager {
       const position = clientState.cursorLocked
         ? clientState.mousePosition.clone().add({ x: e.movementX, y: e.movementY })
         : screenPositionToGamePosition(
-            new Vector2(e.offsetX, e.offsetY).add(gamePositionToScreenPosition(clientState.camera)),
-          );
+          new Vector2(e.offsetX, e.offsetY).add(gamePositionToScreenPosition(clientState.camera)),
+        );
       this.dispatch({ n: "MOUSE_POSITIONED", position });
 
       if (this.leftMouseDown) {
@@ -111,7 +111,7 @@ export default class InputManager {
       this.ctrlDown = e.ctrlKey;
       this.heldKeys.add(e.keyCode);
 
-      if (e.repeat) return;
+      if (e.repeat) { return; }
 
       const k = e.keyCode;
 
@@ -127,9 +127,11 @@ export default class InputManager {
       }
       if (k === hotkeyManager.getBindFor(Hotkey.Patrol)) {
         const { activeCommand, mousePosition } = this.stateManager.getClientState();
-        this.dispatch(activeCommand === ActiveCommand.Patrol
-          ? { n: "HOTKEY_CANCEL" }
-          : { n: "HOTKEY_PATROL", position: mousePosition });
+        this.dispatch(
+          activeCommand === ActiveCommand.Patrol
+            ? { n: "HOTKEY_CANCEL" }
+            : { n: "HOTKEY_PATROL", position: mousePosition },
+        );
       }
       if (k === hotkeyManager.getBindFor(Hotkey.LineFormation)) {
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Line });
@@ -140,7 +142,7 @@ export default class InputManager {
       if (k === hotkeyManager.getBindFor(Hotkey.SplitFormation)) {
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Split });
       }
-controlGroups.forEach((keycode) => {
+      controlGroups.forEach((keycode) => {
         if (k === keycode) {
           this.dispatch({
             n: this.ctrlDown ? "CONTROL_GROUP_ASSIGNED" : "CONTROL_GROUP_SELECTED",
@@ -171,14 +173,14 @@ controlGroups.forEach((keycode) => {
       }
     };
 
-    document.addEventListener('pointerlockchange', this.onPointerLockChange);
-    document.addEventListener('contextmenu', this.onContextMenu);
-    element.addEventListener('mousemove', this.onMouseMove);
-    element.addEventListener('mousedown', this.onMouseDown);
-    element.addEventListener('mouseup', this.onMouseUp);
-    document.addEventListener('keydown', this.onKeyDown);
-    document.addEventListener('keyup', this.onKeyUp);
-    element.addEventListener('click', this.onClick);
+    document.addEventListener("pointerlockchange", this.onPointerLockChange);
+    document.addEventListener("contextmenu", this.onContextMenu);
+    element.addEventListener("mousemove", this.onMouseMove);
+    element.addEventListener("mousedown", this.onMouseDown);
+    element.addEventListener("mouseup", this.onMouseUp);
+    document.addEventListener("keydown", this.onKeyDown);
+    document.addEventListener("keyup", this.onKeyUp);
+    element.addEventListener("click", this.onClick);
   }
 
   dispatchInput(): void {
@@ -207,14 +209,13 @@ controlGroups.forEach((keycode) => {
   }
 
   cleanUp(): void {
-    document.removeEventListener('pointerlockchange', this.onPointerLockChange);
-    document.removeEventListener('contextmenu', this.onContextMenu);
-    this.element.removeEventListener('mousemove', this.onMouseMove);
-    this.element.removeEventListener('mousedown', this.onMouseDown);
-    this.element.removeEventListener('mouseup', this.onMouseUp);
-    document.removeEventListener('keydown', this.onKeyDown);
-    document.removeEventListener('keyup', this.onKeyUp);
-    this.element.removeEventListener('click', this.onClick);
+    document.removeEventListener("pointerlockchange", this.onPointerLockChange);
+    document.removeEventListener("contextmenu", this.onContextMenu);
+    this.element.removeEventListener("mousemove", this.onMouseMove);
+    this.element.removeEventListener("mousedown", this.onMouseDown);
+    this.element.removeEventListener("mouseup", this.onMouseUp);
+    document.removeEventListener("keydown", this.onKeyDown);
+    document.removeEventListener("keyup", this.onKeyUp);
+    this.element.removeEventListener("click", this.onClick);
   }
-
 }

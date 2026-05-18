@@ -3,7 +3,7 @@ import { Vector2 } from "three/src/math/Vector2.js";
 import { UnitInstance } from "../../../../types.d.ts";
 import { formationDepth } from "./formationDepths.ts";
 import formLines, { translateAndRotate } from "./formLines.ts";
-import {groupByTypes} from "./groupByTypes.ts";
+import { groupByTypes } from "./groupByTypes.ts";
 
 const UNITS_PER_ROW = 6;
 

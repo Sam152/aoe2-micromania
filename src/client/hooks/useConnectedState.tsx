@@ -12,7 +12,9 @@ export function gameStateToConnectedState(state: GameState, socket: Socket): Con
   };
 }
 
-const ConnectedStateContext = createContext<[ConnectedState | undefined, Dispatch<ConnectedState | undefined>] | null>(null);
+const ConnectedStateContext = createContext<[ConnectedState | undefined, Dispatch<ConnectedState | undefined>] | null>(
+  null,
+);
 
 export type ConnectedState = {
   clientId: string;

@@ -11,8 +11,8 @@ import { snapToClamp } from "../../../util/snapToClamp.ts";
 
 export default function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
   units.forEach((unit) => {
-      stopUnit(unit);
-      unit.lastCommandedDirection = destination;
+    stopUnit(unit);
+    unit.lastCommandedDirection = destination;
   });
 
   formationManager

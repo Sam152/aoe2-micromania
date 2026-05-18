@@ -3,6 +3,7 @@
   "specifiers": {
     "jsr:@deno/cache-dir@0.13.2": "0.13.2",
     "jsr:@deno/emit@*": "0.46.0",
+    "jsr:@hirochachacha/deno-lint-plugin-unused-fixer@*": "0.1.4",
     "jsr:@luca/esbuild-deno-loader@*": "0.11.1",
     "jsr:@luca/esbuild-deno-loader@~0.11.1": "0.11.1",
     "jsr:@std/assert@0.223": "0.223.0",
@@ -58,6 +59,9 @@
         "jsr:@deno/cache-dir",
         "jsr:@std/path@0.223"
       ]
+    },
+    "@hirochachacha/deno-lint-plugin-unused-fixer@0.1.4": {
+      "integrity": "2133c63460fbf065c73120b6ef7d991143a258d880507e8d36e968f2af92345e"
     },
     "@luca/esbuild-deno-loader@0.11.1": {
       "integrity": "dc020d16d75b591f679f6b9288b10f38bdb4f24345edb2f5732affa1d9885267",

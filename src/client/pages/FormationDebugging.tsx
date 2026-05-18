@@ -19,43 +19,43 @@ export default function FormationDebugging() {
     canvas.height = (globalThis.innerHeight - screenManager.getTopOffset()) * screenManager.getCanvasScale();
 
     drawFormation(
-        [
-          ...arrayOfSize(6 * 5).map(createArcher({ x: 1104, y: 912 })),
-          ...arrayOfSize(6 * 5).map(createMango({ x: 1104, y: 912 })),
-          ...arrayOfSize(6 * 5).map(createMonk({ x: 1104, y: 912 })),
-        ],
-        ctx,
-        new Vector2(700, 700),
+      [
+        ...arrayOfSize(6 * 5).map(createArcher({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMango({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMonk({ x: 1104, y: 912 })),
+      ],
+      ctx,
+      new Vector2(700, 700),
     );
 
     drawFormation(
-        [
-          ...arrayOfSize(6 * 1).map(createArcher({ x: 1104, y: 912 })),
-          ...arrayOfSize(6 * 5).map(createMango({ x: 1104, y: 912 })),
-          ...arrayOfSize(6 * 5).map(createMonk({ x: 1104, y: 912 })),
-        ],
-        ctx,
-        new Vector2(300, 300),
+      [
+        ...arrayOfSize(6 * 1).map(createArcher({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMango({ x: 1104, y: 912 })),
+        ...arrayOfSize(6 * 5).map(createMonk({ x: 1104, y: 912 })),
+      ],
+      ctx,
+      new Vector2(300, 300),
     );
 
     drawFormation(
-        [
-          ...arrayOfSize(2).map(createMonk({ x: 1500, y: 100 })),
-          ...arrayOfSize(1).map(createMango({ x: 1500, y: 100 })),
-          ...arrayOfSize(24).map(createArcher({ x: 1500, y: 100 })),
-        ],
-        ctx,
-        new Vector2(900, 300),
+      [
+        ...arrayOfSize(2).map(createMonk({ x: 1500, y: 100 })),
+        ...arrayOfSize(1).map(createMango({ x: 1500, y: 100 })),
+        ...arrayOfSize(24).map(createArcher({ x: 1500, y: 100 })),
+      ],
+      ctx,
+      new Vector2(900, 300),
     );
 
     drawFormation([...arrayOfSize(24).map(createArcher({ x: 1500, y: 100 }))], ctx, new Vector2(1200, 500));
   }, []);
 
   return (
-      <canvas
-          style={{ width: "100vw", height: "calc(100vh - 53px)", display: "block", backgroundColor: "black" }}
-          ref={ref}
-      />
+    <canvas
+      style={{ width: "100vw", height: "calc(100vh - 53px)", display: "block", backgroundColor: "black" }}
+      ref={ref}
+    />
   );
 }
 

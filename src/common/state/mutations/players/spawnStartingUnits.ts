@@ -95,5 +95,14 @@ export function getStartingSpawnCandidates(
     { x: Math.ceil(state.mapSize / 2), y: state.mapSize - buffer },
     { x: buffer, y: state.mapSize - buffer },
     { x: buffer, y: Math.ceil(state.mapSize / 2) },
-  ].map((position) => grid.middleOfTile(position.x, position.y)) as [Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2];
+  ].map((position) => grid.middleOfTile(position.x, position.y)) as [
+    Vector2,
+    Vector2,
+    Vector2,
+    Vector2,
+    Vector2,
+    Vector2,
+    Vector2,
+    Vector2,
+  ];
 }

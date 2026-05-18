@@ -28,7 +28,7 @@ export function createStaticAssetMap(): StaticAssetMap {
 
   function walk(dir: string, urlPrefix: string) {
     for (const entry of Deno.readDirSync(dir)) {
-      if (entry.name.startsWith(".")) continue;
+      if (entry.name.startsWith(".")) { continue; }
       const filePath = `${dir}/${entry.name}`;
       const urlPath = `${urlPrefix}/${entry.name}`;
       if (entry.isDirectory) {

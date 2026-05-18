@@ -23,10 +23,10 @@ export function useMemoAsync<T>(
 
     asyncFunction()
       .then((value) => {
-        if (isMounted) setState({ value, error: null, loading: false });
+        if (isMounted) { setState({ value, error: null, loading: false }); }
       })
       .catch((error: Error) => {
-        if (isMounted) setState({ value: defaultValue, error, loading: false });
+        if (isMounted) { setState({ value: defaultValue, error, loading: false }); }
       });
 
     return () => {
