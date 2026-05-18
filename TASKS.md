@@ -37,6 +37,7 @@
 - [ ] Restoring stack patrol behaviour
 - [ ] Start in formation
 - [ ] Leave arrows on the field
+- [ ] Fix mango range
 
 # Interface
 
