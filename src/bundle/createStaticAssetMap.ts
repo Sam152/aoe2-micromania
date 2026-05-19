@@ -23,7 +23,7 @@ export type StaticAssetMap = Record<string, {
 }>;
 
 export function createStaticAssetMap(): StaticAssetMap {
-  const assetsRoot = new URL("../../assets", import.meta.url).pathname;
+  const assetsRoot = new URL("../client/assets", import.meta.url).pathname;
   const map: StaticAssetMap = {};
 
   function walk(dir: string, urlPrefix: string) {

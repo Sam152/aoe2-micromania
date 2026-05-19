@@ -20,7 +20,7 @@ export async function bundleClient() {
     esbuild.build({
       plugins: [nodePolyfillsPlugin, ...(denoPlugins({ configPath }) as esbuild.Plugin[])],
       entryPoints: [entrypoint],
-      inject: [new URL("../../assets/buffer-shim.js", import.meta.url).pathname],
+      inject: [new URL("../client/assets/buffer-shim.js", import.meta.url).pathname],
       bundle: true,
       format: "esm",
       platform: "browser",
