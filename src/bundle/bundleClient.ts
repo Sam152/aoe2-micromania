@@ -30,9 +30,6 @@ export async function bundleClient() {
     }),
   ]);
 
-  // Do not bother awaiting terminating the child process.
-  esbuild.stop();
-
   if (!esbuildResult.outputFiles) {
     throw new Error("No output files in build");
   }

@@ -3,17 +3,21 @@ import { Server } from "socket.io";
 import { startGame } from "./server/utils/startGame.ts";
 import Player from "./server/rooms/Player.ts";
 import { logErrors } from "./server/utils/logErrors.ts";
+import * as esbuild from "esbuild";
 import { bundleClient } from "./bundle/bundleClient.ts";
+import { bundleWorker } from "./bundle/bundleWorker.ts";
 import { createStaticAssetMap, StaticAssetMap } from "./bundle/createStaticAssetMap.ts";
 
 logErrors();
 
 // Static assets are a combination of bundled code and assets on disk.
-const { html, css, js } = await bundleClient();
+const [{ html, css, js }, { js: workerJs }] = await Promise.all([bundleClient(), bundleWorker()]);
+esbuild.stop();
 const staticAssets: StaticAssetMap = {
   ...createStaticAssetMap(),
   "/bundle.js": { contentType: "application/javascript", file: js },
   "/styles.css": { contentType: "text/css", file: css },
+  "/renderSmxWorker.js": { contentType: "application/javascript", file: workerJs },
 };
 
 const httpServer = createServer(async (req, res) => {
