@@ -12,7 +12,7 @@ const PLAYER_PALETTES: Record<number, number> = {
   8: 59, // orange
 };
 
-type Frame = {
+export type Frame = {
   shadow: ImageBitmap | null;
   shadowCenterX: number;
   shadowCenterY: number;

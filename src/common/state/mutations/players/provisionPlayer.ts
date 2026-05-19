@@ -2,7 +2,7 @@ import { GameState } from "../../../../types.d.ts";
 import { spawnStartingUnits } from "./spawnStartingUnits.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
-export const MAX_PLAYERS_PER_SERVER = 2;
+export const MAX_PLAYERS_PER_SERVER = 5;
 
 export default function provisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
   // If the client ID is already active, no need to provision them.

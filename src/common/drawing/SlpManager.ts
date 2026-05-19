@@ -1,6 +1,7 @@
 import SmxAnimation from "./SmxAnimation.ts";
 import assetUrl from "../../client/util/assetUrl.ts";
 import { downloadAssets, playerAssets } from "./assets/downloadAssets.ts";
+import { renderSmx } from "./smx/renderSmx.ts";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
 
 const renderedPlayers = Array.from({ length: MAX_PLAYERS_PER_SERVER }, (_, i) => i + 1);
@@ -21,68 +22,22 @@ class SlpManager {
       return;
     }
 
-    console.time("Creating SMX");
+    console.time("Downloading SMX");
     const downloadedSmxFiles = await downloadAssets(this.assetPath);
-    console.timeEnd("Creating SMX");
+    console.timeEnd("Downloading SMX");
 
     console.time("Rendering Frames");
     const renderedSmxLibrary = await Promise.all(
-      downloadedSmxFiles.map(async ({ id, smx }) => {
-        const frames = await Promise.all(
-          smx.getFrames().map(async (frame: any, frameNumber: number) => {
-            const rendersToBuild = playerAssets.includes(id) ? renderedPlayers : [1];
-
-            const perPlayerRenders = await Promise.all(
-              rendersToBuild.map(async (playerId) => {
-                const imageData = smx.renderFrame(frameNumber, playerId);
-                return await createImageBitmap(imageData).then((bitmap) => ({
-                  playerId,
-                  bitmap,
-                }));
-              }),
-            );
-
-            let shadow: ImageBitmap | null = null;
-            if (smx.hasShadow(frameNumber)) {
-              const renderedShadow = smx.renderShadow(frameNumber);
-              shadow = await createImageBitmap(renderedShadow);
-            }
-
-            // Clean up some unused properties for memory.
-            delete frame.layers[0].commands;
-            delete frame.layers[0].pixelData;
-            // @ts-ignore: layerData exists at runtime but is not in the type definition
-            delete frame.layers[0].layerData;
-            if (frame.layers[1]) {
-              // @ts-ignore: layerData exists at runtime but is not in the type definition
-              delete frame.layers[1].layerData;
-            }
-            delete frame.layers[2];
-
-            return {
-              frameDefinition: frame,
-              shadowRender: shadow,
-              playerRenders: perPlayerRenders.reduce(
-                (object, { playerId, bitmap }) => {
-                  object[playerId] = bitmap;
-                  return object;
-                },
-                {} as { [key: number]: ImageBitmap },
-              ),
-            };
-          }),
-        );
-        return {
-          id,
-          smx,
-          frames,
-        };
+      downloadedSmxFiles.map(async ({ id, data, palettes }) => {
+        const playersToRender = playerAssets.includes(id) ? renderedPlayers : [1];
+        const frames = await renderSmx({ data, palettes, playersToRender });
+        return { id, frames };
       }),
     );
     console.timeEnd("Rendering Frames");
 
-    renderedSmxLibrary.forEach(({ id, smx, frames }) => {
-      this.slpList[id] = new SmxAnimation(id, smx.getFramesCount(), frames);
+    renderedSmxLibrary.forEach(({ id, frames }) => {
+      this.slpList[id] = new SmxAnimation(id, frames.length, frames);
     });
     this.loaded = true;
   }

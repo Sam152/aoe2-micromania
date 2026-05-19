@@ -8,7 +8,6 @@ import ProjectileType from "./common/units/ProjectileType.ts";
 import ActiveCommand from "./common/input/ActiveCommand.ts";
 import Hotkey from "./common/input/Hotkey.ts";
 import DamageType from "./common/units/DamageType.ts";
-import { SmxFrame } from "genie-smx/lib/smx/struct.js";
 import Sound from "./common/sounds/Sound.ts";
 
 export interface UnitInstance {
@@ -356,14 +355,6 @@ export interface SlpFrame {
   paletteOffset: number;
   properties: number;
   width: number;
-}
-
-export interface RenderedSlpFrame {
-  frameDefinition: SmxFrame;
-  shadowRender: ImageBitmap | null;
-  playerRenders: {
-    [key: number]: ImageBitmap;
-  };
 }
 
 export interface UnitStats {
