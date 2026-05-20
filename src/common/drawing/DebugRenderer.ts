@@ -1,15 +1,15 @@
 import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types.d.ts";
 import { circle, emptyCircle } from "./shapes.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import arrayOfSize from "../util/arrayOfSize.ts";
-import isInBounds, { bottomLeft, bottomRight, topLeft, topRight } from "../util/isInBounds.ts";
-import config from "../config.ts";
+import { arrayOfSize } from "../util/arrayOfSize.ts";
+import { bottomLeft, bottomRight, isInBounds, topLeft, topRight } from "../util/isInBounds.ts";
+import { config } from "../config.ts";
 import { snapToClamp } from "../util/snapToClamp.ts";
-import unitMetadataFactory from "../units/unitMetadataFactory.ts";
-import Grid from "../terrain/Grid.ts";
+import { unitMetadataFactory } from "../units/unitMetadataFactory.ts";
+import { Grid } from "../terrain/Grid.ts";
 import { getStartingSpawnCandidates } from "../state/mutations/players/spawnStartingUnits.ts";
 
-export default class DebugRenderer implements RendererInterface {
+export class DebugRenderer implements RendererInterface {
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
 

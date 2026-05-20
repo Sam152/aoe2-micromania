@@ -1,4 +1,4 @@
-export default function hasValue(input: any): boolean {
+export function hasValue(input: any): boolean {
   if (Array.isArray(input)) {
     return input.length !== 0;
   }

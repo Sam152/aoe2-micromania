@@ -1,14 +1,14 @@
-import UnitState from "./common/units/UnitState.ts";
-import Unit from "./common/units/Unit.ts";
-import CompassDirection from "./common/units/CompassDirection.ts";
-import AnimationStyle from "./common/units/AnimationStyle.ts";
+import { UnitState } from "./common/units/UnitState.ts";
+import { Unit } from "./common/units/Unit.ts";
+import { CompassDirection } from "./common/units/CompassDirection.ts";
+import { AnimationStyle } from "./common/units/AnimationStyle.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import FormationType from "./common/units/formations/FormationType.ts";
-import ProjectileType from "./common/units/ProjectileType.ts";
-import ActiveCommand from "./common/input/ActiveCommand.ts";
-import Hotkey from "./common/input/Hotkey.ts";
-import DamageType from "./common/units/DamageType.ts";
-import Sound from "./common/sounds/Sound.ts";
+import { FormationType } from "./common/units/formations/FormationType.ts";
+import { ProjectileType } from "./common/units/ProjectileType.ts";
+import { ActiveCommand } from "./common/input/ActiveCommand.ts";
+import { Hotkey } from "./common/input/Hotkey.ts";
+import { DamageType } from "./common/units/DamageType.ts";
+import { Sound } from "./common/sounds/Sound.ts";
 
 export interface UnitInstance {
   id: number;

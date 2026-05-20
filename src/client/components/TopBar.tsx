@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import assetUrl from "../util/assetUrl.ts";
+import { assetUrl } from "../util/assetUrl.ts";
 import { useConnectedState } from "../hooks/useConnectedState.tsx";
 import { PlayingAs } from "./PlayingAs.tsx";
 
 const navClass = ({ isActive }: { isActive: boolean }) => `menu-link${isActive ? " active" : ""}`;
 
-export default function TopBar() {
+export function TopBar() {
   const [connectedState] = useConnectedState();
 
   return (

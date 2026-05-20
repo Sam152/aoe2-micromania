@@ -1,6 +1,4 @@
-enum AnimationStyle {
+export enum AnimationStyle {
   Loop,
   Play,
 }
-
-export default AnimationStyle;

@@ -1,4 +1,4 @@
-enum Hotkey {
+export enum Hotkey {
   LineFormation,
   SpreadFormation,
   SplitFormation,
@@ -14,5 +14,3 @@ enum Hotkey {
   CameraLeft,
   CameraRight,
 }
-
-export default Hotkey;

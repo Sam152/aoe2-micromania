@@ -1,7 +1,7 @@
 import { Quadtree } from "d3-quadtree";
 import { GameState, UnitInstance } from "../../../types.d.ts";
 import { createUnitQuadtree } from "../../util/buildQuadTree.ts";
-import Grid from "../../terrain/Grid.ts";
+import { Grid } from "../../terrain/Grid.ts";
 
 export type ComputedFrameState = {
   quadTreeAllUnits: Quadtree<UnitInstance>;

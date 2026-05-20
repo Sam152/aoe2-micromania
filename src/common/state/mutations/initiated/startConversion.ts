@@ -1,6 +1,6 @@
 import { GameState } from "../../../../types.d.ts";
-import Unit from "../../../units/Unit.ts";
-import stopUnit from "./stopUnit.ts";
+import { Unit } from "../../../units/Unit.ts";
+import { stopUnit } from "./stopUnit.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
 export function startConversion(state: GameState, computed: ComputedFrameState, monkId: number, target: number) {

@@ -1,4 +1,4 @@
-const soundList = [
+export const soundList = [
   ["5051", "701439555"],
   ["5358", "449047169"],
   ["5359", "524398882"],
@@ -3694,5 +3694,3 @@ const soundList = [
   ["Zebra_Idle_02", "12289884"],
   ["Zebra_Idle_03", "406667282"],
 ];
-
-export default soundList;

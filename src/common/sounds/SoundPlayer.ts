@@ -1,7 +1,7 @@
-import Sound from "./Sound.ts";
-import randomArray from "../util/randomArray.ts";
+import { Sound } from "./Sound.ts";
+import { randomArray } from "../util/randomArray.ts";
 import { Howl } from "howler";
-import assetUrl from "../../client/util/assetUrl.ts";
+import { assetUrl } from "../../client/util/assetUrl.ts";
 
 const DEFAULT_VOLUME = 0.25;
 
@@ -105,5 +105,4 @@ class SoundPlayer {
   }
 }
 
-const soundPlayer = new SoundPlayer();
-export default soundPlayer;
+export const soundPlayer = new SoundPlayer();

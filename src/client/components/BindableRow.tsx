@@ -1,9 +1,9 @@
-import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable.ts";
-import hotkeyManager from "../../common/input/HotkeyManager.ts";
-import Hotkey from "../../common/input/Hotkey.ts";
-import BindSelection from "./BindSelection.tsx";
+import { keycodeToHumanReadable } from "../../common/util/keycodeToHumanReadable.ts";
+import { hotkeyManager } from "../../common/input/HotkeyManager.ts";
+import { Hotkey } from "../../common/input/Hotkey.ts";
+import { BindSelection } from "./BindSelection.tsx";
 
-export default function BindableRow({
+export function BindableRow({
   setBind,
   label,
   hotkey,

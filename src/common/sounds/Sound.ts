@@ -1,4 +1,4 @@
-enum Sound {
+export enum Sound {
   SoldierSelected = "soldier-selected",
   SoldierAttack = "soldier-attack",
   SoldierFallen = "soldier-fallen",
@@ -11,5 +11,3 @@ enum Sound {
   MangonelFired = "mango-fired",
   MangonelDestroyed = "mango-destroyed",
 }
-
-export default Sound;

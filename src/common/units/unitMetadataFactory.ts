@@ -1,10 +1,10 @@
-import Unit from "./Unit.ts";
-import UnitState from "./UnitState.ts";
+import { Unit } from "./Unit.ts";
+import { UnitState } from "./UnitState.ts";
 import { UnitStats } from "../../types.d.ts";
-import AnimationStyle from "./AnimationStyle.ts";
-import ProjectileType from "./ProjectileType.ts";
+import { AnimationStyle } from "./AnimationStyle.ts";
+import { ProjectileType } from "./ProjectileType.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import DamageType from "./DamageType.ts";
+import { DamageType } from "./DamageType.ts";
 
 /**
  * Definitions of units, mapped from AOC JSON file:
@@ -190,5 +190,4 @@ class UnitMetadata {
   }
 }
 
-const unitMetadataFactory = new UnitMetadata();
-export default unitMetadataFactory;
+export const unitMetadataFactory = new UnitMetadata();

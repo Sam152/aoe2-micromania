@@ -100,6 +100,6 @@ const names: { [key: number]: string } = {
   222: "single quote",
 };
 
-export default function keycodeToHumanReadable(keycode: number): string {
+export function keycodeToHumanReadable(keycode: number): string {
   return keycode in names ? names[keycode] : "unrecognised";
 }

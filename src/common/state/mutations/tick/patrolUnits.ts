@@ -1,11 +1,11 @@
 import { GameState } from "../../../../types.d.ts";
-import hasValue from "../../../util/hasValue.ts";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
-import swapProperties from "../../../util/swapProperties.ts";
-import setUnitMovementTowards from "../initiated/setUnitMovementTowards.ts";
-import UnitState from "../../../units/UnitState.ts";
+import { hasValue } from "../../../util/hasValue.ts";
+import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
+import { swapProperties } from "../../../util/swapProperties.ts";
+import { setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
+import { UnitState } from "../../../units/UnitState.ts";
 
-export default function patrolUnits(state: GameState) {
+export function patrolUnits(state: GameState) {
   state.units
     .filter(
       (unit) =>

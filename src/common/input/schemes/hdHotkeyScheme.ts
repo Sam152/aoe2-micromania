@@ -1,7 +1,7 @@
 import { HotkeyScheme } from "../../../types.d.ts";
-import Hotkey from "../Hotkey.ts";
+import { Hotkey } from "../Hotkey.ts";
 
-const hdHotkeyScheme: HotkeyScheme = {
+export const hdHotkeyScheme: HotkeyScheme = {
   [Hotkey.LineFormation]: 90,
   [Hotkey.SpreadFormation]: 67,
   [Hotkey.SplitFormation]: 86,
@@ -17,5 +17,3 @@ const hdHotkeyScheme: HotkeyScheme = {
   [Hotkey.CameraLeft]: 37,
   [Hotkey.CameraRight]: 39,
 };
-
-export default hdHotkeyScheme;

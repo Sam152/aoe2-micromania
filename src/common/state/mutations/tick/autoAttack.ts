@@ -1,11 +1,11 @@
 import { GameState, UnitInstance } from "../../../../types.d.ts";
-import UnitState from "../../../units/UnitState.ts";
+import { UnitState } from "../../../units/UnitState.ts";
 import { getAttackRange } from "../../../util/inAttackRange.ts";
 import { hasScalarValue } from "../../../util/hasValue.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
-import Unit from "../../../units/Unit.ts";
+import { Unit } from "../../../units/Unit.ts";
 
-export default function autoAttack(state: GameState, computed: ComputedFrameState) {
+export function autoAttack(state: GameState, computed: ComputedFrameState) {
   const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (

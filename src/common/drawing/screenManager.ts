@@ -33,4 +33,4 @@ class ScreenManager {
   }
 }
 
-export default new ScreenManager();
+export const screenManager = new ScreenManager();

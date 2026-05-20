@@ -1,17 +1,16 @@
 import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types.d.ts";
-import deepClone from "../util/deepClone.ts";
-import pointInRect from "../util/pointInRect.ts";
-import rectIntersectingWithRect, { normalizeRect } from "../util/rectIntersectingWithRect.ts";
-import config from "../config.ts";
+import { deepClone } from "../util/deepClone.ts";
+import { pointInRect } from "../util/pointInRect.ts";
+import { normalizeRect, rectIntersectingWithRect } from "../util/rectIntersectingWithRect.ts";
+import { config } from "../config.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import ActiveCommand from "../input/ActiveCommand.ts";
-import soundManager from "../sounds/SoundManger.ts";
-import soundManger from "../sounds/SoundManger.ts";
+import { ActiveCommand } from "../input/ActiveCommand.ts";
+import { soundManager } from "../sounds/SoundManger.ts";
 import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround.ts";
 import { unitsById } from "../units/unitsById.ts";
-import Unit from "../units/Unit.ts";
+import { Unit } from "../units/Unit.ts";
 
-function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
+export function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;
 
   if (action.n === "FRAME_RENDERING_STARTED") {
@@ -170,7 +169,7 @@ function clientStateMutator(state: ClientState, gameState: GameState, action: Cl
  * Dispatch into the game state, local actions which should be transmitted to the server (or handled locally via the
  * single player state manager).
  */
-function clientStateTransmitter(
+export function clientStateTransmitter(
   clientState: ClientState,
   gameState: GameState,
   action: ClientStateAction,
@@ -241,7 +240,7 @@ function clientStateTransmitter(
     ["RIGHT_CLICK", "LEFT_CLICK", "DRAG_END"].includes(action.n) &&
     clientState.selectedUnits.length > 0
   ) {
-    soundManger.moving(clientState);
+    soundManager.moving(clientState);
     gameDispatcher({
       n: "PATROL",
       units: clientState.selectedUnits,
@@ -251,7 +250,7 @@ function clientStateTransmitter(
   }
 
   if (action.n === "HOTKEY_FORMATION_CHANGED" && clientState.selectedUnits.length > 0) {
-    soundManger.moving(clientState);
+    soundManager.moving(clientState);
     gameDispatcher({
       n: "FORMATION_CHANGED",
       formation: action.formation,
@@ -294,7 +293,7 @@ function clientStateTransmitter(
   }
 }
 
-function defaultState(clientId: string): ClientState {
+export function defaultState(clientId: string): ClientState {
   const state = deepClone({
     unitHitBoxes: [],
     clientId,
@@ -312,5 +311,3 @@ function defaultState(clientId: string): ClientState {
   state.cursorLocked = false;
   return state;
 }
-
-export { clientStateMutator, clientStateTransmitter, defaultState };

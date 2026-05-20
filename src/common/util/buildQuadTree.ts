@@ -9,7 +9,7 @@ function accessY(unit: UnitInstance) {
   return unit.position.y;
 }
 
-export default function buildQuadTree(units: Array<UnitInstance>): Quadtree<UnitInstance> {
+export function buildQuadTree(units: Array<UnitInstance>): Quadtree<UnitInstance> {
   const tree = createUnitQuadtree();
   tree.addAll(units);
   return tree;

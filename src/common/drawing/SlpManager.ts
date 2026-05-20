@@ -1,5 +1,5 @@
-import SmxAnimation from "./SmxAnimation.ts";
-import assetUrl from "../../client/util/assetUrl.ts";
+import { SmxAnimation } from "./SmxAnimation.ts";
+import { assetUrl } from "../../client/util/assetUrl.ts";
 import { downloadAssets, playerAssets } from "./assets/downloadAssets.ts";
 import { renderSmx } from "./smx/renderSmx.ts";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
@@ -50,5 +50,4 @@ class SlpManager {
   }
 }
 
-const slpManager = new SlpManager(assetUrl("graphics"));
-export default slpManager;
+export const slpManager = new SlpManager(assetUrl("graphics"));

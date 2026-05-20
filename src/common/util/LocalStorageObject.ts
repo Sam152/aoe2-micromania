@@ -1,4 +1,4 @@
-export default class LocalStorageObject<T> {
+export class LocalStorageObject<T> {
   private key: string;
 
   constructor(key: string) {

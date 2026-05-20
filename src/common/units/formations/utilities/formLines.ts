@@ -1,9 +1,9 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import averageVector from "../../../util/averageVector.ts";
-import rotateAroundOrigin from "../../../util/rotateAroundOrigin.ts";
+import { averageVector } from "../../../util/averageVector.ts";
+import { rotateAroundOrigin } from "../../../util/rotateAroundOrigin.ts";
 import standardDeviation from "just-standard-deviation";
 
-export default function formLines(
+export function formLines(
   positions: Array<Vector2>,
   destination: Vector2,
   _rows: number,

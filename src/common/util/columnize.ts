@@ -7,7 +7,7 @@
  * 2    6    10    14    18
  * 3    7    11    15    19
  */
-export default function columnize<T>(input: Array<T>, columns: number): Array<T> {
+export function columnize<T>(input: Array<T>, columns: number): Array<T> {
   const newArray: Array<T> = [];
   const indexMax = input.length - 1;
   input.forEach((item, index) => {

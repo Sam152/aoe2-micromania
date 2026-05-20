@@ -1,7 +1,7 @@
 import { ProjectileInstance } from "../../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
-export default function getArrowPosition(
+export function getArrowPosition(
   projectile: Pick<ProjectileInstance, "pathVector" | "startingPoint">,
   percentageComplete: number,
 ): Vector2 {

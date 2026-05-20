@@ -1,7 +1,7 @@
-import UnitState from "../../../units/UnitState.ts";
+import { UnitState } from "../../../units/UnitState.ts";
 import { UnitInstance } from "../../../../types.d.ts";
 
-export default function stopUnit(unit: UnitInstance): void {
+export function stopUnit(unit: UnitInstance): void {
   unit.unitState = UnitState.Idle;
   unit.movingDirection = undefined;
   unit.waypoints = [];

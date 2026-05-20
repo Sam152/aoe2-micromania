@@ -1,5 +1,5 @@
 import { GameState } from "../../types.d.ts";
-import Unit from "./Unit.ts";
+import { Unit } from "./Unit.ts";
 import { unitsById } from "./unitsById.ts";
 
 export function selectionRightClickAction(unitIds: number[], state: GameState): "ATTACK" | "CONVERT" {
