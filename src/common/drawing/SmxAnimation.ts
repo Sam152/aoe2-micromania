@@ -1,12 +1,12 @@
 import { Rectangle } from "../../types.d.ts";
-import CompassDirection from "../units/CompassDirection.ts";
-import anchorAt from "../util/anchorAt.ts";
-import AnimationStyle from "../units/AnimationStyle.ts";
+import { CompassDirection } from "../units/CompassDirection.ts";
+import { anchorAt } from "../util/anchorAt.ts";
+import { AnimationStyle } from "../units/AnimationStyle.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import ticksForAnimation from "../util/ticksForAnimation.ts";
+import { ticksForAnimation } from "../util/ticksForAnimation.ts";
 import { Frame } from "./smx/renderSmx.ts";
 
-export default class SmxAnimation {
+export class SmxAnimation {
   private id: string;
   private directions: number = 16;
   private smxFramesCount: number;

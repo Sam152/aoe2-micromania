@@ -1,6 +1,6 @@
 import { GameState } from "../../../../types.d.ts";
-import registerUnitFallen from "../tick/registerUnitFallen.ts";
-import provisionPlayer from "./provisionPlayer.ts";
+import { registerUnitFallen } from "../tick/registerUnitFallen.ts";
+import { provisionPlayer } from "./provisionPlayer.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
 export function deprovisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {

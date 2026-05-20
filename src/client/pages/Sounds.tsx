@@ -1,12 +1,12 @@
-import Section from "../components/Section.tsx";
-import soundList from "../../common/sounds/soundList.ts";
+import { Section } from "../components/Section.tsx";
+import { soundList } from "../../common/sounds/soundList.ts";
 
 function playSound(soundName: string) {
   const audio = new Audio(`/sounds/de/${soundName}.ogg`);
   audio.play();
 }
 
-export default function Sounds() {
+export function Sounds() {
   return (
     <div className="container">
       <Section>

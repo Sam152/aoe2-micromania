@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useFetched<T>(url: string, defaultValue: T): T {
+export function useFetched<T>(url: string, defaultValue: T): T {
   const [data, setData] = useState<T>(defaultValue);
   useEffect(() => {
     (async function () {

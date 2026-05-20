@@ -1,12 +1,12 @@
-import InputManager from "../../input/InputManager.ts";
+import { InputManager } from "../../input/InputManager.ts";
 import { clientStateTransmitter } from "../clientState.ts";
-import CanvasRenderer from "../../drawing/CanvasRenderer.ts";
+import { CanvasRenderer } from "../../drawing/CanvasRenderer.ts";
 import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
-import Grid from "../../terrain/Grid.ts";
-import soundPlayer from "../../sounds/SoundPlayer.ts";
-import averageVector from "../../util/averageVector.ts";
+import { Grid } from "../../terrain/Grid.ts";
+import { soundPlayer } from "../../sounds/SoundPlayer.ts";
+import { averageVector } from "../../util/averageVector.ts";
 
-export default class RenderLoopManager {
+export class RenderLoopManager {
   private stateManager: StateManagerInterface;
   private renderer: CanvasRenderer;
   private inputManager: InputManager;

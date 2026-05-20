@@ -4,7 +4,7 @@ import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
 export const MAX_PLAYERS_PER_SERVER = 5;
 
-export default function provisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
+export function provisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
   // If the client ID is already active, no need to provision them.
   if (state.activePlayers[playerId]) {
     return;

@@ -1,8 +1,8 @@
-import FormationType from "./FormationType.ts";
-import LineFormation from "./types/LineFormation.ts";
+import { FormationType } from "./FormationType.ts";
+import { LineFormation } from "./types/LineFormation.ts";
 import { FormationInterface, UnitInstance } from "../../../types.d.ts";
-import SpreadFormation from "./types/SpreadFormation.ts";
-import SplitFormation from "./types/SplitFormation.ts";
+import { SpreadFormation } from "./types/SpreadFormation.ts";
+import { SplitFormation } from "./types/SplitFormation.ts";
 
 class FormationManager {
   map: { [key: number]: FormationInterface };
@@ -38,5 +38,4 @@ class FormationManager {
   }
 }
 
-const formationManager = new FormationManager();
-export default formationManager;
+export const formationManager = new FormationManager();

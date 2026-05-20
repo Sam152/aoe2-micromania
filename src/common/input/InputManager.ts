@@ -1,16 +1,16 @@
 import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types.d.ts";
-import screenPositionToGamePosition, { gamePositionToScreenPosition } from "../util/screenPositionToGamePosition.ts";
+import { gamePositionToScreenPosition, screenPositionToGamePosition } from "../util/screenPositionToGamePosition.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import FormationType from "../units/formations/FormationType.ts";
-import hotkeyManager from "./HotkeyManager.ts";
-import Hotkey from "./Hotkey.ts";
-import ActiveCommand from "./ActiveCommand.ts";
+import { FormationType } from "../units/formations/FormationType.ts";
+import { hotkeyManager } from "./HotkeyManager.ts";
+import { Hotkey } from "./Hotkey.ts";
+import { ActiveCommand } from "./ActiveCommand.ts";
 
 const doubleClickDuration = 250;
 const digit0KeyCode = 48;
 const controlGroups = Array.from({ length: 10 }, (_, i) => digit0KeyCode + i);
 
-export default class InputManager {
+export class InputManager {
   private element: HTMLCanvasElement;
   private dragging: boolean;
   stateManager: StateManagerInterface;

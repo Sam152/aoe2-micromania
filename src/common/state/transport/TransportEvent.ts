@@ -1,4 +1,4 @@
-enum TransportEvent {
+export enum TransportEvent {
   GameStateActionDispatch = "1",
   GameStateActionTransmit = "2",
   WholeGameStateTransmit = "3",
@@ -11,5 +11,3 @@ enum TransportEvent {
   SetNickname = "9",
   QuickJoin = "10",
 }
-
-export default TransportEvent;

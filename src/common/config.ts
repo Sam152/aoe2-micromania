@@ -1,4 +1,4 @@
-const config = {
+export const config = {
   /**
    * If the game should render debug information.
    */
@@ -41,5 +41,3 @@ const config = {
    */
   assetBaseUrl: "",
 };
-
-export default config;

@@ -1,6 +1,6 @@
 import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.d.ts";
-import Grid from "../terrain/Grid.ts";
-import config from "../config.ts";
+import { Grid } from "../terrain/Grid.ts";
+import { config } from "../config.ts";
 
 const grid = new Grid(30);
 
@@ -13,7 +13,7 @@ const TERRAIN_TICK_DURATION = 30 * 60 * config.ticksPerSecond;
  * This essentially creates a server-only computation of actions as a function of game
  * state, in order to control what is happening.
  */
-export default class BattleRoyale implements GameMode {
+export class BattleRoyale implements GameMode {
   start(manager: StateManagerInterface): void {
     manager.dispatchGame({
       n: "MAP_PARAMETERS_SET",

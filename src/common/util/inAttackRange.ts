@@ -1,9 +1,9 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import config from "../config.ts";
-import unitMetadataFactory from "../units/unitMetadataFactory.ts";
+import { config } from "../config.ts";
+import { unitMetadataFactory } from "../units/unitMetadataFactory.ts";
 import { UnitInstance } from "../../types.d.ts";
 
-export default function inAttackRange(unit: UnitInstance, position: Vector2): boolean {
+export function inAttackRange(unit: UnitInstance, position: Vector2): boolean {
   return unit.position.distanceTo(position) < getAttackRange(unit);
 }
 

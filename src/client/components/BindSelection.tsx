@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function BindSelection({ onChange }: { onChange: (keycode: number) => void }) {
+export function BindSelection({ onChange }: { onChange: (keycode: number) => void }) {
   const [listening, setListening] = useState(false);
 
   useEffect(() => {

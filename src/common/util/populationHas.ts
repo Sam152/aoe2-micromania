@@ -1,7 +1,7 @@
 import { UnitInstance } from "../../types.d.ts";
-import hasValue from "./hasValue.ts";
+import { hasValue } from "./hasValue.ts";
 
-export default function populationHas(units: UnitInstance[], property: keyof UnitInstance) {
+export function populationHas(units: UnitInstance[], property: keyof UnitInstance) {
   const totalUnitsThatHaveProperty = units
     .map((unit) => hasValue(unit[property]))
     .filter((hasProperty) => hasProperty).length;

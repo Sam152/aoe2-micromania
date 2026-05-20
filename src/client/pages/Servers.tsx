@@ -1,10 +1,10 @@
-import Section from "../components/Section.tsx";
+import { Section } from "../components/Section.tsx";
 import { regionalServers, serversByPing } from "../servers/regionalServers.ts";
 import { useMemoAsync } from "../hooks/useMemoAsync.ts";
 import { resolveServerFromCache, setCachedServer } from "../servers/resolveServerFromCache.ts";
-import arrayOfSize from "../../common/util/arrayOfSize.ts";
+import { arrayOfSize } from "../../common/util/arrayOfSize.ts";
 
-export default function Servers() {
+export function Servers() {
   const [servers] = useMemoAsync(serversByPing, [], []);
   const [cached] = useMemoAsync(resolveServerFromCache, null, []);
 

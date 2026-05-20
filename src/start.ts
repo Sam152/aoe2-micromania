@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { startGame } from "./server/utils/startGame.ts";
-import Player from "./server/rooms/Player.ts";
+import { Player } from "./server/rooms/Player.ts";
 import { logErrors } from "./server/utils/logErrors.ts";
 import * as esbuild from "esbuild";
 import { bundleClient } from "./bundle/bundleClient.ts";

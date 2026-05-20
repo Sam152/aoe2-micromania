@@ -1,5 +1,5 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import config from "../config.ts";
+import { config } from "../config.ts";
 
 // Precompute as many constants as possible.
 const tileGradient = config.tileHeight / config.tileWidth;
@@ -22,7 +22,7 @@ export function isAboveLine(func: gradientFunction, point: Vector2, mapSize: num
   return func(point.x, mapSize) > point.y;
 }
 
-export default function isInBounds(point: Vector2, mapSize: number) {
+export function isInBounds(point: Vector2, mapSize: number) {
   return (
     isBelowLine(topLeft, point, mapSize) &&
     isBelowLine(topRight, point, mapSize) &&

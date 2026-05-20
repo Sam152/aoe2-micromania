@@ -1,6 +1,6 @@
 import { Vector2 } from "three/src/math/Vector2.js";
 
-export default function selectionCircle(
+export function selectionCircle(
   ctx: CanvasRenderingContext2D,
   radius: number,
   color: string,

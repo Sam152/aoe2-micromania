@@ -1,19 +1,19 @@
-import UnitState from "../../../units/UnitState.ts";
-import unitMetadataFactory from "../../../units/unitMetadataFactory.ts";
-import config from "../../../config.ts";
+import { UnitState } from "../../../units/UnitState.ts";
+import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
+import { config } from "../../../config.ts";
 import { GameState } from "../../../../types.d.ts";
-import projectileMetadata from "../../../units/projectileMetadata.ts";
-import hasValue from "../../../util/hasValue.ts";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
-import ticksForAnimation from "../../../util/ticksForAnimation.ts";
-import inAttackRange, { inMinimumRange } from "../../../util/inAttackRange.ts";
-import setUnitMovementTowards, { setUnitMovementAwayFrom } from "../initiated/setUnitMovementTowards.ts";
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator.ts";
-import soundManager from "../../../sounds/SoundManger.ts";
-import Unit from "../../../units/Unit.ts";
+import { projectileMetadata } from "../../../units/projectileMetadata.ts";
+import { hasValue } from "../../../util/hasValue.ts";
+import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
+import { ticksForAnimation } from "../../../util/ticksForAnimation.ts";
+import { inAttackRange, inMinimumRange } from "../../../util/inAttackRange.ts";
+import { setUnitMovementAwayFrom, setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
+import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
+import { soundManager } from "../../../sounds/SoundManger.ts";
+import { Unit } from "../../../units/Unit.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 
-export default function fireProjectiles(state: GameState, computed: ComputedFrameState) {
+export function fireProjectiles(state: GameState, computed: ComputedFrameState) {
   const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
 
   // Check if a unit should be firing or moving towards its target.

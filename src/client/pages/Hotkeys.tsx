@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Section from "../components/Section.tsx";
-import keycodeToHumanReadable from "../../common/util/keycodeToHumanReadable.ts";
-import hotkeyManager from "../../common/input/HotkeyManager.ts";
-import Hotkey from "../../common/input/Hotkey.ts";
-import BindableRow from "../components/BindableRow.tsx";
+import { Section } from "../components/Section.tsx";
+import { keycodeToHumanReadable } from "../../common/util/keycodeToHumanReadable.ts";
+import { hotkeyManager } from "../../common/input/HotkeyManager.ts";
+import { Hotkey } from "../../common/input/Hotkey.ts";
+import { BindableRow } from "../components/BindableRow.tsx";
 import { HotkeyScheme } from "../../types.d.ts";
-import hdHotkeyScheme from "../../common/input/schemes/hdHotkeyScheme.ts";
-import deHotkeyScheme from "../../common/input/schemes/deHotkeyScheme.ts";
-import aocHotkeyScheme from "../../common/input/schemes/aocHotkeyScheme.ts";
+import { hdHotkeyScheme } from "../../common/input/schemes/hdHotkeyScheme.ts";
+import { deHotkeyScheme } from "../../common/input/schemes/deHotkeyScheme.ts";
+import { aocHotkeyScheme } from "../../common/input/schemes/aocHotkeyScheme.ts";
 
-export default function Hotkeys() {
+export function Hotkeys() {
   const [, setCount] = useState(0);
   const rerender = () => setCount((c: number) => c + 1);
 

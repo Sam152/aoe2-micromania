@@ -5,7 +5,7 @@
  * looking in a specific direction. When a value is negative, it must be flipped on
  * the horizontal axis and rendered as with its absolute counterpart.
  */
-enum CompassDirection {
+export enum CompassDirection {
   Start,
   StartA,
   StartB,
@@ -23,5 +23,3 @@ enum CompassDirection {
   StartN,
   StartO,
 }
-
-export default CompassDirection;

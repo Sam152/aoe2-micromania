@@ -1,10 +1,10 @@
-import ProjectileType from "./ProjectileType.ts";
+import { ProjectileType } from "./ProjectileType.ts";
 
 type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T;
 };
 
-const projectileMetadata: PartialRecord<
+export const projectileMetadata: PartialRecord<
   ProjectileType,
   {
     speed: number;
@@ -26,5 +26,3 @@ const projectileMetadata: PartialRecord<
     damageIsAreaOfEffect: true,
   },
 };
-
-export default projectileMetadata;

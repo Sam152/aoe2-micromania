@@ -1,9 +1,9 @@
-import FormationBase from "../FormationBase.ts";
+import { FormationBase } from "../FormationBase.ts";
 import { UnitInstance } from "../../../../types.d.ts";
 import { formGroupedLines } from "../utilities/formGroupedLines.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
-export default class LineFormation extends FormationBase {
+export class LineFormation extends FormationBase {
   distanceBetween = 25;
 
   override doForm(units: UnitInstance[], destination: Vector2): Array<Vector2> {

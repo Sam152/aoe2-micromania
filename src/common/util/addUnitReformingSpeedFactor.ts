@@ -1,8 +1,8 @@
 import { UnitInstance } from "../../types.d.ts";
-import calculateUnitMovementPerTick from "../units/calculateUnitMovementPerTick.ts";
-import config from "../config.ts";
+import { calculateUnitMovementPerTick } from "../units/calculateUnitMovementPerTick.ts";
+import { config } from "../config.ts";
 
-export default function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
+export function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
   if (units.length < 2) {
     throw new Error("Should only reform more than one unit.");
   }

@@ -1,10 +1,10 @@
-import stopUnit from "../initiated/stopUnit.ts";
+import { stopUnit } from "../initiated/stopUnit.ts";
 import { GameState } from "../../../../types.d.ts";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
+import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
 import { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards.ts";
-import hasValue from "../../../util/hasValue.ts";
+import { hasValue } from "../../../util/hasValue.ts";
 
-export default function moveUnits(state: GameState) {
+export function moveUnits(state: GameState) {
   // Move all units that have some active waypoint.
   state.units
     .filter(({ waypoints, reformingTo }) => waypoints.length > 0 && !hasValue(reformingTo))

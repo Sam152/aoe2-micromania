@@ -1,10 +1,10 @@
-import LocalStateManager from "../../common/state/managers/LocalStateManager.ts";
-import TransportEvent from "../../common/state/transport/TransportEvent.ts";
+import { LocalStateManager } from "../../common/state/managers/LocalStateManager.ts";
+import { TransportEvent } from "../../common/state/transport/TransportEvent.ts";
 import { normalizeGameStateAction } from "../../common/util/normalizer.ts";
-import Player from "../rooms/Player.ts";
+import { Player } from "../rooms/Player.ts";
 import { Server } from "socket.io";
 import { GameStateAction } from "../../types.d.ts";
-import BattleRoyale from "../../common/modes/BattleRoyale.ts";
+import { BattleRoyale } from "../../common/modes/BattleRoyale.ts";
 
 export function startGame(io: Server): {
   registerPlayer: (player: Player) => void;

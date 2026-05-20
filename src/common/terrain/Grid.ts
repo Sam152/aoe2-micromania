@@ -1,10 +1,10 @@
 import { Vector2 } from "three/src/math/Vector2.js";
-import config from "../config.ts";
+import { config } from "../config.ts";
 import { GameState } from "../../types.d.ts";
 
 const gridCache: { [key: number]: Grid } = {};
 
-export default class Grid {
+export class Grid {
   public readonly size: number;
   private readonly tileHalfHeight: number;
   private readonly tileHalfWidth: number;

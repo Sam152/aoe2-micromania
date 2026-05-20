@@ -1,15 +1,15 @@
-import UnitState from "../../../units/UnitState.ts";
+import { UnitState } from "../../../units/UnitState.ts";
 import { GameState, UnitInstance } from "../../../../types.d.ts";
-import calculateUnitMovementPerTick from "../../../units/calculateUnitMovementPerTick.ts";
-import inAttackRange from "../../../util/inAttackRange.ts";
-import setUnitMovementTowards from "../initiated/setUnitMovementTowards.ts";
-import compassDirectionCalculator from "../../../units/compassDirectionCalculator.ts";
+import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
+import { inAttackRange } from "../../../util/inAttackRange.ts";
+import { setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
+import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
-import stopUnit from "../initiated/stopUnit.ts";
+import { stopUnit } from "../initiated/stopUnit.ts";
 
 export const CONVERSION_JUICE_TICKS_RECHARGE = 100;
 
-export default function convertUnits(state: GameState, computed: ComputedFrameState) {
+export function convertUnits(state: GameState, computed: ComputedFrameState) {
   const convertingUnits = state.units.filter((unit) => !!unit.convertingUnit);
 
   // Check if a unit should be firing or moving towards its target.

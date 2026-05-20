@@ -1,8 +1,8 @@
-import Hotkey from "./Hotkey.ts";
-import hdHotkeyScheme from "./schemes/hdHotkeyScheme.ts";
-import LocalStorageObject from "../util/LocalStorageObject.ts";
+import { Hotkey } from "./Hotkey.ts";
+import { hdHotkeyScheme } from "./schemes/hdHotkeyScheme.ts";
+import { LocalStorageObject } from "../util/LocalStorageObject.ts";
 import { HotkeyScheme } from "../../types.d.ts";
-import deepClone from "../util/deepClone.ts";
+import { deepClone } from "../util/deepClone.ts";
 
 const defaultScheme = hdHotkeyScheme;
 
@@ -35,5 +35,4 @@ class HotkeyManager {
   }
 }
 
-const hotkeyManager = new HotkeyManager();
-export default hotkeyManager;
+export const hotkeyManager = new HotkeyManager();

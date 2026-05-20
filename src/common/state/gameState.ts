@@ -1,31 +1,31 @@
 import { GameState, GameStateAction } from "../../types.d.ts";
-import deepClone from "../util/deepClone.ts";
-import UnitState from "../units/UnitState.ts";
-import formationManager from "../units/formations/FormationManager.ts";
-import stopUnit, { stopUnitExceptForWaypoints } from "./mutations/initiated/stopUnit.ts";
-import fireProjectiles from "./mutations/tick/fireProjectiles.ts";
-import moveUnits from "./mutations/tick/moveUnits.ts";
-import registerProjectileHits from "./mutations/tick/registerProjectileHits.ts";
-import unitsInGameState from "../util/unitsInGameState.ts";
-import registerUnitFallen from "./mutations/tick/registerUnitFallen.ts";
-import patrolUnits from "./mutations/tick/patrolUnits.ts";
-import reformUnits from "./mutations/tick/reformUnits.ts";
-import autoAttack from "./mutations/tick/autoAttack.ts";
-import patrolTo from "./mutations/initiated/patrolTo.ts";
-import spawnUnit from "./mutations/initiated/spawnUnit.ts";
-import moveTo from "./mutations/initiated/moveTo.ts";
-import changeFormation from "./mutations/initiated/changeFormation.ts";
+import { deepClone } from "../util/deepClone.ts";
+import { UnitState } from "../units/UnitState.ts";
+import { formationManager } from "../units/formations/FormationManager.ts";
+import { stopUnit, stopUnitExceptForWaypoints } from "./mutations/initiated/stopUnit.ts";
+import { fireProjectiles } from "./mutations/tick/fireProjectiles.ts";
+import { moveUnits } from "./mutations/tick/moveUnits.ts";
+import { registerProjectileHits } from "./mutations/tick/registerProjectileHits.ts";
+import { unitsInGameState } from "../util/unitsInGameState.ts";
+import { registerUnitFallen } from "./mutations/tick/registerUnitFallen.ts";
+import { patrolUnits } from "./mutations/tick/patrolUnits.ts";
+import { reformUnits } from "./mutations/tick/reformUnits.ts";
+import { autoAttack } from "./mutations/tick/autoAttack.ts";
+import { patrolTo } from "./mutations/initiated/patrolTo.ts";
+import { spawnUnit } from "./mutations/initiated/spawnUnit.ts";
+import { moveTo } from "./mutations/initiated/moveTo.ts";
+import { changeFormation } from "./mutations/initiated/changeFormation.ts";
 import { setUnitMovementTowardsCurrentWaypoint } from "./mutations/initiated/setUnitMovementTowards.ts";
 import { snapToClamp } from "../util/snapToClamp.ts";
-import provisionPlayer from "./mutations/players/provisionPlayer.ts";
+import { provisionPlayer } from "./mutations/players/provisionPlayer.ts";
 import { cyclePlayers } from "./mutations/players/cyclePlayers.ts";
 import { createComputedFrameState } from "./computed/createComputedFrameState.ts";
 import { deprovisionPlayer } from "./mutations/players/deprovisionPlayer.ts";
 import { cleanFallen } from "./mutations/tick/cleanFallen.ts";
 import { startConversion } from "./mutations/initiated/startConversion.ts";
-import convertUnits from "./mutations/tick/convertUnits.ts";
+import { convertUnits } from "./mutations/tick/convertUnits.ts";
 
-function gameStateMutator(state: GameState, action: GameStateAction): GameState {
+export function gameStateMutator(state: GameState, action: GameStateAction): GameState {
   const computed = createComputedFrameState(state);
 
   if (action.n === "CLIENT_LOADED_WITH_ID") {
@@ -116,7 +116,7 @@ function gameStateMutator(state: GameState, action: GameStateAction): GameState 
   return state;
 }
 
-function defaultState(): GameState {
+export function defaultState(): GameState {
   return deepClone({
     ticks: 0,
     idAt: 1,
@@ -137,5 +137,3 @@ function defaultState(): GameState {
     mapTerrain: "terrain/15008-grass-2",
   });
 }
-
-export { defaultState, gameStateMutator };

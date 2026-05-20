@@ -49,7 +49,7 @@ const heroNames = [
   "El Cid",
 ];
 
-export default function defaultNickname(id: string) {
+export function defaultNickname(id: string) {
   const charSum = id.split("").reduce((sum, letter) => sum + letter.charCodeAt(0), 0);
   return heroNames[charSum % heroNames.length];
 }

@@ -1,10 +1,10 @@
 import { Ai, GameDispatcher, GameState, GameStateAction } from "../../types.d.ts";
-import averageVector from "../util/averageVector.ts";
+import { averageVector } from "../util/averageVector.ts";
 
 /**
  * A zero intelligence AI that just patrols it's units in.
  */
-export default class PatrollingAi implements Ai {
+export class PatrollingAi implements Ai {
   playingAs: number;
 
   constructor(playingAs: number) {

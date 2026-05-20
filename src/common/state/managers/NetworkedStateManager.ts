@@ -3,12 +3,12 @@ import { clientStateMutator, defaultState as defaultClientState } from "../clien
 import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
 import { Socket } from "socket.io-client";
 import { normalizeGameStateAction, normalizeGameStateObject } from "../../util/normalizer.ts";
-import TransportEvent from "../transport/TransportEvent.ts";
+import { TransportEvent } from "../transport/TransportEvent.ts";
 
 /**
  * A state manager with a client => server relationship.
  */
-export default class NetworkedStateManager implements StateManagerInterface {
+export class NetworkedStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
   private socket: Socket;

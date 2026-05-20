@@ -1,14 +1,14 @@
 import { createRef, useEffect } from "react";
 import { circle } from "../../common/drawing/shapes.ts";
-import screenManager from "../../common/drawing/screenManager.ts";
-import LineFormation from "../../common/units/formations/types/LineFormation.ts";
+import { screenManager } from "../../common/drawing/screenManager.ts";
+import { LineFormation } from "../../common/units/formations/types/LineFormation.ts";
 import { UnitInstance } from "../../types.d.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import Unit from "../../common/units/Unit.ts";
-import averageVector from "../../common/util/averageVector.ts";
-import arrayOfSize from "../../common/util/arrayOfSize.ts";
+import { Unit } from "../../common/units/Unit.ts";
+import { averageVector } from "../../common/util/averageVector.ts";
+import { arrayOfSize } from "../../common/util/arrayOfSize.ts";
 
-export default function FormationDebugging() {
+export function FormationDebugging() {
   const ref = createRef<HTMLCanvasElement>();
 
   useEffect(() => {

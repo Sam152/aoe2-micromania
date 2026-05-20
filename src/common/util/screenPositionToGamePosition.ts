@@ -1,7 +1,7 @@
-import screenManager from "../drawing/screenManager.ts";
+import { screenManager } from "../drawing/screenManager.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
-export default function screenPositionToGamePosition(screenPosition: Vector2): Vector2 {
+export function screenPositionToGamePosition(screenPosition: Vector2): Vector2 {
   return screenPosition.clone().multiplyScalar(screenManager.getCanvasScale());
 }
 
