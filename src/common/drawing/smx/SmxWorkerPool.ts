@@ -9,8 +9,6 @@ interface Task {
   transfer: Transferable[];
 }
 
-export type SmxWorkerPool = ReturnType<typeof createSmxWorkerPool>;
-
 export function createSmxWorkerPool(concurrency: number) {
   const workers = Array.from(
     { length: concurrency },
