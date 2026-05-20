@@ -49,11 +49,8 @@
     "three": "npm:three@~0.139.2",
     "howler": "npm:howler@^2.2.3",
     "d3-quadtree": "npm:d3-quadtree@^3.0.1",
-    "genie-smx": "npm:genie-smx@^1.2.0",
-    "genie-smx/lib/smx/struct.js": "npm:genie-smx@^1.2.0/lib/smx/struct.js",
     "humanize-duration": "npm:humanize-duration@^3.27.1",
     "jascpal": "npm:jascpal@~0.1.4",
-    "just-standard-deviation": "npm:just-standard-deviation@^2.0.2",
-    "buffer": "npm:buffer@^6.0.3"
+    "just-standard-deviation": "npm:just-standard-deviation@^2.0.2"
   }
 }

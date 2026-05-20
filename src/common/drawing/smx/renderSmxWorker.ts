@@ -3,7 +3,6 @@
 import { renderSmx } from "./renderSmx.ts";
 import type { Frame } from "./renderSmx.ts";
 import type { Pallet } from "./parsePallet.ts";
-import { Buffer } from "buffer";
 
 interface WorkerRequest {
   data: ArrayBuffer;
@@ -61,7 +60,7 @@ function packFrames(
 self.onmessage = async (e: MessageEvent<WorkerRequest>) => {
   const { data, palettes, playersToRender } = e.data;
   try {
-    const frames = await renderSmx({ data: Buffer.from(data), palettes, playersToRender });
+    const frames = await renderSmx({ data: new Uint8Array(data), palettes, playersToRender });
     const { frameMetadata, bitmaps } = packFrames(frames, playersToRender);
     self.postMessage({ ok: true, frameMetadata, bitmaps }, { transfer: bitmaps });
   } catch (err) {

@@ -1,5 +1,4 @@
 import { Pallet, parsePallet } from "./parsePallet.ts";
-import { Buffer } from "node:buffer";
 
 const PALETTE_FILES: Record<number, string> = {
   0: "original",
@@ -45,7 +44,7 @@ export async function downloadPallets(baseUrl: string): Promise<Record<number, P
     Object.entries(PALETTE_FILES).map(([key, filename]) =>
       fetch(`${baseUrl}/${filename}.pal`)
         .then((r) => r.arrayBuffer())
-        .then((buf) => [parseInt(key, 10), parsePallet(Buffer.from(buf))] as const)
+        .then((buf) => [parseInt(key, 10), parsePallet(new Uint8Array(buf))] as const)
     ),
   );
   return Object.fromEntries(entries);

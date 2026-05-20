@@ -1,5 +1,4 @@
 import { Pallet } from "./parsePallet.ts";
-import { Buffer } from "buffer";
 
 const PLAYER_PALETTES: Record<number, number> = {
   1: 55, // blue
@@ -24,7 +23,7 @@ export type Frame = {
 };
 
 type RenderSmxArgs = {
-  data: Buffer;
+  data: Uint8Array;
   palettes: Record<number, Pallet>;
   playersToRender: number[];
 };

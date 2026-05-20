@@ -1,10 +1,8 @@
 import { downloadPallets } from "../smx/downloadPallets.ts";
 import { Pallet } from "../smx/parsePallet.ts";
-import { Buffer } from "buffer";
-
 export async function downloadAssets(
   assetPath: string,
-): Promise<{ id: string; data: Buffer; palettes: Record<number, Pallet> }[]> {
+): Promise<{ id: string; data: Uint8Array; palettes: Record<number, Pallet> }[]> {
   const palettes = await downloadPallets(`${assetPath}/palettes`);
   return await Promise.all(
     allAssets.map((assetId) =>
@@ -12,7 +10,7 @@ export async function downloadAssets(
         .then((response) => response.arrayBuffer())
         .then((arrayBuffer) => ({
           id: assetId,
-          data: Buffer.from(arrayBuffer),
+          data: new Uint8Array(arrayBuffer),
           palettes,
         }))
     ),

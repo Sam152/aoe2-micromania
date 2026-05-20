@@ -1,8 +1,7 @@
-import { Buffer } from "buffer";
 export type Pallet = { version: string; numColors: number; colors: [number, number, number][] };
 
-export function parsePallet(file: Buffer): Pallet {
-  const lines = file.toString("ascii").split(/\r?\n/);
+export function parsePallet(file: Uint8Array): Pallet {
+  const lines = new TextDecoder().decode(file).split(/\r?\n/);
   const version = lines[1];
   const numColors = parseInt(lines[2], 10);
   const colors = Array.from({ length: numColors }, (_, i) => {
