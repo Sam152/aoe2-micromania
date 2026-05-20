@@ -1,7 +1,7 @@
 import { SmxAnimation } from "./SmxAnimation.ts";
 import { assetUrl } from "../../client/util/assetUrl.ts";
 import { downloadAssets, playerAssets } from "./assets/downloadAssets.ts";
-import { createSmxWorkerPool } from "./smx/SmxWorkerPool.ts";
+import { createSmxWorkerPool } from "./smx/createSmxWorkerPool.ts";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
 
 const renderedPlayers = Array.from({ length: MAX_PLAYERS_PER_SERVER }, (_, i) => i + 1);
