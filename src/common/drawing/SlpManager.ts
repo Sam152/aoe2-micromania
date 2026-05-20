@@ -1,7 +1,7 @@
 import SmxAnimation from "./SmxAnimation.ts";
 import assetUrl from "../../client/util/assetUrl.ts";
 import { downloadAssets, playerAssets } from "./assets/downloadAssets.ts";
-import { SmxWorkerPool } from "./smx/SmxWorkerPool.ts";
+import { createSmxWorkerPool } from "./smx/SmxWorkerPool.ts";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
 
 const renderedPlayers = Array.from({ length: MAX_PLAYERS_PER_SERVER }, (_, i) => i + 1);
@@ -26,7 +26,7 @@ class SlpManager {
     const downloadedSmxFiles = await downloadAssets(this.assetPath);
     console.timeEnd("Downloading SMX");
 
-    const pool = new SmxWorkerPool(Math.min(4, navigator.hardwareConcurrency));
+    const pool = createSmxWorkerPool(Math.min(4, navigator.hardwareConcurrency));
     try {
       console.time("Rendering Frames");
       const renderedSmxLibrary = await Promise.all(

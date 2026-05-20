@@ -9,28 +9,54 @@ interface Task {
   transfer: Transferable[];
 }
 
-export class SmxWorkerPool {
-  private readonly workers: Worker[];
-  private readonly idle: Worker[];
-  private readonly queue: Task[] = [];
+export type SmxWorkerPool = ReturnType<typeof createSmxWorkerPool>;
 
-  constructor(concurrency: number) {
-    this.workers = Array.from(
-      { length: concurrency },
-      () => new Worker("/renderSmxWorker.js", { type: "module" }),
-    );
-    this.idle = [...this.workers];
+export function createSmxWorkerPool(concurrency: number) {
+  const workers = Array.from(
+    { length: concurrency },
+    () => new Worker("/renderSmxWorker.js", { type: "module" }),
+  );
+  const idle = [...workers];
+  const queue: Task[] = [];
+
+  function drain(): void {
+    while (idle.length > 0 && queue.length > 0) {
+      const worker = idle.pop()!;
+      const task = queue.shift()!;
+
+      worker.onmessage = (e: MessageEvent<WorkerResponse | WorkerError>) => {
+        idle.push(worker);
+        if (e.data.ok) {
+          task.resolve(e.data);
+        } else {
+          task.reject(new Error(e.data.error));
+        }
+        drain();
+      };
+
+      worker.onerror = (e: ErrorEvent) => {
+        idle.push(worker);
+        task.reject(e.error ?? new Error(e.message));
+        drain();
+      };
+
+      worker.postMessage(task.payload, task.transfer);
+    }
   }
 
-  async render(
+  function dispatch(payload: unknown, transfer: Transferable[]): Promise<WorkerResponse> {
+    return new Promise((resolve, reject) => {
+      queue.push({ resolve, reject, payload, transfer });
+      drain();
+    });
+  }
+
+  async function render(
     data: ArrayBuffer,
     palettes: Record<number, Pallet>,
     playersToRender: number[],
   ): Promise<Frame[]> {
-    const { frameMetadata, bitmaps } = await this.dispatch(
-      { data, palettes, playersToRender },
-      [data],
-    );
+    const { frameMetadata, bitmaps } = await dispatch({ data, palettes, playersToRender }, [data]);
 
     return frameMetadata.map((meta) => ({
       shadow: meta.shadowIdx >= 0 ? bitmaps[meta.shadowIdx] : null,
@@ -46,39 +72,9 @@ export class SmxWorkerPool {
     }));
   }
 
-  private dispatch(payload: unknown, transfer: Transferable[]): Promise<WorkerResponse> {
-    return new Promise((resolve, reject) => {
-      this.queue.push({ resolve, reject, payload, transfer });
-      this.drain();
-    });
+  function terminate(): void {
+    for (const worker of workers) { worker.terminate(); }
   }
 
-  private drain(): void {
-    while (this.idle.length > 0 && this.queue.length > 0) {
-      const worker = this.idle.pop()!;
-      const task = this.queue.shift()!;
-
-      worker.onmessage = (e: MessageEvent<WorkerResponse | WorkerError>) => {
-        this.idle.push(worker);
-        if (e.data.ok) {
-          task.resolve(e.data);
-        } else {
-          task.reject(new Error(e.data.error));
-        }
-        this.drain();
-      };
-
-      worker.onerror = (e: ErrorEvent) => {
-        this.idle.push(worker);
-        task.reject(e.error ?? new Error(e.message));
-        this.drain();
-      };
-
-      worker.postMessage(task.payload, task.transfer);
-    }
-  }
-
-  terminate(): void {
-    for (const worker of this.workers) { worker.terminate(); }
-  }
+  return { render, terminate };
 }
