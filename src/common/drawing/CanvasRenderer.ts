@@ -34,6 +34,8 @@ export class CanvasRenderer implements RendererInterface {
   private activeCursor: Cursor;
   private lastCursor: Cursor | null;
   private debugRenderer: RendererInterface;
+  private terrainCache: OffscreenCanvas | null = null;
+  private cachedTerrainAsset: string | null = null;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -122,15 +124,31 @@ export class CanvasRenderer implements RendererInterface {
   }
 
   drawTerrain(gameState: GameState): void {
+    if (!this.terrainCache || this.cachedTerrainAsset !== gameState.mapTerrain) {
+      this.terrainCache = this.buildTerrainCache(gameState);
+      this.cachedTerrainAsset = gameState.mapTerrain;
+    }
+    this.context.drawImage(this.terrainCache, 0, 0);
+  }
+
+  private buildTerrainCache(gameState: GameState): OffscreenCanvas {
     const terrain = slpManager.getAsset(gameState.mapTerrain);
     const grid = new Grid(gameState.mapSize);
+
+    const offscreen = new OffscreenCanvas(
+      gameState.mapSize * config.tileWidth,
+      gameState.mapSize * config.tileHeight,
+    );
+    const ctx = offscreen.getContext("2d")!;
 
     // Terrain drawing algo documented at https://simonsan.github.io/openage-webdocs/sphinx/doc/media/terrain.html.
     const terrainCount = Math.sqrt(terrain.getFramesCount());
     grid.iterateTiles((x, y) => {
       const frame = (x % terrainCount) + (y % terrainCount) * terrainCount;
-      terrain.drawFrame(this.context, grid.tileDrawnAt(x, y), frame);
+      terrain.drawFrame(ctx, grid.tileDrawnAt(x, y), frame);
     });
+
+    return offscreen;
   }
 
   drawMovementCommandAnimations(gameState: GameState, clientState: ClientState): void {
