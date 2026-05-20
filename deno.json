@@ -21,6 +21,9 @@
       "jsr:@hirochachacha/deno-lint-plugin-unused-fixer"
     ],
     "rules": {
+      "include": [
+        "no-default-export"
+      ],
       "exclude": [
         "unused-fixer/no-unused-vars",
         "require-await",
