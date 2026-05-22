@@ -3,7 +3,7 @@ import { rockPositionFactory } from "./rockPosition.ts";
 import { ProjectileInstance } from "../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
-const MAX_OVERSHOOT_AMOUNT = 7;
+const MAX_OVERSHOOT_AMOUNT = 12;
 const MAX_ANGLE_VARIANCE = 3;
 
 export function fanOutMangoProjections(projectile: ProjectileInstance, percentageComplete: number) {
