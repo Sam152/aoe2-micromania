@@ -54,18 +54,31 @@ export class NetworkedStateManager implements StateManagerInterface {
     this.socket.off(TransportEvent.GameStateActionTransmit);
     this.socket.off(TransportEvent.WholeGameStateTransmit);
 
-    this.socket.on(TransportEvent.WholeGameStateTransmit, (serverState) => {
-      this.gameState = normalizeGameStateObject(serverState);
-    });
+    let hasWholeState = false;
     this.socket.on(TransportEvent.GameStateActionTransmit, (serverAction) => {
+      if (!hasWholeState) {
+        return;
+      }
+
       const action = normalizeGameStateAction(serverAction);
       this.gameState = gameStateMutator(this.gameState, action);
+
+      if (action.n === "T" && action.t !== this.gameState.ticks - 1) {
+        console.error("Desync detected - reloading");
+        globalThis.location.reload();
+      }
+
       this.dispatchClient({
         n: "GAME_STATE_REHYDRATED",
       });
       this.gameStateListeners.forEach((gameStateListener) => {
         gameStateListener(this.gameState, action);
       });
+    });
+
+    this.socket.on(TransportEvent.WholeGameStateTransmit, (serverState) => {
+      this.gameState = normalizeGameStateObject(serverState);
+      hasWholeState = true;
     });
   }
 
