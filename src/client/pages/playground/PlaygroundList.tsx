@@ -9,7 +9,7 @@ type Playground = {
 const playgrounds: Playground[] = [
   { name: "Formations", path: "/playground/formations" },
   { name: "Arrow frames", path: "/playground/arrow-frames" },
-  { name: "Rock frames", path: "/playground/rock-frames" },
+  { name: "Mango fan-out", path: "/playground/mango-fanout" },
 ];
 
 export function PlaygroundList() {

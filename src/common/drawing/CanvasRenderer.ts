@@ -17,11 +17,13 @@ import { DebugRenderer } from "./DebugRenderer.ts";
 import { slpManager } from "./SlpManager.ts";
 import { selectionCircle } from "./helpers/selectionCircle.ts";
 import { ProjectileType } from "../units/ProjectileType.ts";
-import { rockPositionFactory } from "./helpers/rockPosition.ts";
+
 import { selectionRightClickAction } from "../units/selectionRightClickAction.ts";
 import { CONVERSION_JUICE_TICKS_RECHARGE } from "../state/mutations/tick/convertUnits.ts";
 import { CursorAsset, loadCursorFile } from "./cursorLoader.ts";
 import { assetUrl } from "../../client/util/assetUrl.ts";
+
+import { fanOutMangoProjections } from "./helpers/fanOutMangoProjections.ts";
 
 export class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -174,15 +176,14 @@ export class CanvasRenderer implements RendererInterface {
       const percentageComplete = Math.min(1, ticksOfJourneyComplete / totalTicksInJourney);
 
       if (projectile.type === ProjectileType.Rock) {
-        const rockPosition = rockPositionFactory(projectile, percentageComplete);
-        [
-          // Each
-        ].map((position) => {
-          slpManager
-            .getAsset(projectileInfo.asset)
-            .drawFrame(this.context, position, projectileInfo.frames[projectile.id % projectileInfo.frames.length]);
-        });
+        fanOutMangoProjections(projectile, percentageComplete)
+          .map((position) => {
+            slpManager
+              .getAsset(projectileInfo.asset)
+              .drawFrame(this.context, position, projectileInfo.frames[projectile.id % projectileInfo.frames.length]);
+          });
       }
+
       if (projectile.type === ProjectileType.Arrow) {
         const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
         const position = getArrowPosition(projectile, percentageComplete);

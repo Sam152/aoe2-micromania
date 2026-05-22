@@ -8,7 +8,7 @@ export function getArrowPosition(
   const length = projectile.pathVector.length();
   const lengthComplete = percentageComplete * length;
 
-  const zValue = (-1 * Math.pow(lengthComplete - length / 2, 2) + Math.pow(length / 2, 2)) * 0.001;
+  const zValue = (-1 * Math.pow(lengthComplete - length / 2, 2) + Math.pow(length / 2, 2)) * 0.0013;
 
   const positionOnPathVector = projectile.pathVector.clone().multiplyScalar(percentageComplete);
   return projectile.startingPoint.clone().add(positionOnPathVector).sub(new Vector2(0, zValue));
