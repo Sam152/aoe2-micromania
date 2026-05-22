@@ -5,6 +5,8 @@ import { createRef, useEffect } from "react";
  * might otherwise be hard to observe when the game is running at full speed, or with the tools available.
  *
  * All playgrounds should get a corresponding entry in App.tsx, in the form of: <Route path="/playground/some-name" ... />
+ *
+ * Playground links should be added to PlaygroundList.tsx.
  */
 export function ExamplePlayground() {
   const ref = createRef<HTMLCanvasElement>();

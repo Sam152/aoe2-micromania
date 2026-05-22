@@ -176,20 +176,7 @@ export class CanvasRenderer implements RendererInterface {
       if (projectile.type === ProjectileType.Rock) {
         const rockPosition = rockPositionFactory(projectile, percentageComplete);
         [
-          rockPosition(1, -2),
-
-          rockPosition(-18, -1),
-          rockPosition(-18, -17),
-          rockPosition(-18, 15),
-          rockPosition(-5, 5),
-
-          rockPosition(18, 2),
-          rockPosition(16, -15),
-          rockPosition(17, 19),
-          rockPosition(12, 4),
-
-          rockPosition(3, -14),
-          rockPosition(-1, 17),
+          // Each
         ].map((position) => {
           slpManager
             .getAsset(projectileInfo.asset)
@@ -208,10 +195,7 @@ export class CanvasRenderer implements RendererInterface {
             position,
             projectileInfo.frames[projectile.id % projectileInfo.frames.length],
             angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
-            {
-              x: 15,
-              y: 15,
-            },
+            { x: 2, y: 19 },
           );
       }
     });

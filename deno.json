@@ -2,7 +2,7 @@
   "nodeModulesDir": "auto",
   "tasks": {
     "start": "deno run --check --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
-    "start:watch": "deno run --check --watch=src/ --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
+    "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
     "on-save": "deno --allow-run .hooks/on-save.ts"
   },
