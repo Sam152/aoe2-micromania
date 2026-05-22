@@ -1,0 +1,21 @@
+import { createRef, useEffect } from "react";
+
+/**
+ * A playground takes elements from game and renders out specific scenarios or debugging tools, that
+ * might otherwise be hard to observe when the game is running at full speed, or with the tools available.
+ *
+ * All playgrounds should get a corresponding entry in App.tsx, in the form of: <Route path="/playground/some-name" ... />
+ */
+export function ExamplePlayground() {
+  const ref = createRef<HTMLCanvasElement>();
+
+  useEffect(() => {
+  }, []);
+
+  return (
+    <canvas
+      style={{ width: "100vw", height: "calc(100vh - 53px)", display: "block", backgroundColor: "black" }}
+      ref={ref}
+    />
+  );
+}

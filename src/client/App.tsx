@@ -6,7 +6,7 @@ import { config } from "../common/config.ts";
 import { GameScreen } from "./pages/GameScreen.tsx";
 import { Servers } from "./pages/Servers.tsx";
 import { ConnectedStateProvider } from "./hooks/useConnectedState.tsx";
-import { FormationDebugging } from "./pages/FormationDebugging.tsx";
+import { FormationDebugging } from "./pages/playground/FormationDebugging.tsx";
 import { SpectateGame } from "./pages/SpectateGame.tsx";
 
 export function App() {
@@ -19,7 +19,8 @@ export function App() {
           <Route path="/spectate" element={<SpectateGame />} />
           <Route path="/hotkeys" element={<Hotkeys />} />
           <Route path="/servers" element={<Servers />} />
-          <Route path="/formations" element={<FormationDebugging />} />
+
+          <Route path="/playground/formations" element={<FormationDebugging />} />
         </Routes>
       </BrowserRouter>
     </ConnectedStateProvider>
