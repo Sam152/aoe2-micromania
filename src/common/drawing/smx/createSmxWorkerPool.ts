@@ -18,7 +18,7 @@ export function createSmxWorkerPool(concurrency: number) {
   const queue: Task[] = [];
 
   return {
-    render: (data: ArrayBuffer, palettes: Record<number, Pallet>, playersToRender: number[]) =>
+    render: (data: ArrayBufferLike, palettes: Record<number, Pallet>, playersToRender: number[]) =>
       render(idle, queue, data, palettes, playersToRender),
     terminate: () => terminate(workers),
   };
@@ -27,7 +27,7 @@ export function createSmxWorkerPool(concurrency: number) {
 async function render(
   idle: Worker[],
   queue: Task[],
-  data: ArrayBuffer,
+  data: ArrayBufferLike,
   palettes: Record<number, Pallet>,
   playersToRender: number[],
 ): Promise<Frame[]> {

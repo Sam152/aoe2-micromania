@@ -9,6 +9,7 @@ export function BindSelection({ onChange }: { onChange: (keycode: number) => voi
     }
     globalThis.addEventListener("keydown", function listener(e) {
       e.preventDefault();
+      // @ts-ignore -
       onChange(e.keyCode);
       setListening(false);
       globalThis.removeEventListener("keydown", listener);

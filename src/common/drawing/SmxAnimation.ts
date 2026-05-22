@@ -20,7 +20,12 @@ export class SmxAnimation {
     this.framesPerAngle = Math.floor(this.smxFramesCount / this.directions);
   }
 
-  drawFrame(context: CanvasRenderingContext2D, at: Vector2, frameIndex: number, rotate: number | null = null) {
+  drawFrame(
+    context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+    at: Vector2,
+    frameIndex: number,
+    rotate: number | null = null,
+  ) {
     const frame = this.rendered[frameIndex % this.smxFramesCount];
     const bitmap = frame.renders[1];
 
