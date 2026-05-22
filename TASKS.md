@@ -11,10 +11,10 @@
 - [ ] Admin tools
 - [ ] Boot on idle
 - [x] Logging/observability
-- [ ] Persisting events
+- [ ] Persisting events / replay
 - [ ] Better CDN caching for static assets
 - [ ] Validated dispatch
-- [ ] Desync validation
+- [x] Desync validation
 - [ ] Analytics/stats
 
 ## Gameplay
@@ -38,9 +38,11 @@
 - [ ] Start in formation
 - [ ] Leave arrows on the field
 - [ ] Fix mango range
+- [ ] Mango trails
 
 # Interface
 
+- [ ] Camera over spawn location
 - [ ] Asset rendering off main thread
 - [x] GH/Discord links
 - [x] Spectate mode
