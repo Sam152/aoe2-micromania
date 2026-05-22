@@ -1,6 +1,6 @@
 import { Unit } from "./Unit.ts";
 import { UnitState } from "./UnitState.ts";
-import { UnitStats } from "../../types.d.ts";
+import { UnitStats } from "../../types.ts";
 import { AnimationStyle } from "./AnimationStyle.ts";
 import { ProjectileType } from "./ProjectileType.ts";
 import { Vector2 } from "three/src/math/Vector2.js";

@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types.d.ts";
+import { GameState } from "../../../../types.ts";
 import { Unit } from "../../../units/Unit.ts";
 import { stopUnit } from "./stopUnit.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";

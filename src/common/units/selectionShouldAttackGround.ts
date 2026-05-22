@@ -1,4 +1,4 @@
-import { GameState } from "../../types.d.ts";
+import { GameState } from "../../types.ts";
 import { Unit } from "./Unit.ts";
 import { unitsById } from "./unitsById.ts";
 

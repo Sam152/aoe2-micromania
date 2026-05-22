@@ -1,7 +1,7 @@
 import { UnitState } from "../../../units/UnitState.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
 import { config } from "../../../config.ts";
-import { GameState } from "../../../../types.d.ts";
+import { GameState } from "../../../../types.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 import { hasValue } from "../../../util/hasValue.ts";
 import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";

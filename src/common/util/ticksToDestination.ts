@@ -1,6 +1,6 @@
 import { calculateUnitMovementPerTick } from "../units/calculateUnitMovementPerTick.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import { UnitInstance } from "../../types.d.ts";
+import { UnitInstance } from "../../types.ts";
 
 export function ticksToDestination(unit: UnitInstance, destination: Vector2) {
   const distance = unit.position.distanceTo(destination);

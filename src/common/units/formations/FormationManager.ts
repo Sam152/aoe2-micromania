@@ -1,6 +1,6 @@
 import { FormationType } from "./FormationType.ts";
 import { LineFormation } from "./types/LineFormation.ts";
-import { FormationInterface, UnitInstance } from "../../../types.d.ts";
+import { FormationInterface, UnitInstance } from "../../../types.ts";
 import { SpreadFormation } from "./types/SpreadFormation.ts";
 import { SplitFormation } from "./types/SplitFormation.ts";
 

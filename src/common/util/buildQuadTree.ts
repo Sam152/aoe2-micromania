@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../types.d.ts";
+import { UnitInstance } from "../../types.ts";
 import { Quadtree, quadtree } from "d3-quadtree";
 
 function accessX(unit: UnitInstance) {

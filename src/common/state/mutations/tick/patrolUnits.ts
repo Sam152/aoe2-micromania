@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types.d.ts";
+import { GameState } from "../../../../types.ts";
 import { hasValue } from "../../../util/hasValue.ts";
 import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
 import { swapProperties } from "../../../util/swapProperties.ts";

@@ -1,8 +1,8 @@
-import { ProjectileInstance } from "../../../types.d.ts";
+import { ProjectileInstance } from "../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export function getArrowPosition(
-  projectile: Pick<ProjectileInstance, "pathVector" | "startingPoint">,
+  projectile: Pick<ProjectileInstance, "pathVector" | "startingPoint" | "arrivingTick">,
   percentageComplete: number,
 ): Vector2 {
   const length = projectile.pathVector.length();

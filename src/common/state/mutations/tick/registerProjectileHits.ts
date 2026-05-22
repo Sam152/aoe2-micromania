@@ -1,4 +1,4 @@
-import { GameState } from "../../../../types.d.ts";
+import { GameState } from "../../../../types.ts";
 import { calculateDamage } from "../../../units/calculateDamage.ts";
 import { registerUnitFallen } from "./registerUnitFallen.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";

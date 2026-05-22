@@ -1,7 +1,7 @@
 import { Hotkey } from "./Hotkey.ts";
 import { hdHotkeyScheme } from "./schemes/hdHotkeyScheme.ts";
 import { LocalStorageObject } from "../util/LocalStorageObject.ts";
-import { HotkeyScheme } from "../../types.d.ts";
+import { HotkeyScheme } from "../../types.ts";
 import { deepClone } from "../util/deepClone.ts";
 
 const defaultScheme = hdHotkeyScheme;

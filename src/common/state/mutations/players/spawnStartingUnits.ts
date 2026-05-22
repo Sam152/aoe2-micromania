@@ -1,7 +1,7 @@
 import { Grid } from "../../../terrain/Grid.ts";
 import { spawnUnit } from "../initiated/spawnUnit.ts";
 import { Unit } from "../../../units/Unit.ts";
-import { GameState, UnitInstance } from "../../../../types.d.ts";
+import { GameState, UnitInstance } from "../../../../types.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { formationManager } from "../../../units/formations/FormationManager.ts";

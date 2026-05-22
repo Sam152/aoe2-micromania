@@ -1,4 +1,4 @@
-import { HotkeyScheme } from "../../../types.d.ts";
+import { HotkeyScheme } from "../../../types.ts";
 import { Hotkey } from "../Hotkey.ts";
 
 export const hdHotkeyScheme: HotkeyScheme = {

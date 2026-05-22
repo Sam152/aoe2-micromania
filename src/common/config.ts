@@ -10,7 +10,7 @@ export const config = {
   /**
    * The number of ticks per second that should be executed to advance the game state.
    */
-  ticksPerSecond: 20,
+  ticksPerSecond: 2,
   /**
    * A constant, multiplied by unit speed statistics to make them feel correct.
    */

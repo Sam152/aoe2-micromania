@@ -1,4 +1,4 @@
-import { Rectangle } from "../../types.d.ts";
+import { Rectangle } from "../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export function normalizeRect(rect: Rectangle) {

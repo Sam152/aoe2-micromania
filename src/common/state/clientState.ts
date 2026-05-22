@@ -1,4 +1,4 @@
-import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types.d.ts";
+import { ClientState, ClientStateAction, GameDispatcher, GameState } from "../../types.ts";
 import { deepClone } from "../util/deepClone.ts";
 import { pointInRect } from "../util/pointInRect.ts";
 import { normalizeRect, rectIntersectingWithRect } from "../util/rectIntersectingWithRect.ts";

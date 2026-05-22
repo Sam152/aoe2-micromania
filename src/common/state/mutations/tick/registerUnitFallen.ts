@@ -1,4 +1,4 @@
-import { GameState, UnitInstance } from "../../../../types.d.ts";
+import { GameState, UnitInstance } from "../../../../types.ts";
 import { UnitState } from "../../../units/UnitState.ts";
 import { soundManager } from "../../../sounds/SoundManger.ts";
 

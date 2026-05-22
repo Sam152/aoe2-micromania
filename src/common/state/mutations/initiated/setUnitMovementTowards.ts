@@ -1,6 +1,6 @@
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
 import { UnitState } from "../../../units/UnitState.ts";
-import { GameState, UnitInstance } from "../../../../types.d.ts";
+import { GameState, UnitInstance } from "../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { ticksToDestination } from "../../../util/ticksToDestination.ts";
 import { snapToClamp } from "../../../util/snapToClamp.ts";

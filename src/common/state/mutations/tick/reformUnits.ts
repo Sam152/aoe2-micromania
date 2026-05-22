@@ -1,5 +1,5 @@
 import { setUnitMovementTowards, setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards.ts";
-import { GameState } from "../../../../types.d.ts";
+import { GameState } from "../../../../types.ts";
 import { hasValue } from "../../../util/hasValue.ts";
 import { UnitState } from "../../../units/UnitState.ts";
 import { stopUnit } from "../initiated/stopUnit.ts";

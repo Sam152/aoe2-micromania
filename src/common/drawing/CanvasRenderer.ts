@@ -1,4 +1,4 @@
-import { ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface } from "../../types.d.ts";
+import { ClientDispatcher, ClientState, GameState, Rectangle, RendererInterface } from "../../types.ts";
 import { unitMetadataFactory } from "../units/unitMetadataFactory.ts";
 import { square } from "./shapes.ts";
 import { screenManager } from "./screenManager.ts";
@@ -195,7 +195,8 @@ export class CanvasRenderer implements RendererInterface {
             .getAsset(projectileInfo.asset)
             .drawFrame(this.context, position, projectileInfo.frames[projectile.id % projectileInfo.frames.length]);
         });
-      } else {
+      }
+      if (projectile.type === ProjectileType.Arrow) {
         const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
         const position = getArrowPosition(projectile, percentageComplete);
         const angle = position.clone().sub(positionPrevious).angle();
@@ -207,6 +208,10 @@ export class CanvasRenderer implements RendererInterface {
             position,
             projectileInfo.frames[projectile.id % projectileInfo.frames.length],
             angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
+            {
+              x: 15,
+              y: 15,
+            },
           );
       }
     });

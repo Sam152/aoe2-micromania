@@ -1,4 +1,4 @@
-import { FormationInterface, UnitInstance } from "../../../types.d.ts";
+import { FormationInterface, UnitInstance } from "../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { unitMetadataFactory } from "../unitMetadataFactory.ts";
 

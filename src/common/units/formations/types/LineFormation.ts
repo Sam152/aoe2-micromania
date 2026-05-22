@@ -1,5 +1,5 @@
 import { FormationBase } from "../FormationBase.ts";
-import { UnitInstance } from "../../../../types.d.ts";
+import { UnitInstance } from "../../../../types.ts";
 import { formGroupedLines } from "../utilities/formGroupedLines.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 

@@ -1,5 +1,5 @@
 import { Section } from "../components/Section.tsx";
-import { ReplayIndexItem } from "../../types.d.ts";
+import { ReplayIndexItem } from "../../types.ts";
 import { Link } from "react-router-dom";
 import humanizeDuration from "humanize-duration";
 import { useFetched } from "../hooks/useFetched.ts";

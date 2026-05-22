@@ -1,5 +1,5 @@
 import { UnitState } from "../../../units/UnitState.ts";
-import { GameState, UnitInstance } from "../../../../types.d.ts";
+import { GameState, UnitInstance } from "../../../../types.ts";
 import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
 import { inAttackRange } from "../../../util/inAttackRange.ts";
 import { setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";

@@ -1,4 +1,4 @@
-import { Ai, GameDispatcher, GameState, GameStateAction } from "../../types.d.ts";
+import { Ai, GameDispatcher, GameState, GameStateAction } from "../../types.ts";
 import { averageVector } from "../util/averageVector.ts";
 
 /**

@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../types.d.ts";
+import { UnitInstance } from "../../types.ts";
 import { hasValue } from "./hasValue.ts";
 
 export function populationHas(units: UnitInstance[], property: keyof UnitInstance) {

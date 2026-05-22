@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../../../types.d.ts";
+import { UnitInstance } from "../../../../types.ts";
 import { Unit } from "../../Unit.ts";
 
 export function groupByTypes(units: UnitInstance[]): UnitMap {

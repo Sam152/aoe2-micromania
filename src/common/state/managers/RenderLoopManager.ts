@@ -1,7 +1,7 @@
 import { InputManager } from "../../input/InputManager.ts";
 import { clientStateTransmitter } from "../clientState.ts";
 import { CanvasRenderer } from "../../drawing/CanvasRenderer.ts";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.ts";
 import { Grid } from "../../terrain/Grid.ts";
 import { soundPlayer } from "../../sounds/SoundPlayer.ts";
 import { averageVector } from "../../util/averageVector.ts";

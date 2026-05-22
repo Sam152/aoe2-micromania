@@ -1,7 +1,7 @@
 import { stopUnit } from "./stopUnit.ts";
 import { formationManager } from "../../../units/formations/FormationManager.ts";
 import { setUnitMovementTowards, setUnitMovementTowardsCurrentWaypoint } from "./setUnitMovementTowards.ts";
-import { GameState, UnitInstance } from "../../../../types.d.ts";
+import { GameState, UnitInstance } from "../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { averageVector } from "../../../util/averageVector.ts";
 import { populationVector } from "../../../util/populationVector.ts";

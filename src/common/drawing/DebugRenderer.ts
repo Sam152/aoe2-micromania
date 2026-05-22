@@ -1,4 +1,4 @@
-import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types.d.ts";
+import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types.ts";
 import { circle, emptyCircle } from "./shapes.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { arrayOfSize } from "../util/arrayOfSize.ts";

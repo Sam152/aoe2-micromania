@@ -119,7 +119,7 @@ export type UnitId = number;
 export type RoomId = string;
 export type PlayerId = number;
 
-type GameStateAction =
+export type GameStateAction =
   | {
     n: "T"; // Tick, reduced in size for a smaller transmission, could be an enum in the future.
   }

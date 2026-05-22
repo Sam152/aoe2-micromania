@@ -1,4 +1,4 @@
-import { GameState, GameStateAction } from "../../types.d.ts";
+import { GameState, GameStateAction } from "../../types.ts";
 import { deepClone } from "../util/deepClone.ts";
 import { UnitState } from "../units/UnitState.ts";
 import { formationManager } from "../units/formations/FormationManager.ts";

@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../types.d.ts";
+import { UnitInstance } from "../../types.ts";
 import { hasValue } from "./hasValue.ts";
 import { averageVector } from "./averageVector.ts";
 import { Vector2 } from "three/src/math/Vector2.js";

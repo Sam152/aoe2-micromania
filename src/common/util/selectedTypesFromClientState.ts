@@ -1,4 +1,4 @@
-import { ClientState } from "../../types.d.ts";
+import { ClientState } from "../../types.ts";
 import { Unit } from "../units/Unit.ts";
 
 export function selectedTypesFromClientState(state: ClientState) {

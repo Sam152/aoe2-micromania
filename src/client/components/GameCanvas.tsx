@@ -1,5 +1,5 @@
 import { createRef, useEffect } from "react";
-import { StateManagerInterface } from "../../types.d.ts";
+import { StateManagerInterface } from "../../types.ts";
 import { RenderLoopManager } from "../../common/state/managers/RenderLoopManager.ts";
 
 export function GameCanvas({

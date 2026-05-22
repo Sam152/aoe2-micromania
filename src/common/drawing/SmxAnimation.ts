@@ -1,4 +1,4 @@
-import { Rectangle } from "../../types.d.ts";
+import { Rectangle } from "../../types.ts";
 import { CompassDirection } from "../units/CompassDirection.ts";
 import { anchorAt } from "../util/anchorAt.ts";
 import { AnimationStyle } from "../units/AnimationStyle.ts";
@@ -25,6 +25,7 @@ export class SmxAnimation {
     at: Vector2,
     frameIndex: number,
     rotate: number | null = null,
+    anchor: "FRAME" | "NONE" | { x: number; y: number } = "NONE",
   ) {
     const frame = this.rendered[frameIndex % this.smxFramesCount];
     const bitmap = frame.renders[1];
@@ -34,10 +35,25 @@ export class SmxAnimation {
       context.translate(at.x, at.y);
       context.rotate(rotate);
       context.translate(-at.x, -at.y);
+    }
+
+    if (anchor === "NONE") {
       context.drawImage(bitmap, at.x, at.y);
+    }
+    if (anchor === "FRAME") {
+      const anchoredPosition = anchorAt({ x: frame.centerX, y: frame.centerY }, at);
+      context.drawImage(bitmap, anchoredPosition.x, anchoredPosition.y);
       context.restore();
-    } else {
-      context.drawImage(bitmap, at.x, at.y);
+    }
+
+    if (typeof anchor === "object" && "x" in anchor) {
+      const anchoredPosition = anchorAt(anchor, at);
+      context.drawImage(bitmap, anchoredPosition.x, anchoredPosition.y);
+      context.restore();
+    }
+
+    if (rotate) {
+      context.restore();
     }
   }
 

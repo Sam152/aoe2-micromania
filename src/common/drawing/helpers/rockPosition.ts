@@ -1,4 +1,4 @@
-import { ProjectileInstance } from "../../../types.d.ts";
+import { ProjectileInstance } from "../../../types.ts";
 import { getArrowPosition } from "./getArrowPosition.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 

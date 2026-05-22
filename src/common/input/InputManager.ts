@@ -1,4 +1,4 @@
-import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types.d.ts";
+import { ClientStateAction, StateManagerInterface, StateTransmitter } from "../../types.ts";
 import { gamePositionToScreenPosition, screenPositionToGamePosition } from "../util/screenPositionToGamePosition.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { FormationType } from "../units/formations/FormationType.ts";

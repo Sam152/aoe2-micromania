@@ -1,4 +1,4 @@
-import { UnitInstance } from "../../types.d.ts";
+import { UnitInstance } from "../../types.ts";
 import { calculateUnitMovementPerTick } from "../units/calculateUnitMovementPerTick.ts";
 import { config } from "../config.ts";
 

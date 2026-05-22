@@ -1,5 +1,5 @@
 import { stopUnit } from "../initiated/stopUnit.ts";
-import { GameState } from "../../../../types.d.ts";
+import { GameState } from "../../../../types.ts";
 import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
 import { setUnitMovementTowardsCurrentWaypoint } from "../initiated/setUnitMovementTowards.ts";
 import { hasValue } from "../../../util/hasValue.ts";

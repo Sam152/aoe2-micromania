@@ -1,6 +1,6 @@
 import { defaultState as defaultGameState, gameStateMutator } from "../gameState.ts";
 import { clientStateMutator, defaultState as defaultClientState } from "../clientState.ts";
-import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.d.ts";
+import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.ts";
 import { config } from "../../config.ts";
 
 /**

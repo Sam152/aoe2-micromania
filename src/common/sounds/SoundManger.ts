@@ -1,4 +1,4 @@
-import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types.d.ts";
+import { ClientState, GameState, ProjectileInstance, UnitInstance } from "../../types.ts";
 import { selectedTypesFromClientState } from "../util/selectedTypesFromClientState.ts";
 import { Unit } from "../units/Unit.ts";
 import { Sound } from "./Sound.ts";

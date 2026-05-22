@@ -1,4 +1,4 @@
-import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.d.ts";
+import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.ts";
 import { Grid } from "../terrain/Grid.ts";
 import { config } from "../config.ts";
 
