@@ -228,6 +228,12 @@ export interface ClientState {
     left: boolean;
     right: boolean;
   };
+
+  canvas: {
+    width: number;
+    height: number;
+    scale: number;
+  };
 }
 
 export type ClientStateAction =
@@ -329,7 +335,10 @@ export type ClientStateAction =
     locked: boolean;
   }
   | {
-    n: "WINDOW_SIZED";
+    n: "CANVAS_CHANGED";
+    canvasHeight: number;
+    canvasWidth: number;
+    scale: number;
   };
 
 export type GameDispatcher = (action: GameStateAction) => void;

@@ -5,7 +5,7 @@ import { ClientState, ClientStateAction, GameState, GameStateAction, StateManage
 import { Grid } from "../../terrain/Grid.ts";
 import { soundPlayer } from "../../sounds/SoundPlayer.ts";
 import { averageVector } from "../../util/averageVector.ts";
-import { screenManager } from "../../drawing/screenManager.ts";
+import { screenManager, ScreenManagerChangeEvent } from "../../drawing/screenManager.ts";
 
 export class RenderLoopManager {
   private stateManager: StateManagerInterface;
@@ -67,13 +67,13 @@ export class RenderLoopManager {
     });
   }
 
-  onResize() {
-    // @TODO - Integrate screen size, so nudging works.
-    console.log(this.stateManager);
-    // this.stateManager.dispatchClient({
-    //   n: "FIXATE_CAMERA",
-    //   location: startingCamera.sub(this.renderer.getSize().divideScalar(2)),
-    // });
+  onResize(e: ScreenManagerChangeEvent) {
+    this.stateManager.dispatchClient({
+      n: "CANVAS_CHANGED",
+      canvasHeight: e.canvasHeight,
+      canvasWidth: e.canvasWidth,
+      scale: e.scale,
+    });
   }
 
   fixateCameraOnPlayerUnits(state: GameState, player: number) {

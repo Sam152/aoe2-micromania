@@ -22,6 +22,12 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
     // Could filter owned units here?
   }
 
+  if (action.n === "CANVAS_CHANGED") {
+    state.canvas.width = action.canvasWidth;
+    state.canvas.height = action.canvasHeight;
+    state.canvas.scale = action.scale;
+  }
+
   if (action.n === "MOUSE_POSITIONED") {
     const clampedPosition = action.position.clone();
 
@@ -33,6 +39,16 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
     state.anchored.left = action.position.y <= state.camera.y;
     if (state.anchored.left) {
       clampedPosition.y = state.camera.y;
+    }
+
+    state.anchored.right = action.position.x >= state.camera.x + state.canvas.width - 3;
+    if (state.anchored.right) {
+      clampedPosition.x = state.camera.x + state.canvas.width - 3;
+    }
+
+    state.anchored.bottom = action.position.y >= state.camera.y + state.canvas.height - 3;
+    if (state.anchored.bottom) {
+      clampedPosition.y = state.camera.y + state.canvas.height - 3;
     }
 
     state.mousePosition = clampedPosition;
@@ -323,6 +339,11 @@ export function defaultState(clientId: string): ClientState {
       bottom: false,
       left: false,
       right: false,
+    },
+    canvas: {
+      height: 0,
+      width: 0,
+      scale: 0,
     },
   });
 

@@ -1,7 +1,15 @@
+export type ScreenManagerChangeEvent = {
+  canvasHeight: number;
+  canvasWidth: number;
+  scale: number;
+};
+
+type Subscriber = (e: ScreenManagerChangeEvent) => void;
+
 class ScreenManager {
   private scale: number;
   private topOffset: number;
-  callbacks: (() => void)[];
+  callbacks: Subscriber[];
 
   constructor() {
     this.scale = Math.min(1.3, globalThis.devicePixelRatio);
@@ -13,11 +21,12 @@ class ScreenManager {
     this.resize();
   }
 
-  onChange(callback: () => void) {
+  onChange(callback: Subscriber) {
     this.callbacks.push(callback);
+    this.resize();
   }
 
-  removeOnChange(callback: () => void) {
+  removeOnChange(callback: Subscriber) {
     console.log(this.callbacks.length);
     this.callbacks = this.callbacks.filter((listCallback) => listCallback !== callback);
     console.log(this.callbacks.length);
@@ -27,7 +36,13 @@ class ScreenManager {
     const topBar = document.getElementById("nav-bar");
     this.topOffset = topBar ? topBar.offsetHeight : 52;
 
-    this.callbacks.forEach((callback) => callback());
+    const e: ScreenManagerChangeEvent = {
+      canvasWidth: globalThis.innerWidth * this.scale,
+      canvasHeight: (globalThis.innerHeight - this.topOffset) *
+        this.scale,
+      scale: this.scale,
+    };
+    this.callbacks.forEach((callback) => callback(e));
   }
 
   getTopOffset(): number {
