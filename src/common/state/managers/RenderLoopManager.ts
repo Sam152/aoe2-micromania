@@ -60,6 +60,13 @@ export class RenderLoopManager {
         state.soundQueue = [];
       }
     });
+
+    //
+    // globalThis.addEventListener("resize", this.resize.bind(this));
+    // this.stateManager.dispatchClient({
+    //   n: "FIXATE_CAMERA",
+    //   location: startingCamera.sub(this.renderer.getSize().divideScalar(2)),
+    // });
   }
 
   fixateCameraOnPlayerUnits(state: GameState, player: number) {

@@ -220,6 +220,13 @@ export interface ClientState {
   };
   soundQueue: Sound[];
   cursorLocked: boolean;
+
+  anchored: {
+    top: boolean;
+    bottom: boolean;
+    left: boolean;
+    right: boolean;
+  };
 }
 
 export type ClientStateAction =

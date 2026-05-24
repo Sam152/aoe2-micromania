@@ -23,7 +23,19 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
   }
 
   if (action.n === "MOUSE_POSITIONED") {
-    state.mousePosition = action.position;
+    const clampedPosition = action.position.clone();
+
+    state.anchored.top = action.position.x <= state.camera.x;
+    if (state.anchored.top) {
+      clampedPosition.x = state.camera.x;
+    }
+
+    state.anchored.left = action.position.y <= state.camera.y;
+    if (state.anchored.left) {
+      clampedPosition.y = state.camera.y;
+    }
+
+    state.mousePosition = clampedPosition;
   }
 
   if (action.n === "CURSOR_LOCK_CHANGED") {
@@ -294,7 +306,7 @@ export function clientStateTransmitter(
 }
 
 export function defaultState(clientId: string): ClientState {
-  const state = deepClone({
+  const state: Omit<ClientState, "camera" | "mousePosition" | "cursorLocked"> = deepClone({
     unitHitBoxes: [],
     clientId,
     renderedFrames: 0,
@@ -305,9 +317,19 @@ export function defaultState(clientId: string): ClientState {
     selectionRectangle: null,
     controlGroups: {},
     soundQueue: [],
-  }) as unknown as ClientState;
-  state.camera = new Vector2(0, 0);
-  state.mousePosition = new Vector2(0, 0);
-  state.cursorLocked = false;
-  return state;
+    lastAttackedUnit: null,
+    anchored: {
+      top: false,
+      bottom: false,
+      left: false,
+      right: false,
+    },
+  });
+
+  const withVectors: ClientState = state as ClientState;
+  withVectors.camera = new Vector2(0, 0);
+  withVectors.mousePosition = new Vector2(0, 0);
+  withVectors.cursorLocked = false;
+
+  return withVectors;
 }

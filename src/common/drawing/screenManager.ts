@@ -13,6 +13,10 @@ class ScreenManager {
     this.resize();
   }
 
+  /**
+   * @todo - where is the cleanup? This component should probably go away and be replaced with a
+   * few functions, callers can subscribe to resize themselves.
+   */
   onChange(callback: () => void) {
     this.callbacks.push(callback);
   }
