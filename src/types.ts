@@ -86,6 +86,7 @@ export interface ProjectileInstance {
 export interface RendererInterface {
   render: (gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) => void;
   bootUp: () => Promise<void>;
+  cleanUp: () => void;
 }
 
 export type StateTransmitter = (
@@ -326,6 +327,9 @@ export type ClientStateAction =
   | {
     n: "CURSOR_LOCK_CHANGED";
     locked: boolean;
+  }
+  | {
+    n: "WINDOW_SIZED";
   };
 
 export type GameDispatcher = (action: GameStateAction) => void;

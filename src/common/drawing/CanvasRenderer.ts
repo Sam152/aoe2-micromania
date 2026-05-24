@@ -57,8 +57,14 @@ export class CanvasRenderer implements RendererInterface {
 
     this.debugRenderer = new DebugRenderer(canvas);
 
+    this.fit = this.fit.bind(this);
+
     this.fit();
-    screenManager.onChange(this.fit.bind(this));
+    screenManager.onChange(this.fit);
+  }
+
+  cleanUp() {
+    screenManager.removeOnChange(this.fit);
   }
 
   fit() {

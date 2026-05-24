@@ -23,6 +23,9 @@ export class DebugRenderer implements RendererInterface {
     return Promise.resolve();
   }
 
+  cleanUp() {
+  }
+
   render(gameState: GameState, clientState: ClientState, _clientStateDispatcher: ClientDispatcher): void {
     this.drawUnits(gameState);
     this.drawClampSnap(gameState, clientState);
