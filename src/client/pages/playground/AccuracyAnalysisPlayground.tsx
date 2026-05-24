@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { screenManager } from "../../../common/drawing/screenManager.ts";
 import { slpManager } from "../../../common/drawing/SlpManager.ts";
-import { createCircularProbabilityAccuracy } from "../../../common/state/mutations/tick/applyAccuracy.ts";
+import { createCircularProbabilityAccuracy, defaults } from "../../../common/state/mutations/tick/applyAccuracy.ts";
 import { unitMetadataFactory } from "../../../common/units/unitMetadataFactory.ts";
 import { Unit } from "../../../common/units/Unit.ts";
 import { UnitState } from "../../../common/units/UnitState.ts";
@@ -22,7 +22,7 @@ export function AccuracyAnalysisPlayground() {
   const cgrLabelRef = useRef<HTMLSpanElement>(null);
   const mcsSliderRef = useRef<HTMLInputElement>(null);
   const mcsLabelRef = useRef<HTMLSpanElement>(null);
-  const paramsRef = useRef({ circleGrowthFactor: 6, clusterStrength: 2, circleGrowthRate: -50, minCircleSize: 5 });
+  const paramsRef = useRef({ ...defaults });
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -207,7 +207,7 @@ export function AccuracyAnalysisPlayground() {
       >
         <div style={{ marginBottom: "14px" }}>
           <div>
-            <code>circleGrowthFactor</code>: <span ref={cgfLabelRef}>6.0</span>
+            <code>circleGrowthFactor</code>: <span ref={cgfLabelRef}>{defaults.circleGrowthFactor}</span>
           </div>
           <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
             scales the logarithmic spread curve
@@ -218,13 +218,13 @@ export function AccuracyAnalysisPlayground() {
             min="1"
             max="20"
             step="0.5"
-            defaultValue="6"
+            defaultValue={defaults.circleGrowthFactor}
             style={{ width: "100%" }}
           />
         </div>
         <div style={{ marginBottom: "14px" }}>
           <div>
-            <code>circleGrowthRate</code>: <span ref={cgrLabelRef}>-50</span>
+            <code>circleGrowthRate</code>: <span ref={cgrLabelRef}>{defaults.circleGrowthRate}</span>
           </div>
           <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
             offset inside log — ln(distance − cgr)
@@ -235,13 +235,13 @@ export function AccuracyAnalysisPlayground() {
             min="-300"
             max="300"
             step="1"
-            defaultValue="-50"
+            defaultValue={defaults.circleGrowthRate}
             style={{ width: "100%" }}
           />
         </div>
         <div style={{ marginBottom: "14px" }}>
           <div>
-            <code>minCircleSize</code>: <span ref={mcsLabelRef}>5</span>
+            <code>minCircleSize</code>: <span ref={mcsLabelRef}>{defaults.minCircleSize}</span>
           </div>
           <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
             floor inside log — Math.max(mcs, …)
@@ -252,13 +252,13 @@ export function AccuracyAnalysisPlayground() {
             min="1"
             max="200"
             step="1"
-            defaultValue="5"
+            defaultValue={defaults.minCircleSize}
             style={{ width: "100%" }}
           />
         </div>
         <div>
           <div>
-            <code>clusterStrength</code>: <span ref={csLabelRef}>2.0</span>
+            <code>clusterStrength</code>: <span ref={csLabelRef}>{defaults.clusterStrength}</span>
           </div>
           <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
             higher → shots cluster toward center
@@ -269,7 +269,7 @@ export function AccuracyAnalysisPlayground() {
             min="0.1"
             max="8"
             step="0.1"
-            defaultValue="2"
+            defaultValue={defaults.clusterStrength}
             style={{ width: "100%" }}
           />
         </div>

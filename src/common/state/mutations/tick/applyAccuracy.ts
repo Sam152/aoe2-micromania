@@ -15,9 +15,9 @@ type CircularProbabilityArgs = {
 };
 
 export const defaults: CircularProbabilityArgs = {
-  circleGrowthFactor: 3.5,
-  circleGrowthRate: 84,
-  clusterStrength: 4.5,
+  circleGrowthFactor: 2.5,
+  circleGrowthRate: 93,
+  clusterStrength: 2.5,
   minCircleSize: 5,
 };
 
