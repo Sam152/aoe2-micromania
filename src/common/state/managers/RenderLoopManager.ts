@@ -5,6 +5,7 @@ import { ClientState, ClientStateAction, GameState, GameStateAction, StateManage
 import { Grid } from "../../terrain/Grid.ts";
 import { soundPlayer } from "../../sounds/SoundPlayer.ts";
 import { averageVector } from "../../util/averageVector.ts";
+import { screenManager, ScreenManagerChangeEvent } from "../../drawing/screenManager.ts";
 
 export class RenderLoopManager {
   private stateManager: StateManagerInterface;
@@ -17,11 +18,15 @@ export class RenderLoopManager {
     this.renderer = new CanvasRenderer(canvas);
     this.inputManager = new InputManager(canvas, stateManager, clientStateTransmitter);
     this.running = false;
+
+    this.onResize = this.onResize.bind(this);
   }
 
   start(startAs: "CLIENT" | "SPECTATOR") {
     this.running = true;
     this.stateManager.init();
+
+    screenManager.onChange(this.onResize);
 
     this.renderer.context.font = "bold 125px Georgia";
     this.renderer.context.strokeStyle = "#ffd568";
@@ -43,12 +48,13 @@ export class RenderLoopManager {
       }
 
       // Fixate on a logical part of the map, when significant actions occur.
-      if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === this.stateManager.getClientState().clientId) {
-        // if (state.activePlayers[clientId]) {
-        //   this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
-        // } else {
-        // this.fixateCameraOnMiddleOfMap(state.mapSize);
-        // }
+      const clientId = this.stateManager.getClientState().clientId;
+      if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === clientId) {
+        if (state.activePlayers[clientId]) {
+          this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
+        } else {
+          this.fixateCameraOnMiddleOfMap(state.mapSize);
+        }
       }
     });
     this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {
@@ -61,12 +67,28 @@ export class RenderLoopManager {
     });
   }
 
+  onResize(e: ScreenManagerChangeEvent) {
+    this.stateManager.dispatchClient({
+      n: "CANVAS_CHANGED",
+      canvasHeight: e.canvasHeight,
+      canvasWidth: e.canvasWidth,
+      scale: e.scale,
+    });
+  }
+
   fixateCameraOnPlayerUnits(state: GameState, player: number) {
+    const unitsVector = averageVector(
+      state.units.filter((unit) => unit.ownedByPlayer === player).map((unit) => unit.position),
+    );
+    const middleOfGrid = new Grid(state.mapSize).middleOfGrid();
+    const towardsMiddle = middleOfGrid.sub(unitsVector);
+
+    // The amount "towards the middle" we should nudge the camera.
+    const startingCamera = unitsVector.add(towardsMiddle.multiplyScalar(0.5));
+
     this.stateManager.dispatchClient({
       n: "FIXATE_CAMERA",
-      location: averageVector(
-        state.units.filter((unit) => unit.ownedByPlayer === player).map((unit) => unit.position),
-      ).sub(this.renderer.getSize().divideScalar(2)),
+      location: startingCamera.sub(this.renderer.getSize().divideScalar(2)),
     });
   }
 
@@ -79,8 +101,10 @@ export class RenderLoopManager {
 
   stop() {
     this.running = false;
+    screenManager.removeOnChange(this.onResize);
     this.inputManager.cleanUp();
     this.stateManager.cleanUp();
+    this.renderer.cleanUp();
   }
 
   render() {

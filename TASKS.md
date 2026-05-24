@@ -32,10 +32,10 @@
 - [x] Better mango volleys
 - [x] Replace default sand terrain with less jank switch
 - [x] Terrain decor
+- [x] Start in formation
 - [ ] Selection panel
 - [ ] Formation changing while units idle
 - [ ] Restoring stack patrol behaviour
-- [ ] Start in formation
 - [ ] Leave arrows on the field
 - [ ] Fix mango range
 - [ ] Mango trails
@@ -43,10 +43,10 @@
 # Interface
 
 - [ ] Camera over spawn location
-- [ ] Asset rendering off main thread
+- [x] Asset rendering off main thread
 - [x] GH/Discord links
 - [x] Spectate mode
-- [ ] Favicon
+- [x] Favicon
 - [x] "Playing as" top banner
 - [x] Main thread blocking perf for graphics render
 - [x] Loading progress

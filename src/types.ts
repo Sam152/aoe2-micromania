@@ -86,6 +86,7 @@ export interface ProjectileInstance {
 export interface RendererInterface {
   render: (gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) => void;
   bootUp: () => Promise<void>;
+  cleanUp: () => void;
 }
 
 export type StateTransmitter = (
@@ -220,6 +221,19 @@ export interface ClientState {
   };
   soundQueue: Sound[];
   cursorLocked: boolean;
+
+  anchored: {
+    top: boolean;
+    bottom: boolean;
+    left: boolean;
+    right: boolean;
+  };
+
+  canvas: {
+    width: number;
+    height: number;
+    scale: number;
+  };
 }
 
 export type ClientStateAction =
@@ -319,6 +333,12 @@ export type ClientStateAction =
   | {
     n: "CURSOR_LOCK_CHANGED";
     locked: boolean;
+  }
+  | {
+    n: "CANVAS_CHANGED";
+    canvasHeight: number;
+    canvasWidth: number;
+    scale: number;
   };
 
 export type GameDispatcher = (action: GameStateAction) => void;

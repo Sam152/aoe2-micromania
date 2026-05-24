@@ -23,6 +23,7 @@ export function fanOutMangoProjections(projectile: ProjectileInstance, percentag
         origin,
         -0.01 + angleVariance(),
       ),
+    projectile.pathVector.clone().multiplyScalar(1 + overshootVariance()),
     projectile.pathVector.clone().multiplyScalar(1 + overshootVariance())
       .rotateAround(
         origin,

@@ -5,6 +5,7 @@ import { FormationType } from "../units/formations/FormationType.ts";
 import { hotkeyManager } from "./HotkeyManager.ts";
 import { Hotkey } from "./Hotkey.ts";
 import { ActiveCommand } from "./ActiveCommand.ts";
+import { screenManager } from "../drawing/screenManager.ts";
 
 const doubleClickDuration = 250;
 const digit0KeyCode = 48;
@@ -52,8 +53,9 @@ export class InputManager {
 
     this.onMouseMove = (e) => {
       const clientState = this.stateManager.getClientState();
+      const movement = new Vector2(e.movementX, e.movementY);
       const position = clientState.cursorLocked
-        ? clientState.mousePosition.clone().add({ x: e.movementX, y: e.movementY })
+        ? clientState.mousePosition.clone().add(movement.multiplyScalar(screenManager.getCanvasScale()))
         : screenPositionToGamePosition(
           new Vector2(e.offsetX, e.offsetY).add(gamePositionToScreenPosition(clientState.camera)),
         );
