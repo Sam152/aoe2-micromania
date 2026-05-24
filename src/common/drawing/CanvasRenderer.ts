@@ -103,6 +103,11 @@ export class CanvasRenderer implements RendererInterface {
       // Record the rendered tick and the frame we are rendering.
       this.lastRenderedGameTick = gameState.ticks;
       this.frameAtLastRenderedTick = clientState.renderedFrames;
+
+      clientStateDispatcher({
+        n: "FRAMES_PER_TICK_MEASURED",
+        framesPerTick: this.framesPerTick,
+      });
     }
     this.fractionOfTickRendered = gameState.gameEnded
       ? 1

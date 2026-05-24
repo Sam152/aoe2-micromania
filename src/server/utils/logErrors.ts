@@ -1,4 +1,5 @@
 import process from "node:process";
+
 export function logErrors() {
   process.on("unhandledRejection", logAndExit);
   process.on("uncaughtException", logAndExit);

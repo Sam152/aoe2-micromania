@@ -5,9 +5,16 @@ globalThis.addEventListener("error", (event) => {
   globalThis.location.reload();
 });
 
+const ignoredRejections = [
+  /Pointer lock/,
+];
+
 globalThis.addEventListener("unhandledrejection", (event) => {
   console.error("Unhandled promise rejection:", event.reason);
-  globalThis.location.reload();
+
+  if (!ignoredRejections.find((reason) => reason.test(event.reason))) {
+    globalThis.location.reload();
+  }
 });
 
 import { App } from "./App.tsx";

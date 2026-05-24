@@ -221,6 +221,7 @@ export interface ClientState {
   };
   soundQueue: Sound[];
   cursorLocked: boolean;
+  framesPerTick: number;
 
   anchored: {
     top: boolean;
@@ -339,6 +340,10 @@ export type ClientStateAction =
     canvasHeight: number;
     canvasWidth: number;
     scale: number;
+  }
+  | {
+    n: "FRAMES_PER_TICK_MEASURED";
+    framesPerTick: number;
   };
 
 export type GameDispatcher = (action: GameStateAction) => void;
