@@ -8,17 +8,17 @@ export type AccuracyFunction = (input: {
 }) => Vector2;
 
 type CircularProbabilityArgs = {
-  circleDistanceRatio: number;
+  circleGrowthFactor: number;
   clusterStrength: number;
 };
 
 const defaults: CircularProbabilityArgs = {
-  circleDistanceRatio: 6,
+  circleGrowthFactor: 6,
   clusterStrength: 2,
 };
 
 export function createCircularProbabilityAccuracy(
-  { circleDistanceRatio, clusterStrength }: CircularProbabilityArgs = defaults,
+  { circleGrowthFactor, clusterStrength }: CircularProbabilityArgs = defaults,
 ): AccuracyFunction {
   return ({
     startingPoint,
@@ -26,7 +26,8 @@ export function createCircularProbabilityAccuracy(
     entropy,
   }) => {
     const distance = startingPoint.distanceTo(aimingFor);
-    const circleSize = distance / circleDistanceRatio;
+
+    const circleSize = circleGrowthFactor * Math.log(distance);
 
     const randomUnitVector = new Vector2(
       (hash(entropy) % 1000) - 500,
