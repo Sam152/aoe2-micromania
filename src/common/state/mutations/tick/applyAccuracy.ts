@@ -10,15 +10,19 @@ export type AccuracyFunction = (input: {
 type CircularProbabilityArgs = {
   circleGrowthFactor: number;
   clusterStrength: number;
+  circleGrowthRate: number;
+  minCircleSize: number;
 };
 
-const defaults: CircularProbabilityArgs = {
-  circleGrowthFactor: 6,
-  clusterStrength: 2,
+export const defaults: CircularProbabilityArgs = {
+  circleGrowthFactor: 3.5,
+  circleGrowthRate: 84,
+  clusterStrength: 4.5,
+  minCircleSize: 5,
 };
 
 export function createCircularProbabilityAccuracy(
-  { circleGrowthFactor, clusterStrength }: CircularProbabilityArgs = defaults,
+  { circleGrowthFactor, clusterStrength, circleGrowthRate, minCircleSize }: CircularProbabilityArgs = defaults,
 ): AccuracyFunction {
   return ({
     startingPoint,
@@ -27,15 +31,12 @@ export function createCircularProbabilityAccuracy(
   }) => {
     const distance = startingPoint.distanceTo(aimingFor);
 
-    const circleSize = circleGrowthFactor * Math.log(distance);
+    const circleSize = circleGrowthFactor * Math.log(Math.max(minCircleSize, distance - circleGrowthRate));
 
-    const randomUnitVector = new Vector2(
-      (hash(entropy) % 1000) - 500,
-      (hash(entropy + 1) % 1000) - 500,
-    ).normalize();
+    const angle = ((hash(entropy) % 10000) / 10000) * Math.PI * 2;
+    const randomUnitVector = new Vector2(Math.cos(angle), Math.sin(angle));
 
-    const accuracyScore = circleSize * Math.pow((hash(entropy + 2) % 10000) / 10000, clusterStrength);
-
+    const accuracyScore = circleSize * Math.pow((hash(entropy + 1) % 10000) / 10000, clusterStrength);
     return aimingFor.clone().add(randomUnitVector.multiplyScalar(accuracyScore));
   };
 }
