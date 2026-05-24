@@ -6,6 +6,8 @@ import { ProjectileType } from "./ProjectileType.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { DamageType } from "./DamageType.ts";
 
+const DECAY_DURATION = 100;
+
 /**
  * Definitions of units, mapped from AOC JSON file:
  * @code
@@ -62,7 +64,7 @@ const unitDefinitions: {
       },
       [UnitState.Decaying]: {
         slp: "units/u_arc_crossbowman_decayA_x1",
-        animationDuration: 60,
+        animationDuration: DECAY_DURATION,
         style: AnimationStyle.Play,
       },
     },
@@ -111,7 +113,7 @@ const unitDefinitions: {
       },
       [UnitState.Decaying]: {
         slp: "units/u_monk_west_decayA_x1",
-        animationDuration: 60,
+        animationDuration: DECAY_DURATION,
         style: AnimationStyle.Play,
       },
     },
@@ -161,7 +163,7 @@ const unitDefinitions: {
       },
       [UnitState.Decaying]: {
         slp: "units/u_sie_mangonel_decayA_x1",
-        animationDuration: 60,
+        animationDuration: DECAY_DURATION,
         style: AnimationStyle.Play,
       },
     },

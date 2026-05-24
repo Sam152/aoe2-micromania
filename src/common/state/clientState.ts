@@ -41,14 +41,14 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
       clampedPosition.y = state.camera.y;
     }
 
-    state.anchored.right = action.position.x >= state.camera.x + state.canvas.width - 3;
+    state.anchored.right = action.position.x >= state.camera.x + state.canvas.width - 2;
     if (state.anchored.right) {
-      clampedPosition.x = state.camera.x + state.canvas.width - 3;
+      clampedPosition.x = state.camera.x + state.canvas.width - 2;
     }
 
-    state.anchored.bottom = action.position.y >= state.camera.y + state.canvas.height - 3;
+    state.anchored.bottom = action.position.y >= state.camera.y + state.canvas.height - 2;
     if (state.anchored.bottom) {
-      clampedPosition.y = state.camera.y + state.canvas.height - 3;
+      clampedPosition.y = state.camera.y + state.canvas.height - 2;
     }
 
     state.mousePosition = clampedPosition;
