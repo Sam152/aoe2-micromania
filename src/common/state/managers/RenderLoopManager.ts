@@ -43,12 +43,13 @@ export class RenderLoopManager {
       }
 
       // Fixate on a logical part of the map, when significant actions occur.
-      if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === this.stateManager.getClientState().clientId) {
-        // if (state.activePlayers[clientId]) {
-        //   this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
-        // } else {
-        // this.fixateCameraOnMiddleOfMap(state.mapSize);
-        // }
+      const clientId = this.stateManager.getClientState().clientId;
+      if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === clientId) {
+        if (state.activePlayers[clientId]) {
+          this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
+        } else {
+          this.fixateCameraOnMiddleOfMap(state.mapSize);
+        }
       }
     });
     this.stateManager.addClientStateListener((state: ClientState, action: ClientStateAction) => {
@@ -62,11 +63,18 @@ export class RenderLoopManager {
   }
 
   fixateCameraOnPlayerUnits(state: GameState, player: number) {
+    const unitsVector = averageVector(
+      state.units.filter((unit) => unit.ownedByPlayer === player).map((unit) => unit.position),
+    );
+    const middleOfGrid = new Grid(state.mapSize).middleOfGrid();
+    const towardsMiddle = middleOfGrid.sub(unitsVector);
+
+    // The amount "towards the middle" we should nudge the camera.
+    const startingCamera = unitsVector.add(towardsMiddle.multiplyScalar(0.5));
+
     this.stateManager.dispatchClient({
       n: "FIXATE_CAMERA",
-      location: averageVector(
-        state.units.filter((unit) => unit.ownedByPlayer === player).map((unit) => unit.position),
-      ).sub(this.renderer.getSize().divideScalar(2)),
+      location: startingCamera.sub(this.renderer.getSize().divideScalar(2)),
     });
   }
 
