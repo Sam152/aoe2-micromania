@@ -68,7 +68,7 @@ export class RenderLoopManager {
   }
 
   onResize() {
-    // @TODODOODODODO
+    // @TODO - Integrate screen size, so nudging works.
     console.log(this.stateManager);
     // this.stateManager.dispatchClient({
     //   n: "FIXATE_CAMERA",
