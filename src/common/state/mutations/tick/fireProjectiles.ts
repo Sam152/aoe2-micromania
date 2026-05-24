@@ -2,7 +2,7 @@ import { UnitState } from "../../../units/UnitState.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
 import { config } from "../../../config.ts";
 import { GameState } from "../../../../types.ts";
-import { projectileMetadata } from "../../../units/projectileMetadata.ts";
+
 import { hasValue } from "../../../util/hasValue.ts";
 import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMovementPerTick.ts";
 import { ticksForAnimation } from "../../../util/ticksForAnimation.ts";
@@ -12,6 +12,7 @@ import { compassDirectionCalculator } from "../../../units/compassDirectionCalcu
 import { soundManager } from "../../../sounds/SoundManger.ts";
 import { Unit } from "../../../units/Unit.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 
 export function fireProjectiles(state: GameState, computed: ComputedFrameState) {
   const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
@@ -61,31 +62,39 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
         return;
       }
 
-      const targetingPosition =
+      const aimingFor =
         (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
 
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
       const idleFrame = ticksForAnimation(unitData.animations[UnitState.Firing].animationDuration);
 
-      unit.direction = compassDirectionCalculator.getDirection(unit.position, targetingPosition);
+      unit.direction = compassDirectionCalculator.getDirection(unit.position, aimingFor);
 
       if (state.ticks - unit.unitStateStartedAt === firingFrame) {
         soundManager.projectileLaunched(state, unitData.firesProjectileType);
 
-        const targetingUnit = computed.unitIndex[unit.targetingUnit!];
-        const distance = unit.position.distanceTo(targetingPosition);
+        const id = state.idAt++;
+
         const startingPoint = unit.position.clone().add(unitData.firingAnchor);
+        const landedPosition = unitData.accuracyFunction({
+          entropy: id,
+          startingPoint,
+          aimingFor,
+        });
+
+        const targetingUnit = computed.unitIndex[unit.targetingUnit!];
+        const distance = unit.position.distanceTo(landedPosition);
 
         state.projectiles.push({
-          id: state.idAt++,
+          id,
           ownedBy: unit.ownedByPlayer,
           type: unitData.firesProjectileType,
           startingPoint: startingPoint,
-          destination: targetingPosition.clone(),
+          destination: landedPosition.clone(),
           startingTick: state.ticks,
           arrivingTick: Math.floor(state.ticks + distance / projectileMetadata[unitData.firesProjectileType]!.speed),
-          pathVector: targetingPosition.clone().sub(startingPoint),
+          pathVector: landedPosition.clone().sub(startingPoint),
           targeting: targetingUnit ? targetingUnit.id : undefined,
           hasDamage: true,
           firedByType: unit.unitType,

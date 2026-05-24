@@ -9,6 +9,7 @@ import { ActiveCommand } from "./common/input/ActiveCommand.ts";
 import { Hotkey } from "./common/input/Hotkey.ts";
 import { DamageType } from "./common/units/DamageType.ts";
 import { Sound } from "./common/sounds/Sound.ts";
+import { AccuracyFunction } from "./common/state/mutations/tick/applyAccuracy.ts";
 
 export interface UnitInstance {
   id: number;
@@ -400,6 +401,7 @@ export interface UnitStats {
   selectionRadius: number;
   hitBox: number;
   hitPointsBarAnchor: number;
+  accuracyFunction: AccuracyFunction;
   animations: {
     [key in UnitState]: {
       slp: string;

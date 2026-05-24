@@ -17,22 +17,24 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
     state.unitHitBoxes = [];
     state.renderedFrames++;
 
-    const nudgeAmount = 25 / (state.framesPerTick);
-    if (state.anchored.left) {
-      state.camera.x -= nudgeAmount;
-      state.mousePosition.x -= nudgeAmount;
-    }
-    if (state.anchored.top) {
-      state.camera.y -= nudgeAmount;
-      state.mousePosition.y -= nudgeAmount;
-    }
-    if (state.anchored.right) {
-      state.camera.x += nudgeAmount;
-      state.mousePosition.x += nudgeAmount;
-    }
-    if (state.anchored.bottom) {
-      state.camera.y += nudgeAmount;
-      state.mousePosition.y += nudgeAmount;
+    if (state.cursorLocked) {
+      const nudgeAmount = 25 / (state.framesPerTick);
+      if (state.anchored.left) {
+        state.camera.x -= nudgeAmount;
+        state.mousePosition.x -= nudgeAmount;
+      }
+      if (state.anchored.top) {
+        state.camera.y -= nudgeAmount;
+        state.mousePosition.y -= nudgeAmount;
+      }
+      if (state.anchored.right) {
+        state.camera.x += nudgeAmount;
+        state.mousePosition.x += nudgeAmount;
+      }
+      if (state.anchored.bottom) {
+        state.camera.y += nudgeAmount;
+        state.mousePosition.y += nudgeAmount;
+      }
     }
   }
 
