@@ -370,7 +370,7 @@ export class CanvasRenderer implements RendererInterface {
           .find((unitAndHitBox) => pointInRect(unitAndHitBox.hitBox, state.mousePosition));
 
       this.activeCursor = attacking
-        ? (selectionRightClickAction(state.selectedUnits, gameState) === "ATTACK" ? "attack" : "default")
+        ? (selectionRightClickAction(state.selectedUnits, gameState) === "ATTACK" ? "attack" : "convert")
         : "default";
     } else {
       this.activeCursor = activeCommandMap[state.activeCommand];
