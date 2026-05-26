@@ -22,16 +22,9 @@ export async function loadCursorFile(url: string): Promise<CursorAsset> {
   const imageOffset = view.getUint32(18, true);
 
   const imageData = bytes.slice(imageOffset, imageOffset + imageSize);
-
-  // Modern .cur files embed PNG — detect by signature.
-  const isPng = imageData[0] === 0x89 && imageData[1] === 0x50;
-  const image = isPng ? await loadPng(imageData) : await loadDib(imageData);
+  const image = await loadDib(imageData);
 
   return { image, hotspot: new Vector2(hotspotX, hotspotY) };
-}
-
-async function loadPng(data: Uint8Array): Promise<ImageBitmap> {
-  return createImageBitmap(new Blob([data as unknown as BlobPart], { type: "image/png" }));
 }
 
 async function loadDib(dib: Uint8Array): Promise<ImageBitmap> {
