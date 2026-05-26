@@ -56,3 +56,4 @@
 - [ ] Nudge camera when on edges
 - [ ] Restore nicknames
 - [ ] Start with default control groups
+- [ ] Convert mouse cursor
