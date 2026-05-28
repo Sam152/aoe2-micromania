@@ -27,6 +27,7 @@ const httpServer = createServer(async (req, res) => {
   if (req.method === "GET" && staticAsset) {
     const headers = {
       "Content-Type": staticAsset.contentType,
+      "Cache-Control": "public, max-age=31536000, immutable",
     };
     res.writeHead(200, headers);
     return res.end(staticAsset.file);
