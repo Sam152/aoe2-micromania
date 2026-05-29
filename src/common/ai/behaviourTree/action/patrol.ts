@@ -1,4 +1,4 @@
-import { ActionDefinition } from "./ActionDefinition.ts";
+import { ActionDefinition } from "./actionsList.ts";
 
 export const patrol = {
   type: "PATROL",
