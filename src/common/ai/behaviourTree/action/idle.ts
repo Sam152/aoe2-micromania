@@ -1,4 +1,4 @@
-import { ActionDefinition } from "./actionsList.ts";
+import { ActionDefinition } from "./ActionDefinition.ts";
 
 export const idle = {
   type: "IDLE",

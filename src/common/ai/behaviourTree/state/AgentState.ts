@@ -1,4 +1,4 @@
-import { ActionNode } from "../action/actionsList.ts";
+import { ActionNode } from "../action/ActionDefinition.ts";
 
 export type AgentState = {
   playingAs: number;
