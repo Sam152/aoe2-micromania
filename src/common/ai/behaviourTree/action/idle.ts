@@ -3,7 +3,14 @@ import { ActionDefinition } from "./actionsList.ts";
 export const idle = {
   type: "IDLE",
   params: {
-    forTicksAmount: "number",
+    forTicksAmount: {
+      dataType: "number",
+      mutationRequirements: {
+        min: 0,
+        max: 100,
+        step: 5,
+      },
+    },
   },
   execute: ({ direction }) => {
   },

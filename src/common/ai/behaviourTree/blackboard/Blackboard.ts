@@ -2,7 +2,7 @@ import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "..
 
 export type BlackboardValueDefinition<TDataType extends DataType = DataType> = {
   dataType: TDataType;
-  thing: MutationRequirementsFromDataType<TDataType>;
+  mutationRequirements: MutationRequirementsFromDataType<TDataType>;
 };
 
 export type BlackboardDefinition = Record<string, { [K in DataType]: BlackboardValueDefinition<K> }[DataType]>;
@@ -10,7 +10,7 @@ export type BlackboardDefinition = Record<string, { [K in DataType]: BlackboardV
 const blackboardDefinition = {
   distanceToClosestOpponent: {
     dataType: "number",
-    thing: {
+    mutationRequirements: {
       min: 1,
       max: 1,
       step: 1,
@@ -18,7 +18,11 @@ const blackboardDefinition = {
   },
   ticksSinceLastAction: {
     dataType: "number",
-    thing: 1,
+    mutationRequirements: {
+      min: 1,
+      max: 100,
+      step: 5,
+    },
   },
 } as const satisfies BlackboardDefinition;
 

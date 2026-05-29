@@ -3,7 +3,10 @@ import { ActionDefinition } from "./actionsList.ts";
 export const patrol = {
   type: "PATROL",
   params: {
-    direction: "direction",
+    direction: {
+      dataType: "direction",
+      mutationRequirements: undefined,
+    },
   },
   execute: ({ direction }) => {
   },

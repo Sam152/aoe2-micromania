@@ -1,11 +1,21 @@
 import { patrol } from "./patrol.ts";
 import { idle } from "./idle.ts";
-import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 
-export type ActionDefinition<TParams extends Record<string, DataType> = Record<string, DataType>> = {
+type ActionDefinitionParam<TDataType extends DataType> = {
+  dataType: TDataType;
+  mutationRequirements: MutationRequirementsFromDataType<TDataType>;
+};
+
+export type ActionDefinition<
+  TParams extends Record<string, { [K in DataType]: ActionDefinitionParam<K> }[DataType]> = Record<
+    string,
+    { [K in DataType]: ActionDefinitionParam<K> }[DataType]
+  >,
+> = {
   type: string;
   params: TParams;
-  execute: (input: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]> }) => void;
+  execute: (input: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> }) => void;
 };
 
 export const actionsList = {
