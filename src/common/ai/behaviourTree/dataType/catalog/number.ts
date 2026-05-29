@@ -1,4 +1,4 @@
-import { DataTypeDefinition } from "./DataTypeDefinition.ts";
+import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
 export const number = {
   id: "number",

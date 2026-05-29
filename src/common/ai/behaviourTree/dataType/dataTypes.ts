@@ -1,7 +1,7 @@
-import { boolean } from "./boolean.ts";
-import { number } from "./number.ts";
+import { boolean } from "./catalog/boolean.ts";
+import { number } from "./catalog/number.ts";
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
-import { direction } from "./direction.ts";
+import { direction } from "./catalog/direction.ts";
 
 export const dataTypes = {
   boolean,

@@ -1,5 +1,5 @@
-import { patrol } from "./patrol.ts";
-import { idle } from "./idle.ts";
+import { patrol } from "./catalog/patrol.ts";
+import { idle } from "./catalog/idle.ts";
 import { ActionDefinition } from "./ActionDefinition.ts";
 
 export const actionsList = {
