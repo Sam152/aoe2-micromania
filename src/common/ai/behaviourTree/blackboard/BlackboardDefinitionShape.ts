@@ -5,8 +5,8 @@ export type BlackboardValueDefinition<TDataType extends DataType = DataType> = {
   mutationRequirements: MutationRequirementsFromDataType<TDataType>;
 };
 
-export type BlackboardDefinition = Record<string, { [K in DataType]: BlackboardValueDefinition<K> }[DataType]>;
+export type BlackboardDefinitionShape = Record<string, { [K in DataType]: BlackboardValueDefinition<K> }[DataType]>;
 
-export type BlackboardValuesFromDefinition<TBlackboard extends BlackboardDefinition> = {
+export type BlackboardValuesFromDefinition<TBlackboard extends BlackboardDefinitionShape> = {
   [TKey in keyof TBlackboard]: TypeFromDataType<TBlackboard[TKey]["dataType"]>;
 };
