@@ -1,9 +1,9 @@
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 
-export const boolean: DataTypeDefinition<boolean, undefined> = {
+export const boolean = {
   id: "boolean",
   conditions: {
-    EQ: (a, b) => a === b,
-    NEQ: (a, b) => a !== b,
+    EQ: (a: boolean, b: boolean) => a === b,
+    NEQ: (a: boolean, b: boolean) => a !== b,
   },
-};
+} satisfies DataTypeDefinition<boolean, undefined>;

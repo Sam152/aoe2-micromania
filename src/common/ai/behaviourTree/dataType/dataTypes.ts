@@ -21,10 +21,3 @@ export type MutationRequirementsFromDataType<TDataType extends DataType> = (type
 
 export type ComparatorOptionsFromDataType<TDataType extends DataType> =
   keyof (typeof dataTypes)[TDataType]["conditions"];
-
-export type DataTypeFromBlackboardValue<TValue> = {
-  [TDataType in DataType]: [TValue] extends [TypeFromDataType<TDataType>]
-    ? [TypeFromDataType<TDataType>] extends [TValue] ? TDataType
-    : never
-    : never;
-}[DataType];

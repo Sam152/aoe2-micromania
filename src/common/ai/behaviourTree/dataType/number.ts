@@ -1,11 +1,11 @@
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 
-export const number: DataTypeDefinition<number, { min: number; max: number; step: number }> = {
+export const number = {
   id: "number",
   conditions: {
-    GT: (a, b) => a > b,
-    LT: (a, b) => a < b,
-    EQ: (a, b) => a === b,
-    NEQ: (a, b) => a !== b,
+    GT: (a: number, b: number) => a > b,
+    LT: (a: number, b: number) => a < b,
+    EQ: (a: number, b: number) => a === b,
+    NEQ: (a: number, b: number) => a !== b,
   },
-};
+} satisfies DataTypeDefinition<number, { min: number; max: number; step: number }>;

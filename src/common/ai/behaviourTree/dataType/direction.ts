@@ -1,9 +1,9 @@
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 
-export const direction: DataTypeDefinition<"TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT", undefined> = {
+export const direction = {
   id: "direction",
   conditions: {
-    EQ: (a, b) => a === b,
-    NEQ: (a, b) => a !== b,
+    EQ: (a: "TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT", b: "TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT") => a === b,
+    NEQ: (a: "TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT", b: "TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT") => a !== b,
   },
-};
+} satisfies DataTypeDefinition<"TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT", undefined>;

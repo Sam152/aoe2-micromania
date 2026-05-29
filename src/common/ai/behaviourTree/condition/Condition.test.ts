@@ -24,7 +24,7 @@ Deno.test("type safety", () => {
   const _invalid3: Condition = {
     nodeType: "condition",
     propertyName: "distanceToClosestOpponent",
-    comparatorType: "WAT",
+    comparatorType: "GT",
     // @ts-expect-error - bad value type
     value: "fooString",
   };
