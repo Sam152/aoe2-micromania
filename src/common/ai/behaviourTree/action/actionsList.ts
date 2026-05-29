@@ -15,7 +15,7 @@ export const actionsList = {
 
 export type ActionsList = typeof actionsList;
 
-export type Action<TType extends keyof ActionsList = keyof ActionsList> = TType extends keyof ActionsList ? {
+export type ActionNode<TType extends keyof ActionsList = keyof ActionsList> = TType extends keyof ActionsList ? {
     nodeType: "action";
     type: TType;
     params: {

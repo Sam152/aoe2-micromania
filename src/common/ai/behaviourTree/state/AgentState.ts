@@ -1,7 +1,7 @@
-import { ActionType } from "../action/ActionDefinition.ts";
+import { ActionNode } from "../action/actionsList.ts";
 
 export type AgentState = {
   playingAs: number;
-  lastActionType: ActionType;
+  lastActionType: ActionNode["type"];
   lastActionTick: number;
 };

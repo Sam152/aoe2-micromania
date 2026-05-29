@@ -1,7 +1,7 @@
 import { Condition } from "./condition/Condition.ts";
-import { Action } from "./action/actionsList.ts";
+import { ActionNode } from "./action/actionsList.ts";
 
-type Node = Sequence | Selector | Condition | Action;
+type Node = Sequence | Selector | Condition | ActionNode;
 
 /**
  * Resolve first success node, else fail.
