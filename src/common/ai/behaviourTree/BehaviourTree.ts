@@ -1,5 +1,5 @@
 import { Condition } from "./condition/Condition.ts";
-import { ActionNode } from "./action/actionsList.ts";
+import { ActionNode } from "./action/ActionDefinition.ts";
 
 type Node = Sequence | Selector | Condition | ActionNode;
 
