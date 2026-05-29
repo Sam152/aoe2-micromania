@@ -1,8 +1,8 @@
-import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 
 export type BlackboardValueDefinition<TDataType extends DataType = DataType> = {
   dataType: TDataType;
-  thing: TypeFromDataType<TDataType>;
+  thing: MutationRequirementsFromDataType<TDataType>;
 };
 
 export type BlackboardDefinition = Record<string, { [K in DataType]: BlackboardValueDefinition<K> }[DataType]>;
@@ -10,7 +10,11 @@ export type BlackboardDefinition = Record<string, { [K in DataType]: BlackboardV
 const blackboardDefinition = {
   distanceToClosestOpponent: {
     dataType: "number",
-    thing: 1,
+    thing: {
+      min: 1,
+      max: 1,
+      step: 1,
+    },
   },
   ticksSinceLastAction: {
     dataType: "number",
