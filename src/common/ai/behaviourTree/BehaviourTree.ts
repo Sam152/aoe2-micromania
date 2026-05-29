@@ -19,28 +19,4 @@ type Sequence = {
   nodes: Node[];
 };
 
-export const fooTree: Selector = {
-  nodeType: "selector",
-  nodes: [
-    {
-      nodeType: "sequence",
-      nodes: [
-        { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "GT", value: 1 },
-        {
-          nodeType: "action",
-          type: "PATROL",
-          params: {
-            direction: "TOWARDS",
-          },
-        },
-        {
-          nodeType: "action",
-          type: "IDLE",
-          params: {
-            forTicksAmount: 100,
-          },
-        },
-      ],
-    },
-  ],
-};
+export type BehaviourTree = Selector;

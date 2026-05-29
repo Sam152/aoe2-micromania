@@ -12,6 +12,6 @@ export const idle = {
       },
     },
   },
-  execute: ({ direction }) => {
+  execute: ({ forTicksAmount }) => {
   },
 } as const satisfies ActionDefinition;

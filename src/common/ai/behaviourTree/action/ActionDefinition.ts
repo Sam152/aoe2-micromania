@@ -21,8 +21,8 @@ export type ActionNode<TType extends keyof ActionsList = keyof ActionsList> = TT
     nodeType: "action";
     type: TType;
     params: {
-      [TKey in keyof ActionsList[TType]["params"]]: ActionsList[TType]["params"][TKey] extends DataType
-        ? TypeFromDataType<ActionsList[TType]["params"][TKey]>
+      [TKey in keyof ActionsList[TType]["params"]]: ActionsList[TType]["params"][TKey] extends
+        { dataType: infer D extends DataType } ? TypeFromDataType<D>
         : never;
     };
   }

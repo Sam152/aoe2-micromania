@@ -5,7 +5,7 @@ const blackboard = {
     dataType: "number",
     mutationRequirements: {
       min: 1,
-      max: 1,
+      max: 500,
       step: 1,
     },
   },
