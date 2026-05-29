@@ -1,5 +1,5 @@
 import { ComparatorOptionsFromDataType, DataTypeFromBlackboardValue, TypeFromDataType } from "../dataType/dataTypes.ts";
-import { Blackboard } from "../blackboard/computeBlackboard.ts";
+import { Blackboard } from "../blackboard/Blackboard.ts";
 
 export type Condition<TBlackBoardKey extends keyof Blackboard = keyof Blackboard> = {
   nodeType: "condition";
