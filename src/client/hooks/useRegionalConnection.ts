@@ -6,9 +6,11 @@ import { resolveServerFromCache } from "../servers/resolveServerFromCache.ts";
 async function createRegionalConnection(): Promise<Socket> {
   // Local development has no host to configure.
   const foo = window;
-  if (foo.location.host.includes("localhost")) {
+  if (foo.location.host.includes("localhost") || true) {
     return io(socketConfig);
   }
+
+  // No servers atm.
   const server = await resolveServerFromCache();
   return io(server, socketConfig);
 }

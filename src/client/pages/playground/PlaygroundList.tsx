@@ -10,6 +10,7 @@ const playgrounds: Playground[] = [
   { name: "Formations", path: "/playground/formations" },
   { name: "Arrow frames", path: "/playground/arrow-frames" },
   { name: "Mango fan-out", path: "/playground/mango-fanout" },
+  { name: "Accuracy analysis", path: "/playground/accuracy-analysis" },
 ];
 
 export function PlaygroundList() {

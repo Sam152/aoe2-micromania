@@ -5,6 +5,7 @@ import { AnimationStyle } from "./AnimationStyle.ts";
 import { ProjectileType } from "./ProjectileType.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { DamageType } from "./DamageType.ts";
+import { createCircularProbabilityAccuracy } from "../state/mutations/tick/applyAccuracy.ts";
 
 const DECAY_DURATION = 100;
 
@@ -41,6 +42,7 @@ const unitDefinitions: {
     selectionRadius: 15,
     hitBox: 10,
     hitPointsBarAnchor: -49,
+    accuracyFunction: createCircularProbabilityAccuracy(),
     animations: {
       [UnitState.Idle]: {
         slp: "units/u_arc_crossbowman_idleA_x1",
@@ -90,6 +92,8 @@ const unitDefinitions: {
     selectionRadius: 15,
     hitBox: 10,
     hitPointsBarAnchor: -49,
+    accuracyFunction: ({ aimingFor }) => aimingFor,
+
     animations: {
       [UnitState.Idle]: {
         slp: "units/u_monk_west_idleA_x1",
@@ -140,6 +144,8 @@ const unitDefinitions: {
     selectionRadius: 50,
     hitBox: 35,
     hitPointsBarAnchor: -55,
+    accuracyFunction: ({ aimingFor }) => aimingFor,
+
     animations: {
       [UnitState.Idle]: {
         slp: "units/u_sie_mangonel_idleA_x1",

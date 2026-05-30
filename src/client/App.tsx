@@ -9,6 +9,7 @@ import { ConnectedStateProvider } from "./hooks/useConnectedState.tsx";
 import { FormationDebugging } from "./pages/playground/FormationDebugging.tsx";
 import { ArrowFramesPlayground } from "./pages/playground/ArrowFramesPlayground.tsx";
 import { MangoFanOutPlayground } from "./pages/playground/MangoFanOutPlayground.tsx";
+import { AccuracyAnalysisPlayground } from "./pages/playground/AccuracyAnalysisPlayground.tsx";
 
 import { SpectateGame } from "./pages/SpectateGame.tsx";
 import { PlaygroundList } from "./pages/playground/PlaygroundList.tsx";
@@ -28,6 +29,7 @@ export function App() {
           <Route path="/playground/formations" element={<FormationDebugging />} />
           <Route path="/playground/arrow-frames" element={<ArrowFramesPlayground />} />
           <Route path="/playground/mango-fanout" element={<MangoFanOutPlayground />} />
+          <Route path="/playground/accuracy-analysis" element={<AccuracyAnalysisPlayground />} />
         </Routes>
       </BrowserRouter>
     </ConnectedStateProvider>

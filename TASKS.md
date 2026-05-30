@@ -53,6 +53,7 @@
 - [x] Cached cursors
 - [x] Replace Chakra
 - [ ] Add names back into the mix
-- [ ] Nudge camera when on edges
+- [x] Nudge camera when on edges
 - [ ] Restore nicknames
 - [ ] Start with default control groups
+- [ ] Convert mouse cursor

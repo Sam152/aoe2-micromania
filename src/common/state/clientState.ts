@@ -16,6 +16,26 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
   if (action.n === "FRAME_RENDERING_STARTED") {
     state.unitHitBoxes = [];
     state.renderedFrames++;
+
+    if (state.cursorLocked) {
+      const nudgeAmount = 25 / (state.framesPerTick);
+      if (state.anchored.left) {
+        state.camera.x -= nudgeAmount;
+        state.mousePosition.x -= nudgeAmount;
+      }
+      if (state.anchored.top) {
+        state.camera.y -= nudgeAmount;
+        state.mousePosition.y -= nudgeAmount;
+      }
+      if (state.anchored.right) {
+        state.camera.x += nudgeAmount;
+        state.mousePosition.x += nudgeAmount;
+      }
+      if (state.anchored.bottom) {
+        state.camera.y += nudgeAmount;
+        state.mousePosition.y += nudgeAmount;
+      }
+    }
   }
 
   if (action.n === "GAME_STATE_REHYDRATED") {
@@ -31,14 +51,14 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
   if (action.n === "MOUSE_POSITIONED") {
     const clampedPosition = action.position.clone();
 
-    state.anchored.top = action.position.x <= state.camera.x;
+    state.anchored.top = action.position.y <= state.camera.y;
     if (state.anchored.top) {
-      clampedPosition.x = state.camera.x;
+      clampedPosition.y = state.camera.y;
     }
 
-    state.anchored.left = action.position.y <= state.camera.y;
+    state.anchored.left = action.position.x <= state.camera.x;
     if (state.anchored.left) {
-      clampedPosition.y = state.camera.y;
+      clampedPosition.x = state.camera.x;
     }
 
     state.anchored.right = action.position.x >= state.camera.x + state.canvas.width - 2;
@@ -190,6 +210,10 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
     state.selectedUnits = state.controlGroups[action.group];
   }
 
+  if (action.n === "FRAMES_PER_TICK_MEASURED") {
+    state.framesPerTick = action.framesPerTick;
+  }
+
   return state;
 }
 
@@ -334,6 +358,7 @@ export function defaultState(clientId: string): ClientState {
     controlGroups: {},
     soundQueue: [],
     lastAttackedUnit: null,
+    framesPerTick: 1,
     anchored: {
       top: false,
       bottom: false,
