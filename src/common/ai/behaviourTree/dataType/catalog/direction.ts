@@ -8,4 +8,4 @@ export const direction = {
     EQ: (node: Direction, blackboard: Direction) => node === blackboard,
     NEQ: (node: Direction, blackboard: Direction) => node !== blackboard,
   },
-} satisfies DataTypeDefinition<"TOWARDS" | "AWAY_FROM" | "LEFT" | "RIGHT", undefined>;
+} satisfies DataTypeDefinition<Direction, undefined>;
