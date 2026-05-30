@@ -49,7 +49,11 @@ export class RenderLoopManager {
 
       // Fixate on a logical part of the map, when significant actions occur.
       const clientId = this.stateManager.getClientState().clientId;
-      if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === clientId) {
+
+      const clientJustLoaded = action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === clientId;
+      const playerCycled = action.n === "CYCLE_PLAYER" && action.playerId === clientId;
+
+      if (clientJustLoaded || playerCycled) {
         if (state.activePlayers[clientId]) {
           this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
         } else {
@@ -84,7 +88,7 @@ export class RenderLoopManager {
     const towardsMiddle = middleOfGrid.sub(unitsVector);
 
     // The amount "towards the middle" we should nudge the camera.
-    const startingCamera = unitsVector.add(towardsMiddle.multiplyScalar(0.5));
+    const startingCamera = unitsVector.add(towardsMiddle.multiplyScalar(0.2));
 
     this.stateManager.dispatchClient({
       n: "FIXATE_CAMERA",
