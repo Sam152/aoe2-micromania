@@ -27,9 +27,7 @@ class ScreenManager {
   }
 
   removeOnChange(callback: Subscriber) {
-    console.log(this.callbacks.length);
     this.callbacks = this.callbacks.filter((listCallback) => listCallback !== callback);
-    console.log(this.callbacks.length);
   }
 
   resize() {

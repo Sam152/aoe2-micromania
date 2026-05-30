@@ -29,7 +29,7 @@ export class BattleRoyale implements GameMode {
     }
 
     this.cyclePlayers(state, action, manager);
-    // this.cycleBots(state, action, manager);
+    this.cycleBots(state, action, manager);
     //this.cycleTerrain(state, action, manager);
   }
 
@@ -57,8 +57,8 @@ export class BattleRoyale implements GameMode {
 
   cycleBots(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
     const activePlayers = Object.keys(state.activePlayers).length;
-    if (activePlayers === 1) {
-      console.log("Adding a bot");
+    if (activePlayers !== 1) {
+      return;
     }
   }
 

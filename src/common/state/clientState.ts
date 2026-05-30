@@ -18,7 +18,7 @@ export function clientStateMutator(state: ClientState, gameState: GameState, act
     state.renderedFrames++;
 
     if (state.cursorLocked) {
-      const nudgeAmount = 25 / (state.framesPerTick);
+      const nudgeAmount = 50 / (state.framesPerTick);
       if (state.anchored.left) {
         state.camera.x -= nudgeAmount;
         state.mousePosition.x -= nudgeAmount;
