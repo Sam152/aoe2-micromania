@@ -43,27 +43,6 @@ export function evaluateTreeNode(
       const result = evaluateTreeNode({ blackboard, node: sequenceNode, actionNodes });
       if (!result.result) {
         return {
-          // If any actions were found along the way in the sequence, consider this a success and
-          // returned the gathered actions, even if subsequent conditions evaluated to false. This
-          // keeps more representations of the tree meaningful - sequences organized like this are
-          // essentially selectors with two child sequences. An example:
-          // - sequence
-          //   - cond 1 true
-          //   - action 1
-          //   - cond 2 false
-          //   - action 2
-          // => returns success, action 1
-          //
-          // ...which is the same configuration as:
-          //
-          // - selector
-          //  - cond 2 false
-          //    - action 2
-          //  - cond 1 true
-          //    - action 1
-          // => returns success, action 1
-          //
-          // This should allow random mutations produce less accidentally useless branches.
           result: sequenceActionNodes.length > 0,
           actionNodes: sequenceActionNodes,
         };
