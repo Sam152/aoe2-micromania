@@ -4,6 +4,7 @@ import { evaluateTreeNode } from "../behaviourTree/evaluateTreeNode.ts";
 import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
+import { splitGroup } from "./splitGroup.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
@@ -32,19 +33,26 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
       dispatcher(gameStateAction);
     }
 
+    // This special meta-action impacts the bot state, splitting groups apart.
+    if (nextAction.action.type === "SPLIT_GROUP") {
+      splitGroup({ group, state, botState });
+    }
+
     // The queued action is donezo.
     group.actionQueue.shift();
     return;
   }
 
   // Translate actions from the tree into a queue of actions to take over the course of some number of ticks.
-  const blackboard = computeBlackboard({ gameState: state, botState });
+  const blackboard = computeBlackboard({ gameState: state, botState, group });
   const treeToEvaluate = sampleTree[group.unitType];
 
   const { actionNodes } = evaluateTreeNode({
     blackboard,
     node: treeToEvaluate,
   });
+
+  console.log(actionNodes, blackboard);
 
   group.actionQueue.push(
     ...actionNodes.map((actionNode, i) => ({

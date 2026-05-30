@@ -1,6 +1,17 @@
 import { BlackboardDefinitionShape, BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
 
 export const blackboardDefinition = {
+  /**
+   * Counts the number of groups, for the group type being acted on.
+   */
+  numberOfGroupsForGroupUnitType: {
+    dataType: "number",
+    mutationRequirements: {
+      min: 1,
+      max: 5,
+      step: 1,
+    },
+  },
   distanceToClosestOpponent: {
     dataType: "number",
     mutationRequirements: {

@@ -15,21 +15,35 @@ export const sampleTree: UnitAwareBehaviourTree = {
     ],
   },
   [UnitType.Archer]: {
-    nodeType: "sequence",
+    nodeType: "selector",
     nodes: [
+      // If there are less than two groups of archers, split them.
       {
-        nodeType: "action",
-        type: "PATROL",
-        params: {
-          direction: "TOWARDS",
-        },
+        nodeType: "sequence",
+        nodes: [
+          { nodeType: "condition", value: 2, comparatorType: "GT", propertyName: "numberOfGroupsForGroupUnitType" },
+          { nodeType: "action", type: "SPLIT_GROUP", params: {} },
+        ],
       },
+      // Then patrol.
       {
-        nodeType: "action",
-        type: "IDLE",
-        params: {
-          forTicksAmount: 100,
-        },
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "action",
+            type: "PATROL",
+            params: {
+              direction: "TOWARDS",
+            },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: {
+              forTicksAmount: 100,
+            },
+          },
+        ],
       },
     ],
   },

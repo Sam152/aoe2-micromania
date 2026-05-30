@@ -5,6 +5,7 @@ import { ActionNode } from "../behaviourTree/action/ActionDefinition.ts";
 import { UnitType } from "../../units/UnitType.ts";
 
 import { createInitialUnitGroups } from "./createInitialUnitGroups.ts";
+import { consolidateGroups } from "./consolidateGroups.ts";
 
 export type BotInstance = {
   tick: (state: GameState, dispatcher: GameDispatcher) => void;
@@ -56,6 +57,9 @@ export function createBot({ playingAs, playerId }: { playingAs: number; playerId
           botState,
         });
       });
+
+      // Delete any groups with no units actually alive.
+      consolidateGroups(botState.unitGroups, state);
     },
   };
 }
