@@ -1,7 +1,13 @@
 import { BotState, BotUnitGroup } from "./createBot.ts";
 import { GameState } from "../../../types.ts";
 
-export function splitGroup({ group, botState, state }: { group: BotUnitGroup; botState: BotState; state: GameState }) {
+export function splitGroup(
+  { group, botState, state }: {
+    group: BotUnitGroup;
+    botState: Pick<BotState, "unitGroups">;
+    state: Pick<GameState, "ticks">;
+  },
+) {
   if (group.includedUnits.length < 2) {
     return;
   }
@@ -29,4 +35,6 @@ export function splitGroup({ group, botState, state }: { group: BotUnitGroup; bo
       },
     ],
   });
+
+  group.includedUnits = [];
 }

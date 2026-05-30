@@ -8,11 +8,12 @@ export function consolidateGroups(groups: BotUnitGroup[], state: { units: Pick<U
   }, {});
 
   // Only retain units in the group which are actually in the game state.
-  // Delete groups which have no units left.
-  groups.forEach((group, index) => {
+  groups.forEach((group) => {
     group.includedUnits = group.includedUnits.filter((unit) => unitsIndex[unit] ?? false);
-    if (group.includedUnits.length === 0) {
-      delete groups[index];
-    }
   });
+
+  // Remove groups which have no units left, mutating the array in place so we
+  // don't leave behind sparse holes (undefined elements).
+  const remaining = groups.filter((group) => group.includedUnits.length > 0);
+  groups.splice(0, groups.length, ...remaining);
 }
