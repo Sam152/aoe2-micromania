@@ -2,8 +2,8 @@ import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
 export const boolean = {
   id: "boolean",
-  conditions: {
-    EQ: (a: boolean, b: boolean) => a === b,
-    NEQ: (a: boolean, b: boolean) => a !== b,
+  comparitors: {
+    EQ: (node: boolean, blackboard: boolean) => node === blackboard,
+    NEQ: (node: boolean, blackboard: boolean) => node !== blackboard,
   },
 } satisfies DataTypeDefinition<boolean, undefined>;

@@ -20,4 +20,4 @@ export type MutationRequirementsFromDataType<TDataType extends DataType> = (type
   : never;
 
 export type ComparatorOptionsFromDataType<TDataType extends DataType> =
-  keyof (typeof dataTypes)[TDataType]["conditions"];
+  keyof (typeof dataTypes)[TDataType]["comparitors"];

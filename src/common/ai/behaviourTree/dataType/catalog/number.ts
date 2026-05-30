@@ -2,10 +2,10 @@ import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
 export const number = {
   id: "number",
-  conditions: {
-    GT: (a: number, b: number) => a > b,
-    LT: (a: number, b: number) => a < b,
-    EQ: (a: number, b: number) => a === b,
-    NEQ: (a: number, b: number) => a !== b,
+  comparitors: {
+    GT: (node: number, blackboard: number) => node > blackboard,
+    LT: (node: number, blackboard: number) => node < blackboard,
+    EQ: (node: number, blackboard: number) => node === blackboard,
+    NEQ: (node: number, blackboard: number) => node !== blackboard,
   },
 } satisfies DataTypeDefinition<number, { min: number; max: number; step: number }>;

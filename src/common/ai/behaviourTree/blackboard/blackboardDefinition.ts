@@ -1,6 +1,6 @@
 import { BlackboardDefinitionShape, BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
 
-const blackboard = {
+export const blackboardDefinition = {
   distanceToClosestOpponent: {
     dataType: "number",
     mutationRequirements: {
@@ -19,6 +19,6 @@ const blackboard = {
   },
 } as const satisfies BlackboardDefinitionShape;
 
-export type BlackboardDefinition = typeof blackboard;
+export type BlackboardDefinition = typeof blackboardDefinition;
 
 export type Blackboard = BlackboardValuesFromDefinition<BlackboardDefinition>;

@@ -1,14 +1,14 @@
 import { Condition } from "./condition/Condition.ts";
 import { ActionNode } from "./action/ActionDefinition.ts";
 
-type Node = Sequence | Selector | Condition | ActionNode;
+export type BehaviourTreeNode = Sequence | Selector | Condition | ActionNode;
 
 /**
  * Resolve first success node, else fail.
  */
 type Selector = {
   nodeType: "selector";
-  nodes: Node[];
+  nodes: BehaviourTreeNode[];
 };
 
 /**
@@ -16,7 +16,5 @@ type Selector = {
  */
 type Sequence = {
   nodeType: "sequence";
-  nodes: Node[];
+  nodes: BehaviourTreeNode[];
 };
-
-export type BehaviourTree = Selector;
