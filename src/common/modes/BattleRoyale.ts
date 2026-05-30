@@ -61,6 +61,9 @@ export class BattleRoyale implements GameMode {
         playerId: found[0],
         playerNumber: found[1],
       });
+
+      // If bots were mixed in with real players, and a bot cycled into a queued player,
+      // we would probably have to destroy its instance here.
     }
   }
 
