@@ -5,6 +5,7 @@ import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
 import { splitGroup } from "./splitGroup.ts";
+import { mergeGroups } from "./mergeGroups.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
@@ -33,12 +34,12 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
       dispatcher(gameStateAction);
     }
 
-    // This special meta-action impacts the bot state, splitting groups apart.
+    // These special meta-actions impacts the bot state, splitting groups apart.
     if (nextAction.action.type === "SPLIT_GROUP") {
       splitGroup({ group, state, botState });
     }
-
     if (nextAction.action.type === "MERGE_GROUP") {
+      mergeGroups({ group, state, botState });
     }
 
     // The queued action is donezo.
@@ -54,12 +55,11 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
     blackboard,
     node: treeToEvaluate,
   });
-
-  console.log(actionNodes, blackboard);
-
   group.actionQueue.push(
     ...actionNodes.map((actionNode, i) => ({
       action: actionNode,
+      // Execute sequences of actions 1 tick apart, except for IDLE which will only execute after its
+      // idle number of ticks have been played out.
       executeAfterTick: state.ticks + i + (actionNode.type === "IDLE" ? actionNode.params.forTicksAmount : 0),
     })),
   );

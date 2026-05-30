@@ -12,13 +12,6 @@ function group(includedUnits: number[]): BotUnitGroup {
   };
 }
 
-const idleQueue = (ticks: number) => [
-  {
-    action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } } as const,
-    executeAfterTick: ticks + 1,
-  },
-];
-
 describe("splitGroup", () => {
   it("splits an even group into two equal halves", () => {
     const g = group([1, 2, 3, 4]);
@@ -40,7 +33,13 @@ describe("splitGroup", () => {
     const [, first, second] = botState.unitGroups;
     assertEquals(first.unitType, UnitType.Mangonel);
     assertEquals(second.unitType, UnitType.Mangonel);
-    assertEquals(first.actionQueue, idleQueue(42));
-    assertEquals(second.actionQueue, idleQueue(42));
+    const expectedQueue = [
+      {
+        action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } } as const,
+        executeAfterTick: 43,
+      },
+    ];
+    assertEquals(first.actionQueue, expectedQueue);
+    assertEquals(second.actionQueue, expectedQueue);
   });
 });

@@ -12,13 +12,6 @@ function group(unitType: UnitType, includedUnits: number[]): BotUnitGroup {
   };
 }
 
-const idleQueue = (ticks: number) => [
-  {
-    action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } } as const,
-    executeAfterTick: ticks + 1,
-  },
-];
-
 describe("mergeGroups", () => {
   it("merges all groups of the same type into one new group", () => {
     const archersA = group(UnitType.Archer, [1, 2]);
@@ -31,7 +24,12 @@ describe("mergeGroups", () => {
     const merged = botState.unitGroups[2];
     assertEquals(merged.unitType, UnitType.Archer);
     assertEquals(merged.includedUnits, [1, 2, 3, 4]);
-    assertEquals(merged.actionQueue, idleQueue(10));
+    assertEquals(merged.actionQueue, [
+      {
+        action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } } as const,
+        executeAfterTick: 11,
+      },
+    ]);
 
     // The source groups are emptied out.
     assertEquals(archersA.includedUnits, []);
