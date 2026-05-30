@@ -121,25 +121,18 @@ describe("tree evaluation", () => {
         actionNodes: [],
         blackboard,
         node: {
-          nodeType: "selector",
+          nodeType: "sequence",
           nodes: [
-            {
-              nodeType: "sequence",
-              nodes: [
-                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
-              ],
-            },
+            { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
+            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+            { nodeType: "condition", value: 5, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
+            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
           ],
         },
       }),
       {
         result: true,
-        actionNodes: [
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
-        ],
+        actionNodes: [],
       },
     );
   });
