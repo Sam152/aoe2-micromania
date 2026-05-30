@@ -7,9 +7,9 @@ export type ActionQueue = {
 
 export type BotState = {
   playingAs: number;
+  playerId: string;
   lastActionType: ActionNode["type"];
   lastActionTick: number;
   isEligibleForDecision: boolean;
-
   actionQueue: ActionQueue;
 };

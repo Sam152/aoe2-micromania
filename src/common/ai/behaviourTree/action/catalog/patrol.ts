@@ -1,6 +1,7 @@
 import { ActionDefinition } from "../ActionDefinition.ts";
-import { GameStateAction } from "../../../../../types.ts";
+import { GameStateAction, UnitId } from "../../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
+import { BotState } from "../../state/BotState.ts";
 
 export const patrol = {
   type: "PATROL",
@@ -10,10 +11,10 @@ export const patrol = {
       mutationRequirements: undefined,
     },
   },
-  execute: ({ direction }, gameState, botState): GameStateAction => {
+  execute: ({ direction }, gameState, botState: BotState, unitIds: UnitId[]): GameStateAction => {
     return {
       n: "PATROL",
-      units: [1],
+      units: unitIds,
       position: new Vector2(1, 1),
     };
   },

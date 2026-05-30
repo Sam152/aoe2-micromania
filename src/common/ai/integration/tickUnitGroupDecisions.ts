@@ -6,13 +6,14 @@ import { ActionQueue, BotState } from "../behaviourTree/state/BotState.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 
 type TickGroupArgs = {
+  unitIds: number[];
   actionQueue: ActionQueue;
   state: GameState;
   botState: BotState;
   dispatcher: GameDispatcher;
 };
 
-export function tickUnitGroupDecisions({ actionQueue, state, botState, dispatcher }: TickGroupArgs) {
+export function tickUnitGroupDecisions({ actionQueue, state, botState, dispatcher, unitIds }: TickGroupArgs) {
   // If we have actions in the queue, try to consume the next available one.
   if (actionQueue.length > 0) {
     const nextAction = actionQueue[0];
@@ -25,6 +26,7 @@ export function tickUnitGroupDecisions({ actionQueue, state, botState, dispatche
       nextAction.action.params as any,
       state,
       botState,
+      unitIds,
     );
 
     if (gameStateAction) {

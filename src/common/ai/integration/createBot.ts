@@ -1,6 +1,5 @@
 import { BotState } from "../behaviourTree/state/BotState.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
-
 import { tickUnitGroupDecisions } from "./tickUnitGroupDecisions.ts";
 
 export type BotInstance = {
@@ -10,8 +9,9 @@ export type BotInstance = {
 
 export function createBot({ playingAs, playerId }: { playingAs: number; playerId: string }): BotInstance {
   const botState: BotState = {
-    isEligibleForDecision: true,
+    playerId,
     playingAs: playingAs,
+    isEligibleForDecision: true,
     lastActionType: "IDLE",
     lastActionTick: 0,
     actionQueue: [],
@@ -28,6 +28,7 @@ export function createBot({ playingAs, playerId }: { playingAs: number; playerId
         state,
         dispatcher,
         botState,
+        unitIds: [1],
       });
     },
   };

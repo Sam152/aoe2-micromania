@@ -1,6 +1,6 @@
 import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { ActionsList } from "./actionsList.ts";
-import { GameState, GameStateAction } from "../../../../types.ts";
+import { GameState, GameStateAction, UnitId } from "../../../../types.ts";
 import { BotState } from "../state/BotState.ts";
 
 export type ActionDefinition<
@@ -14,7 +14,8 @@ export type ActionDefinition<
   execute: (
     input: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> },
     gameState: GameState,
-    agentState: BotState,
+    botState: BotState,
+    unitIds: UnitId[],
   ) => GameStateAction | undefined;
 };
 
