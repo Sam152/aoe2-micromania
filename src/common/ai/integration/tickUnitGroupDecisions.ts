@@ -38,6 +38,9 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
       splitGroup({ group, state, botState });
     }
 
+    if (nextAction.action.type === "MERGE_GROUP") {
+    }
+
     // The queued action is donezo.
     group.actionQueue.shift();
     return;
