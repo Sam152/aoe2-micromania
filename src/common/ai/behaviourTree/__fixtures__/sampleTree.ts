@@ -21,14 +21,15 @@ export const sampleTree: UnitAwareBehaviourTree = {
       {
         nodeType: "sequence",
         nodes: [
-          { nodeType: "condition", value: 2, comparatorType: "GT", propertyName: "numberOfGroupsForGroupUnitType" },
+          { nodeType: "condition", value: 2, comparatorType: "GT", propertyName: "groupsForUnitTypeCount" },
           { nodeType: "action", type: "SPLIT_GROUP", params: {} },
         ],
       },
-      // Then patrol.
+      // Then patrol one of the groups.
       {
         nodeType: "sequence",
         nodes: [
+          { nodeType: "condition", value: 0, comparatorType: "EQ", propertyName: "unitTypeGroupIndex" },
           {
             nodeType: "action",
             type: "PATROL",

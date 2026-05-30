@@ -4,12 +4,15 @@ import { BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 
 export function computeBlackboard(
-  { gameState, botState, group }: { gameState: GameState; botState: BotState; group: BotUnitGroup },
+  { state, botState, group }: { state: GameState; botState: BotState; group: BotUnitGroup },
 ): BlackboardValuesFromDefinition<BlackboardDefinition> {
   return {
-    numberOfGroupsForGroupUnitType:
+    groupsForUnitTypeCount:
       Object.values(botState.unitGroups).filter((botGroup) => botGroup.unitType === group.unitType).length,
-    distanceToClosestOpponent: 100,
-    ticksSinceLastAction: 100,
+    unitTypeGroupIndex: Object.values(botState.unitGroups)
+      .filter((arrGroup) => arrGroup.unitType === group.unitType)
+      .findIndex((arrGroup) => arrGroup === group),
+    unitsInGroupCount: group.includedUnits.length,
+    unitsOfTypeGlobalCount: state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
   };
 }

@@ -44,7 +44,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
   }
 
   // Translate actions from the tree into a queue of actions to take over the course of some number of ticks.
-  const blackboard = computeBlackboard({ gameState: state, botState, group });
+  const blackboard = computeBlackboard({ state, botState, group });
   const treeToEvaluate = sampleTree[group.unitType];
 
   const { actionNodes } = evaluateTreeNode({
