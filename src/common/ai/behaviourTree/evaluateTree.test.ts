@@ -77,4 +77,70 @@ describe("tree evaluation", () => {
       },
     );
   });
+
+  it("can gather multiple actions from a sequence", () => {
+    assertEquals(
+      evaluateTreeNode({
+        actionNodes: [],
+        blackboard,
+        node: {
+          nodeType: "sequence",
+          nodes: [
+            {
+              nodeType: "sequence",
+              nodes: [
+                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
+                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+              ],
+            },
+            {
+              nodeType: "sequence",
+              nodes: [
+                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
+                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+              ],
+            },
+            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+          ],
+        },
+      }),
+      {
+        result: true,
+        actionNodes: [
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+        ],
+      },
+    );
+  });
+
+  it("can gather multiple actions from a deeply nested sequence", () => {
+    assertEquals(
+      evaluateTreeNode({
+        actionNodes: [],
+        blackboard,
+        node: {
+          nodeType: "selector",
+          nodes: [
+            {
+              nodeType: "sequence",
+              nodes: [
+                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
+                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+              ],
+            },
+          ],
+        },
+      }),
+      {
+        result: true,
+        actionNodes: [
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+        ],
+      },
+    );
+  });
 });
