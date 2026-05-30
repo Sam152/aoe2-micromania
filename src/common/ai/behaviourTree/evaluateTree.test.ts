@@ -153,7 +153,73 @@ describe("tree evaluation", () => {
       }),
       {
         result: true,
+        actionNodes: [
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+        ],
+      },
+    );
+  });
+
+  it("can gather up actions from a deeply nested structure", () => {
+    assertEquals(
+      evaluateTreeNode({
         actionNodes: [],
+        blackboard,
+        node: {
+          nodeType: "sequence",
+          nodes: [
+            {
+              nodeType: "sequence",
+              nodes: [
+                {
+                  nodeType: "sequence",
+                  nodes: [
+                    { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+                  ],
+                },
+                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+                {
+                  nodeType: "selector",
+                  nodes: [
+                    {
+                      nodeType: "condition",
+                      value: 5,
+                      comparatorType: "GT",
+                      propertyName: "distanceToClosestOpponent",
+                    },
+                    {
+                      nodeType: "selector",
+                      nodes: [
+                        {
+                          nodeType: "condition",
+                          value: 5,
+                          comparatorType: "GT",
+                          propertyName: "distanceToClosestOpponent",
+                        },
+                        {
+                          nodeType: "sequence",
+                          nodes: [
+                            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 4 } },
+          ],
+        },
+      }),
+      {
+        result: true,
+        actionNodes: [
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 4 } },
+        ],
       },
     );
   });
