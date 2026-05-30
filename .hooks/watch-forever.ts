@@ -5,6 +5,7 @@ while (true) {
       "--check",
       "--watch=src/",
       "--allow-env",
+      "--allow-sys",
       "--allow-net",
       "--allow-read",
       "--allow-write",

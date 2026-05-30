@@ -2,8 +2,8 @@
   "nodeModulesDir": "auto",
   "vendor": true,
   "tasks": {
-    "start": "deno run --check --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
-    "start:debug": "deno run --inspect --check --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
+    "start": "deno run --check --allow-env --allow-sys --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
+    "start:debug": "deno run --inspect --check --allow-env --allow-sys --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
     "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
     "on-save": "deno --allow-run .hooks/on-save.ts"
@@ -44,6 +44,7 @@
     "@std/crypto": "jsr:@std/crypto@^1.1.0",
     "esbuild": "npm:esbuild@0.28.0",
     "@types/three": "npm:@types/three@^0.184.1",
+    "pino": "npm:pino@^10.3.1",
     "react": "npm:react@18",
     "react/jsx-runtime": "npm:react@18/jsx-runtime",
     "react-dom": "npm:react-dom@18",
