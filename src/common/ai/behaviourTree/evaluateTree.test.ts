@@ -8,8 +8,8 @@ const blackboard: Blackboard = {
   ticksSinceLastAction: 10,
 };
 
-describe("simple tree evaluation", () => {
-  it("evaluates a set of true conditions", () => {
+describe("tree evaluation", () => {
+  it("runs a selector until it finds true", () => {
     assertEquals(
       evaluateTreeNode({
         actionNodes: [],
@@ -17,9 +17,9 @@ describe("simple tree evaluation", () => {
         node: {
           nodeType: "selector",
           nodes: [
-            { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "GT", value: 1 },
-            { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "LT", value: 15 },
-            { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "LT", value: 15 },
+            { nodeType: "condition", value: 1, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
+            { nodeType: "condition", value: 15, comparatorType: "LT", propertyName: "distanceToClosestOpponent" },
+            { nodeType: "condition", value: 15, comparatorType: "LT", propertyName: "distanceToClosestOpponent" },
             {
               nodeType: "action",
               type: "IDLE",
@@ -50,21 +50,21 @@ describe("simple tree evaluation", () => {
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "GT", value: 100 },
+                { nodeType: "condition", value: 5, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
                 { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
               ],
             },
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "GT", value: 5 },
+                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
                 { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
               ],
             },
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", propertyName: "distanceToClosestOpponent", comparatorType: "GT", value: 3 },
+                { nodeType: "condition", value: 20, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
                 { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
               ],
             },

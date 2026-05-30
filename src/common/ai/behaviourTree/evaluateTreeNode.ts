@@ -41,14 +41,12 @@ export function evaluateTreeNode(
 
     for (const sequenceNode of node.nodes) {
       const result = evaluateTreeNode({ blackboard, node: sequenceNode, actionNodes });
-
       if (!result.result) {
         return {
           result: false,
           actionNodes,
         };
       }
-
       sequenceActionNodes.push(...result.actionNodes);
     }
 
