@@ -1,4 +1,4 @@
-import { Unit } from "./Unit.ts";
+import { UnitType } from "./UnitType.ts";
 import { UnitState } from "./UnitState.ts";
 import { UnitStats } from "../../types.ts";
 import { AnimationStyle } from "./AnimationStyle.ts";
@@ -21,9 +21,9 @@ const DECAY_DURATION = 100;
  * @endcode
  */
 const unitDefinitions: {
-  [key in Unit]: UnitStats;
+  [key in UnitType]: UnitStats;
 } = {
-  [Unit.Archer]: {
+  [UnitType.Archer]: {
     firesProjectileType: ProjectileType.Arrow,
     attackFrameDelay: 0.35,
     reloadTime: 2,
@@ -71,7 +71,7 @@ const unitDefinitions: {
       },
     },
   },
-  [Unit.Monk]: {
+  [UnitType.Monk]: {
     firesProjectileType: ProjectileType.Conversion,
     // These don't apply to Monks.
     attackFrameDelay: 0,
@@ -122,7 +122,7 @@ const unitDefinitions: {
       },
     },
   },
-  [Unit.Mangonel]: {
+  [UnitType.Mangonel]: {
     attackFrameDelay: 0,
     reloadTime: 6,
     movementRate: 0.6,
@@ -179,13 +179,13 @@ const unitDefinitions: {
 class UnitMetadata {
   units: Partial<
     {
-      [key in Unit]: UnitStats;
+      [key in UnitType]: UnitStats;
     }
   > = {};
 
   constructor() {
     this.units = {};
-    (Object.keys(unitDefinitions) as unknown as Unit[]).forEach((unit) => {
+    (Object.keys(unitDefinitions) as unknown as UnitType[]).forEach((unit) => {
       this.units[unit] = {
         // Compute any required properties.
         ...unitDefinitions[unit],
@@ -193,7 +193,7 @@ class UnitMetadata {
     });
   }
 
-  getUnit(unit: Unit): UnitStats {
+  getUnit(unit: UnitType): UnitStats {
     return this.units[unit]!;
   }
 }

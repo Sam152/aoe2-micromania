@@ -1,7 +1,7 @@
 import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { ActionsList } from "./actionsList.ts";
 import { GameState, GameStateAction, UnitId } from "../../../../types.ts";
-import { BotState } from "../state/BotState.ts";
+import { BotState } from "../../integration/createBot.ts";
 
 export type ActionDefinition<
   TParams extends Record<string, { [K in DataType]: ActionDefinitionParam<K> }[DataType]> = Record<

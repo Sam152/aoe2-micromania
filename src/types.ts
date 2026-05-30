@@ -1,5 +1,5 @@
 import { UnitState } from "./common/units/UnitState.ts";
-import { Unit } from "./common/units/Unit.ts";
+import { UnitType } from "./common/units/UnitType.ts";
 import { CompassDirection } from "./common/units/CompassDirection.ts";
 import { AnimationStyle } from "./common/units/AnimationStyle.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
@@ -14,7 +14,7 @@ import { AccuracyFunction } from "./common/state/mutations/tick/applyAccuracy.ts
 export interface UnitInstance {
   id: number;
   ownedByPlayer: PlayerId;
-  unitType: Unit;
+  unitType: UnitType;
 
   unitStateStartedAt: number;
   unitState: UnitState;
@@ -64,7 +64,7 @@ export interface UnitInstance {
 export interface FallenUnitInstance {
   id: number;
   ownedByPlayer: PlayerId;
-  unitType: Unit;
+  unitType: UnitType;
   unitFallenAt: number;
   position: Vector2;
   direction: CompassDirection;
@@ -74,7 +74,7 @@ export interface ProjectileInstance {
   id: number;
   ownedBy: PlayerId;
   type: ProjectileType;
-  firedByType: Unit;
+  firedByType: UnitType;
   targeting?: PlayerId;
   startingPoint: Vector2;
   destination: Vector2;
@@ -149,7 +149,7 @@ export type GameStateAction =
   | {
     n: "SPAWN_UNIT";
     position: Vector2;
-    unitType: Unit;
+    unitType: UnitType;
     forPlayer: PlayerId;
     direction?: CompassDirection;
   }

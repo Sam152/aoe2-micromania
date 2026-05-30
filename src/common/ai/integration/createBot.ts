@@ -1,10 +1,34 @@
-import { BotState } from "../behaviourTree/state/BotState.ts";
-import { GameDispatcher, GameState } from "../../../types.ts";
+import { GameDispatcher, GameState, UnitId } from "../../../types.ts";
 import { tickUnitGroupDecisions } from "./tickUnitGroupDecisions.ts";
+
+import { ActionNode } from "../behaviourTree/action/ActionDefinition.ts";
+import { UnitType } from "../../units/UnitType.ts";
+
+import { createInitialUnitGroups } from "./createInitialUnitGroups.ts";
 
 export type BotInstance = {
   tick: (state: GameState, dispatcher: GameDispatcher) => void;
   playerId: string;
+};
+
+export type ActionQueue = {
+  action: ActionNode;
+  executeAfterTick: number;
+}[];
+
+export type BotUnitGroup = {
+  unitType: UnitType;
+  actionQueue: ActionQueue;
+  includedUnits: UnitId[];
+};
+
+export type BotState = {
+  playingAs: number;
+  playerId: string;
+  lastActionType: ActionNode["type"];
+  lastActionTick: number;
+  isEligibleForDecision: boolean;
+  unitGroups: BotUnitGroup[];
 };
 
 export function createBot({ playingAs, playerId }: { playingAs: number; playerId: string }): BotInstance {
@@ -14,21 +38,23 @@ export function createBot({ playingAs, playerId }: { playingAs: number; playerId
     isEligibleForDecision: true,
     lastActionType: "IDLE",
     lastActionTick: 0,
-    actionQueue: [],
+    unitGroups: [],
   };
 
   return {
     playerId,
     tick: (state, dispatcher) => {
-      // @todo split unit types into groups, run for each groups.
-      // @todo allow groups to be split apart and combined.
-      const actionQueue = botState.actionQueue;
-      tickUnitGroupDecisions({
-        actionQueue,
-        state,
-        dispatcher,
-        botState,
-        unitIds: [1],
+      if (botState.unitGroups.length === 0) {
+        createInitialUnitGroups(botState, state);
+      }
+
+      botState.unitGroups.forEach((group) => {
+        tickUnitGroupDecisions({
+          group,
+          state,
+          dispatcher,
+          botState,
+        });
       });
     },
   };

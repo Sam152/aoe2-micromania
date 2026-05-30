@@ -8,7 +8,7 @@ import { ActiveCommand } from "../input/ActiveCommand.ts";
 import { soundManager } from "../sounds/SoundManger.ts";
 import { selectionShouldAttackGround } from "../units/selectionShouldAttackGround.ts";
 import { unitsById } from "../units/unitsById.ts";
-import { Unit } from "../units/Unit.ts";
+import { UnitType } from "../units/UnitType.ts";
 
 export function clientStateMutator(state: ClientState, gameState: GameState, action: ClientStateAction): ClientState {
   const playingAs = gameState.activePlayers[state.clientId] ?? -1;
@@ -242,7 +242,7 @@ export function clientStateTransmitter(
       const byId = unitsById(gameState);
       const attackingUnits = clientState.selectedUnits.filter((selectedUnit) => {
         const unit = byId[selectedUnit];
-        return unit && unit.unitType !== Unit.Monk;
+        return unit && unit.unitType !== UnitType.Monk;
       });
       if (attackingUnits.length > 0) {
         soundManager.attacking(clientState);
@@ -255,7 +255,7 @@ export function clientStateTransmitter(
 
       const convertingUnits = clientState.selectedUnits.filter((selectedUnit) => {
         const unit = byId[selectedUnit];
-        return unit && unit.unitType === Unit.Monk;
+        return unit && unit.unitType === UnitType.Monk;
       });
       if (convertingUnits.length > 0) {
         gameDispatcher({

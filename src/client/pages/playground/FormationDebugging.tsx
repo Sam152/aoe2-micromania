@@ -4,7 +4,7 @@ import { screenManager } from "../../../common/drawing/screenManager.ts";
 import { LineFormation } from "../../../common/units/formations/types/LineFormation.ts";
 import { UnitInstance } from "../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import { Unit } from "../../../common/units/Unit.ts";
+import { UnitType } from "../../../common/units/UnitType.ts";
 import { averageVector } from "../../../common/util/averageVector.ts";
 import { arrayOfSize } from "../../../common/util/arrayOfSize.ts";
 
@@ -69,13 +69,13 @@ function drawFormation(units: UnitInstance[], ctx: CanvasRenderingContext2D, des
 
   positions.map((position, i) => {
     const unit = units[i];
-    if (unit.unitType == Unit.Archer) {
+    if (unit.unitType == UnitType.Archer) {
       circle(ctx, position, 5, "green");
     }
-    if (unit.unitType == Unit.Mangonel) {
+    if (unit.unitType == UnitType.Mangonel) {
       circle(ctx, position, 5, "red");
     }
-    if (unit.unitType == Unit.Monk) {
+    if (unit.unitType == UnitType.Monk) {
       circle(ctx, position, 5, "blue");
     }
   });
@@ -100,7 +100,7 @@ function createArcher(position: { x: number; y: number }): () => UnitInstance {
     ...defaultUnit,
     position: new Vector2(position.x, position.y),
     id: Math.floor(Math.random() * 1000000000),
-    unitType: Unit.Archer,
+    unitType: UnitType.Archer,
   });
 }
 
@@ -109,7 +109,7 @@ function createMango(position: { x: number; y: number }): () => UnitInstance {
     ...defaultUnit,
     position: new Vector2(position.x, position.y),
     id: Math.floor(Math.random() * 1000000000),
-    unitType: Unit.Mangonel,
+    unitType: UnitType.Mangonel,
   });
 }
 
@@ -118,6 +118,6 @@ function createMonk(position: { x: number; y: number }): () => UnitInstance {
     ...defaultUnit,
     position: new Vector2(position.x, position.y),
     id: Math.floor(Math.random() * 1000000000),
-    unitType: Unit.Monk,
+    unitType: UnitType.Monk,
   });
 }

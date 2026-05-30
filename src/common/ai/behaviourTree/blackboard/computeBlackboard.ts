@@ -1,7 +1,7 @@
 import { GameState } from "../../../../types.ts";
-import { BotState } from "../state/BotState.ts";
 import { BlackboardDefinition } from "./blackboardDefinition.ts";
 import { BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
+import { BotState } from "../../integration/createBot.ts";
 
 export function computeBlackboard(
   { gameState, botState }: { gameState: GameState; botState: BotState },

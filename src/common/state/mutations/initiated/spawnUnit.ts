@@ -4,13 +4,13 @@ import { UnitState } from "../../../units/UnitState.ts";
 import { CompassDirection } from "../../../units/CompassDirection.ts";
 import { GameState, PlayerId, UnitInstance } from "../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import { Unit } from "../../../units/Unit.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 
 export function spawnUnit(
   state: GameState,
   action: {
     position: Vector2;
-    unitType: Unit;
+    unitType: UnitType;
     forPlayer: PlayerId;
     direction?: CompassDirection;
   },

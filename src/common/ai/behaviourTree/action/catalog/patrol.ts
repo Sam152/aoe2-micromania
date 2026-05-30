@@ -1,7 +1,7 @@
 import { ActionDefinition } from "../ActionDefinition.ts";
 import { GameStateAction, UnitId } from "../../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
-import { BotState } from "../../state/BotState.ts";
+import { BotState } from "../../../integration/createBot.ts";
 
 export const patrol = {
   type: "PATROL",

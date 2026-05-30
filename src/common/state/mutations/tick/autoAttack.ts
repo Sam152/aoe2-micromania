@@ -3,10 +3,10 @@ import { UnitState } from "../../../units/UnitState.ts";
 import { getAttackRange } from "../../../util/inAttackRange.ts";
 import { hasScalarValue } from "../../../util/hasValue.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
-import { Unit } from "../../../units/Unit.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 
 export function autoAttack(state: GameState, computed: ComputedFrameState) {
-  const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
+  const fireUnits = state.units.filter((unit) => unit.unitType !== UnitType.Monk);
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
       (unit.unitState === UnitState.Idle || hasScalarValue(unit.patrollingTo)) &&

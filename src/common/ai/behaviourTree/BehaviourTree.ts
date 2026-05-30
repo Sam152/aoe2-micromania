@@ -1,5 +1,6 @@
 import { Condition } from "./condition/Condition.ts";
 import { ActionNode } from "./action/ActionDefinition.ts";
+import { UnitType } from "../../units/UnitType.ts";
 
 export type BehaviourTreeNode = Sequence | Selector | Condition | ActionNode;
 
@@ -18,3 +19,5 @@ type Sequence = {
   nodeType: "sequence";
   nodes: BehaviourTreeNode[];
 };
+
+export type UnitAwareBehaviourTree = Record<UnitType, BehaviourTreeNode>;

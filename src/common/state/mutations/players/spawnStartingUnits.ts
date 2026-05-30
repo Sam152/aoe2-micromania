@@ -1,6 +1,6 @@
 import { Grid } from "../../../terrain/Grid.ts";
 import { spawnUnit } from "../initiated/spawnUnit.ts";
-import { Unit } from "../../../units/Unit.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 import { GameState, UnitInstance } from "../../../../types.ts";
 import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
@@ -18,21 +18,21 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
   units.push(
     spawnUnit(state, {
       forPlayer: newPlayerNumber,
-      unitType: Unit.Mangonel,
+      unitType: UnitType.Mangonel,
       position: location,
     }),
   );
   units.push(
     spawnUnit(state, {
       forPlayer: newPlayerNumber,
-      unitType: Unit.Monk,
+      unitType: UnitType.Monk,
       position: location,
     }),
   );
   units.push(
     spawnUnit(state, {
       forPlayer: newPlayerNumber,
-      unitType: Unit.Monk,
+      unitType: UnitType.Monk,
       position: location,
     }),
   );
@@ -40,7 +40,7 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
     units.push(
       spawnUnit(state, {
         forPlayer: newPlayerNumber,
-        unitType: Unit.Archer,
+        unitType: UnitType.Archer,
         position: location,
       }),
     );

@@ -3,7 +3,7 @@ import { Vector2 } from "three/src/math/Vector2.js";
 import { screenManager } from "../../../common/drawing/screenManager.ts";
 import { fanOutMangoProjections } from "../../../common/drawing/helpers/fanOutMangoProjections.ts";
 import { ProjectileType } from "../../../common/units/ProjectileType.ts";
-import { Unit } from "../../../common/units/Unit.ts";
+import { UnitType } from "../../../common/units/UnitType.ts";
 import { ProjectileInstance } from "../../../types.ts";
 
 const VARIATIONS = 10;
@@ -59,7 +59,7 @@ export function MangoFanOutPlayground() {
         id: idsRef.current[i],
         ownedBy: 1,
         type: ProjectileType.Rock,
-        firedByType: Unit.Mangonel,
+        firedByType: UnitType.Mangonel,
         startingPoint,
         destination,
         pathVector: destination.clone().sub(startingPoint),
