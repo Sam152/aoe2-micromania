@@ -4,7 +4,7 @@ import { BlackboardDefinition } from "./blackboardDefinition.ts";
 import { BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
 
 export function computeBlackboard(
-  { gameState, agentState }: { gameState: GameState; agentState: BotState },
+  { gameState, botState }: { gameState: GameState; botState: BotState },
 ): BlackboardValuesFromDefinition<BlackboardDefinition> {
   return {
     distanceToClosestOpponent: 100,

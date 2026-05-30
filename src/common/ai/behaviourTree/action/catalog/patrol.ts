@@ -1,6 +1,6 @@
 import { ActionDefinition } from "../ActionDefinition.ts";
 import { GameStateAction } from "../../../../../types.ts";
-import { Vector2 } from "npm:@types/three@0.184.1";
+import { Vector2 } from "three/src/math/Vector2.js";
 
 export const patrol = {
   type: "PATROL",
