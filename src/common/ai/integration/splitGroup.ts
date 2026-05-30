@@ -11,6 +11,7 @@ export function splitGroup(
   if (group.includedUnits.length < 2) {
     return;
   }
+
   const halfWay = Math.floor(group.includedUnits.length / 2);
   const groupOne = group.includedUnits.slice(0, halfWay);
   const groupTwo = group.includedUnits.slice(halfWay);
