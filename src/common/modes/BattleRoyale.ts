@@ -4,7 +4,7 @@ import { config } from "../config.ts";
 
 const grid = new Grid(30);
 
-const TERRAIN_TICK_DURATION = 30 * 60 * config.ticksPerSecond;
+const TERRAIN_TICK_DURATION = 1 * config.ticksPerSecond;
 
 /**
  * Game modes may: respond to state or actions by dispatching more actions,
@@ -29,7 +29,8 @@ export class BattleRoyale implements GameMode {
     }
 
     this.cyclePlayers(state, action, manager);
-    this.cycleTerrain(state, action, manager);
+    // this.cycleBots(state, action, manager);
+    //this.cycleTerrain(state, action, manager);
   }
 
   cyclePlayers(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
@@ -37,8 +38,9 @@ export class BattleRoyale implements GameMode {
     if (activePlayers === 0) {
       return;
     }
-    const checkPlayer = (state.ticks % activePlayers) + 1;
 
+    // Every so often check if each player has any units left.
+    const checkPlayer = (state.ticks % activePlayers) + 1;
     const unitsOwned = state.units.filter((unit) => unit.ownedByPlayer === checkPlayer).length;
     if (unitsOwned === 0) {
       const found = Object.entries(state.activePlayers).find((entry) => entry[1] === checkPlayer);
@@ -50,6 +52,13 @@ export class BattleRoyale implements GameMode {
         playerId: found[0],
         playerNumber: found[1],
       });
+    }
+  }
+
+  cycleBots(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
+    const activePlayers = Object.keys(state.activePlayers).length;
+    if (activePlayers === 1) {
+      console.log("Adding a bot");
     }
   }
 
