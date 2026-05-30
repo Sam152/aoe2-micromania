@@ -4,7 +4,11 @@ import { BehaviourTreeNode } from "./BehaviourTree.ts";
 import { dataTypes } from "./dataType/dataTypes.ts";
 
 export function evaluateTreeNode(
-  { blackboard, node, actionNodes }: { blackboard: Blackboard; node: BehaviourTreeNode; actionNodes: ActionNode[] },
+  { blackboard, node, actionNodes = [] }: {
+    blackboard: Blackboard;
+    node: BehaviourTreeNode;
+    actionNodes?: ActionNode[];
+  },
 ): { result: boolean; actionNodes: ActionNode[] } {
   if (node.nodeType === "condition") {
     const definition = blackboardDefinition[node.propertyName];

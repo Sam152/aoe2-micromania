@@ -1,5 +1,7 @@
 import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { ActionsList } from "./actionsList.ts";
+import { GameState, GameStateAction } from "../../../../types.ts";
+import { BotState } from "../state/BotState.ts";
 
 export type ActionDefinition<
   TParams extends Record<string, { [K in DataType]: ActionDefinitionParam<K> }[DataType]> = Record<
@@ -9,7 +11,11 @@ export type ActionDefinition<
 > = {
   type: string;
   params: TParams;
-  execute: (input: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> }) => void;
+  execute: (
+    input: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> },
+    gameState: GameState,
+    agentState: BotState,
+  ) => GameStateAction | undefined;
 };
 
 type ActionDefinitionParam<TDataType extends DataType> = {

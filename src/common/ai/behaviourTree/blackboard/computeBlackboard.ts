@@ -1,10 +1,10 @@
 import { GameState } from "../../../../types.ts";
-import { AgentState } from "../state/AgentState.ts";
+import { BotState } from "../state/BotState.ts";
 import { BlackboardDefinition } from "./blackboardDefinition.ts";
 import { BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
 
 export function computeBlackboard(
-  { gameState, agentState }: { gameState: GameState; agentState: AgentState },
+  { gameState, agentState }: { gameState: GameState; agentState: BotState },
 ): BlackboardValuesFromDefinition<BlackboardDefinition> {
   return {
     distanceToClosestOpponent: 100,

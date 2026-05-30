@@ -1,14 +1,14 @@
 import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.ts";
 import { Grid } from "../terrain/Grid.ts";
-import { config } from "../config.ts";
+
 import { logger } from "../../server/logger.ts";
 import { BotInstance, createBot } from "../ai/integration/createBot.ts";
 import { assert } from "@std/assert";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
+import stat = Deno.stat;
+import { triggerBotTicks } from "../ai/integration/triggerBotTicks.ts";
 
 const grid = new Grid(30);
-
-const TERRAIN_TICK_DURATION = 1 * config.ticksPerSecond;
 
 /**
  * Game modes may: respond to state or actions by dispatching more actions,
@@ -16,6 +16,8 @@ const TERRAIN_TICK_DURATION = 1 * config.ticksPerSecond;
  *
  * This essentially creates a server-only computation of actions as a function of game
  * state, in order to control what is happening.
+ *
+ * This
  */
 export class BattleRoyale implements GameMode {
   private bots: BotInstance[] = [];
@@ -36,6 +38,7 @@ export class BattleRoyale implements GameMode {
 
     this.cyclePlayers(state, action, manager);
     this.cycleBots(state, action, manager);
+    this.allowBotsToMakeDecision(state, action, manager);
     //this.cycleTerrain(state, action, manager);
   }
 
@@ -59,6 +62,10 @@ export class BattleRoyale implements GameMode {
         playerNumber: found[1],
       });
     }
+  }
+
+  allowBotsToMakeDecision(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
+    triggerBotTicks(this.bots, state, manager.dispatchGame.bind(manager));
   }
 
   cycleBots(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
@@ -96,7 +103,7 @@ export class BattleRoyale implements GameMode {
 
   cycleTerrain(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
     const terrainOptions = ["terrain/15001-grass", "terrain/15008-grass-2", "terrain/15009-grass-dirt"];
-    const terrainIndex = Math.floor(state.ticks / TERRAIN_TICK_DURATION) % terrainOptions.length;
+    const terrainIndex = Math.floor(state.ticks / 1000) % terrainOptions.length;
     const newTerrain = terrainOptions[terrainIndex];
     if (state.mapTerrain !== newTerrain) {
       manager.dispatchGame({
