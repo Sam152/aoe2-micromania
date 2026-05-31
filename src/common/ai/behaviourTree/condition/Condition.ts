@@ -1,12 +1,15 @@
-import { ComparatorOptionsFromDataType, DataType } from "../dataType/dataTypes.ts";
+import { ConditionList, ConditionType } from "./conditionList.ts";
 import { DataValueOfType } from "../dataValue/DataValue.ts";
 
-export type Condition = { [TDataType in DataType]: ConditionOfType<TDataType> }[DataType];
+import { DataType } from "../dataType/dataTypes.ts";
 
-export type ConditionOfType<TDataType extends DataType> = {
+export type ConditionNode = { [TConditionType in ConditionType]: ConditionOfType<TConditionType> }[ConditionType];
+
+export type ConditionOfType<TConditionType extends ConditionType> = {
   nodeType: "condition";
-  dataType: TDataType;
-  comparatorType: ComparatorOptionsFromDataType<TDataType>;
-  leftValue: DataValueOfType<TDataType>;
-  rightValue: DataValueOfType<TDataType>;
+  type: TConditionType;
+  params: {
+    [TKey in keyof ConditionList[TConditionType]["params"]]: ConditionList[TConditionType]["params"][TKey] extends
+      { dataType: infer D extends DataType } ? DataValueOfType<D> : never;
+  };
 };

@@ -1,8 +1,8 @@
-import { Condition } from "./condition/Condition.ts";
 import { ActionNode } from "./action/ActionDefinition.ts";
 import { UnitType } from "../../units/UnitType.ts";
+import { ConditionNode } from "./condition/Condition.ts";
 
-export type BehaviourTreeNode = Sequence | Selector | Condition | ActionNode;
+export type BehaviourTreeNode = Sequence | Selector | ConditionNode | ActionNode;
 
 /**
  * Resolve first success node, else fail.

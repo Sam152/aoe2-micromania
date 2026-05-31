@@ -1,10 +1,11 @@
 import { ActionNode } from "./action/ActionDefinition.ts";
 import { BehaviourTreeNode } from "./BehaviourTree.ts";
-import { dataTypes } from "./dataType/dataTypes.ts";
+
 import { BlackboardComputer } from "./blackboard/computeBlackboard.ts";
-import { resolveDataValueToPrimitive } from "./dataValue/resolveDataValue.ts";
+import { resolveParamDataValues } from "./dataValue/resolveDataValue.ts";
 import { GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "../integration/createBot.ts";
+import { conditionList } from "./condition/conditionList.ts";
 
 type EvaluateTreeNodeArgs = {
   blackboardComputer: BlackboardComputer;
@@ -19,26 +20,14 @@ export function evaluateTreeNode(
   { blackboardComputer, node, actionNodes = [], state, botState, group }: EvaluateTreeNodeArgs,
 ): { result: boolean; actionNodes: ActionNode[] } {
   if (node.nodeType === "condition") {
-    const leftValue = resolveDataValueToPrimitive({
-      dataValue: node.leftValue,
+    const resolvedParams = resolveParamDataValues(node.params, {
+      group,
       state,
       botState,
-      group,
       blackboardComputer,
     });
-    const rightValue = resolveDataValueToPrimitive({
-      dataValue: node.rightValue,
-      state,
-      botState,
-      group,
-      blackboardComputer,
-    });
-
-    const dataTypeDefinition = dataTypes[node.dataType];
-    const comparitors = dataTypeDefinition.comparitors;
-    const comparitor = comparitors[node.comparatorType as keyof typeof comparitors] as any;
-
-    return { result: comparitor(leftValue, rightValue), actionNodes };
+    const conditionDefinition = conditionList[node.type];
+    return { result: conditionDefinition.evaluate(resolvedParams as any), actionNodes };
   }
 
   if (node.nodeType === "action") {

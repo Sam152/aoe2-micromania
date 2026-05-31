@@ -28,20 +28,21 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodes: [
           {
             nodeType: "condition",
-            dataType: "number",
-            leftValue: {
-              nodeType: "dataValue",
-              dataType: "number",
-              type: "PRIMITIVE",
-              value: 2,
-            },
-            comparatorType: "GT",
-            rightValue: {
-              nodeType: "dataValue",
-              dataType: "number",
-              type: "BLACKBOARD",
-              blackboardKey: "groupsForUnitTypeCount",
-              params: {},
+            type: "numberGreaterThan",
+            params: {
+              left: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "PRIMITIVE",
+                value: 2,
+              },
+              right: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "groupsForUnitTypeCount",
+                params: {},
+              },
             },
           },
           { nodeType: "action", type: "SPLIT_GROUP", params: {} },
@@ -53,20 +54,21 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodes: [
           {
             nodeType: "condition",
-            dataType: "number",
-            leftValue: {
-              nodeType: "dataValue",
-              dataType: "number",
-              type: "PRIMITIVE",
-              value: 0,
-            },
-            comparatorType: "EQ",
-            rightValue: {
-              nodeType: "dataValue",
-              dataType: "number",
-              type: "BLACKBOARD",
-              blackboardKey: "unitTypeGroupIndex",
-              params: {},
+            type: "numberEquals",
+            params: {
+              left: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "PRIMITIVE",
+                value: 0,
+              },
+              right: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "unitTypeGroupIndex",
+                params: {},
+              },
             },
           },
           {
