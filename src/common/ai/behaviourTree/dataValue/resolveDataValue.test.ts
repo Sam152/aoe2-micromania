@@ -1,0 +1,62 @@
+import { resolveDataValueToPrimitive } from "./resolveDataValue.ts";
+import { DataValue } from "./DataValue.ts";
+import { BlackboardComputer } from "../blackboard/computeBlackboard.ts";
+import { GameState } from "../../../../types.ts";
+import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
+import { describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+
+// The resolver only passes these through to the computer, so empty stubs are sufficient here.
+const state = {} as GameState;
+const botState = {} as BotState;
+const group = {} as BotUnitGroup;
+
+// A stub computer: number keys return fixed values; the vector key echoes its resolved param so
+// we can assert that nested params were resolved to primitives before the computer was invoked.
+const blackboardComputer: BlackboardComputer = {
+  groupsForUnitTypeCount: () => 1,
+  unitTypeGroupIndex: () => 2,
+  unitsInGroupCount: () => 7,
+  unitsOfTypeGlobalCount: () => 4,
+  perceptionAverageVectorOpponents: ({ params }) => params.vectorOffset,
+};
+
+const resolve = (dataValue: DataValue) =>
+  resolveDataValueToPrimitive({ dataValue, state, botState, group, blackboardComputer });
+
+describe("resolveDataValueToPrimitive", () => {
+  it("returns the value of a primitive data value", () => {
+    assertEquals(
+      resolve({ nodeType: "dataValue", type: "PRIMITIVE", dataType: "number", value: 42 }),
+      42,
+    );
+  });
+
+  it("resolves a blackboard data value with no params via the computer", () => {
+    assertEquals(
+      resolve({
+        nodeType: "dataValue",
+        type: "BLACKBOARD",
+        dataType: "number",
+        blackboardKey: "unitsInGroupCount",
+        paramValues: {},
+      }),
+      7,
+    );
+  });
+
+  it("resolves nested param data values to primitives before invoking the computer", () => {
+    assertEquals(
+      resolve({
+        nodeType: "dataValue",
+        type: "BLACKBOARD",
+        dataType: "vector",
+        blackboardKey: "perceptionAverageVectorOpponents",
+        paramValues: {
+          vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 3, y: 4 } },
+        },
+      }),
+      { x: 3, y: 4 },
+    );
+  });
+});

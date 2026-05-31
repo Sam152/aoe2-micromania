@@ -1,20 +1,44 @@
-import { Blackboard, blackboardDefinition } from "./blackboard/blackboardDefinition.ts";
 import { ActionNode } from "./action/ActionDefinition.ts";
 import { BehaviourTreeNode } from "./BehaviourTree.ts";
 import { dataTypes } from "./dataType/dataTypes.ts";
+import { BlackboardComputer } from "./blackboard/computeBlackboard.ts";
+import { resolveDataValueToPrimitive } from "./dataValue/resolveDataValue.ts";
+import { GameState } from "../../../types.ts";
+import { BotState, BotUnitGroup } from "../integration/createBot.ts";
+
+type EvaluateTreeNodeArgs = {
+  blackboardComputer: BlackboardComputer;
+  state: GameState;
+  botState: BotState;
+  group: BotUnitGroup;
+  node: BehaviourTreeNode;
+  actionNodes?: ActionNode[];
+};
 
 export function evaluateTreeNode(
-  { blackboard, node, actionNodes = [] }: {
-    blackboard: Blackboard;
-    node: BehaviourTreeNode;
-    actionNodes?: ActionNode[];
-  },
+  { blackboardComputer, node, actionNodes = [], state, botState, group }: EvaluateTreeNodeArgs,
 ): { result: boolean; actionNodes: ActionNode[] } {
   if (node.nodeType === "condition") {
-    const definition = blackboardDefinition[node.propertyName];
-    const dataTypeDefinition = dataTypes[definition.dataType];
-    const comparitor = dataTypeDefinition.comparitors[node.comparatorType];
-    return { result: comparitor(node.value, blackboard[node.propertyName]), actionNodes };
+    const leftValue = resolveDataValueToPrimitive({
+      dataValue: node.leftValue,
+      state,
+      botState,
+      group,
+      blackboardComputer,
+    });
+    const rightValue = resolveDataValueToPrimitive({
+      dataValue: node.rightValue,
+      state,
+      botState,
+      group,
+      blackboardComputer,
+    });
+
+    const dataTypeDefinition = dataTypes[node.dataType];
+    const comparitors = dataTypeDefinition.comparitors as Record<string, (a: unknown, b: unknown) => boolean>;
+    const comparitor = comparitors[node.comparatorType];
+
+    return { result: comparitor(leftValue, rightValue), actionNodes };
   }
 
   if (node.nodeType === "action") {
