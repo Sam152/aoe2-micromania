@@ -4,9 +4,7 @@ type Vector = { x: number; y: number };
 
 export const vector = {
   id: "vector",
-  comparitors: {
-    MAG_GT: (a, b) => false,
-  },
+  defaultValue: { x: 0, y: 0 },
 } satisfies DataTypeDefinition<Vector, {
   scalarMultiple: number;
 }>;

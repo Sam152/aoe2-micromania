@@ -19,6 +19,3 @@ export type TypeFromDataType<TDataType extends DataType> = (typeof dataTypes)[TD
 export type MutationRequirementsFromDataType<TDataType extends DataType> = (typeof dataTypes)[TDataType] extends
   DataTypeDefinition<any, infer T> ? T
   : never;
-
-export type ComparatorOptionsFromDataType<TDataType extends DataType> =
-  keyof (typeof dataTypes)[TDataType]["comparitors"];
