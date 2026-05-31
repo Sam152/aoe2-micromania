@@ -2,6 +2,7 @@ import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "..
 import { ActionsList } from "./actionsList.ts";
 import { GameState, GameStateAction, UnitId } from "../../../../types.ts";
 import { BotState } from "../../integration/createBot.ts";
+import { DataValueOfType } from "../dataValue/DataValue.ts";
 
 export type ActionDefinition<
   TParams extends Record<string, { [K in DataType]: ActionDefinitionParam<K> }[DataType]> = Record<
@@ -29,7 +30,7 @@ export type ActionNode<TType extends keyof ActionsList = keyof ActionsList> = TT
     type: TType;
     params: {
       [TKey in keyof ActionsList[TType]["params"]]: ActionsList[TType]["params"][TKey] extends
-        { dataType: infer D extends DataType } ? TypeFromDataType<D>
+        { dataType: infer D extends DataType } ? DataValueOfType<D>
         : never;
     };
   }

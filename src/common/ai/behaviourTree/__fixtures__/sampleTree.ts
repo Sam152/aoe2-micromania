@@ -9,7 +9,12 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodeType: "action",
         type: "IDLE",
         params: {
-          forTicksAmount: 100,
+          forTicksAmount: {
+            nodeType: "dataValue",
+            dataType: "number",
+            type: "PRIMITIVE",
+            value: 100,
+          },
         },
       },
     ],
@@ -21,7 +26,24 @@ export const sampleTree: UnitAwareBehaviourTree = {
       {
         nodeType: "sequence",
         nodes: [
-          { nodeType: "condition", value: 2, comparatorType: "GT", propertyName: "groupsForUnitTypeCount" },
+          {
+            nodeType: "condition",
+            dataType: "number",
+            leftValue: {
+              nodeType: "dataValue",
+              dataType: "number",
+              type: "PRIMITIVE",
+              value: 2,
+            },
+            comparatorType: "GT",
+            rightValue: {
+              nodeType: "dataValue",
+              dataType: "number",
+              type: "BLACKBOARD",
+              blackboardKey: "groupsForUnitTypeCount",
+              paramValues: {},
+            },
+          },
           { nodeType: "action", type: "SPLIT_GROUP", params: {} },
         ],
       },
