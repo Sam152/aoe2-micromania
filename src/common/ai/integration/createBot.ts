@@ -4,8 +4,8 @@ import { tickUnitGroupDecisions } from "./tickUnitGroupDecisions.ts";
 import { ActionNode } from "../behaviourTree/action/ActionDefinition.ts";
 import { UnitType } from "../../units/UnitType.ts";
 
-import { createInitialUnitGroups } from "./createInitialUnitGroups.ts";
-import { consolidateGroups } from "./consolidateGroups.ts";
+import { createInitialUnitGroups } from "./util/createInitialUnitGroups.ts";
+import { consolidateGroups } from "./util/consolidateGroups.ts";
 
 export type BotInstance = {
   tick: (state: GameState, dispatcher: GameDispatcher) => void;

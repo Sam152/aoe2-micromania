@@ -1,5 +1,5 @@
-import { BotState, BotUnitGroup } from "./createBot.ts";
-import { GameState } from "../../../types.ts";
+import { BotState, BotUnitGroup } from "../createBot.ts";
+import { GameState } from "../../../../types.ts";
 
 export function mergeGroups(
   { group, botState, state }: {

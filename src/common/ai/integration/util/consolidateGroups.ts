@@ -1,5 +1,5 @@
-import { BotUnitGroup } from "./createBot.ts";
-import { UnitInstance } from "../../../types.ts";
+import { BotUnitGroup } from "../createBot.ts";
+import { UnitInstance } from "../../../../types.ts";
 
 export function consolidateGroups(groups: BotUnitGroup[], state: { units: Pick<UnitInstance, "id">[] }) {
   const unitsIndex = state.units.reduce<Record<number, boolean>>((index, unit) => {

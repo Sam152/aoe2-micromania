@@ -1,6 +1,6 @@
 import { consolidateGroups } from "./consolidateGroups.ts";
-import { BotUnitGroup } from "./createBot.ts";
-import { UnitType } from "../../units/UnitType.ts";
+import { BotUnitGroup } from "../createBot.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 

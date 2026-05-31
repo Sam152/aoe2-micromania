@@ -1,8 +1,8 @@
-import { unitsByType } from "../../util/unitsByType.ts";
-import { unitsOwnedByPlayer } from "../../util/unitsOwnedByPlayer.ts";
-import { UnitType } from "../../units/UnitType.ts";
-import { BotState } from "./createBot.ts";
-import { GameState } from "../../../types.ts";
+import { unitsByType } from "../../../util/unitsByType.ts";
+import { unitsOwnedByPlayer } from "../../../util/unitsOwnedByPlayer.ts";
+import { UnitType } from "../../../units/UnitType.ts";
+import { BotState } from "../createBot.ts";
+import { GameState } from "../../../../types.ts";
 
 export function createInitialUnitGroups(botState: BotState, state: GameState) {
   const botUnitsByType = unitsByType(unitsOwnedByPlayer(state.units, botState.playingAs));

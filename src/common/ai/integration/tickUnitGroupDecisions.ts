@@ -1,11 +1,10 @@
 import { actionsList } from "../behaviourTree/action/actionsList.ts";
-
 import { evaluateTreeNode } from "../behaviourTree/evaluateTreeNode.ts";
 import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
-import { splitGroup } from "./splitGroup.ts";
-import { mergeGroups } from "./mergeGroups.ts";
+import { splitGroup } from "./util/splitGroup.ts";
+import { mergeGroups } from "./util/mergeGroups.ts";
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
 import { resolveDataValueToPrimitive } from "../behaviourTree/dataValue/resolveDataValue.ts";
 
