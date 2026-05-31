@@ -4,5 +4,5 @@ type UnitType = "ARCHER" | "MANGO" | "MONK";
 
 export const unitType = {
   id: "unitType",
-  defaultValue: "ARCHER" as UnitType,
+  defaultValue: "ARCHER",
 } satisfies DataTypeDefinition<UnitType, undefined>;
