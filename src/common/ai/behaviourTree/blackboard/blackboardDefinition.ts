@@ -1,4 +1,4 @@
-import { BlackboardDefinitionShape, BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
+import { BlackboardDefinitionShape } from "./BlackboardDefinitionShape.ts";
 
 export const blackboardDefinition = {
   /**
@@ -60,6 +60,9 @@ export const blackboardDefinition = {
       step: 1,
     },
     params: {
+      /**
+       * Not strictly used or useful, but used to flesh out the params system.
+       */
       vectorOffset: {
         dataType: "vector",
         default: { x: 0, y: 0 },
@@ -75,5 +78,3 @@ export const blackboardDefinition = {
 
 export type BlackboardDefinition = typeof blackboardDefinition;
 export type BlackboardKey = keyof BlackboardDefinition;
-
-export type Blackboard = BlackboardValuesFromDefinition<BlackboardDefinition>;
