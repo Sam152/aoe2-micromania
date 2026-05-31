@@ -61,8 +61,8 @@ export const blackboardDefinition = {
     },
     params: {
       vectorOffset: {
-        default: { x: 0, y: 0 },
         dataType: "vector",
+        default: { x: 0, y: 0 },
         mutationRequirements: {
           min: 1,
           max: 40,
@@ -74,6 +74,6 @@ export const blackboardDefinition = {
 } as const satisfies BlackboardDefinitionShape;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
-export type BlackboardKeys = keyof BlackboardDefinition;
+export type BlackboardKey = keyof BlackboardDefinition;
 
 export type Blackboard = BlackboardValuesFromDefinition<BlackboardDefinition>;

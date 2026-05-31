@@ -4,8 +4,11 @@ import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 
 const blackboard: Blackboard = {
-  distanceToClosestOpponent: 10,
-  ticksSinceLastAction: 10,
+  groupsForUnitTypeCount: 10,
+  unitTypeGroupIndex: 10,
+  unitsInGroupCount: 10,
+  unitsOfTypeGlobalCount: 10,
+  perceptionAverageVectorOpponents: { x: 0, y: 0 },
 };
 
 describe("tree evaluation", () => {
@@ -17,13 +20,49 @@ describe("tree evaluation", () => {
         node: {
           nodeType: "selector",
           nodes: [
-            { nodeType: "condition", value: 1, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-            { nodeType: "condition", value: 15, comparatorType: "LT", propertyName: "distanceToClosestOpponent" },
-            { nodeType: "condition", value: 15, comparatorType: "LT", propertyName: "distanceToClosestOpponent" },
+            {
+              nodeType: "condition",
+              dataType: "number",
+              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+              comparatorType: "GT",
+              rightValue: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "unitsInGroupCount",
+                paramValues: {},
+              },
+            },
+            {
+              nodeType: "condition",
+              dataType: "number",
+              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+              comparatorType: "LT",
+              rightValue: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "unitsInGroupCount",
+                paramValues: {},
+              },
+            },
+            {
+              nodeType: "condition",
+              dataType: "number",
+              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+              comparatorType: "LT",
+              rightValue: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "unitsInGroupCount",
+                paramValues: {},
+              },
+            },
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: 1 },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
             },
           ],
         },
@@ -33,7 +72,7 @@ describe("tree evaluation", () => {
         actionNodes: [{
           nodeType: "action",
           type: "IDLE",
-          params: { forTicksAmount: 1 },
+          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
         }],
       },
     );
@@ -50,22 +89,76 @@ describe("tree evaluation", () => {
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", value: 5, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+                {
+                  nodeType: "condition",
+                  dataType: "number",
+                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                  comparatorType: "GT",
+                  rightValue: {
+                    nodeType: "dataValue",
+                    dataType: "number",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitsInGroupCount",
+                    paramValues: {},
+                  },
+                },
+                {
+                  nodeType: "action",
+                  type: "IDLE",
+                  params: {
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                  },
+                },
               ],
             },
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+                {
+                  nodeType: "condition",
+                  dataType: "number",
+                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                  comparatorType: "GT",
+                  rightValue: {
+                    nodeType: "dataValue",
+                    dataType: "number",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitsInGroupCount",
+                    paramValues: {},
+                  },
+                },
+                {
+                  nodeType: "action",
+                  type: "IDLE",
+                  params: {
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+                  },
+                },
               ],
             },
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", value: 20, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+                {
+                  nodeType: "condition",
+                  dataType: "number",
+                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 20 },
+                  comparatorType: "GT",
+                  rightValue: {
+                    nodeType: "dataValue",
+                    dataType: "number",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitsInGroupCount",
+                    paramValues: {},
+                  },
+                },
+                {
+                  nodeType: "action",
+                  type: "IDLE",
+                  params: {
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 },
+                  },
+                },
               ],
             },
           ],
@@ -73,7 +166,11 @@ describe("tree evaluation", () => {
       }),
       {
         result: true,
-        actionNodes: [{ nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } }],
+        actionNodes: [{
+          nodeType: "action",
+          type: "IDLE",
+          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+        }],
       },
     );
   });
@@ -89,27 +186,79 @@ describe("tree evaluation", () => {
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+                {
+                  nodeType: "condition",
+                  dataType: "number",
+                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                  comparatorType: "GT",
+                  rightValue: {
+                    nodeType: "dataValue",
+                    dataType: "number",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitsInGroupCount",
+                    paramValues: {},
+                  },
+                },
+                {
+                  nodeType: "action",
+                  type: "IDLE",
+                  params: {
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                  },
+                },
               ],
             },
             {
               nodeType: "sequence",
               nodes: [
-                { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+                {
+                  nodeType: "condition",
+                  dataType: "number",
+                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                  comparatorType: "GT",
+                  rightValue: {
+                    nodeType: "dataValue",
+                    dataType: "number",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitsInGroupCount",
+                    paramValues: {},
+                  },
+                },
+                {
+                  nodeType: "action",
+                  type: "IDLE",
+                  params: {
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+                  },
+                },
               ],
             },
-            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+            {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+            },
           ],
         },
       }),
       {
         result: true,
         actionNodes: [
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+          },
         ],
       },
     );
@@ -144,17 +293,53 @@ describe("tree evaluation", () => {
         node: {
           nodeType: "sequence",
           nodes: [
-            { nodeType: "condition", value: 15, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
-            { nodeType: "condition", value: 5, comparatorType: "GT", propertyName: "distanceToClosestOpponent" },
-            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+            {
+              nodeType: "condition",
+              dataType: "number",
+              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+              comparatorType: "GT",
+              rightValue: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "unitsInGroupCount",
+                paramValues: {},
+              },
+            },
+            {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            },
+            {
+              nodeType: "condition",
+              dataType: "number",
+              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+              comparatorType: "GT",
+              rightValue: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "unitsInGroupCount",
+                paramValues: {},
+              },
+            },
+            {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+            },
           ],
         },
       }),
       {
         result: true,
         actionNodes: [
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+          },
         ],
       },
     );
@@ -174,32 +359,69 @@ describe("tree evaluation", () => {
                 {
                   nodeType: "sequence",
                   nodes: [
-                    { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+                    {
+                      nodeType: "action",
+                      type: "IDLE",
+                      params: {
+                        forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                      },
+                    },
                   ],
                 },
-                { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
+                {
+                  nodeType: "action",
+                  type: "IDLE",
+                  params: {
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+                  },
+                },
                 {
                   nodeType: "selector",
                   nodes: [
                     {
                       nodeType: "condition",
-                      value: 5,
+                      dataType: "number",
+                      leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
                       comparatorType: "GT",
-                      propertyName: "distanceToClosestOpponent",
+                      rightValue: {
+                        nodeType: "dataValue",
+                        dataType: "number",
+                        type: "BLACKBOARD",
+                        blackboardKey: "unitsInGroupCount",
+                        paramValues: {},
+                      },
                     },
                     {
                       nodeType: "selector",
                       nodes: [
                         {
                           nodeType: "condition",
-                          value: 5,
+                          dataType: "number",
+                          leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
                           comparatorType: "GT",
-                          propertyName: "distanceToClosestOpponent",
+                          rightValue: {
+                            nodeType: "dataValue",
+                            dataType: "number",
+                            type: "BLACKBOARD",
+                            blackboardKey: "unitsInGroupCount",
+                            paramValues: {},
+                          },
                         },
                         {
                           nodeType: "sequence",
                           nodes: [
-                            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
+                            {
+                              nodeType: "action",
+                              type: "IDLE",
+                              params: {
+                                forTicksAmount: {
+                                  nodeType: "dataValue",
+                                  dataType: "number",
+                                  type: "PRIMITIVE",
+                                  value: 3,
+                                },
+                              },
+                            },
                           ],
                         },
                       ],
@@ -208,17 +430,37 @@ describe("tree evaluation", () => {
                 },
               ],
             },
-            { nodeType: "action", type: "IDLE", params: { forTicksAmount: 4 } },
+            {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 4 } },
+            },
           ],
         },
       }),
       {
         result: true,
         actionNodes: [
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 2 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 3 } },
-          { nodeType: "action", type: "IDLE", params: { forTicksAmount: 4 } },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 4 } },
+          },
         ],
       },
     );

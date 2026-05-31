@@ -1,18 +1,39 @@
 import { GameState } from "../../../../types.ts";
-import { BlackboardDefinition } from "./blackboardDefinition.ts";
-import { BlackboardValuesFromDefinition } from "./BlackboardDefinitionShape.ts";
-import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
+import { BlackboardDefinition, BlackboardKey } from "./blackboardDefinition.ts";
 
-export function computeBlackboard(
-  { state, botState, group }: { state: GameState; botState: BotState; group: BotUnitGroup },
-): BlackboardValuesFromDefinition<BlackboardDefinition> {
-  return {
-    groupsForUnitTypeCount:
-      Object.values(botState.unitGroups).filter((botGroup) => botGroup.unitType === group.unitType).length,
-    unitTypeGroupIndex: Object.values(botState.unitGroups)
+import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
+import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+
+type BlackboardValueResolverParams<TBlackboardKey extends BlackboardKey> = {
+  state: GameState;
+  botState: BotState;
+  group: BotUnitGroup;
+  params: {
+    [TKey in keyof BlackboardDefinition[TBlackboardKey]["params"]]:
+      BlackboardDefinition[TBlackboardKey]["params"][TKey] extends { dataType: infer D extends DataType }
+        ? TypeFromDataType<D>
+        : never;
+  };
+};
+
+type BlackboardValueResolver<TDataType extends DataType, TBlackboardKey extends BlackboardKey> = (
+  params: BlackboardValueResolverParams<TBlackboardKey>,
+) => TypeFromDataType<TDataType>;
+
+export type BlackboardComputer = {
+  [TKey in BlackboardKey]: BlackboardValueResolver<BlackboardDefinition[TKey]["dataType"], TKey>;
+};
+
+export const blackboardComputer: BlackboardComputer = {
+  groupsForUnitTypeCount: ({ botState, group }) => {
+    return Object.values(botState.unitGroups).filter((botGroup) => botGroup.unitType === group.unitType).length;
+  },
+  unitTypeGroupIndex: ({ botState, group }) =>
+    Object.values(botState.unitGroups)
       .filter((arrGroup) => arrGroup.unitType === group.unitType)
       .findIndex((arrGroup) => arrGroup === group),
-    unitsInGroupCount: group.includedUnits.length,
-    unitsOfTypeGlobalCount: state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
-  };
-}
+  unitsInGroupCount: ({ group }) => group.includedUnits.length,
+  unitsOfTypeGlobalCount: ({ state, botState }) =>
+    state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
+  perceptionAverageVectorOpponents: () => ({ x: 1, y: 1 }),
+};
