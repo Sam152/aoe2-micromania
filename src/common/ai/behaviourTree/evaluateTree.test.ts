@@ -45,41 +45,46 @@ describe("tree evaluation", () => {
           nodes: [
             {
               nodeType: "condition",
-              dataType: "number",
-              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
-              comparatorType: "GT",
-              rightValue: {
-                nodeType: "dataValue",
-                dataType: "number",
-                type: "BLACKBOARD",
-                blackboardKey: "unitsInGroupCount",
-                params: {},
+              type: "numberGreaterThan",
+              params: {
+                left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                right: {
+                  nodeType: "dataValue",
+                  dataType: "number",
+                  type: "BLACKBOARD",
+                  blackboardKey: "unitsInGroupCount",
+                  params: {},
+                },
               },
             },
             {
+              // 10 > 15 = false (was: 15 LT 10)
               nodeType: "condition",
-              dataType: "number",
-              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
-              comparatorType: "LT",
-              rightValue: {
-                nodeType: "dataValue",
-                dataType: "number",
-                type: "BLACKBOARD",
-                blackboardKey: "unitsInGroupCount",
-                params: {},
+              type: "numberGreaterThan",
+              params: {
+                left: {
+                  nodeType: "dataValue",
+                  dataType: "number",
+                  type: "BLACKBOARD",
+                  blackboardKey: "unitsInGroupCount",
+                  params: {},
+                },
+                right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
               },
             },
             {
+              // 10 > 15 = false (was: 15 LT 10)
               nodeType: "condition",
-              dataType: "number",
-              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
-              comparatorType: "LT",
-              rightValue: {
-                nodeType: "dataValue",
-                dataType: "number",
-                type: "BLACKBOARD",
-                blackboardKey: "unitsInGroupCount",
-                params: {},
+              type: "numberGreaterThan",
+              params: {
+                left: {
+                  nodeType: "dataValue",
+                  dataType: "number",
+                  type: "BLACKBOARD",
+                  blackboardKey: "unitsInGroupCount",
+                  params: {},
+                },
+                right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
               },
             },
             {
@@ -114,15 +119,16 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  dataType: "number",
-                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
-                  comparatorType: "GT",
-                  rightValue: {
-                    nodeType: "dataValue",
-                    dataType: "number",
-                    type: "BLACKBOARD",
-                    blackboardKey: "unitsInGroupCount",
-                    params: {},
+                  type: "numberGreaterThan",
+                  params: {
+                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                    right: {
+                      nodeType: "dataValue",
+                      dataType: "number",
+                      type: "BLACKBOARD",
+                      blackboardKey: "unitsInGroupCount",
+                      params: {},
+                    },
                   },
                 },
                 {
@@ -139,15 +145,16 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  dataType: "number",
-                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
-                  comparatorType: "GT",
-                  rightValue: {
-                    nodeType: "dataValue",
-                    dataType: "number",
-                    type: "BLACKBOARD",
-                    blackboardKey: "unitsInGroupCount",
-                    params: {},
+                  type: "numberGreaterThan",
+                  params: {
+                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                    right: {
+                      nodeType: "dataValue",
+                      dataType: "number",
+                      type: "BLACKBOARD",
+                      blackboardKey: "unitsInGroupCount",
+                      params: {},
+                    },
                   },
                 },
                 {
@@ -164,15 +171,16 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  dataType: "number",
-                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 20 },
-                  comparatorType: "GT",
-                  rightValue: {
-                    nodeType: "dataValue",
-                    dataType: "number",
-                    type: "BLACKBOARD",
-                    blackboardKey: "unitsInGroupCount",
-                    params: {},
+                  type: "numberGreaterThan",
+                  params: {
+                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 20 },
+                    right: {
+                      nodeType: "dataValue",
+                      dataType: "number",
+                      type: "BLACKBOARD",
+                      blackboardKey: "unitsInGroupCount",
+                      params: {},
+                    },
                   },
                 },
                 {
@@ -211,15 +219,16 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  dataType: "number",
-                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
-                  comparatorType: "GT",
-                  rightValue: {
-                    nodeType: "dataValue",
-                    dataType: "number",
-                    type: "BLACKBOARD",
-                    blackboardKey: "unitsInGroupCount",
-                    params: {},
+                  type: "numberGreaterThan",
+                  params: {
+                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                    right: {
+                      nodeType: "dataValue",
+                      dataType: "number",
+                      type: "BLACKBOARD",
+                      blackboardKey: "unitsInGroupCount",
+                      params: {},
+                    },
                   },
                 },
                 {
@@ -236,15 +245,16 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  dataType: "number",
-                  leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
-                  comparatorType: "GT",
-                  rightValue: {
-                    nodeType: "dataValue",
-                    dataType: "number",
-                    type: "BLACKBOARD",
-                    blackboardKey: "unitsInGroupCount",
-                    params: {},
+                  type: "numberGreaterThan",
+                  params: {
+                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                    right: {
+                      nodeType: "dataValue",
+                      dataType: "number",
+                      type: "BLACKBOARD",
+                      blackboardKey: "unitsInGroupCount",
+                      params: {},
+                    },
                   },
                 },
                 {
@@ -318,15 +328,16 @@ describe("tree evaluation", () => {
           nodes: [
             {
               nodeType: "condition",
-              dataType: "number",
-              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
-              comparatorType: "GT",
-              rightValue: {
-                nodeType: "dataValue",
-                dataType: "number",
-                type: "BLACKBOARD",
-                blackboardKey: "unitsInGroupCount",
-                params: {},
+              type: "numberGreaterThan",
+              params: {
+                left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                right: {
+                  nodeType: "dataValue",
+                  dataType: "number",
+                  type: "BLACKBOARD",
+                  blackboardKey: "unitsInGroupCount",
+                  params: {},
+                },
               },
             },
             {
@@ -336,15 +347,16 @@ describe("tree evaluation", () => {
             },
             {
               nodeType: "condition",
-              dataType: "number",
-              leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
-              comparatorType: "GT",
-              rightValue: {
-                nodeType: "dataValue",
-                dataType: "number",
-                type: "BLACKBOARD",
-                blackboardKey: "unitsInGroupCount",
-                params: {},
+              type: "numberGreaterThan",
+              params: {
+                left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                right: {
+                  nodeType: "dataValue",
+                  dataType: "number",
+                  type: "BLACKBOARD",
+                  blackboardKey: "unitsInGroupCount",
+                  params: {},
+                },
               },
             },
             {
@@ -403,15 +415,16 @@ describe("tree evaluation", () => {
                   nodes: [
                     {
                       nodeType: "condition",
-                      dataType: "number",
-                      leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
-                      comparatorType: "GT",
-                      rightValue: {
-                        nodeType: "dataValue",
-                        dataType: "number",
-                        type: "BLACKBOARD",
-                        blackboardKey: "unitsInGroupCount",
-                        params: {},
+                      type: "numberGreaterThan",
+                      params: {
+                        left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                        right: {
+                          nodeType: "dataValue",
+                          dataType: "number",
+                          type: "BLACKBOARD",
+                          blackboardKey: "unitsInGroupCount",
+                          params: {},
+                        },
                       },
                     },
                     {
@@ -419,15 +432,16 @@ describe("tree evaluation", () => {
                       nodes: [
                         {
                           nodeType: "condition",
-                          dataType: "number",
-                          leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
-                          comparatorType: "GT",
-                          rightValue: {
-                            nodeType: "dataValue",
-                            dataType: "number",
-                            type: "BLACKBOARD",
-                            blackboardKey: "unitsInGroupCount",
-                            params: {},
+                          type: "numberGreaterThan",
+                          params: {
+                            left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                            right: {
+                              nodeType: "dataValue",
+                              dataType: "number",
+                              type: "BLACKBOARD",
+                              blackboardKey: "unitsInGroupCount",
+                              params: {},
+                            },
                           },
                         },
                         {

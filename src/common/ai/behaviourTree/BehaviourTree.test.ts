@@ -1,36 +1,36 @@
 import { BehaviourTreeNode } from "./BehaviourTree.ts";
 
 Deno.test("behaviour tree type safety", () => {
-  const _condBadComparator: BehaviourTreeNode = {
+  const _condMissingParams: BehaviourTreeNode = {
     nodeType: "condition",
-    dataType: "number",
-    leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
-    // @ts-expect-error - MAG_GT is a vector comparator, not valid for number
-    comparatorType: "MAG_GT",
-    rightValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+    type: "numberEquals",
+    // @ts-expect-error - params must satisfy the condition's required shape
+    params: {},
   };
 
-  const _condBadValueType: BehaviourTreeNode = {
+  const _condBadParamType: BehaviourTreeNode = {
     nodeType: "condition",
-    dataType: "number",
-    // @ts-expect-error - value dataType "vector" does not match condition dataType "number"
-    leftValue: { nodeType: "dataValue", dataType: "vector", type: "PRIMITIVE", value: { x: 0, y: 0 } },
-    comparatorType: "GT",
-    rightValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+    type: "numberEquals",
+    params: {
+      // @ts-expect-error - vector not valid for number param
+      left: { nodeType: "dataValue", dataType: "vector", type: "PRIMITIVE", value: { x: 0, y: 0 } },
+      right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+    },
   };
 
   const _condBadBlackboardKey: BehaviourTreeNode = {
     nodeType: "condition",
-    dataType: "number",
-    leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
-    comparatorType: "EQ",
-    rightValue: {
-      nodeType: "dataValue",
-      dataType: "number",
-      type: "BLACKBOARD",
-      // @ts-expect-error - not a blackboard key
-      blackboardKey: "notARealKey",
-      params: {},
+    type: "numberEquals",
+    params: {
+      left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      right: {
+        nodeType: "dataValue",
+        dataType: "number",
+        type: "BLACKBOARD",
+        // @ts-expect-error - not a blackboard key
+        blackboardKey: "notARealKey",
+        params: {},
+      },
     },
   };
 

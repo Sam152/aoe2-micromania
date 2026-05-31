@@ -1,64 +1,53 @@
-import { Condition } from "./Condition.ts";
+import { ConditionNode } from "./Condition.ts";
 
 Deno.test("type safety", () => {
-  const _valid: Condition = {
+  const _valid: ConditionNode = {
     nodeType: "condition",
-    dataType: "number",
-    leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
-    comparatorType: "GT",
-    rightValue: {
-      nodeType: "dataValue",
-      dataType: "number",
-      type: "BLACKBOARD",
-      blackboardKey: "unitsInGroupCount",
-      params: {},
+    type: "numberEquals",
+    params: {
+      left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      right: {
+        nodeType: "dataValue",
+        dataType: "number",
+        type: "BLACKBOARD",
+        blackboardKey: "unitsInGroupCount",
+        params: {},
+      },
     },
   };
-  const _invalid1: Condition = {
+  const _invalid1: ConditionNode = {
     nodeType: "condition",
-    dataType: "number",
-    leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
-    comparatorType: "GT",
-    rightValue: {
-      nodeType: "dataValue",
-      dataType: "number",
-      type: "BLACKBOARD",
-      // @ts-expect-error - bad blackboard key
-      blackboardKey: "badPropName",
-      params: {},
+    type: "numberEquals",
+    params: {
+      left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      right: {
+        nodeType: "dataValue",
+        dataType: "number",
+        type: "BLACKBOARD",
+        // @ts-expect-error - bad blackboard key
+        blackboardKey: "badPropName",
+        params: {},
+      },
     },
   };
-  const _invalid2: Condition = {
+  const _invalid2: ConditionNode = {
     nodeType: "condition",
-    dataType: "number",
-    leftValue: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
-    // @ts-expect-error - bad comparitor
-    comparatorType: "WAT",
-    rightValue: {
-      nodeType: "dataValue",
-      dataType: "number",
-      type: "BLACKBOARD",
-      blackboardKey: "unitsInGroupCount",
-      params: {},
-    },
+    type: "numberEquals",
+    // @ts-expect-error - empty params does not satisfy the required param shape
+    params: {},
   };
-  const _invalid3: Condition = {
+  const _invalid3: ConditionNode = {
     nodeType: "condition",
-    dataType: "number",
-    leftValue: {
-      nodeType: "dataValue",
-      dataType: "number",
-      type: "PRIMITIVE",
-      // @ts-expect-error - bad value type
-      value: "fooString",
-    },
-    comparatorType: "GT",
-    rightValue: {
-      nodeType: "dataValue",
-      dataType: "number",
-      type: "BLACKBOARD",
-      blackboardKey: "unitsInGroupCount",
-      params: {},
+    type: "numberEquals",
+    params: {
+      left: {
+        nodeType: "dataValue",
+        dataType: "number",
+        type: "PRIMITIVE",
+        // @ts-expect-error - bad value type
+        value: "fooString",
+      },
+      right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
     },
   };
 });
