@@ -1,9 +1,9 @@
-import { ComparatorOptionsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
-import { BlackboardDefinition } from "../blackboard/blackboardDefinition.ts";
+import { ComparatorOptionsFromDataType, DataType } from "../dataType/dataTypes.ts";
+import { DataValueOfType } from "../dataValue/DataValue.ts";
 
-export type Condition<TBlackBoardKey extends keyof BlackboardDefinition = keyof BlackboardDefinition> = {
+export type Condition<TDataType extends DataType> = {
   nodeType: "condition";
-  propertyName: TBlackBoardKey;
-  comparatorType: ComparatorOptionsFromDataType<BlackboardDefinition[TBlackBoardKey]["dataType"]>;
-  value: TypeFromDataType<BlackboardDefinition[TBlackBoardKey]["dataType"]>;
+  comparatorType: ComparatorOptionsFromDataType<TDataType>;
+  aValue: DataValueOfType<TDataType>;
+  bValue: DataValueOfType<TDataType>;
 };

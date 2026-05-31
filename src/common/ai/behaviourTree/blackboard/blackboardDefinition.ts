@@ -6,6 +6,7 @@ export const blackboardDefinition = {
    */
   groupsForUnitTypeCount: {
     dataType: "number",
+    params: {},
     mutationRequirements: {
       min: 1,
       max: 5,
@@ -17,6 +18,7 @@ export const blackboardDefinition = {
    */
   unitTypeGroupIndex: {
     dataType: "number",
+    params: {},
     mutationRequirements: {
       min: 1,
       max: 5,
@@ -28,6 +30,7 @@ export const blackboardDefinition = {
    */
   unitsInGroupCount: {
     dataType: "number",
+    params: {},
     mutationRequirements: {
       min: 1,
       max: 40,
@@ -39,14 +42,38 @@ export const blackboardDefinition = {
    */
   unitsOfTypeGlobalCount: {
     dataType: "number",
+    params: {},
     mutationRequirements: {
       min: 1,
       max: 40,
       step: 1,
     },
   },
+  /**
+   * The average vector of all opponent units.
+   */
+  perceptionAverageVectorOpponents: {
+    dataType: "vector",
+    mutationRequirements: {
+      min: 1,
+      max: 40,
+      step: 1,
+    },
+    params: {
+      vectorOffset: {
+        default: { x: 0, y: 0 },
+        dataType: "vector",
+        mutationRequirements: {
+          min: 1,
+          max: 40,
+          step: 1,
+        },
+      },
+    },
+  },
 } as const satisfies BlackboardDefinitionShape;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
+export type BlackboardKeys = keyof BlackboardDefinition;
 
 export type Blackboard = BlackboardValuesFromDefinition<BlackboardDefinition>;

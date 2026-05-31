@@ -2,11 +2,13 @@ import { boolean } from "./catalog/boolean.ts";
 import { number } from "./catalog/number.ts";
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 import { direction } from "./catalog/direction.ts";
+import { vector } from "./catalog/vector.ts";
 
 export const dataTypes = {
   boolean,
   number,
   direction,
+  vector,
 };
 
 export type DataType = keyof typeof dataTypes;
