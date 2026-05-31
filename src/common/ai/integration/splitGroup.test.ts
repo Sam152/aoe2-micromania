@@ -35,7 +35,11 @@ describe("splitGroup", () => {
     assertEquals(second.unitType, UnitType.Mangonel);
     const expectedQueue = [
       {
-        action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } } as const,
+        action: {
+          nodeType: "action",
+          type: "IDLE",
+          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+        } as const,
         executeAfterTick: 43,
       },
     ];

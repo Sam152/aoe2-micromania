@@ -7,6 +7,7 @@ import { BotState, BotUnitGroup } from "./createBot.ts";
 import { splitGroup } from "./splitGroup.ts";
 import { mergeGroups } from "./mergeGroups.ts";
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
+import { resolveDataValueToPrimitive } from "../behaviourTree/dataValue/resolveDataValue.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
@@ -61,11 +62,24 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
   });
 
   group.actionQueue.push(
-    ...actionNodes.map((actionNode, i) => ({
-      action: actionNode,
-      // Execute sequences of actions 1 tick apart, except for IDLE which will only execute after its
-      // idle number of ticks have been played out.
-      executeAfterTick: state.ticks + i + (actionNode.type === "IDLE" ? actionNode.params.forTicksAmount : 0),
-    })),
+    ...actionNodes.map((actionNode, i) => {
+      let executeAfterTick: number = state.ticks + i;
+
+      if (actionNode.type === "IDLE") {
+        executeAfterTick += resolveDataValueToPrimitive({
+          dataValue: actionNode.params.forTicksAmount,
+          group,
+          botState,
+          state,
+          blackboardComputer,
+        }) as number;
+      }
+      return {
+        action: actionNode,
+        // Execute sequences of actions 1 tick apart, except for IDLE which will only execute after its
+        // idle number of ticks have been played out.
+        executeAfterTick,
+      };
+    }),
   );
 }

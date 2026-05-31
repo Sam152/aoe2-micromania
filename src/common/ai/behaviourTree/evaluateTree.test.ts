@@ -1,22 +1,45 @@
 import { evaluateTreeNode } from "./evaluateTreeNode.ts";
-import { Blackboard } from "./blackboard/blackboardDefinition.ts";
+import { BlackboardComputer } from "./blackboard/computeBlackboard.ts";
+import { defaultState } from "../../state/gameState.ts";
+import { BotState, BotUnitGroup } from "../integration/createBot.ts";
+import { UnitType } from "../../units/UnitType.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 
-const blackboard: Blackboard = {
-  groupsForUnitTypeCount: 10,
-  unitTypeGroupIndex: 10,
-  unitsInGroupCount: 10,
-  unitsOfTypeGlobalCount: 10,
-  perceptionAverageVectorOpponents: { x: 0, y: 0 },
+const state = defaultState();
+
+const group: BotUnitGroup = {
+  unitType: UnitType.Archer,
+  actionQueue: [],
+  includedUnits: [],
 };
+
+const botState: BotState = {
+  playingAs: 0,
+  playerId: "bot",
+  lastActionType: "IDLE",
+  lastActionTick: 0,
+  isEligibleForDecision: true,
+  unitGroups: [group],
+};
+
+// Resolves to the same values the old `blackboard` fixture held, so the existing assertions hold.
+const blackboardComputer: BlackboardComputer = {
+  groupsForUnitTypeCount: () => 10,
+  unitTypeGroupIndex: () => 10,
+  unitsInGroupCount: () => 10,
+  unitsOfTypeGlobalCount: () => 10,
+  perceptionAverageVectorOpponents: () => ({ x: 0, y: 0 }),
+};
+
+const params = { state, botState, group, blackboardComputer };
 
 describe("tree evaluation", () => {
   it("runs a selector until it finds true", () => {
     assertEquals(
       evaluateTreeNode({
         actionNodes: [],
-        blackboard,
+        ...params,
         node: {
           nodeType: "selector",
           nodes: [
@@ -82,7 +105,7 @@ describe("tree evaluation", () => {
     assertEquals(
       evaluateTreeNode({
         actionNodes: [],
-        blackboard,
+        ...params,
         node: {
           nodeType: "selector",
           nodes: [
@@ -179,7 +202,7 @@ describe("tree evaluation", () => {
     assertEquals(
       evaluateTreeNode({
         actionNodes: [],
-        blackboard,
+        ...params,
         node: {
           nodeType: "sequence",
           nodes: [
@@ -289,7 +312,7 @@ describe("tree evaluation", () => {
     assertEquals(
       evaluateTreeNode({
         actionNodes: [],
-        blackboard,
+        ...params,
         node: {
           nodeType: "sequence",
           nodes: [
@@ -349,7 +372,7 @@ describe("tree evaluation", () => {
     assertEquals(
       evaluateTreeNode({
         actionNodes: [],
-        blackboard,
+        ...params,
         node: {
           nodeType: "sequence",
           nodes: [

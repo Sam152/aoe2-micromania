@@ -26,7 +26,11 @@ describe("mergeGroups", () => {
     assertEquals(merged.includedUnits, [1, 2, 3, 4]);
     assertEquals(merged.actionQueue, [
       {
-        action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } } as const,
+        action: {
+          nodeType: "action",
+          type: "IDLE",
+          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+        },
         executeAfterTick: 11,
       },
     ]);

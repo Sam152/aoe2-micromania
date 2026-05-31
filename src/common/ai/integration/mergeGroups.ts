@@ -18,7 +18,11 @@ export function mergeGroups(
     includedUnits: groupsOfType.flatMap((groupOfType) => groupOfType.includedUnits),
     actionQueue: [
       {
-        action: { nodeType: "action", type: "IDLE", params: { forTicksAmount: 1 } },
+        action: {
+          nodeType: "action",
+          type: "IDLE",
+          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+        },
         executeAfterTick: state.ticks + 1,
       },
     ],
