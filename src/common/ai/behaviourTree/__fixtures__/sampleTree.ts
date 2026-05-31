@@ -41,7 +41,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               dataType: "number",
               type: "BLACKBOARD",
               blackboardKey: "groupsForUnitTypeCount",
-              paramValues: {},
+              params: {},
             },
           },
           { nodeType: "action", type: "SPLIT_GROUP", params: {} },
@@ -66,7 +66,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               dataType: "number",
               type: "BLACKBOARD",
               blackboardKey: "unitTypeGroupIndex",
-              paramValues: {},
+              params: {},
             },
           },
           {
