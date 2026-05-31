@@ -25,6 +25,15 @@ type ActionDefinitionParam<TDataType extends DataType> = {
   mutationRequirements: MutationRequirementsFromDataType<TDataType>;
 };
 
+/**
+ * Definition helper.
+ */
+export function defineAction<
+  const TParams extends Record<string, { [K in DataType]: ActionDefinitionParam<K> }[DataType]>,
+>(definition: ActionDefinition<TParams>): ActionDefinition<TParams> {
+  return definition;
+}
+
 export type ActionNode<TType extends keyof ActionsList = keyof ActionsList> = TType extends keyof ActionsList ? {
     nodeType: "action";
     type: TType;

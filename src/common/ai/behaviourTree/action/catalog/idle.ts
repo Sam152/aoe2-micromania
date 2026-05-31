@@ -1,9 +1,9 @@
-import { ActionDefinition } from "../ActionDefinition.ts";
+import { defineAction } from "../ActionDefinition.ts";
 
 /**
  * This is a meta action that acts on the bot state, not something that dispatches a game action.
  */
-export const idle = {
+export const idle = defineAction({
   type: "IDLE",
   params: {
     forTicksAmount: {
@@ -16,4 +16,4 @@ export const idle = {
     },
   },
   execute: () => {},
-} as const satisfies ActionDefinition;
+});

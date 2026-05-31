@@ -1,9 +1,9 @@
-import { ActionDefinition } from "../ActionDefinition.ts";
+import { defineAction } from "../ActionDefinition.ts";
 import { GameStateAction, UnitId } from "../../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { BotState } from "../../../integration/createBot.ts";
 
-export const patrol = {
+export const patrol = defineAction({
   type: "PATROL",
   params: {
     direction: {
@@ -18,4 +18,4 @@ export const patrol = {
       position: new Vector2(1, 1),
     };
   },
-} as const satisfies ActionDefinition;
+});
