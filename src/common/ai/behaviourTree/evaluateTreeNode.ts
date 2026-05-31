@@ -35,7 +35,7 @@ export function evaluateTreeNode(
     });
 
     const dataTypeDefinition = dataTypes[node.dataType];
-    const comparitors = dataTypeDefinition.comparitors as Record<string, (a: unknown, b: unknown) => boolean>;
+    const comparitors = dataTypeDefinition.comparitors;
     const comparitor = comparitors[node.comparatorType];
 
     return { result: comparitor(leftValue, rightValue), actionNodes };
@@ -50,7 +50,7 @@ export function evaluateTreeNode(
 
   if (node.nodeType === "selector") {
     for (const selectorNode of node.nodes) {
-      const result = evaluateTreeNode({ blackboard, node: selectorNode, actionNodes });
+      const result = evaluateTreeNode({ blackboardComputer, node: selectorNode, actionNodes, botState, group, state });
       if (result.result) {
         return {
           result: true,
@@ -68,7 +68,7 @@ export function evaluateTreeNode(
     const sequenceActionNodes = [];
 
     for (const sequenceNode of node.nodes) {
-      const result = evaluateTreeNode({ blackboard, node: sequenceNode, actionNodes });
+      const result = evaluateTreeNode({ blackboardComputer, node: sequenceNode, actionNodes, state, botState, group });
       if (!result.result) {
         return {
           result: sequenceActionNodes.length > 0,
