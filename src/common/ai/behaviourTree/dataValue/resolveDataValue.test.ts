@@ -1,4 +1,4 @@
-import { resolveDataValueToPrimitive } from "./resolveDataValue.ts";
+import { resolveDataValueToPrimitive, resolveParamDataValues } from "./resolveDataValue.ts";
 import { DataValue } from "./DataValue.ts";
 import { BlackboardComputer } from "../blackboard/computeBlackboard.ts";
 import { GameState } from "../../../../types.ts";
@@ -23,6 +23,9 @@ const blackboardComputer: BlackboardComputer = {
 
 const resolve = (dataValue: DataValue) =>
   resolveDataValueToPrimitive({ dataValue, state, botState, group, blackboardComputer });
+
+const resolveParams = (params: Record<string, DataValue>) =>
+  resolveParamDataValues(params, { state, botState, group, blackboardComputer });
 
 describe("resolveDataValueToPrimitive", () => {
   it("returns the value of a primitive data value", () => {
@@ -80,6 +83,29 @@ describe("resolveDataValueToPrimitive", () => {
         },
       }),
       { x: 5, y: 6 },
+    );
+  });
+});
+
+describe("resolveParamDataValues", () => {
+  it("returns an empty object for empty params", () => {
+    assertEquals(resolveParams({}), {});
+  });
+
+  it("resolves each param to its primitive, keyed by param name", () => {
+    assertEquals(
+      resolveParams({
+        a: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "number", value: 1 },
+        b: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 2, y: 3 } },
+        c: {
+          nodeType: "dataValue",
+          type: "BLACKBOARD",
+          dataType: "number",
+          blackboardKey: "unitsInGroupCount",
+          params: {},
+        },
+      }),
+      { a: 1, b: { x: 2, y: 3 }, c: 7 },
     );
   });
 });

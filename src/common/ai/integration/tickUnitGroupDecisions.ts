@@ -6,7 +6,7 @@ import { BotState, BotUnitGroup } from "./createBot.ts";
 import { splitGroup } from "./util/splitGroup.ts";
 import { mergeGroups } from "./util/mergeGroups.ts";
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
-import { resolveDataValueToPrimitive } from "../behaviourTree/dataValue/resolveDataValue.ts";
+import { resolveDataValueToPrimitive, resolveParamDataValues } from "../behaviourTree/dataValue/resolveDataValue.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
@@ -16,6 +16,8 @@ type TickGroupArgs = {
 };
 
 export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: TickGroupArgs) {
+  const blackboardComputer = createCachedBlackboardComputer();
+
   // If we have actions in the queue, try to consume the next available one.
   if (group.actionQueue.length > 0) {
     const nextAction = group.actionQueue[0];
@@ -24,8 +26,14 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
     }
 
     const actionDefinition = actionsList[nextAction.action.type];
+    const resolvedParams = resolveParamDataValues(nextAction.action.params, {
+      group,
+      state,
+      botState,
+      blackboardComputer,
+    });
     const gameStateAction = actionDefinition.execute(
-      nextAction.action.params as any,
+      resolvedParams as any,
       state,
       botState,
       group.includedUnits,
@@ -50,7 +58,6 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
 
   // Translate actions from the tree into a queue of actions to take over the course of some number of ticks.
   const treeToEvaluate = sampleTree[group.unitType];
-  const blackboardComputer = createCachedBlackboardComputer();
 
   const { actionNodes } = evaluateTreeNode({
     blackboardComputer,
