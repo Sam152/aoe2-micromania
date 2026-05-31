@@ -39,7 +39,7 @@ describe("resolveDataValueToPrimitive", () => {
         type: "BLACKBOARD",
         dataType: "number",
         blackboardKey: "unitsInGroupCount",
-        paramValues: {},
+        params: {},
       }),
       7,
     );
@@ -52,7 +52,7 @@ describe("resolveDataValueToPrimitive", () => {
         type: "BLACKBOARD",
         dataType: "vector",
         blackboardKey: "perceptionAverageVectorOpponents",
-        paramValues: {
+        params: {
           vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 3, y: 4 } },
         },
       }),
@@ -67,13 +67,13 @@ describe("resolveDataValueToPrimitive", () => {
         type: "BLACKBOARD",
         dataType: "vector",
         blackboardKey: "perceptionAverageVectorOpponents",
-        paramValues: {
+        params: {
           vectorOffset: {
             nodeType: "dataValue",
             type: "BLACKBOARD",
             dataType: "vector",
             blackboardKey: "perceptionAverageVectorOpponents",
-            paramValues: {
+            params: {
               vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 5, y: 6 } },
             },
           },

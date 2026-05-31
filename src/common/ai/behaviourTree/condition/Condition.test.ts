@@ -11,7 +11,7 @@ Deno.test("type safety", () => {
       dataType: "number",
       type: "BLACKBOARD",
       blackboardKey: "unitsInGroupCount",
-      paramValues: {},
+      params: {},
     },
   };
   const _invalid1: Condition = {
@@ -25,7 +25,7 @@ Deno.test("type safety", () => {
       type: "BLACKBOARD",
       // @ts-expect-error - bad blackboard key
       blackboardKey: "badPropName",
-      paramValues: {},
+      params: {},
     },
   };
   const _invalid2: Condition = {
@@ -39,7 +39,7 @@ Deno.test("type safety", () => {
       dataType: "number",
       type: "BLACKBOARD",
       blackboardKey: "unitsInGroupCount",
-      paramValues: {},
+      params: {},
     },
   };
   const _invalid3: Condition = {
@@ -58,7 +58,7 @@ Deno.test("type safety", () => {
       dataType: "number",
       type: "BLACKBOARD",
       blackboardKey: "unitsInGroupCount",
-      paramValues: {},
+      params: {},
     },
   };
 });

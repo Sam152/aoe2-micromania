@@ -53,7 +53,7 @@ describe("tree evaluation", () => {
                 dataType: "number",
                 type: "BLACKBOARD",
                 blackboardKey: "unitsInGroupCount",
-                paramValues: {},
+                params: {},
               },
             },
             {
@@ -66,7 +66,7 @@ describe("tree evaluation", () => {
                 dataType: "number",
                 type: "BLACKBOARD",
                 blackboardKey: "unitsInGroupCount",
-                paramValues: {},
+                params: {},
               },
             },
             {
@@ -79,7 +79,7 @@ describe("tree evaluation", () => {
                 dataType: "number",
                 type: "BLACKBOARD",
                 blackboardKey: "unitsInGroupCount",
-                paramValues: {},
+                params: {},
               },
             },
             {
@@ -122,7 +122,7 @@ describe("tree evaluation", () => {
                     dataType: "number",
                     type: "BLACKBOARD",
                     blackboardKey: "unitsInGroupCount",
-                    paramValues: {},
+                    params: {},
                   },
                 },
                 {
@@ -147,7 +147,7 @@ describe("tree evaluation", () => {
                     dataType: "number",
                     type: "BLACKBOARD",
                     blackboardKey: "unitsInGroupCount",
-                    paramValues: {},
+                    params: {},
                   },
                 },
                 {
@@ -172,7 +172,7 @@ describe("tree evaluation", () => {
                     dataType: "number",
                     type: "BLACKBOARD",
                     blackboardKey: "unitsInGroupCount",
-                    paramValues: {},
+                    params: {},
                   },
                 },
                 {
@@ -219,7 +219,7 @@ describe("tree evaluation", () => {
                     dataType: "number",
                     type: "BLACKBOARD",
                     blackboardKey: "unitsInGroupCount",
-                    paramValues: {},
+                    params: {},
                   },
                 },
                 {
@@ -244,7 +244,7 @@ describe("tree evaluation", () => {
                     dataType: "number",
                     type: "BLACKBOARD",
                     blackboardKey: "unitsInGroupCount",
-                    paramValues: {},
+                    params: {},
                   },
                 },
                 {
@@ -326,7 +326,7 @@ describe("tree evaluation", () => {
                 dataType: "number",
                 type: "BLACKBOARD",
                 blackboardKey: "unitsInGroupCount",
-                paramValues: {},
+                params: {},
               },
             },
             {
@@ -344,7 +344,7 @@ describe("tree evaluation", () => {
                 dataType: "number",
                 type: "BLACKBOARD",
                 blackboardKey: "unitsInGroupCount",
-                paramValues: {},
+                params: {},
               },
             },
             {
@@ -411,7 +411,7 @@ describe("tree evaluation", () => {
                         dataType: "number",
                         type: "BLACKBOARD",
                         blackboardKey: "unitsInGroupCount",
-                        paramValues: {},
+                        params: {},
                       },
                     },
                     {
@@ -427,7 +427,7 @@ describe("tree evaluation", () => {
                             dataType: "number",
                             type: "BLACKBOARD",
                             blackboardKey: "unitsInGroupCount",
-                            paramValues: {},
+                            params: {},
                           },
                         },
                         {
