@@ -17,7 +17,7 @@ export function setCachedServer(server: string) {
 
 export function getCachedServer(): string | undefined {
   const stored = localStorage.getItem("selectedServer");
-  if (stored && regionalServers.includes(stored)) {
+  if (stored && Object.values(regionalServers).includes(stored)) {
     return stored;
   }
   return undefined;
