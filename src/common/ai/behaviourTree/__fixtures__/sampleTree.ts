@@ -51,19 +51,46 @@ export const sampleTree: UnitAwareBehaviourTree = {
       {
         nodeType: "sequence",
         nodes: [
-          { nodeType: "condition", value: 0, comparatorType: "EQ", propertyName: "unitTypeGroupIndex" },
+          {
+            nodeType: "condition",
+            dataType: "number",
+            leftValue: {
+              nodeType: "dataValue",
+              dataType: "number",
+              type: "PRIMITIVE",
+              value: 0,
+            },
+            comparatorType: "EQ",
+            rightValue: {
+              nodeType: "dataValue",
+              dataType: "number",
+              type: "BLACKBOARD",
+              blackboardKey: "unitTypeGroupIndex",
+              paramValues: {},
+            },
+          },
           {
             nodeType: "action",
             type: "PATROL",
             params: {
-              direction: "TOWARDS",
+              direction: {
+                nodeType: "dataValue",
+                dataType: "direction",
+                type: "PRIMITIVE",
+                value: "TOWARDS",
+              },
             },
           },
           {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: 100,
+              forTicksAmount: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "PRIMITIVE",
+                value: 100,
+              },
             },
           },
         ],
@@ -77,14 +104,24 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodeType: "action",
         type: "PATROL",
         params: {
-          direction: "TOWARDS",
+          direction: {
+            nodeType: "dataValue",
+            dataType: "direction",
+            type: "PRIMITIVE",
+            value: "TOWARDS",
+          },
         },
       },
       {
         nodeType: "action",
         type: "IDLE",
         params: {
-          forTicksAmount: 100,
+          forTicksAmount: {
+            nodeType: "dataValue",
+            dataType: "number",
+            type: "PRIMITIVE",
+            value: 100,
+          },
         },
       },
     ],
