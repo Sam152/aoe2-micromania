@@ -15,7 +15,7 @@ export const patrol = defineAction({
     return {
       n: "PATROL",
       units: unitIds,
-      position: new Vector2(1, 1),
+      position: new Vector2(direction.x, direction.y),
     };
   },
 });
