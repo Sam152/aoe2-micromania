@@ -19,7 +19,7 @@ export type BlackboardDataValue<TBlackboardKey extends BlackboardKey> = {
   type: "BLACKBOARD";
   dataType: BlackboardDefinition[TBlackboardKey]["dataType"];
   blackboardKey: TBlackboardKey;
-  paramValues: {
+  params: {
     [TKey in keyof BlackboardDefinition[TBlackboardKey]["params"]]:
       BlackboardDefinition[TBlackboardKey]["params"][TKey] extends { dataType: infer D extends DataType }
         ? DataValueOfType<D>

@@ -7,7 +7,7 @@ export const patrol = {
   type: "PATROL",
   params: {
     direction: {
-      dataType: "direction",
+      dataType: "vector",
       mutationRequirements: undefined,
     },
   },

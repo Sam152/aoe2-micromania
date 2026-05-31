@@ -19,7 +19,7 @@ export function resolveDataValueToPrimitive(
   }
 
   if (dataValue.type === "BLACKBOARD") {
-    const resolvedParams = Object.entries(dataValue.paramValues).reduce<Record<string, unknown>>(
+    const resolvedParams = Object.entries(dataValue.params).reduce<Record<string, unknown>>(
       (resolved, [paramName, paramDataValue]) => {
         resolved[paramName] = resolveDataValueToPrimitive({
           dataValue: paramDataValue,

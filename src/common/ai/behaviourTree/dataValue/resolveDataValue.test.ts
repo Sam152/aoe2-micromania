@@ -59,4 +59,27 @@ describe("resolveDataValueToPrimitive", () => {
       { x: 3, y: 4 },
     );
   });
+
+  it("recursively resolves a blackboard param whose value is itself a blackboard data value", () => {
+    assertEquals(
+      resolve({
+        nodeType: "dataValue",
+        type: "BLACKBOARD",
+        dataType: "vector",
+        blackboardKey: "perceptionAverageVectorOpponents",
+        paramValues: {
+          vectorOffset: {
+            nodeType: "dataValue",
+            type: "BLACKBOARD",
+            dataType: "vector",
+            blackboardKey: "perceptionAverageVectorOpponents",
+            paramValues: {
+              vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 5, y: 6 } },
+            },
+          },
+        },
+      }),
+      { x: 5, y: 6 },
+    );
+  });
 });

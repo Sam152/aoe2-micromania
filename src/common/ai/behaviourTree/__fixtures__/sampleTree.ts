@@ -41,7 +41,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               dataType: "number",
               type: "BLACKBOARD",
               blackboardKey: "groupsForUnitTypeCount",
-              paramValues: {},
+              params: {},
             },
           },
           { nodeType: "action", type: "SPLIT_GROUP", params: {} },
@@ -66,7 +66,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               dataType: "number",
               type: "BLACKBOARD",
               blackboardKey: "unitTypeGroupIndex",
-              paramValues: {},
+              params: {},
             },
           },
           {
@@ -75,9 +75,17 @@ export const sampleTree: UnitAwareBehaviourTree = {
             params: {
               direction: {
                 nodeType: "dataValue",
-                dataType: "direction",
-                type: "PRIMITIVE",
-                value: "TOWARDS",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "perceptionAverageVectorOpponents",
+                params: {
+                  vectorOffset: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "PRIMITIVE",
+                    value: { x: 0, y: 0 },
+                  },
+                },
               },
             },
           },
@@ -106,9 +114,17 @@ export const sampleTree: UnitAwareBehaviourTree = {
         params: {
           direction: {
             nodeType: "dataValue",
-            dataType: "direction",
-            type: "PRIMITIVE",
-            value: "TOWARDS",
+            dataType: "vector",
+            type: "BLACKBOARD",
+            blackboardKey: "perceptionAverageVectorOpponents",
+            params: {
+              vectorOffset: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "PRIMITIVE",
+                value: { x: 0, y: 0 },
+              },
+            },
           },
         },
       },

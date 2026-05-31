@@ -13,7 +13,7 @@ export type ActionDefinition<
   type: string;
   params: TParams;
   execute: (
-    input: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> },
+    params: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> },
     gameState: GameState,
     botState: BotState,
     unitIds: UnitId[],
