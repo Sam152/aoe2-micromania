@@ -6,5 +6,5 @@ import { defineAction } from "../ActionDefinition.ts";
 export const mergeGroup = defineAction({
   type: "MERGE_GROUP",
   params: {},
-  execute: () => {},
+  execute: () => undefined,
 });

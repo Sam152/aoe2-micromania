@@ -6,5 +6,5 @@ import { defineAction } from "../ActionDefinition.ts";
 export const splitGroup = defineAction({
   type: "SPLIT_GROUP",
   params: {},
-  execute: () => {},
+  execute: () => undefined,
 });

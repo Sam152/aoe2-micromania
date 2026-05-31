@@ -15,5 +15,5 @@ export const idle = defineAction({
       },
     },
   },
-  execute: () => {},
+  execute: () => undefined,
 });
