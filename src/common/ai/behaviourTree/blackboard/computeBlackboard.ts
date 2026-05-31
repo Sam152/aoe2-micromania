@@ -3,6 +3,7 @@ import { BlackboardDefinition, BlackboardKey } from "./blackboardDefinition.ts";
 
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+import { averageVector } from "../../../util/averageVector.ts";
 
 type BlackboardValueResolverParams<TBlackboardKey extends BlackboardKey> = {
   state: GameState;
@@ -35,5 +36,9 @@ export const blackboardComputer: BlackboardComputer = {
   unitsInGroupCount: ({ group }) => group.includedUnits.length,
   unitsOfTypeGlobalCount: ({ state, botState }) =>
     state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
-  perceptionAverageVectorOpponents: () => ({ x: 1, y: 1 }),
+  perceptionAverageVectorOpponents: ({ state, botState }) => {
+    return averageVector(
+      state.units.filter((unit) => unit.ownedByPlayer !== botState.playingAs).map((unit) => unit.position),
+    );
+  },
 };
