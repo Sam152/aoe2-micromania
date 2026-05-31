@@ -1,7 +1,6 @@
 import { defaultState as defaultGameState, gameStateMutator } from "../gameState.ts";
 import { clientStateMutator, defaultState as defaultClientState } from "../clientState.ts";
 import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.ts";
-import { config } from "../../config.ts";
 
 /**
  * A state manager that holds context locally, may either be a client or a server.
@@ -53,7 +52,7 @@ export class LocalStateManager implements StateManagerInterface {
   }
 
   init(): void {
-    this.ticker = setInterval(this.tickFn, 1000 / config.ticksPerSecond);
+    this.ticker = setInterval(this.tickFn, 0);
   }
 
   cleanUp(): void {

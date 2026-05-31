@@ -2,6 +2,7 @@ import { DataValue } from "./DataValue.ts";
 import { GameState } from "../../../../types.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { BlackboardComputer } from "../blackboard/computeBlackboard.ts";
+import { TypeFromDataType } from "../dataType/dataTypes.ts";
 
 type ResolveContext = {
   state: GameState;
@@ -30,15 +31,19 @@ export function resolveDataValueToPrimitive(
   throw new Error();
 }
 
-export function resolveParamDataValues(
-  params: Record<string, DataValue>,
+type ResolvedParams<TParams extends Record<string, DataValue>> = {
+  [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]>;
+};
+
+export function resolveParamDataValues<TParams extends Record<string, DataValue>>(
+  params: TParams,
   context: ResolveContext,
-): Record<string, unknown> {
-  return Object.entries(params).reduce<Record<string, unknown>>(
+): ResolvedParams<TParams> {
+  return Object.entries(params).reduce(
     (resolved, [paramName, paramDataValue]) => {
       resolved[paramName] = resolveDataValueToPrimitive({ dataValue: paramDataValue, ...context });
       return resolved;
     },
-    {},
-  );
+    {} as Record<string, unknown>,
+  ) as ResolvedParams<TParams>;
 }

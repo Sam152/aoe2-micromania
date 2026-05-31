@@ -24,7 +24,7 @@ const blackboardComputer: BlackboardComputer = {
 const resolve = (dataValue: DataValue) =>
   resolveDataValueToPrimitive({ dataValue, state, botState, group, blackboardComputer });
 
-const resolveParams = (params: Record<string, DataValue>) =>
+const resolveParams = <const TParams extends Record<string, DataValue>>(params: TParams) =>
   resolveParamDataValues(params, { state, botState, group, blackboardComputer });
 
 describe("resolveDataValueToPrimitive", () => {
