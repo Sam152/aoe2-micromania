@@ -1,11 +1,12 @@
 import { actionsList } from "../behaviourTree/action/actionsList.ts";
-import { computeBlackboard } from "../behaviourTree/blackboard/computeBlackboard.ts";
+
 import { evaluateTreeNode } from "../behaviourTree/evaluateTreeNode.ts";
 import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
 import { splitGroup } from "./splitGroup.ts";
 import { mergeGroups } from "./mergeGroups.ts";
+import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
@@ -48,13 +49,17 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: T
   }
 
   // Translate actions from the tree into a queue of actions to take over the course of some number of ticks.
-  const blackboard = computeBlackboard({ state, botState, group });
   const treeToEvaluate = sampleTree[group.unitType];
+  const blackboardComputer = createCachedBlackboardComputer();
 
   const { actionNodes } = evaluateTreeNode({
-    blackboard,
+    blackboardComputer,
+    group,
+    state,
+    botState,
     node: treeToEvaluate,
   });
+
   group.actionQueue.push(
     ...actionNodes.map((actionNode, i) => ({
       action: actionNode,

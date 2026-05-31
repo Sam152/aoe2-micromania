@@ -36,7 +36,7 @@ export function evaluateTreeNode(
 
     const dataTypeDefinition = dataTypes[node.dataType];
     const comparitors = dataTypeDefinition.comparitors;
-    const comparitor = comparitors[node.comparatorType];
+    const comparitor = comparitors[node.comparatorType as keyof typeof comparitors] as any;
 
     return { result: comparitor(leftValue, rightValue), actionNodes };
   }
