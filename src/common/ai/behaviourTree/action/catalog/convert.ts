@@ -10,6 +10,7 @@ export const mergeGroup = defineAction({
   params: {
     unit: {
       dataType: "unitId",
+      mutationRequirements: undefined,
     },
   },
   execute: () => undefined,

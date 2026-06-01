@@ -49,15 +49,9 @@ export class LocalStateManager implements StateManagerInterface {
     this.gameState = gameStateMutator(this.gameState, action);
     this.computedFrameState = createComputedFrameState(this.gameState);
 
-    const mutatorMs = performance.now() - start;
     this.gameStateListeners.forEach((gameStateListener, i) => {
-      const ls = performance.now();
       gameStateListener(this.gameState, action, this.computedFrameState);
-      console.log(`  listener[${i}] took ${(performance.now() - ls).toFixed(2)}ms`);
     });
-    console.log(
-      `tick ${action.n} took ${(performance.now() - start).toFixed(2)}ms (mutator: ${mutatorMs.toFixed(2)}ms)`,
-    );
   }
 
   getClientState(): ClientState {
