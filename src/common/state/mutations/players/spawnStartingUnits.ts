@@ -55,29 +55,14 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
 }
 
 export function getBestSpawnLocation(state: GameState, computed: ComputedFrameState): Vector2 {
-  const candidates = getStartingSpawnCandidates(state);
+  const distanceToNearest = (v: Vector2): number => {
+    const nearest = computed.quadTreeAllUnits.find(v.x, v.y);
+    return nearest ? nearest.position.distanceTo(v) : Infinity;
+  };
 
-  let startingLocation: Vector2;
-  let largestDistance: number;
-  for (const candidate of candidates) {
-    const nearestUnit = computed.quadTreeAllUnits.find(candidate.x, candidate.y);
-    if (!nearestUnit) {
-      startingLocation = candidate;
-      continue;
-    }
-    const nearestUnitDistance = computed.quadTreeAllUnits.find(candidate.x, candidate.y).position.distanceTo(candidate);
-    if (!largestDistance!) {
-      largestDistance = nearestUnitDistance;
-      startingLocation = candidate;
-      continue;
-    }
-    if (nearestUnitDistance > largestDistance) {
-      largestDistance = nearestUnitDistance;
-      startingLocation = candidate;
-    }
-  }
-
-  return startingLocation!;
+  return getStartingSpawnCandidates(state).reduce((best, candidate) =>
+    distanceToNearest(candidate) > distanceToNearest(best) ? candidate : best
+  );
 }
 
 export function getStartingSpawnCandidates(
