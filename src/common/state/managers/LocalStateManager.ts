@@ -4,6 +4,8 @@ import { ClientState, ClientStateAction, GameState, GameStateAction, StateManage
 
 import { ComputedTickState, createComputedTickState } from "../computed/createComputedTickState.ts";
 import { GameStateListener } from "./GameStateListener.ts";
+
+import { FrameBudgetCalculator, frameBudgetCalculator } from "../../util/frameBudgetCalculator.ts";
 import { config } from "../../config.ts";
 
 /**
@@ -16,6 +18,7 @@ export class LocalStateManager implements StateManagerInterface {
   private gameStateListeners: Array<GameStateListener>;
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
+  private budgetCalculator: FrameBudgetCalculator;
   private tickFn: () => void;
 
   constructor(clientId: string | undefined, tickFn?: () => void) {
@@ -23,6 +26,7 @@ export class LocalStateManager implements StateManagerInterface {
     this.clientState = defaultClientState(clientId!);
     this.gameStateListeners = [];
     this.clientStateListeners = [];
+    this.budgetCalculator = frameBudgetCalculator();
     this.tickFn = tickFn || (() => this.dispatchGame({ n: "T", t: this.gameState.ticks }));
   }
 
@@ -49,12 +53,14 @@ export class LocalStateManager implements StateManagerInterface {
     // Create the computed frame state, after the given tick is done,
     // because listeners may want to use it, but also feed it back into
     // the next mutator.
+    this.budgetCalculator.start();
     this.gameState = gameStateMutator(this.gameState, action, this.computedFrameState);
     this.computedFrameState = createComputedTickState(this.gameState);
 
     this.gameStateListeners.forEach((gameStateListener) => {
       gameStateListener(this.gameState, action, this.computedFrameState!);
     });
+    this.budgetCalculator.end();
   }
 
   getClientState(): ClientState {
