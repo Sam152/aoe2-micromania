@@ -12,12 +12,12 @@ export function startGame(io: Server): {
   const gameMode = new BattleRoyale();
   const state = new LocalStateManager("server");
 
-  state.addGameStateListener((gameState, action) => {
+  state.addGameStateListener((gameState, action, computed) => {
     // The network could either dispatch the whole units state OR the action, letting the clients
     // calculate the whole state. Emitting the action only, seems to work, however are there circumstances
     // where clients could drift out of sync and require syncing back up?
     io.emit(TransportEvent.GameStateActionTransmit, action);
-    gameMode.onTick(gameState, action, state);
+    gameMode.onTick(gameState, action, state, computed);
   });
 
   state.init();

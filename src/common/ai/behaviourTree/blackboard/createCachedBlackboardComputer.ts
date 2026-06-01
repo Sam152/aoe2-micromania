@@ -1,11 +1,12 @@
 import { BlackboardComputer, createBlackboardComputer } from "./computeBlackboard.ts";
 import { BlackboardKey } from "./blackboardDefinition.ts";
+import { ComputedFrameState } from "../../../state/computed/createComputedFrameState.ts";
 
 type AnyResolver = (params: any) => unknown;
 
-export function createCachedBlackboardComputer(): BlackboardComputer {
+export function createCachedBlackboardComputer({ computed }: { computed: ComputedFrameState }): BlackboardComputer {
   const cache = new Map<string, unknown>();
-  const blackboardComputer = createBlackboardComputer();
+  const blackboardComputer = createBlackboardComputer({ computed });
 
   const cachedEntries = (Object.keys(blackboardComputer) as BlackboardKey[]).map((key) => {
     const resolver = blackboardComputer[key] as AnyResolver;

@@ -3,6 +3,7 @@ import { clientStateMutator, defaultState as defaultClientState } from "../clien
 import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.ts";
 import { config } from "../../config.ts";
 import { ComputedFrameState, createComputedFrameState } from "../computed/createComputedFrameState.ts";
+import { GameStateListener } from "./GameStateListener.ts";
 
 /**
  * A state manager that holds context locally, may either be a client or a server.
@@ -11,7 +12,7 @@ export class LocalStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
   private computedFrameState: ComputedFrameState | undefined;
-  private gameStateListeners: Array<(state: GameState, action: GameStateAction, computed: ComputedFrameState) => void>;
+  private gameStateListeners: Array<GameStateListener>;
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
   private tickFn: () => void;
@@ -24,7 +25,7 @@ export class LocalStateManager implements StateManagerInterface {
     this.tickFn = tickFn || (() => this.dispatchGame({ n: "T", t: this.gameState.ticks }));
   }
 
-  addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void {
+  addGameStateListener(listener: GameStateListener): void {
     this.gameStateListeners.push(listener);
   }
 

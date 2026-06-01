@@ -7,16 +7,18 @@ import { splitGroup } from "./util/splitGroup.ts";
 import { mergeGroups } from "./util/mergeGroups.ts";
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
 import { resolveDataValueToPrimitive, resolveParamDataValues } from "../behaviourTree/dataValue/resolveDataValue.ts";
+import { ComputedFrameState } from "../../state/computed/createComputedFrameState.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
   state: GameState;
   botState: BotState;
   dispatcher: GameDispatcher;
+  computed: ComputedFrameState;
 };
 
-export function tickUnitGroupDecisions({ state, botState, dispatcher, group }: TickGroupArgs) {
-  const blackboardComputer = createCachedBlackboardComputer();
+export function tickUnitGroupDecisions({ state, botState, dispatcher, group, computed }: TickGroupArgs) {
+  const blackboardComputer = createCachedBlackboardComputer({ computed });
 
   // If we have actions in the queue, try to consume the next available one.
   if (group.actionQueue.length > 0) {

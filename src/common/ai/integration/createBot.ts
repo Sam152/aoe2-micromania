@@ -6,9 +6,10 @@ import { UnitType } from "../../units/UnitType.ts";
 
 import { createInitialUnitGroups } from "./util/createInitialUnitGroups.ts";
 import { consolidateGroups } from "./util/consolidateGroups.ts";
+import { ComputedFrameState } from "../../state/computed/createComputedFrameState.ts";
 
 export type BotInstance = {
-  tick: (state: GameState, dispatcher: GameDispatcher) => void;
+  tick: (state: GameState, dispatcher: GameDispatcher, computed: ComputedFrameState) => void;
   playerId: string;
 };
 
@@ -44,7 +45,7 @@ export function createBot({ playingAs, playerId }: { playingAs: number; playerId
 
   return {
     playerId,
-    tick: (state, dispatcher) => {
+    tick: (state, dispatcher, computed) => {
       if (botState.unitGroups.length === 0) {
         createInitialUnitGroups(botState, state);
       }
@@ -55,6 +56,7 @@ export function createBot({ playingAs, playerId }: { playingAs: number; playerId
           state,
           dispatcher,
           botState,
+          computed,
         });
       });
 

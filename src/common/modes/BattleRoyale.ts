@@ -7,6 +7,7 @@ import { assert } from "@std/assert";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
 import stat = Deno.stat;
 import { triggerBotTicks } from "../ai/integration/triggerBotTicks.ts";
+import { ComputedFrameState } from "../state/computed/createComputedFrameState.ts";
 
 const grid = new Grid(30);
 
@@ -30,7 +31,12 @@ export class BattleRoyale implements GameMode {
     });
   }
 
-  onTick(state: GameState, action: GameStateAction, manager: StateManagerInterface): void {
+  onTick(
+    state: GameState,
+    action: GameStateAction,
+    manager: StateManagerInterface,
+    computed: ComputedFrameState,
+  ): void {
     // Only respond on tick.
     if (action.n !== "T") {
       return;
@@ -38,7 +44,7 @@ export class BattleRoyale implements GameMode {
 
     this.cyclePlayers(state, action, manager);
     this.cycleBots(state, action, manager);
-    this.allowBotsToMakeDecision(state, action, manager);
+    triggerBotTicks(this.bots, state, manager.dispatchGame.bind(manager), computed);
     //this.cycleTerrain(state, action, manager);
   }
 
@@ -65,10 +71,6 @@ export class BattleRoyale implements GameMode {
       // If bots were mixed in with real players, and a bot cycled into a queued player,
       // we would probably have to destroy its instance here.
     }
-  }
-
-  allowBotsToMakeDecision(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
-    triggerBotTicks(this.bots, state, manager.dispatchGame.bind(manager));
   }
 
   cycleBots(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {
