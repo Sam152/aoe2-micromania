@@ -10,7 +10,7 @@ import { ComputedFrameState, createComputedFrameState } from "../computed/create
 export class LocalStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
-  private computedFrameState: ComputedFrameState;
+  private computedFrameState: ComputedFrameState | undefined;
   private gameStateListeners: Array<(state: GameState, action: GameStateAction, computed: ComputedFrameState) => void>;
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
@@ -40,13 +40,14 @@ export class LocalStateManager implements StateManagerInterface {
   }
 
   dispatchGame(action: GameStateAction): void {
-    const start = performance.now();
-
     if (!this.computedFrameState) {
       this.computedFrameState = createComputedFrameState(this.gameState);
     }
 
-    this.gameState = gameStateMutator(this.gameState, action);
+    // Create the computed frame state, after the given tick is done,
+    // because listeners may want to use it, but also feed it back into
+    // the next mutator.
+    this.gameState = gameStateMutator(this.gameState, action, this.computedFrameState);
     this.computedFrameState = createComputedFrameState(this.gameState);
 
     this.gameStateListeners.forEach((gameStateListener, i) => {

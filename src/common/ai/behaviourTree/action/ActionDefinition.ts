@@ -3,6 +3,7 @@ import { ActionsList } from "./actionsList.ts";
 import { GameState, GameStateAction, UnitId } from "../../../../types.ts";
 import { BotState } from "../../integration/createBot.ts";
 import { DataValueOfType } from "../dataValue/DataValue.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 
 export type ActionDefinition<
   TParams extends Record<string, { [K in DataType]: ActionDefinitionParam<K> }[DataType]> = Record<
@@ -12,6 +13,7 @@ export type ActionDefinition<
 > = {
   type: string;
   params: TParams;
+  applicableForUnitType: UnitType[];
   execute: (
     params: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> },
     gameState: GameState,

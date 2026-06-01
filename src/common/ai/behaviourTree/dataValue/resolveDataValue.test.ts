@@ -13,7 +13,14 @@ const group = {} as BotUnitGroup;
 
 // A stub computer: number keys return fixed values; the vector key echoes its resolved param so
 // we can assert that nested params were resolved to primitives before the computer was invoked.
-const blackboardComputer: BlackboardComputer = {
+const blackboardComputer: Pick<
+  BlackboardComputer,
+  | "groupsForUnitTypeCount"
+  | "unitTypeGroupIndex"
+  | "unitsInGroupCount"
+  | "unitsOfTypeGlobalCount"
+  | "opponentAveragePosition"
+> = {
   groupsForUnitTypeCount: () => 1,
   unitTypeGroupIndex: () => 2,
   unitsInGroupCount: () => 7,
@@ -22,10 +29,21 @@ const blackboardComputer: BlackboardComputer = {
 };
 
 const resolve = (dataValue: DataValue) =>
-  resolveDataValueToPrimitive({ dataValue, state, botState, group, blackboardComputer });
+  resolveDataValueToPrimitive({
+    dataValue,
+    state,
+    botState,
+    group,
+    blackboardComputer: blackboardComputer as unknown as BlackboardComputer,
+  });
 
 const resolveParams = <const TParams extends Record<string, DataValue>>(params: TParams) =>
-  resolveParamDataValues(params, { state, botState, group, blackboardComputer });
+  resolveParamDataValues(params, {
+    state,
+    botState,
+    group,
+    blackboardComputer: blackboardComputer as unknown as BlackboardComputer,
+  });
 
 describe("resolveDataValueToPrimitive", () => {
   it("returns the value of a primitive data value", () => {
