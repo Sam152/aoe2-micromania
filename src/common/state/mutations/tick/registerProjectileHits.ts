@@ -49,5 +49,6 @@ export function registerProjectileHits(state: GameState) {
   });
 
   // Remove landed projectiles from the game state.
-  state.projectiles = state.projectiles.filter(({ id }) => !landedProjectiles.map(({ id }) => id).includes(id));
+  const landedIds = new Set(landedProjectiles.map(({ id }) => id));
+  state.projectiles = state.projectiles.filter(({ id }) => !landedIds.has(id));
 }
