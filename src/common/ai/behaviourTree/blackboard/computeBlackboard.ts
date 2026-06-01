@@ -46,6 +46,8 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
       );
     },
     opponentClosestMonk: ({ group, botState }) =>
+      // Re: undefined, allow all data values to resolve undefined. When computing the behaviour tree,
+      // turn any undefined data into a "fail" of that node.
       closestExcludingPlayer({
         playerQuadTrees: computed.monkQuadTreesByPlayer(),
         position: groupAveragePosition({ group, computed }),
