@@ -29,6 +29,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
           {
             nodeType: "condition",
             type: "numberGreaterThan",
+            invert: false,
             params: {
               left: {
                 nodeType: "dataValue",
@@ -55,6 +56,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
           {
             nodeType: "condition",
             type: "numberEquals",
+            invert: false,
             params: {
               left: {
                 nodeType: "dataValue",

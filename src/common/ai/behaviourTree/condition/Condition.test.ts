@@ -4,6 +4,7 @@ Deno.test("type safety", () => {
   const _valid: ConditionNode = {
     nodeType: "condition",
     type: "numberEquals",
+    invert: false,
     params: {
       left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
       right: {
@@ -18,6 +19,7 @@ Deno.test("type safety", () => {
   const _invalid1: ConditionNode = {
     nodeType: "condition",
     type: "numberEquals",
+    invert: false,
     params: {
       left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
       right: {
@@ -33,12 +35,14 @@ Deno.test("type safety", () => {
   const _invalid2: ConditionNode = {
     nodeType: "condition",
     type: "numberEquals",
+    invert: false,
     // @ts-expect-error - empty params does not satisfy the required param shape
     params: {},
   };
   const _invalid3: ConditionNode = {
     nodeType: "condition",
     type: "numberEquals",
+    invert: false,
     params: {
       left: {
         nodeType: "dataValue",

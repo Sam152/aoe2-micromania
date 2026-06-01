@@ -46,6 +46,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "condition",
               type: "numberGreaterThan",
+              invert: false,
               params: {
                 left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
                 right: {
@@ -61,6 +62,7 @@ describe("tree evaluation", () => {
               // 10 > 15 = false (was: 15 LT 10)
               nodeType: "condition",
               type: "numberGreaterThan",
+              invert: false,
               params: {
                 left: {
                   nodeType: "dataValue",
@@ -76,6 +78,7 @@ describe("tree evaluation", () => {
               // 10 > 15 = false (was: 15 LT 10)
               nodeType: "condition",
               type: "numberGreaterThan",
+              invert: false,
               params: {
                 left: {
                   nodeType: "dataValue",
@@ -120,6 +123,7 @@ describe("tree evaluation", () => {
                 {
                   nodeType: "condition",
                   type: "numberGreaterThan",
+                  invert: false,
                   params: {
                     left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
                     right: {
@@ -146,6 +150,7 @@ describe("tree evaluation", () => {
                 {
                   nodeType: "condition",
                   type: "numberGreaterThan",
+                  invert: false,
                   params: {
                     left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
                     right: {
@@ -172,6 +177,7 @@ describe("tree evaluation", () => {
                 {
                   nodeType: "condition",
                   type: "numberGreaterThan",
+                  invert: false,
                   params: {
                     left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 20 },
                     right: {
@@ -220,6 +226,7 @@ describe("tree evaluation", () => {
                 {
                   nodeType: "condition",
                   type: "numberGreaterThan",
+                  invert: false,
                   params: {
                     left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
                     right: {
@@ -246,6 +253,7 @@ describe("tree evaluation", () => {
                 {
                   nodeType: "condition",
                   type: "numberGreaterThan",
+                  invert: false,
                   params: {
                     left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
                     right: {
@@ -329,6 +337,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "condition",
               type: "numberGreaterThan",
+              invert: false,
               params: {
                 left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
                 right: {
@@ -348,6 +357,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "condition",
               type: "numberGreaterThan",
+              invert: false,
               params: {
                 left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
                 right: {
@@ -416,6 +426,7 @@ describe("tree evaluation", () => {
                     {
                       nodeType: "condition",
                       type: "numberGreaterThan",
+                      invert: false,
                       params: {
                         left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
                         right: {
@@ -433,6 +444,7 @@ describe("tree evaluation", () => {
                         {
                           nodeType: "condition",
                           type: "numberGreaterThan",
+                          invert: false,
                           params: {
                             left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
                             right: {
