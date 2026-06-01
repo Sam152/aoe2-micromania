@@ -5,6 +5,8 @@ import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { averageVector } from "../../../util/averageVector.ts";
 import { ComputedTickState } from "../../../state/computed/createComputedTickState.ts";
+import { groupAveragePosition } from "./utils/groupAveragePosition.ts";
+import { closestExcludingPlayer } from "../../../util/closestExcludingPlayer.ts";
 
 type BlackboardValueResolverParams<TBlackboardKey extends BlackboardKey> = {
   state: GameState;
@@ -43,7 +45,12 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
         state.units.filter((unit) => unit.ownedByPlayer !== botState.playingAs).map((unit) => unit.position),
       );
     },
-    opponentClosestMonk: () => 1,
+    opponentClosestMonk: ({ group, botState }) =>
+      closestExcludingPlayer({
+        playerQuadTrees: computed.monkQuadTreesByPlayer(),
+        position: groupAveragePosition({ group, computed }),
+        excludingPlayer: botState.playingAs,
+      })?.id,
     opponentClosestArcher: () => 1,
     opponentClosestMango: () => 1,
   };
