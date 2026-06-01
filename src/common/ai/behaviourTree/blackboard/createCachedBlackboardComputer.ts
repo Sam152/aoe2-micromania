@@ -1,10 +1,11 @@
-import { BlackboardComputer, blackboardComputer } from "./computeBlackboard.ts";
+import { BlackboardComputer, createBlackboardComputer } from "./computeBlackboard.ts";
 import { BlackboardKey } from "./blackboardDefinition.ts";
 
 type AnyResolver = (params: any) => unknown;
 
 export function createCachedBlackboardComputer(): BlackboardComputer {
   const cache = new Map<string, unknown>();
+  const blackboardComputer = createBlackboardComputer();
 
   const cachedEntries = (Object.keys(blackboardComputer) as BlackboardKey[]).map((key) => {
     const resolver = blackboardComputer[key] as AnyResolver;
