@@ -2,6 +2,7 @@ import { defaultState as defaultGameState, gameStateMutator } from "../gameState
 import { clientStateMutator, defaultState as defaultClientState } from "../clientState.ts";
 import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.ts";
 import { config } from "../../config.ts";
+import { ComputedFrameState, createComputedFrameState } from "../computed/createComputedFrameState.ts";
 
 /**
  * A state manager that holds context locally, may either be a client or a server.
@@ -9,7 +10,8 @@ import { config } from "../../config.ts";
 export class LocalStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
-  private gameStateListeners: Array<(state: GameState, action: GameStateAction) => void>;
+  private computedFrameState: ComputedFrameState;
+  private gameStateListeners: Array<(state: GameState, action: GameStateAction, computed: ComputedFrameState) => void>;
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
   private tickFn: () => void;
@@ -38,10 +40,24 @@ export class LocalStateManager implements StateManagerInterface {
   }
 
   dispatchGame(action: GameStateAction): void {
+    const start = performance.now();
+
+    if (!this.computedFrameState) {
+      this.computedFrameState = createComputedFrameState(this.gameState);
+    }
+
     this.gameState = gameStateMutator(this.gameState, action);
-    this.gameStateListeners.forEach((gameStateListener) => {
-      gameStateListener(this.gameState, action);
+    this.computedFrameState = createComputedFrameState(this.gameState);
+
+    const mutatorMs = performance.now() - start;
+    this.gameStateListeners.forEach((gameStateListener, i) => {
+      const ls = performance.now();
+      gameStateListener(this.gameState, action, this.computedFrameState);
+      console.log(`  listener[${i}] took ${(performance.now() - ls).toFixed(2)}ms`);
     });
+    console.log(
+      `tick ${action.n} took ${(performance.now() - start).toFixed(2)}ms (mutator: ${mutatorMs.toFixed(2)}ms)`,
+    );
   }
 
   getClientState(): ClientState {
