@@ -26,15 +26,15 @@ import { memo } from "../../util/memo.ts";
  *  which are computed a maximum of one time per changing game state.
  */
 export type ComputedTickState = {
-  playerUnitQuadTrees: () => Record<number, Quadtree<UnitInstance>>;
+  unitQuadTreesByPlayer: () => Record<number, Quadtree<UnitInstance>>;
   grid: () => Grid;
-  unitIndex: () => Record<number, UnitInstance>;
+  unitsById: () => Record<number, UnitInstance>;
 };
 
 export function createComputedTickState(state: GameState): ComputedTickState {
   return {
     grid: memo(() => new Grid(state.mapSize)),
-    playerUnitQuadTrees: memo(() =>
+    unitQuadTreesByPlayer: memo(() =>
       state.units.reduce(
         (trees: Record<number, Quadtree<UnitInstance>>, unit: UnitInstance) => {
           if (!trees[unit.ownedByPlayer]) {
@@ -46,7 +46,7 @@ export function createComputedTickState(state: GameState): ComputedTickState {
         {} as Record<number, Quadtree<UnitInstance>>,
       )
     ),
-    unitIndex: memo(() =>
+    unitsById: memo(() =>
       state.units.reduce(
         (acc, unit) => {
           acc[unit.id] = unit;

@@ -4,7 +4,7 @@ import { stopUnit } from "./stopUnit.ts";
 import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 
 export function startConversion(state: GameState, computed: ComputedTickState, monkId: number, target: number) {
-  const monk = computed.unitIndex()[monkId];
+  const monk = computed.unitsById()[monkId];
   if (!monk || monk.unitType !== UnitType.Monk) {
     return;
   }
