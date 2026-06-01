@@ -29,7 +29,7 @@ const blackboardComputer: BlackboardComputer = {
   unitTypeGroupIndex: () => 10,
   unitsInGroupCount: () => 10,
   unitsOfTypeGlobalCount: () => 10,
-  perceptionAverageVectorOpponents: () => ({ x: 0, y: 0 }),
+  opponentAveragePosition: () => ({ x: 0, y: 0 }),
 };
 
 const params = { state, botState, group, blackboardComputer };

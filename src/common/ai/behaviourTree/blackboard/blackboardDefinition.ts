@@ -52,7 +52,7 @@ export const blackboardDefinition = {
   /**
    * The average vector of all opponent units.
    */
-  perceptionAverageVectorOpponents: {
+  opponentAveragePosition: {
     dataType: "vector",
     mutationRequirements: {
       min: 1,

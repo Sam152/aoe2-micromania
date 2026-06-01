@@ -36,7 +36,7 @@ export const blackboardComputer: BlackboardComputer = {
   unitsInGroupCount: ({ group }) => group.includedUnits.length,
   unitsOfTypeGlobalCount: ({ state, botState }) =>
     state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
-  perceptionAverageVectorOpponents: ({ state, botState }) => {
+  opponentAveragePosition: ({ state, botState }) => {
     return averageVector(
       state.units.filter((unit) => unit.ownedByPlayer !== botState.playingAs).map((unit) => unit.position),
     );

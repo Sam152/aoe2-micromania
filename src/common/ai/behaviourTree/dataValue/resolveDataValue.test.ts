@@ -18,7 +18,7 @@ const blackboardComputer: BlackboardComputer = {
   unitTypeGroupIndex: () => 2,
   unitsInGroupCount: () => 7,
   unitsOfTypeGlobalCount: () => 4,
-  perceptionAverageVectorOpponents: ({ params }) => params.vectorOffset,
+  opponentAveragePosition: ({ params }) => params.vectorOffset,
 };
 
 const resolve = (dataValue: DataValue) =>
@@ -54,7 +54,7 @@ describe("resolveDataValueToPrimitive", () => {
         nodeType: "dataValue",
         type: "BLACKBOARD",
         dataType: "vector",
-        blackboardKey: "perceptionAverageVectorOpponents",
+        blackboardKey: "opponentAveragePosition",
         params: {
           vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 3, y: 4 } },
         },
@@ -69,13 +69,13 @@ describe("resolveDataValueToPrimitive", () => {
         nodeType: "dataValue",
         type: "BLACKBOARD",
         dataType: "vector",
-        blackboardKey: "perceptionAverageVectorOpponents",
+        blackboardKey: "opponentAveragePosition",
         params: {
           vectorOffset: {
             nodeType: "dataValue",
             type: "BLACKBOARD",
             dataType: "vector",
-            blackboardKey: "perceptionAverageVectorOpponents",
+            blackboardKey: "opponentAveragePosition",
             params: {
               vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 5, y: 6 } },
             },

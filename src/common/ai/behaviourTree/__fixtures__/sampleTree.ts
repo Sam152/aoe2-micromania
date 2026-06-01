@@ -79,7 +79,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "vector",
                 type: "BLACKBOARD",
-                blackboardKey: "perceptionAverageVectorOpponents",
+                blackboardKey: "opponentAveragePosition",
                 params: {
                   vectorOffset: {
                     nodeType: "dataValue",
@@ -118,7 +118,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
             nodeType: "dataValue",
             dataType: "vector",
             type: "BLACKBOARD",
-            blackboardKey: "perceptionAverageVectorOpponents",
+            blackboardKey: "opponentAveragePosition",
             params: {
               vectorOffset: {
                 nodeType: "dataValue",

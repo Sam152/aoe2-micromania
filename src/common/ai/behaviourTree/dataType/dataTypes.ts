@@ -3,11 +3,15 @@ import { number } from "./catalog/number.ts";
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 
 import { vector } from "./catalog/vector.ts";
+import { count } from "./catalog/count.ts";
+import { vectorMagnitude } from "./catalog/vectorMagnitude.ts";
 
 export const dataTypes = {
   boolean,
   number,
   vector,
+  count,
+  vectorMagnitude,
 };
 
 export type DataType = keyof typeof dataTypes;
