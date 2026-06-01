@@ -74,6 +74,21 @@ export const blackboardDefinition = {
       },
     },
   },
+  opponentClosestMonk: {
+    dataType: "unitId",
+    mutationRequirements: undefined,
+    params: {},
+  },
+  opponentClosestArcher: {
+    dataType: "unitId",
+    mutationRequirements: undefined,
+    params: {},
+  },
+  opponentClosestMango: {
+    dataType: "unitId",
+    mutationRequirements: undefined,
+    params: {},
+  },
 } as const satisfies BlackboardDefinitionShape;
 
 export type BlackboardDefinition = typeof blackboardDefinition;

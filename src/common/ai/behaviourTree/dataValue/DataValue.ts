@@ -1,6 +1,8 @@
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { BlackboardDefinition, BlackboardKey } from "../blackboard/blackboardDefinition.ts";
 
+export type DataValueType = "PRIMITIVE" | "BLACKBOARD";
+
 export type DataValue =
   | { [TKey in DataType]: PrimitiveDataValue<TKey> }[DataType]
   | { [TKey in BlackboardKey]: BlackboardDataValue<TKey> }[BlackboardKey];

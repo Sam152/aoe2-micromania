@@ -41,4 +41,7 @@ export const blackboardComputer: BlackboardComputer = {
       state.units.filter((unit) => unit.ownedByPlayer !== botState.playingAs).map((unit) => unit.position),
     );
   },
+  opponentClosestMonk: () => 1,
+  opponentClosestArcher: () => 1,
+  opponentClosestMango: () => 1,
 };

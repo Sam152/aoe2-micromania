@@ -5,6 +5,7 @@ import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 import { vector } from "./catalog/vector.ts";
 import { count } from "./catalog/count.ts";
 import { vectorMagnitude } from "./catalog/vectorMagnitude.ts";
+import { unitId } from "./catalog/unitId.ts";
 
 export const dataTypes = {
   boolean,
@@ -12,6 +13,7 @@ export const dataTypes = {
   vector,
   count,
   vectorMagnitude,
+  unitId,
 };
 
 export type DataType = keyof typeof dataTypes;

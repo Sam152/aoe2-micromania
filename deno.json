@@ -1,6 +1,5 @@
 {
   "nodeModulesDir": "auto",
-  "vendor": true,
   "tasks": {
     "start": "deno run --check --allow-env --allow-sys --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
     "start:debug": "deno run --inspect --check --allow-env --allow-sys --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
@@ -38,6 +37,7 @@
     "@std/cli": "jsr:@std/cli@^1.0.29",
     "@std/testing": "jsr:@std/testing@^1.0.19",
     "@std/testing/bdd": "jsr:@std/testing/bdd",
+    "@types/d3-quadtree": "npm:@types/d3-quadtree@^3.0.6",
     "@types/react": "npm:@types/react@^18",
     "@types/react-dom": "npm:@types/react-dom@^18",
     "@luca/esbuild-deno-loader": "jsr:@luca/esbuild-deno-loader@^0.11.1",

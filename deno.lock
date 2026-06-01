@@ -30,6 +30,7 @@
     "jsr:@std/path@^1.1.5": "1.1.5",
     "jsr:@std/testing@*": "1.0.19",
     "jsr:@std/testing@^1.0.19": "1.0.19",
+    "npm:@types/d3-quadtree@^3.0.6": "3.0.6",
     "npm:@types/react-dom@18": "18.3.7_@types+react@18.3.28",
     "npm:@types/react@18": "18.3.28",
     "npm:@types/three@0.184.1": "0.184.1",
@@ -366,6 +367,9 @@
       "dependencies": [
         "@types/node"
       ]
+    },
+    "@types/d3-quadtree@3.0.6": {
+      "integrity": "sha512-oUzyO1/Zm6rsxKRHA1vH0NEDG58HrT5icx/azi9MF1TWdtttWl0UIUsjEQBBh+SIkrpd21ZjEv7ptxWys1ncsg=="
     },
     "@types/eslint-scope@3.7.7": {
       "integrity": "sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==",
@@ -1102,6 +1106,7 @@
       "jsr:@std/crypto@^1.1.0",
       "jsr:@std/testing@*",
       "jsr:@std/testing@^1.0.19",
+      "npm:@types/d3-quadtree@^3.0.6",
       "npm:@types/react-dom@18",
       "npm:@types/react@18",
       "npm:@types/three@~0.184.1",
