@@ -3,6 +3,7 @@ import { GameState, UnitInstance } from "../../../types.ts";
 import { createUnitQuadtree } from "../../util/buildQuadTree.ts";
 import { Grid } from "../../terrain/Grid.ts";
 import { memo } from "../../util/memo.ts";
+import { UnitType } from "../../units/UnitType.ts";
 
 /**
  * After every action, the state of the game changes. There are certain computation
@@ -27,6 +28,9 @@ import { memo } from "../../util/memo.ts";
  */
 export type ComputedTickState = {
   unitQuadTreesByPlayer: () => Record<number, Quadtree<UnitInstance>>;
+  archerQuadTreesByPlayer: () => Record<number, Quadtree<UnitInstance>>;
+  monkQuadTreesByPlayer: () => Record<number, Quadtree<UnitInstance>>;
+  mangoQuadTreesByPlayer: () => Record<number, Quadtree<UnitInstance>>;
   grid: () => Grid;
   unitsById: () => Record<number, UnitInstance>;
 };
@@ -34,18 +38,10 @@ export type ComputedTickState = {
 export function createComputedTickState(state: GameState): ComputedTickState {
   return {
     grid: memo(() => new Grid(state.mapSize)),
-    unitQuadTreesByPlayer: memo(() =>
-      state.units.reduce(
-        (trees: Record<number, Quadtree<UnitInstance>>, unit: UnitInstance) => {
-          if (!trees[unit.ownedByPlayer]) {
-            trees[unit.ownedByPlayer] = createUnitQuadtree();
-          }
-          trees[unit.ownedByPlayer].add(unit);
-          return trees;
-        },
-        {} as Record<number, Quadtree<UnitInstance>>,
-      )
-    ),
+    unitQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units)),
+    archerQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units, UnitType.Archer)),
+    monkQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units, UnitType.Monk)),
+    mangoQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units, UnitType.Mangonel)),
     unitsById: memo(() =>
       state.units.reduce(
         (acc, unit) => {
@@ -56,4 +52,21 @@ export function createComputedTickState(state: GameState): ComputedTickState {
       )
     ),
   };
+}
+
+function buildQuadTreesByPlayer(
+  units: UnitInstance[],
+  filter?: UnitType,
+): Record<number, Quadtree<UnitInstance>> {
+  return units.reduce(
+    (trees: Record<number, Quadtree<UnitInstance>>, unit: UnitInstance) => {
+      if (filter !== undefined && unit.unitType !== filter) { return trees; }
+      if (!trees[unit.ownedByPlayer]) {
+        trees[unit.ownedByPlayer] = createUnitQuadtree();
+      }
+      trees[unit.ownedByPlayer].add(unit);
+      return trees;
+    },
+    {} as Record<number, Quadtree<UnitInstance>>,
+  );
 }
