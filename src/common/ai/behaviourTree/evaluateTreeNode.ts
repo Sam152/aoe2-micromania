@@ -27,7 +27,8 @@ export function evaluateTreeNode(
       blackboardComputer,
     });
     const conditionDefinition = conditionList[node.type];
-    return { result: conditionDefinition.evaluate(resolvedParams as any), actionNodes };
+    const evalResult = conditionDefinition.evaluate(resolvedParams as any);
+    return { result: node.invert ? !evalResult : evalResult, actionNodes };
   }
 
   if (node.nodeType === "action") {

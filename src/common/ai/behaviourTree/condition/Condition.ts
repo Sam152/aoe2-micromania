@@ -8,6 +8,7 @@ export type ConditionNode = { [TConditionType in ConditionType]: ConditionOfType
 export type ConditionOfType<TConditionType extends ConditionType> = {
   nodeType: "condition";
   type: TConditionType;
+  invert: boolean;
   params: {
     [TKey in keyof ConditionList[TConditionType]["params"]]: ConditionList[TConditionType]["params"][TKey] extends
       { dataType: infer D extends DataType } ? DataValueOfType<D> : never;
