@@ -24,14 +24,14 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
         (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing,
     )
     .forEach((unit) => {
-      if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
+      if (unit.targetingUnit && !computed.unitIndex()[unit.targetingUnit]) {
         unit.targetingUnit = undefined;
         unit.unitState = UnitState.Idle;
         return;
       }
 
       const targetingPosition =
-        (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
+        (unit.targetingUnit ? computed.unitIndex()[unit.targetingUnit!]!.position : unit.targetingPosition)!;
 
       if (inMinimumRange(unit, targetingPosition)) {
         setUnitMovementAwayFrom(state, unit, targetingPosition);
@@ -56,14 +56,14 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
   fireUnits
     .filter(({ unitState }) => unitState === UnitState.Firing)
     .forEach((unit) => {
-      if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
+      if (unit.targetingUnit && !computed.unitIndex()[unit.targetingUnit]) {
         unit.targetingUnit = undefined;
         unit.unitState = UnitState.Idle;
         return;
       }
 
       const aimingFor =
-        (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
+        (unit.targetingUnit ? computed.unitIndex()[unit.targetingUnit!]!.position : unit.targetingPosition)!;
 
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
@@ -83,7 +83,7 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
           aimingFor,
         });
 
-        const targetingUnit = computed.unitIndex[unit.targetingUnit!];
+        const targetingUnit = computed.unitIndex()[unit.targetingUnit!];
         const distance = unit.position.distanceTo(landedPosition);
 
         state.projectiles.push({

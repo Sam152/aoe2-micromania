@@ -10,7 +10,7 @@ import { compassDirectionCalculator } from "../../../units/compassDirectionCalcu
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
   const location = getBestSpawnLocation(state);
-  const facingMiddle = location.clone().sub(computed.grid.middleOfGrid()).normalize();
+  const facingMiddle = location.clone().sub(computed.grid().middleOfGrid()).normalize();
   const buffered = location.clone().sub(facingMiddle.multiplyScalar(5));
 
   const units: UnitInstance[] = [];
@@ -50,7 +50,7 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
     .form(units, buffered)
     .map((position, idx) => {
       units[idx].position = position;
-      units[idx].direction = compassDirectionCalculator.getDirection(position, computed.grid.middleOfGrid());
+      units[idx].direction = compassDirectionCalculator.getDirection(position, computed.grid().middleOfGrid());
     });
 }
 

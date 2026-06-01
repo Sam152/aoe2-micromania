@@ -29,7 +29,7 @@ export function closestUnitNotOwnedBy(
   let distance: number;
   let closestUnit: UnitInstance | undefined;
 
-  Object.entries(computed.playerUnitQuadTrees).forEach(([player, tree]) => {
+  Object.entries(computed.playerUnitQuadTrees()).forEach(([player, tree]) => {
     if (parseInt(player) === notOwnedBy) {
       return;
     }
