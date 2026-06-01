@@ -6,10 +6,10 @@ import { UnitType } from "../../units/UnitType.ts";
 
 import { createInitialUnitGroups } from "./util/createInitialUnitGroups.ts";
 import { consolidateGroups } from "./util/consolidateGroups.ts";
-import { ComputedFrameState } from "../../state/computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
 
 export type BotInstance = {
-  tick: (state: GameState, dispatcher: GameDispatcher, computed: ComputedFrameState) => void;
+  tick: (state: GameState, dispatcher: GameDispatcher, computed: ComputedTickState) => void;
   playerId: string;
 };
 

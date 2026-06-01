@@ -4,12 +4,12 @@ import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMoveme
 import { inAttackRange } from "../../../util/inAttackRange.ts";
 import { setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { stopUnit } from "../initiated/stopUnit.ts";
 
 export const CONVERSION_JUICE_TICKS_RECHARGE = 100;
 
-export function convertUnits(state: GameState, computed: ComputedFrameState) {
+export function convertUnits(state: GameState, computed: ComputedTickState) {
   const convertingUnits = state.units.filter((unit) => !!unit.convertingUnit);
 
   // Check if a unit should be firing or moving towards its target.

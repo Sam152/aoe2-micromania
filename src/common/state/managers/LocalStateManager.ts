@@ -2,7 +2,7 @@ import { defaultState as defaultGameState, gameStateMutator } from "../gameState
 import { clientStateMutator, defaultState as defaultClientState } from "../clientState.ts";
 import { ClientState, ClientStateAction, GameState, GameStateAction, StateManagerInterface } from "../../../types.ts";
 import { config } from "../../config.ts";
-import { ComputedFrameState, createComputedFrameState } from "../computed/createComputedFrameState.ts";
+import { ComputedTickState, createComputedTickState } from "../computed/createComputedTickState.ts";
 import { GameStateListener } from "./GameStateListener.ts";
 
 /**
@@ -11,7 +11,7 @@ import { GameStateListener } from "./GameStateListener.ts";
 export class LocalStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
-  private computedFrameState: ComputedFrameState | undefined;
+  private computedFrameState: ComputedTickState | undefined;
   private gameStateListeners: Array<GameStateListener>;
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
@@ -42,14 +42,14 @@ export class LocalStateManager implements StateManagerInterface {
 
   dispatchGame(action: GameStateAction): void {
     if (!this.computedFrameState) {
-      this.computedFrameState = createComputedFrameState(this.gameState);
+      this.computedFrameState = createComputedTickState(this.gameState);
     }
 
     // Create the computed frame state, after the given tick is done,
     // because listeners may want to use it, but also feed it back into
     // the next mutator.
     this.gameState = gameStateMutator(this.gameState, action, this.computedFrameState);
-    this.computedFrameState = createComputedFrameState(this.gameState);
+    this.computedFrameState = createComputedTickState(this.gameState);
 
     this.gameStateListeners.forEach((gameStateListener) => {
       gameStateListener(this.gameState, action, this.computedFrameState!);

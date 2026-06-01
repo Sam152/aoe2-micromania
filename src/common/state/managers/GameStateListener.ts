@@ -1,4 +1,4 @@
 import { GameState, GameStateAction } from "../../../types.ts";
-import { ComputedFrameState } from "../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../computed/createComputedTickState.ts";
 
-export type GameStateListener = (state: GameState, action: GameStateAction, computed: ComputedFrameState) => void;
+export type GameStateListener = (state: GameState, action: GameStateAction, computed: ComputedTickState) => void;

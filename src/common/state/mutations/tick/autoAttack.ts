@@ -2,10 +2,10 @@ import { GameState, UnitInstance } from "../../../../types.ts";
 import { UnitState } from "../../../units/UnitState.ts";
 import { getAttackRange } from "../../../util/inAttackRange.ts";
 import { hasScalarValue } from "../../../util/hasValue.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 
-export function autoAttack(state: GameState, computed: ComputedFrameState) {
+export function autoAttack(state: GameState, computed: ComputedTickState) {
   const fireUnits = state.units.filter((unit) => unit.unitType !== UnitType.Monk);
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
@@ -24,7 +24,7 @@ export function autoAttack(state: GameState, computed: ComputedFrameState) {
 export function closestUnitNotOwnedBy(
   notOwnedBy: number,
   attackingUnit: UnitInstance,
-  computed: ComputedFrameState,
+  computed: ComputedTickState,
 ): UnitInstance | undefined {
   let distance: number;
   let closestUnit: UnitInstance | undefined;

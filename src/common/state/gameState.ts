@@ -19,13 +19,13 @@ import { setUnitMovementTowardsCurrentWaypoint } from "./mutations/initiated/set
 import { snapToClamp } from "../util/snapToClamp.ts";
 import { provisionPlayer } from "./mutations/players/provisionPlayer.ts";
 import { cyclePlayers } from "./mutations/players/cyclePlayers.ts";
-import { ComputedFrameState } from "./computed/createComputedFrameState.ts";
+import { ComputedTickState } from "./computed/createComputedTickState.ts";
 import { deprovisionPlayer } from "./mutations/players/deprovisionPlayer.ts";
 import { cleanFallen } from "./mutations/tick/cleanFallen.ts";
 import { startConversion } from "./mutations/initiated/startConversion.ts";
 import { convertUnits } from "./mutations/tick/convertUnits.ts";
 
-export function gameStateMutator(state: GameState, action: GameStateAction, computed: ComputedFrameState): GameState {
+export function gameStateMutator(state: GameState, action: GameStateAction, computed: ComputedTickState): GameState {
   if (action.n === "CLIENT_LOADED_WITH_ID") {
     provisionPlayer(state, action.playerId, computed);
   }

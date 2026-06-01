@@ -25,14 +25,15 @@ import { memo } from "../../util/memo.ts";
  *  Each property is memoized, allowing us to have a lot of interesting computations,
  *  which are computed a maximum of one time per changing game state.
  */
-export type ComputedFrameState = {
+export type ComputedTickState = {
   playerUnitQuadTrees: () => Record<number, Quadtree<UnitInstance>>;
   grid: () => Grid;
   unitIndex: () => Record<number, UnitInstance>;
 };
 
-export function createComputedFrameState(state: GameState): ComputedFrameState {
+export function createComputedTickState(state: GameState): ComputedTickState {
   return {
+    grid: memo(() => new Grid(state.mapSize)),
     playerUnitQuadTrees: memo(() =>
       state.units.reduce(
         (trees: Record<number, Quadtree<UnitInstance>>, unit: UnitInstance) => {
@@ -45,17 +46,14 @@ export function createComputedFrameState(state: GameState): ComputedFrameState {
         {} as Record<number, Quadtree<UnitInstance>>,
       )
     ),
-    grid: memo(() => new Grid(state.mapSize)),
-    unitIndex: memo(() => createUnitIndex(state.units)),
+    unitIndex: memo(() =>
+      state.units.reduce(
+        (acc, unit) => {
+          acc[unit.id] = unit;
+          return acc;
+        },
+        {} as Record<number, UnitInstance>,
+      )
+    ),
   };
-}
-
-function createUnitIndex(units: UnitInstance[]): Record<number, UnitInstance> {
-  return units.reduce(
-    (acc, unit) => {
-      acc[unit.id] = unit;
-      return acc;
-    },
-    {} as Record<number, UnitInstance>,
-  );
 }

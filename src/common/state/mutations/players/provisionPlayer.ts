@@ -1,10 +1,10 @@
 import { GameState } from "../../../../types.ts";
 import { spawnStartingUnits } from "./spawnStartingUnits.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 
 export const MAX_PLAYERS_PER_SERVER = 5;
 
-export function provisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
+export function provisionPlayer(state: GameState, playerId: string, computed: ComputedTickState) {
   // If the client ID is already active, no need to provision them.
   if (state.activePlayers[playerId]) {
     return;

@@ -2,13 +2,13 @@ import { Grid } from "../../../terrain/Grid.ts";
 import { spawnUnit } from "../initiated/spawnUnit.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 import { GameState, UnitInstance } from "../../../../types.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { formationManager } from "../../../units/formations/FormationManager.ts";
 import { FormationType } from "../../../units/formations/FormationType.ts";
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
 
-export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
+export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedTickState) {
   const location = getBestSpawnLocation(state);
   const facingMiddle = location.clone().sub(computed.grid().middleOfGrid()).normalize();
   const buffered = location.clone().sub(facingMiddle.multiplyScalar(5));

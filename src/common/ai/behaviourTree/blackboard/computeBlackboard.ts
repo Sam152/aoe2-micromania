@@ -4,7 +4,7 @@ import { BlackboardDefinition, BlackboardKey } from "./blackboardDefinition.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { averageVector } from "../../../util/averageVector.ts";
-import { ComputedFrameState } from "../../../state/computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../../state/computed/createComputedTickState.ts";
 
 type BlackboardValueResolverParams<TBlackboardKey extends BlackboardKey> = {
   state: GameState;
@@ -26,7 +26,7 @@ export type BlackboardComputer = {
   [TKey in BlackboardKey]: BlackboardValueResolver<BlackboardDefinition[TKey]["dataType"], TKey>;
 };
 
-export function createBlackboardComputer({ computed }: { computed: ComputedFrameState }): BlackboardComputer {
+export function createBlackboardComputer({ computed }: { computed: ComputedTickState }): BlackboardComputer {
   return {
     groupsForUnitTypeCount: ({ botState, group }) => {
       return Object.values(botState.unitGroups).filter((botGroup) => botGroup.unitType === group.unitType).length;

@@ -1,6 +1,6 @@
 import { Vector2 } from "three/src/math/Vector2.js";
 import { closestUnitNotOwnedBy } from "./autoAttack.ts";
-import { createComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { createComputedTickState } from "../../computed/createComputedTickState.ts";
 import { GameState, UnitInstance } from "../../../../types.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 import { UnitState } from "../../../units/UnitState.ts";
@@ -55,7 +55,7 @@ export function closestUnitNotOwnedByBruteForce(
 
 for (const unitsPerPlayer of [50, 250, 1000]) {
   const state = makeState(unitsPerPlayer);
-  const computed = createComputedFrameState(state);
+  const computed = createComputedTickState(state);
 
   Deno.bench(`quadtree   — ${unitsPerPlayer}u/player, all units`, () => {
     for (const unit of state.units) {

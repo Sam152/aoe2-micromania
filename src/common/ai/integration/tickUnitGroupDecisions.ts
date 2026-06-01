@@ -7,14 +7,14 @@ import { splitGroup } from "./util/splitGroup.ts";
 import { mergeGroups } from "./util/mergeGroups.ts";
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
 import { resolveDataValueToPrimitive, resolveParamDataValues } from "../behaviourTree/dataValue/resolveDataValue.ts";
-import { ComputedFrameState } from "../../state/computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
   state: GameState;
   botState: BotState;
   dispatcher: GameDispatcher;
-  computed: ComputedFrameState;
+  computed: ComputedTickState;
 };
 
 export function tickUnitGroupDecisions({ state, botState, dispatcher, group, computed }: TickGroupArgs) {

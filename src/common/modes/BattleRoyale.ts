@@ -7,7 +7,7 @@ import { assert } from "@std/assert";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
 import stat = Deno.stat;
 import { triggerBotTicks } from "../ai/integration/triggerBotTicks.ts";
-import { ComputedFrameState } from "../state/computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../state/computed/createComputedTickState.ts";
 
 const grid = new Grid(30);
 
@@ -35,7 +35,7 @@ export class BattleRoyale implements GameMode {
     state: GameState,
     action: GameStateAction,
     manager: StateManagerInterface,
-    computed: ComputedFrameState,
+    computed: ComputedTickState,
   ): void {
     // Only respond on tick.
     if (action.n !== "T") {

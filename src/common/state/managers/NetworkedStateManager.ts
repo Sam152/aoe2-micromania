@@ -4,7 +4,7 @@ import { ClientState, ClientStateAction, GameState, GameStateAction, StateManage
 import { Socket } from "socket.io-client";
 import { normalizeGameStateAction, normalizeGameStateObject } from "../../util/normalizer.ts";
 import { TransportEvent } from "../transport/TransportEvent.ts";
-import { ComputedFrameState, createComputedFrameState } from "../computed/createComputedFrameState.ts";
+import { ComputedTickState, createComputedTickState } from "../computed/createComputedTickState.ts";
 
 /**
  * A state manager with a client => server relationship.
@@ -13,8 +13,8 @@ export class NetworkedStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
   private socket: Socket;
-  private computedFrameState: ComputedFrameState | undefined;
-  private gameStateListeners: Array<(state: GameState, action: GameStateAction, computed: ComputedFrameState) => void>;
+  private computedFrameState: ComputedTickState | undefined;
+  private gameStateListeners: Array<(state: GameState, action: GameStateAction, computed: ComputedTickState) => void>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
 
   constructor(socket: Socket) {
@@ -65,11 +65,11 @@ export class NetworkedStateManager implements StateManagerInterface {
       const action = normalizeGameStateAction(serverAction);
 
       if (!this.computedFrameState) {
-        this.computedFrameState = createComputedFrameState(this.gameState);
+        this.computedFrameState = createComputedTickState(this.gameState);
       }
 
       this.gameState = gameStateMutator(this.gameState, action, this.computedFrameState);
-      this.computedFrameState = createComputedFrameState(this.gameState);
+      this.computedFrameState = createComputedTickState(this.gameState);
 
       if (action.n === "T" && action.t !== this.gameState.ticks - 1) {
         console.error("Desync detected - reloading");
