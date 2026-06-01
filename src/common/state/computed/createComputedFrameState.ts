@@ -19,7 +19,6 @@ export function createComputedFrameState(state: GameState): ComputedFrameState {
             trees[unit.ownedByPlayer] = createUnitQuadtree();
           }
           trees[unit.ownedByPlayer].add(unit);
-
           return trees;
         },
         {} as Record<number, Quadtree<UnitInstance>>,
