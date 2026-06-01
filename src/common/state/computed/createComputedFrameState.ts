@@ -4,7 +4,6 @@ import { createUnitQuadtree } from "../../util/buildQuadTree.ts";
 import { Grid } from "../../terrain/Grid.ts";
 
 export type ComputedFrameState = {
-  quadTreeAllUnits: Quadtree<UnitInstance>;
   playerUnitQuadTrees: Record<number, Quadtree<UnitInstance>>;
   grid: Grid;
   unitIndex: Record<number, UnitInstance>;
@@ -12,7 +11,6 @@ export type ComputedFrameState = {
 
 export function createComputedFrameState(state: GameState): ComputedFrameState {
   return {
-    quadTreeAllUnits: createUnitQuadtree().addAll(state.units),
     playerUnitQuadTrees: state.units.reduce(
       (trees: Record<number, Quadtree<UnitInstance>>, unit: UnitInstance) => {
         if (!trees[unit.ownedByPlayer]) {

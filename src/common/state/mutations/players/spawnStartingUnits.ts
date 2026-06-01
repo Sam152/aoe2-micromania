@@ -9,7 +9,7 @@ import { FormationType } from "../../../units/formations/FormationType.ts";
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
 
 export function spawnStartingUnits(state: GameState, newPlayerNumber: number, computed: ComputedFrameState) {
-  const location = getBestSpawnLocation(state, computed);
+  const location = getBestSpawnLocation(state);
   const facingMiddle = location.clone().sub(computed.grid.middleOfGrid()).normalize();
   const buffered = location.clone().sub(facingMiddle.multiplyScalar(5));
 
@@ -54,14 +54,12 @@ export function spawnStartingUnits(state: GameState, newPlayerNumber: number, co
     });
 }
 
-export function getBestSpawnLocation(state: GameState, computed: ComputedFrameState): Vector2 {
-  const distanceToNearest = (v: Vector2): number => {
-    const nearest = computed.quadTreeAllUnits.find(v.x, v.y);
-    return nearest ? nearest.position.distanceTo(v) : Infinity;
-  };
+export function getBestSpawnLocation(state: GameState): Vector2 {
+  const minDistToUnit = (v: Vector2): number =>
+    state.units.reduce((min, u) => Math.min(min, u.position.distanceTo(v)), Infinity);
 
   return getStartingSpawnCandidates(state).reduce((best, candidate) =>
-    distanceToNearest(candidate) > distanceToNearest(best) ? candidate : best
+    minDistToUnit(candidate) > minDistToUnit(best) ? candidate : best
   );
 }
 
