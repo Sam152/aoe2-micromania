@@ -30,7 +30,7 @@ const blackboardComputer: BlackboardComputer = {
   unitsInGroupCount: () => 10,
   unitsOfTypeGlobalCount: () => 10,
   opponentAveragePosition: () => ({ x: 0, y: 0 }),
-};
+} as unknown as BlackboardComputer;
 
 const params = { state, botState, group, blackboardComputer };
 

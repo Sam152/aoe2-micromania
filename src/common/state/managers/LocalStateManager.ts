@@ -50,8 +50,8 @@ export class LocalStateManager implements StateManagerInterface {
     this.gameState = gameStateMutator(this.gameState, action, this.computedFrameState);
     this.computedFrameState = createComputedFrameState(this.gameState);
 
-    this.gameStateListeners.forEach((gameStateListener, i) => {
-      gameStateListener(this.gameState, action, this.computedFrameState);
+    this.gameStateListeners.forEach((gameStateListener) => {
+      gameStateListener(this.gameState, action, this.computedFrameState!);
     });
   }
 
