@@ -22,7 +22,7 @@ type BlackboardValueResolverParams<TBlackboardKey extends BlackboardKey> = {
 
 type BlackboardValueResolver<TDataType extends DataType, TBlackboardKey extends BlackboardKey> = (
   params: BlackboardValueResolverParams<TBlackboardKey>,
-) => TypeFromDataType<TDataType>;
+) => TypeFromDataType<TDataType> | undefined;
 
 export type BlackboardComputer = {
   [TKey in BlackboardKey]: BlackboardValueResolver<BlackboardDefinition[TKey]["dataType"], TKey>;

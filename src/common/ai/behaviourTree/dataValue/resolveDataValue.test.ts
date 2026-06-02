@@ -24,7 +24,7 @@ const blackboardComputer: Pick<
   groupsForUnitTypeCount: () => 1,
   unitTypeGroupIndex: () => 2,
   unitsInGroupCount: () => 7,
-  unitsOfTypeGlobalCount: () => 4,
+  unitsOfTypeGlobalCount: () => undefined,
   opponentAveragePosition: ({ params }) => params.vectorOffset,
 };
 
@@ -124,6 +124,22 @@ describe("resolveParamDataValues", () => {
         },
       }),
       { a: 1, b: { x: 2, y: 3 }, c: 7 },
+    );
+  });
+  it("resolves the whole object as undefined, if any params are undefined", () => {
+    assertEquals(
+      resolveParams({
+        a: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "number", value: 1 },
+        // This param will resolve undefined.
+        c: {
+          nodeType: "dataValue",
+          type: "BLACKBOARD",
+          dataType: "number",
+          blackboardKey: "unitsOfTypeGlobalCount",
+          params: {},
+        },
+      }),
+      undefined,
     );
   });
 });

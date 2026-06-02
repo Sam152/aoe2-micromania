@@ -74,13 +74,14 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
       let executeAfterTick: number = state.ticks + i;
 
       if (actionNode.type === "IDLE") {
-        executeAfterTick += resolveDataValueToPrimitive({
+        const resolvedForTicksAmount = resolveDataValueToPrimitive({
           dataValue: actionNode.params.forTicksAmount,
           group,
           botState,
           state,
           blackboardComputer,
-        }) as number;
+        }) as number | undefined;
+        executeAfterTick += resolvedForTicksAmount ?? 0;
       }
       return {
         action: actionNode,
