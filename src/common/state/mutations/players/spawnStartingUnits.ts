@@ -66,7 +66,7 @@ export function getBestSpawnLocation(state: GameState): Vector2 {
 export function getStartingSpawnCandidates(
   state: GameState,
 ): [Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2, Vector2] {
-  const buffer = 4;
+  const buffer = Object.values(state.activePlayers).length <= 2 ? 8 : 4;
   const grid = new Grid(state.mapSize);
   // Clock face positions, see debug renderer.
   return [
