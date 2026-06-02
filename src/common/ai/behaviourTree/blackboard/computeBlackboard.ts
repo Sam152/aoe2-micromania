@@ -3,7 +3,7 @@ import { BlackboardDefinition, BlackboardKey } from "./blackboardDefinition.ts";
 
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
-import { averageVector } from "../../../util/averageVector.ts";
+import { averageVectorOrUndefined } from "../../../util/averageVector.ts";
 import { ComputedTickState } from "../../../state/computed/createComputedTickState.ts";
 import { groupAveragePosition } from "./utils/groupAveragePosition.ts";
 import { closestExcludingPlayer } from "../../../util/closestExcludingPlayer.ts";
@@ -41,7 +41,7 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
     unitsOfTypeGlobalCount: ({ state, botState }) =>
       state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
     opponentAveragePosition: ({ state, botState }) => {
-      return averageVector(
+      return averageVectorOrUndefined(
         state.units.filter((unit) => unit.ownedByPlayer !== botState.playingAs).map((unit) => unit.position),
       );
     },
