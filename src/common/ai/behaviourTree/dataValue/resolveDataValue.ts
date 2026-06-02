@@ -24,6 +24,7 @@ export function resolveDataValueToPrimitive(
 
   if (dataValue.type === "BLACKBOARD") {
     const resolvedParams = resolveParamDataValues(dataValue.params, context);
+    if (resolvedParams === undefined) { return undefined; }
     const computer = context.blackboardComputer[dataValue.blackboardKey];
     return computer({ ...context, params: resolvedParams as any });
   }
@@ -38,12 +39,15 @@ type ResolvedParams<TParams extends Record<string, DataValue>> = {
 export function resolveParamDataValues<TParams extends Record<string, DataValue>>(
   params: TParams,
   context: ResolveContext,
-): ResolvedParams<TParams> {
-  return Object.entries(params).reduce(
-    (resolved, [paramName, paramDataValue]) => {
-      resolved[paramName] = resolveDataValueToPrimitive({ dataValue: paramDataValue, ...context });
-      return resolved;
-    },
-    {} as Record<string, unknown>,
-  ) as ResolvedParams<TParams>;
+): ResolvedParams<TParams> | undefined {
+  const entries = Object.entries(params);
+  const resolved: Record<string, unknown> = {};
+  for (const [paramName, paramDataValue] of entries) {
+    const value = resolveDataValueToPrimitive({ dataValue: paramDataValue, ...context });
+    if (value === undefined) {
+      return undefined;
+    }
+    resolved[paramName] = value;
+  }
+  return resolved as ResolvedParams<TParams>;
 }

@@ -22,7 +22,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
 
   // If we have actions in the queue, try to consume the next available one.
   if (group.actionQueue.length > 0) {
-    const nextAction = group.actionQueue[0];
+    const nextAction = group.actionQueue.shift()!;
     if (state.ticks < nextAction.executeAfterTick) {
       return;
     }
@@ -34,6 +34,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
       botState,
       blackboardComputer,
     });
+
     const gameStateAction = actionDefinition.execute(
       resolvedParams as any,
       state,
@@ -53,8 +54,6 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
       mergeGroups({ group, state, botState });
     }
 
-    // The queued action is donezo.
-    group.actionQueue.shift();
     return;
   }
 
@@ -70,7 +69,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
   });
 
   group.actionQueue.push(
-    ...actionNodes.map((actionNode, i) => {
+    ...actionNodes.map(({ actionNode, resolvedParams }, i) => {
       let executeAfterTick: number = state.ticks + i;
 
       if (actionNode.type === "IDLE") {

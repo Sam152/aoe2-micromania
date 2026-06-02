@@ -101,9 +101,14 @@ describe("tree evaluation", () => {
       {
         result: true,
         actionNodes: [{
-          nodeType: "action",
-          type: "IDLE",
-          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+          actionNode: {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+          },
+          resolvedParams: {
+            forTicksAmount: 1,
+          },
         }],
       },
     );
@@ -204,9 +209,12 @@ describe("tree evaluation", () => {
       {
         result: true,
         actionNodes: [{
-          nodeType: "action",
-          type: "IDLE",
-          params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+          actionNode: {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+          },
+          resolvedParams: { forTicksAmount: 2 },
         }],
       },
     );
@@ -286,19 +294,28 @@ describe("tree evaluation", () => {
         result: true,
         actionNodes: [
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            },
+            resolvedParams: { forTicksAmount: 1 },
           },
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+            },
+            resolvedParams: { forTicksAmount: 2 },
           },
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+            },
+            resolvedParams: { forTicksAmount: 3 },
           },
         ],
       },
@@ -381,9 +398,12 @@ describe("tree evaluation", () => {
         result: true,
         actionNodes: [
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            },
+            resolvedParams: { forTicksAmount: 1 },
           },
         ],
       },
@@ -491,24 +511,36 @@ describe("tree evaluation", () => {
         result: true,
         actionNodes: [
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            },
+            resolvedParams: { forTicksAmount: 1 },
           },
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+            },
+            resolvedParams: { forTicksAmount: 2 },
           },
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+            },
+            resolvedParams: { forTicksAmount: 3 },
           },
           {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 4 } },
+            actionNode: {
+              nodeType: "action",
+              type: "IDLE",
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 4 } },
+            },
+            resolvedParams: { forTicksAmount: 4 },
           },
         ],
       },
