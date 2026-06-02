@@ -556,4 +556,64 @@ describe("tree evaluation", () => {
       },
     );
   });
+
+  it("evaluates a condition as false when its params cannot be resolved", () => {
+    const unresolvableComputer = {
+      ...blackboardComputer,
+      unitsInGroupCount: () => undefined,
+    } as unknown as BlackboardComputer;
+
+    assertEquals(
+      evaluateTreeNode({
+        actionNodes: [],
+        ...params,
+        blackboardComputer: unresolvableComputer,
+        node: {
+          nodeType: "condition",
+          type: "numberGreaterThan",
+          invert: false,
+          params: {
+            left: {
+              nodeType: "dataValue",
+              dataType: "number",
+              type: "BLACKBOARD",
+              blackboardKey: "unitsInGroupCount",
+              params: {},
+            },
+            right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+          },
+        },
+      }),
+      { result: false, actionNodes: [] },
+    );
+  });
+
+  it("evaluates an action as false when its params cannot be resolved", () => {
+    const unresolvableComputer = {
+      ...blackboardComputer,
+      unitsInGroupCount: () => undefined,
+    } as unknown as BlackboardComputer;
+
+    assertEquals(
+      evaluateTreeNode({
+        actionNodes: [],
+        ...params,
+        blackboardComputer: unresolvableComputer,
+        node: {
+          nodeType: "action",
+          type: "IDLE",
+          params: {
+            forTicksAmount: {
+              nodeType: "dataValue",
+              dataType: "number",
+              type: "BLACKBOARD",
+              blackboardKey: "unitsInGroupCount",
+              params: {},
+            },
+          },
+        },
+      }),
+      { result: false, actionNodes: [] },
+    );
+  });
 });
