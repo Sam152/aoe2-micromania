@@ -7,11 +7,18 @@ import { GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "../integration/createBot.ts";
 import { conditionList } from "./condition/conditionList.ts";
 import { ActionsList } from "./action/actionsList.ts";
+import { DataType, TypeFromDataType } from "./dataType/dataTypes.ts";
 
-export type ActionNodeWithResolvedParams<TType extends keyof ActionsList = keyof ActionsList> = {
-  actionNode: ActionNode<TType>;
-  resolvedParams: ActionNode<TType>["params"];
-};
+export type ActionNodeWithResolvedParams<TType extends keyof ActionsList = keyof ActionsList> = TType extends
+  keyof ActionsList ? {
+    type: TType;
+    actionNode: ActionNode<TType>;
+    resolvedParams: {
+      [TKey in keyof ActionsList[TType]["params"]]: ActionsList[TType]["params"][TKey] extends
+        { dataType: infer D extends DataType } ? TypeFromDataType<D> : never;
+    };
+  }
+  : never;
 
 type EvaluateTreeNodeArgs = {
   blackboardComputer: BlackboardComputer;
@@ -67,7 +74,10 @@ export function evaluateTreeNode(
 
     return {
       result: true,
-      actionNodes: [...actionNodes, { actionNode: node, resolvedParams }],
+      actionNodes: [
+        ...actionNodes,
+        { type: node.type, actionNode: node, resolvedParams } as ActionNodeWithResolvedParams,
+      ],
     };
   }
 

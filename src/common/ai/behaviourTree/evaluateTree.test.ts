@@ -101,6 +101,7 @@ describe("tree evaluation", () => {
       {
         result: true,
         actionNodes: [{
+          type: "IDLE",
           actionNode: {
             nodeType: "action",
             type: "IDLE",
@@ -209,6 +210,7 @@ describe("tree evaluation", () => {
       {
         result: true,
         actionNodes: [{
+          type: "IDLE",
           actionNode: {
             nodeType: "action",
             type: "IDLE",
@@ -294,6 +296,7 @@ describe("tree evaluation", () => {
         result: true,
         actionNodes: [
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -302,6 +305,7 @@ describe("tree evaluation", () => {
             resolvedParams: { forTicksAmount: 1 },
           },
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -310,6 +314,7 @@ describe("tree evaluation", () => {
             resolvedParams: { forTicksAmount: 2 },
           },
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -398,6 +403,7 @@ describe("tree evaluation", () => {
         result: true,
         actionNodes: [
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -511,6 +517,7 @@ describe("tree evaluation", () => {
         result: true,
         actionNodes: [
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -519,6 +526,7 @@ describe("tree evaluation", () => {
             resolvedParams: { forTicksAmount: 1 },
           },
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -527,6 +535,7 @@ describe("tree evaluation", () => {
             resolvedParams: { forTicksAmount: 2 },
           },
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",
@@ -535,6 +544,7 @@ describe("tree evaluation", () => {
             resolvedParams: { forTicksAmount: 3 },
           },
           {
+            type: "IDLE",
             actionNode: {
               nodeType: "action",
               type: "IDLE",

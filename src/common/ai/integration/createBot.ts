@@ -7,6 +7,7 @@ import { UnitType } from "../../units/UnitType.ts";
 import { createInitialUnitGroups } from "./util/createInitialUnitGroups.ts";
 import { consolidateGroups } from "./util/consolidateGroups.ts";
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
+import { ActionNodeWithResolvedParams } from "../behaviourTree/evaluateTreeNode.ts";
 
 export type BotInstance = {
   tick: (state: GameState, dispatcher: GameDispatcher, computed: ComputedTickState) => void;
@@ -14,7 +15,7 @@ export type BotInstance = {
 };
 
 export type ActionQueue = {
-  action: ActionNode;
+  action: ActionNodeWithResolvedParams;
   executeAfterTick: number;
 }[];
 

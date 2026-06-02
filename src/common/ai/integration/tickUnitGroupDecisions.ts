@@ -6,7 +6,7 @@ import { BotState, BotUnitGroup } from "./createBot.ts";
 import { splitGroup } from "./util/splitGroup.ts";
 import { mergeGroups } from "./util/mergeGroups.ts";
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
-import { resolveDataValueToPrimitive, resolveParamDataValues } from "../behaviourTree/dataValue/resolveDataValue.ts";
+
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
 
 type TickGroupArgs = {
@@ -22,21 +22,27 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
 
   // If we have actions in the queue, try to consume the next available one.
   if (group.actionQueue.length > 0) {
-    const nextAction = group.actionQueue.shift()!;
-    if (state.ticks < nextAction.executeAfterTick) {
+    // Peek if we are able to execute the given action yet.
+    if (state.ticks < group.actionQueue[0].executeAfterTick) {
       return;
     }
 
+    const nextAction = group.actionQueue.shift()!;
     const actionDefinition = actionsList[nextAction.action.type];
-    const resolvedParams = resolveParamDataValues(nextAction.action.params, {
-      group,
-      state,
-      botState,
-      blackboardComputer,
-    });
+
+    // Params were resolved when the action was queued, but should they be resolved
+    // again when we execute the action? Do we want to operate on the data we had when
+    // we made the choice, or the data we had when we go to execute the action? We could
+    // resolve the params here again.
+    // const resolvedParams = resolveParamDataValues(nextAction.action.actionNode.params, {
+    //   group,
+    //   state,
+    //   botState,
+    //   blackboardComputer,
+    // });
 
     const gameStateAction = actionDefinition.execute(
-      resolvedParams as any,
+      nextAction.action.resolvedParams as any,
       state,
       botState,
       group.includedUnits,
@@ -69,21 +75,14 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
   });
 
   group.actionQueue.push(
-    ...actionNodes.map(({ actionNode, resolvedParams }, i) => {
+    ...actionNodes.map((entry, i) => {
       let executeAfterTick: number = state.ticks + i;
 
-      if (actionNode.type === "IDLE") {
-        const resolvedForTicksAmount = resolveDataValueToPrimitive({
-          dataValue: actionNode.params.forTicksAmount,
-          group,
-          botState,
-          state,
-          blackboardComputer,
-        }) as number | undefined;
-        executeAfterTick += resolvedForTicksAmount ?? 0;
+      if (entry.type === "IDLE") {
+        executeAfterTick += entry.resolvedParams.forTicksAmount;
       }
       return {
-        action: actionNode,
+        action: entry,
         // Execute sequences of actions 1 tick apart, except for IDLE which will only execute after its
         // idle number of ticks have been played out.
         executeAfterTick,
