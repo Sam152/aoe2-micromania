@@ -4,7 +4,8 @@ import { ClientState, ClientStateAction, GameState, GameStateAction, StateManage
 import { Socket } from "socket.io-client";
 import { normalizeGameStateAction, normalizeGameStateObject } from "../../util/normalizer.ts";
 import { TransportEvent } from "../transport/TransportEvent.ts";
-import { ComputedTickState, createComputedTickState } from "../computed/createComputedTickState.ts";
+import { createComputedTickState } from "../computed/createComputedTickState.ts";
+import { GameStateListener, PreTickListener } from "./GameStateListener.ts";
 
 /**
  * A state manager with a client => server relationship.
@@ -13,8 +14,8 @@ export class NetworkedStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
   private socket: Socket;
-  private computedFrameState: ComputedTickState | undefined;
-  private gameStateListeners: Array<(state: GameState, action: GameStateAction, computed: ComputedTickState) => void>;
+  private gameStateListeners: Array<GameStateListener>;
+  private preTickListeners: Array<PreTickListener>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
 
   constructor(socket: Socket) {
@@ -22,11 +23,16 @@ export class NetworkedStateManager implements StateManagerInterface {
     this.clientState = defaultClientState(socket.id!);
     this.socket = socket;
     this.gameStateListeners = [];
+    this.preTickListeners = [];
     this.clientStateListeners = [];
   }
 
-  addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void {
+  addGameStateListener(listener: GameStateListener): void {
     this.gameStateListeners.push(listener);
+  }
+
+  addPreTickListener(listener: PreTickListener): void {
+    this.preTickListeners.push(listener);
   }
 
   addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void {
@@ -63,13 +69,10 @@ export class NetworkedStateManager implements StateManagerInterface {
       }
 
       const action = normalizeGameStateAction(serverAction);
+      const computed = createComputedTickState(this.gameState);
 
-      if (!this.computedFrameState) {
-        this.computedFrameState = createComputedTickState(this.gameState);
-      }
-
-      this.gameState = gameStateMutator(this.gameState, action, this.computedFrameState);
-      this.computedFrameState = createComputedTickState(this.gameState);
+      this.preTickListeners.forEach((listener) => listener(this.gameState, action, computed));
+      this.gameState = gameStateMutator(this.gameState, action, computed);
 
       if (action.n === "T" && action.t !== this.gameState.ticks - 1) {
         console.error("Desync detected - reloading");
@@ -79,9 +82,7 @@ export class NetworkedStateManager implements StateManagerInterface {
       this.dispatchClient({
         n: "GAME_STATE_REHYDRATED",
       });
-      this.gameStateListeners.forEach((gameStateListener) => {
-        gameStateListener(this.gameState, action, this.computedFrameState!);
-      });
+      this.gameStateListeners.forEach((listener) => listener(this.gameState, action));
     });
 
     this.socket.on(TransportEvent.WholeGameStateTransmit, (serverState) => {

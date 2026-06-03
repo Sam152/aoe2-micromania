@@ -35,17 +35,23 @@ export class BattleRoyale implements GameMode {
     state: GameState,
     action: GameStateAction,
     manager: StateManagerInterface,
-    computed: ComputedTickState,
   ): void {
     // Only respond on tick.
     if (action.n !== "T") {
       return;
     }
-
     this.cyclePlayers(state, action, manager);
     this.cycleBots(state, action, manager);
-    triggerBotTicks(this.bots, state, manager.dispatchGame.bind(manager), computed);
     //this.cycleTerrain(state, action, manager);
+  }
+
+  preTick(
+    state: GameState,
+    _action: GameStateAction,
+    manager: StateManagerInterface,
+    computed: ComputedTickState,
+  ): void {
+    triggerBotTicks(this.bots, state, manager.dispatchGame.bind(manager), computed);
   }
 
   cyclePlayers(state: GameState, _action: GameStateAction, manager: StateManagerInterface) {

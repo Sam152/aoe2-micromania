@@ -10,6 +10,7 @@ import { Hotkey } from "./common/input/Hotkey.ts";
 import { DamageType } from "./common/units/DamageType.ts";
 import { Sound } from "./common/sounds/Sound.ts";
 import { AccuracyFunction } from "./common/state/mutations/tick/applyAccuracy.ts";
+import { GameStateListener, PreTickListener } from "./common/state/managers/GameStateListener.ts";
 
 export interface UnitInstance {
   id: number;
@@ -362,7 +363,9 @@ export interface StateManagerInterface {
 
   getClientState(): ClientState;
 
-  addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void;
+  addGameStateListener(listener: GameStateListener): void;
+
+  addPreTickListener(listener: PreTickListener): void;
 
   addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void;
 }
