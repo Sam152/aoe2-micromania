@@ -7,7 +7,35 @@ export const sampleTree: UnitAwareBehaviourTree = {
     nodes: [
       {
         nodeType: "sequence",
-        nodes: [],
+        nodes: [
+          {
+            nodeType: "condition",
+            type: "vectorDistanceBetweenLessThan",
+            invert: false,
+            params: {
+              pointA: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "groupsForUnitTypeCount",
+                params: {},
+              },
+              pointB: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "BLACKBOARD",
+                blackboardKey: "groupsForUnitTypeCount",
+                params: {},
+              },
+              distance: {
+                nodeType: "dataValue",
+                dataType: "number",
+                type: "PRIMITIVE",
+                value: 200,
+              },
+            },
+          },
+        ],
       },
       {
         nodeType: "sequence",
