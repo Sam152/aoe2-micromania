@@ -1,10 +1,10 @@
 import { resolveDataValueToPrimitive, resolveParamDataValues } from "./resolveDataValue.ts";
 import { DataValue } from "./DataValue.ts";
-import { BlackboardComputer } from "../blackboard/computeBlackboard.ts";
 import { GameState } from "../../../../types.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
+import { BlackboardComputer } from "../blackboard/types/BlackboardComputer.ts";
 
 // The resolver only passes these through to the computer, so empty stubs are sufficient here.
 const state = {} as GameState;
@@ -15,16 +15,16 @@ const group = {} as BotUnitGroup;
 // we can assert that nested params were resolved to primitives before the computer was invoked.
 const blackboardComputer: Pick<
   BlackboardComputer,
-  | "groupsForUnitTypeCount"
-  | "unitTypeGroupIndex"
-  | "unitsInGroupCount"
-  | "unitsOfTypeGlobalCount"
+  | "groupMetaUnitTypeGroupCount"
+  | "groupMetaUnitTypeIndex"
+  | "groupUnitCount"
+  | "globalUnitsOfTypeCount"
   | "opponentAveragePosition"
 > = {
-  groupsForUnitTypeCount: () => 1,
-  unitTypeGroupIndex: () => 2,
-  unitsInGroupCount: () => 7,
-  unitsOfTypeGlobalCount: () => undefined,
+  groupMetaUnitTypeGroupCount: () => 1,
+  groupMetaUnitTypeIndex: () => 2,
+  groupUnitCount: () => 7,
+  globalUnitsOfTypeCount: () => undefined,
   opponentAveragePosition: ({ params }) => params.vectorOffset,
 };
 
@@ -59,7 +59,7 @@ describe("resolveDataValueToPrimitive", () => {
         nodeType: "dataValue",
         type: "BLACKBOARD",
         dataType: "number",
-        blackboardKey: "unitsInGroupCount",
+        blackboardKey: "groupUnitCount",
         params: {},
       }),
       7,
@@ -119,7 +119,7 @@ describe("resolveParamDataValues", () => {
           nodeType: "dataValue",
           type: "BLACKBOARD",
           dataType: "number",
-          blackboardKey: "unitsInGroupCount",
+          blackboardKey: "groupUnitCount",
           params: {},
         },
       }),
@@ -135,7 +135,7 @@ describe("resolveParamDataValues", () => {
           nodeType: "dataValue",
           type: "BLACKBOARD",
           dataType: "number",
-          blackboardKey: "unitsOfTypeGlobalCount",
+          blackboardKey: "globalUnitsOfTypeCount",
           params: {},
         },
       }),

@@ -5,7 +5,7 @@ import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
 import { splitGroup } from "./util/splitGroup.ts";
 import { mergeGroups } from "./util/mergeGroups.ts";
-import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/createCachedBlackboardComputer.ts";
+import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/utils/createCachedBlackboardComputer.ts";
 
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
 

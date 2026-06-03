@@ -1,6 +1,7 @@
-import { BlackboardComputer, createBlackboardComputer } from "./computeBlackboard.ts";
-import { BlackboardKey } from "./blackboardDefinition.ts";
-import { ComputedTickState } from "../../../state/computed/createComputedTickState.ts";
+import { createBlackboardComputer } from "../computeBlackboard.ts";
+import { BlackboardKey } from "../blackboardDefinition.ts";
+import { ComputedTickState } from "../../../../state/computed/createComputedTickState.ts";
+import { BlackboardComputer } from "../types/BlackboardComputer.ts";
 
 type AnyResolver = (params: any) => unknown;
 

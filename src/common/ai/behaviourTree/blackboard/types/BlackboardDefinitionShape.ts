@@ -1,4 +1,4 @@
-import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../../dataType/dataTypes.ts";
 
 export type BlackboardValueParam<TDataType extends DataType> = {
   dataType: TDataType;
@@ -9,7 +9,7 @@ export type BlackboardValueParam<TDataType extends DataType> = {
 export type BlackboardValueDefinition<TDataType extends DataType = DataType> = {
   dataType: TDataType;
   mutationRequirements: MutationRequirementsFromDataType<TDataType>;
-  params: Record<string, { [key in DataType]: BlackboardValueParam<TDataType> }[DataType]>;
+  params: Record<string, { [K in DataType]: BlackboardValueParam<K> }[DataType]>;
 };
 
 export type BlackboardDefinitionShape = Record<string, { [K in DataType]: BlackboardValueDefinition<K> }[DataType]>;

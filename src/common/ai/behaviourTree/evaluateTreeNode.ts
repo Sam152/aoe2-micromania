@@ -1,13 +1,12 @@
 import { ActionNode } from "./action/ActionDefinition.ts";
 import { BehaviourTreeNode } from "./BehaviourTree.ts";
-
-import { BlackboardComputer } from "./blackboard/computeBlackboard.ts";
 import { resolveParamDataValues } from "./dataValue/resolveDataValue.ts";
 import { GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "../integration/createBot.ts";
 import { conditionList } from "./condition/conditionList.ts";
 import { ActionsList } from "./action/actionsList.ts";
 import { DataType, TypeFromDataType } from "./dataType/dataTypes.ts";
+import { BlackboardComputer } from "./blackboard/types/BlackboardComputer.ts";
 
 export type ActionNodeWithResolvedParams<TType extends keyof ActionsList = keyof ActionsList> = TType extends
   keyof ActionsList ? {

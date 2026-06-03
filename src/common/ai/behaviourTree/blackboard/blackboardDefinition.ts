@@ -1,10 +1,10 @@
-import { BlackboardDefinitionShape } from "./BlackboardDefinitionShape.ts";
+import { BlackboardDefinitionShape } from "./types/BlackboardDefinitionShape.ts";
 
 export const blackboardDefinition = {
   /**
    * Counts the number of groups, for the group type being acted on.
    */
-  groupsForUnitTypeCount: {
+  groupMetaUnitTypeGroupCount: {
     dataType: "number",
     params: {},
     mutationRequirements: {
@@ -16,7 +16,7 @@ export const blackboardDefinition = {
   /**
    * An index identifying an index for a group of a particular type.
    */
-  unitTypeGroupIndex: {
+  groupMetaUnitTypeIndex: {
     dataType: "number",
     params: {},
     mutationRequirements: {
@@ -28,7 +28,7 @@ export const blackboardDefinition = {
   /**
    * The total number of units in a given group.
    */
-  unitsInGroupCount: {
+  groupUnitCount: {
     dataType: "number",
     params: {},
     mutationRequirements: {
@@ -40,9 +40,15 @@ export const blackboardDefinition = {
   /**
    * The total number of units owned by the player of a given type.
    */
-  unitsOfTypeGlobalCount: {
+  globalUnitsOfTypeCount: {
     dataType: "number",
-    params: {},
+    params: {
+      unitType: {
+        dataType: "unitType",
+        default: "ARCHER",
+        mutationRequirements: undefined,
+      },
+    },
     mutationRequirements: {
       min: 1,
       max: 40,
@@ -59,20 +65,7 @@ export const blackboardDefinition = {
       max: 40,
       step: 1,
     },
-    params: {
-      /**
-       * Not strictly used or useful, but used to flesh out the params system.
-       */
-      vectorOffset: {
-        dataType: "vector",
-        default: { x: 0, y: 0 },
-        mutationRequirements: {
-          min: 1,
-          max: 40,
-          step: 1,
-        },
-      },
-    },
+    params: {},
   },
   opponentClosestMonk: {
     dataType: "unitId",

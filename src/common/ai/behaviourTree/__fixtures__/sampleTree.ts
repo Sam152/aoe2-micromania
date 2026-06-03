@@ -15,16 +15,16 @@ export const sampleTree: UnitAwareBehaviourTree = {
             params: {
               pointA: {
                 nodeType: "dataValue",
-                dataType: "number",
+                dataType: "vector",
                 type: "BLACKBOARD",
-                blackboardKey: "groupsForUnitTypeCount",
+                blackboardKey: "opponentAveragePosition",
                 params: {},
               },
               pointB: {
                 nodeType: "dataValue",
-                dataType: "number",
+                dataType: "vector",
                 type: "BLACKBOARD",
-                blackboardKey: "groupsForUnitTypeCount",
+                blackboardKey: "opponentAveragePosition",
                 params: {},
               },
               distance: {
@@ -73,7 +73,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "number",
                 type: "BLACKBOARD",
-                blackboardKey: "groupsForUnitTypeCount",
+                blackboardKey: "groupMetaUnitTypeGroupCount",
                 params: {},
               },
             },
@@ -100,7 +100,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "number",
                 type: "BLACKBOARD",
-                blackboardKey: "unitTypeGroupIndex",
+                blackboardKey: "groupMetaUnitTypeIndex",
                 params: {},
               },
             },
