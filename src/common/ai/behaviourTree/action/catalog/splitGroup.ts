@@ -8,5 +8,6 @@ export const splitGroup = defineAction({
   type: "SPLIT_GROUP",
   applicableForUnitType: [UnitType.Monk, UnitType.Archer, UnitType.Mangonel],
   params: {},
+  // @todo, can split logic be moved in here?
   execute: () => undefined,
 });

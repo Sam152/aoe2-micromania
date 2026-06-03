@@ -8,5 +8,6 @@ export const mergeGroup = defineAction({
   type: "MERGE_GROUP",
   applicableForUnitType: [UnitType.Monk, UnitType.Archer, UnitType.Mangonel],
   params: {},
+  // @todo, can merge logic be moved in here?
   execute: () => undefined,
 });
