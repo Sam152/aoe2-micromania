@@ -1,4 +1,4 @@
-import { mergeGroups } from "./mergeGroups.ts";
+import { doMergeGroups } from "./doMergeGroups.ts";
 import { BotUnitGroup } from "../createBot.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 import { describe, it } from "@std/testing/bdd";
@@ -18,7 +18,7 @@ describe("mergeGroups", () => {
     const archersB = group(UnitType.Archer, [3, 4]);
     const botState = { unitGroups: [archersA, archersB] };
 
-    mergeGroups({ group: archersA, botState, state: { ticks: 10 } });
+    doMergeGroups({ group: archersA, botState, state: { ticks: 10 } });
 
     assertEquals(botState.unitGroups.length, 3);
     const merged = botState.unitGroups[2];
@@ -50,7 +50,7 @@ describe("mergeGroups", () => {
     const mangonels = group(UnitType.Mangonel, [4, 5]);
     const botState = { unitGroups: [archersA, archersB, mangonels] };
 
-    mergeGroups({ group: archersA, botState, state: { ticks: 0 } });
+    doMergeGroups({ group: archersA, botState, state: { ticks: 0 } });
 
     assertEquals(mangonels.includedUnits, [4, 5]);
     const merged = botState.unitGroups[3];

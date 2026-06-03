@@ -3,8 +3,7 @@ import { evaluateTreeNode } from "../behaviourTree/evaluateTreeNode.ts";
 import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
-import { splitGroup } from "./util/splitGroup.ts";
-import { mergeGroups } from "./util/mergeGroups.ts";
+
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/utils/createCachedBlackboardComputer.ts";
 
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
@@ -48,14 +47,6 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
 
     if (gameStateAction) {
       dispatcher(gameStateAction);
-    }
-
-    // These special meta-actions impacts the bot state, splitting groups apart.
-    if (nextAction.action.type === "SPLIT_GROUP") {
-      splitGroup({ group, state, botState });
-    }
-    if (nextAction.action.type === "MERGE_GROUP") {
-      mergeGroups({ group, state, botState });
     }
 
     return;

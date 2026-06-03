@@ -1,7 +1,7 @@
 import { BotState, BotUnitGroup } from "../createBot.ts";
 import { GameState } from "../../../../types.ts";
 
-export function mergeGroups(
+export function doMergeGroups(
   { group, botState, state }: {
     group: BotUnitGroup;
     botState: Pick<BotState, "unitGroups">;

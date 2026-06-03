@@ -1,4 +1,4 @@
-import { splitGroup } from "./splitGroup.ts";
+import { doSplitGroup } from "./doSplitGroup.ts";
 import { BotUnitGroup } from "../createBot.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 import { describe, it } from "@std/testing/bdd";
@@ -16,7 +16,7 @@ describe("splitGroup", () => {
   it("splits an even group into two equal halves", () => {
     const g = group([1, 2, 3, 4]);
     const botState = { unitGroups: [g] };
-    splitGroup({ group: g, botState, state: { ticks: 10 } });
+    doSplitGroup({ group: g, botState, state: { ticks: 10 } });
 
     assertEquals(g.includedUnits, []);
     assertEquals(botState.unitGroups.length, 3);
@@ -28,7 +28,7 @@ describe("splitGroup", () => {
     const g = group([1, 2]);
     g.unitType = UnitType.Mangonel;
     const botState = { unitGroups: [g] };
-    splitGroup({ group: g, botState, state: { ticks: 42 } });
+    doSplitGroup({ group: g, botState, state: { ticks: 42 } });
 
     const [, first, second] = botState.unitGroups;
     assertEquals(first.unitType, UnitType.Mangonel);
