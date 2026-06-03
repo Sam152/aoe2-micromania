@@ -43,11 +43,7 @@ export const blackboardDefinition = {
   groupAveragePosition: {
     dataType: "vector",
     params: {},
-    mutationRequirements: {
-      min: 1,
-      max: 40,
-      step: 1,
-    },
+    mutationRequirements: undefined,
   },
   /**
    * The total number of units owned by the player of a given type.

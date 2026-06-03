@@ -24,7 +24,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "vector",
                 type: "BLACKBOARD",
-                blackboardKey: "opponentAveragePosition",
+                blackboardKey: "groupAveragePosition",
                 params: {},
               },
               distance: {
