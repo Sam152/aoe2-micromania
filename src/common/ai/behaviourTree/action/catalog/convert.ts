@@ -1,7 +1,5 @@
 import { defineAction } from "../ActionDefinition.ts";
 import { UnitType } from "../../../../units/UnitType.ts";
-import { BotState } from "../../../integration/createBot.ts";
-import { UnitId } from "../../../../../types.ts";
 
 /**
  * This is a meta action that acts on the bot state, not something that dispatches a game action.
@@ -15,10 +13,10 @@ export const convert = defineAction({
       mutationRequirements: undefined,
     },
   },
-  execute: ({ unit }, gameState, botState: BotState, unitIds: UnitId[]) => {
+  execute: ({ unit }, { group }) => {
     return {
       n: "START_CONVERSION",
-      units: unitIds,
+      units: group.includedUnits,
       target: unit,
     };
   },

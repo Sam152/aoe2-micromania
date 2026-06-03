@@ -43,9 +43,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
 
     const gameStateAction = actionDefinition.execute(
       nextAction.action.resolvedParams as any,
-      state,
-      botState,
-      group.includedUnits,
+      { state, botState, group },
     );
 
     if (gameStateAction) {

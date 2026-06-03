@@ -1,7 +1,7 @@
 import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { ActionsList } from "./actionsList.ts";
-import { GameState, GameStateAction, UnitId } from "../../../../types.ts";
-import { BotState } from "../../integration/createBot.ts";
+import { GameState, GameStateAction } from "../../../../types.ts";
+import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { DataValueOfType } from "../dataValue/DataValue.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 
@@ -16,9 +16,7 @@ export type ActionDefinition<
   applicableForUnitType: UnitType[];
   execute: (
     params: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> },
-    gameState: GameState,
-    botState: BotState,
-    unitIds: UnitId[],
+    meta: { state: GameState; botState: BotState; group: BotUnitGroup },
   ) => GameStateAction | undefined;
 };
 
