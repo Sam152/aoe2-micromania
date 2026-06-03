@@ -3,19 +3,23 @@ import { UnitType } from "../../../units/UnitType.ts";
 
 export const sampleTree: UnitAwareBehaviourTree = {
   [UnitType.Monk]: {
-    nodeType: "sequence",
+    nodeType: "selector",
     nodes: [
       {
-        nodeType: "action",
-        type: "IDLE",
-        params: {
-          forTicksAmount: {
-            nodeType: "dataValue",
-            dataType: "number",
-            type: "PRIMITIVE",
-            value: 100,
-          },
-        },
+        nodeType: "sequence",
+        nodes: [],
+      },
+      {
+        nodeType: "sequence",
+        nodes: [],
+      },
+      {
+        nodeType: "sequence",
+        nodes: [],
+      },
+      {
+        nodeType: "sequence",
+        nodes: [],
       },
     ],
   },
