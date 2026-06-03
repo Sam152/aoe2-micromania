@@ -6,7 +6,7 @@ Deno.test("type safety", () => {
     type: "numberEquals",
     invert: false,
     params: {
-      left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
       right: {
         nodeType: "dataValue",
         dataType: "number",
@@ -21,7 +21,7 @@ Deno.test("type safety", () => {
     type: "numberEquals",
     invert: false,
     params: {
-      left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
       right: {
         nodeType: "dataValue",
         dataType: "number",
@@ -47,11 +47,11 @@ Deno.test("type safety", () => {
       left: {
         nodeType: "dataValue",
         dataType: "number",
-        type: "PRIMITIVE",
+        type: "LITERAL",
         // @ts-expect-error - bad value type
         value: "fooString",
       },
-      right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+      right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
     },
   };
 });

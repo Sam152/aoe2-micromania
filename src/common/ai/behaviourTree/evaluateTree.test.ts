@@ -48,7 +48,7 @@ describe("tree evaluation", () => {
               type: "numberGreaterThan",
               invert: false,
               params: {
-                left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
                 right: {
                   nodeType: "dataValue",
                   dataType: "number",
@@ -71,7 +71,7 @@ describe("tree evaluation", () => {
                   blackboardKey: "groupUnitCount",
                   params: {},
                 },
-                right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
               },
             },
             {
@@ -87,13 +87,13 @@ describe("tree evaluation", () => {
                   blackboardKey: "groupUnitCount",
                   params: {},
                 },
-                right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
               },
             },
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
             },
           ],
         },
@@ -105,7 +105,7 @@ describe("tree evaluation", () => {
           actionNode: {
             nodeType: "action",
             type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
           },
           resolvedParams: {
             forTicksAmount: 1,
@@ -131,7 +131,7 @@ describe("tree evaluation", () => {
                   type: "numberGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
                     right: {
                       nodeType: "dataValue",
                       dataType: "number",
@@ -145,7 +145,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
                   },
                 },
               ],
@@ -158,7 +158,7 @@ describe("tree evaluation", () => {
                   type: "numberGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
                     right: {
                       nodeType: "dataValue",
                       dataType: "number",
@@ -172,7 +172,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
                   },
                 },
               ],
@@ -185,7 +185,7 @@ describe("tree evaluation", () => {
                   type: "numberGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 20 },
+                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 20 },
                     right: {
                       nodeType: "dataValue",
                       dataType: "number",
@@ -199,7 +199,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 },
                   },
                 },
               ],
@@ -214,7 +214,7 @@ describe("tree evaluation", () => {
           actionNode: {
             nodeType: "action",
             type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
           },
           resolvedParams: { forTicksAmount: 2 },
         }],
@@ -238,7 +238,7 @@ describe("tree evaluation", () => {
                   type: "numberGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
                     right: {
                       nodeType: "dataValue",
                       dataType: "number",
@@ -252,7 +252,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
                   },
                 },
               ],
@@ -265,7 +265,7 @@ describe("tree evaluation", () => {
                   type: "numberGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
                     right: {
                       nodeType: "dataValue",
                       dataType: "number",
@@ -279,7 +279,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
                   },
                 },
               ],
@@ -287,7 +287,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 } },
             },
           ],
         },
@@ -300,7 +300,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
             },
             resolvedParams: { forTicksAmount: 1 },
           },
@@ -309,7 +309,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
             },
             resolvedParams: { forTicksAmount: 2 },
           },
@@ -318,7 +318,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 } },
             },
             resolvedParams: { forTicksAmount: 3 },
           },
@@ -361,7 +361,7 @@ describe("tree evaluation", () => {
               type: "numberGreaterThan",
               invert: false,
               params: {
-                left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 15 },
+                left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
                 right: {
                   nodeType: "dataValue",
                   dataType: "number",
@@ -374,14 +374,14 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
             },
             {
               nodeType: "condition",
               type: "numberGreaterThan",
               invert: false,
               params: {
-                left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
                 right: {
                   nodeType: "dataValue",
                   dataType: "number",
@@ -394,7 +394,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
             },
           ],
         },
@@ -407,7 +407,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
             },
             resolvedParams: { forTicksAmount: 1 },
           },
@@ -434,7 +434,7 @@ describe("tree evaluation", () => {
                       nodeType: "action",
                       type: "IDLE",
                       params: {
-                        forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+                        forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
                       },
                     },
                   ],
@@ -443,7 +443,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
                   },
                 },
                 {
@@ -454,7 +454,7 @@ describe("tree evaluation", () => {
                       type: "numberGreaterThan",
                       invert: false,
                       params: {
-                        left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                        left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
                         right: {
                           nodeType: "dataValue",
                           dataType: "number",
@@ -472,7 +472,7 @@ describe("tree evaluation", () => {
                           type: "numberGreaterThan",
                           invert: false,
                           params: {
-                            left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+                            left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
                             right: {
                               nodeType: "dataValue",
                               dataType: "number",
@@ -492,7 +492,7 @@ describe("tree evaluation", () => {
                                 forTicksAmount: {
                                   nodeType: "dataValue",
                                   dataType: "number",
-                                  type: "PRIMITIVE",
+                                  type: "LITERAL",
                                   value: 3,
                                 },
                               },
@@ -508,7 +508,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 4 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 4 } },
             },
           ],
         },
@@ -521,7 +521,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
             },
             resolvedParams: { forTicksAmount: 1 },
           },
@@ -530,7 +530,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
             },
             resolvedParams: { forTicksAmount: 2 },
           },
@@ -539,7 +539,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 3 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 } },
             },
             resolvedParams: { forTicksAmount: 3 },
           },
@@ -548,7 +548,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 4 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 4 } },
             },
             resolvedParams: { forTicksAmount: 4 },
           },
@@ -580,7 +580,7 @@ describe("tree evaluation", () => {
               blackboardKey: "groupUnitCount",
               params: {},
             },
-            right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 5 },
+            right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
           },
         },
       }),

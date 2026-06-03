@@ -13,8 +13,8 @@ Deno.test("behaviour tree type safety", () => {
     type: "numberEquals",
     params: {
       // @ts-expect-error - vector not valid for number param
-      left: { nodeType: "dataValue", dataType: "vector", type: "PRIMITIVE", value: { x: 0, y: 0 } },
-      right: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 2 },
+      left: { nodeType: "dataValue", dataType: "vector", type: "LITERAL", value: { x: 0, y: 0 } },
+      right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
     },
   };
 
@@ -22,7 +22,7 @@ Deno.test("behaviour tree type safety", () => {
     nodeType: "condition",
     type: "numberEquals",
     params: {
-      left: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
       right: {
         nodeType: "dataValue",
         dataType: "number",
@@ -38,14 +38,14 @@ Deno.test("behaviour tree type safety", () => {
     nodeType: "action",
     type: "IDLE",
     // @ts-expect-error - forTicksAmount must be a number data value, not vector
-    params: { forTicksAmount: { nodeType: "dataValue", dataType: "vector", type: "PRIMITIVE", value: { x: 0, y: 0 } } },
+    params: { forTicksAmount: { nodeType: "dataValue", dataType: "vector", type: "LITERAL", value: { x: 0, y: 0 } } },
   };
 
   const _actionBadParamType2: BehaviourTreeNode = {
     nodeType: "action",
     type: "PATROL",
     // @ts-expect-error - direction must be a vector data value, not number
-    params: { direction: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+    params: { direction: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
   };
 
   const _actionBadType: BehaviourTreeNode = {
@@ -59,9 +59,9 @@ Deno.test("behaviour tree type safety", () => {
     nodeType: "action",
     type: "IDLE",
     params: {
-      forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
       // @ts-expect-error - IDLE has no such param
-      notAParam: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 },
+      notAParam: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
     },
   };
 });

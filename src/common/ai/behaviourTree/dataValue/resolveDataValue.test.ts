@@ -49,7 +49,7 @@ const resolveParams = <const TParams extends Record<string, DataValue>>(params: 
 describe("resolveDataValueToPrimitive", () => {
   it("returns the value of a primitive data value", () => {
     assertEquals(
-      resolve({ nodeType: "dataValue", type: "PRIMITIVE", dataType: "number", value: 42 }),
+      resolve({ nodeType: "dataValue", type: "LITERAL", dataType: "number", value: 42 }),
       42,
     );
   });
@@ -75,7 +75,7 @@ describe("resolveDataValueToPrimitive", () => {
         dataType: "number",
         blackboardKey: "globalUnitsOfTypeCount",
         params: {
-          unitType: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "unitType", value: "ARCHER" },
+          unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
         },
       }),
       5,
@@ -91,8 +91,8 @@ describe("resolveParamDataValues", () => {
   it("resolves each param to its primitive, keyed by param name", () => {
     assertEquals(
       resolveParams({
-        a: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "number", value: 1 },
-        b: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 2, y: 3 } },
+        a: { nodeType: "dataValue", type: "LITERAL", dataType: "number", value: 1 },
+        b: { nodeType: "dataValue", type: "LITERAL", dataType: "vector", value: { x: 2, y: 3 } },
         c: {
           nodeType: "dataValue",
           type: "BLACKBOARD",
@@ -114,7 +114,7 @@ describe("resolveParamDataValues", () => {
           dataType: "number",
           blackboardKey: "globalUnitsOfTypeCount",
           params: {
-            unitType: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "unitType", value: "ARCHER" },
+            unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
           },
         },
       }),
@@ -125,7 +125,7 @@ describe("resolveParamDataValues", () => {
   it("resolves the whole object as undefined, if any params are undefined", () => {
     assertEquals(
       resolveParams({
-        a: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "number", value: 1 },
+        a: { nodeType: "dataValue", type: "LITERAL", dataType: "number", value: 1 },
         // This param will resolve undefined.
         c: {
           nodeType: "dataValue",

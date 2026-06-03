@@ -2,6 +2,6 @@ import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
 export const boolean = {
   id: "boolean",
-  allowedValueTypes: ["BLACKBOARD", "PRIMITIVE"],
+  allowedValueTypes: ["BLACKBOARD", "LITERAL"],
   defaultValue: false,
 } satisfies DataTypeDefinition<boolean, undefined>;

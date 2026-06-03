@@ -1,7 +1,7 @@
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { BlackboardDefinition, BlackboardKey } from "../blackboard/blackboardDefinition.ts";
 
-export type DataValueType = "PRIMITIVE" | "BLACKBOARD";
+export type DataValueType = "LITERAL" | "BLACKBOARD";
 
 export type DataValue =
   | { [TKey in DataType]: PrimitiveDataValue<TKey> }[DataType]
@@ -11,7 +11,7 @@ export type DataValueOfType<TType extends DataType> = Extract<DataValue, { dataT
 
 export type PrimitiveDataValue<TDataType extends DataType> = {
   nodeType: "dataValue";
-  type: "PRIMITIVE";
+  type: "LITERAL";
   dataType: TDataType;
   value: TypeFromDataType<TDataType>;
 };

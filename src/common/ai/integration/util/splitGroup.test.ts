@@ -40,7 +40,7 @@ describe("splitGroup", () => {
           actionNode: {
             nodeType: "action",
             type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "PRIMITIVE", value: 1 } },
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
           },
           resolvedParams: { forTicksAmount: 1 },
         } as const,

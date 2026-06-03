@@ -18,7 +18,7 @@ type ResolveDataValueArgs = ResolveContext & {
 export function resolveDataValueToPrimitive(
   { dataValue, ...context }: ResolveDataValueArgs,
 ) {
-  if (dataValue.type === "PRIMITIVE") {
+  if (dataValue.type === "LITERAL") {
     return dataValue.value;
   }
 

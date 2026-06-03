@@ -30,7 +30,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               distance: {
                 nodeType: "dataValue",
                 dataType: "number",
-                type: "PRIMITIVE",
+                type: "LITERAL",
                 value: 200,
               },
             },
@@ -66,7 +66,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               left: {
                 nodeType: "dataValue",
                 dataType: "number",
-                type: "PRIMITIVE",
+                type: "LITERAL",
                 value: 2,
               },
               right: {
@@ -93,7 +93,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               left: {
                 nodeType: "dataValue",
                 dataType: "number",
-                type: "PRIMITIVE",
+                type: "LITERAL",
                 value: 0,
               },
               right: {
@@ -118,7 +118,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                   vectorOffset: {
                     nodeType: "dataValue",
                     dataType: "vector",
-                    type: "PRIMITIVE",
+                    type: "LITERAL",
                     value: { x: 0, y: 0 },
                   },
                 },
@@ -132,7 +132,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               forTicksAmount: {
                 nodeType: "dataValue",
                 dataType: "number",
-                type: "PRIMITIVE",
+                type: "LITERAL",
                 value: 100,
               },
             },
@@ -157,7 +157,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               vectorOffset: {
                 nodeType: "dataValue",
                 dataType: "vector",
-                type: "PRIMITIVE",
+                type: "LITERAL",
                 value: { x: 0, y: 0 },
               },
             },
@@ -171,7 +171,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
           forTicksAmount: {
             nodeType: "dataValue",
             dataType: "number",
-            type: "PRIMITIVE",
+            type: "LITERAL",
             value: 100,
           },
         },
