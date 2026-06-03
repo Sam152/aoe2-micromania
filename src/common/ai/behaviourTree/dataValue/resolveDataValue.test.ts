@@ -11,21 +11,22 @@ const state = {} as GameState;
 const botState = {} as BotState;
 const group = {} as BotUnitGroup;
 
-// A stub computer: number keys return fixed values; the vector key echoes its resolved param so
-// we can assert that nested params were resolved to primitives before the computer was invoked.
+// A stub computer: number keys return fixed values; globalUnitsOfTypeCount returns a count
+// based on the resolved unitType param so we can assert params are resolved before the computer
+// is invoked; opponentClosestMonk always returns undefined to exercise that code path.
 const blackboardComputer: Pick<
   BlackboardComputer,
   | "groupMetaUnitTypeGroupCount"
   | "groupMetaUnitTypeIndex"
   | "groupUnitCount"
   | "globalUnitsOfTypeCount"
-  | "opponentAveragePosition"
+  | "opponentClosestMonk"
 > = {
   groupMetaUnitTypeGroupCount: () => 1,
   groupMetaUnitTypeIndex: () => 2,
   groupUnitCount: () => 7,
-  globalUnitsOfTypeCount: () => undefined,
-  opponentAveragePosition: ({ params }) => params.vectorOffset,
+  globalUnitsOfTypeCount: ({ params }) => params.unitType === "ARCHER" ? 5 : 3,
+  opponentClosestMonk: () => undefined,
 };
 
 const resolve = (dataValue: DataValue) =>
@@ -66,41 +67,18 @@ describe("resolveDataValueToPrimitive", () => {
     );
   });
 
-  it("resolves nested param data values to primitives before invoking the computer", () => {
+  it("resolves param data values to primitives before invoking the computer", () => {
     assertEquals(
       resolve({
         nodeType: "dataValue",
         type: "BLACKBOARD",
-        dataType: "vector",
-        blackboardKey: "opponentAveragePosition",
+        dataType: "number",
+        blackboardKey: "globalUnitsOfTypeCount",
         params: {
-          vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 3, y: 4 } },
+          unitType: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "unitType", value: "ARCHER" },
         },
       }),
-      { x: 3, y: 4 },
-    );
-  });
-
-  it("recursively resolves a blackboard param whose value is itself a blackboard data value", () => {
-    assertEquals(
-      resolve({
-        nodeType: "dataValue",
-        type: "BLACKBOARD",
-        dataType: "vector",
-        blackboardKey: "opponentAveragePosition",
-        params: {
-          vectorOffset: {
-            nodeType: "dataValue",
-            type: "BLACKBOARD",
-            dataType: "vector",
-            blackboardKey: "opponentAveragePosition",
-            params: {
-              vectorOffset: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "vector", value: { x: 5, y: 6 } },
-            },
-          },
-        },
-      }),
-      { x: 5, y: 6 },
+      5,
     );
   });
 });
@@ -126,6 +104,24 @@ describe("resolveParamDataValues", () => {
       { a: 1, b: { x: 2, y: 3 }, c: 7 },
     );
   });
+
+  it("recursively resolves a param that is itself a blackboard value with params", () => {
+    assertEquals(
+      resolveParams({
+        archerCount: {
+          nodeType: "dataValue",
+          type: "BLACKBOARD",
+          dataType: "number",
+          blackboardKey: "globalUnitsOfTypeCount",
+          params: {
+            unitType: { nodeType: "dataValue", type: "PRIMITIVE", dataType: "unitType", value: "ARCHER" },
+          },
+        },
+      }),
+      { archerCount: 5 },
+    );
+  });
+
   it("resolves the whole object as undefined, if any params are undefined", () => {
     assertEquals(
       resolveParams({
@@ -134,8 +130,8 @@ describe("resolveParamDataValues", () => {
         c: {
           nodeType: "dataValue",
           type: "BLACKBOARD",
-          dataType: "number",
-          blackboardKey: "globalUnitsOfTypeCount",
+          dataType: "unitId",
+          blackboardKey: "opponentClosestMonk",
           params: {},
         },
       }),
