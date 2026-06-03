@@ -69,6 +69,7 @@ export class LocalStateManager implements StateManagerInterface {
 
   init(): void {
     this.ticker = setInterval(this.tickFn, 1000 / config.ticksPerSecond);
+    // this.ticker = setInterval(this.tickFn, config.ticksPerSecond / config.ticksPerSecond);
   }
 
   cleanUp(): void {
