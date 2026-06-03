@@ -38,10 +38,22 @@ export const blackboardDefinition = {
     },
   },
   /**
+   * The total number of units in a given group.
+   */
+  groupAveragePosition: {
+    dataType: "vector",
+    params: {},
+    mutationRequirements: {
+      min: 1,
+      max: 40,
+      step: 1,
+    },
+  },
+  /**
    * The total number of units owned by the player of a given type.
    */
   globalUnitsOfTypeCount: {
-    dataType: "number",
+    dataType: "count",
     params: {
       unitType: {
         dataType: "unitType",

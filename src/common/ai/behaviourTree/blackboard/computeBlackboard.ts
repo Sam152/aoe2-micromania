@@ -16,6 +16,8 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
     groupUnitCount: ({ group }) => group.includedUnits.length,
     globalUnitsOfTypeCount: ({ state, botState }) =>
       state.units.filter((unit) => unit.ownedByPlayer === botState.playingAs).length,
+    groupAveragePosition: ({ group }) =>
+      averageVectorOrUndefined(group.includedUnits.map((id) => computed.unitsById()[id].position)),
     opponentAveragePosition: ({ state, botState }) => {
       return averageVectorOrUndefined(
         state.units.filter((unit) => unit.ownedByPlayer !== botState.playingAs).map((unit) => unit.position),
