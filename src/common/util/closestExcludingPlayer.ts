@@ -8,9 +8,13 @@ export function closestExcludingPlayer({
   playerQuadTrees,
 }: {
   excludingPlayer: number;
-  position: Vector2;
+  position: Vector2 | undefined;
   playerQuadTrees: Record<number, Quadtree<UnitInstance>>;
 }): UnitInstance | undefined {
+  if (!position) {
+    return undefined;
+  }
+
   return Object.entries(playerQuadTrees)
     .filter(([player]) => Number(player) !== excludingPlayer)
     .map(([, tree]) => tree.find(position.x, position.y))
