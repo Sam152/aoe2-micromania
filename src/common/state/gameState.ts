@@ -6,7 +6,7 @@ import { stopUnit, stopUnitExceptForWaypoints } from "./mutations/initiated/stop
 import { fireProjectiles } from "./mutations/tick/fireProjectiles.ts";
 import { moveUnits } from "./mutations/tick/moveUnits.ts";
 import { registerProjectileHits } from "./mutations/tick/registerProjectileHits.ts";
-import { unitsInGameState } from "../util/unitsInGameState.ts";
+import { unitsInGameState, unitsInGameStateComputed } from "../util/unitsInGameState.ts";
 import { registerUnitFallen } from "./mutations/tick/registerUnitFallen.ts";
 import { patrolUnits } from "./mutations/tick/patrolUnits.ts";
 import { reformUnits } from "./mutations/tick/reformUnits.ts";
@@ -40,7 +40,7 @@ export function gameStateMutator(state: GameState, action: GameStateAction, comp
     spawnUnit(state, action);
   }
   if (action.n === "MOVE_UNITS_TO") {
-    const units = unitsInGameState(state, action.units);
+    const units = unitsInGameStateComputed(computed, action.units);
     moveTo(state, units, action.position);
   }
   if (action.n === "ADD_WAYPOINT") {
@@ -61,13 +61,13 @@ export function gameStateMutator(state: GameState, action: GameStateAction, comp
   }
 
   if (action.n === "STOP_UNITS") {
-    unitsInGameState(state, action.units).forEach((unit) => stopUnit(unit));
+    unitsInGameStateComputed(computed, action.units).forEach((unit) => stopUnit(unit));
   }
   if (action.n === "DELETE_UNITS") {
-    unitsInGameState(state, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
+    unitsInGameStateComputed(computed, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
   }
   if (action.n === "ATTACK") {
-    unitsInGameState(state, action.units).forEach((attackingUnit) => {
+    unitsInGameStateComputed(computed, action.units).forEach((attackingUnit) => {
       stopUnit(attackingUnit);
       attackingUnit.targetingUnit = action.target;
     });
@@ -76,14 +76,14 @@ export function gameStateMutator(state: GameState, action: GameStateAction, comp
     action.units.map((monkId) => startConversion(state, computed, monkId, action.target));
   }
   if (action.n === "ATTACK_GROUND") {
-    unitsInGameState(state, action.units).forEach((attackingUnit) => {
+    unitsInGameStateComputed(computed, action.units).forEach((attackingUnit) => {
       stopUnit(attackingUnit);
       attackingUnit.targetingPosition = action.position;
     });
   }
 
   if (action.n === "PATROL") {
-    const units = unitsInGameState(state, action.units);
+    const units = unitsInGameStateComputed(computed, action.units);
     patrolTo(state, units, action.position);
   }
 
