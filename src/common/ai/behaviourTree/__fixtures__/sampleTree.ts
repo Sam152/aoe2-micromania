@@ -17,8 +17,15 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "vector",
                 type: "BLACKBOARD",
-                blackboardKey: "opponentAveragePosition",
-                params: {},
+                blackboardKey: "opponentClosestUnitPositionByType",
+                params: {
+                  unitType: {
+                    nodeType: "dataValue",
+                    dataType: "unitType",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
+                },
               },
               pointB: {
                 nodeType: "dataValue",
@@ -31,7 +38,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "number",
                 type: "LITERAL",
-                value: 200,
+                value: 400,
               },
             },
           },
@@ -79,7 +86,28 @@ export const sampleTree: UnitAwareBehaviourTree = {
       },
       {
         nodeType: "sequence",
-        nodes: [],
+        nodes: [
+          {
+            nodeType: "action",
+            type: "CONVERT",
+            params: {
+              unit: {
+                nodeType: "dataValue",
+                dataType: "unitId",
+                type: "BLACKBOARD",
+                blackboardKey: "opponentClosestUnitByType",
+                params: {
+                  unitType: {
+                    nodeType: "dataValue",
+                    dataType: "unitType",
+                    type: "LITERAL",
+                    value: "MANGO",
+                  },
+                },
+              },
+            },
+          },
+        ],
       },
       {
         nodeType: "sequence",

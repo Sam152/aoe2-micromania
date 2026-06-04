@@ -5,7 +5,6 @@ import { DataTypeDefinition } from "../DataTypeDefinition.ts";
  * dividing 2pi into... something?
  */
 export const vectorAngle = {
-  id: "vectorAngle",
   allowedValueTypes: ["BLACKBOARD", "LITERAL"],
   defaultValue: 0,
 } satisfies DataTypeDefinition<number>;

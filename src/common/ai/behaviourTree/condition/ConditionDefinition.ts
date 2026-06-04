@@ -6,7 +6,6 @@ export type ConditionDefinition<
     { [TKey in DataType]: ConditionDefinitionParam<TKey> }[DataType]
   >,
 > = {
-  id: string;
   params: TParams;
   evaluate: (params: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> }) => boolean;
 };

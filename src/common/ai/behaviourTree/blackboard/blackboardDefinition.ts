@@ -60,6 +60,15 @@ export const blackboardDefinition = {
       },
     },
   },
+  opponentClosestUnitPositionByType: {
+    dataType: "vector",
+    params: {
+      unitType: {
+        dataType: "unitType",
+        default: "ARCHER",
+      },
+    },
+  },
   opponentAverageUnitPositionByType: {
     dataType: "vector",
     params: {

@@ -41,6 +41,17 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
         excludingPlayer: botState.playingAs,
       })?.id,
 
+    opponentClosestUnitPositionByType: ({ params, group, botState }) =>
+      closestExcludingPlayer({
+        playerQuadTrees: {
+          "ARCHER": () => computed.archerQuadTreesByPlayer(),
+          "MONK": () => computed.monkQuadTreesByPlayer(),
+          "MANGO": () => computed.mangoQuadTreesByPlayer(),
+        }[params.unitType](),
+        position: groupAveragePosition({ group, computed }),
+        excludingPlayer: botState.playingAs,
+      })?.position,
+
     groupUnitVectorFacingDirection: ({ params, group }) => {
       const groupPosition = groupAveragePosition({ group, computed });
       if (!groupPosition) {

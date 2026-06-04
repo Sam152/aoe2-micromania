@@ -5,7 +5,6 @@ import { DataValueType } from "../dataValue/DataValue.ts";
  * to work.
  */
 export type DataTypeDefinition<TDataType> = {
-  id: string;
   allowedValueTypes: DataValueType[];
   defaultValue: TDataType;
 };

@@ -2,7 +2,6 @@ import { defineCondition } from "../ConditionDefinition.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 
 export const vectorDistanceBetweenLessThan = defineCondition({
-  id: "vectorDistanceBetweenLessThan",
   params: {
     pointA: {
       dataType: "vector",
