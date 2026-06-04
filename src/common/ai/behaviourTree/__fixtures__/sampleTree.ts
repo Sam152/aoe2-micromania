@@ -88,6 +88,20 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodeType: "sequence",
         nodes: [
           {
+            nodeType: "condition",
+            invert: true,
+            type: "isTrue",
+            params: {
+              subject: {
+                nodeType: "dataValue",
+                dataType: "boolean",
+                type: "BLACKBOARD",
+                blackboardKey: "groupIsConverting",
+                params: {},
+              },
+            },
+          },
+          {
             nodeType: "action",
             type: "CONVERT",
             params: {
