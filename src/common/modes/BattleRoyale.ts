@@ -47,10 +47,13 @@ export class BattleRoyale implements GameMode {
 
   preTick(
     state: GameState,
-    _action: GameStateAction,
+    action: GameStateAction,
     manager: StateManagerInterface,
     computed: ComputedTickState,
   ): void {
+    if (action.n !== "T") {
+      return;
+    }
     triggerBotTicks(this.bots, state, manager.dispatchGame.bind(manager), computed);
   }
 
