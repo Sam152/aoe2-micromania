@@ -98,6 +98,10 @@ export const blackboardDefinition = {
       },
     },
   },
+  groupIsConverting: {
+    dataType: "boolean",
+    params: {},
+  },
 } as const satisfies BlackboardDefinitionShape;
 
 export type BlackboardDefinition = typeof blackboardDefinition;

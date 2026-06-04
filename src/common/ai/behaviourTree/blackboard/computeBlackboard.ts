@@ -7,6 +7,7 @@ import { Vector2 } from "three/src/math/Vector2.js";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { vectorToPrimitive } from "./utils/vectorToPrimitive.ts";
 import { unitIsType } from "./utils/unitIsType.ts";
+import { unitsInGroup } from "./utils/unitsInGroup.ts";
 
 export function createBlackboardComputer({ computed }: { computed: ComputedTickState }): BlackboardComputer {
   return {
@@ -40,7 +41,6 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
         position: groupAveragePosition({ group, computed }),
         excludingPlayer: botState.playingAs,
       })?.id,
-
     opponentClosestUnitPositionByType: ({ params, group, botState }) =>
       closestExcludingPlayer({
         playerQuadTrees: {
@@ -51,7 +51,6 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
         position: groupAveragePosition({ group, computed }),
         excludingPlayer: botState.playingAs,
       })?.position,
-
     groupUnitVectorFacingDirection: ({ params, group }) => {
       const groupPosition = groupAveragePosition({ group, computed });
       if (!groupPosition) {
@@ -67,5 +66,7 @@ export function createBlackboardComputer({ computed }: { computed: ComputedTickS
           .add(groupPosition),
       );
     },
+    groupIsConverting: ({ group }) =>
+      !!unitsInGroup({ group, computed }).find((unit) => unit.convertingUnit !== undefined),
   };
 }
