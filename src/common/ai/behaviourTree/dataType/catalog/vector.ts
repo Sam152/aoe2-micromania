@@ -2,7 +2,7 @@ import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
 type Vector = { x: number; y: number };
 
-export const vector = {
+export const vector: DataTypeDefinition<Vector> = {
   allowedValueTypes: ["BLACKBOARD", "LITERAL"],
   defaultValue: { x: 0, y: 0 },
-} satisfies DataTypeDefinition<Vector>;
+};

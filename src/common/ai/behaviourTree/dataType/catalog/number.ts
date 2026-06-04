@@ -1,6 +1,6 @@
 import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
-export const number = {
+export const number: DataTypeDefinition<number> = {
   allowedValueTypes: ["BLACKBOARD", "LITERAL"],
   defaultValue: 0,
-} satisfies DataTypeDefinition<number>;
+};
