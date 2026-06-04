@@ -2,6 +2,8 @@ import { Quadtree } from "d3-quadtree";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { UnitInstance } from "../../types.ts";
 
+export type PlayerQuadTrees = Record<number, Quadtree<UnitInstance>>;
+
 export function closestExcludingPlayer({
   excludingPlayer,
   position,
@@ -9,7 +11,7 @@ export function closestExcludingPlayer({
 }: {
   excludingPlayer: number;
   position: Vector2 | undefined;
-  playerQuadTrees: Record<number, Quadtree<UnitInstance>>;
+  playerQuadTrees: PlayerQuadTrees;
 }): UnitInstance | undefined {
   if (!position) {
     return undefined;

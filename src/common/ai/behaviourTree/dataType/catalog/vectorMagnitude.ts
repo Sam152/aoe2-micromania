@@ -4,4 +4,4 @@ export const vectorMagnitude = {
   id: "vectorMangitude",
   allowedValueTypes: ["BLACKBOARD", "LITERAL"],
   defaultValue: 0,
-} satisfies DataTypeDefinition<number, { min: number; max: number; step: number }>;
+} satisfies DataTypeDefinition<number>;

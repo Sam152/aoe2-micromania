@@ -10,7 +10,6 @@ export const patrol = defineAction({
   params: {
     direction: {
       dataType: "vector",
-      mutationRequirements: undefined,
     },
   },
   execute: ({ direction }, { group }): GameStateAction => {

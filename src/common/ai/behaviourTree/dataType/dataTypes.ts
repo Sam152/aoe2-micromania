@@ -6,24 +6,22 @@ import { vector } from "./catalog/vector.ts";
 import { count } from "./catalog/count.ts";
 import { vectorMagnitude } from "./catalog/vectorMagnitude.ts";
 import { unitId } from "./catalog/unitId.ts";
-import { unitType } from "./catalog/unitType.ts";
+import { unitType } from "./catalog/blackboardUnitType.ts";
+import { vectorAngle } from "./catalog/vectorAngle.ts";
 
 export const dataTypes = {
   boolean,
-  number,
-  vector,
   count,
-  vectorMagnitude,
+  number,
   unitId,
   unitType,
+  vector,
+  vectorMagnitude,
+  vectorAngle,
 };
 
 export type DataType = keyof typeof dataTypes;
 
 export type TypeFromDataType<TDataType extends DataType> = (typeof dataTypes)[TDataType] extends
-  DataTypeDefinition<infer T, any> ? T
-  : never;
-
-export type MutationRequirementsFromDataType<TDataType extends DataType> = (typeof dataTypes)[TDataType] extends
-  DataTypeDefinition<any, infer T> ? T
+  DataTypeDefinition<infer T> ? T
   : never;

@@ -1,4 +1,4 @@
-import { DataType, MutationRequirementsFromDataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { ActionsList } from "./actionsList.ts";
 import { GameState, GameStateAction } from "../../../../types.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
@@ -22,7 +22,6 @@ export type ActionDefinition<
 
 type ActionDefinitionParam<TDataType extends DataType> = {
   dataType: TDataType;
-  mutationRequirements: MutationRequirementsFromDataType<TDataType>;
 };
 
 /**

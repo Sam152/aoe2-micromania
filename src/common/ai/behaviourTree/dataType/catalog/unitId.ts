@@ -9,4 +9,4 @@ export const unitId = {
    */
   allowedValueTypes: ["BLACKBOARD"],
   defaultValue: -1,
-} satisfies DataTypeDefinition<number, undefined>;
+} satisfies DataTypeDefinition<number>;

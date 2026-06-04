@@ -10,11 +10,6 @@ export const idle = defineAction({
   params: {
     forTicksAmount: {
       dataType: "number",
-      mutationRequirements: {
-        min: 0,
-        max: 100,
-        step: 5,
-      },
     },
   },
   execute: () => undefined,

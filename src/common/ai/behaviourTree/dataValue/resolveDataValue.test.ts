@@ -13,20 +13,20 @@ const group = {} as BotUnitGroup;
 
 // A stub computer: number keys return fixed values; globalUnitsOfTypeCount returns a count
 // based on the resolved unitType param so we can assert params are resolved before the computer
-// is invoked; opponentClosestMonk always returns undefined to exercise that code path.
+// is invoked; opponentClosestUnitByType always returns undefined to exercise that code path.
 const blackboardComputer: Pick<
   BlackboardComputer,
   | "groupMetaUnitTypeGroupCount"
   | "groupMetaUnitTypeIndex"
   | "groupUnitCount"
   | "globalUnitsOfTypeCount"
-  | "opponentClosestMonk"
+  | "opponentClosestUnitByType"
 > = {
   groupMetaUnitTypeGroupCount: () => 1,
   groupMetaUnitTypeIndex: () => 2,
   groupUnitCount: () => 7,
   globalUnitsOfTypeCount: ({ params }) => params.unitType === "ARCHER" ? 5 : 3,
-  opponentClosestMonk: () => undefined,
+  opponentClosestUnitByType: () => undefined,
 };
 
 const resolve = (dataValue: DataValue) =>
@@ -131,8 +131,10 @@ describe("resolveParamDataValues", () => {
           nodeType: "dataValue",
           type: "BLACKBOARD",
           dataType: "unitId",
-          blackboardKey: "opponentClosestMonk",
-          params: {},
+          blackboardKey: "opponentClosestUnitByType",
+          params: {
+            unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
+          },
         },
       }),
       undefined,

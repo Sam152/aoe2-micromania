@@ -4,7 +4,7 @@ import { vectorDistanceBetweenLessThan } from "./catalog/vectorDistanceBetweenLe
 
 export const conditionList = {
   numberEquals,
-  numberGreaterThan: numberGreaterThan,
+  numberGreaterThan,
   vectorDistanceBetweenLessThan,
 } as const;
 

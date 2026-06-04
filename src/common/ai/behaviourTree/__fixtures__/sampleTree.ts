@@ -11,7 +11,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
           {
             nodeType: "condition",
             type: "vectorDistanceBetweenLessThan",
-            invert: false,
+            invert: true,
             params: {
               pointA: {
                 nodeType: "dataValue",
@@ -32,6 +32,46 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 dataType: "number",
                 type: "LITERAL",
                 value: 200,
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "MOVE_UNITS",
+            params: {
+              direction: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "groupUnitVectorFacingDirection",
+                params: {
+                  direction: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "BLACKBOARD",
+                    blackboardKey: "opponentAverageUnitPositionByType",
+                    params: {
+                      unitType: {
+                        nodeType: "dataValue",
+                        dataType: "unitType",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
+                    },
+                  },
+                  angle: {
+                    nodeType: "dataValue",
+                    dataType: "vectorAngle",
+                    type: "LITERAL",
+                    value: 180,
+                  },
+                  magnitude: {
+                    nodeType: "dataValue",
+                    dataType: "vectorMagnitude",
+                    type: "LITERAL",
+                    value: 150,
+                  },
+                },
               },
             },
           },

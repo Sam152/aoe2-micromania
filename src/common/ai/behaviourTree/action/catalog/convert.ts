@@ -10,7 +10,6 @@ export const convert = defineAction({
   params: {
     unit: {
       dataType: "unitId",
-      mutationRequirements: undefined,
     },
   },
   execute: ({ unit }, { group }) => {

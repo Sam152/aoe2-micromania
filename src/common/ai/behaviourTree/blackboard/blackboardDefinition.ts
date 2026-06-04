@@ -7,11 +7,6 @@ export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount: {
     dataType: "number",
     params: {},
-    mutationRequirements: {
-      min: 1,
-      max: 5,
-      step: 1,
-    },
   },
   /**
    * An index identifying an index for a group of a particular type.
@@ -19,11 +14,6 @@ export const blackboardDefinition = {
   groupMetaUnitTypeIndex: {
     dataType: "number",
     params: {},
-    mutationRequirements: {
-      min: 1,
-      max: 5,
-      step: 1,
-    },
   },
   /**
    * The total number of units in a given group.
@@ -31,11 +21,6 @@ export const blackboardDefinition = {
   groupUnitCount: {
     dataType: "number",
     params: {},
-    mutationRequirements: {
-      min: 1,
-      max: 40,
-      step: 1,
-    },
   },
   /**
    * The total number of units in a given group.
@@ -43,7 +28,6 @@ export const blackboardDefinition = {
   groupAveragePosition: {
     dataType: "vector",
     params: {},
-    mutationRequirements: undefined,
   },
   /**
    * The total number of units owned by the player of a given type.
@@ -54,13 +38,7 @@ export const blackboardDefinition = {
       unitType: {
         dataType: "unitType",
         default: "ARCHER",
-        mutationRequirements: undefined,
       },
-    },
-    mutationRequirements: {
-      min: 1,
-      max: 40,
-      step: 1,
     },
   },
   /**
@@ -68,27 +46,48 @@ export const blackboardDefinition = {
    */
   opponentAveragePosition: {
     dataType: "vector",
-    mutationRequirements: {
-      min: 1,
-      max: 40,
-      step: 1,
+    params: {},
+  },
+  /**
+   * Closest units of a given type.
+   */
+  opponentClosestUnitByType: {
+    dataType: "unitId",
+    params: {
+      unitType: {
+        dataType: "unitType",
+        default: "ARCHER",
+      },
     },
-    params: {},
   },
-  opponentClosestMonk: {
-    dataType: "unitId",
-    mutationRequirements: undefined,
-    params: {},
+  opponentAverageUnitPositionByType: {
+    dataType: "vector",
+    params: {
+      unitType: {
+        dataType: "unitType",
+        default: "ARCHER",
+      },
+    },
   },
-  opponentClosestArcher: {
-    dataType: "unitId",
-    mutationRequirements: undefined,
-    params: {},
-  },
-  opponentClosestMango: {
-    dataType: "unitId",
-    mutationRequirements: undefined,
-    params: {},
+  /**
+   * Positional computation.
+   */
+  groupUnitVectorFacingDirection: {
+    dataType: "vector",
+    params: {
+      direction: {
+        dataType: "vector",
+        default: { x: 0, y: 0 },
+      },
+      angle: {
+        dataType: "vectorAngle",
+        default: 0,
+      },
+      magnitude: {
+        dataType: "vectorMagnitude",
+        default: 100,
+      },
+    },
   },
 } as const satisfies BlackboardDefinitionShape;
 

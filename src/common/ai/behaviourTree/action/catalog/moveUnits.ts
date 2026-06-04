@@ -4,13 +4,12 @@ import { Vector2 } from "three/src/math/Vector2.js";
 
 import { UnitType } from "../../../../units/UnitType.ts";
 
-export const move = defineAction({
-  type: "MOVE",
+export const moveUnits = defineAction({
+  type: "MOVE_UNITS",
   applicableForUnitType: [UnitType.Archer, UnitType.Mangonel, UnitType.Monk],
   params: {
     direction: {
       dataType: "vector",
-      mutationRequirements: undefined,
     },
   },
   execute: ({ direction }, { group }): GameStateAction => {
