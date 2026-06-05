@@ -3,9 +3,7 @@ import { evaluateTreeNode } from "../behaviourTree/evaluateTreeNode.ts";
 import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
-
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/utils/createCachedBlackboardComputer.ts";
-
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
 
 type TickGroupArgs = {
