@@ -8,6 +8,7 @@ import { createInitialUnitGroups } from "./util/createInitialUnitGroups.ts";
 import { consolidateGroups } from "./util/consolidateGroups.ts";
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
 import { ActionNodeWithResolvedParams } from "../behaviourTree/evaluateTreeNode.ts";
+import { UnitAwareBehaviourTree } from "../behaviourTree/BehaviourTree.ts";
 
 export type BotInstance = {
   tick: (state: GameState, dispatcher: GameDispatcher, computed: ComputedTickState) => void;
@@ -34,7 +35,9 @@ export type BotState = {
   unitGroups: BotUnitGroup[];
 };
 
-export function createBot({ playingAs, playerId }: { playingAs: number; playerId: string }): BotInstance {
+export function createBot(
+  { playingAs, playerId, tree }: { playingAs: number; playerId: string; tree: UnitAwareBehaviourTree },
+): BotInstance {
   const botState: BotState = {
     playerId,
     playingAs: playingAs,
@@ -58,6 +61,7 @@ export function createBot({ playingAs, playerId }: { playingAs: number; playerId
           dispatcher,
           botState,
           computed,
+          tree: tree[group.unitType],
         });
       });
 

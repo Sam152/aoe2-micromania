@@ -1,12 +1,11 @@
 import { actionsList } from "../behaviourTree/action/actionsList.ts";
 import { evaluateTreeNode } from "../behaviourTree/evaluateTreeNode.ts";
-import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
+
 import { GameDispatcher, GameState } from "../../../types.ts";
 import { BotState, BotUnitGroup } from "./createBot.ts";
-
 import { createCachedBlackboardComputer } from "../behaviourTree/blackboard/utils/createCachedBlackboardComputer.ts";
-
 import { ComputedTickState } from "../../state/computed/createComputedTickState.ts";
+import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
 
 type TickGroupArgs = {
   group: BotUnitGroup;
@@ -14,9 +13,10 @@ type TickGroupArgs = {
   botState: BotState;
   dispatcher: GameDispatcher;
   computed: ComputedTickState;
+  tree: BehaviourTreeNode;
 };
 
-export function tickUnitGroupDecisions({ state, botState, dispatcher, group, computed }: TickGroupArgs) {
+export function tickUnitGroupDecisions({ state, botState, dispatcher, group, computed, tree }: TickGroupArgs) {
   const blackboardComputer = createCachedBlackboardComputer({ computed });
 
   // If we have actions in the queue, try to consume the next available one.
@@ -52,15 +52,12 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
     return;
   }
 
-  // Translate actions from the tree into a queue of actions to take over the course of some number of ticks.
-  const treeToEvaluate = sampleTree[group.unitType];
-
   const { actionNodes } = evaluateTreeNode({
     blackboardComputer,
     group,
     state,
     botState,
-    node: treeToEvaluate,
+    node: tree,
   });
 
   group.actionQueue.push(

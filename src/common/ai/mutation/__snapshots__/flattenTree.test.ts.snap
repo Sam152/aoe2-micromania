@@ -1,0 +1,101 @@
+export const snapshot = {};
+
+snapshot[`flattenTree > generates candidates from tree 1`] = `
+[
+  {
+    nodeType: "selector",
+    parent: "",
+    path: "",
+  },
+  {
+    nodeType: "sequence",
+    parent: "",
+    path: ".nodes[0]",
+  },
+  {
+    nodeType: "condition",
+    parent: ".nodes[0]",
+    path: ".nodes[0].nodes[0]",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[0].nodes[0]",
+    path: ".nodes[0].nodes[0].params.left",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[0].nodes[0]",
+    path: ".nodes[0].nodes[0].params.right",
+  },
+  {
+    nodeType: "action",
+    parent: ".nodes[0]",
+    path: ".nodes[0].nodes[1]",
+  },
+  {
+    nodeType: "sequence",
+    parent: "",
+    path: ".nodes[1]",
+  },
+  {
+    nodeType: "condition",
+    parent: ".nodes[1]",
+    path: ".nodes[1].nodes[0]",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[1].nodes[0]",
+    path: ".nodes[1].nodes[0].params.left",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[1].nodes[0]",
+    path: ".nodes[1].nodes[0].params.right",
+  },
+  {
+    nodeType: "action",
+    parent: ".nodes[1]",
+    path: ".nodes[1].nodes[1]",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[1].nodes[1]",
+    path: ".nodes[1].nodes[1].params.direction",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[1].nodes[1].params.direction",
+    path: ".nodes[1].nodes[1].params.direction.params.vectorOffset",
+  },
+  {
+    nodeType: "action",
+    parent: ".nodes[1]",
+    path: ".nodes[1].nodes[2]",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[1].nodes[2]",
+    path: ".nodes[1].nodes[2].params.forTicksAmount",
+  },
+]
+`;
+
+snapshot[`flattenTree > generates candidates from tree 2`] = `
+[
+  "selector > selector",
+  "selector > sequence",
+  "sequence > condition",
+  "condition > dataValue",
+  "condition > dataValue",
+  "sequence > action",
+  "selector > sequence",
+  "sequence > condition",
+  "condition > dataValue",
+  "condition > dataValue",
+  "sequence > action",
+  "action > dataValue",
+  "dataValue > dataValue",
+  "sequence > action",
+  "action > dataValue",
+]
+`;

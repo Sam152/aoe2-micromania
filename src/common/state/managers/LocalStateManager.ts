@@ -15,7 +15,7 @@ export class LocalStateManager implements StateManagerInterface {
   private gameState: GameState;
   private clientState: ClientState;
   private gameStateListeners: Array<GameStateListener>;
-  private preTickListeners: Array<PreTickListener>;
+  private preGameStateListeners: Array<PreTickListener>;
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
   private budgetCalculator: FrameBudgetCalculator;
@@ -25,7 +25,7 @@ export class LocalStateManager implements StateManagerInterface {
     this.gameState = defaultGameState();
     this.clientState = defaultClientState(clientId!);
     this.gameStateListeners = [];
-    this.preTickListeners = [];
+    this.preGameStateListeners = [];
     this.clientStateListeners = [];
     this.budgetCalculator = frameBudgetCalculator();
     this.tickFn = tickFn || (() => this.dispatchGame({ n: "T", t: this.gameState.ticks }));
@@ -36,7 +36,7 @@ export class LocalStateManager implements StateManagerInterface {
   }
 
   addPreTickListener(listener: PreTickListener): void {
-    this.preTickListeners.push(listener);
+    this.preGameStateListeners.push(listener);
   }
 
   addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void {
@@ -53,7 +53,7 @@ export class LocalStateManager implements StateManagerInterface {
   dispatchGame(action: GameStateAction): void {
     this.budgetCalculator.start();
     const computed = createComputedTickState(this.gameState);
-    this.preTickListeners.forEach((listener) => listener(this.gameState, action, computed));
+    this.preGameStateListeners.forEach((listener) => listener(this.gameState, action, computed));
     this.gameState = gameStateMutator(this.gameState, action, computed);
     this.gameStateListeners.forEach((listener) => listener(this.gameState, action));
     this.budgetCalculator.end();
