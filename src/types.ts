@@ -124,7 +124,8 @@ export type PlayerId = number;
 
 export type GameStateAction =
   | {
-    n: "T"; // Tick, reduced in size for a smaller transmission, could be an enum in the future.
+    // Tick, reduced in size for a smaller transmission, could be an enum in the future.
+    n: "T";
     // Send the number of ticks in state, down the pipe at the same time, for desync protection.
     t: number;
   }
