@@ -136,6 +136,59 @@ export const sampleTree: UnitAwareBehaviourTree = {
   [UnitType.Archer]: {
     nodeType: "selector",
     nodes: [
+      // If we have less than 8 units, just patrol them all.
+      {
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "condition",
+            type: "countGreaterThan",
+            invert: true,
+            params: {
+              left: {
+                nodeType: "dataValue",
+                dataType: "count",
+                type: "BLACKBOARD",
+                blackboardKey: "globalUnitsOfTypeCount",
+                params: {
+                  unitType: {
+                    nodeType: "dataValue",
+                    dataType: "unitType",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
+                },
+              },
+              right: {
+                nodeType: "dataValue",
+                dataType: "count",
+                type: "LITERAL",
+                value: 8,
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "PATROL",
+            params: {
+              direction: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "opponentAveragePosition",
+                params: {
+                  vectorOffset: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "LITERAL",
+                    value: { x: 0, y: 0 },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
       // If there are less than two groups of archers, split them.
       {
         nodeType: "sequence",
