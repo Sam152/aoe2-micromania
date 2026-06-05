@@ -2,12 +2,12 @@ import { defineCondition } from "../ConditionDefinition.ts";
 
 export const countGreaterThan = defineCondition({
   params: {
-    left: {
+    count: {
       dataType: "count",
     },
-    right: {
+    threshold: {
       dataType: "count",
     },
   },
-  evaluate: ({ left, right }) => left > right,
+  evaluate: ({ count, threshold }) => count > threshold,
 });

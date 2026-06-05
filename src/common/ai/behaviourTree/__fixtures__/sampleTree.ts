@@ -145,7 +145,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
             type: "countGreaterThan",
             invert: true,
             params: {
-              left: {
+              count: {
                 nodeType: "dataValue",
                 dataType: "count",
                 type: "BLACKBOARD",
@@ -159,7 +159,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              right: {
+              threshold: {
                 nodeType: "dataValue",
                 dataType: "count",
                 type: "LITERAL",

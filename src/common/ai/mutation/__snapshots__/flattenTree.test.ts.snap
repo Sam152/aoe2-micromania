@@ -20,17 +20,32 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
   {
     nodeType: "dataValue",
     parent: ".nodes[0].nodes[0]",
-    path: ".nodes[0].nodes[0].params.left",
+    path: ".nodes[0].nodes[0].params.count",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[0].nodes[0].params.count",
+    path: ".nodes[0].nodes[0].params.count.params.unitType",
   },
   {
     nodeType: "dataValue",
     parent: ".nodes[0].nodes[0]",
-    path: ".nodes[0].nodes[0].params.right",
+    path: ".nodes[0].nodes[0].params.threshold",
   },
   {
     nodeType: "action",
     parent: ".nodes[0]",
     path: ".nodes[0].nodes[1]",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[0].nodes[1]",
+    path: ".nodes[0].nodes[1].params.direction",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[0].nodes[1].params.direction",
+    path: ".nodes[0].nodes[1].params.direction.params.vectorOffset",
   },
   {
     nodeType: "sequence",
@@ -58,24 +73,49 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     path: ".nodes[1].nodes[1]",
   },
   {
-    nodeType: "dataValue",
-    parent: ".nodes[1].nodes[1]",
-    path: ".nodes[1].nodes[1].params.direction",
+    nodeType: "sequence",
+    parent: "",
+    path: ".nodes[2]",
+  },
+  {
+    nodeType: "condition",
+    parent: ".nodes[2]",
+    path: ".nodes[2].nodes[0]",
   },
   {
     nodeType: "dataValue",
-    parent: ".nodes[1].nodes[1].params.direction",
-    path: ".nodes[1].nodes[1].params.direction.params.vectorOffset",
+    parent: ".nodes[2].nodes[0]",
+    path: ".nodes[2].nodes[0].params.left",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[2].nodes[0]",
+    path: ".nodes[2].nodes[0].params.right",
   },
   {
     nodeType: "action",
-    parent: ".nodes[1]",
-    path: ".nodes[1].nodes[2]",
+    parent: ".nodes[2]",
+    path: ".nodes[2].nodes[1]",
   },
   {
     nodeType: "dataValue",
-    parent: ".nodes[1].nodes[2]",
-    path: ".nodes[1].nodes[2].params.forTicksAmount",
+    parent: ".nodes[2].nodes[1]",
+    path: ".nodes[2].nodes[1].params.direction",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[2].nodes[1].params.direction",
+    path: ".nodes[2].nodes[1].params.direction.params.vectorOffset",
+  },
+  {
+    nodeType: "action",
+    parent: ".nodes[2]",
+    path: ".nodes[2].nodes[2]",
+  },
+  {
+    nodeType: "dataValue",
+    parent: ".nodes[2].nodes[2]",
+    path: ".nodes[2].nodes[2].params.forTicksAmount",
   },
 ]
 `;
@@ -83,6 +123,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
 snapshot[`flattenTree > generates candidates from tree 2`] = `
 [
   "selector > selector",
+  "selector > sequence",
+  "sequence > condition",
+  "condition > dataValue",
+  "dataValue > dataValue",
+  "condition > dataValue",
+  "sequence > action",
+  "action > dataValue",
+  "dataValue > dataValue",
   "selector > sequence",
   "sequence > condition",
   "condition > dataValue",
