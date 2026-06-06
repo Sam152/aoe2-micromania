@@ -1,8 +1,8 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertSnapshot } from "jsr:@std/testing/snapshot";
 import { flattenTree } from "./flattenTree.ts";
-import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
-import { UnitType } from "../../units/UnitType.ts";
+import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 
 describe("flattenTree", () => {
   it("generates candidates from tree", async (t) => {

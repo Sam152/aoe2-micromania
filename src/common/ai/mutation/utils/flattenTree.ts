@@ -1,4 +1,4 @@
-import { BehaviourTreeNodeOrValue } from "../behaviourTree/BehaviourTree.ts";
+import { BehaviourTreeNodeOrValue } from "../../behaviourTree/BehaviourTree.ts";
 
 export type FlatTreeNode = {
   node: BehaviourTreeNodeOrValue;

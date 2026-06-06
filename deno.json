@@ -1,5 +1,6 @@
 {
   "nodeModulesDir": "auto",
+  "vendor": true,
   "tasks": {
     "start": "deno run --check -A src/start.ts",
     "start:debug": "deno run --inspect --check -A src/start.ts",

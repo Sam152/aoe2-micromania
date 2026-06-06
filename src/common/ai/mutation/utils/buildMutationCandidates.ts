@@ -1,8 +1,9 @@
 import { FlatTreeNode } from "./flattenTree.ts";
-import { ConditionNode } from "../behaviourTree/condition/Condition.ts";
-import { ActionNode } from "../behaviourTree/action/ActionDefinition.ts";
-import { BlackboardDataValue } from "../behaviourTree/dataValue/DataValue.ts";
-import { Selector, Sequence } from "../behaviourTree/BehaviourTree.ts";
+import { ConditionNode } from "../../behaviourTree/condition/Condition.ts";
+import { ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
+import { BlackboardDataValue } from "../../behaviourTree/dataValue/DataValue.ts";
+import { Selector, Sequence } from "../../behaviourTree/BehaviourTree.ts";
+import { arrayOfSize } from "../../../util/arrayOfSize.ts";
 
 type MutationCandidate =
   & { weight?: number }
@@ -32,6 +33,16 @@ type MutationCandidate =
   );
 
 export function buildMutationCandidates(flatNodes: FlatTreeNode[]): MutationCandidate[] {
+  // Expand weights out into concrete representation in the candidate list.
+  return buildMutationCandidatesWithWeights(flatNodes).flatMap((candidate) =>
+    arrayOfSize(candidate.weight ?? 1).map(() => candidate)
+  );
+}
+
+/**
+ * Build a list of candidate mutations with a weight.
+ */
+function buildMutationCandidatesWithWeights(flatNodes: FlatTreeNode[]): MutationCandidate[] {
   return flatNodes.flatMap((flatNode) => {
     if (flatNode.node.nodeType === "condition") {
       return [
@@ -42,7 +53,7 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): MutationCand
 
     if (flatNode.node.nodeType === "selector" || flatNode.node.nodeType === "sequence") {
       return [
-        { type: "ADD_NODE_TO_LIST", listNode: flatNode.node },
+        { type: "ADD_NODE_TO_LIST", listNode: flatNode.node, weight: 2 },
         { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node },
       ];
     }
