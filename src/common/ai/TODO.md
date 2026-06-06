@@ -1,6 +1,8 @@
 ## AI Todo
 
 - [ ] BB closestInRangeOfType
+- [ ] BB projectiles
+- [ ] Actions formations
 - [ ] Train harness
-- [ ] Offspring
-- [ ] Random mutations
+- [ ] Offspring?
+- [x] Random mutations

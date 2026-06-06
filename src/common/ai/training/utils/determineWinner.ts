@@ -1,11 +1,11 @@
-import { defaultState as defaultGameState, gameStateMutator } from "../../state/gameState.ts";
-import { GameState, GameStateAction } from "../../../types.ts";
-import { createComputedTickState } from "../../state/computed/createComputedTickState.ts";
-import { triggerBotTicks } from "../integration/triggerBotTicks.ts";
-import { config } from "../../config.ts";
-import { hpByPlayer } from "../../util/hpByPlayer.ts";
-import { UnitAwareBehaviourTree } from "../behaviourTree/BehaviourTree.ts";
-import { createBot } from "../integration/createBot.ts";
+import { defaultState as defaultGameState, gameStateMutator } from "../../../state/gameState.ts";
+import { GameState, GameStateAction } from "../../../../types.ts";
+import { createComputedTickState } from "../../../state/computed/createComputedTickState.ts";
+import { triggerBotTicks } from "../../integration/triggerBotTicks.ts";
+import { config } from "../../../config.ts";
+import { hpByPlayer } from "../../../util/hpByPlayer.ts";
+import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
+import { createBot } from "../../integration/createBot.ts";
 
 const MAX_TIME_MINUTES = 3;
 
