@@ -11,7 +11,7 @@
     "training:docker:reset": "docker compose -f src/common/ai/training/infra/docker-compose.yml down -v",
     "training:dump": "docker compose -f src/common/ai/training/infra/docker-compose.yml exec postgres pg_dump --data-only -U postgres postgres | gzip > src/common/ai/training/infra/data/dump.sql.gz",
     "training:tourney": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startTournamentHarness.ts",
-    "training:breeding": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startBreedingHarness.ts"
+    "training:evolution": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts"
   },
   "compilerOptions": {
     "jsx": "react-jsx",

@@ -5,13 +5,13 @@ import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
 import { setLowestRatedPlayersToInactive } from "../infra/repo/setLowestRatedPlayersToInactive.ts";
 import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
-import { breedNextGeneration } from "../seeding/breedNextGeneration.ts";
+import { evolveNextGeneration } from "../evolution/evolveNextGeneration.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 
 const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL } = trainingParams;
 
-async function startBreedingHarness() {
+async function startEvolutionHarness() {
   const botCount = await activeBotsCount();
   console.log(`Total bots: ${botCount}`);
 
@@ -28,11 +28,11 @@ async function startBreedingHarness() {
 
   const formatter = createProgressFormatter({ totalIterations: requiredBots });
   await Promise.allSettled(
-    breedNextGeneration({ specimens, newPlayersRequired: requiredBots }).map(async (nextGeneration) => {
+    evolveNextGeneration({ specimens, newPlayersRequired: requiredBots }).map(async (nextGeneration) => {
       await insertBot(await nextGeneration);
       formatter.advance();
     }),
   );
 }
 
-startBreedingHarness().then(() => sql.end());
+startEvolutionHarness().then(() => sql.end());

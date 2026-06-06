@@ -7,13 +7,13 @@ import { trainingParams } from "../trainingParams.ts";
 
 const { CPU_WORKER_COUNT, NEXT_GENERATION_RANDOM_MUTATIONS } = trainingParams;
 
-type BreedNextGenArgs = {
+type EvolveNextGenArgs = {
   specimens: UnitAwareBehaviourTree[];
   newPlayersRequired: number;
 };
 
-export function breedNextGeneration(
-  { specimens, newPlayersRequired }: BreedNextGenArgs,
+export function evolveNextGeneration(
+  { specimens, newPlayersRequired }: EvolveNextGenArgs,
 ): Promise<UnitAwareBehaviourTree>[] {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
 
