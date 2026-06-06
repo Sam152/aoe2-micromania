@@ -1,5 +1,5 @@
 import { defaultState as defaultGameState, gameStateMutator } from "../../../state/gameState.ts";
-import { GameState, GameStateAction } from "../../../../types.ts";
+import { GameStateAction } from "../../../../types.ts";
 import { createComputedTickState } from "../../../state/computed/createComputedTickState.ts";
 import { triggerBotTicks } from "../../integration/triggerBotTicks.ts";
 import { config } from "../../../config.ts";
@@ -15,18 +15,15 @@ type DetermineWinnerArgs = {
 };
 
 export type GameResult = {
-  state: GameState;
   hp: { 1: number; 2: number };
   winner: 1 | 2 | "DRAW";
-  actionLog: GameStateAction[];
+  ticks: number;
 };
 
 export function determineWinner({ player1, player2 }: DetermineWinnerArgs): GameResult {
   const state = defaultGameState();
-  const actionLog: GameStateAction[] = [];
 
   const dispatch = (action: GameStateAction) => {
-    actionLog.push(action);
     const computed = createComputedTickState(state);
 
     if (action.n === "T") {
@@ -70,9 +67,8 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Game
 
   const hp = hpByPlayer(state) as GameResult["hp"];
   return {
-    actionLog,
-    state,
     winner: hp[1] === hp[2] ? "DRAW" : hp[1] > hp[2] ? 1 : 2,
     hp,
+    ticks: state.ticks,
   };
 }
