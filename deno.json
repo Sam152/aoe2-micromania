@@ -6,7 +6,8 @@
     "start:debug": "deno run --inspect --check -A src/start.ts",
     "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
-    "on-save": "deno --allow-run .hooks/on-save.ts"
+    "on-save": "deno --allow-run .hooks/on-save.ts",
+    "training:docker-start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
