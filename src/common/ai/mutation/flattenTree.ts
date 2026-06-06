@@ -1,7 +1,7 @@
 import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
 import { DataValue } from "../behaviourTree/dataValue/DataValue.ts";
 
-export type Candidate = {
+export type FlatTreeNode = {
   nodeType: string;
   parent: string;
   path: string;
@@ -9,10 +9,10 @@ export type Candidate = {
 
 export function flattenTree(
   node: BehaviourTreeNode | DataValue,
-  candidates: Candidate[] = [],
+  candidates: FlatTreeNode[] = [],
   parent: string = "",
   path: string = "",
-): Candidate[] {
+): FlatTreeNode[] {
   if (node.nodeType === "sequence" || node.nodeType === "selector") {
     candidates.push({
       nodeType: node.nodeType,
