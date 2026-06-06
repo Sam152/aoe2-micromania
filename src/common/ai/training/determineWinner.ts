@@ -10,17 +10,17 @@ import { createBot } from "../integration/createBot.ts";
 const MAX_TIME_MINUTES = 3;
 
 type DetermineWinnerArgs = {
-  a: UnitAwareBehaviourTree;
-  b: UnitAwareBehaviourTree;
+  player1: UnitAwareBehaviourTree;
+  player2: UnitAwareBehaviourTree;
 };
 
 type DetermineWinnerResult = {
   state: GameState;
-  hp: Record<string, number>;
+  hp: { 1: number; 2: number };
   actionLog: GameStateAction[];
 };
 
-export function determineWinner({ a, b }: DetermineWinnerArgs): DetermineWinnerResult {
+export function determineWinner({ player1, player2 }: DetermineWinnerArgs): DetermineWinnerResult {
   const state = defaultGameState();
   const actionLog: GameStateAction[] = [];
 
@@ -34,13 +34,15 @@ export function determineWinner({ a, b }: DetermineWinnerArgs): DetermineWinnerR
     gameStateMutator(state, action, computed);
   };
 
-  const bots = [a, b].map((tree, i) => {
-    const playerId = `bot-${i}`;
+  const bots = [player1, player2].map((tree, i) => {
+    const playerId = `bot-${i + 1}`;
+
     dispatch({
       n: "CLIENT_LOADED_WITH_ID",
-      playerId: `bot-${i}`,
+      playerId,
     });
     const playingAs = state.activePlayers[playerId];
+
     return createBot({
       playingAs,
       playerId,
@@ -68,6 +70,6 @@ export function determineWinner({ a, b }: DetermineWinnerArgs): DetermineWinnerR
   return {
     actionLog,
     state,
-    hp: hpByPlayer(state),
+    hp: hpByPlayer(state) as DetermineWinnerResult["hp"],
   };
 }
