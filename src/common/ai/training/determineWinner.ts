@@ -14,13 +14,13 @@ type DetermineWinnerArgs = {
   player2: UnitAwareBehaviourTree;
 };
 
-type DetermineWinnerResult = {
+export type GameResult = {
   state: GameState;
   hp: { 1: number; 2: number };
   actionLog: GameStateAction[];
 };
 
-export function determineWinner({ player1, player2 }: DetermineWinnerArgs): DetermineWinnerResult {
+export function determineWinner({ player1, player2 }: DetermineWinnerArgs): GameResult {
   const state = defaultGameState();
   const actionLog: GameStateAction[] = [];
 
@@ -70,6 +70,6 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Dete
   return {
     actionLog,
     state,
-    hp: hpByPlayer(state) as DetermineWinnerResult["hp"],
+    hp: hpByPlayer(state) as GameResult["hp"],
   };
 }
