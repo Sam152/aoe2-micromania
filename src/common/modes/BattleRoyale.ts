@@ -1,15 +1,12 @@
 import { GameMode, GameState, GameStateAction, StateManagerInterface } from "../../types.ts";
 import { Grid } from "../terrain/Grid.ts";
-
 import { logger } from "../../server/logger.ts";
 import { BotInstance, createBot } from "../ai/integration/createBot.ts";
 import { assert } from "@std/assert";
 import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlayer.ts";
-import stat = Deno.stat;
 import { triggerBotTicks } from "../ai/integration/triggerBotTicks.ts";
 import { ComputedTickState } from "../state/computed/createComputedTickState.ts";
 import { sampleTree } from "../ai/behaviourTree/__fixtures__/sampleTree.ts";
-
 import { bestBot } from "../ai/behaviourTree/__fixtures__/bestBot.ts";
 
 const grid = new Grid(30);
