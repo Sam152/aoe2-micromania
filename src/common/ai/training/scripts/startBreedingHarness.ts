@@ -7,6 +7,7 @@ import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { breedNextGeneration } from "../seeding/breedNextGeneration.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
+import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 
 const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL } = trainingParams;
 
@@ -25,10 +26,12 @@ async function startBreedingHarness() {
     ? [sampleTree]
     : (await getActiveBotsByElo()).map((bot) => bot.tree);
 
+  const formatter = createProgressFormatter({ totalIterations: requiredBots });
   await Promise.allSettled(
-    breedNextGeneration({ specimens, newPlayersRequired: requiredBots }).map((nextGeneration) =>
-      nextGeneration.then(insertBot)
-    ),
+    breedNextGeneration({ specimens, newPlayersRequired: requiredBots }).map(async (nextGeneration) => {
+      formatter.advance();
+      await insertBot(await nextGeneration);
+    }),
   );
 }
 
