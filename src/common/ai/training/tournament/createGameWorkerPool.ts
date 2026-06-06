@@ -1,4 +1,4 @@
-import { Bot } from "../infra/repo/getAllBotsByElo.ts";
+import { Bot } from "../infra/repo/getActiveBotsByElo.ts";
 import { GameResult } from "../utils/determineWinner.ts";
 
 type PendingJob = {

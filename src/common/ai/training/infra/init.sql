@@ -4,7 +4,8 @@ CREATE TABLE bots (
   tree JSONB NOT NULL,
   elo INT NOT NULL DEFAULT 1600,
   wins INT NOT NULL DEFAULT 0,
-  losses INT NOT NULL DEFAULT 0
+  losses INT NOT NULL DEFAULT 0,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 CREATE INDEX bots_elo_idx ON bots (elo);

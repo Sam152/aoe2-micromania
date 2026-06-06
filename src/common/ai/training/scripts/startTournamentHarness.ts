@@ -1,15 +1,15 @@
 import { sql } from "../infra/connection.ts";
-import { getAllBotsByElo } from "../infra/repo/getAllBotsByElo.ts";
+import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
 import { topUpPlayerPool } from "../tournament/topUpPlayerPool.ts";
 import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
 import { chunkArray } from "../../../util/chunckArray.ts";
 import { roundRobin } from "../tournament/roundRobin.ts";
 import { recordResult } from "../tournament/recordResult.ts";
-import { createProgressFormatter } from "../tournament/createProgressFormatter.ts";
+import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 
 const TOTAL_BOTS_IN_POOL = 500;
-const BOTS_IN_EACH_TOURNEY = 100;
+const BOTS_IN_EACH_TOURNEY = 10;
 const MUTATION_COUNT = 50;
 const WORKER_COUNT = 4;
 
@@ -26,10 +26,8 @@ async function startTournamentHarness() {
       ((BOTS_IN_EACH_TOURNEY * (BOTS_IN_EACH_TOURNEY - 1)) / 2),
   });
 
-  const bots = await getAllBotsByElo();
-
   await Promise.allSettled(
-    chunkArray(bots, BOTS_IN_EACH_TOURNEY)
+    chunkArray(await getActiveBotsByElo(), BOTS_IN_EACH_TOURNEY)
       .flatMap((bots) =>
         roundRobin(bots, async (p1, p2) => {
           const result = await runInPool(p1, p2);

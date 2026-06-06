@@ -1,5 +1,5 @@
 import { determineWinner } from "../utils/determineWinner.ts";
-import { Bot } from "../infra/repo/getAllBotsByElo.ts";
+import { Bot } from "../infra/repo/getActiveBotsByElo.ts";
 
 self.onmessage = async (e: MessageEvent<{ p1: Bot; p2: Bot }>) => {
   const { p1, p2 } = e.data;
