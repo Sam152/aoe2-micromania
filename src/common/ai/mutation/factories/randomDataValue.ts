@@ -13,10 +13,11 @@ export function randomDataValue(
   dataType: DataType,
   _paramName: string,
   _parent: AttachedToNode,
+  forceLiteral?: boolean,
 ): unknown {
   const type = randomAllowedValueType(dataType);
 
-  if (type === "LITERAL") {
+  if (type === "LITERAL" || forceLiteral) {
     return {
       nodeType: "dataValue",
       type: "LITERAL",
@@ -29,6 +30,10 @@ export function randomDataValue(
     const candidateBlackboardKeys = (Object.entries(blackboardDefinition) as [string, BlackboardValueDefinition][])
       .filter(([_, def]) => def.dataType === dataType)
       .map(([key]) => key);
+
+    if (candidateBlackboardKeys.length === 0) {
+      return randomDataValue(dataType, _paramName, _parent, true);
+    }
 
     const key = randomArray(candidateBlackboardKeys);
     const keyDef = blackboardDefinition[key as keyof typeof blackboardDefinition] as BlackboardValueDefinition;

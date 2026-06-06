@@ -7,7 +7,7 @@ export function randomAllowedValueType(dataType: DataType) {
   if (dataDefinition.allowedValueTypes.includes("LITERAL")) {
     options.push("LITERAL");
   }
-  if (dataDefinition.allowedValueTypes) {
+  if (dataDefinition.allowedValueTypes.includes("BLACKBOARD")) {
     options.push("BLACKBOARD");
   }
   return randomArray(options);
