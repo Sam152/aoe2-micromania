@@ -1,33 +1,26 @@
 import { sql } from "../infra/connection.ts";
 import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
-import { topUpPlayerPool } from "../tournament/topUpPlayerPool.ts";
-import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
 import { chunkArray } from "../../../util/chunckArray.ts";
 import { roundRobin } from "../tournament/roundRobin.ts";
 import { recordResult } from "../tournament/recordResult.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
+import { trainingParams } from "../params.ts";
 
-const TOTAL_BOTS_IN_POOL = 500;
-const BOTS_IN_EACH_TOURNEY = 10;
-const MUTATION_COUNT = 50;
-const WORKER_COUNT = 4;
+const { TOTAL_BOTS_IN_POOL, ROUND_ROBIN_TOURNEY_SIZE, CPU_WORKER_COUNT } = trainingParams;
 
 async function startTournamentHarness() {
-  await topUpPlayerPool({
-    requiredPoolSize: TOTAL_BOTS_IN_POOL,
-    baseTree: sampleTree,
-    mutationCount: MUTATION_COUNT,
-  });
-
-  const { runInPool, terminatePool } = createGameWorkerPool(WORKER_COUNT);
+  const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
   const { advance } = createProgressFormatter({
-    totalIterations: (TOTAL_BOTS_IN_POOL / BOTS_IN_EACH_TOURNEY) *
-      ((BOTS_IN_EACH_TOURNEY * (BOTS_IN_EACH_TOURNEY - 1)) / 2),
+    totalIterations: (TOTAL_BOTS_IN_POOL / ROUND_ROBIN_TOURNEY_SIZE) *
+      ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2),
   });
 
+  // Play a single set of round robins. Matching similar ELO bots against
+  // each-other. Probably need to play multiple of these, to allow bots
+  // to rise in ELO.
   await Promise.allSettled(
-    chunkArray(await getActiveBotsByElo(), BOTS_IN_EACH_TOURNEY)
+    chunkArray(await getActiveBotsByElo(), ROUND_ROBIN_TOURNEY_SIZE)
       .flatMap((bots) =>
         roundRobin(bots, async (p1, p2) => {
           const result = await runInPool(p1, p2);
@@ -39,9 +32,6 @@ async function startTournamentHarness() {
         })
       ),
   );
-
-  // Run tournaments, give bots a chance to gain and lose ELO.
-  // Cut the bottom 500 bots in the pool.
 
   terminatePool();
 }

@@ -10,13 +10,12 @@ CREATE TABLE bots (
 
 CREATE INDEX bots_elo_idx ON bots (elo);
 
-CREATE TABLE games (
+CREATE TABLE match_result (
   id BIGSERIAL PRIMARY KEY,
-  player_1 BIGINT NOT NULL,
-  player_2 BIGINT NOT NULL,
-  actions JSONB NOT NULL,
-  final_state JSONB NOT NULL,
-  player_1_hp INT NOT NULL,
-  player_2_hp INT NOT NULL,
-  tick_count INT NOT NULL
+  bot_id BIGINT NOT NULL REFERENCES bots(id),
+  opponent_id BIGINT NOT NULL REFERENCES bots(id),
+  tick_count INT NOT NULL,
+  was_winner BOOLEAN NOT NULL,
+  match_elo INT NOT NULL,
+  elo_delta INT NOT NULL
 );
