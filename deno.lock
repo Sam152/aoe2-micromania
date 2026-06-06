@@ -44,6 +44,7 @@
     "npm:just-standard-deviation@^2.0.2": "2.2.0",
     "npm:pino@10.3.1": "10.3.1",
     "npm:pino@^10.3.1": "10.3.1",
+    "npm:postgres@^3.4.9": "3.4.9",
     "npm:react-dom@18": "18.3.1_react@18.3.1",
     "npm:react-router-dom@^6.3.0": "6.30.3_react@18.3.1_react-dom@18.3.1__react@18.3.1",
     "npm:react@18": "18.3.1",
@@ -869,6 +870,9 @@
       ],
       "bin": true
     },
+    "postgres@3.4.9": {
+      "integrity": "sha512-GD3qdB0x1z9xgFI6cdRD6xu2Sp2WCOEoe3mtnyB5Ee0XrrL5Pe+e4CCnJrRMnL1zYtRDZmQQVbvOttLnKDLnaw=="
+    },
     "process-warning@5.0.0": {
       "integrity": "sha512-a39t9ApHNx2L4+HBnQKqxxHNs1r7KF+Intd8Q/g1bUh6q0WIp9voPXJ/x0j+ZL45KF1pJd9+q2jLIRMfvEshkA=="
     },
@@ -1117,6 +1121,7 @@
       "npm:jascpal@~0.1.4",
       "npm:just-standard-deviation@^2.0.2",
       "npm:pino@^10.3.1",
+      "npm:postgres@^3.4.9",
       "npm:react-dom@18",
       "npm:react-router-dom@^6.3.0",
       "npm:react@18",

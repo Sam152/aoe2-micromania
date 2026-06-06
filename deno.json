@@ -54,6 +54,7 @@
     "esbuild": "npm:esbuild@0.28.0",
     "@types/three": "npm:@types/three@^0.184.1",
     "pino": "npm:pino@^10.3.1",
+    "postgres": "npm:postgres@^3.4.9",
     "react": "npm:react@18",
     "react/jsx-runtime": "npm:react@18/jsx-runtime",
     "react-dom": "npm:react-dom@18",
