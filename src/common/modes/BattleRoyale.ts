@@ -8,7 +8,8 @@ import { MAX_PLAYERS_PER_SERVER } from "../state/mutations/players/provisionPlay
 import stat = Deno.stat;
 import { triggerBotTicks } from "../ai/integration/triggerBotTicks.ts";
 import { ComputedTickState } from "../state/computed/createComputedTickState.ts";
-import { sampleTree } from "../ai/behaviourTree/__fixtures__/sampleTree.ts";
+
+import { randomlyGeneratedTree } from "../ai/behaviourTree/__fixtures__/randomlyGeneratedTree.ts";
 
 const grid = new Grid(30);
 
@@ -111,7 +112,7 @@ export class BattleRoyale implements GameMode {
       this.bots.push(createBot({
         playingAs,
         playerId: botPlayerId,
-        tree: sampleTree,
+        tree: randomlyGeneratedTree,
       }));
       return;
     }
