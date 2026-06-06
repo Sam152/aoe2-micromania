@@ -1,0 +1,254 @@
+export const snapshot = {};
+
+snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
+[
+  {
+    condition: {
+      invert: true,
+      nodeType: "condition",
+      params: {
+        count: {
+          blackboardKey: "globalUnitsOfTypeCount",
+          dataType: "count",
+          nodeType: "dataValue",
+          params: {
+            unitType: {
+              dataType: "unitType",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: "ARCHER",
+            },
+          },
+          type: "BLACKBOARD",
+        },
+        threshold: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 8,
+        },
+      },
+      type: "countGreaterThan",
+    },
+    type: "INVERT_CONDITION",
+  },
+  {
+    node: {
+      invert: true,
+      nodeType: "condition",
+      params: {
+        count: {
+          blackboardKey: "globalUnitsOfTypeCount",
+          dataType: "count",
+          nodeType: "dataValue",
+          params: {
+            unitType: {
+              dataType: "unitType",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: "ARCHER",
+            },
+          },
+          type: "BLACKBOARD",
+        },
+        threshold: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 8,
+        },
+      },
+      type: "countGreaterThan",
+    },
+    paramName: "count",
+    type: "REPLACE_PARAM_DATA_VALUE",
+  },
+  {
+    node: {
+      invert: true,
+      nodeType: "condition",
+      params: {
+        count: {
+          blackboardKey: "globalUnitsOfTypeCount",
+          dataType: "count",
+          nodeType: "dataValue",
+          params: {
+            unitType: {
+              dataType: "unitType",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: "ARCHER",
+            },
+          },
+          type: "BLACKBOARD",
+        },
+        threshold: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 8,
+        },
+      },
+      type: "countGreaterThan",
+    },
+    paramName: "threshold",
+    type: "REPLACE_PARAM_DATA_VALUE",
+  },
+  {
+    condition: {
+      invert: false,
+      nodeType: "condition",
+      params: {
+        left: {
+          dataType: "number",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
+        right: {
+          blackboardKey: "groupMetaUnitTypeGroupCount",
+          dataType: "number",
+          nodeType: "dataValue",
+          params: {},
+          type: "BLACKBOARD",
+        },
+      },
+      type: "numberGreaterThan",
+    },
+    type: "INVERT_CONDITION",
+  },
+  {
+    node: {
+      invert: false,
+      nodeType: "condition",
+      params: {
+        left: {
+          dataType: "number",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
+        right: {
+          blackboardKey: "groupMetaUnitTypeGroupCount",
+          dataType: "number",
+          nodeType: "dataValue",
+          params: {},
+          type: "BLACKBOARD",
+        },
+      },
+      type: "numberGreaterThan",
+    },
+    paramName: "left",
+    type: "REPLACE_PARAM_DATA_VALUE",
+  },
+  {
+    node: {
+      invert: false,
+      nodeType: "condition",
+      params: {
+        left: {
+          dataType: "number",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
+        right: {
+          blackboardKey: "groupMetaUnitTypeGroupCount",
+          dataType: "number",
+          nodeType: "dataValue",
+          params: {},
+          type: "BLACKBOARD",
+        },
+      },
+      type: "numberGreaterThan",
+    },
+    paramName: "right",
+    type: "REPLACE_PARAM_DATA_VALUE",
+  },
+  {
+    condition: {
+      invert: false,
+      nodeType: "condition",
+      params: {
+        left: {
+          dataType: "number",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 0,
+        },
+        right: {
+          blackboardKey: "groupMetaUnitTypeIndex",
+          dataType: "number",
+          nodeType: "dataValue",
+          params: {},
+          type: "BLACKBOARD",
+        },
+      },
+      type: "numberEquals",
+    },
+    type: "INVERT_CONDITION",
+  },
+  {
+    node: {
+      invert: false,
+      nodeType: "condition",
+      params: {
+        left: {
+          dataType: "number",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 0,
+        },
+        right: {
+          blackboardKey: "groupMetaUnitTypeIndex",
+          dataType: "number",
+          nodeType: "dataValue",
+          params: {},
+          type: "BLACKBOARD",
+        },
+      },
+      type: "numberEquals",
+    },
+    paramName: "left",
+    type: "REPLACE_PARAM_DATA_VALUE",
+  },
+  {
+    node: {
+      invert: false,
+      nodeType: "condition",
+      params: {
+        left: {
+          dataType: "number",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 0,
+        },
+        right: {
+          blackboardKey: "groupMetaUnitTypeIndex",
+          dataType: "number",
+          nodeType: "dataValue",
+          params: {},
+          type: "BLACKBOARD",
+        },
+      },
+      type: "numberEquals",
+    },
+    paramName: "right",
+    type: "REPLACE_PARAM_DATA_VALUE",
+  },
+]
+`;
+
+snapshot[`buildMutationCandidates > generates candidates from tree 2`] = `
+[
+  "INVERT_CONDITION > condition",
+  "REPLACE_PARAM_DATA_VALUE > condition > count",
+  "REPLACE_PARAM_DATA_VALUE > condition > threshold",
+  "INVERT_CONDITION > condition",
+  "REPLACE_PARAM_DATA_VALUE > condition > left",
+  "REPLACE_PARAM_DATA_VALUE > condition > right",
+  "INVERT_CONDITION > condition",
+  "REPLACE_PARAM_DATA_VALUE > condition > left",
+  "REPLACE_PARAM_DATA_VALUE > condition > right",
+]
+`;

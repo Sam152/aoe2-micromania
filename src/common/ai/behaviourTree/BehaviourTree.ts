@@ -10,7 +10,7 @@ export type BehaviourTreeNodeOrValue = BehaviourTreeNode | DataValue;
 /**
  * Resolve first success node, else fail.
  */
-type Selector = {
+export type Selector = {
   nodeType: "selector";
   nodes: BehaviourTreeNode[];
 };
@@ -18,7 +18,7 @@ type Selector = {
 /**
  * Resolve all as success, else fail.
  */
-type Sequence = {
+export type Sequence = {
   nodeType: "sequence";
   nodes: BehaviourTreeNode[];
 };

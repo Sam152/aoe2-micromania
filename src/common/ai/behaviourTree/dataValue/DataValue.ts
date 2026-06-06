@@ -16,7 +16,7 @@ export type PrimitiveDataValue<TDataType extends DataType> = {
   value: TypeFromDataType<TDataType>;
 };
 
-export type BlackboardDataValue<TBlackboardKey extends BlackboardKey> = {
+export type BlackboardDataValue<TBlackboardKey extends BlackboardKey = BlackboardKey> = {
   nodeType: "dataValue";
   type: "BLACKBOARD";
   dataType: BlackboardDefinition[TBlackboardKey]["dataType"];
