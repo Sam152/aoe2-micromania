@@ -68,9 +68,9 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): MutationCand
 }
 
 function gatherReplaceParamCandidates(node: ConditionNode | ActionNode | BlackboardDataValue): MutationCandidate[] {
-  return Object.entries(node.params).map(([paramName]) => ({
+  return Object.entries(node.params).flatMap(([paramName]) => [{
     type: "REPLACE_PARAM_DATA_VALUE",
     node,
     paramName,
-  }));
+  }]);
 }
