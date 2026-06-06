@@ -11,9 +11,7 @@ describe("flattenTree", () => {
     const candidates = flattenTree(tree);
     await assertSnapshot(t, candidates);
 
-    const unravelledNodes = candidates.map((candidate) =>
-      `${eval(`tree${candidate.parent}.nodeType`)} > ${eval(`tree${candidate.path}.nodeType`)}`
-    );
+    const unravelledNodes = candidates.map((candidate) => `${candidate.parent?.nodeType} > ${candidate.node.nodeType}`);
     await assertSnapshot(t, unravelledNodes);
   });
 });

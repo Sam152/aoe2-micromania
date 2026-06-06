@@ -34,7 +34,8 @@
   },
   "test": {
     "permissions": {
-      "read": true
+      "read": true,
+      "write": true
     }
   },
   "imports": {

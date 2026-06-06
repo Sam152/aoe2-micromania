@@ -1,47 +1,29 @@
 import { BehaviourTreeNodeOrValue } from "../behaviourTree/BehaviourTree.ts";
 
 export type FlatTreeNode = {
-  nodeType: BehaviourTreeNodeOrValue["nodeType"];
-  parent: string;
-  path: string;
+  node: BehaviourTreeNodeOrValue;
+  parent: BehaviourTreeNodeOrValue | undefined;
 };
 
 export function flattenTree(
   node: BehaviourTreeNodeOrValue,
   candidates: FlatTreeNode[] = [],
-  parent: string = "",
-  path: string = "",
+  parent?: BehaviourTreeNodeOrValue,
 ): FlatTreeNode[] {
   if (node.nodeType === "sequence" || node.nodeType === "selector") {
-    candidates.push({
-      nodeType: node.nodeType,
-      parent,
-      path: `${path}`,
-    });
-    node.nodes.map((node, i) => flattenTree(node, candidates, path, `${path}.nodes[${i}]`));
+    candidates.push({ node, parent });
+    node.nodes.forEach((child) => flattenTree(child, candidates, node));
   }
 
   if (node.nodeType === "action" || node.nodeType === "condition") {
-    candidates.push({
-      nodeType: node.nodeType,
-      parent,
-      path,
-    });
-    Object.entries(node.params).map(([index, paramNode]) =>
-      flattenTree(paramNode, candidates, path, `${path}.params.${index}`)
-    );
+    candidates.push({ node, parent });
+    Object.values(node.params).forEach((paramNode) => flattenTree(paramNode, candidates, node));
   }
 
   if (node.nodeType === "dataValue") {
-    candidates.push({
-      nodeType: node.nodeType,
-      parent,
-      path,
-    });
+    candidates.push({ node, parent });
     if ("params" in node) {
-      Object.entries(node.params).map(([index, paramNode]) =>
-        flattenTree(paramNode, candidates, path, `${path}.params.${index}`)
-      );
+      Object.values(node.params).forEach((paramNode) => flattenTree(paramNode, candidates, node));
     }
   }
 
