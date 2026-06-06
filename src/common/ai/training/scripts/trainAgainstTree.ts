@@ -1,7 +1,7 @@
-import { determineWinner, GameResult } from "./utils/determineWinner.ts";
-import { sampleTree } from "../behaviourTree/__fixtures__/sampleTree.ts";
-import { randomlyMutateUnitAwareBehaviourTree } from "../mutation/randomlyMutateUnitAwareBehaviourTree.ts";
-import { dumpTree } from "../mutation/dumpTree.ts";
+import { determineWinner, GameResult } from "../utils/determineWinner.ts";
+import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
+import { randomlyMutateUnitAwareBehaviourTree } from "../../mutation/randomlyMutateUnitAwareBehaviourTree.ts";
+import { dumpTree } from "../../mutation/dumpTree.ts";
 
 (() => {
   const formatter = createResultFormatter();
