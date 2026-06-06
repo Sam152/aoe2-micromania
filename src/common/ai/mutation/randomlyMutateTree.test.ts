@@ -6,20 +6,35 @@ import { BehaviourTreeNode, UnitAwareBehaviourTree } from "../behaviourTree/Beha
 
 describe("randomlyMutateTree", () => {
   it("randomlyMutatedTree", () => {
+    const sampleTreeMutations = 20;
+
     dumpTree("randomlyMutatedTree", {
-      [UnitType.Archer]: randomlyMutateTree({ count: 5000, tree: sampleTree[UnitType.Archer] }),
-      [UnitType.Mangonel]: randomlyMutateTree({ count: 5000, tree: sampleTree[UnitType.Mangonel] }),
-      [UnitType.Monk]: randomlyMutateTree({ count: 5000, tree: sampleTree[UnitType.Monk] }),
+      [UnitType.Archer]: randomlyMutateTree({
+        count: sampleTreeMutations,
+        tree: sampleTree[UnitType.Archer],
+        unitType: UnitType.Archer,
+      }),
+      [UnitType.Mangonel]: randomlyMutateTree({
+        count: sampleTreeMutations,
+        tree: sampleTree[UnitType.Mangonel],
+        unitType: UnitType.Mangonel,
+      }),
+      [UnitType.Monk]: randomlyMutateTree({
+        count: sampleTreeMutations,
+        tree: sampleTree[UnitType.Monk],
+        unitType: UnitType.Monk,
+      }),
     });
   });
 
   it("randomlyGeneratedTree", () => {
-    const emptyTree: BehaviourTreeNode = { nodeType: "selector", nodes: [] };
+    const mutations = 5000;
 
+    const emptyTree: BehaviourTreeNode = { nodeType: "selector", nodes: [] };
     dumpTree("randomlyGeneratedTree", {
-      [UnitType.Archer]: randomlyMutateTree({ count: 5000, tree: emptyTree }),
-      [UnitType.Mangonel]: randomlyMutateTree({ count: 5000, tree: emptyTree }),
-      [UnitType.Monk]: randomlyMutateTree({ count: 5000, tree: emptyTree }),
+      [UnitType.Archer]: randomlyMutateTree({ count: mutations, tree: emptyTree, unitType: UnitType.Archer }),
+      [UnitType.Mangonel]: randomlyMutateTree({ count: mutations, tree: emptyTree, unitType: UnitType.Mangonel }),
+      [UnitType.Monk]: randomlyMutateTree({ count: mutations, tree: emptyTree, unitType: UnitType.Monk }),
     });
   });
 });

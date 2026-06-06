@@ -6,8 +6,9 @@ import { DataType } from "../../behaviourTree/dataType/dataTypes.ts";
 import { randomDataValue } from "./randomDataValue.ts";
 import { ConditionNode } from "../../behaviourTree/condition/Condition.ts";
 import { ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 
-export function randomNode(): BehaviourTreeNode {
+export function randomNode(unitType: UnitType): BehaviourTreeNode {
   const type: BehaviourTreeNodeType = randomArray([
     "sequence",
     "selector",
@@ -44,7 +45,11 @@ export function randomNode(): BehaviourTreeNode {
   }
 
   if (type === "action") {
-    const actionType = randomArray(Object.keys(actionsList) as Array<keyof typeof actionsList>);
+    const actionType = randomArray(
+      (Object.keys(actionsList) as Array<keyof typeof actionsList>).filter((key) =>
+        actionsList[key].applicableForUnitType.includes(unitType)
+      ),
+    );
     const actionDef = actionsList[actionType];
 
     const action: ActionNode = {

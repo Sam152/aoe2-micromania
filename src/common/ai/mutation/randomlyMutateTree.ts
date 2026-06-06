@@ -1,4 +1,5 @@
 import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
+import { UnitType } from "../../units/UnitType.ts";
 import { arrayOfSize } from "../../util/arrayOfSize.ts";
 import { buildMutationCandidates } from "./utils/buildMutationCandidates.ts";
 import { flattenTree } from "./utils/flattenTree.ts";
@@ -8,7 +9,9 @@ import { randomNode } from "./factories/randomNode.ts";
 import { randomDataValue } from "./factories/randomDataValue.ts";
 import { randomLiteral } from "./factories/randomLiteral.ts";
 
-export function randomlyMutateTree({ count, tree }: { count: number; tree: BehaviourTreeNode }): BehaviourTreeNode {
+export function randomlyMutateTree(
+  { count, tree, unitType }: { count: number; tree: BehaviourTreeNode; unitType: UnitType },
+): BehaviourTreeNode {
   const newTree = structuredClone(tree);
 
   arrayOfSize(count).forEach(() => {
@@ -42,7 +45,7 @@ export function randomlyMutateTree({ count, tree }: { count: number; tree: Behav
       mutation.listNode.nodes.splice(
         Math.floor(Math.random() * mutation.listNode.nodes.length),
         0,
-        randomNode(),
+        randomNode(unitType),
       );
     }
   });
