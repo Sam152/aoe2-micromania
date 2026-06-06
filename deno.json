@@ -7,7 +7,8 @@
     "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
     "on-save": "deno --allow-run .hooks/on-save.ts",
-    "training:docker-start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d"
+    "training:docker-start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d",
+    "training:dump": "PGPASSWORD=postgres pg_dump -h localhost -p 8345 -U postgres postgres > src/common/ai/training/infra/data/dump.sql && PGPASSWORD=postgres pg_dump --schema-only -h localhost -p 8345 -U postgres postgres > src/common/ai/training/infra/data/schema.sql"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
