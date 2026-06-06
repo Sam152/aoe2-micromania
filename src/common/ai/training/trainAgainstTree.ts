@@ -6,7 +6,7 @@ import { dumpTree } from "../mutation/dumpTree.ts";
 (() => {
   const formatter = createResultFormatter();
   while (true) {
-    const mutatedTree = randomlyMutateUnitAwareBehaviourTree({ tree: sampleTree, count: 5 });
+    const mutatedTree = randomlyMutateUnitAwareBehaviourTree({ tree: sampleTree, count: 50 });
 
     const result = determineWinner({
       player1: sampleTree,
@@ -15,7 +15,7 @@ import { dumpTree } from "../mutation/dumpTree.ts";
 
     formatter(result);
 
-    if (result.hp[2] - result.hp[1] > 500) {
+    if (result.hp[2] - result.hp[1] > 200) {
       dumpTree("winningTree", mutatedTree);
       // break;
     }
@@ -27,7 +27,7 @@ function createResultFormatter() {
   return function formatResult(result: GameResult) {
     const betterBy = result.hp[2] - result.hp[1];
 
-    if (betterBy > 500) {
+    if (betterBy > 200) {
       process.stdout.write("!");
     } else if (betterBy > 0) {
       process.stdout.write(":");
