@@ -1,6 +1,9 @@
 import { UnitAwareBehaviourTree } from "../BehaviourTree.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 
+/**
+ * A human wrote this one.
+ */
 export const sampleTree: UnitAwareBehaviourTree = {
   [UnitType.Monk]: {
     nodeType: "selector",
