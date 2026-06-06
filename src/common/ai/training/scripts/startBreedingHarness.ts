@@ -29,8 +29,8 @@ async function startBreedingHarness() {
   const formatter = createProgressFormatter({ totalIterations: requiredBots });
   await Promise.allSettled(
     breedNextGeneration({ specimens, newPlayersRequired: requiredBots }).map(async (nextGeneration) => {
-      formatter.advance();
       await insertBot(await nextGeneration);
+      formatter.advance();
     }),
   );
 }
