@@ -56,6 +56,13 @@ export function determineWinner({ a, b }: DetermineWinnerArgs): DetermineWinnerR
     if (state.ticks === config.ticksPerSecond * 60 * MAX_TIME_MINUTES) {
       break;
     }
+
+    if (hpByPlayer(state)[1] === 0) {
+      break;
+    }
+    if (hpByPlayer(state)[2] === 0) {
+      break;
+    }
   }
 
   return {
