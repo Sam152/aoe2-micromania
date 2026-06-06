@@ -3,11 +3,11 @@ CREATE TABLE bots (
   bot_name TEXT NOT NULL UNIQUE,
   tree JSONB NOT NULL,
   elo INT NOT NULL DEFAULT 1600,
-  total_matches INT NOT NULL DEFAULT 0
+  wins INT NOT NULL DEFAULT 0,
+  losses INT NOT NULL DEFAULT 0
 );
 
 CREATE INDEX bots_elo_idx ON bots (elo);
-CREATE INDEX bots_total_matches_idx ON bots (total_matches);
 
 CREATE TABLE games (
   id BIGSERIAL PRIMARY KEY,
