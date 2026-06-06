@@ -17,6 +17,7 @@ type DetermineWinnerArgs = {
 export type GameResult = {
   state: GameState;
   hp: { 1: number; 2: number };
+  winner: 1 | 2 | "DRAW";
   actionLog: GameStateAction[];
 };
 
@@ -67,9 +68,11 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Game
     }
   }
 
+  const hp = hpByPlayer(state) as GameResult["hp"];
   return {
     actionLog,
     state,
-    hp: hpByPlayer(state) as GameResult["hp"],
+    winner: hp[1] === hp[2] ? "DRAW" : hp[1] > hp[2] ? 1 : 2,
+    hp,
   };
 }
