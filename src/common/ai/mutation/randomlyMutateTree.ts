@@ -4,6 +4,7 @@ import { arrayOfSize } from "../../util/arrayOfSize.ts";
 import { buildMutationCandidates } from "./utils/buildMutationCandidates.ts";
 import { flattenTree } from "./utils/flattenTree.ts";
 import { randomArray } from "../../util/randomArray.ts";
+import { ConditionNode } from "../behaviourTree/condition/Condition.ts";
 
 export function randomlyMutateTree({ count, tree }: { count: number; tree: BehaviourTreeNode }): BehaviourTreeNode {
   const newTree = structuredClone(tree);
@@ -12,7 +13,14 @@ export function randomlyMutateTree({ count, tree }: { count: number; tree: Behav
     const candidates = buildMutationCandidates(flattenTree(newTree));
     const mutation = randomArray(candidates);
 
-    console.log(mutation.type);
+    if (mutation.type === "REMOVE_NODE_FROM_LIST") {
+      mutation.listNode.nodes.splice(Math.floor(Math.random() * mutation.listNode.nodes.length));
+    }
+
+    if (mutation.type === "ADD_NODE_TO_LIST") {
+      const newElement: ConditionNode = {} as ConditionNode;
+      mutation.listNode.nodes.splice(Math.floor(Math.random() * mutation.listNode.nodes.length), 0, newElement);
+    }
   });
 
   return newTree;

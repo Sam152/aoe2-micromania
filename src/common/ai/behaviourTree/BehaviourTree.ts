@@ -4,7 +4,7 @@ import { ConditionNode } from "./condition/Condition.ts";
 import { DataValue } from "./dataValue/DataValue.ts";
 
 export type BehaviourTreeNode = Sequence | Selector | ConditionNode | ActionNode;
-
+export type BehaviourTreeNodeType = BehaviourTreeNode["nodeType"];
 export type BehaviourTreeNodeOrValue = BehaviourTreeNode | DataValue;
 
 /**
