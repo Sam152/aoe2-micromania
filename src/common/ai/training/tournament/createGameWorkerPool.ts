@@ -1,17 +1,16 @@
-import { Bot } from "../infra/repo/getActiveBotsByElo.ts";
+import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { GameResult } from "../utils/determineWinner.ts";
 
+type Trees = { 1: UnitAwareBehaviourTree; 2: UnitAwareBehaviourTree };
+
 type PendingJob = {
-  p1: Bot;
-  p2: Bot;
+  trees: Trees;
   resolve: (result: GameResult) => void;
 };
 
-type GameWorkerPool = { runInPool: (p1: Bot, p2: Bot) => Promise<GameResult>; terminatePool: () => void };
+type GameWorkerPool = { runInPool: (trees: Trees) => Promise<GameResult>; terminatePool: () => void };
 
-export function createGameWorkerPool(
-  workerCount: number,
-): GameWorkerPool {
+export function createGameWorkerPool(workerCount: number): GameWorkerPool {
   const available: Worker[] = Array.from(
     { length: workerCount },
     () => new Worker(new URL("./worker.ts", import.meta.url), { type: "module" }),
@@ -23,20 +22,20 @@ export function createGameWorkerPool(
       return;
     }
     const worker = available.pop()!;
-    const { p1, p2, resolve } = queue.shift()!;
+    const { trees, resolve } = queue.shift()!;
 
     worker.onmessage = (e: MessageEvent<GameResult>) => {
       resolve(e.data);
       available.push(worker);
       workQueue();
     };
-    worker.postMessage({ p1, p2 });
+    worker.postMessage(trees);
   }
 
   return {
-    runInPool: (p1: Bot, p2: Bot): Promise<GameResult> =>
+    runInPool: (trees: Trees): Promise<GameResult> =>
       new Promise((resolve) => {
-        queue.push({ p1, p2, resolve });
+        queue.push({ trees, resolve });
         workQueue();
       }),
     terminatePool: () => available.forEach((w) => w.terminate()),

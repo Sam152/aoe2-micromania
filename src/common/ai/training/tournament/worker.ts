@@ -1,8 +1,7 @@
 import { determineWinner } from "../utils/determineWinner.ts";
-import { Bot } from "../infra/repo/getActiveBotsByElo.ts";
+import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 
-self.onmessage = async (e: MessageEvent<{ p1: Bot; p2: Bot }>) => {
-  const { p1, p2 } = e.data;
-  const result = determineWinner({ player1: p1.tree, player2: p2.tree });
+self.onmessage = (e: MessageEvent<{ 1: UnitAwareBehaviourTree; 2: UnitAwareBehaviourTree }>) => {
+  const result = determineWinner({ player1: e.data[1], player2: e.data[2] });
   self.postMessage(result);
 };

@@ -10,7 +10,7 @@ CREATE TABLE bots (
 
 CREATE INDEX bots_elo_idx ON bots (elo);
 
-CREATE TABLE match_result (
+CREATE TABLE match_results (
   id BIGSERIAL PRIMARY KEY,
   bot_id BIGINT NOT NULL REFERENCES bots(id),
   opponent_id BIGINT NOT NULL REFERENCES bots(id),

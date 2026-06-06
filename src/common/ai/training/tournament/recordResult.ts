@@ -13,7 +13,7 @@ export async function recordResult({ players, result }: { players: [Bot, Bot]; r
 
   await sql.begin(async (tx) => {
     await tx`
-      INSERT INTO match_result (bot_id, opponent_id, tick_count, was_winner, match_elo, elo_delta)
+      INSERT INTO match_results (bot_id, opponent_id, tick_count, was_winner, match_elo, elo_delta)
       VALUES
         (${p1.id}, ${p2.id}, ${result.state.ticks}, ${winner === 1}, ${p1.elo}, ${elo1Delta}),
         (${p2.id}, ${p1.id}, ${result.state.ticks}, ${winner === 2}, ${p2.elo}, ${elo2Delta})

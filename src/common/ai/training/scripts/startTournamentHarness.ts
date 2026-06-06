@@ -5,14 +5,14 @@ import { chunkArray } from "../../../util/chunckArray.ts";
 import { roundRobin } from "../tournament/roundRobin.ts";
 import { recordResult } from "../tournament/recordResult.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
-import { trainingParams } from "../params.ts";
+import { trainingParams } from "../trainingParams.ts";
 
-const { TOTAL_BOTS_IN_POOL, ROUND_ROBIN_TOURNEY_SIZE, CPU_WORKER_COUNT } = trainingParams;
+const { TARGET_TOTAL_BOTS_IN_POOL, ROUND_ROBIN_TOURNEY_SIZE, CPU_WORKER_COUNT } = trainingParams;
 
 async function startTournamentHarness() {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
   const { advance } = createProgressFormatter({
-    totalIterations: (TOTAL_BOTS_IN_POOL / ROUND_ROBIN_TOURNEY_SIZE) *
+    totalIterations: (TARGET_TOTAL_BOTS_IN_POOL / ROUND_ROBIN_TOURNEY_SIZE) *
       ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2),
   });
 
@@ -23,7 +23,7 @@ async function startTournamentHarness() {
     chunkArray(await getActiveBotsByElo(), ROUND_ROBIN_TOURNEY_SIZE)
       .flatMap((bots) =>
         roundRobin(bots, async (p1, p2) => {
-          const result = await runInPool(p1, p2);
+          const result = await runInPool({ 1: p1.tree, 2: p2.tree });
           await recordResult({
             players: [p1, p2],
             result,

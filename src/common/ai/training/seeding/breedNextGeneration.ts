@@ -1,9 +1,11 @@
 import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "../../mutation/randomlyMutateUnitAwareBehaviourTree.ts";
-import { determineWinner } from "../utils/determineWinner.ts";
 
-const TOTAL_MUTATIONS = 50;
+import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
+import { trainingParams } from "../trainingParams.ts";
+
+const { CPU_WORKER_COUNT, NEXT_GENERATION_RANDOM_MUTATIONS } = trainingParams;
 
 type BreedNextGenArgs = {
   specimens: UnitAwareBehaviourTree[];
@@ -12,27 +14,27 @@ type BreedNextGenArgs = {
 
 export function breedNextGeneration(
   { specimens, newPlayersRequired }: BreedNextGenArgs,
-): UnitAwareBehaviourTree[] {
+): Promise<UnitAwareBehaviourTree>[] {
+  const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
   const formatter = createProgressFormatter({ totalIterations: newPlayersRequired });
 
-  let currentSpecimenIndex = 0;
-  const nextGen: UnitAwareBehaviourTree[] = [];
+  const targets = Array.from({ length: newPlayersRequired }, (_, i) => specimens[i % specimens.length]);
 
-  while (nextGen.length < newPlayersRequired) {
-    const currentSpecimen = specimens[currentSpecimenIndex % specimens.length];
-    const mutatedTree = randomlyMutateUnitAwareBehaviourTree({ tree: currentSpecimen, count: TOTAL_MUTATIONS });
-
-    const result = determineWinner({
-      player1: currentSpecimen,
-      player2: mutatedTree,
-    });
-
-    if (result.winner === 2) {
-      nextGen.push(mutatedTree);
-      formatter.advance();
-      currentSpecimenIndex++;
+  const promises = targets.map(async (specimen) => {
+    while (true) {
+      const mutated = randomlyMutateUnitAwareBehaviourTree({
+        tree: specimen,
+        count: NEXT_GENERATION_RANDOM_MUTATIONS,
+      });
+      const result = await runInPool({ 1: specimen, 2: mutated });
+      if (result.winner === 2) {
+        formatter.advance();
+        return mutated;
+      }
     }
-  }
+  });
 
-  return nextGen;
+  Promise.all(promises).then(() => terminatePool());
+
+  return promises;
 }
