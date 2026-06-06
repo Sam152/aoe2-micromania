@@ -6,6 +6,9 @@ CREATE TABLE bots (
   total_matches INT NOT NULL DEFAULT 0
 );
 
+CREATE INDEX bots_elo_idx ON bots (elo);
+CREATE INDEX bots_total_matches_idx ON bots (total_matches);
+
 CREATE TABLE games (
   id BIGSERIAL PRIMARY KEY,
   player_1 BIGINT NOT NULL,
