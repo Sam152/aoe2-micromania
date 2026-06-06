@@ -1,14 +1,13 @@
-import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
-import { DataValue } from "../behaviourTree/dataValue/DataValue.ts";
+import { BehaviourTreeNodeOrValue } from "../behaviourTree/BehaviourTree.ts";
 
 export type FlatTreeNode = {
-  nodeType: string;
+  nodeType: BehaviourTreeNodeOrValue["nodeType"];
   parent: string;
   path: string;
 };
 
 export function flattenTree(
-  node: BehaviourTreeNode | DataValue,
+  node: BehaviourTreeNodeOrValue,
   candidates: FlatTreeNode[] = [],
   parent: string = "",
   path: string = "",
