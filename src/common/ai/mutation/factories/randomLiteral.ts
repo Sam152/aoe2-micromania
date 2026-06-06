@@ -9,6 +9,7 @@ export function randomLiteral(dataType: DataType): unknown {
     case "boolean":
       return Math.random() < 0.5;
     case "count":
+      return Math.floor(Math.random() * 40);
     case "number":
       return Math.floor(Math.random() * 500);
     case "unitType":

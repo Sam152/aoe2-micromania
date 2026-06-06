@@ -1,4 +1,4 @@
-import { DataType, dataTypes } from "../../behaviourTree/dataType/dataTypes.ts";
+import { DataType } from "../../behaviourTree/dataType/dataTypes.ts";
 import { blackboardDefinition } from "../../behaviourTree/blackboard/blackboardDefinition.ts";
 import { randomArray } from "../../../util/randomArray.ts";
 import { BlackboardValueDefinition } from "../../behaviourTree/blackboard/types/BlackboardDefinitionShape.ts";
@@ -6,6 +6,7 @@ import { ConditionNode } from "../../behaviourTree/condition/Condition.ts";
 import { ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
 import { BlackboardDataValue } from "../../behaviourTree/dataValue/DataValue.ts";
 import { randomAllowedValueType } from "./randomAllowedValueType.ts";
+import { randomLiteral } from "./randomLiteral.ts";
 
 type AttachedToNode = ConditionNode | ActionNode | BlackboardDataValue;
 
@@ -22,7 +23,7 @@ export function randomDataValue(
       nodeType: "dataValue",
       type: "LITERAL",
       dataType,
-      value: dataTypes[dataType].defaultValue,
+      value: randomLiteral(dataType),
     };
   }
 
