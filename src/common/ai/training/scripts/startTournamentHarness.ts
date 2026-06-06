@@ -1,5 +1,5 @@
 import { sql } from "../infra/connection.ts";
-import { getAllBots } from "../infra/repo/getAllBots.ts";
+import { getAllBotsByElo } from "../infra/repo/getAllBotsByElo.ts";
 import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
 import { topUpPlayerPool } from "../tournament/topUpPlayerPool.ts";
 import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
@@ -20,19 +20,19 @@ async function startTournamentHarness() {
     mutationCount: MUTATION_COUNT,
   });
 
-  const worker = createGameWorkerPool(WORKER_COUNT);
+  const { runInPool, terminatePool } = createGameWorkerPool(WORKER_COUNT);
   const { advance } = createProgressFormatter({
     totalIterations: (TOTAL_BOTS_IN_POOL / BOTS_IN_EACH_TOURNEY) *
       ((BOTS_IN_EACH_TOURNEY * (BOTS_IN_EACH_TOURNEY - 1)) / 2),
   });
 
-  const bots = await getAllBots();
+  const bots = await getAllBotsByElo();
 
-  await Promise.all(
+  await Promise.allSettled(
     chunkArray(bots, BOTS_IN_EACH_TOURNEY)
       .flatMap((bots) =>
         roundRobin(bots, async (p1, p2) => {
-          const result = await worker(p1, p2);
+          const result = await runInPool(p1, p2);
           await recordResult({
             players: [p1, p2],
             result,
@@ -44,6 +44,8 @@ async function startTournamentHarness() {
 
   // Run tournaments, give bots a chance to gain and lose ELO.
   // Cut the bottom 500 bots in the pool.
+
+  terminatePool();
 }
 
 startTournamentHarness().then(() => sql.end());

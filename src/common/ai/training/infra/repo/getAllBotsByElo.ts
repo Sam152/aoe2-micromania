@@ -10,8 +10,8 @@ export type Bot = {
   losses: number;
 };
 
-export async function getAllBots(): Promise<Bot[]> {
-  const rows = await sql`SELECT * FROM bots`;
+export async function getAllBotsByElo(): Promise<Bot[]> {
+  const rows = await sql`SELECT * FROM bots ORDER BY elo, id`;
   return rows.map((row) => ({
     id: row.id,
     botName: row.bot_name,

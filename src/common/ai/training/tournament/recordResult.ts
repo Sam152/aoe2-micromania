@@ -1,5 +1,5 @@
 import { GameResult } from "../utils/determineWinner.ts";
-import { Bot } from "../infra/repo/getAllBots.ts";
+import { Bot } from "../infra/repo/getAllBotsByElo.ts";
 import { computeEloChange } from "../utils/computeEloChange.ts";
 import { sql } from "../infra/connection.ts";
 

@@ -1,4 +1,4 @@
-import { Bot } from "../infra/repo/getAllBots.ts";
+import { Bot } from "../infra/repo/getAllBotsByElo.ts";
 import { GameResult } from "../utils/determineWinner.ts";
 
 type PendingJob = {
@@ -7,7 +7,11 @@ type PendingJob = {
   resolve: (result: GameResult) => void;
 };
 
-export function createGameWorkerPool(workerCount: number): (p1: Bot, p2: Bot) => Promise<GameResult> {
+type GameWorkerPool = { runInPool: (p1: Bot, p2: Bot) => Promise<GameResult>; terminatePool: () => void };
+
+export function createGameWorkerPool(
+  workerCount: number,
+): GameWorkerPool {
   const available: Worker[] = Array.from(
     { length: workerCount },
     () => new Worker(new URL("./worker.ts", import.meta.url), { type: "module" }),
@@ -29,9 +33,12 @@ export function createGameWorkerPool(workerCount: number): (p1: Bot, p2: Bot) =>
     worker.postMessage({ p1, p2 });
   }
 
-  return (p1: Bot, p2: Bot): Promise<GameResult> =>
-    new Promise((resolve) => {
-      queue.push({ p1, p2, resolve });
-      workQueue();
-    });
+  return {
+    runInPool: (p1: Bot, p2: Bot): Promise<GameResult> =>
+      new Promise((resolve) => {
+        queue.push({ p1, p2, resolve });
+        workQueue();
+      }),
+    terminatePool: () => available.forEach((w) => w.terminate()),
+  };
 }
