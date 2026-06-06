@@ -12,11 +12,21 @@ describe("buildMutationCandidates", () => {
     const candidates = buildMutationCandidates(flattenTree(tree));
     await assertSnapshot(t, candidates);
 
-    const unravelledCandidates = candidates.map((candidate) =>
-      candidate.type === "INVERT_CONDITION"
-        ? `INVERT_CONDITION > ${candidate.condition.nodeType}`
-        : `REPLACE_PARAM_DATA_VALUE > ${candidate.node.nodeType} > ${candidate.paramName}`
-    );
+    const unravelledCandidates = candidates.map((candidate) => {
+      if (candidate.type === "INVERT_CONDITION") { return `INVERT_CONDITION > ${candidate.condition.nodeType}`; }
+      if (
+        candidate.type === "REPLACE_PARAM_DATA_VALUE"
+      ) { return `REPLACE_PARAM_DATA_VALUE > ${candidate.node.nodeType} > ${candidate.paramName}`; }
+      if (candidate.type === "ADD_NODE_TO_LIST") { return `ADD_NODE_TO_LIST > ${candidate.listNode.nodeType}`; }
+      if (candidate.type === "REMOVE_NODE_FROM_LIST") {
+        return `REMOVE_NODE_FROM_LIST > ${candidate.listNode.nodeType}`;
+      }
+      if (
+        candidate.type === "CHANGE_LITERAL_DATA_VALUE"
+      ) {
+        return `CHANGE_LITERAL_DATA_VALUE > ${candidate.parentNode.nodeType} > ${candidate.paramName}`;
+      }
+    });
     await assertSnapshot(t, unravelledCandidates);
   });
 });

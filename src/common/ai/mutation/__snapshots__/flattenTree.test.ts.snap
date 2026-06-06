@@ -390,6 +390,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "countGreaterThan",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -461,6 +462,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "BLACKBOARD",
     },
+    paramKey: "count",
     parent: {
       invert: true,
       nodeType: "condition",
@@ -496,6 +498,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: "ARCHER",
     },
+    paramKey: "unitType",
     parent: {
       blackboardKey: "globalUnitsOfTypeCount",
       dataType: "count",
@@ -518,6 +521,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: 8,
     },
+    paramKey: "threshold",
     parent: {
       invert: true,
       nodeType: "condition",
@@ -570,6 +574,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "PATROL",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -644,6 +649,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "BLACKBOARD",
     },
+    paramKey: "direction",
     parent: {
       nodeType: "action",
       params: {
@@ -678,6 +684,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
         y: 0,
       },
     },
+    paramKey: "vectorOffset",
     parent: {
       blackboardKey: "opponentAveragePosition",
       dataType: "vector",
@@ -899,6 +906,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "numberGreaterThan",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -937,6 +945,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: 2,
     },
+    paramKey: "left",
     parent: {
       invert: false,
       nodeType: "condition",
@@ -966,6 +975,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       params: {},
       type: "BLACKBOARD",
     },
+    paramKey: "right",
     parent: {
       invert: false,
       nodeType: "condition",
@@ -993,6 +1003,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       params: {},
       type: "SPLIT_GROUP",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -1257,6 +1268,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "numberEquals",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -1325,6 +1337,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: 0,
     },
+    paramKey: "left",
     parent: {
       invert: false,
       nodeType: "condition",
@@ -1354,6 +1367,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       params: {},
       type: "BLACKBOARD",
     },
+    paramKey: "right",
     parent: {
       invert: false,
       nodeType: "condition",
@@ -1399,6 +1413,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "PATROL",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -1478,6 +1493,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "BLACKBOARD",
     },
+    paramKey: "direction",
     parent: {
       nodeType: "action",
       params: {
@@ -1512,6 +1528,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
         y: 0,
       },
     },
+    paramKey: "vectorOffset",
     parent: {
       blackboardKey: "opponentAveragePosition",
       dataType: "vector",
@@ -1543,6 +1560,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "IDLE",
     },
+    paramKey: undefined,
     parent: {
       nodeType: "sequence",
       nodes: [
@@ -1611,6 +1629,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: 100,
     },
+    paramKey: "forTicksAmount",
     parent: {
       nodeType: "action",
       params: {

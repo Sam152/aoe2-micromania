@@ -54,8 +54,13 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): MutationCand
     if (flatNode.node.nodeType === "dataValue" && flatNode.node.type === "LITERAL") {
       return {
         type: "CHANGE_LITERAL_DATA_VALUE",
-        parentNode: flatNode.parent,
+        paramName: flatNode.paramKey as string,
+        parentNode: flatNode.parent as ConditionNode | ActionNode | BlackboardDataValue,
       };
+    }
+
+    if (flatNode.node.nodeType === "action") {
+      return gatherReplaceParamCandidates(flatNode.node);
     }
 
     return [];

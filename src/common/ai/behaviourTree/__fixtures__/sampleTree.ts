@@ -102,24 +102,46 @@ export const sampleTree: UnitAwareBehaviourTree = {
             },
           },
           {
-            nodeType: "action",
-            type: "CONVERT",
-            params: {
-              unit: {
-                nodeType: "dataValue",
-                dataType: "unitId",
-                type: "BLACKBOARD",
-                blackboardKey: "opponentClosestUnitByType",
-                params: {
-                  unitType: {
-                    nodeType: "dataValue",
-                    dataType: "unitType",
-                    type: "LITERAL",
-                    value: "MANGO",
+            nodeType: "selector",
+            nodes: [{
+              nodeType: "action",
+              type: "CONVERT",
+              params: {
+                unit: {
+                  nodeType: "dataValue",
+                  dataType: "unitId",
+                  type: "BLACKBOARD",
+                  blackboardKey: "opponentClosestUnitByType",
+                  params: {
+                    unitType: {
+                      nodeType: "dataValue",
+                      dataType: "unitType",
+                      type: "LITERAL",
+                      value: "MANGO",
+                    },
                   },
                 },
               },
-            },
+            }, {
+              nodeType: "action",
+              type: "CONVERT",
+              params: {
+                unit: {
+                  nodeType: "dataValue",
+                  dataType: "unitId",
+                  type: "BLACKBOARD",
+                  blackboardKey: "opponentClosestUnitByType",
+                  params: {
+                    unitType: {
+                      nodeType: "dataValue",
+                      dataType: "unitType",
+                      type: "LITERAL",
+                      value: "ARCHER",
+                    },
+                  },
+                },
+              },
+            }],
           },
         ],
       },
