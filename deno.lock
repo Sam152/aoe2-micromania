@@ -30,6 +30,7 @@
     "jsr:@std/path@^1.1.5": "1.1.5",
     "jsr:@std/testing@*": "1.0.19",
     "jsr:@std/testing@^1.0.19": "1.0.19",
+    "npm:@criblinc/docker-names@^1.2.2": "1.2.2",
     "npm:@types/d3-quadtree@^3.0.6": "3.0.6",
     "npm:@types/react-dom@18": "18.3.7_@types+react@18.3.28",
     "npm:@types/react@18": "18.3.28",
@@ -191,6 +192,9 @@
     }
   },
   "npm": {
+    "@criblinc/docker-names@1.2.2": {
+      "integrity": "sha512-dYW/V8ngbCnd+gH8o93IBUeG8H20vfTY/U/urZjnEL/AGQ4rcAmQuT3pVVy5ZHn7jicyfcEiu5KlgXS4nyR4+g=="
+    },
     "@dimforge/rapier3d-compat@0.12.0": {
       "integrity": "sha512-uekIGetywIgopfD97oDL5PfeezkFpNhwlzlaEYNOA0N6ghdsOvh/HYjSMek5Q2O1PYvRSDFcqFVJl4r4ZBwOow=="
     },
@@ -1110,6 +1114,7 @@
       "jsr:@std/crypto@^1.1.0",
       "jsr:@std/testing@*",
       "jsr:@std/testing@^1.0.19",
+      "npm:@criblinc/docker-names@^1.2.2",
       "npm:@types/d3-quadtree@^3.0.6",
       "npm:@types/react-dom@18",
       "npm:@types/react@18",
