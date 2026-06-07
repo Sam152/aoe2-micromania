@@ -1,5 +1,5 @@
-import { BehaviourTreeNode, UnitAwareBehaviourTree } from "./BehaviourTree.ts";
-import { UnitType } from "../../units/UnitType.ts";
+import { BehaviourTreeNode, UnitAwareBehaviourTree } from "../BehaviourTree.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 
 export function pruneUnitAwareTree(
   tree: UnitAwareBehaviourTree,

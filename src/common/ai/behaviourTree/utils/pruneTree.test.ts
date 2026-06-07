@@ -1,11 +1,10 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { determineWinner } from "../training/utils/determineWinner.ts";
-
-import { sampleTree } from "./__fixtures__/sampleTree.ts";
-import { winningTree } from "./__fixtures__/winningTree.ts";
-import { flattenTree } from "../mutation/utils/flattenTree.ts";
-import { UnitType } from "../../units/UnitType.ts";
+import { determineWinner } from "../../training/utils/determineWinner.ts";
+import { sampleTree } from "../__fixtures__/sampleTree.ts";
+import { winningTree } from "../__fixtures__/winningTree.ts";
+import { flattenTree } from "../../mutation/utils/flattenTree.ts";
+import { UnitType } from "../../../units/UnitType.ts";
 import { pruneUnitAwareTree } from "./pruneTree.ts";
 
 describe("pruneTree", () => {
