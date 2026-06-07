@@ -16,7 +16,9 @@ async function startPruningHarness() {
   console.log(`Found ${bots.length} active bots`);
 
   const prunableBots = bots.filter((bot) => bot.treeGamesPlayed > PRUNING_MINIMUM_GAMES_COUNT);
-  console.log(`Found ${prunableBots.length} bots with > ${PRUNING_MINIMUM_GAMES_COUNT} games`);
+  console.log(
+    `Found ${prunableBots.length} bots with > ${PRUNING_MINIMUM_GAMES_COUNT} games played with the current version of their tree`,
+  );
 
   const formatter = createProgressFormatter({
     totalIterations: prunableBots.length,

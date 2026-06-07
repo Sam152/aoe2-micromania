@@ -11,7 +11,7 @@
     "training:docker:reset": "docker compose -f src/common/ai/training/infra/docker-compose.yml down -v",
     "training:evolve": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
     "training:tourney": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startTournamentHarness.ts",
-    "training:prune": "deno run --inspect-brk --allow-env --allow-net src/common/ai/training/scripts/startPruningHarness.ts",
+    "training:prune": "deno run --allow-env --allow-net src/common/ai/training/scripts/startPruningHarness.ts",
     "training:dump": "docker compose -f src/common/ai/training/infra/docker-compose.yml exec postgres pg_dump --data-only -U postgres postgres | gzip > src/common/ai/training/infra/data/dump.sql.gz"
   },
   "compilerOptions": {
