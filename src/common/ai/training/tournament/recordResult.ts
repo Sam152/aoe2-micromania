@@ -27,7 +27,8 @@ export async function recordResult({ players, result }: { players: [Bot, Bot]; r
       UPDATE bots SET
         elo = elo + ${elo1Delta},
         wins = wins + ${result.winner === 1 ? 1 : 0},
-        losses = losses + ${result.winner === 2 ? 1 : 0}
+        losses = losses + ${result.winner === 2 ? 1 : 0},
+        tree_games_played = tree_games_played + 1
       WHERE id = ${p1.id}
     `;
 
@@ -35,7 +36,8 @@ export async function recordResult({ players, result }: { players: [Bot, Bot]; r
       UPDATE bots SET
         elo = elo + ${elo2Delta},
         wins = wins + ${result.winner === 2 ? 1 : 0},
-        losses = losses + ${result.winner === 1 ? 1 : 0}
+        losses = losses + ${result.winner === 1 ? 1 : 0},
+        tree_games_played = tree_games_played + 1
       WHERE id = ${p2.id}
     `;
   });

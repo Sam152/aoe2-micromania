@@ -5,6 +5,7 @@ CREATE TABLE bots (
   elo INT NOT NULL DEFAULT 1600,
   wins INT NOT NULL DEFAULT 0,
   losses INT NOT NULL DEFAULT 0,
+  tree_games_played INT NOT NULL DEFAULT 0,
   is_active BOOLEAN NOT NULL DEFAULT TRUE
 );
 

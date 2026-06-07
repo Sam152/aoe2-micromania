@@ -7,5 +7,5 @@ export async function updateBotTree(
   tree: UnitAwareBehaviourTree,
   tx: postgres.Sql | postgres.TransactionSql = sql,
 ): Promise<void> {
-  await tx`UPDATE bots SET tree = ${tx.json(tree)} WHERE id = ${botId}`;
+  await tx`UPDATE bots SET tree = ${tx.json(tree)}, tree_games_played = 0 WHERE id = ${botId}`;
 }
