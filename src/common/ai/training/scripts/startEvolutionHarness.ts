@@ -13,7 +13,7 @@ const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL } = training
 
 async function startEvolutionHarness() {
   const botCount = await activeBotsCount();
-  console.log(`Total bots: ${botCount}`);
+  console.log(`Total bots in pool: ${botCount}`);
 
   if (botCount >= TARGET_TOTAL_BOTS_IN_POOL) {
     const retiringCount = (NEXT_GENERATION_CHURN_PERCENTAGE / 100) * botCount;
@@ -21,10 +21,15 @@ async function startEvolutionHarness() {
     await setLowestRatedPlayersToInactive((NEXT_GENERATION_CHURN_PERCENTAGE / 100) * botCount);
   }
 
+  // Start all training from a single reference tree.
+  if (botCount === 0) {
+    console.log(`Inserted genesis bot`);
+    await insertBot(sampleTree);
+  }
+
   const requiredBots = TARGET_TOTAL_BOTS_IN_POOL - await activeBotsCount();
-  const specimens: UnitAwareBehaviourTree[] = botCount === 0
-    ? [sampleTree]
-    : (await getActiveBotsByElo()).map((bot) => bot.tree);
+  const specimens: UnitAwareBehaviourTree[] = (await getActiveBotsByElo()).map((bot) => bot.tree);
+  console.log(`Evolving ${requiredBots} bots from ${specimens.length} specimens`);
 
   const formatter = createProgressFormatter({ totalIterations: requiredBots });
   await Promise.allSettled(
