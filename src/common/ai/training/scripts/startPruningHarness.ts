@@ -1,0 +1,38 @@
+import { sql } from "../infra/connection.ts";
+import { trainingParams } from "../trainingParams.ts";
+import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
+import { getActivations } from "../infra/repo/getActivations.ts";
+import { pruneUnitAwareTree } from "../../behaviourTree/pruneTree.ts";
+
+import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
+
+const { PRUNING_MINIMUM_GAMES_COUNT } = trainingParams;
+
+async function startPruningHarness() {
+  // Get all active bots.
+  const bots = await getActiveBotsByElo();
+  console.log(`Found ${bots.length} active bots`);
+
+  const prunableBots = bots.filter((bot) => bot.wins + bot.losses > PRUNING_MINIMUM_GAMES_COUNT);
+  console.log(`Found ${prunableBots.length} bots with > ${PRUNING_MINIMUM_GAMES_COUNT} games`);
+
+  const formatter = createProgressFormatter({
+    totalIterations: prunableBots.length,
+  });
+
+  for (const bot of prunableBots) {
+    // Activations will represent the nodes of the tree which had any kind of impact
+    // on a game, over all of their games played.
+    const activations = await getActivations(bot.id);
+    const prunedTree = pruneUnitAwareTree(bot.tree, activations);
+
+    // Start a transaction.
+    // Call a new repo function updateBotTree();
+    // Call a new repo function truncateBotActivations();
+    // Commit the txn
+
+    formatter.advance();
+  }
+}
+
+startPruningHarness().then(() => sql.end());
