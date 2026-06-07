@@ -3,10 +3,9 @@ import { UnitState } from "../../../units/UnitState.ts";
 import { getAttackRange } from "../../../util/inAttackRange.ts";
 import { hasScalarValue } from "../../../util/hasValue.ts";
 import { ComputedTickState } from "../../computed/createComputedTickState.ts";
-import { UnitType } from "../../../units/UnitType.ts";
 
-export function autoAttack(state: GameState, computed: ComputedTickState) {
-  const fireUnits = state.units.filter((unit) => unit.unitType !== UnitType.Monk);
+export function autoAttack(_state: GameState, computed: ComputedTickState) {
+  const fireUnits = computed.nonMonkUnits();
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
       (unit.unitState === UnitState.Idle || hasScalarValue(unit.patrollingTo)) &&

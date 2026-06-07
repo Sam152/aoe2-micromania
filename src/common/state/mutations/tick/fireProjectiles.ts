@@ -10,12 +10,12 @@ import { inAttackRange, inMinimumRange } from "../../../util/inAttackRange.ts";
 import { setUnitMovementAwayFrom, setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
 import { soundManager } from "../../../sounds/SoundManger.ts";
-import { UnitType } from "../../../units/UnitType.ts";
+
 import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 
 export function fireProjectiles(state: GameState, computed: ComputedTickState) {
-  const fireUnits = state.units.filter((unit) => unit.unitType !== UnitType.Monk);
+  const fireUnits = computed.nonMonkUnits();
 
   // Check if a unit should be firing or moving towards its target.
   fireUnits

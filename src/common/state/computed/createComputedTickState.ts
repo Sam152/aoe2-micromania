@@ -33,6 +33,13 @@ export type ComputedTickState = {
   mangoQuadTreesByPlayer: () => Record<number, Quadtree<UnitInstance>>;
   grid: () => Grid;
   unitsById: () => Record<number, UnitInstance>;
+  // Units that can fire projectiles (everything except Monks). Filtered out of
+  // state.units in more than one tick mutation, so it is derived once here.
+  //
+  // Safe to memoise because it keys on `unitType`, which never changes for a unit
+  // (unlike `ownedByPlayer`, which `convertUnits` mutates mid-tick — owner-keyed
+  // collections must not be cached on the shared computed state).
+  nonMonkUnits: () => UnitInstance[];
 };
 
 export function createComputedTickState(state: GameState): ComputedTickState {
@@ -51,6 +58,7 @@ export function createComputedTickState(state: GameState): ComputedTickState {
         {} as Record<number, UnitInstance>,
       )
     ),
+    nonMonkUnits: memo(() => state.units.filter((unit) => unit.unitType !== UnitType.Monk)),
   };
 }
 

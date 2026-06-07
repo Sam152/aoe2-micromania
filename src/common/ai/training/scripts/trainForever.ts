@@ -3,12 +3,12 @@ import { startEvolutionHarness } from "./startEvolutionHarness.ts";
 import { startTournamentHarness } from "./startTournamentHarness.ts";
 import { startPruningHarness } from "./startPruningHarness.ts";
 
-const { ROUND_ROBIN_TOURNEY_SIZE, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } = params;
+const { TOURNEY_ROUND_ROBIN_SIZE, NEXT_GENERATION_MINIMUM_GAMES_PLAYED, TOURNEY_MIN_TOURNEY_COUNT } = params;
 
 async function trainForever() {
   const requiredTourneys = Math.max(
-    3,
-    Math.ceil(NEXT_GENERATION_MINIMUM_GAMES_PLAYED / (ROUND_ROBIN_TOURNEY_SIZE - 1)),
+    TOURNEY_MIN_TOURNEY_COUNT,
+    Math.ceil(NEXT_GENERATION_MINIMUM_GAMES_PLAYED / (TOURNEY_ROUND_ROBIN_SIZE - 1)),
   );
 
   while (true) {

@@ -11,7 +11,12 @@ export const prod = {
    * The number of bots that are entered into a round-robin tournament
    * according to their ELO.
    */
-  ROUND_ROBIN_TOURNEY_SIZE: 50,
+  TOURNEY_ROUND_ROBIN_SIZE: 50,
+  /**
+   * The number of passes through the tourney script which will be run, for
+   * each evolution and pruning.
+   */
+  TOURNEY_MIN_TOURNEY_COUNT: 3,
   /**
    * The percentage of bots that should be retired when making room for
    * the next generation.
@@ -43,7 +48,8 @@ type Params = typeof prod;
 export const dev: Params = {
   CPU_WORKER_COUNT: 4,
   TARGET_TOTAL_BOTS_IN_POOL: 10,
-  ROUND_ROBIN_TOURNEY_SIZE: 5,
+  TOURNEY_ROUND_ROBIN_SIZE: 5,
+  TOURNEY_MIN_TOURNEY_COUNT: 3,
   NEXT_GENERATION_CHURN_PERCENTAGE: 60,
   NEXT_GENERATION_RANDOM_MUTATIONS: 50,
   NEXT_GENERATION_MINIMUM_GAMES_PLAYED: 50,
