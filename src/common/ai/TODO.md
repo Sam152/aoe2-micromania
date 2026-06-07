@@ -3,7 +3,7 @@
 - [ ] BB closestInRangeOfType
 - [ ] BB projectiles
 - [ ] Actions formations
-- [ ] Train harness
+- [x] Train harness
 - [ ] Offspring?
 - [x] Random mutations
 - [ ] Randomize mutation count?
