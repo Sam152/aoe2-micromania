@@ -37,7 +37,7 @@ export type ComputedTickState = {
 
 export function createComputedTickState(state: GameState): ComputedTickState {
   return {
-    grid: memo(() => new Grid(state.mapSize)),
+    grid: () => Grid.fromGameState(state),
     unitQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units)),
     archerQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units, UnitType.Archer)),
     monkQuadTreesByPlayer: memo(() => buildQuadTreesByPlayer(state.units, UnitType.Monk)),

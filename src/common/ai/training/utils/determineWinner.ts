@@ -61,10 +61,8 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Game
       break;
     }
 
-    if (hpByPlayer(state)[1] === 0) {
-      break;
-    }
-    if (hpByPlayer(state)[2] === 0) {
+    const hp = hpByPlayer(state);
+    if (hp[1] === 0 || hp[2] === 0) {
       break;
     }
   }
