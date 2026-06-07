@@ -13,7 +13,7 @@ import { getFewestNumberOfGamesPlayedByActiveBots } from "../infra/repo/getFewes
 
 const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } = params;
 
-async function startEvolutionHarness() {
+export async function startEvolutionHarness() {
   // Require all bots in the active player pool to have played a minimum number of games.
   const minGamesPlayed = await getFewestNumberOfGamesPlayedByActiveBots();
   if (minGamesPlayed < NEXT_GENERATION_MINIMUM_GAMES_PLAYED) {

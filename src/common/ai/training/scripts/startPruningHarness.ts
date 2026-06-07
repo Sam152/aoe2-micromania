@@ -10,7 +10,7 @@ import { countUnitAwareBehaviourTreeNodes } from "../../behaviourTree/utils/coun
 
 const { PRUNING_MINIMUM_GAMES_COUNT } = params;
 
-async function startPruningHarness() {
+export async function startPruningHarness() {
   // Get all active bots.
   const bots = await getActiveBotsByElo();
   console.log(`Found ${bots.length} active bots`);
