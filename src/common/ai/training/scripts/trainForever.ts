@@ -1,7 +1,6 @@
-import { trainingParams } from "../trainingParams.ts";
+import { params } from "../params.ts";
 
-const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } =
-  trainingParams;
+const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } = params;
 
 async function trainForever() {
   // Start evolution.

@@ -1,5 +1,5 @@
 import { sql } from "../infra/connection.ts";
-import { trainingParams } from "../trainingParams.ts";
+import { params } from "../params.ts";
 import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { getActivations } from "../infra/repo/getActivations.ts";
 import { pruneUnitAwareTree } from "../../behaviourTree/utils/pruneTree.ts";
@@ -8,7 +8,7 @@ import { truncateBotActivations } from "../infra/repo/truncateBotActivations.ts"
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { countUnitAwareBehaviourTreeNodes } from "../../behaviourTree/utils/countUnitAwareBehaviourTreeNodes.ts";
 
-const { PRUNING_MINIMUM_GAMES_COUNT } = trainingParams;
+const { PRUNING_MINIMUM_GAMES_COUNT } = params;
 
 async function startPruningHarness() {
   // Get all active bots.

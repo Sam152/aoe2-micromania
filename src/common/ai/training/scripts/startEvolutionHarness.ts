@@ -1,5 +1,5 @@
 import { sql } from "../infra/connection.ts";
-import { trainingParams } from "../trainingParams.ts";
+import { params } from "../params.ts";
 import { activeBotsCount } from "../infra/repo/activeBotsCount.ts";
 import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
 import { setLowestRatedPlayersToInactive } from "../infra/repo/setLowestRatedPlayersToInactive.ts";
@@ -11,8 +11,7 @@ import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
 import { getFewestNumberOfGamesPlayedByActiveBots } from "../infra/repo/getFewestNumberOfGamesPlayedByActiveBots.ts";
 
-const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } =
-  trainingParams;
+const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } = params;
 
 async function startEvolutionHarness() {
   // Require all bots in the active player pool to have played a minimum number of games.

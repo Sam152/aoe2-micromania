@@ -1,4 +1,4 @@
-export const prodTrainingParams = {
+export const prod = {
   /**
    * How many workers should be fired up.
    */
@@ -35,12 +35,12 @@ export const prodTrainingParams = {
   PRUNING_MINIMUM_GAMES_COUNT: 30,
 };
 
-type Params = typeof prodTrainingParams;
+type Params = typeof prod;
 
 /**
  * Scaled down params, so we can effectively test the harness.
  */
-export const testTrainingParams: Params = {
+export const dev: Params = {
   CPU_WORKER_COUNT: 4,
   TARGET_TOTAL_BOTS_IN_POOL: 10,
   ROUND_ROBIN_TOURNEY_SIZE: 5,
@@ -50,5 +50,5 @@ export const testTrainingParams: Params = {
   PRUNING_MINIMUM_GAMES_COUNT: 10,
 };
 
-// export const trainingParams = prodTrainingParams;
-export const trainingParams: Params = testTrainingParams;
+// export const params = prod;
+export const params: Params = dev;

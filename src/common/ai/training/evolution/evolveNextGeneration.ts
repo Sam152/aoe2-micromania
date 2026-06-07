@@ -3,9 +3,9 @@ import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "../../mutation/randomlyMutateUnitAwareBehaviourTree.ts";
 
 import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
-import { trainingParams } from "../trainingParams.ts";
+import { params } from "../params.ts";
 
-const { CPU_WORKER_COUNT, NEXT_GENERATION_RANDOM_MUTATIONS } = trainingParams;
+const { CPU_WORKER_COUNT, NEXT_GENERATION_RANDOM_MUTATIONS } = params;
 
 type EvolveNextGenArgs = {
   specimens: UnitAwareBehaviourTree[];

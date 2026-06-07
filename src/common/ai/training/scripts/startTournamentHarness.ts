@@ -5,9 +5,9 @@ import { chunkArray } from "../../../util/chunckArray.ts";
 import { roundRobin } from "../tournament/roundRobin.ts";
 import { recordResult } from "../tournament/recordResult.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
-import { trainingParams } from "../trainingParams.ts";
+import { params } from "../params.ts";
 
-const { TARGET_TOTAL_BOTS_IN_POOL, ROUND_ROBIN_TOURNEY_SIZE, CPU_WORKER_COUNT } = trainingParams;
+const { TARGET_TOTAL_BOTS_IN_POOL, ROUND_ROBIN_TOURNEY_SIZE, CPU_WORKER_COUNT } = params;
 
 async function startTournamentHarness() {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
