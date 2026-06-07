@@ -3,7 +3,8 @@ import { trainingParams } from "../trainingParams.ts";
 import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { getActivations } from "../infra/repo/getActivations.ts";
 import { pruneUnitAwareTree } from "../../behaviourTree/pruneTree.ts";
-
+import { updateBotTree } from "../infra/repo/updateBotTree.ts";
+import { truncateBotActivations } from "../infra/repo/truncateBotActivations.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 
 const { PRUNING_MINIMUM_GAMES_COUNT } = trainingParams;
@@ -26,10 +27,10 @@ async function startPruningHarness() {
     const activations = await getActivations(bot.id);
     const prunedTree = pruneUnitAwareTree(bot.tree, activations);
 
-    // Start a transaction.
-    // Call a new repo function updateBotTree();
-    // Call a new repo function truncateBotActivations();
-    // Commit the txn
+    await sql.begin(async (tx) => {
+      await updateBotTree(bot.id, prunedTree, tx);
+      await truncateBotActivations(bot.id, tx);
+    });
 
     formatter.advance();
   }
