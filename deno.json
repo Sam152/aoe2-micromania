@@ -9,7 +9,7 @@
     "on-save": "deno --allow-run .hooks/on-save.ts",
     "training:docker:start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d",
     "training:docker:reset": "docker compose -f src/common/ai/training/infra/docker-compose.yml down -v && deno task training:docker:start",
-    "training:evolve": "deno run --inspect-brk --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
+    "training:evolve": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
     "training:tourney": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startTournamentHarness.ts",
     "training:prune": "deno run --allow-env --allow-net src/common/ai/training/scripts/startPruningHarness.ts",
     "training:forever": "deno run --allow-env --allow-read --allow-net src/common/ai/training/scripts/trainForever.ts",

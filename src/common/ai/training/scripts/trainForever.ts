@@ -6,8 +6,7 @@ import { startPruningHarness } from "./startPruningHarness.ts";
 const { ROUND_ROBIN_TOURNEY_SIZE, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } = params;
 
 async function trainForever() {
-  const gamesPerTourney = (ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2;
-  const requiredTourneys = Math.ceil(NEXT_GENERATION_MINIMUM_GAMES_PLAYED / gamesPerTourney);
+  const requiredTourneys = Math.ceil(NEXT_GENERATION_MINIMUM_GAMES_PLAYED / (ROUND_ROBIN_TOURNEY_SIZE - 1));
 
   while (true) {
     console.log("---- EVOLVE ----");
