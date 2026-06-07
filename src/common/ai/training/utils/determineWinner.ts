@@ -5,7 +5,7 @@ import { triggerBotTicks } from "../../integration/triggerBotTicks.ts";
 import { config } from "../../../config.ts";
 import { hpByPlayer } from "../../../util/hpByPlayer.ts";
 import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
-import { createBot } from "../../integration/createBot.ts";
+import { BotState, createBot } from "../../integration/createBot.ts";
 
 const MAX_TIME_MINUTES = 3;
 
@@ -18,6 +18,10 @@ export type GameResult = {
   hp: { 1: number; 2: number };
   winner: 1 | 2 | "DRAW";
   ticks: number;
+  bots: {
+    player1: BotState;
+    player2: BotState;
+  };
 };
 
 export function determineWinner({ player1, player2 }: DetermineWinnerArgs): GameResult {
@@ -67,6 +71,10 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Game
 
   const hp = hpByPlayer(state) as GameResult["hp"];
   return {
+    bots: {
+      player1: bots[0].botState,
+      player2: bots[1].botState,
+    },
     winner: hp[1] === hp[2] ? "DRAW" : hp[1] > hp[2] ? 1 : 2,
     hp,
     ticks: state.ticks,

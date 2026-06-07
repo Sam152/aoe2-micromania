@@ -13,6 +13,7 @@ import { UnitAwareBehaviourTree } from "../behaviourTree/BehaviourTree.ts";
 export type BotInstance = {
   tick: (state: GameState, dispatcher: GameDispatcher, computed: ComputedTickState) => void;
   playerId: string;
+  botState: BotState;
 };
 
 export type ActionQueue = {
@@ -33,6 +34,7 @@ export type BotState = {
   lastActionTick: number;
   isEligibleForDecision: boolean;
   unitGroups: BotUnitGroup[];
+  activations?: Set<string>;
 };
 
 export function createBot(
@@ -45,10 +47,12 @@ export function createBot(
     lastActionType: "IDLE",
     lastActionTick: 0,
     unitGroups: [],
+    activations: new Set<string>(),
   };
 
   return {
     playerId,
+    botState,
     tick: (state, dispatcher, computed) => {
       if (botState.unitGroups.length === 0) {
         createInitialUnitGroups(botState, state);

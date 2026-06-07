@@ -53,6 +53,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
   }
 
   const { actionNodes } = evaluateTreeNode({
+    activations: botState.activations,
     blackboardComputer,
     group,
     state,
