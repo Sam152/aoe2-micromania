@@ -1,6 +1,6 @@
 import { evaluateTreeNode } from "./evaluateTreeNode.ts";
 import { defaultState } from "../../state/gameState.ts";
-import { BotState, BotUnitGroup } from "../integration/createBot.ts";
+import { BotState, BotUnitGroup, createUnitTypeActivations } from "../integration/createBot.ts";
 import { UnitType } from "../../units/UnitType.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
@@ -21,11 +21,7 @@ const botState: BotState = {
   lastActionTick: 0,
   isEligibleForDecision: true,
   unitGroups: [group],
-  activations: {
-    [UnitType.Mangonel]: new Set<string>(),
-    [UnitType.Monk]: new Set<string>(),
-    [UnitType.Archer]: new Set<string>(),
-  },
+  activations: createUnitTypeActivations(),
 };
 
 const blackboardComputer: BlackboardComputer = {

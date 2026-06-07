@@ -27,6 +27,8 @@ export type BotUnitGroup = {
   includedUnits: UnitId[];
 };
 
+export type UnitTypeActivations = Record<UnitType, Set<string>>;
+
 export type BotState = {
   playingAs: number;
   playerId: string;
@@ -34,8 +36,16 @@ export type BotState = {
   lastActionTick: number;
   isEligibleForDecision: boolean;
   unitGroups: BotUnitGroup[];
-  activations: Record<UnitType, Set<string>>;
+  activations: UnitTypeActivations;
 };
+
+export function createUnitTypeActivations(): UnitTypeActivations {
+  return {
+    [UnitType.Mangonel]: new Set<string>(),
+    [UnitType.Monk]: new Set<string>(),
+    [UnitType.Archer]: new Set<string>(),
+  };
+}
 
 export function createBot(
   { playingAs, playerId, tree }: { playingAs: number; playerId: string; tree: UnitAwareBehaviourTree },
@@ -47,11 +57,7 @@ export function createBot(
     lastActionType: "IDLE",
     lastActionTick: 0,
     unitGroups: [],
-    activations: {
-      [UnitType.Mangonel]: new Set<string>(),
-      [UnitType.Monk]: new Set<string>(),
-      [UnitType.Archer]: new Set<string>(),
-    },
+    activations: createUnitTypeActivations(),
   };
 
   return {
