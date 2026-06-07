@@ -11,8 +11,10 @@ const { TARGET_TOTAL_BOTS_IN_POOL, ROUND_ROBIN_TOURNEY_SIZE, CPU_WORKER_COUNT } 
 
 export async function startTournamentHarness() {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
+  const botsInPool = await getActiveBotsByElo();
+
   const { advance } = createProgressFormatter({
-    totalIterations: (TARGET_TOTAL_BOTS_IN_POOL / ROUND_ROBIN_TOURNEY_SIZE) *
+    totalIterations: (botsInPool.length / ROUND_ROBIN_TOURNEY_SIZE) *
       ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2),
   });
 
@@ -20,7 +22,7 @@ export async function startTournamentHarness() {
   // each-other. Probably need to play multiple of these, to allow bots
   // to rise in ELO.
   await Promise.all(
-    chunkArray(await getActiveBotsByElo(), ROUND_ROBIN_TOURNEY_SIZE)
+    chunkArray(botsInPool, ROUND_ROBIN_TOURNEY_SIZE)
       .flatMap((bots) =>
         roundRobin(bots, async (p1, p2) => {
           const result = await runInPool({ 1: p1.tree, 2: p2.tree });
