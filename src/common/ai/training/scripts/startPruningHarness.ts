@@ -15,7 +15,7 @@ async function startPruningHarness() {
   const bots = await getActiveBotsByElo();
   console.log(`Found ${bots.length} active bots`);
 
-  const prunableBots = bots.filter((bot) => bot.treeGamesPlayed > PRUNING_MINIMUM_GAMES_COUNT);
+  const prunableBots = bots.filter((bot) => bot.gamesSinceLastPrune > PRUNING_MINIMUM_GAMES_COUNT);
   console.log(
     `Found ${prunableBots.length} bots with > ${PRUNING_MINIMUM_GAMES_COUNT} games played with the current version of their tree`,
   );

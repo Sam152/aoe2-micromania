@@ -8,7 +8,8 @@ export type Bot = {
   elo: number;
   wins: number;
   losses: number;
-  treeGamesPlayed: number;
+  draws: number;
+  gamesSinceLastPrune: number;
 };
 
 export async function getActiveBotsByElo(): Promise<Bot[]> {
@@ -20,6 +21,7 @@ export async function getActiveBotsByElo(): Promise<Bot[]> {
     elo: row.elo,
     wins: row.wins,
     losses: row.losses,
-    treeGamesPlayed: row.tree_games_played,
+    draws: row.draws,
+    gamesSinceLastPrune: row.games_since_last_prune,
   }));
 }
