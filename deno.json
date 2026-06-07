@@ -9,8 +9,9 @@
     "on-save": "deno --allow-run .hooks/on-save.ts",
     "training:docker:start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d",
     "training:docker:reset": "docker compose -f src/common/ai/training/infra/docker-compose.yml down -v",
-    "training:evolution": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
+    "training:evolve": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
     "training:tourney": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startTournamentHarness.ts",
+    "training:prune": "deno run --inspect-brk --allow-env --allow-net src/common/ai/training/scripts/startPruningHarness.ts",
     "training:dump": "docker compose -f src/common/ai/training/infra/docker-compose.yml exec postgres pg_dump --data-only -U postgres postgres | gzip > src/common/ai/training/infra/data/dump.sql.gz"
   },
   "compilerOptions": {

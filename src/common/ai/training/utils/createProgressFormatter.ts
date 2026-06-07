@@ -8,7 +8,7 @@ export function createProgressFormatter({ totalIterations }: { totalIterations: 
       completed++;
       Deno.stdout.writeSync(new TextEncoder().encode("."));
 
-      if (completed % ROW_SIZE === 0) {
+      if (completed % ROW_SIZE === 0 || completed === totalIterations) {
         Deno.stdout.writeSync(new TextEncoder().encode(` (${completed}/${totalIterations})\n`));
       }
     },
