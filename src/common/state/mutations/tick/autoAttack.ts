@@ -3,8 +3,9 @@ import { UnitState } from "../../../units/UnitState.ts";
 import { getAttackRange } from "../../../util/inAttackRange.ts";
 import { hasScalarValue } from "../../../util/hasValue.ts";
 import { ComputedTickState } from "../../computed/createComputedTickState.ts";
+import { closestUnitNotOwnedByBruteForce } from "../../../util/closestUnitNotOwnedByBruteForce.ts";
 
-export function autoAttack(_state: GameState, computed: ComputedTickState) {
+export function autoAttack(state: GameState, computed: ComputedTickState) {
   const fireUnits = computed.nonMonkUnits();
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
@@ -13,7 +14,7 @@ export function autoAttack(_state: GameState, computed: ComputedTickState) {
     );
   });
   autoAttackingUnits.forEach((attackingUnit) => {
-    const closest = closestUnitNotOwnedBy(attackingUnit.ownedByPlayer, attackingUnit, computed);
+    const closest = closestUnitNotOwnedByBruteForce(attackingUnit.ownedByPlayer, attackingUnit, state.units);
     if (closest) {
       attackingUnit.targetingUnit = closest.id;
     }
