@@ -50,5 +50,5 @@ export const dev: Params = {
   PRUNING_MINIMUM_GAMES_COUNT: 10,
 };
 
-// export const params = prod;
-export const params: Params = dev;
+export const params = prod;
+// export const params: Params = dev;
