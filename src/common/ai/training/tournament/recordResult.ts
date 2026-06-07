@@ -2,6 +2,7 @@ import { GameResult } from "../utils/determineWinner.ts";
 import { Bot } from "../infra/repo/getActiveBotsByElo.ts";
 import { computeEloChange } from "../utils/computeEloChange.ts";
 import { sql } from "../infra/connection.ts";
+import { upsertActivations } from "../infra/repo/upsertActivations.ts";
 
 // Draws might mean bots are just sat idle. Apply a penalty to both.
 const DRAW_ELO_IMPACT = [-16, -16];
@@ -10,6 +11,9 @@ export async function recordResult({ players, result }: { players: [Bot, Bot]; r
   const [p1, p2] = players;
   const winner = result.winner === "DRAW" ? null : result.winner;
   const [elo1Delta, elo2Delta] = winner ? computeEloChange([p1.elo, p2.elo], winner) : DRAW_ELO_IMPACT;
+
+  await upsertActivations(p1.id, result.bots.player1.activations);
+  await upsertActivations(p2.id, result.bots.player2.activations);
 
   await sql.begin(async (tx) => {
     await tx`
