@@ -16,12 +16,6 @@ export async function startTournamentHarness() {
       ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2),
   });
 
-  console.log((await getActiveBotsByElo()).length);
-  console.log(
-    (TARGET_TOTAL_BOTS_IN_POOL / ROUND_ROBIN_TOURNEY_SIZE) *
-      ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2),
-  );
-
   // Play a single set of round robins. Matching similar ELO bots against
   // each-other. Probably need to play multiple of these, to allow bots
   // to rise in ELO.

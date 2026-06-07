@@ -14,6 +14,7 @@ async function trainForever() {
 
     console.log("---- TOURNAMENT ----");
     for (let i = 0; i < requiredTourneys; i++) {
+      console.log(`Starting ${i + 1} of ${requiredTourneys}`);
       await startTournamentHarness();
     }
 
