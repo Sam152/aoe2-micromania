@@ -26,10 +26,19 @@ type EvaluateTreeNodeArgs = {
   group: BotUnitGroup;
   node: BehaviourTreeNode;
   actionNodes?: ActionNodeWithResolvedParams[];
+  /**
+   * An "activation" is when a particular node of the tree had some impact on a decision being
+   * made. Activations can be tracked over the course of gameplay and used as a tool to trim
+   * down the tree. Removing dead branches from the tree, ensures that future mutations have a
+   * maximum chance to have a real impact on the behavior, since they'll spend less time mutating
+   * nodes that aren't reachable.
+   */
+  activations?: Set<string>;
+  path?: string;
 };
 
 export function evaluateTreeNode(
-  { blackboardComputer, node, actionNodes = [], state, botState, group }: EvaluateTreeNodeArgs,
+  { blackboardComputer, node, actionNodes = [], state, botState, group, activations, path = "" }: EvaluateTreeNodeArgs,
 ): { result: boolean; actionNodes: ActionNodeWithResolvedParams[] } {
   if (node.nodeType === "condition") {
     const resolvedParams = resolveParamDataValues(node.params, {
@@ -49,7 +58,16 @@ export function evaluateTreeNode(
 
     const conditionDefinition = conditionList[node.type];
     const evalResult = conditionDefinition.evaluate(resolvedParams as any);
-    return { result: node.invert ? !evalResult : evalResult, actionNodes };
+    const conditionResult = node.invert ? !evalResult : evalResult;
+
+    // Only conditions that evaluate true trigger an activation. If a condition is false,
+    // in both sequences and selectors, they'll mean that branch of the structure does not
+    // trigger an action, so it should be pruneable.
+    if (conditionResult) {
+      activations?.add(path);
+    }
+
+    return { result: conditionResult, actionNodes };
   }
 
   if (node.nodeType === "action") {
@@ -71,6 +89,7 @@ export function evaluateTreeNode(
       };
     }
 
+    activations?.add(path);
     return {
       result: true,
       actionNodes: [
@@ -81,9 +100,19 @@ export function evaluateTreeNode(
   }
 
   if (node.nodeType === "selector") {
-    for (const selectorNode of node.nodes) {
-      const result = evaluateTreeNode({ blackboardComputer, node: selectorNode, actionNodes, botState, group, state });
+    for (const [i, selectorNode] of node.nodes.entries()) {
+      const result = evaluateTreeNode({
+        blackboardComputer,
+        node: selectorNode,
+        actionNodes,
+        botState,
+        group,
+        state,
+        activations,
+        path: `${path}.nodes[${i}]`,
+      });
       if (result.result) {
+        activations?.add(path);
         return {
           result: true,
           actionNodes: result.actionNodes,
@@ -99,17 +128,35 @@ export function evaluateTreeNode(
   if (node.nodeType === "sequence") {
     const sequenceActionNodes = [];
 
-    for (const sequenceNode of node.nodes) {
-      const result = evaluateTreeNode({ blackboardComputer, node: sequenceNode, actionNodes, state, botState, group });
+    for (const [i, sequenceNode] of node.nodes.entries()) {
+      const result = evaluateTreeNode({
+        blackboardComputer,
+        node: sequenceNode,
+        actionNodes,
+        state,
+        botState,
+        group,
+        activations,
+        path: `${path}.nodes[${i}]`,
+      });
       if (!result.result) {
+        const hadAtLeastOneAction = sequenceActionNodes.length > 0;
+        if (hadAtLeastOneAction) {
+          activations?.add(path);
+        }
         return {
-          result: sequenceActionNodes.length > 0,
+          result: hadAtLeastOneAction,
           actionNodes: sequenceActionNodes,
         };
       }
       sequenceActionNodes.push(...result.actionNodes);
     }
 
+    // Only consider a sequence as activated, if it had at least one node
+    // that activated.
+    if (node.nodes.length > 0) {
+      activations?.add(path);
+    }
     return {
       result: true,
       actionNodes: sequenceActionNodes,
