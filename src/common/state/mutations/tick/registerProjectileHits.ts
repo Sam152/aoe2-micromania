@@ -31,16 +31,16 @@ export function registerProjectileHits(state: GameState) {
 
   areaProjectiles.forEach((projectile) => {
     const area = unitMetadataFactory.getUnit(projectile.firedByType).areaOfEffect;
-    const damagedUnits: Array<number> = [];
+    const damagedUnits = new Set<number>();
     area!.forEach(({ distanceFromTarget, percentageOfAttack }) => {
       const affectedUnits = state.units
         // Find units within the radius of the blast.
         .filter(({ position }) => position.distanceTo(projectile.destination) < distanceFromTarget)
         // That haven't already been damaged.
-        .filter(({ id }) => !damagedUnits.includes(id));
+        .filter(({ id }) => !damagedUnits.has(id));
       affectedUnits.forEach((affectedUnit) => {
         affectedUnit.hitPoints -= calculateDamage(projectile.firedByType, affectedUnit.unitType) * percentageOfAttack;
-        damagedUnits.push(affectedUnit.id);
+        damagedUnits.add(affectedUnit.id);
         if (affectedUnit.hitPoints <= 0) {
           registerUnitFallen(state, affectedUnit);
         }
