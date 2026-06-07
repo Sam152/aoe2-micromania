@@ -14,9 +14,12 @@ type TickGroupArgs = {
   dispatcher: GameDispatcher;
   computed: ComputedTickState;
   tree: BehaviourTreeNode;
+  activations?: Set<string>;
 };
 
-export function tickUnitGroupDecisions({ state, botState, dispatcher, group, computed, tree }: TickGroupArgs) {
+export function tickUnitGroupDecisions(
+  { state, botState, dispatcher, group, computed, tree, activations }: TickGroupArgs,
+) {
   const blackboardComputer = createCachedBlackboardComputer({ computed });
 
   // If we have actions in the queue, try to consume the next available one.
@@ -53,7 +56,7 @@ export function tickUnitGroupDecisions({ state, botState, dispatcher, group, com
   }
 
   const { actionNodes } = evaluateTreeNode({
-    activations: botState.activations,
+    activations,
     blackboardComputer,
     group,
     state,

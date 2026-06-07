@@ -21,6 +21,11 @@ const botState: BotState = {
   lastActionTick: 0,
   isEligibleForDecision: true,
   unitGroups: [group],
+  activations: {
+    [UnitType.Mangonel]: new Set<string>(),
+    [UnitType.Monk]: new Set<string>(),
+    [UnitType.Archer]: new Set<string>(),
+  },
 };
 
 // Resolves to the same values the old `blackboard` fixture held, so the existing assertions hold.

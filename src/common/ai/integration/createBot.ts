@@ -34,7 +34,7 @@ export type BotState = {
   lastActionTick: number;
   isEligibleForDecision: boolean;
   unitGroups: BotUnitGroup[];
-  activations?: Set<string>;
+  activations: Record<UnitType, Set<string>>;
 };
 
 export function createBot(
@@ -47,7 +47,11 @@ export function createBot(
     lastActionType: "IDLE",
     lastActionTick: 0,
     unitGroups: [],
-    activations: new Set<string>(),
+    activations: {
+      [UnitType.Mangonel]: new Set<string>(),
+      [UnitType.Monk]: new Set<string>(),
+      [UnitType.Archer]: new Set<string>(),
+    },
   };
 
   return {
@@ -66,6 +70,7 @@ export function createBot(
           botState,
           computed,
           tree: tree[group.unitType],
+          activations: botState.activations?.[group.unitType],
         });
       });
 
