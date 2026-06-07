@@ -14,8 +14,11 @@ export async function startTournamentHarness() {
   const botsInPool = await getActiveBotsByElo();
 
   const { advance } = createProgressFormatter({
-    totalIterations: (botsInPool.length / ROUND_ROBIN_TOURNEY_SIZE) *
-      ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2),
+    totalIterations: Math.floor(botsInPool.length / ROUND_ROBIN_TOURNEY_SIZE) *
+        ((ROUND_ROBIN_TOURNEY_SIZE * (ROUND_ROBIN_TOURNEY_SIZE - 1)) / 2) +
+      ((botsInPool.length % ROUND_ROBIN_TOURNEY_SIZE) *
+          ((botsInPool.length % ROUND_ROBIN_TOURNEY_SIZE) - 1)) /
+        2,
   });
 
   // Play a single set of round robins. Matching similar ELO bots against
