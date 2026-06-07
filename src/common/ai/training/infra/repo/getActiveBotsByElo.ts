@@ -10,6 +10,7 @@ export type Bot = {
   losses: number;
   draws: number;
   gamesSinceLastPrune: number;
+  generation: number;
 };
 
 export async function getActiveBotsByElo(): Promise<Bot[]> {
@@ -23,5 +24,6 @@ export async function getActiveBotsByElo(): Promise<Bot[]> {
     losses: row.losses,
     draws: row.draws,
     gamesSinceLastPrune: row.games_since_last_prune,
+    generation: row.generation,
   }));
 }

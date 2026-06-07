@@ -8,11 +8,13 @@ import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { evolveNextGeneration } from "../evolution/evolveNextGeneration.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
+import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
 
 const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL } = trainingParams;
 
 async function startEvolutionHarness() {
   const botCount = await activeBotsCount();
+  const generation = await getCurrentGenerationNumber() + 1;
   console.log(`Total bots in pool: ${botCount}`);
 
   if (botCount >= TARGET_TOTAL_BOTS_IN_POOL) {
@@ -24,7 +26,7 @@ async function startEvolutionHarness() {
   // Start all training from a single reference tree.
   if (botCount === 0) {
     console.log(`Inserted genesis bot`);
-    await insertBot(sampleTree);
+    await insertBot(sampleTree, 0);
   }
 
   const requiredBots = TARGET_TOTAL_BOTS_IN_POOL - await activeBotsCount();
@@ -34,7 +36,7 @@ async function startEvolutionHarness() {
   const formatter = createProgressFormatter({ totalIterations: requiredBots });
   await Promise.allSettled(
     evolveNextGeneration({ specimens, newPlayersRequired: requiredBots }).map(async (nextGeneration) => {
-      await insertBot(await nextGeneration);
+      await insertBot(await nextGeneration, generation);
       formatter.advance();
     }),
   );
