@@ -19,7 +19,7 @@ async function startTournamentHarness() {
   // Play a single set of round robins. Matching similar ELO bots against
   // each-other. Probably need to play multiple of these, to allow bots
   // to rise in ELO.
-  await Promise.allSettled(
+  await Promise.all(
     chunkArray(await getActiveBotsByElo(), ROUND_ROBIN_TOURNEY_SIZE)
       .flatMap((bots) =>
         roundRobin(bots, async (p1, p2) => {
