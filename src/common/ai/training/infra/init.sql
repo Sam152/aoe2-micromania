@@ -1,14 +1,14 @@
 CREATE TABLE bots (
   id BIGSERIAL PRIMARY KEY
   ,bot_name TEXT NOT NULL UNIQUE
-  ,tree JSONB NOT NULL
+  ,generation INT NOT NULL DEFAULT 0
   ,elo INT NOT NULL DEFAULT 1600
   ,wins INT NOT NULL DEFAULT 0
   ,losses INT NOT NULL DEFAULT 0
   ,draws INT NOT NULL DEFAULT 0
   ,games_since_last_prune INT NOT NULL DEFAULT 0
   ,is_active BOOLEAN NOT NULL DEFAULT TRUE
-  ,generation INT NOT NULL DEFAULT 0
+  ,tree JSONB NOT NULL
 );
 
 CREATE INDEX bots_elo_idx ON bots (elo);
