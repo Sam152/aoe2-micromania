@@ -6,6 +6,7 @@ export const prodTrainingParams = {
   // the next generation.
   NEXT_GENERATION_CHURN_PERCENTAGE: 80,
   NEXT_GENERATION_RANDOM_MUTATIONS: 50,
+  NEXT_GENERATION_MINIMUM_GAMES_PLAYED: 30,
   /**
    * The number of games a bot must play, before having its tree pruned.
    */

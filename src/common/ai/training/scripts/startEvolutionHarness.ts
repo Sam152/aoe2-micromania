@@ -9,10 +9,21 @@ import { evolveNextGeneration } from "../evolution/evolveNextGeneration.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
+import { getFewestNumberOfGamesPlayedByActiveBots } from "../infra/repo/getFewestNumberOfGamesPlayedByActiveBots.ts";
 
-const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL } = trainingParams;
+const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } =
+  trainingParams;
 
 async function startEvolutionHarness() {
+  // Require all bots in the active player pool to have played a minimum number of games.
+  const minGamesPlayed = await getFewestNumberOfGamesPlayedByActiveBots();
+  if (minGamesPlayed < NEXT_GENERATION_MINIMUM_GAMES_PLAYED) {
+    console.log(
+      `Skipping evolution: ${minGamesPlayed} games played is less than minimum of ${NEXT_GENERATION_MINIMUM_GAMES_PLAYED}`,
+    );
+    return;
+  }
+
   const botCount = await activeBotsCount();
   const generation = await getCurrentGenerationNumber() + 1;
   console.log(`Total bots in pool: ${botCount}`);
