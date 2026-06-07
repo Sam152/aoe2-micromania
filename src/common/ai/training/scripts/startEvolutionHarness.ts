@@ -14,18 +14,17 @@ import { getFewestNumberOfGamesPlayedByActiveBots } from "../infra/repo/getFewes
 const { NEXT_GENERATION_CHURN_PERCENTAGE, TARGET_TOTAL_BOTS_IN_POOL, NEXT_GENERATION_MINIMUM_GAMES_PLAYED } = params;
 
 export async function startEvolutionHarness() {
+  const botCount = await activeBotsCount();
+  console.log(`Total bots in pool: ${botCount}`);
+
   // Require all bots in the active player pool to have played a minimum number of games.
   const minGamesPlayed = await getFewestNumberOfGamesPlayedByActiveBots();
-  if (minGamesPlayed < NEXT_GENERATION_MINIMUM_GAMES_PLAYED) {
+  if (botCount > 2 && minGamesPlayed < NEXT_GENERATION_MINIMUM_GAMES_PLAYED) {
     console.log(
       `Skipping evolution: ${minGamesPlayed} games played is less than minimum of ${NEXT_GENERATION_MINIMUM_GAMES_PLAYED}`,
     );
     return;
   }
-
-  const botCount = await activeBotsCount();
-  const generation = await getCurrentGenerationNumber() + 1;
-  console.log(`Total bots in pool: ${botCount}`);
 
   if (botCount >= TARGET_TOTAL_BOTS_IN_POOL) {
     const retiringCount = (NEXT_GENERATION_CHURN_PERCENTAGE / 100) * botCount;
@@ -43,6 +42,7 @@ export async function startEvolutionHarness() {
   const specimens: UnitAwareBehaviourTree[] = (await getActiveBotsByElo()).map((bot) => bot.tree);
   console.log(`Evolving ${requiredBots} bots from ${specimens.length} specimens`);
 
+  const generation = await getCurrentGenerationNumber() + 1;
   const formatter = createProgressFormatter({ totalIterations: requiredBots });
   await Promise.allSettled(
     evolveNextGeneration({ specimens, newPlayersRequired: requiredBots }).map(async (nextGeneration) => {
@@ -52,4 +52,6 @@ export async function startEvolutionHarness() {
   );
 }
 
-startEvolutionHarness().then(() => sql.end());
+if (import.meta.main) {
+  startEvolutionHarness().then(() => sql.end());
+}

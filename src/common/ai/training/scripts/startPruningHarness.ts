@@ -45,4 +45,6 @@ export async function startPruningHarness() {
   console.log(`Pruned ${prunedNodes} nodes`);
 }
 
-startPruningHarness().then(() => sql.end());
+if (import.meta.main) {
+  startPruningHarness().then(() => sql.end());
+}
