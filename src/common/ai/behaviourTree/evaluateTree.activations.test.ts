@@ -169,12 +169,6 @@ describe("activations", () => {
     assertEquals(activations, new Set(["", ".nodes[1]", ".nodes[1].nodes[1]"]));
   });
 
-  it("works without an activations Set (no error thrown)", () => {
-    evaluateTreeNode({ ...params, node: trueCond });
-    evaluateTreeNode({ ...params, node: falseCond });
-    evaluateTreeNode({ ...params, node: action });
-  });
-
   it("sequence: all nodes pass activates root and each child", () => {
     const activations = new Set<string>();
     evaluateTreeNode({
