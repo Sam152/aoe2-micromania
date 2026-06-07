@@ -10,6 +10,14 @@ CREATE TABLE bots (
 
 CREATE INDEX bots_elo_idx ON bots (elo);
 
+CREATE TABLE activations (
+  id BIGSERIAL PRIMARY KEY,
+  bot_id BIGINT NOT NULL REFERENCES bots(id),
+  path TEXT NOT NULL,
+  unit_type INT NOT NULL,
+  UNIQUE (bot_id, path, unit_type)
+);
+
 CREATE TABLE match_results (
   id BIGSERIAL PRIMARY KEY,
   bot_id BIGINT NOT NULL REFERENCES bots(id),

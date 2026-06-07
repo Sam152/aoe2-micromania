@@ -1,6 +1,19 @@
 import { BehaviourTreeNode, UnitAwareBehaviourTree } from "./BehaviourTree.ts";
 import { UnitType } from "../../units/UnitType.ts";
 
+export function pruneUnitAwareTree(
+  tree: UnitAwareBehaviourTree,
+  activations: Record<UnitType, Set<string>>,
+): UnitAwareBehaviourTree {
+  const newTree = structuredClone(tree);
+  return Object.fromEntries(
+    (Object.entries(newTree) as unknown as [UnitType, BehaviourTreeNode][]).map(([unitType, node]) => [
+      unitType,
+      pruneTree(node, activations[unitType]) ?? node,
+    ]),
+  ) as UnitAwareBehaviourTree;
+}
+
 export function pruneTree(
   node: BehaviourTreeNode,
   activations: Set<string>,
@@ -20,17 +33,4 @@ export function pruneTree(
   });
 
   return { ...node, nodes: prunedNodes };
-}
-
-export function pruneUnitAwareTree(
-  tree: UnitAwareBehaviourTree,
-  activations: Record<UnitType, Set<string>>,
-): UnitAwareBehaviourTree {
-  const newTree = structuredClone(tree);
-  return Object.fromEntries(
-    (Object.entries(newTree) as unknown as [UnitType, BehaviourTreeNode][]).map(([unitType, node]) => [
-      unitType,
-      pruneTree(node, activations[unitType]) ?? node,
-    ]),
-  ) as UnitAwareBehaviourTree;
 }
