@@ -9,16 +9,16 @@ async function trainForever() {
   const requiredTourneys = Math.ceil(NEXT_GENERATION_MINIMUM_GAMES_PLAYED / (ROUND_ROBIN_TOURNEY_SIZE - 1));
 
   while (true) {
-    console.log("---- EVOLVE ----");
+    console.log("\n---- EVOLVE ----");
     await startEvolutionHarness();
 
-    console.log("---- TOURNAMENT ----");
+    console.log("\n---- TOURNAMENT ----");
     for (let i = 0; i < requiredTourneys; i++) {
       console.log(`Starting ${i + 1} of ${requiredTourneys}`);
       await startTournamentHarness();
     }
 
-    console.log("---- PRUNE ----");
+    console.log("\n---- PRUNE ----");
     await startPruningHarness();
   }
 }
