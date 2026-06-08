@@ -1,5 +1,5 @@
 import { UnitInstance } from "../../../../../types.ts";
-import { BlackboardUnitType } from "../../dataType/catalog/blackboardUnitType.ts";
+import { BlackboardUnitType } from "../../dataType/catalog/unitType.ts";
 import { UnitType } from "../../../../units/UnitType.ts";
 
 const map = {

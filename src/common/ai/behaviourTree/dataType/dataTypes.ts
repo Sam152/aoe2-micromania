@@ -6,7 +6,7 @@ import { vector } from "./catalog/vector.ts";
 import { unitCount } from "./catalog/unitCount.ts";
 import { vectorMagnitude } from "./catalog/vectorMagnitude.ts";
 import { unitId } from "./catalog/unitId.ts";
-import { unitType } from "./catalog/blackboardUnitType.ts";
+import { unitType } from "./catalog/unitType.ts";
 import { vectorAngle } from "./catalog/vectorAngle.ts";
 import { formation } from "./catalog/formation.ts";
 import { tickCount } from "./catalog/tickCount.ts";
