@@ -11,6 +11,7 @@ import { vectorAngle } from "./catalog/vectorAngle.ts";
 import { formation } from "./catalog/formation.ts";
 import { tickCount } from "./catalog/tickCount.ts";
 import { groupIndex } from "./catalog/groupIndex.ts";
+import { projectileType } from "./catalog/projectileType.ts";
 
 export const dataTypes = {
   boolean,
@@ -23,6 +24,7 @@ export const dataTypes = {
   vectorMagnitude,
   vectorAngle,
   formation,
+  projectileType,
 };
 
 export type DataType = keyof typeof dataTypes;
