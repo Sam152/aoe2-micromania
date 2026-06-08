@@ -168,13 +168,13 @@ export const winningTree: UnitAwareBehaviourTree = {
         "type": "unitCountGreaterThan",
         "invert": true,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
             "value": 39,
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "unitCount",
@@ -195,7 +195,7 @@ export const winningTree: UnitAwareBehaviourTree = {
         "type": "unitCountGreaterThan",
         "invert": false,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "unitCount",
@@ -209,7 +209,7 @@ export const winningTree: UnitAwareBehaviourTree = {
               },
             },
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
@@ -245,7 +245,7 @@ export const winningTree: UnitAwareBehaviourTree = {
             "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
-              "leftCount": {
+              "leftUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
@@ -259,7 +259,7 @@ export const winningTree: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              "rightCount": {
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "unitCount",

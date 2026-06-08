@@ -10,13 +10,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "unitCountEquals",
         "invert": false,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
             "value": 15,
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "unitCount",
@@ -30,7 +30,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "unitCountGreaterThan",
         "invert": false,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "unitCount",
@@ -44,7 +44,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
               },
             },
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "unitCount",
@@ -67,7 +67,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                     "type": "unitCountGreaterThan",
                     "invert": true,
                     "params": {
-                      "leftCount": {
+                      "leftUnitCount": {
                         "nodeType": "dataValue",
                         "type": "BLACKBOARD",
                         "dataType": "unitCount",
@@ -81,7 +81,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                           },
                         },
                       },
-                      "rightCount": {
+                      "rightUnitCount": {
                         "nodeType": "dataValue",
                         "type": "LITERAL",
                         "dataType": "unitCount",
@@ -100,7 +100,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                 "type": "unitCountGreaterThan",
                 "invert": false,
                 "params": {
-                  "leftCount": {
+                  "leftUnitCount": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "unitCount",
@@ -114,7 +114,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                       },
                     },
                   },
-                  "rightCount": {
+                  "rightUnitCount": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "unitCount",
@@ -139,14 +139,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "unitCountGreaterThan",
             "invert": false,
             "params": {
-              "leftCount": {
+              "leftUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
                 "blackboardKey": "groupUnitCount",
                 "params": {},
               },
-              "rightCount": {
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "unitCount",
@@ -349,13 +349,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "unitCountEquals",
             "invert": true,
             "params": {
-              "leftCount": {
+              "leftUnitCount": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "unitCount",
                 "value": 37,
               },
-              "rightCount": {
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
@@ -901,13 +901,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "unitCountGreaterThan",
         "invert": true,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
             "value": 10,
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
@@ -985,13 +985,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "unitCountGreaterThan",
         "invert": true,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
             "value": 0,
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",
@@ -1258,7 +1258,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                 "type": "unitCountGreaterThan",
                 "invert": false,
                 "params": {
-                  "leftCount": {
+                  "leftUnitCount": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "unitCount",
@@ -1272,7 +1272,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                       },
                     },
                   },
-                  "rightCount": {
+                  "rightUnitCount": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "unitCount",

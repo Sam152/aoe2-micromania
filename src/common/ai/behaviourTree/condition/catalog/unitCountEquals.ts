@@ -2,12 +2,12 @@ import { defineCondition } from "../ConditionDefinition.ts";
 
 export const unitCountEquals = defineCondition({
   params: {
-    leftCount: {
+    leftUnitCount: {
       dataType: "unitCount",
     },
-    rightCount: {
+    rightUnitCount: {
       dataType: "unitCount",
     },
   },
-  evaluate: ({ leftCount, rightCount }) => leftCount === rightCount,
+  evaluate: ({ leftUnitCount, rightUnitCount }) => leftUnitCount === rightUnitCount,
 });

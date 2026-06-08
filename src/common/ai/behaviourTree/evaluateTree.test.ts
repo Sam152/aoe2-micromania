@@ -579,14 +579,14 @@ describe("tree evaluation", () => {
           type: "unitCountGreaterThan",
           invert: false,
           params: {
-            leftCount: {
+            leftUnitCount: {
               nodeType: "dataValue",
               dataType: "unitCount",
               type: "BLACKBOARD",
               blackboardKey: "groupUnitCount",
               params: {},
             },
-            rightCount: { nodeType: "dataValue", dataType: "unitCount", type: "LITERAL", value: 5 },
+            rightUnitCount: { nodeType: "dataValue", dataType: "unitCount", type: "LITERAL", value: 5 },
           },
         },
       }),

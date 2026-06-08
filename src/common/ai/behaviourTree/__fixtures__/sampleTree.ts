@@ -170,7 +170,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
             type: "unitCountGreaterThan",
             invert: true,
             params: {
-              leftCount: {
+              leftUnitCount: {
                 nodeType: "dataValue",
                 dataType: "unitCount",
                 type: "BLACKBOARD",
@@ -184,7 +184,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              rightCount: {
+              rightUnitCount: {
                 nodeType: "dataValue",
                 dataType: "unitCount",
                 type: "LITERAL",
@@ -223,14 +223,14 @@ export const sampleTree: UnitAwareBehaviourTree = {
             type: "unitCountGreaterThan",
             invert: true,
             params: {
-              leftCount: {
+              leftUnitCount: {
                 nodeType: "dataValue",
                 dataType: "unitCount",
                 type: "BLACKBOARD",
                 blackboardKey: "groupMetaUnitTypeGroupCount",
                 params: {},
               },
-              rightCount: {
+              rightUnitCount: {
                 nodeType: "dataValue",
                 dataType: "unitCount",
                 type: "LITERAL",

@@ -51,13 +51,13 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
             "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
-              "leftCount": {
+              "leftUnitCount": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "unitCount",
                 "value": 34,
               },
-              "rightCount": {
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
@@ -71,7 +71,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
             "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
-              "leftCount": {
+              "leftUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
@@ -85,7 +85,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              "rightCount": {
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "dataType": "unitCount",
                 "type": "LITERAL",
@@ -131,7 +131,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
             "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
-              "leftCount": {
+              "leftUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
@@ -145,7 +145,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              "rightCount": {
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "dataType": "unitCount",
                 "type": "LITERAL",
@@ -551,13 +551,13 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "type": "unitCountEquals",
                 "invert": false,
                 "params": {
-                  "leftCount": {
+                  "leftUnitCount": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "unitCount",
                     "value": 4,
                   },
-                  "rightCount": {
+                  "rightUnitCount": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "unitCount",
@@ -594,14 +594,14 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "type": "unitCountGreaterThan",
         "invert": false,
         "params": {
-          "leftCount": {
+          "leftUnitCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "unitCount",
             "blackboardKey": "groupMetaUnitTypeGroupCount",
             "params": {},
           },
-          "rightCount": {
+          "rightUnitCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "unitCount",

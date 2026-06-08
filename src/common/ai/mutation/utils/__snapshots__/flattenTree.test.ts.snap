@@ -13,7 +13,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
@@ -27,7 +27,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -68,14 +68,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -163,7 +163,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            leftCount: {
+            leftUnitCount: {
               blackboardKey: "globalOwnedUnitsOfTypeCount",
               dataType: "unitCount",
               nodeType: "dataValue",
@@ -177,7 +177,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               },
               type: "BLACKBOARD",
             },
-            rightCount: {
+            rightUnitCount: {
               dataType: "unitCount",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -221,7 +221,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
@@ -235,7 +235,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -276,14 +276,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -367,7 +367,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       invert: true,
       nodeType: "condition",
       params: {
-        leftCount: {
+        leftUnitCount: {
           blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "unitCount",
           nodeType: "dataValue",
@@ -381,7 +381,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        rightCount: {
+        rightUnitCount: {
           dataType: "unitCount",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -398,7 +398,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            leftCount: {
+            leftUnitCount: {
               blackboardKey: "globalOwnedUnitsOfTypeCount",
               dataType: "unitCount",
               nodeType: "dataValue",
@@ -412,7 +412,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               },
               type: "BLACKBOARD",
             },
-            rightCount: {
+            rightUnitCount: {
               dataType: "unitCount",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -462,12 +462,12 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       },
       type: "BLACKBOARD",
     },
-    paramKey: "leftCount",
+    paramKey: "leftUnitCount",
     parent: {
       invert: true,
       nodeType: "condition",
       params: {
-        leftCount: {
+        leftUnitCount: {
           blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "unitCount",
           nodeType: "dataValue",
@@ -481,7 +481,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        rightCount: {
+        rightUnitCount: {
           dataType: "unitCount",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -521,12 +521,12 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: 8,
     },
-    paramKey: "rightCount",
+    paramKey: "rightUnitCount",
     parent: {
       invert: true,
       nodeType: "condition",
       params: {
-        leftCount: {
+        leftUnitCount: {
           blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "unitCount",
           nodeType: "dataValue",
@@ -540,7 +540,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        rightCount: {
+        rightUnitCount: {
           dataType: "unitCount",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -582,7 +582,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            leftCount: {
+            leftUnitCount: {
               blackboardKey: "globalOwnedUnitsOfTypeCount",
               dataType: "unitCount",
               nodeType: "dataValue",
@@ -596,7 +596,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               },
               type: "BLACKBOARD",
             },
-            rightCount: {
+            rightUnitCount: {
               dataType: "unitCount",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -711,14 +711,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            leftCount: {
+            leftUnitCount: {
               blackboardKey: "groupMetaUnitTypeGroupCount",
               dataType: "unitCount",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
-            rightCount: {
+            rightUnitCount: {
               dataType: "unitCount",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -744,7 +744,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
@@ -758,7 +758,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -799,14 +799,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -890,14 +890,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       invert: true,
       nodeType: "condition",
       params: {
-        leftCount: {
+        leftUnitCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
           dataType: "unitCount",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
-        rightCount: {
+        rightUnitCount: {
           dataType: "unitCount",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -914,14 +914,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            leftCount: {
+            leftUnitCount: {
               blackboardKey: "groupMetaUnitTypeGroupCount",
               dataType: "unitCount",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
-            rightCount: {
+            rightUnitCount: {
               dataType: "unitCount",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -946,19 +946,19 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       params: {},
       type: "BLACKBOARD",
     },
-    paramKey: "leftCount",
+    paramKey: "leftUnitCount",
     parent: {
       invert: true,
       nodeType: "condition",
       params: {
-        leftCount: {
+        leftUnitCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
           dataType: "unitCount",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
-        rightCount: {
+        rightUnitCount: {
           dataType: "unitCount",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -975,19 +975,19 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       type: "LITERAL",
       value: 2,
     },
-    paramKey: "rightCount",
+    paramKey: "rightUnitCount",
     parent: {
       invert: true,
       nodeType: "condition",
       params: {
-        leftCount: {
+        leftUnitCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
           dataType: "unitCount",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
-        rightCount: {
+        rightUnitCount: {
           dataType: "unitCount",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -1011,14 +1011,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            leftCount: {
+            leftUnitCount: {
               blackboardKey: "groupMetaUnitTypeGroupCount",
               dataType: "unitCount",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
-            rightCount: {
+            rightUnitCount: {
               dataType: "unitCount",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -1106,7 +1106,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
@@ -1120,7 +1120,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -1161,14 +1161,14 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                leftCount: {
+                leftUnitCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
-                rightCount: {
+                rightUnitCount: {
                   dataType: "unitCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
