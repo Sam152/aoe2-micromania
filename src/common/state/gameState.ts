@@ -88,7 +88,7 @@ export function gameStateMutator(state: GameState, action: GameStateAction, comp
   }
 
   if (action.n === "FORMATION_CHANGED") {
-    changeFormation(state, action);
+    changeFormation(state, action, computed);
   }
 
   if (action.n === "T") {

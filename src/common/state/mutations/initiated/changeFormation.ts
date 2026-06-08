@@ -1,4 +1,4 @@
-import { unitsInGameState } from "../../../util/unitsInGameState.ts";
+import { unitsInGameStateComputed } from "../../../util/unitsInGameState.ts";
 import { populationHas } from "../../../util/populationHas.ts";
 import { populationVector } from "../../../util/populationVector.ts";
 import { patrolGroupTo } from "./patrolTo.ts";
@@ -9,9 +9,14 @@ import { setUnitMovementTowards } from "./setUnitMovementTowards.ts";
 import { addUnitReformingSpeedFactor } from "../../../util/addUnitReformingSpeedFactor.ts";
 import { FormationType } from "../../../units/formations/FormationType.ts";
 import { GameState, UnitId } from "../../../../types.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 
-export function changeFormation(state: GameState, action: { formation: FormationType; units: UnitId[] }) {
-  const units = unitsInGameState(state, action.units);
+export function changeFormation(
+  state: GameState,
+  action: { formation: FormationType; units: UnitId[] },
+  computed: ComputedTickState,
+) {
+  const units = unitsInGameStateComputed(computed, action.units);
   units.forEach((unit) => (unit.formation = action.formation));
 
   if (units.length < 2) {
