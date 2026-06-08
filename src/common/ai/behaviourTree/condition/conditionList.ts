@@ -4,6 +4,7 @@ import { vectorDistanceBetweenLessThan } from "./catalog/vectorDistanceBetweenLe
 import { booleanIsTrue } from "./catalog/booleanIsTrue.ts";
 import { countGreaterThan } from "./catalog/countGreaterThan.ts";
 import { countEquals } from "./catalog/countEquals.ts";
+import { formationEquals } from "./catalog/formationEquals.ts";
 
 export const conditionList = {
   numberEquals,
@@ -12,6 +13,7 @@ export const conditionList = {
   booleanIsTrue,
   countGreaterThan,
   countEquals,
+  formationEquals,
 } as const;
 
 export type ConditionList = typeof conditionList;

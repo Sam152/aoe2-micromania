@@ -8,6 +8,7 @@ import { vectorMagnitude } from "./catalog/vectorMagnitude.ts";
 import { unitId } from "./catalog/unitId.ts";
 import { unitType } from "./catalog/blackboardUnitType.ts";
 import { vectorAngle } from "./catalog/vectorAngle.ts";
+import { formation } from "./catalog/formation.ts";
 
 export const dataTypes = {
   boolean,
@@ -18,6 +19,7 @@ export const dataTypes = {
   vector,
   vectorMagnitude,
   vectorAngle,
+  formation,
 };
 
 export type DataType = keyof typeof dataTypes;
