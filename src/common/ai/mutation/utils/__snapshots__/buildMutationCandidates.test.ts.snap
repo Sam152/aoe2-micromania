@@ -154,7 +154,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
   },
   {
     listNode: {
@@ -308,7 +308,314 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "selector",
+      nodes: [
+        {
+          nodeType: "sequence",
+          nodes: [
+            {
+              invert: true,
+              nodeType: "condition",
+              params: {
+                leftCount: {
+                  blackboardKey: "globalOwnedUnitsOfTypeCount",
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  params: {
+                    unitType: {
+                      dataType: "unitType",
+                      nodeType: "dataValue",
+                      type: "LITERAL",
+                      value: "ARCHER",
+                    },
+                  },
+                  type: "BLACKBOARD",
+                },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 8,
+                },
+              },
+              type: "countGreaterThan",
+            },
+            {
+              nodeType: "action",
+              params: {
+                direction: {
+                  blackboardKey: "opponentAveragePosition",
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  params: {
+                    vectorOffset: {
+                      dataType: "vector",
+                      nodeType: "dataValue",
+                      type: "LITERAL",
+                      value: {
+                        x: 0,
+                        y: 0,
+                      },
+                    },
+                  },
+                  type: "BLACKBOARD",
+                },
+              },
+              type: "PATROL",
+            },
+          ],
+        },
+        {
+          nodeType: "sequence",
+          nodes: [
+            {
+              invert: true,
+              nodeType: "condition",
+              params: {
+                leftCount: {
+                  blackboardKey: "groupMetaUnitTypeGroupCount",
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  params: {},
+                  type: "BLACKBOARD",
+                },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 2,
+                },
+              },
+              type: "countGreaterThan",
+            },
+            {
+              nodeType: "action",
+              params: {},
+              type: "SPLIT_GROUP",
+            },
+          ],
+        },
+        {
+          nodeType: "sequence",
+          nodes: [
+            {
+              invert: false,
+              nodeType: "condition",
+              params: {
+                left: {
+                  dataType: "number",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 0,
+                },
+                right: {
+                  blackboardKey: "groupMetaUnitTypeIndex",
+                  dataType: "number",
+                  nodeType: "dataValue",
+                  params: {},
+                  type: "BLACKBOARD",
+                },
+              },
+              type: "numberEquals",
+            },
+            {
+              nodeType: "action",
+              params: {
+                direction: {
+                  blackboardKey: "opponentAveragePosition",
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  params: {
+                    vectorOffset: {
+                      dataType: "vector",
+                      nodeType: "dataValue",
+                      type: "LITERAL",
+                      value: {
+                        x: 0,
+                        y: 0,
+                      },
+                    },
+                  },
+                  type: "BLACKBOARD",
+                },
+              },
+              type: "PATROL",
+            },
+            {
+              nodeType: "action",
+              params: {
+                forTicksAmount: {
+                  dataType: "number",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 100,
+                },
+              },
+              type: "IDLE",
+            },
+          ],
+        },
+      ],
+    },
+    type: "ADD_NODE_TO_LIST",
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "selector",
+      nodes: [
+        {
+          nodeType: "sequence",
+          nodes: [
+            {
+              invert: true,
+              nodeType: "condition",
+              params: {
+                leftCount: {
+                  blackboardKey: "globalOwnedUnitsOfTypeCount",
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  params: {
+                    unitType: {
+                      dataType: "unitType",
+                      nodeType: "dataValue",
+                      type: "LITERAL",
+                      value: "ARCHER",
+                    },
+                  },
+                  type: "BLACKBOARD",
+                },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 8,
+                },
+              },
+              type: "countGreaterThan",
+            },
+            {
+              nodeType: "action",
+              params: {
+                direction: {
+                  blackboardKey: "opponentAveragePosition",
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  params: {
+                    vectorOffset: {
+                      dataType: "vector",
+                      nodeType: "dataValue",
+                      type: "LITERAL",
+                      value: {
+                        x: 0,
+                        y: 0,
+                      },
+                    },
+                  },
+                  type: "BLACKBOARD",
+                },
+              },
+              type: "PATROL",
+            },
+          ],
+        },
+        {
+          nodeType: "sequence",
+          nodes: [
+            {
+              invert: true,
+              nodeType: "condition",
+              params: {
+                leftCount: {
+                  blackboardKey: "groupMetaUnitTypeGroupCount",
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  params: {},
+                  type: "BLACKBOARD",
+                },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 2,
+                },
+              },
+              type: "countGreaterThan",
+            },
+            {
+              nodeType: "action",
+              params: {},
+              type: "SPLIT_GROUP",
+            },
+          ],
+        },
+        {
+          nodeType: "sequence",
+          nodes: [
+            {
+              invert: false,
+              nodeType: "condition",
+              params: {
+                left: {
+                  dataType: "number",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 0,
+                },
+                right: {
+                  blackboardKey: "groupMetaUnitTypeIndex",
+                  dataType: "number",
+                  nodeType: "dataValue",
+                  params: {},
+                  type: "BLACKBOARD",
+                },
+              },
+              type: "numberEquals",
+            },
+            {
+              nodeType: "action",
+              params: {
+                direction: {
+                  blackboardKey: "opponentAveragePosition",
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  params: {
+                    vectorOffset: {
+                      dataType: "vector",
+                      nodeType: "dataValue",
+                      type: "LITERAL",
+                      value: {
+                        x: 0,
+                        y: 0,
+                      },
+                    },
+                  },
+                  type: "BLACKBOARD",
+                },
+              },
+              type: "PATROL",
+            },
+            {
+              nodeType: "action",
+              params: {
+                forTicksAmount: {
+                  dataType: "number",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 100,
+                },
+              },
+              type: "IDLE",
+            },
+          ],
+        },
+      ],
+    },
+    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
   },
   {
     listNode: {
@@ -520,7 +827,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
   },
   {
     listNode: {
@@ -579,7 +886,124 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "sequence",
+      nodes: [
+        {
+          invert: true,
+          nodeType: "condition",
+          params: {
+            leftCount: {
+              blackboardKey: "globalOwnedUnitsOfTypeCount",
+              dataType: "count",
+              nodeType: "dataValue",
+              params: {
+                unitType: {
+                  dataType: "unitType",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: "ARCHER",
+                },
+              },
+              type: "BLACKBOARD",
+            },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 8,
+            },
+          },
+          type: "countGreaterThan",
+        },
+        {
+          nodeType: "action",
+          params: {
+            direction: {
+              blackboardKey: "opponentAveragePosition",
+              dataType: "vector",
+              nodeType: "dataValue",
+              params: {
+                vectorOffset: {
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: {
+                    x: 0,
+                    y: 0,
+                  },
+                },
+              },
+              type: "BLACKBOARD",
+            },
+          },
+          type: "PATROL",
+        },
+      ],
+    },
+    type: "ADD_NODE_TO_LIST",
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "sequence",
+      nodes: [
+        {
+          invert: true,
+          nodeType: "condition",
+          params: {
+            leftCount: {
+              blackboardKey: "globalOwnedUnitsOfTypeCount",
+              dataType: "count",
+              nodeType: "dataValue",
+              params: {
+                unitType: {
+                  dataType: "unitType",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: "ARCHER",
+                },
+              },
+              type: "BLACKBOARD",
+            },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 8,
+            },
+          },
+          type: "countGreaterThan",
+        },
+        {
+          nodeType: "action",
+          params: {
+            direction: {
+              blackboardKey: "opponentAveragePosition",
+              dataType: "vector",
+              nodeType: "dataValue",
+              params: {
+                vectorOffset: {
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: {
+                    x: 0,
+                    y: 0,
+                  },
+                },
+              },
+              type: "BLACKBOARD",
+            },
+          },
+          type: "PATROL",
+        },
+      ],
+    },
+    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
   },
   {
     listNode: {
@@ -899,7 +1323,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
   },
   {
     listNode: {
@@ -933,7 +1357,74 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "sequence",
+      nodes: [
+        {
+          invert: true,
+          nodeType: "condition",
+          params: {
+            leftCount: {
+              blackboardKey: "groupMetaUnitTypeGroupCount",
+              dataType: "count",
+              nodeType: "dataValue",
+              params: {},
+              type: "BLACKBOARD",
+            },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 2,
+            },
+          },
+          type: "countGreaterThan",
+        },
+        {
+          nodeType: "action",
+          params: {},
+          type: "SPLIT_GROUP",
+        },
+      ],
+    },
+    type: "ADD_NODE_TO_LIST",
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "sequence",
+      nodes: [
+        {
+          invert: true,
+          nodeType: "condition",
+          params: {
+            leftCount: {
+              blackboardKey: "groupMetaUnitTypeGroupCount",
+              dataType: "count",
+              nodeType: "dataValue",
+              params: {},
+              type: "BLACKBOARD",
+            },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 2,
+            },
+          },
+          type: "countGreaterThan",
+        },
+        {
+          nodeType: "action",
+          params: {},
+          type: "SPLIT_GROUP",
+        },
+      ],
+    },
+    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
   },
   {
     listNode: {
@@ -1125,7 +1616,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
   },
   {
     listNode: {
@@ -1189,7 +1680,134 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       ],
     },
     type: "ADD_NODE_TO_LIST",
-    weight: 2,
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "sequence",
+      nodes: [
+        {
+          invert: false,
+          nodeType: "condition",
+          params: {
+            left: {
+              dataType: "number",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 0,
+            },
+            right: {
+              blackboardKey: "groupMetaUnitTypeIndex",
+              dataType: "number",
+              nodeType: "dataValue",
+              params: {},
+              type: "BLACKBOARD",
+            },
+          },
+          type: "numberEquals",
+        },
+        {
+          nodeType: "action",
+          params: {
+            direction: {
+              blackboardKey: "opponentAveragePosition",
+              dataType: "vector",
+              nodeType: "dataValue",
+              params: {
+                vectorOffset: {
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: {
+                    x: 0,
+                    y: 0,
+                  },
+                },
+              },
+              type: "BLACKBOARD",
+            },
+          },
+          type: "PATROL",
+        },
+        {
+          nodeType: "action",
+          params: {
+            forTicksAmount: {
+              dataType: "number",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 100,
+            },
+          },
+          type: "IDLE",
+        },
+      ],
+    },
+    type: "ADD_NODE_TO_LIST",
+    weight: 3,
+  },
+  {
+    listNode: {
+      nodeType: "sequence",
+      nodes: [
+        {
+          invert: false,
+          nodeType: "condition",
+          params: {
+            left: {
+              dataType: "number",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 0,
+            },
+            right: {
+              blackboardKey: "groupMetaUnitTypeIndex",
+              dataType: "number",
+              nodeType: "dataValue",
+              params: {},
+              type: "BLACKBOARD",
+            },
+          },
+          type: "numberEquals",
+        },
+        {
+          nodeType: "action",
+          params: {
+            direction: {
+              blackboardKey: "opponentAveragePosition",
+              dataType: "vector",
+              nodeType: "dataValue",
+              params: {
+                vectorOffset: {
+                  dataType: "vector",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: {
+                    x: 0,
+                    y: 0,
+                  },
+                },
+              },
+              type: "BLACKBOARD",
+            },
+          },
+          type: "PATROL",
+        },
+        {
+          nodeType: "action",
+          params: {
+            forTicksAmount: {
+              dataType: "number",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 100,
+            },
+          },
+          type: "IDLE",
+        },
+      ],
+    },
+    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
   },
   {
     listNode: {

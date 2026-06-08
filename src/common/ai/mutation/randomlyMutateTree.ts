@@ -1,4 +1,4 @@
-import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
+import { BehaviourTreeNode, BehaviourTreeNodeType } from "../behaviourTree/BehaviourTree.ts";
 import { UnitType } from "../../units/UnitType.ts";
 import { arrayOfSize } from "../../util/arrayOfSize.ts";
 import { buildMutationCandidates } from "./utils/buildMutationCandidates.ts";
@@ -8,6 +8,7 @@ import { DataValue } from "../behaviourTree/dataValue/DataValue.ts";
 import { randomNode } from "./factories/randomNode.ts";
 import { randomDataValue } from "./factories/randomDataValue.ts";
 import { randomLiteral } from "./factories/randomLiteral.ts";
+import { isNever } from "../../util/isNever.ts";
 
 export function randomlyMutateTree(
   { count, tree, unitType }: { count: number; tree: BehaviourTreeNode; unitType: UnitType },
@@ -20,6 +21,7 @@ export function randomlyMutateTree(
 
     if (mutation.type === "INVERT_CONDITION") {
       mutation.condition.invert = !mutation.condition.invert;
+      return;
     }
 
     if (mutation.type === "REPLACE_PARAM_DATA_VALUE") {
@@ -30,24 +32,47 @@ export function randomlyMutateTree(
         mutation.paramName,
         mutation.node,
       );
+      return;
     }
 
     if (mutation.type === "CHANGE_LITERAL_DATA_VALUE") {
       const param = (mutation.parentNode.params as Record<string, DataValue & { value: unknown }>)[mutation.paramName];
       param.value = randomLiteral(param.dataType);
+      return;
     }
 
     if (mutation.type === "REMOVE_NODE_FROM_LIST") {
       mutation.listNode.nodes.splice(Math.floor(Math.random() * mutation.listNode.nodes.length), 1);
+      return;
     }
 
     if (mutation.type === "ADD_NODE_TO_LIST") {
+      const type: BehaviourTreeNodeType = randomArray([
+        "condition",
+        "action",
+      ]);
       mutation.listNode.nodes.splice(
         Math.floor(Math.random() * mutation.listNode.nodes.length),
         0,
-        randomNode(unitType),
+        randomNode(unitType, type),
       );
+      return;
     }
+
+    if (mutation.type === "ADD_SEQ_OR_SEL_NODE_TO_LIST") {
+      const type: BehaviourTreeNodeType = randomArray([
+        "sequence",
+        "selector",
+      ]);
+      mutation.listNode.nodes.splice(
+        Math.floor(Math.random() * mutation.listNode.nodes.length),
+        0,
+        randomNode(unitType, type),
+      );
+      return;
+    }
+
+    return isNever(mutation);
   });
 
   return newTree;

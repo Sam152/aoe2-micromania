@@ -22,6 +22,10 @@ type MutationCandidate =
       listNode: Sequence | Selector;
     }
     | {
+      type: "ADD_SEQ_OR_SEL_NODE_TO_LIST";
+      listNode: Sequence | Selector;
+    }
+    | {
       type: "REMOVE_NODE_FROM_LIST";
       listNode: Sequence | Selector;
     }
@@ -53,7 +57,9 @@ function buildMutationCandidatesWithWeights(flatNodes: FlatTreeNode[]): Mutation
 
     if (flatNode.node.nodeType === "selector" || flatNode.node.nodeType === "sequence") {
       return [
-        { type: "ADD_NODE_TO_LIST", listNode: flatNode.node, weight: 2 },
+        // Insert conditions and actions 3x as often as sequences or selectors.
+        { type: "ADD_NODE_TO_LIST", listNode: flatNode.node, weight: 3 },
+        { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node },
         { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node },
       ];
     }
