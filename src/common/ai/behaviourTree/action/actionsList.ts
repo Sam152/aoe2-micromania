@@ -4,6 +4,9 @@ import { splitGroup } from "./catalog/splitGroup.ts";
 import { mergeGroup } from "./catalog/mergeGroup.ts";
 import { convert } from "./catalog/convert.ts";
 import { moveUnits } from "./catalog/moveUnits.ts";
+import { formationLine } from "./catalog/formationLine.ts";
+import { formationSplit } from "./catalog/formationSplit.ts";
+import { formationSpread } from "./catalog/formationSpread.ts";
 
 export const actionsList = {
   PATROL: patrol,
@@ -12,6 +15,9 @@ export const actionsList = {
   MERGE_GROUP: mergeGroup,
   CONVERT: convert,
   MOVE_UNITS: moveUnits,
+  FORMATION_LINE: formationLine,
+  FORMATION_SPLIT: formationSplit,
+  FORMATION_SPREAD: formationSpread,
 } as const;
 
 export type ActionsList = typeof actionsList;
