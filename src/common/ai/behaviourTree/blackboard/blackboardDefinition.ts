@@ -12,6 +12,10 @@ import { groupIsConverting } from "./catalog/groupIsConverting.ts";
 import { groupFormation } from "./catalog/groupFormation.ts";
 import { opponentFormationByType } from "./catalog/opponentFormationByType.ts";
 import { groupVectorFacingDirection } from "./catalog/groupVectorFacingDirection.ts";
+import {
+  opponentNextProjectileLandingInTicksTimeByType,
+} from "./catalog/opponentNextProjectileLandingInTicksTimeByType.ts";
+import { opponentNextProjectileLandingPositionByType } from "./catalog/opponentNextProjectileLandingPositionByType.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -28,6 +32,8 @@ export const blackboardDefinition = {
   groupIsConverting,
   groupFormation,
   opponentFormationByType,
+  opponentNextProjectileLandingInTicksTimeByType,
+  opponentNextProjectileLandingPositionByType,
 } as const;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
