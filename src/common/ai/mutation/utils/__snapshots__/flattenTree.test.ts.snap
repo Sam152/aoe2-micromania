@@ -141,7 +141,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "action",
               params: {
                 forTicksAmount: {
-                  dataType: "number",
+                  dataType: "tickCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 100,
@@ -349,7 +349,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "action",
               params: {
                 forTicksAmount: {
-                  dataType: "number",
+                  dataType: "tickCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 100,
@@ -872,7 +872,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "action",
               params: {
                 forTicksAmount: {
-                  dataType: "number",
+                  dataType: "tickCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 100,
@@ -1086,7 +1086,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "action",
           params: {
             forTicksAmount: {
-              dataType: "number",
+              dataType: "tickCount",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 100,
@@ -1234,7 +1234,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "action",
               params: {
                 forTicksAmount: {
-                  dataType: "number",
+                  dataType: "tickCount",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 100,
@@ -1319,7 +1319,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "action",
           params: {
             forTicksAmount: {
-              dataType: "number",
+              dataType: "tickCount",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 100,
@@ -1464,7 +1464,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "action",
           params: {
             forTicksAmount: {
-              dataType: "number",
+              dataType: "tickCount",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 100,
@@ -1552,7 +1552,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       nodeType: "action",
       params: {
         forTicksAmount: {
-          dataType: "number",
+          dataType: "tickCount",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 100,
@@ -1611,7 +1611,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "action",
           params: {
             forTicksAmount: {
-              dataType: "number",
+              dataType: "tickCount",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 100,
@@ -1624,7 +1624,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
   },
   {
     node: {
-      dataType: "number",
+      dataType: "tickCount",
       nodeType: "dataValue",
       type: "LITERAL",
       value: 100,
@@ -1634,7 +1634,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       nodeType: "action",
       params: {
         forTicksAmount: {
-          dataType: "number",
+          dataType: "tickCount",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 100,

@@ -21,7 +21,7 @@ describe("pruneTree", () => {
 
     assertEquals(flattenTree(winningTree[UnitType.Archer]).length, 22);
     assertEquals(flattenTree(winningTree[UnitType.Monk]).length, 18);
-    assertEquals(flattenTree(winningTree[UnitType.Mangonel]).length, 13);
+    assertEquals(flattenTree(winningTree[UnitType.Mangonel]).length, 11);
 
     // Pruning the tree reduces its branches significantly.
     const winningTreePruned = pruneUnitAwareTree(winningTree, winner.bots.player2.activations);
