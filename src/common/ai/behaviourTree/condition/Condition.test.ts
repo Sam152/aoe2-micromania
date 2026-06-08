@@ -6,8 +6,8 @@ Deno.test("type safety", () => {
     type: "groupIndexEquals",
     invert: false,
     params: {
-      left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
-      right: {
+      groupIndexLeft: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
+      groupIndexRight: {
         nodeType: "dataValue",
         dataType: "groupIndex",
         type: "BLACKBOARD",
@@ -21,8 +21,8 @@ Deno.test("type safety", () => {
     type: "groupIndexEquals",
     invert: false,
     params: {
-      left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
-      right: {
+      groupIndexLeft: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
+      groupIndexRight: {
         nodeType: "dataValue",
         dataType: "groupIndex",
         type: "BLACKBOARD",

@@ -159,14 +159,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexGreaterThan",
             "invert": false,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
@@ -216,13 +216,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexEquals",
             "invert": false,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
                 "value": 155,
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
@@ -378,13 +378,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "groupIndexGreaterThan",
         "invert": false,
         "params": {
-          "left": {
+          "groupIndexLeft": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "groupIndex",
             "value": 62,
           },
-          "right": {
+          "groupIndexRight": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "groupIndex",
@@ -442,14 +442,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexGreaterThan",
             "invert": true,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
@@ -587,14 +587,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexEquals",
             "invert": true,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
@@ -612,13 +612,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexEquals",
             "invert": true,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
                 "value": 220,
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
@@ -645,14 +645,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "groupIndexEquals",
         "invert": false,
         "params": {
-          "left": {
+          "groupIndexLeft": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "groupIndex",
             "blackboardKey": "groupMetaUnitTypeIndex",
             "params": {},
           },
-          "right": {
+          "groupIndexRight": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "groupIndex",
@@ -767,13 +767,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                     "type": "groupIndexEquals",
                     "invert": false,
                     "params": {
-                      "left": {
+                      "groupIndexLeft": {
                         "nodeType": "dataValue",
                         "type": "LITERAL",
                         "dataType": "groupIndex",
                         "value": 491,
                       },
-                      "right": {
+                      "groupIndexRight": {
                         "nodeType": "dataValue",
                         "type": "LITERAL",
                         "dataType": "groupIndex",
@@ -799,13 +799,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                     "type": "groupIndexEquals",
                     "invert": false,
                     "params": {
-                      "left": {
+                      "groupIndexLeft": {
                         "nodeType": "dataValue",
                         "type": "LITERAL",
                         "dataType": "groupIndex",
                         "value": 315,
                       },
-                      "right": {
+                      "groupIndexRight": {
                         "nodeType": "dataValue",
                         "type": "LITERAL",
                         "dataType": "groupIndex",
@@ -820,13 +820,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                 "type": "groupIndexEquals",
                 "invert": true,
                 "params": {
-                  "left": {
+                  "groupIndexLeft": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "groupIndex",
                     "value": 3,
                   },
-                  "right": {
+                  "groupIndexRight": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "groupIndex",
@@ -839,13 +839,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                 "type": "groupIndexGreaterThan",
                 "invert": true,
                 "params": {
-                  "left": {
+                  "groupIndexLeft": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "groupIndex",
                     "value": 391,
                   },
-                  "right": {
+                  "groupIndexRight": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "groupIndex",
@@ -863,13 +863,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "groupIndexEquals",
         "invert": false,
         "params": {
-          "left": {
+          "groupIndexLeft": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "groupIndex",
             "value": 39,
           },
-          "right": {
+          "groupIndexRight": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "groupIndex",
@@ -966,13 +966,13 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "type": "groupIndexGreaterThan",
         "invert": false,
         "params": {
-          "left": {
+          "groupIndexLeft": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "groupIndex",
             "value": 219,
           },
-          "right": {
+          "groupIndexRight": {
             "nodeType": "dataValue",
             "type": "LITERAL",
             "dataType": "groupIndex",
@@ -1049,14 +1049,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexEquals",
             "invert": false,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
@@ -1089,14 +1089,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "type": "groupIndexGreaterThan",
             "invert": false,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
@@ -1217,14 +1217,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                     "type": "groupIndexEquals",
                     "invert": false,
                     "params": {
-                      "left": {
+                      "groupIndexLeft": {
                         "nodeType": "dataValue",
                         "type": "BLACKBOARD",
                         "dataType": "groupIndex",
                         "blackboardKey": "groupMetaUnitTypeIndex",
                         "params": {},
                       },
-                      "right": {
+                      "groupIndexRight": {
                         "nodeType": "dataValue",
                         "type": "LITERAL",
                         "dataType": "groupIndex",
@@ -1306,14 +1306,14 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                 "type": "groupIndexEquals",
                 "invert": true,
                 "params": {
-                  "left": {
+                  "groupIndexLeft": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "groupIndex",
                     "blackboardKey": "groupMetaUnitTypeIndex",
                     "params": {},
                   },
-                  "right": {
+                  "groupIndexRight": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "groupIndex",

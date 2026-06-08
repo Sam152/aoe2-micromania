@@ -250,13 +250,13 @@ export const sampleTree: UnitAwareBehaviourTree = {
             type: "groupIndexEquals",
             invert: false,
             params: {
-              left: {
+              groupIndexLeft: {
                 nodeType: "dataValue",
                 dataType: "groupIndex",
                 type: "LITERAL",
                 value: 0,
               },
-              right: {
+              groupIndexRight: {
                 nodeType: "dataValue",
                 dataType: "groupIndex",
                 type: "BLACKBOARD",

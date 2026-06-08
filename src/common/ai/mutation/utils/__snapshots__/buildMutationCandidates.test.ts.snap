@@ -98,13 +98,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: false,
               nodeType: "condition",
               params: {
-                left: {
+                groupIndexLeft: {
                   dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
-                right: {
+                groupIndexRight: {
                   blackboardKey: "groupMetaUnitTypeIndex",
                   dataType: "groupIndex",
                   nodeType: "dataValue",
@@ -252,13 +252,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: false,
               nodeType: "condition",
               params: {
-                left: {
+                groupIndexLeft: {
                   dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
-                right: {
+                groupIndexRight: {
                   blackboardKey: "groupMetaUnitTypeIndex",
                   dataType: "groupIndex",
                   nodeType: "dataValue",
@@ -406,13 +406,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: false,
               nodeType: "condition",
               params: {
-                left: {
+                groupIndexLeft: {
                   dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
-                right: {
+                groupIndexRight: {
                   blackboardKey: "groupMetaUnitTypeIndex",
                   dataType: "groupIndex",
                   nodeType: "dataValue",
@@ -560,13 +560,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: false,
               nodeType: "condition",
               params: {
-                left: {
+                groupIndexLeft: {
                   dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
-                right: {
+                groupIndexRight: {
                   blackboardKey: "groupMetaUnitTypeIndex",
                   dataType: "groupIndex",
                   nodeType: "dataValue",
@@ -713,13 +713,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: false,
               nodeType: "condition",
               params: {
-                left: {
+                groupIndexLeft: {
                   dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
-                right: {
+                groupIndexRight: {
                   blackboardKey: "groupMetaUnitTypeIndex",
                   dataType: "groupIndex",
                   nodeType: "dataValue",
@@ -1562,13 +1562,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: false,
           nodeType: "condition",
           params: {
-            left: {
+            groupIndexLeft: {
               dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
-            right: {
+            groupIndexRight: {
               blackboardKey: "groupMetaUnitTypeIndex",
               dataType: "groupIndex",
               nodeType: "dataValue",
@@ -1626,13 +1626,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: false,
           nodeType: "condition",
           params: {
-            left: {
+            groupIndexLeft: {
               dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
-            right: {
+            groupIndexRight: {
               blackboardKey: "groupMetaUnitTypeIndex",
               dataType: "groupIndex",
               nodeType: "dataValue",
@@ -1690,13 +1690,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: false,
           nodeType: "condition",
           params: {
-            left: {
+            groupIndexLeft: {
               dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
-            right: {
+            groupIndexRight: {
               blackboardKey: "groupMetaUnitTypeIndex",
               dataType: "groupIndex",
               nodeType: "dataValue",
@@ -1754,13 +1754,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: false,
           nodeType: "condition",
           params: {
-            left: {
+            groupIndexLeft: {
               dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
-            right: {
+            groupIndexRight: {
               blackboardKey: "groupMetaUnitTypeIndex",
               dataType: "groupIndex",
               nodeType: "dataValue",
@@ -1817,13 +1817,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: false,
           nodeType: "condition",
           params: {
-            left: {
+            groupIndexLeft: {
               dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
-            right: {
+            groupIndexRight: {
               blackboardKey: "groupMetaUnitTypeIndex",
               dataType: "groupIndex",
               nodeType: "dataValue",
@@ -1877,13 +1877,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       invert: false,
       nodeType: "condition",
       params: {
-        left: {
+        groupIndexLeft: {
           dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
-        right: {
+        groupIndexRight: {
           blackboardKey: "groupMetaUnitTypeIndex",
           dataType: "groupIndex",
           nodeType: "dataValue",
@@ -1900,13 +1900,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       invert: false,
       nodeType: "condition",
       params: {
-        left: {
+        groupIndexLeft: {
           dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
-        right: {
+        groupIndexRight: {
           blackboardKey: "groupMetaUnitTypeIndex",
           dataType: "groupIndex",
           nodeType: "dataValue",
@@ -1916,7 +1916,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       },
       type: "groupIndexEquals",
     },
-    paramName: "left",
+    paramName: "groupIndexLeft",
     type: "REPLACE_PARAM_DATA_VALUE",
   },
   {
@@ -1924,13 +1924,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       invert: false,
       nodeType: "condition",
       params: {
-        left: {
+        groupIndexLeft: {
           dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
-        right: {
+        groupIndexRight: {
           blackboardKey: "groupMetaUnitTypeIndex",
           dataType: "groupIndex",
           nodeType: "dataValue",
@@ -1940,22 +1940,22 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       },
       type: "groupIndexEquals",
     },
-    paramName: "right",
+    paramName: "groupIndexRight",
     type: "REPLACE_PARAM_DATA_VALUE",
   },
   {
-    paramName: "left",
+    paramName: "groupIndexLeft",
     parentNode: {
       invert: false,
       nodeType: "condition",
       params: {
-        left: {
+        groupIndexLeft: {
           dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
-        right: {
+        groupIndexRight: {
           blackboardKey: "groupMetaUnitTypeIndex",
           dataType: "groupIndex",
           nodeType: "dataValue",

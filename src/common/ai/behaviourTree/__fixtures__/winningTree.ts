@@ -53,13 +53,13 @@ export const winningTree: UnitAwareBehaviourTree = {
             "type": "groupIndexGreaterThan",
             "invert": false,
             "params": {
-              "left": {
+              "groupIndexLeft": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "groupIndex",
                 "value": 75,
               },
-              "right": {
+              "groupIndexRight": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "groupIndex",
