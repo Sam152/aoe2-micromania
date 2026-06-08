@@ -31,7 +31,7 @@ export function changeFormation(
       patrolGroupTo(state, units, returningTo, destination);
     } else {
       const destination = populationVector(units, "patrollingTo");
-      const returningTo = units.map(({ patrollingToReturn }) => patrollingToReturn!);
+      const returningTo = units.map((unit) => unit.patrollingToReturn ?? unit.position);
       patrolGroupTo(state, units, returningTo, destination);
     }
   } else if (populationHas(units, "waypoints")) {
