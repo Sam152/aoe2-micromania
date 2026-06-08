@@ -1,28 +1,20 @@
-import { DataType } from "../../behaviourTree/dataType/dataTypes.ts";
+import { DataType, TypeFromDataType } from "../../behaviourTree/dataType/dataTypes.ts";
 import { randomArray } from "../../../util/randomArray.ts";
-import { isNever } from "../../../util/isNever.ts";
 
-export function randomLiteral(dataType: DataType): unknown {
-  switch (dataType) {
-    case "boolean":
-      return Math.random() < 0.5;
-    case "count":
-      return Math.floor(Math.random() * 40);
-    case "number":
-      return Math.floor(Math.random() * 500);
-    case "unitType":
-      return randomArray(["ARCHER", "MANGO", "MONK"]);
-    case "formation":
-      return randomArray(["SPREAD", "LINE", "SPLIT"]);
-    case "vector":
-      return { x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) };
-    case "vectorMagnitude":
-      return Math.floor(Math.random() * 500);
-    case "vectorAngle":
-      return Math.floor(Math.random() * 360);
-    case "unitId":
-      throw new Error("Generating random unit IDs does not make sense");
-    default:
-      return isNever(dataType);
-  }
+const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
+  boolean: () => Math.random() < 0.5,
+  count: () => Math.floor(Math.random() * 40),
+  number: () => Math.floor(Math.random() * 500),
+  unitType: () => randomArray(["ARCHER", "MANGO", "MONK"]),
+  formation: () => randomArray(["SPREAD", "LINE", "SPLIT"]),
+  vector: () => ({ x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) }),
+  vectorMagnitude: () => Math.floor(Math.random() * 500),
+  vectorAngle: () => Math.floor(Math.random() * 360),
+  unitId: () => {
+    throw new Error("Generating random unit IDs does not make sense");
+  },
+};
+
+export function randomLiteral<TDataType extends DataType>(dataType: TDataType): TypeFromDataType<TDataType> {
+  return literalGenerators[dataType]();
 }
