@@ -37,7 +37,7 @@ Deno.test("type safety", () => {
   // Non-default unitType values are valid in blackboard params too
   const _blackboardParam: DataValue = {
     nodeType: "dataValue",
-    dataType: "count",
+    dataType: "unitCount",
     type: "BLACKBOARD",
     blackboardKey: "globalOwnedUnitsOfTypeCount",
     params: {
@@ -51,7 +51,7 @@ Deno.test("type safety", () => {
   };
   const _invalidBlackboardParam: DataValue = {
     nodeType: "dataValue",
-    dataType: "count",
+    dataType: "unitCount",
     type: "BLACKBOARD",
     blackboardKey: "globalOwnedUnitsOfTypeCount",
     params: {

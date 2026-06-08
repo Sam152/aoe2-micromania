@@ -171,13 +171,13 @@ export const winningTree: UnitAwareBehaviourTree = {
           "leftCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "count",
+            "dataType": "unitCount",
             "value": 39,
           },
           "rightCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
-            "dataType": "count",
+            "dataType": "unitCount",
             "blackboardKey": "globalOwnedUnitsOfTypeCount",
             "params": {
               "unitType": {
@@ -198,7 +198,7 @@ export const winningTree: UnitAwareBehaviourTree = {
           "leftCount": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
-            "dataType": "count",
+            "dataType": "unitCount",
             "blackboardKey": "globalOwnedUnitsOfTypeCount",
             "params": {
               "unitType": {
@@ -212,21 +212,8 @@ export const winningTree: UnitAwareBehaviourTree = {
           "rightCount": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "count",
+            "dataType": "unitCount",
             "value": 35,
-          },
-        },
-      },
-      {
-        "nodeType": "action",
-        "type": "IDLE",
-        "params": {
-          "forTicksAmount": {
-            "nodeType": "dataValue",
-            "type": "BLACKBOARD",
-            "dataType": "number",
-            "blackboardKey": "groupMetaUnitTypeIndex",
-            "params": {},
           },
         },
       },
@@ -327,7 +314,7 @@ export const winningTree: UnitAwareBehaviourTree = {
               "leftCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
-                "dataType": "count",
+                "dataType": "unitCount",
                 "blackboardKey": "globalOwnedUnitsOfTypeCount",
                 "params": {
                   "unitType": {
@@ -341,7 +328,7 @@ export const winningTree: UnitAwareBehaviourTree = {
               "rightCount": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
-                "dataType": "count",
+                "dataType": "unitCount",
                 "value": 16,
               },
             },

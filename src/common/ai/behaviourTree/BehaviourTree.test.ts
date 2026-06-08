@@ -59,7 +59,7 @@ Deno.test("behaviour tree type safety", () => {
     nodeType: "action",
     type: "IDLE",
     params: {
-      forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+      forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 },
       // @ts-expect-error - IDLE has no such param
       notAParam: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
     },

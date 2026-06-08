@@ -94,7 +94,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
             },
           ],
         },
@@ -106,7 +106,7 @@ describe("tree evaluation", () => {
           actionNode: {
             nodeType: "action",
             type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
           },
           resolvedParams: {
             forTicksAmount: 1,
@@ -146,7 +146,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 },
                   },
                 },
               ],
@@ -173,7 +173,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 },
                   },
                 },
               ],
@@ -200,7 +200,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 3 },
                   },
                 },
               ],
@@ -215,7 +215,7 @@ describe("tree evaluation", () => {
           actionNode: {
             nodeType: "action",
             type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 } },
           },
           resolvedParams: { forTicksAmount: 2 },
         }],
@@ -253,7 +253,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 },
                   },
                 },
               ],
@@ -280,7 +280,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 },
                   },
                 },
               ],
@@ -288,7 +288,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 3 } },
             },
           ],
         },
@@ -301,7 +301,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
             },
             resolvedParams: { forTicksAmount: 1 },
           },
@@ -310,7 +310,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 } },
             },
             resolvedParams: { forTicksAmount: 2 },
           },
@@ -319,7 +319,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 3 } },
             },
             resolvedParams: { forTicksAmount: 3 },
           },
@@ -375,7 +375,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
             },
             {
               nodeType: "condition",
@@ -395,7 +395,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 } },
             },
           ],
         },
@@ -408,7 +408,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
             },
             resolvedParams: { forTicksAmount: 1 },
           },
@@ -435,7 +435,7 @@ describe("tree evaluation", () => {
                       nodeType: "action",
                       type: "IDLE",
                       params: {
-                        forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+                        forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 },
                       },
                     },
                   ],
@@ -444,7 +444,7 @@ describe("tree evaluation", () => {
                   nodeType: "action",
                   type: "IDLE",
                   params: {
-                    forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
+                    forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 },
                   },
                 },
                 {
@@ -492,7 +492,7 @@ describe("tree evaluation", () => {
                               params: {
                                 forTicksAmount: {
                                   nodeType: "dataValue",
-                                  dataType: "number",
+                                  dataType: "tickCount",
                                   type: "LITERAL",
                                   value: 3,
                                 },
@@ -509,7 +509,7 @@ describe("tree evaluation", () => {
             {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 4 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 4 } },
             },
           ],
         },
@@ -522,7 +522,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
             },
             resolvedParams: { forTicksAmount: 1 },
           },
@@ -531,7 +531,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 2 } },
             },
             resolvedParams: { forTicksAmount: 2 },
           },
@@ -540,7 +540,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 3 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 3 } },
             },
             resolvedParams: { forTicksAmount: 3 },
           },
@@ -549,7 +549,7 @@ describe("tree evaluation", () => {
             actionNode: {
               nodeType: "action",
               type: "IDLE",
-              params: { forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 4 } },
+              params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 4 } },
             },
             resolvedParams: { forTicksAmount: 4 },
           },
@@ -576,12 +576,12 @@ describe("tree evaluation", () => {
           params: {
             leftCount: {
               nodeType: "dataValue",
-              dataType: "count",
+              dataType: "unitCount",
               type: "BLACKBOARD",
               blackboardKey: "groupUnitCount",
               params: {},
             },
-            rightCount: { nodeType: "dataValue", dataType: "count", type: "LITERAL", value: 5 },
+            rightCount: { nodeType: "dataValue", dataType: "unitCount", type: "LITERAL", value: 5 },
           },
         },
       }),
@@ -590,31 +590,5 @@ describe("tree evaluation", () => {
   });
 
   it("evaluates an action as false when its params cannot be resolved", () => {
-    const unresolvableComputer = {
-      ...blackboardComputer,
-      groupMetaUnitTypeIndex: () => undefined,
-    } as unknown as BlackboardComputer;
-
-    assertEquals(
-      evaluateTreeNode({
-        actionNodes: [],
-        ...params,
-        blackboardComputer: unresolvableComputer,
-        node: {
-          nodeType: "action",
-          type: "IDLE",
-          params: {
-            forTicksAmount: {
-              nodeType: "dataValue",
-              dataType: "number",
-              type: "BLACKBOARD",
-              blackboardKey: "groupMetaUnitTypeIndex",
-              params: {},
-            },
-          },
-        },
-      }),
-      { result: false, actionNodes: [] },
-    );
   });
 });

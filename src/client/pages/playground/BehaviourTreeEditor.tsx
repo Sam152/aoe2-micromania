@@ -211,7 +211,7 @@ function LiteralEditor(
       />
     );
   }
-  if (dataType === "number" || dataType === "count" || dataType === "vectorMagnitude") {
+  if (dataType === "number" || dataType === "unitCount" || dataType === "vectorMagnitude") {
     return (
       <input
         type="number"

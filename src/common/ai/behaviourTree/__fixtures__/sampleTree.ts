@@ -172,7 +172,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
             params: {
               leftCount: {
                 nodeType: "dataValue",
-                dataType: "count",
+                dataType: "unitCount",
                 type: "BLACKBOARD",
                 blackboardKey: "globalOwnedUnitsOfTypeCount",
                 params: {
@@ -186,7 +186,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               },
               rightCount: {
                 nodeType: "dataValue",
-                dataType: "count",
+                dataType: "unitCount",
                 type: "LITERAL",
                 value: 8,
               },
@@ -225,14 +225,14 @@ export const sampleTree: UnitAwareBehaviourTree = {
             params: {
               leftCount: {
                 nodeType: "dataValue",
-                dataType: "count",
+                dataType: "unitCount",
                 type: "BLACKBOARD",
                 blackboardKey: "groupMetaUnitTypeGroupCount",
                 params: {},
               },
               rightCount: {
                 nodeType: "dataValue",
-                dataType: "count",
+                dataType: "unitCount",
                 type: "LITERAL",
                 value: 2,
               },
@@ -291,7 +291,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
             params: {
               forTicksAmount: {
                 nodeType: "dataValue",
-                dataType: "number",
+                dataType: "tickCount",
                 type: "LITERAL",
                 value: 100,
               },
@@ -330,7 +330,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
         params: {
           forTicksAmount: {
             nodeType: "dataValue",
-            dataType: "number",
+            dataType: "tickCount",
             type: "LITERAL",
             value: 100,
           },

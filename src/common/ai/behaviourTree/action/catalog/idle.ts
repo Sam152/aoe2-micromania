@@ -9,7 +9,7 @@ export const idle = defineAction({
   applicableForUnitType: [UnitType.Monk, UnitType.Archer, UnitType.Mangonel],
   params: {
     forTicksAmount: {
-      dataType: "number",
+      dataType: "tickCount",
     },
   },
   execute: () => undefined,

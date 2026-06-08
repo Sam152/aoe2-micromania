@@ -3,16 +3,18 @@ import { number } from "./catalog/number.ts";
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 
 import { vector } from "./catalog/vector.ts";
-import { count } from "./catalog/count.ts";
+import { unitCount } from "./catalog/unitCount.ts";
 import { vectorMagnitude } from "./catalog/vectorMagnitude.ts";
 import { unitId } from "./catalog/unitId.ts";
 import { unitType } from "./catalog/blackboardUnitType.ts";
 import { vectorAngle } from "./catalog/vectorAngle.ts";
 import { formation } from "./catalog/formation.ts";
+import { tickCount } from "./catalog/tickCount.ts";
 
 export const dataTypes = {
   boolean,
-  count,
+  unitCount,
+  tickCount,
   number,
   unitId,
   unitType,

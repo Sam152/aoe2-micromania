@@ -5,7 +5,7 @@ Deno.test("type safety", () => {
     nodeType: "action",
     type: "IDLE",
     params: {
-      forTicksAmount: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+      forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 },
     },
   };
   // @ts-expect-error - string instead of number

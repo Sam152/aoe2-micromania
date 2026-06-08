@@ -3,7 +3,8 @@ import { randomArray } from "../../../util/randomArray.ts";
 
 const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   boolean: () => Math.random() < 0.5,
-  count: () => Math.floor(Math.random() * 40),
+  unitCount: () => Math.floor(Math.random() * 40),
+  tickCount: () => Math.floor(Math.random() * 100),
   number: () => Math.floor(Math.random() * 500),
   unitType: () => randomArray(["ARCHER", "MANGO", "MONK"]),
   formation: () => randomArray(["SPREAD", "LINE", "SPLIT"]),

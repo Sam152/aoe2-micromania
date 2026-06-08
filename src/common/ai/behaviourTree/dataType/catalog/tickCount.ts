@@ -1,6 +1,6 @@
 import { DataTypeDefinition } from "../DataTypeDefinition.ts";
 
-export const count: DataTypeDefinition<number> = {
+export const tickCount: DataTypeDefinition<number> = {
   allowedValueTypes: ["BLACKBOARD", "LITERAL"],
-  defaultValue: 0,
+  defaultValue: 1,
 };

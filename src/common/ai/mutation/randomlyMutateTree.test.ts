@@ -5,7 +5,7 @@ import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "./randomlyMutateUnitAwareBehaviourTree.ts";
 import { dumpTree } from "./dumpTree.ts";
 
-describe.skip("randomlyMutateTree", () => {
+describe("randomlyMutateTree", () => {
   it("randomlyMutatedTree", () => {
     dumpTree("randomlyMutatedTree", randomlyMutateUnitAwareBehaviourTree({ count: 20, tree: sampleTree }));
   });
@@ -15,7 +15,7 @@ describe.skip("randomlyMutateTree", () => {
     dumpTree(
       "randomlyGeneratedTree",
       randomlyMutateUnitAwareBehaviourTree({
-        count: 10_000,
+        count: 100,
         tree: { [UnitType.Archer]: emptyTree, [UnitType.Mangonel]: emptyTree, [UnitType.Monk]: emptyTree },
       }),
     );

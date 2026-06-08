@@ -72,7 +72,7 @@ describe("resolveDataValueToPrimitive", () => {
       resolve({
         nodeType: "dataValue",
         type: "BLACKBOARD",
-        dataType: "count",
+        dataType: "unitCount",
         blackboardKey: "globalOwnedUnitsOfTypeCount",
         params: {
           unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
@@ -111,7 +111,7 @@ describe("resolveParamDataValues", () => {
         archerCount: {
           nodeType: "dataValue",
           type: "BLACKBOARD",
-          dataType: "count",
+          dataType: "unitCount",
           blackboardKey: "globalOwnedUnitsOfTypeCount",
           params: {
             unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
