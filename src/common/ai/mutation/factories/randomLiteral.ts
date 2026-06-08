@@ -1,8 +1,6 @@
 import { DataType } from "../../behaviourTree/dataType/dataTypes.ts";
-import { BlackboardUnitType } from "../../behaviourTree/dataType/catalog/blackboardUnitType.ts";
 import { randomArray } from "../../../util/randomArray.ts";
-
-const unitTypes: BlackboardUnitType[] = ["ARCHER", "MANGO", "MONK"];
+import { isNever } from "../../../util/isNever.ts";
 
 export function randomLiteral(dataType: DataType): unknown {
   switch (dataType) {
@@ -13,7 +11,9 @@ export function randomLiteral(dataType: DataType): unknown {
     case "number":
       return Math.floor(Math.random() * 500);
     case "unitType":
-      return randomArray(unitTypes);
+      return randomArray(["ARCHER", "MANGO", "MONK"]);
+    case "formation":
+      return randomArray(["SPREAD", "LINE", "SPLIT"]);
     case "vector":
       return { x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) };
     case "vectorMagnitude":
@@ -22,5 +22,7 @@ export function randomLiteral(dataType: DataType): unknown {
       return Math.floor(Math.random() * 360);
     case "unitId":
       throw new Error("Generating random unit IDs does not make sense");
+    default:
+      return isNever(dataType);
   }
 }
