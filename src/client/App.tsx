@@ -10,7 +10,6 @@ import { FormationDebugging } from "./pages/playground/FormationDebugging.tsx";
 import { ArrowFramesPlayground } from "./pages/playground/ArrowFramesPlayground.tsx";
 import { MangoFanOutPlayground } from "./pages/playground/MangoFanOutPlayground.tsx";
 import { AccuracyAnalysisPlayground } from "./pages/playground/AccuracyAnalysisPlayground.tsx";
-import { BehaviourTreeEditor } from "./pages/playground/BehaviourTreeEditor.tsx";
 import { GroupUnitVectorFacingDirectionPlayground } from "./pages/playground/GroupUnitVectorFacingDirectionPlayground.tsx";
 
 import { SpectateGame } from "./pages/SpectateGame.tsx";
@@ -32,7 +31,6 @@ export function App() {
           <Route path="/playground/arrow-frames" element={<ArrowFramesPlayground />} />
           <Route path="/playground/mango-fanout" element={<MangoFanOutPlayground />} />
           <Route path="/playground/accuracy-analysis" element={<AccuracyAnalysisPlayground />} />
-          <Route path="/playground/behaviour-tree" element={<BehaviourTreeEditor />} />
           <Route
             path="/playground/group-unit-vector-facing-direction"
             element={<GroupUnitVectorFacingDirectionPlayground />}

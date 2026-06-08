@@ -32,11 +32,11 @@ Deno.test("type safety", () => {
       },
     },
   };
+  // @ts-expect-error - empty params does not satisfy the required param shape
   const _invalid2: ConditionNode = {
     nodeType: "condition",
     type: "groupIndexEquals",
     invert: false,
-    // @ts-expect-error - empty params does not satisfy the required param shape
     params: {},
   };
   const _invalid3: ConditionNode = {

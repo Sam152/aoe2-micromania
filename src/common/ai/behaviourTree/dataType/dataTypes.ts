@@ -1,5 +1,5 @@
 import { boolean } from "./catalog/boolean.ts";
-import { number } from "./catalog/number.ts";
+
 import { DataTypeDefinition } from "./DataTypeDefinition.ts";
 
 import { vector } from "./catalog/vector.ts";
@@ -16,7 +16,6 @@ export const dataTypes = {
   boolean,
   unitCount,
   tickCount,
-  number,
   unitId,
   unitType,
   vector,

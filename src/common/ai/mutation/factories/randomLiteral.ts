@@ -6,7 +6,6 @@ const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   unitCount: () => Math.floor(Math.random() * 40),
   tickCount: () => Math.floor(Math.random() * 100),
   groupIndex: () => Math.floor(Math.random() * 4),
-  number: () => Math.floor(Math.random() * 500),
   unitType: () => randomArray(["ARCHER", "MANGO", "MONK"]),
   formation: () => randomArray(["SPREAD", "LINE", "SPLIT"]),
   vector: () => ({ x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) }),

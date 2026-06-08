@@ -11,7 +11,6 @@ const playgrounds: Playground[] = [
   { name: "Arrow frames", path: "/playground/arrow-frames" },
   { name: "Mango fan-out", path: "/playground/mango-fanout" },
   { name: "Accuracy analysis", path: "/playground/accuracy-analysis" },
-  { name: "Behaviour Tree Editor", path: "/playground/behaviour-tree" },
   { name: "Group unit vector facing direction", path: "/playground/group-unit-vector-facing-direction" },
 ];
 
