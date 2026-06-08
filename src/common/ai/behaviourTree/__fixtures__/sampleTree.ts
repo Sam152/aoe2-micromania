@@ -39,7 +39,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               },
               distance: {
                 nodeType: "dataValue",
-                dataType: "number",
+                dataType: "groupIndex",
                 type: "LITERAL",
                 value: 400,
               },
@@ -247,18 +247,18 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodes: [
           {
             nodeType: "condition",
-            type: "numberEquals",
+            type: "groupIndexEquals",
             invert: false,
             params: {
               left: {
                 nodeType: "dataValue",
-                dataType: "number",
+                dataType: "groupIndex",
                 type: "LITERAL",
                 value: 0,
               },
               right: {
                 nodeType: "dataValue",
-                dataType: "number",
+                dataType: "groupIndex",
                 type: "BLACKBOARD",
                 blackboardKey: "groupMetaUnitTypeIndex",
                 params: {},

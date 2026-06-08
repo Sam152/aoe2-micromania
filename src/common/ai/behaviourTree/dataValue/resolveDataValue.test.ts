@@ -49,7 +49,7 @@ const resolveParams = <const TParams extends Record<string, DataValue>>(params: 
 describe("resolveDataValueToPrimitive", () => {
   it("returns the value of a primitive data value", () => {
     assertEquals(
-      resolve({ nodeType: "dataValue", type: "LITERAL", dataType: "number", value: 42 }),
+      resolve({ nodeType: "dataValue", type: "LITERAL", dataType: "groupIndex", value: 42 }),
       42,
     );
   });
@@ -59,7 +59,7 @@ describe("resolveDataValueToPrimitive", () => {
       resolve({
         nodeType: "dataValue",
         type: "BLACKBOARD",
-        dataType: "number",
+        dataType: "groupIndex",
         blackboardKey: "groupMetaUnitTypeIndex",
         params: {},
       }),
@@ -91,12 +91,12 @@ describe("resolveParamDataValues", () => {
   it("resolves each param to its primitive, keyed by param name", () => {
     assertEquals(
       resolveParams({
-        a: { nodeType: "dataValue", type: "LITERAL", dataType: "number", value: 1 },
+        a: { nodeType: "dataValue", type: "LITERAL", dataType: "groupIndex", value: 1 },
         b: { nodeType: "dataValue", type: "LITERAL", dataType: "vector", value: { x: 2, y: 3 } },
         c: {
           nodeType: "dataValue",
           type: "BLACKBOARD",
-          dataType: "number",
+          dataType: "groupIndex",
           blackboardKey: "groupMetaUnitTypeIndex",
           params: {},
         },
@@ -125,7 +125,7 @@ describe("resolveParamDataValues", () => {
   it("resolves the whole object as undefined, if any params are undefined", () => {
     assertEquals(
       resolveParams({
-        a: { nodeType: "dataValue", type: "LITERAL", dataType: "number", value: 1 },
+        a: { nodeType: "dataValue", type: "LITERAL", dataType: "groupIndex", value: 1 },
         // This param will resolve undefined.
         c: {
           nodeType: "dataValue",

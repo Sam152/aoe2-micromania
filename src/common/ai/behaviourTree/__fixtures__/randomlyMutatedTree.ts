@@ -7,38 +7,38 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
     "nodes": [
       {
         "nodeType": "condition",
-        "type": "numberEquals",
+        "type": "groupIndexEquals",
         "invert": true,
         "params": {
           "left": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "number",
+            "dataType": "groupIndex",
             "value": 384,
           },
           "right": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "number",
+            "dataType": "groupIndex",
             "value": 113,
           },
         },
       },
       {
         "nodeType": "condition",
-        "type": "numberEquals",
+        "type": "groupIndexEquals",
         "invert": true,
         "params": {
           "left": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "number",
+            "dataType": "groupIndex",
             "value": 340,
           },
           "right": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "number",
+            "dataType": "groupIndex",
             "value": 183,
           },
         },
@@ -162,20 +162,20 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               },
               {
                 "nodeType": "condition",
-                "type": "numberGreaterThan",
+                "type": "groupIndexGreaterThan",
                 "invert": true,
                 "params": {
                   "left": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
-                    "dataType": "number",
+                    "dataType": "groupIndex",
                     "blackboardKey": "groupMetaUnitTypeIndex",
                     "params": {},
                   },
                   "right": {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
-                    "dataType": "number",
+                    "dataType": "groupIndex",
                     "blackboardKey": "groupMetaUnitTypeIndex",
                     "params": {},
                   },
@@ -195,19 +195,19 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "numberEquals",
+            "type": "groupIndexEquals",
             "invert": false,
             "params": {
               "left": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
-                "dataType": "number",
+                "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
               "right": {
                 "nodeType": "dataValue",
-                "dataType": "number",
+                "dataType": "groupIndex",
                 "type": "BLACKBOARD",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
@@ -254,19 +254,19 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
     "nodes": [
       {
         "nodeType": "condition",
-        "type": "numberGreaterThan",
+        "type": "groupIndexGreaterThan",
         "invert": true,
         "params": {
           "left": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "number",
+            "dataType": "groupIndex",
             "value": 121,
           },
           "right": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "number",
+            "dataType": "groupIndex",
             "value": 414,
           },
         },
@@ -353,7 +353,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               "distance": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
-                "dataType": "number",
+                "dataType": "groupIndex",
                 "value": 438,
               },
             },
@@ -424,7 +424,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               },
               "distance": {
                 "nodeType": "dataValue",
-                "dataType": "number",
+                "dataType": "groupIndex",
                 "type": "LITERAL",
                 "value": 400,
               },
@@ -541,7 +541,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                   "distance": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
-                    "dataType": "number",
+                    "dataType": "groupIndex",
                     "value": 141,
                   },
                 },

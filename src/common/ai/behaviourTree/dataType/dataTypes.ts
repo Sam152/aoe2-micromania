@@ -10,6 +10,7 @@ import { unitType } from "./catalog/blackboardUnitType.ts";
 import { vectorAngle } from "./catalog/vectorAngle.ts";
 import { formation } from "./catalog/formation.ts";
 import { tickCount } from "./catalog/tickCount.ts";
+import { groupIndex } from "./catalog/groupIndex.ts";
 
 export const dataTypes = {
   boolean,
@@ -19,6 +20,7 @@ export const dataTypes = {
   unitId,
   unitType,
   vector,
+  groupIndex,
   vectorMagnitude,
   vectorAngle,
   formation,

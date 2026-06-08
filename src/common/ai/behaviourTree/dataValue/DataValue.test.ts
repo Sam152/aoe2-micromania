@@ -29,7 +29,7 @@ Deno.test("type safety", () => {
   };
   const _invalidNumber: DataValue = {
     nodeType: "dataValue",
-    dataType: "number",
+    dataType: "groupIndex",
     type: "LITERAL",
     // @ts-expect-error - string where number is required
     value: "not-a-number",

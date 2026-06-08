@@ -1,12 +1,12 @@
 import { defineCondition } from "../ConditionDefinition.ts";
 
-export const numberEquals = defineCondition({
+export const groupIndexEquals = defineCondition({
   params: {
     left: {
-      dataType: "number",
+      dataType: "groupIndex",
     },
     right: {
-      dataType: "number",
+      dataType: "groupIndex",
     },
   },
   evaluate: ({ left, right }) => left === right,

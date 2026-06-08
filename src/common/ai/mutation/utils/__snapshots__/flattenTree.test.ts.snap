@@ -99,20 +99,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "condition",
               params: {
                 left: {
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
                 right: {
                   blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
               },
-              type: "numberEquals",
+              type: "groupIndexEquals",
             },
             {
               nodeType: "action",
@@ -307,20 +307,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "condition",
               params: {
                 left: {
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
                 right: {
                   blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
               },
-              type: "numberEquals",
+              type: "groupIndexEquals",
             },
             {
               nodeType: "action",
@@ -830,20 +830,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "condition",
               params: {
                 left: {
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
                 right: {
                   blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
               },
-              type: "numberEquals",
+              type: "groupIndexEquals",
             },
             {
               nodeType: "action",
@@ -1044,20 +1044,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "condition",
           params: {
             left: {
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
             right: {
               blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
           },
-          type: "numberEquals",
+          type: "groupIndexEquals",
         },
         {
           nodeType: "action",
@@ -1192,20 +1192,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               nodeType: "condition",
               params: {
                 left: {
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   type: "LITERAL",
                   value: 0,
                 },
                 right: {
                   blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
               },
-              type: "numberEquals",
+              type: "groupIndexEquals",
             },
             {
               nodeType: "action",
@@ -1253,20 +1253,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       nodeType: "condition",
       params: {
         left: {
-          dataType: "number",
+          dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
         right: {
           blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "number",
+          dataType: "groupIndex",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
       },
-      type: "numberEquals",
+      type: "groupIndexEquals",
     },
     paramKey: undefined,
     parent: {
@@ -1277,20 +1277,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "condition",
           params: {
             left: {
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
             right: {
               blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
           },
-          type: "numberEquals",
+          type: "groupIndexEquals",
         },
         {
           nodeType: "action",
@@ -1332,7 +1332,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
   },
   {
     node: {
-      dataType: "number",
+      dataType: "groupIndex",
       nodeType: "dataValue",
       type: "LITERAL",
       value: 0,
@@ -1343,26 +1343,26 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       nodeType: "condition",
       params: {
         left: {
-          dataType: "number",
+          dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
         right: {
           blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "number",
+          dataType: "groupIndex",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
       },
-      type: "numberEquals",
+      type: "groupIndexEquals",
     },
   },
   {
     node: {
       blackboardKey: "groupMetaUnitTypeIndex",
-      dataType: "number",
+      dataType: "groupIndex",
       nodeType: "dataValue",
       params: {},
       type: "BLACKBOARD",
@@ -1373,20 +1373,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       nodeType: "condition",
       params: {
         left: {
-          dataType: "number",
+          dataType: "groupIndex",
           nodeType: "dataValue",
           type: "LITERAL",
           value: 0,
         },
         right: {
           blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "number",
+          dataType: "groupIndex",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
       },
-      type: "numberEquals",
+      type: "groupIndexEquals",
     },
   },
   {
@@ -1422,20 +1422,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "condition",
           params: {
             left: {
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
             right: {
               blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
           },
-          type: "numberEquals",
+          type: "groupIndexEquals",
         },
         {
           nodeType: "action",
@@ -1569,20 +1569,20 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           nodeType: "condition",
           params: {
             left: {
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               type: "LITERAL",
               value: 0,
             },
             right: {
               blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "number",
+              dataType: "groupIndex",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
           },
-          type: "numberEquals",
+          type: "groupIndexEquals",
         },
         {
           nodeType: "action",

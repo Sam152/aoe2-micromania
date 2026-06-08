@@ -50,19 +50,19 @@ export const winningTree: UnitAwareBehaviourTree = {
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "numberGreaterThan",
+            "type": "groupIndexGreaterThan",
             "invert": false,
             "params": {
               "left": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
-                "dataType": "number",
+                "dataType": "groupIndex",
                 "value": 75,
               },
               "right": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
-                "dataType": "number",
+                "dataType": "groupIndex",
                 "blackboardKey": "groupMetaUnitTypeIndex",
                 "params": {},
               },
@@ -236,72 +236,6 @@ export const winningTree: UnitAwareBehaviourTree = {
             },
           },
         },
-      },
-      {
-        "nodeType": "sequence",
-        "nodes": [
-          {
-            "nodeType": "condition",
-            "type": "vectorDistanceBetweenLessThan",
-            "invert": false,
-            "params": {
-              "pointA": {
-                "nodeType": "dataValue",
-                "type": "BLACKBOARD",
-                "dataType": "vector",
-                "blackboardKey": "groupUnitVectorFacingDirection",
-                "params": {
-                  "direction": {
-                    "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
-                    "dataType": "vector",
-                    "blackboardKey": "opponentClosestUnitPositionByType",
-                    "params": {
-                      "unitType": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "unitType",
-                        "value": "MONK",
-                      },
-                    },
-                  },
-                  "angle": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "vectorAngle",
-                    "value": 198,
-                  },
-                  "magnitude": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "vectorMagnitude",
-                    "value": 72,
-                  },
-                },
-              },
-              "pointB": {
-                "nodeType": "dataValue",
-                "type": "BLACKBOARD",
-                "dataType": "vector",
-                "blackboardKey": "opponentAverageUnitPositionByType",
-                "params": {
-                  "unitType": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "unitType",
-                    "value": "MONK",
-                  },
-                },
-              },
-              "distance": {
-                "nodeType": "dataValue",
-                "type": "LITERAL",
-                "dataType": "number",
-                "value": 249,
-              },
-            },
-          },
-        ],
       },
       {
         "nodeType": "sequence",

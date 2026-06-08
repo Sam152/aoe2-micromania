@@ -1,12 +1,12 @@
 import { defineCondition } from "../ConditionDefinition.ts";
 
-export const numberGreaterThan = defineCondition({
+export const groupIndexGreaterThan = defineCondition({
   params: {
     left: {
-      dataType: "number",
+      dataType: "groupIndex",
     },
     right: {
-      dataType: "number",
+      dataType: "groupIndex",
     },
   },
   evaluate: ({ left, right }) => left > right,

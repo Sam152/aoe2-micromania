@@ -46,13 +46,13 @@ describe("tree evaluation", () => {
           nodes: [
             {
               nodeType: "condition",
-              type: "numberGreaterThan",
+              type: "groupIndexGreaterThan",
               invert: false,
               params: {
-                left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+                left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
                 right: {
                   nodeType: "dataValue",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   type: "BLACKBOARD",
                   blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
@@ -62,33 +62,33 @@ describe("tree evaluation", () => {
             {
               // 10 > 15 = false (was: 15 LT 10)
               nodeType: "condition",
-              type: "numberGreaterThan",
+              type: "groupIndexGreaterThan",
               invert: false,
               params: {
                 left: {
                   nodeType: "dataValue",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   type: "BLACKBOARD",
                   blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
-                right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
+                right: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 15 },
               },
             },
             {
               // 10 > 15 = false (was: 15 LT 10)
               nodeType: "condition",
-              type: "numberGreaterThan",
+              type: "groupIndexGreaterThan",
               invert: false,
               params: {
                 left: {
                   nodeType: "dataValue",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   type: "BLACKBOARD",
                   blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
-                right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
+                right: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 15 },
               },
             },
             {
@@ -129,13 +129,13 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  type: "numberGreaterThan",
+                  type: "groupIndexGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
+                    left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 5 },
                     right: {
                       nodeType: "dataValue",
-                      dataType: "number",
+                      dataType: "groupIndex",
                       type: "BLACKBOARD",
                       blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
@@ -156,13 +156,13 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  type: "numberGreaterThan",
+                  type: "groupIndexGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
+                    left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 15 },
                     right: {
                       nodeType: "dataValue",
-                      dataType: "number",
+                      dataType: "groupIndex",
                       type: "BLACKBOARD",
                       blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
@@ -183,13 +183,13 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  type: "numberGreaterThan",
+                  type: "groupIndexGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 20 },
+                    left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 20 },
                     right: {
                       nodeType: "dataValue",
-                      dataType: "number",
+                      dataType: "groupIndex",
                       type: "BLACKBOARD",
                       blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
@@ -236,13 +236,13 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  type: "numberGreaterThan",
+                  type: "groupIndexGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
+                    left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 15 },
                     right: {
                       nodeType: "dataValue",
-                      dataType: "number",
+                      dataType: "groupIndex",
                       type: "BLACKBOARD",
                       blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
@@ -263,13 +263,13 @@ describe("tree evaluation", () => {
               nodes: [
                 {
                   nodeType: "condition",
-                  type: "numberGreaterThan",
+                  type: "groupIndexGreaterThan",
                   invert: false,
                   params: {
-                    left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
+                    left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 15 },
                     right: {
                       nodeType: "dataValue",
-                      dataType: "number",
+                      dataType: "groupIndex",
                       type: "BLACKBOARD",
                       blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
@@ -359,13 +359,13 @@ describe("tree evaluation", () => {
           nodes: [
             {
               nodeType: "condition",
-              type: "numberGreaterThan",
+              type: "groupIndexGreaterThan",
               invert: false,
               params: {
-                left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
+                left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 15 },
                 right: {
                   nodeType: "dataValue",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   type: "BLACKBOARD",
                   blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
@@ -379,13 +379,13 @@ describe("tree evaluation", () => {
             },
             {
               nodeType: "condition",
-              type: "numberGreaterThan",
+              type: "groupIndexGreaterThan",
               invert: false,
               params: {
-                left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
+                left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 5 },
                 right: {
                   nodeType: "dataValue",
-                  dataType: "number",
+                  dataType: "groupIndex",
                   type: "BLACKBOARD",
                   blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
@@ -452,13 +452,13 @@ describe("tree evaluation", () => {
                   nodes: [
                     {
                       nodeType: "condition",
-                      type: "numberGreaterThan",
+                      type: "groupIndexGreaterThan",
                       invert: false,
                       params: {
-                        left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
+                        left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 5 },
                         right: {
                           nodeType: "dataValue",
-                          dataType: "number",
+                          dataType: "groupIndex",
                           type: "BLACKBOARD",
                           blackboardKey: "groupMetaUnitTypeIndex",
                           params: {},
@@ -470,13 +470,13 @@ describe("tree evaluation", () => {
                       nodes: [
                         {
                           nodeType: "condition",
-                          type: "numberGreaterThan",
+                          type: "groupIndexGreaterThan",
                           invert: false,
                           params: {
-                            left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
+                            left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 5 },
                             right: {
                               nodeType: "dataValue",
-                              dataType: "number",
+                              dataType: "groupIndex",
                               type: "BLACKBOARD",
                               blackboardKey: "groupMetaUnitTypeIndex",
                               params: {},

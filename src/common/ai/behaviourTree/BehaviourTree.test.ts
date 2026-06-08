@@ -3,29 +3,29 @@ import { BehaviourTreeNode } from "./BehaviourTree.ts";
 Deno.test("behaviour tree type safety", () => {
   const _condMissingParams: BehaviourTreeNode = {
     nodeType: "condition",
-    type: "numberEquals",
+    type: "groupIndexEquals",
     // @ts-expect-error - params must satisfy the condition's required shape
     params: {},
   };
 
   const _condBadParamType: BehaviourTreeNode = {
     nodeType: "condition",
-    type: "numberEquals",
+    type: "groupIndexEquals",
     params: {
       // @ts-expect-error - vector not valid for number param
       left: { nodeType: "dataValue", dataType: "vector", type: "LITERAL", value: { x: 0, y: 0 } },
-      right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 2 },
+      right: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 2 },
     },
   };
 
   const _condBadBlackboardKey: BehaviourTreeNode = {
     nodeType: "condition",
-    type: "numberEquals",
+    type: "groupIndexEquals",
     params: {
-      left: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+      left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
       right: {
         nodeType: "dataValue",
-        dataType: "number",
+        dataType: "groupIndex",
         type: "BLACKBOARD",
         // @ts-expect-error - not a blackboard key
         blackboardKey: "notARealKey",
@@ -45,7 +45,7 @@ Deno.test("behaviour tree type safety", () => {
     nodeType: "action",
     type: "PATROL",
     // @ts-expect-error - direction must be a vector data value, not number
-    params: { direction: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 } },
+    params: { direction: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 } },
   };
 
   const _actionBadType: BehaviourTreeNode = {
@@ -61,7 +61,7 @@ Deno.test("behaviour tree type safety", () => {
     params: {
       forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 },
       // @ts-expect-error - IDLE has no such param
-      notAParam: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 1 },
+      notAParam: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
     },
   };
 });
