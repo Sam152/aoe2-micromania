@@ -34,7 +34,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 8,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -82,7 +82,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 2,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -184,7 +184,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               value: 8,
             },
           },
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
         },
         {
           nodeType: "action",
@@ -242,7 +242,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 8,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -290,7 +290,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 2,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -388,7 +388,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           value: 8,
         },
       },
-      type: "countGreaterThan",
+      type: "unitCountGreaterThan",
     },
     paramKey: undefined,
     parent: {
@@ -419,7 +419,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               value: 8,
             },
           },
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
         },
         {
           nodeType: "action",
@@ -488,7 +488,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           value: 8,
         },
       },
-      type: "countGreaterThan",
+      type: "unitCountGreaterThan",
     },
   },
   {
@@ -547,7 +547,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           value: 8,
         },
       },
-      type: "countGreaterThan",
+      type: "unitCountGreaterThan",
     },
   },
   {
@@ -603,7 +603,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               value: 8,
             },
           },
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
         },
         {
           nodeType: "action",
@@ -725,7 +725,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               value: 2,
             },
           },
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
         },
         {
           nodeType: "action",
@@ -765,7 +765,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 8,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -813,7 +813,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 2,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -904,7 +904,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           value: 2,
         },
       },
-      type: "countGreaterThan",
+      type: "unitCountGreaterThan",
     },
     paramKey: undefined,
     parent: {
@@ -928,7 +928,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               value: 2,
             },
           },
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
         },
         {
           nodeType: "action",
@@ -965,7 +965,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           value: 2,
         },
       },
-      type: "countGreaterThan",
+      type: "unitCountGreaterThan",
     },
   },
   {
@@ -994,7 +994,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           value: 2,
         },
       },
-      type: "countGreaterThan",
+      type: "unitCountGreaterThan",
     },
   },
   {
@@ -1025,7 +1025,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               value: 2,
             },
           },
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
         },
         {
           nodeType: "action",
@@ -1127,7 +1127,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 8,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",
@@ -1175,7 +1175,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   value: 2,
                 },
               },
-              type: "countGreaterThan",
+              type: "unitCountGreaterThan",
             },
             {
               nodeType: "action",

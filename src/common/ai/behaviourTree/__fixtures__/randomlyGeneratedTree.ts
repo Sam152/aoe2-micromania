@@ -7,7 +7,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
     "nodes": [
       {
         "nodeType": "condition",
-        "type": "countEquals",
+        "type": "unitCountEquals",
         "invert": false,
         "params": {
           "leftCount": {
@@ -27,7 +27,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "condition",
-        "type": "countGreaterThan",
+        "type": "unitCountGreaterThan",
         "invert": false,
         "params": {
           "leftCount": {
@@ -64,7 +64,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
                 "nodes": [
                   {
                     "nodeType": "condition",
-                    "type": "countGreaterThan",
+                    "type": "unitCountGreaterThan",
                     "invert": true,
                     "params": {
                       "leftCount": {
@@ -97,7 +97,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
               },
               {
                 "nodeType": "condition",
-                "type": "countGreaterThan",
+                "type": "unitCountGreaterThan",
                 "invert": false,
                 "params": {
                   "leftCount": {
@@ -136,7 +136,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
           },
           {
             "nodeType": "condition",
-            "type": "countGreaterThan",
+            "type": "unitCountGreaterThan",
             "invert": false,
             "params": {
               "leftCount": {
@@ -346,7 +346,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "countEquals",
+            "type": "unitCountEquals",
             "invert": true,
             "params": {
               "leftCount": {
@@ -898,7 +898,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "condition",
-        "type": "countGreaterThan",
+        "type": "unitCountGreaterThan",
         "invert": true,
         "params": {
           "leftCount": {
@@ -982,7 +982,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "condition",
-        "type": "countGreaterThan",
+        "type": "unitCountGreaterThan",
         "invert": true,
         "params": {
           "leftCount": {
@@ -1255,7 +1255,7 @@ export const randomlyGeneratedTree: UnitAwareBehaviourTree = {
             "nodes": [
               {
                 "nodeType": "condition",
-                "type": "countGreaterThan",
+                "type": "unitCountGreaterThan",
                 "invert": false,
                 "params": {
                   "leftCount": {

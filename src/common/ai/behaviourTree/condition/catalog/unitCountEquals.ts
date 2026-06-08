@@ -1,6 +1,6 @@
 import { defineCondition } from "../ConditionDefinition.ts";
 
-export const countEquals = defineCondition({
+export const unitCountEquals = defineCondition({
   params: {
     leftCount: {
       dataType: "unitCount",

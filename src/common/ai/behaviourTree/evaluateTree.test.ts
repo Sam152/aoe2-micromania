@@ -571,7 +571,7 @@ describe("tree evaluation", () => {
         blackboardComputer: unresolvableComputer,
         node: {
           nodeType: "condition",
-          type: "countGreaterThan",
+          type: "unitCountGreaterThan",
           invert: false,
           params: {
             leftCount: {

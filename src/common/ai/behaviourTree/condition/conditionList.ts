@@ -2,8 +2,8 @@ import { groupIndexEquals } from "./catalog/groupIndexEquals.ts";
 import { groupIndexGreaterThan } from "./catalog/groupIndexGreaterThan.ts";
 import { vectorDistanceBetweenLessThan } from "./catalog/vectorDistanceBetweenLessThan.ts";
 import { booleanIsTrue } from "./catalog/booleanIsTrue.ts";
-import { countGreaterThan } from "./catalog/countGreaterThan.ts";
-import { countEquals } from "./catalog/countEquals.ts";
+import { unitCountGreaterThan } from "./catalog/unitCountGreaterThan.ts";
+import { unitCountEquals } from "./catalog/unitCountEquals.ts";
 import { formationEquals } from "./catalog/formationEquals.ts";
 
 export const conditionList = {
@@ -11,8 +11,8 @@ export const conditionList = {
   groupIndexGreaterThan,
   vectorDistanceBetweenLessThan,
   booleanIsTrue,
-  countGreaterThan,
-  countEquals,
+  unitCountGreaterThan,
+  unitCountEquals,
   formationEquals,
 } as const;
 

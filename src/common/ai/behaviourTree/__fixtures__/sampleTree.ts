@@ -167,7 +167,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodes: [
           {
             nodeType: "condition",
-            type: "countGreaterThan",
+            type: "unitCountGreaterThan",
             invert: true,
             params: {
               leftCount: {
@@ -220,7 +220,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodes: [
           {
             nodeType: "condition",
-            type: "countGreaterThan",
+            type: "unitCountGreaterThan",
             invert: true,
             params: {
               leftCount: {

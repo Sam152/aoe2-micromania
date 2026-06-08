@@ -48,7 +48,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "countGreaterThan",
+            "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
               "leftCount": {
@@ -68,7 +68,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
           },
           {
             "nodeType": "condition",
-            "type": "countGreaterThan",
+            "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
               "leftCount": {
@@ -128,7 +128,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "countGreaterThan",
+            "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
               "leftCount": {
@@ -548,7 +548,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               },
               {
                 "nodeType": "condition",
-                "type": "countEquals",
+                "type": "unitCountEquals",
                 "invert": false,
                 "params": {
                   "leftCount": {
@@ -591,7 +591,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "condition",
-        "type": "countGreaterThan",
+        "type": "unitCountGreaterThan",
         "invert": false,
         "params": {
           "leftCount": {

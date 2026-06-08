@@ -165,7 +165,7 @@ export const winningTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "condition",
-        "type": "countGreaterThan",
+        "type": "unitCountGreaterThan",
         "invert": true,
         "params": {
           "leftCount": {
@@ -192,7 +192,7 @@ export const winningTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "condition",
-        "type": "countGreaterThan",
+        "type": "unitCountGreaterThan",
         "invert": false,
         "params": {
           "leftCount": {
@@ -242,7 +242,7 @@ export const winningTree: UnitAwareBehaviourTree = {
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "countGreaterThan",
+            "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
               "leftCount": {
