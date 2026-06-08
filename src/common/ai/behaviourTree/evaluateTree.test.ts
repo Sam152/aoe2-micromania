@@ -590,5 +590,33 @@ describe("tree evaluation", () => {
   });
 
   it("evaluates an action as false when its params cannot be resolved", () => {
+    const unresolvableComputer = {
+      ...blackboardComputer,
+      opponentClosestUnitByType: () => undefined,
+    } as unknown as BlackboardComputer;
+
+    assertEquals(
+      evaluateTreeNode({
+        actionNodes: [],
+        ...params,
+        blackboardComputer: unresolvableComputer,
+        node: {
+          nodeType: "action",
+          type: "CONVERT",
+          params: {
+            unit: {
+              nodeType: "dataValue",
+              dataType: "unitId",
+              type: "BLACKBOARD",
+              blackboardKey: "opponentClosestUnitByType",
+              params: {
+                unitType: { nodeType: "dataValue", dataType: "unitType", type: "LITERAL", value: "ARCHER" },
+              },
+            },
+          },
+        },
+      }),
+      { result: false, actionNodes: [] },
+    );
   });
 });
