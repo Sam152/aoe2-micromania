@@ -1,7 +1,7 @@
 import { DataType } from "../../behaviourTree/dataType/dataTypes.ts";
-import { blackboardDefinition } from "../../behaviourTree/blackboard/blackboardDefinition.ts";
+import { blackboardDefinition, BlackboardValue } from "../../behaviourTree/blackboard/blackboardDefinition.ts";
 import { randomArray } from "../../../util/randomArray.ts";
-import { BlackboardValueDefinition } from "../../behaviourTree/blackboard/types/BlackboardDefinitionShape.ts";
+
 import { ConditionNode } from "../../behaviourTree/condition/Condition.ts";
 import { ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
 import { BlackboardDataValue } from "../../behaviourTree/dataValue/DataValue.ts";
@@ -28,7 +28,7 @@ export function randomDataValue(
   }
 
   if (type === "BLACKBOARD") {
-    const candidateBlackboardKeys = (Object.entries(blackboardDefinition) as [string, BlackboardValueDefinition][])
+    const candidateBlackboardKeys = (Object.entries(blackboardDefinition) as [string, BlackboardValue][])
       .filter(([_, def]) => def.dataType === dataType)
       .map(([key]) => key);
 
@@ -37,7 +37,7 @@ export function randomDataValue(
     }
 
     const key = randomArray(candidateBlackboardKeys);
-    const keyDef = blackboardDefinition[key as keyof typeof blackboardDefinition] as BlackboardValueDefinition;
+    const keyDef = blackboardDefinition[key as keyof typeof blackboardDefinition] as BlackboardValue;
 
     const node = {
       nodeType: "dataValue",

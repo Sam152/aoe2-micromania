@@ -93,7 +93,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
           {
             nodeType: "condition",
             invert: true,
-            type: "isTrue",
+            type: "booleanIsTrue",
             params: {
               subject: {
                 nodeType: "dataValue",
@@ -170,11 +170,11 @@ export const sampleTree: UnitAwareBehaviourTree = {
             type: "countGreaterThan",
             invert: true,
             params: {
-              count: {
+              leftCount: {
                 nodeType: "dataValue",
                 dataType: "count",
                 type: "BLACKBOARD",
-                blackboardKey: "globalUnitsOfTypeCount",
+                blackboardKey: "globalOwnedUnitsOfTypeCount",
                 params: {
                   unitType: {
                     nodeType: "dataValue",
@@ -184,7 +184,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              threshold: {
+              rightCount: {
                 nodeType: "dataValue",
                 dataType: "count",
                 type: "LITERAL",
@@ -220,21 +220,21 @@ export const sampleTree: UnitAwareBehaviourTree = {
         nodes: [
           {
             nodeType: "condition",
-            type: "numberGreaterThan",
-            invert: false,
+            type: "countGreaterThan",
+            invert: true,
             params: {
-              left: {
+              leftCount: {
                 nodeType: "dataValue",
-                dataType: "number",
-                type: "LITERAL",
-                value: 2,
-              },
-              right: {
-                nodeType: "dataValue",
-                dataType: "number",
+                dataType: "count",
                 type: "BLACKBOARD",
                 blackboardKey: "groupMetaUnitTypeGroupCount",
                 params: {},
+              },
+              rightCount: {
+                nodeType: "dataValue",
+                dataType: "count",
+                type: "LITERAL",
+                value: 2,
               },
             },
           },

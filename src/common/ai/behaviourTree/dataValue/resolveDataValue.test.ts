@@ -4,14 +4,14 @@ import { GameState } from "../../../../types.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { BlackboardComputer } from "../blackboard/types/BlackboardComputer.ts";
+import { BlackboardComputer } from "../blackboard/utils/createCachedBlackboardComputer.ts";
 
 // The resolver only passes these through to the computer, so empty stubs are sufficient here.
 const state = {} as GameState;
 const botState = {} as BotState;
 const group = {} as BotUnitGroup;
 
-// A stub computer: number keys return fixed values; globalUnitsOfTypeCount returns a count
+// A stub computer: number keys return fixed values; globalOwnedUnitsOfTypeCount returns a count
 // based on the resolved unitType param so we can assert params are resolved before the computer
 // is invoked; opponentClosestUnitByType always returns undefined to exercise that code path.
 const blackboardComputer: Pick<
@@ -19,13 +19,13 @@ const blackboardComputer: Pick<
   | "groupMetaUnitTypeGroupCount"
   | "groupMetaUnitTypeIndex"
   | "groupUnitCount"
-  | "globalUnitsOfTypeCount"
+  | "globalOwnedUnitsOfTypeCount"
   | "opponentClosestUnitByType"
 > = {
   groupMetaUnitTypeGroupCount: () => 1,
   groupMetaUnitTypeIndex: () => 2,
   groupUnitCount: () => 7,
-  globalUnitsOfTypeCount: ({ params }) => params.unitType === "ARCHER" ? 5 : 3,
+  globalOwnedUnitsOfTypeCount: ({ params }) => params.unitType === "ARCHER" ? 5 : 3,
   opponentClosestUnitByType: () => undefined,
 };
 
@@ -60,10 +60,10 @@ describe("resolveDataValueToPrimitive", () => {
         nodeType: "dataValue",
         type: "BLACKBOARD",
         dataType: "number",
-        blackboardKey: "groupUnitCount",
+        blackboardKey: "groupMetaUnitTypeIndex",
         params: {},
       }),
-      7,
+      2,
     );
   });
 
@@ -73,7 +73,7 @@ describe("resolveDataValueToPrimitive", () => {
         nodeType: "dataValue",
         type: "BLACKBOARD",
         dataType: "count",
-        blackboardKey: "globalUnitsOfTypeCount",
+        blackboardKey: "globalOwnedUnitsOfTypeCount",
         params: {
           unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
         },
@@ -97,11 +97,11 @@ describe("resolveParamDataValues", () => {
           nodeType: "dataValue",
           type: "BLACKBOARD",
           dataType: "number",
-          blackboardKey: "groupUnitCount",
+          blackboardKey: "groupMetaUnitTypeIndex",
           params: {},
         },
       }),
-      { a: 1, b: { x: 2, y: 3 }, c: 7 },
+      { a: 1, b: { x: 2, y: 3 }, c: 2 },
     );
   });
 
@@ -112,7 +112,7 @@ describe("resolveParamDataValues", () => {
           nodeType: "dataValue",
           type: "BLACKBOARD",
           dataType: "count",
-          blackboardKey: "globalUnitsOfTypeCount",
+          blackboardKey: "globalOwnedUnitsOfTypeCount",
           params: {
             unitType: { nodeType: "dataValue", type: "LITERAL", dataType: "unitType", value: "ARCHER" },
           },

@@ -2,7 +2,7 @@ import { DataValue } from "./DataValue.ts";
 import { GameState } from "../../../../types.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
 import { TypeFromDataType } from "../dataType/dataTypes.ts";
-import { BlackboardComputer } from "../blackboard/types/BlackboardComputer.ts";
+import { BlackboardComputer } from "../blackboard/utils/createCachedBlackboardComputer.ts";
 
 type ResolveContext = {
   state: GameState;

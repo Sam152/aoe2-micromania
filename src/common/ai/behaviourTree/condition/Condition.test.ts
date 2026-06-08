@@ -11,7 +11,7 @@ Deno.test("type safety", () => {
         nodeType: "dataValue",
         dataType: "number",
         type: "BLACKBOARD",
-        blackboardKey: "groupUnitCount",
+        blackboardKey: "groupMetaUnitTypeIndex",
         params: {},
       },
     },

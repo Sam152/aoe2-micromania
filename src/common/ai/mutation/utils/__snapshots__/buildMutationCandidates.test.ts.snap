@@ -13,8 +13,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                count: {
-                  blackboardKey: "globalUnitsOfTypeCount",
+                leftCount: {
+                  blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "count",
                   nodeType: "dataValue",
                   params: {
@@ -27,7 +27,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                threshold: {
+                rightCount: {
                   dataType: "count",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -65,24 +65,24 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           nodeType: "sequence",
           nodes: [
             {
-              invert: false,
+              invert: true,
               nodeType: "condition",
               params: {
-                left: {
-                  dataType: "number",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
-                right: {
+                leftCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "number",
+                  dataType: "count",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 2,
+                },
               },
-              type: "numberGreaterThan",
+              type: "countGreaterThan",
             },
             {
               nodeType: "action",
@@ -167,8 +167,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                count: {
-                  blackboardKey: "globalUnitsOfTypeCount",
+                leftCount: {
+                  blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "count",
                   nodeType: "dataValue",
                   params: {
@@ -181,7 +181,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                threshold: {
+                rightCount: {
                   dataType: "count",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -219,24 +219,24 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           nodeType: "sequence",
           nodes: [
             {
-              invert: false,
+              invert: true,
               nodeType: "condition",
               params: {
-                left: {
-                  dataType: "number",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
-                right: {
+                leftCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "number",
+                  dataType: "count",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 2,
+                },
               },
-              type: "numberGreaterThan",
+              type: "countGreaterThan",
             },
             {
               nodeType: "action",
@@ -321,8 +321,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               invert: true,
               nodeType: "condition",
               params: {
-                count: {
-                  blackboardKey: "globalUnitsOfTypeCount",
+                leftCount: {
+                  blackboardKey: "globalOwnedUnitsOfTypeCount",
                   dataType: "count",
                   nodeType: "dataValue",
                   params: {
@@ -335,7 +335,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   },
                   type: "BLACKBOARD",
                 },
-                threshold: {
+                rightCount: {
                   dataType: "count",
                   nodeType: "dataValue",
                   type: "LITERAL",
@@ -373,24 +373,24 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           nodeType: "sequence",
           nodes: [
             {
-              invert: false,
+              invert: true,
               nodeType: "condition",
               params: {
-                left: {
-                  dataType: "number",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
-                right: {
+                leftCount: {
                   blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "number",
+                  dataType: "count",
                   nodeType: "dataValue",
                   params: {},
                   type: "BLACKBOARD",
                 },
+                rightCount: {
+                  dataType: "count",
+                  nodeType: "dataValue",
+                  type: "LITERAL",
+                  value: 2,
+                },
               },
-              type: "numberGreaterThan",
+              type: "countGreaterThan",
             },
             {
               nodeType: "action",
@@ -471,8 +471,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            count: {
-              blackboardKey: "globalUnitsOfTypeCount",
+            leftCount: {
+              blackboardKey: "globalOwnedUnitsOfTypeCount",
               dataType: "count",
               nodeType: "dataValue",
               params: {
@@ -485,7 +485,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               },
               type: "BLACKBOARD",
             },
-            threshold: {
+            rightCount: {
               dataType: "count",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -530,8 +530,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            count: {
-              blackboardKey: "globalUnitsOfTypeCount",
+            leftCount: {
+              blackboardKey: "globalOwnedUnitsOfTypeCount",
               dataType: "count",
               nodeType: "dataValue",
               params: {
@@ -544,7 +544,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               },
               type: "BLACKBOARD",
             },
-            threshold: {
+            rightCount: {
               dataType: "count",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -589,8 +589,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           invert: true,
           nodeType: "condition",
           params: {
-            count: {
-              blackboardKey: "globalUnitsOfTypeCount",
+            leftCount: {
+              blackboardKey: "globalOwnedUnitsOfTypeCount",
               dataType: "count",
               nodeType: "dataValue",
               params: {
@@ -603,7 +603,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               },
               type: "BLACKBOARD",
             },
-            threshold: {
+            rightCount: {
               dataType: "count",
               nodeType: "dataValue",
               type: "LITERAL",
@@ -644,8 +644,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       invert: true,
       nodeType: "condition",
       params: {
-        count: {
-          blackboardKey: "globalUnitsOfTypeCount",
+        leftCount: {
+          blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "count",
           nodeType: "dataValue",
           params: {
@@ -658,7 +658,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        threshold: {
+        rightCount: {
           dataType: "count",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -674,8 +674,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       invert: true,
       nodeType: "condition",
       params: {
-        count: {
-          blackboardKey: "globalUnitsOfTypeCount",
+        leftCount: {
+          blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "count",
           nodeType: "dataValue",
           params: {
@@ -688,7 +688,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        threshold: {
+        rightCount: {
           dataType: "count",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -697,7 +697,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       },
       type: "countGreaterThan",
     },
-    paramName: "count",
+    paramName: "leftCount",
     type: "REPLACE_PARAM_DATA_VALUE",
   },
   {
@@ -705,8 +705,8 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       invert: true,
       nodeType: "condition",
       params: {
-        count: {
-          blackboardKey: "globalUnitsOfTypeCount",
+        leftCount: {
+          blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "count",
           nodeType: "dataValue",
           params: {
@@ -719,7 +719,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        threshold: {
+        rightCount: {
           dataType: "count",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -728,12 +728,12 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       },
       type: "countGreaterThan",
     },
-    paramName: "threshold",
+    paramName: "rightCount",
     type: "REPLACE_PARAM_DATA_VALUE",
   },
   {
     node: {
-      blackboardKey: "globalUnitsOfTypeCount",
+      blackboardKey: "globalOwnedUnitsOfTypeCount",
       dataType: "count",
       nodeType: "dataValue",
       params: {
@@ -752,7 +752,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
   {
     paramName: "unitType",
     parentNode: {
-      blackboardKey: "globalUnitsOfTypeCount",
+      blackboardKey: "globalOwnedUnitsOfTypeCount",
       dataType: "count",
       nodeType: "dataValue",
       params: {
@@ -768,13 +768,13 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
     type: "CHANGE_LITERAL_DATA_VALUE",
   },
   {
-    paramName: "threshold",
+    paramName: "rightCount",
     parentNode: {
       invert: true,
       nodeType: "condition",
       params: {
-        count: {
-          blackboardKey: "globalUnitsOfTypeCount",
+        leftCount: {
+          blackboardKey: "globalOwnedUnitsOfTypeCount",
           dataType: "count",
           nodeType: "dataValue",
           params: {
@@ -787,7 +787,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
           type: "BLACKBOARD",
         },
-        threshold: {
+        rightCount: {
           dataType: "count",
           nodeType: "dataValue",
           type: "LITERAL",
@@ -872,24 +872,24 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       nodeType: "sequence",
       nodes: [
         {
-          invert: false,
+          invert: true,
           nodeType: "condition",
           params: {
-            left: {
-              dataType: "number",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
-            right: {
+            leftCount: {
               blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "number",
+              dataType: "count",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 2,
+            },
           },
-          type: "numberGreaterThan",
+          type: "countGreaterThan",
         },
         {
           nodeType: "action",
@@ -906,24 +906,24 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       nodeType: "sequence",
       nodes: [
         {
-          invert: false,
+          invert: true,
           nodeType: "condition",
           params: {
-            left: {
-              dataType: "number",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
-            right: {
+            leftCount: {
               blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "number",
+              dataType: "count",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 2,
+            },
           },
-          type: "numberGreaterThan",
+          type: "countGreaterThan",
         },
         {
           nodeType: "action",
@@ -940,24 +940,24 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
       nodeType: "sequence",
       nodes: [
         {
-          invert: false,
+          invert: true,
           nodeType: "condition",
           params: {
-            left: {
-              dataType: "number",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
-            right: {
+            leftCount: {
               blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "number",
+              dataType: "count",
               nodeType: "dataValue",
               params: {},
               type: "BLACKBOARD",
             },
+            rightCount: {
+              dataType: "count",
+              nodeType: "dataValue",
+              type: "LITERAL",
+              value: 2,
+            },
           },
-          type: "numberGreaterThan",
+          type: "countGreaterThan",
         },
         {
           nodeType: "action",
@@ -970,96 +970,96 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
   },
   {
     condition: {
-      invert: false,
+      invert: true,
       nodeType: "condition",
       params: {
-        left: {
-          dataType: "number",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
-        right: {
+        leftCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "number",
+          dataType: "count",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
+        rightCount: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
       },
-      type: "numberGreaterThan",
+      type: "countGreaterThan",
     },
     type: "INVERT_CONDITION",
   },
   {
     node: {
-      invert: false,
+      invert: true,
       nodeType: "condition",
       params: {
-        left: {
-          dataType: "number",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
-        right: {
+        leftCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "number",
+          dataType: "count",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
+        rightCount: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
       },
-      type: "numberGreaterThan",
+      type: "countGreaterThan",
     },
-    paramName: "left",
+    paramName: "leftCount",
     type: "REPLACE_PARAM_DATA_VALUE",
   },
   {
     node: {
-      invert: false,
+      invert: true,
       nodeType: "condition",
       params: {
-        left: {
-          dataType: "number",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
-        right: {
+        leftCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "number",
+          dataType: "count",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
+        rightCount: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
       },
-      type: "numberGreaterThan",
+      type: "countGreaterThan",
     },
-    paramName: "right",
+    paramName: "rightCount",
     type: "REPLACE_PARAM_DATA_VALUE",
   },
   {
-    paramName: "left",
+    paramName: "rightCount",
     parentNode: {
-      invert: false,
+      invert: true,
       nodeType: "condition",
       params: {
-        left: {
-          dataType: "number",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
-        right: {
+        leftCount: {
           blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "number",
+          dataType: "count",
           nodeType: "dataValue",
           params: {},
           type: "BLACKBOARD",
         },
+        rightCount: {
+          dataType: "count",
+          nodeType: "dataValue",
+          type: "LITERAL",
+          value: 2,
+        },
       },
-      type: "numberGreaterThan",
+      type: "countGreaterThan",
     },
     type: "CHANGE_LITERAL_DATA_VALUE",
   },

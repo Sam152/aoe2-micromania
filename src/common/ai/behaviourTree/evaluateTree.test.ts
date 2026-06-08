@@ -4,7 +4,7 @@ import { BotState, BotUnitGroup, createUnitTypeActivations } from "../integratio
 import { UnitType } from "../../units/UnitType.ts";
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { BlackboardComputer } from "./blackboard/types/BlackboardComputer.ts";
+import { BlackboardComputer } from "./blackboard/utils/createCachedBlackboardComputer.ts";
 
 const state = defaultState();
 
@@ -29,7 +29,7 @@ const blackboardComputer: BlackboardComputer = {
   groupMetaUnitTypeGroupCount: () => 10,
   groupMetaUnitTypeIndex: () => 10,
   groupUnitCount: () => 10,
-  globalUnitsOfTypeCount: () => 10,
+  globalOwnedUnitsOfTypeCount: () => 10,
   opponentAveragePosition: () => ({ x: 0, y: 0 }),
 } as unknown as BlackboardComputer;
 
@@ -54,7 +54,7 @@ describe("tree evaluation", () => {
                   nodeType: "dataValue",
                   dataType: "number",
                   type: "BLACKBOARD",
-                  blackboardKey: "groupUnitCount",
+                  blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
               },
@@ -69,7 +69,7 @@ describe("tree evaluation", () => {
                   nodeType: "dataValue",
                   dataType: "number",
                   type: "BLACKBOARD",
-                  blackboardKey: "groupUnitCount",
+                  blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
                 right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
@@ -85,7 +85,7 @@ describe("tree evaluation", () => {
                   nodeType: "dataValue",
                   dataType: "number",
                   type: "BLACKBOARD",
-                  blackboardKey: "groupUnitCount",
+                  blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
                 right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 15 },
@@ -137,7 +137,7 @@ describe("tree evaluation", () => {
                       nodeType: "dataValue",
                       dataType: "number",
                       type: "BLACKBOARD",
-                      blackboardKey: "groupUnitCount",
+                      blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
                     },
                   },
@@ -164,7 +164,7 @@ describe("tree evaluation", () => {
                       nodeType: "dataValue",
                       dataType: "number",
                       type: "BLACKBOARD",
-                      blackboardKey: "groupUnitCount",
+                      blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
                     },
                   },
@@ -191,7 +191,7 @@ describe("tree evaluation", () => {
                       nodeType: "dataValue",
                       dataType: "number",
                       type: "BLACKBOARD",
-                      blackboardKey: "groupUnitCount",
+                      blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
                     },
                   },
@@ -244,7 +244,7 @@ describe("tree evaluation", () => {
                       nodeType: "dataValue",
                       dataType: "number",
                       type: "BLACKBOARD",
-                      blackboardKey: "groupUnitCount",
+                      blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
                     },
                   },
@@ -271,7 +271,7 @@ describe("tree evaluation", () => {
                       nodeType: "dataValue",
                       dataType: "number",
                       type: "BLACKBOARD",
-                      blackboardKey: "groupUnitCount",
+                      blackboardKey: "groupMetaUnitTypeIndex",
                       params: {},
                     },
                   },
@@ -367,7 +367,7 @@ describe("tree evaluation", () => {
                   nodeType: "dataValue",
                   dataType: "number",
                   type: "BLACKBOARD",
-                  blackboardKey: "groupUnitCount",
+                  blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
               },
@@ -387,7 +387,7 @@ describe("tree evaluation", () => {
                   nodeType: "dataValue",
                   dataType: "number",
                   type: "BLACKBOARD",
-                  blackboardKey: "groupUnitCount",
+                  blackboardKey: "groupMetaUnitTypeIndex",
                   params: {},
                 },
               },
@@ -460,7 +460,7 @@ describe("tree evaluation", () => {
                           nodeType: "dataValue",
                           dataType: "number",
                           type: "BLACKBOARD",
-                          blackboardKey: "groupUnitCount",
+                          blackboardKey: "groupMetaUnitTypeIndex",
                           params: {},
                         },
                       },
@@ -478,7 +478,7 @@ describe("tree evaluation", () => {
                               nodeType: "dataValue",
                               dataType: "number",
                               type: "BLACKBOARD",
-                              blackboardKey: "groupUnitCount",
+                              blackboardKey: "groupMetaUnitTypeIndex",
                               params: {},
                             },
                           },
@@ -571,17 +571,17 @@ describe("tree evaluation", () => {
         blackboardComputer: unresolvableComputer,
         node: {
           nodeType: "condition",
-          type: "numberGreaterThan",
+          type: "countGreaterThan",
           invert: false,
           params: {
-            left: {
+            leftCount: {
               nodeType: "dataValue",
-              dataType: "number",
+              dataType: "count",
               type: "BLACKBOARD",
               blackboardKey: "groupUnitCount",
               params: {},
             },
-            right: { nodeType: "dataValue", dataType: "number", type: "LITERAL", value: 5 },
+            rightCount: { nodeType: "dataValue", dataType: "count", type: "LITERAL", value: 5 },
           },
         },
       }),
@@ -592,7 +592,7 @@ describe("tree evaluation", () => {
   it("evaluates an action as false when its params cannot be resolved", () => {
     const unresolvableComputer = {
       ...blackboardComputer,
-      groupUnitCount: () => undefined,
+      groupMetaUnitTypeIndex: () => undefined,
     } as unknown as BlackboardComputer;
 
     assertEquals(
@@ -608,7 +608,7 @@ describe("tree evaluation", () => {
               nodeType: "dataValue",
               dataType: "number",
               type: "BLACKBOARD",
-              blackboardKey: "groupUnitCount",
+              blackboardKey: "groupMetaUnitTypeIndex",
               params: {},
             },
           },

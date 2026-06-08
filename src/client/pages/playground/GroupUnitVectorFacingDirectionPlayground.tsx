@@ -1,11 +1,13 @@
 import { createRef, useEffect, useRef, useState } from "react";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { screenManager } from "../../../common/drawing/screenManager.ts";
-import { createBlackboardComputer } from "../../../common/ai/behaviourTree/blackboard/computeBlackboard.ts";
 import { groupAveragePosition } from "../../../common/ai/behaviourTree/blackboard/utils/groupAveragePosition.ts";
 import { ComputedTickState } from "../../../common/state/computed/createComputedTickState.ts";
 import { BotState, BotUnitGroup } from "../../../common/ai/integration/createBot.ts";
 import { GameState, UnitInstance } from "../../../types.ts";
+import {
+  createCachedBlackboardComputer,
+} from "../../../common/ai/behaviourTree/blackboard/utils/createCachedBlackboardComputer.ts";
 
 /**
  * Visual demonstration of `groupUnitVectorFacingDirection`.
@@ -81,7 +83,7 @@ export function GroupUnitVectorFacingDirectionPlayground() {
 
     const computeResult = () => {
       const { computed, group } = buildContext();
-      return createBlackboardComputer({ computed }).groupUnitVectorFacingDirection({
+      return createCachedBlackboardComputer({ computed }).groupUnitVectorFacingDirection({
         params: {
           direction: { x: directionRef.current!.x, y: directionRef.current!.y },
           angle: angleRef.current,

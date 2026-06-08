@@ -1,6 +1,6 @@
 import { defineCondition } from "../ConditionDefinition.ts";
 
-export const countGreaterThan = defineCondition({
+export const countEquals = defineCondition({
   params: {
     leftCount: {
       dataType: "count",
@@ -9,5 +9,5 @@ export const countGreaterThan = defineCondition({
       dataType: "count",
     },
   },
-  evaluate: ({ leftCount, rightCount }) => leftCount > rightCount,
+  evaluate: ({ leftCount, rightCount }) => leftCount === rightCount,
 });

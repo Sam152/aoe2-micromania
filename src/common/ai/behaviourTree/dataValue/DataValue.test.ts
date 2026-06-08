@@ -39,7 +39,7 @@ Deno.test("type safety", () => {
     nodeType: "dataValue",
     dataType: "count",
     type: "BLACKBOARD",
-    blackboardKey: "globalUnitsOfTypeCount",
+    blackboardKey: "globalOwnedUnitsOfTypeCount",
     params: {
       unitType: {
         nodeType: "dataValue",
@@ -53,7 +53,7 @@ Deno.test("type safety", () => {
     nodeType: "dataValue",
     dataType: "count",
     type: "BLACKBOARD",
-    blackboardKey: "globalUnitsOfTypeCount",
+    blackboardKey: "globalOwnedUnitsOfTypeCount",
     params: {
       unitType: {
         nodeType: "dataValue",

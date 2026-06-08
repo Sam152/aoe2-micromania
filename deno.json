@@ -7,6 +7,7 @@
     "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
     "on-save": "deno --allow-run .hooks/on-save.ts",
+    "validate": "deno check && deno test -P",
     "training:docker:start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d",
     "training:docker:reset": "docker compose -f src/common/ai/training/infra/docker-compose.yml down -v && deno task training:docker:start",
     "training:evolve": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
