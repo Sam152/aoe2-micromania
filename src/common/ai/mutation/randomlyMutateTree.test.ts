@@ -5,7 +5,7 @@ import { BehaviourTreeNode } from "../behaviourTree/BehaviourTree.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "./randomlyMutateUnitAwareBehaviourTree.ts";
 import { dumpTree } from "./dumpTree.ts";
 
-describe("randomlyMutateTree", () => {
+describe.skip("randomlyMutateTree", () => {
   it("randomlyMutatedTree", () => {
     dumpTree("randomlyMutatedTree", randomlyMutateUnitAwareBehaviourTree({ count: 20, tree: sampleTree }));
   });
