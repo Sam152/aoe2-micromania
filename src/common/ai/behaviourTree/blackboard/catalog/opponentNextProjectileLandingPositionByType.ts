@@ -1,4 +1,6 @@
 import { defineBlackboardValue } from "../types/defineBlackboardValue.ts";
+import { ProjectileInstance } from "../../../../../types.ts";
+import { projectileIsType } from "../utils/projectileIsType.ts";
 
 export const opponentNextProjectileLandingPositionByType = defineBlackboardValue({
   dataType: "vector",
@@ -9,6 +11,17 @@ export const opponentNextProjectileLandingPositionByType = defineBlackboardValue
     },
   },
   resolve: ({ params, state, botState }) => {
-    // Resolve the vector of the next projectile to land on the map, of the given type.
+    const next = state.projectiles
+      .filter((projectile) =>
+        projectileIsType(projectile, params.type) &&
+        projectile.ownedBy !== botState.playingAs
+      )
+      .reduce<ProjectileInstance | undefined>(
+        (soonest, projectile) =>
+          soonest === undefined || projectile.arrivingTick < soonest.arrivingTick ? projectile : soonest,
+        undefined,
+      );
+
+    return next?.destination;
   },
 });

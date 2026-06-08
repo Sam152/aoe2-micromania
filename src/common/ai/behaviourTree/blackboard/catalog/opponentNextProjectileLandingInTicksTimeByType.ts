@@ -1,4 +1,6 @@
 import { defineBlackboardValue } from "../types/defineBlackboardValue.ts";
+import { ProjectileInstance } from "../../../../../types.ts";
+import { projectileIsType } from "../utils/projectileIsType.ts";
 
 export const opponentNextProjectileLandingInTicksTimeByType = defineBlackboardValue({
   dataType: "tickCount",
@@ -9,6 +11,17 @@ export const opponentNextProjectileLandingInTicksTimeByType = defineBlackboardVa
     },
   },
   resolve: ({ params, state, botState }) => {
-    // Resolve the number of ticks, until the next projectile of a given type will land.
+    const next = state.projectiles
+      .filter((projectile) =>
+        projectileIsType(projectile, params.type) &&
+        projectile.ownedBy !== botState.playingAs
+      )
+      .reduce<ProjectileInstance | undefined>(
+        (soonest, projectile) =>
+          soonest === undefined || projectile.arrivingTick < soonest.arrivingTick ? projectile : soonest,
+        undefined,
+      );
+
+    return next === undefined ? undefined : next.arrivingTick - state.ticks;
   },
 });
