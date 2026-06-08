@@ -15,7 +15,7 @@ describe.skip("randomlyMutateTree", () => {
     dumpTree(
       "randomlyGeneratedTree",
       randomlyMutateUnitAwareBehaviourTree({
-        count: 5000,
+        count: 10_000,
         tree: { [UnitType.Archer]: emptyTree, [UnitType.Mangonel]: emptyTree, [UnitType.Monk]: emptyTree },
       }),
     );
