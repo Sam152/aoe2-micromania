@@ -11,6 +11,7 @@ import { groupUnitVectorFacingDirection } from "./catalog/groupUnitVectorFacingD
 import { groupIsConverting } from "./catalog/groupIsConverting.ts";
 import { groupFormation } from "./catalog/groupFormation.ts";
 import { opponentFormationByType } from "./catalog/opponentFormationByType.ts";
+import { groupVectorFacingDirection } from "./catalog/groupVectorFacingDirection.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -23,6 +24,7 @@ export const blackboardDefinition = {
   opponentClosestUnitPositionByType,
   opponentAverageUnitPositionByType,
   groupUnitVectorFacingDirection,
+  groupVectorFacingDirection,
   groupIsConverting,
   groupFormation,
   opponentFormationByType,

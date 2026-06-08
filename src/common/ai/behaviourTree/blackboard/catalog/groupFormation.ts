@@ -1,5 +1,4 @@
 import { defineBlackboardValue } from "../types/defineBlackboardValue.ts";
-
 import { unitsInGroup } from "../utils/unitsInGroup.ts";
 import { dominantFormation } from "../utils/dominantFormation.ts";
 
