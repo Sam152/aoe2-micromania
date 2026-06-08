@@ -44,14 +44,14 @@ Deno.test("type safety", () => {
     type: "groupIndexEquals",
     invert: false,
     params: {
-      left: {
+      groupIndexLeft: {
         nodeType: "dataValue",
         dataType: "groupIndex",
         type: "LITERAL",
         // @ts-expect-error - bad value type
         value: "fooString",
       },
-      right: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 2 },
+      groupIndexRight: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 2 },
     },
   };
 });

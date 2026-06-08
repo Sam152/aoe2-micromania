@@ -22,8 +22,8 @@ Deno.test("behaviour tree type safety", () => {
     nodeType: "condition",
     type: "groupIndexEquals",
     params: {
-      left: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
-      right: {
+      groupIndexLeft: { nodeType: "dataValue", dataType: "groupIndex", type: "LITERAL", value: 1 },
+      groupIndexRight: {
         nodeType: "dataValue",
         dataType: "groupIndex",
         type: "BLACKBOARD",

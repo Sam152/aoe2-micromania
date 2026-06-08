@@ -5,6 +5,8 @@ import { booleanIsTrue } from "./catalog/booleanIsTrue.ts";
 import { unitCountGreaterThan } from "./catalog/unitCountGreaterThan.ts";
 import { unitCountEquals } from "./catalog/unitCountEquals.ts";
 import { formationEquals } from "./catalog/formationEquals.ts";
+import { tickCountLessThan } from "./catalog/tickCountLessThan.ts";
+import { tickCountEquals } from "./catalog/tickCountEquals.ts";
 
 export const conditionList = {
   groupIndexEquals,
@@ -14,6 +16,8 @@ export const conditionList = {
   unitCountGreaterThan,
   unitCountEquals,
   formationEquals,
+  tickCountLessThan,
+  tickCountEquals,
 } as const;
 
 export type ConditionList = typeof conditionList;
