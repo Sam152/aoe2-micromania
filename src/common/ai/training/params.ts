@@ -2,7 +2,7 @@ export const prod = {
   /**
    * How many workers should be fired up.
    */
-  CPU_WORKER_COUNT: 4,
+  CPU_WORKER_COUNT: 8,
   /**
    * How many bots we should aim to keep in the active player pool.
    */
@@ -16,7 +16,7 @@ export const prod = {
    * The number of passes through the tourney script which will be run, for
    * each evolution and pruning.
    */
-  TOURNEY_MIN_TOURNEY_COUNT: 3,
+  TOURNEY_MIN_TOURNEY_COUNT: 4,
   /**
    * The percentage of bots that should be retired when making room for
    * the next generation.
@@ -31,13 +31,13 @@ export const prod = {
    * The minimum number of games the active player pool need to have
    * played, before we can evolve a new generation.
    */
-  NEXT_GENERATION_MINIMUM_GAMES_PLAYED: 30,
+  NEXT_GENERATION_MINIMUM_GAMES_PLAYED: 100,
   /**
    * The number of games a bot must play, before it is eligible for
    * tree pruning. This should be enough games to exercise its full
    * tree.
    */
-  PRUNING_MINIMUM_GAMES_COUNT: 30,
+  PRUNING_MINIMUM_GAMES_COUNT: 100,
 };
 
 type Params = typeof prod;
