@@ -26,7 +26,7 @@ export const prod = {
    * How many mutations should be applied, when training a next
    * generation.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS: 50,
+  NEXT_GENERATION_RANDOM_MUTATIONS: 10,
   /**
    * The minimum number of games the active player pool need to have
    * played, before we can evolve a new generation.
