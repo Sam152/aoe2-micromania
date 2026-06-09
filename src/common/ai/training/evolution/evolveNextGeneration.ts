@@ -26,8 +26,7 @@ export function evolveNextGeneration(
         count: NEXT_GENERATION_RANDOM_MUTATIONS,
       });
       const result = await runInPool({ 1: specimen, 2: mutated });
-
-      if (result.winner === 2) {
+      if (result.winner === 2 && result.hp[2] - result.hp[1] > 250) {
         return mutated;
       }
     }
