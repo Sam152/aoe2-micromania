@@ -20,10 +20,11 @@ export function evolveNextGeneration(
   const targets = Array.from({ length: newPlayersRequired }, (_, i) => specimens[i % specimens.length]);
 
   const promises = targets.map(async (specimen) => {
-    while (true) {
+    for (let i = 0;; i++) {
       const mutated = randomlyMutateUnitAwareBehaviourTree({
         tree: specimen,
-        count: NEXT_GENERATION_RANDOM_MUTATIONS,
+        // Increase the random mutations, if we cannot find a winner.
+        count: NEXT_GENERATION_RANDOM_MUTATIONS * (Math.floor(i / 10_000) + 1),
       });
       const result = await runInPool({ 1: specimen, 2: mutated });
       if (result.winner === 2 && result.hp[2] - result.hp[1] > 250) {
