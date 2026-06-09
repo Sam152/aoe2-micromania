@@ -14,7 +14,8 @@
     "training:tourney": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startTournamentHarness.ts",
     "training:prune": "deno run --allow-env --allow-net src/common/ai/training/scripts/startPruningHarness.ts",
     "training:forever": "deno run --allow-env --allow-read --allow-net src/common/ai/training/scripts/trainForever.ts",
-    "training:dump": "docker compose -f src/common/ai/training/infra/docker-compose.yml exec postgres pg_dump --data-only -U postgres postgres | gzip > src/common/ai/training/infra/data/dump.sql.gz"
+    "training:dump": "docker compose -f src/common/ai/training/infra/docker-compose.yml exec postgres pg_dump --data-only -U postgres postgres | gzip > src/common/ai/training/infra/data/dump.sql.gz",
+    "training:load": "gunzip -c src/common/ai/training/infra/data/dump.sql.gz | docker compose -f src/common/ai/training/infra/docker-compose.yml exec -T postgres psql -U postgres postgres"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
