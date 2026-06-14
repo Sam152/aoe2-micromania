@@ -5,14 +5,14 @@ import { startPruningHarness } from "./startPruningHarness.ts";
 
 import { startPromotionHarness } from "./startPromotionHarness.ts";
 import { retireAllBots } from "../infra/repo/retireAllBots.ts";
-import { logTime } from "../utils/logTime.ts";
+import { createTimer } from "../utils/createTimer.ts";
 
 const { TOURNEY_ROUND_ROBIN_COUNT } = params;
 
 async function trainForever() {
   while (true) {
     console.log("\n---- EVOLVE ----");
-    const evolveTimer = logTime("Evolution");
+    const evolveTimer = createTimer("Evolution");
     await startEvolutionHarness();
     evolveTimer();
 
@@ -32,6 +32,13 @@ async function trainForever() {
     await retireAllBots();
     console.log("Retired all bots - ready to start a new generation");
   }
+}
+
+async function step(name: string, step: () => Promise<void>) {
+  console.log(`---- ${name} ----`);
+  const timer = createTimer();
+  await step();
+  timer();
 }
 
 if (import.meta.main) {

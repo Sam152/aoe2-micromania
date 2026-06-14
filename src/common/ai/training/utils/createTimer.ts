@@ -1,10 +1,10 @@
-export function logTime(label?: string): () => number {
+export function createTimer(): () => number {
   const start = performance.now();
 
   return () => {
     const elapsed = performance.now() - start;
     const pretty = formatDuration(elapsed);
-    console.log(label ? `${label} took ${pretty}` : `Took ${pretty}`);
+    console.log(`Took ${pretty}`);
     return elapsed;
   };
 }
