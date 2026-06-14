@@ -31,7 +31,9 @@ export async function evolveNextGeneration(
         const candidate = generateCandidateTree({ iterationCount: iterationCount++, champions });
         if (await canBeatAllChampions({ champions, tree: candidate, pool }) && !enough()) {
           winners.push(candidate);
-          console.log(`Beat ${champions.length} champions after ${iterationCount} total iterations`);
+          console.log(
+            `(${winners.length}/${newBotsRequired}) Beat ${champions.length} champions after ${iterationCount} total iterations`,
+          );
         }
       }
     }),
