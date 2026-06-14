@@ -33,7 +33,7 @@ async function trainForever() {
 
 async function step(name: string, step: () => Promise<void>) {
   console.log(`\n---- ${name} ----`);
-  const timer = createTimer(name);
+  const timer = createTimer();
   await step();
   timer();
 }
