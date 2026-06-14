@@ -7,26 +7,23 @@ import { evolveNextGeneration } from "../evolution/evolveNextGeneration.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 
 import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
-import { promoteToGenerationChampion } from "../infra/repo/promoteToGenerationChampion.ts";
-import { retireAllBots } from "../infra/repo/retireAllBots.ts";
+import { insertGenerationZero } from "../infra/repo/insertGenerationZero.ts";
 import { getAllChampions } from "../infra/repo/getAllChampions.ts";
 
 const { TOTAL_BOTS_PER_GENERATION } = params;
 
 export async function startEvolutionHarness() {
   const botCount = await activeBotsCount();
-  console.log(`Total bots in pool: ${botCount}`);
-
   const requiredBots = Math.max(0, TOTAL_BOTS_PER_GENERATION - await activeBotsCount());
+  console.log(`Total bots in pool: ${botCount}, ${requiredBots} required`);
 
   if (requiredBots === 0) {
     return;
   }
 
-  if (botCount === 0) {
-    await promoteToGenerationChampion(await insertBot(sampleTree, 0));
-    await retireAllBots(0);
-    console.log(`Created generation 0`);
+  if ((await getAllChampions()).length === 0) {
+    console.log(`No champions found, generating generation zero`);
+    await insertGenerationZero(sampleTree);
   }
 
   const champions = await getAllChampions();
