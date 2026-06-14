@@ -2,11 +2,11 @@ export const params = {
   /**
    * How many workers should be fired up.
    */
-  CPU_WORKER_COUNT: 8,
+  CPU_WORKER_COUNT: 10,
   /**
    * How many bots we should aim to keep in the active player pool.
    */
-  TOTAL_BOTS_PER_GENERATION: 5,
+  TOTAL_BOTS_PER_GENERATION: 50,
   /**
    * The maximum duration of a game in minutes.
    */
