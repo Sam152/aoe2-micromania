@@ -5,7 +5,7 @@ import { params } from "../params.ts";
 import { arrayOfSize } from "../../../util/arrayOfSize.ts";
 
 import { Bot } from "../infra/repo/utils/botRowToBot.ts";
-import { generateCandidateTree } from "./generateCandidateTree.ts";
+import { generateCandidateTree } from "./candidates/generateCandidateTree.ts";
 import { canBeatAllChampions } from "./canBeatAllChampions.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 
