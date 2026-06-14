@@ -29,17 +29,14 @@ export async function evolveNextGeneration(
     arrayOfSize(CPU_WORKER_COUNT).map(async () => {
       while (!enough()) {
         const candidate = generateCandidateTree({ iterationCount: iterationCount++, champions });
-        if (await canBeatAllChampions({ champions, tree: candidate, pool })) {
-          if (!enough()) {
-            winners.push(candidate);
-            console.log(`Beat ${champions.length} champions after ${iterationCount} total iterations`);
-          }
+        if (await canBeatAllChampions({ champions, tree: candidate, pool }) && !enough()) {
+          winners.push(candidate);
+          console.log(`Beat ${champions.length} champions after ${iterationCount} total iterations`);
         }
       }
     }),
   );
 
   pool.terminatePool();
-
   return winners;
 }
