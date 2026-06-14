@@ -57,7 +57,6 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Game
   while (true) {
     dispatch({ n: "T", t: ++ticks });
 
-    // Two minutes should be enough.
     if (state.ticks === config.ticksPerSecond * 60 * MAX_GAME_TIME_MINUTES) {
       break;
     }
