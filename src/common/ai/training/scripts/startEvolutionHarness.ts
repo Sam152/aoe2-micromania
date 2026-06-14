@@ -30,8 +30,8 @@ export async function startEvolutionHarness() {
   const generation = await getCurrentGenerationNumber() + 1;
   console.log(`Evolving ${requiredBots} generation ${generation} bots from ${champions.length} champions`);
 
-  await Promise.allSettled(
-    evolveNextGeneration({ champions: champions, newBotsRequired: requiredBots }).map(
+  await Promise.all(
+    evolveNextGeneration({ champions, newBotsRequired: requiredBots }).map(
       async (nextGeneration) => {
         await insertBot(await nextGeneration, generation);
       },

@@ -6,7 +6,6 @@ import { arrayOfSize } from "../../../util/arrayOfSize.ts";
 
 import { Bot } from "../infra/repo/utils/botRowToBot.ts";
 import { createEvolutionCandidate } from "./createEvolutionCandidate.ts";
-import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 
 const { CPU_WORKER_COUNT } = params;
 
@@ -20,11 +19,8 @@ export function evolveNextGeneration(
 ): Promise<UnitAwareBehaviourTree>[] {
   const pool = createGameWorkerPool(CPU_WORKER_COUNT);
 
-  const progress = createProgressFormatter({ totalIterations: newBotsRequired });
-
   const nextGeneration = arrayOfSize(newBotsRequired).map(() =>
     createEvolutionCandidate({ champions, pool }).then((candidate) => {
-      progress.advance();
       return candidate;
     })
   );

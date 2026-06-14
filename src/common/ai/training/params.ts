@@ -6,7 +6,7 @@ export const params = {
   /**
    * How many bots we should aim to keep in the active player pool.
    */
-  TOTAL_BOTS_PER_GENERATION: 50,
+  TOTAL_BOTS_PER_GENERATION: 5,
   /**
    * The maximum duration of a game in minutes.
    */

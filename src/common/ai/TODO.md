@@ -12,4 +12,3 @@
 Ideas:
  - [ ] Treat timeouts as draws
  - [ ] Increase requirement of new bots to beat bots from each generation
- - 
