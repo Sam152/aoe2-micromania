@@ -6,38 +6,20 @@ export const prod = {
   /**
    * How many bots we should aim to keep in the active player pool.
    */
-  TARGET_TOTAL_BOTS_IN_POOL: 500,
+  TOTAL_BOTS_PER_GENERATION: 50,
   /**
-   * The number of bots that are entered into a round-robin tournament
-   * according to their ELO.
+   * The maximum duration of a game in minutes.
    */
-  TOURNEY_ROUND_ROBIN_SIZE: 50,
-  /**
-   * The number of passes through the tourney script which will be run, for
-   * each evolution and pruning.
-   */
-  TOURNEY_MIN_TOURNEY_COUNT: 4,
-  /**
-   * The percentage of bots that should be retired when making room for
-   * the next generation.
-   */
-  NEXT_GENERATION_CHURN_PERCENTAGE: 80,
+  MAX_GAME_TIME_MINUTES: 3,
   /**
    * How many mutations should be applied, when training a next
    * generation.
    */
   NEXT_GENERATION_RANDOM_MUTATIONS: 10,
   /**
-   * The minimum number of games the active player pool need to have
-   * played, before we can evolve a new generation.
+   * How many games must be played, before we increase the number of random mutations.
    */
-  NEXT_GENERATION_MINIMUM_GAMES_PLAYED: 100,
-  /**
-   * The number of games a bot must play, before it is eligible for
-   * tree pruning. This should be enough games to exercise its full
-   * tree.
-   */
-  PRUNING_MINIMUM_GAMES_COUNT: 100,
+  NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT: 10_000,
 };
 
 type Params = typeof prod;
@@ -45,16 +27,7 @@ type Params = typeof prod;
 /**
  * Scaled down params, so we can effectively test the harness.
  */
-export const dev: Params = {
-  CPU_WORKER_COUNT: 4,
-  TARGET_TOTAL_BOTS_IN_POOL: 10,
-  TOURNEY_ROUND_ROBIN_SIZE: 5,
-  TOURNEY_MIN_TOURNEY_COUNT: 3,
-  NEXT_GENERATION_CHURN_PERCENTAGE: 60,
-  NEXT_GENERATION_RANDOM_MUTATIONS: 50,
-  NEXT_GENERATION_MINIMUM_GAMES_PLAYED: 50,
-  PRUNING_MINIMUM_GAMES_COUNT: 10,
-};
+export const dev: Params = prod;
 
 export const params = prod;
 // export const params: Params = dev;

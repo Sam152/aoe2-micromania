@@ -1,39 +1,35 @@
 import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 
-import { randomlyMutateUnitAwareBehaviourTree } from "../../mutation/randomlyMutateUnitAwareBehaviourTree.ts";
-
 import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
 import { params } from "../params.ts";
+import { arrayOfSize } from "../../../util/arrayOfSize.ts";
 
-const { CPU_WORKER_COUNT, NEXT_GENERATION_RANDOM_MUTATIONS } = params;
+import { Bot } from "../infra/repo/utils/botRowToBot.ts";
+import { createEvolutionCandidate } from "./createEvolutionCandidate.ts";
+import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
+
+const { CPU_WORKER_COUNT } = params;
 
 type EvolveNextGenArgs = {
-  specimens: UnitAwareBehaviourTree[];
-  newPlayersRequired: number;
+  champions: Bot[];
+  newBotsRequired: number;
 };
 
 export function evolveNextGeneration(
-  { specimens, newPlayersRequired }: EvolveNextGenArgs,
+  { champions, newBotsRequired }: EvolveNextGenArgs,
 ): Promise<UnitAwareBehaviourTree>[] {
-  const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
+  const pool = createGameWorkerPool(CPU_WORKER_COUNT);
 
-  const targets = Array.from({ length: newPlayersRequired }, (_, i) => specimens[i % specimens.length]);
+  const progress = createProgressFormatter({ totalIterations: newBotsRequired });
 
-  const promises = targets.map(async (specimen) => {
-    for (let i = 0;; i++) {
-      const mutated = randomlyMutateUnitAwareBehaviourTree({
-        tree: specimen,
-        // Increase the random mutations, if we cannot find a winner.
-        count: NEXT_GENERATION_RANDOM_MUTATIONS * (Math.floor(i / 10_000) + 1),
-      });
-      const result = await runInPool({ 1: specimen, 2: mutated });
-      if (result.winner === 2 && result.hp[2] - result.hp[1] > 250) {
-        return mutated;
-      }
-    }
-  });
+  const nextGeneration = arrayOfSize(newBotsRequired).map(() =>
+    createEvolutionCandidate({ champions, pool }).then((candidate) => {
+      progress.advance();
+      return candidate;
+    })
+  );
 
-  Promise.all(promises).then(() => terminatePool());
+  Promise.all(nextGeneration).then(() => pool.terminatePool());
 
-  return promises;
+  return nextGeneration;
 }

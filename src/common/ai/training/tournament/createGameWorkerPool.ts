@@ -8,7 +8,7 @@ type PendingJob = {
   resolve: (result: GameResult) => void;
 };
 
-type GameWorkerPool = { runInPool: (trees: Trees) => Promise<GameResult>; terminatePool: () => void };
+export type GameWorkerPool = { runInPool: (trees: Trees) => Promise<GameResult>; terminatePool: () => void };
 
 export function createGameWorkerPool(workerCount: number): GameWorkerPool {
   const available: Worker[] = Array.from(

@@ -8,6 +8,7 @@ CREATE TABLE bots (
   ,draws INT NOT NULL DEFAULT 0
   ,games_since_last_prune INT NOT NULL DEFAULT 0
   ,is_active BOOLEAN NOT NULL DEFAULT TRUE
+  ,generation_champion BOOLEAN NOT NULL DEFAULT FALSE
   ,tree JSONB NOT NULL
 );
 

@@ -1,17 +1,7 @@
 import { sql } from "../connection.ts";
-import { UnitAwareBehaviourTree } from "../../../behaviourTree/BehaviourTree.ts";
+import { Bot, botRowToBot } from "./utils/botRowToBot.ts";
 
-export type Bot = {
-  id: number;
-  botName: string;
-  tree: UnitAwareBehaviourTree;
-  elo: number;
-  wins: number;
-  losses: number;
-  draws: number;
-  gamesSinceLastPrune: number;
-  generation: number;
-};
+export type { Bot };
 
 export async function getActiveBotsByElo(): Promise<Bot[]> {
   const rows = await sql`
@@ -21,15 +11,5 @@ export async function getActiveBotsByElo(): Promise<Bot[]> {
       --  Order ELO, then bot_name, to distribute bots evenly amongst
       -- generations, when ELOs are reset.
       ORDER BY elo DESC, bot_name DESC, id`;
-  return rows.map((row) => ({
-    id: row.id,
-    botName: row.bot_name,
-    tree: row.tree as UnitAwareBehaviourTree,
-    elo: row.elo,
-    wins: row.wins,
-    losses: row.losses,
-    draws: row.draws,
-    gamesSinceLastPrune: row.games_since_last_prune,
-    generation: row.generation,
-  }));
+  return rows.map(botRowToBot);
 }

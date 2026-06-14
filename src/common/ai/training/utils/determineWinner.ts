@@ -6,8 +6,9 @@ import { config } from "../../../config.ts";
 import { hpByPlayer } from "../../../util/hpByPlayer.ts";
 import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { BotState, createBot } from "../../integration/createBot.ts";
+import { params } from "../params.ts";
 
-const MAX_TIME_MINUTES = 3;
+const { MAX_GAME_TIME_MINUTES } = params;
 
 type DetermineWinnerArgs = {
   player1: UnitAwareBehaviourTree;
@@ -57,7 +58,7 @@ export function determineWinner({ player1, player2 }: DetermineWinnerArgs): Game
     dispatch({ n: "T", t: ++ticks });
 
     // Two minutes should be enough.
-    if (state.ticks === config.ticksPerSecond * 60 * MAX_TIME_MINUTES) {
+    if (state.ticks === config.ticksPerSecond * 60 * MAX_GAME_TIME_MINUTES) {
       break;
     }
 
