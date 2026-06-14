@@ -5,7 +5,8 @@ import { params } from "../params.ts";
 import { arrayOfSize } from "../../../util/arrayOfSize.ts";
 
 import { Bot } from "../infra/repo/utils/botRowToBot.ts";
-import { createEvolutionCandidate } from "./createEvolutionCandidate.ts";
+import { generateCandidateTree } from "./generateCandidateTree.ts";
+import { canBeatAllChampions } from "./canBeatAllChampions.ts";
 
 const { CPU_WORKER_COUNT } = params;
 
@@ -14,18 +15,31 @@ type EvolveNextGenArgs = {
   newBotsRequired: number;
 };
 
-export function evolveNextGeneration(
+export async function evolveNextGeneration(
   { champions, newBotsRequired }: EvolveNextGenArgs,
-): Promise<UnitAwareBehaviourTree>[] {
+): Promise<UnitAwareBehaviourTree[]> {
   const pool = createGameWorkerPool(CPU_WORKER_COUNT);
 
-  const nextGeneration = arrayOfSize(newBotsRequired).map(() =>
-    createEvolutionCandidate({ champions, pool }).then((candidate) => {
-      return candidate;
-    })
+  const winners: UnitAwareBehaviourTree[] = [];
+  const enough = () => winners.length >= newBotsRequired;
+
+  let iterationCount = 0;
+
+  await Promise.all(
+    arrayOfSize(CPU_WORKER_COUNT).map(async () => {
+      while (!enough()) {
+        const candidate = generateCandidateTree({ iterationCount: iterationCount++, champions });
+        if (await canBeatAllChampions({ champions, tree: candidate, pool })) {
+          if (!enough()) {
+            winners.push(candidate);
+            console.log(`Beat ${champions.length} champions after ${iterationCount} total iterations`);
+          }
+        }
+      }
+    }),
   );
 
-  Promise.all(nextGeneration).then(() => pool.terminatePool());
+  pool.terminatePool();
 
-  return nextGeneration;
+  return winners;
 }
