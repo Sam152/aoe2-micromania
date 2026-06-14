@@ -20,6 +20,7 @@ export const params = {
    * generation.
    */
   NEXT_GENERATION_RANDOM_MUTATIONS: 4,
+  NEXT_GENERATION_MAXIMUM_RANDOM_MUTATIONS: 4,
   /**
    * How many games must be played, before we increase the number of random mutations.
    */
