@@ -17,7 +17,7 @@ export async function startPruningHarness() {
 
   const minimumGameCount = (TOTAL_BOTS_PER_GENERATION - 1) * TOURNEY_ROUND_ROBIN_COUNT;
 
-  const prunableBots = bots.filter((bot) => bot.gamesSinceLastPrune > minimumGameCount);
+  const prunableBots = bots.filter((bot) => bot.gamesSinceLastPrune >= minimumGameCount);
   console.log(
     `Found ${prunableBots.length} bots with > ${minimumGameCount} games played with the current version of their tree`,
   );

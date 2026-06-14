@@ -8,7 +8,7 @@ import { insertBot } from "../infra/repo/insertBot.ts";
 
 import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
 import { promoteToGenerationChampion } from "../infra/repo/promoteToGenerationChampion.ts";
-import { retireGeneration } from "../infra/repo/retireGeneration.ts";
+import { retireAllBots } from "../infra/repo/retireAllBots.ts";
 import { getAllChampions } from "../infra/repo/getAllChampions.ts";
 
 const { TOTAL_BOTS_PER_GENERATION } = params;
@@ -25,7 +25,7 @@ export async function startEvolutionHarness() {
 
   if (botCount === 0) {
     await promoteToGenerationChampion(await insertBot(sampleTree, 0));
-    await retireGeneration(0);
+    await retireAllBots(0);
     console.log(`Created generation 0`);
   }
 

@@ -4,6 +4,7 @@ import { startTournamentHarness } from "./startTournamentHarness.ts";
 import { startPruningHarness } from "./startPruningHarness.ts";
 
 import { startPromotionHarness } from "./startPromotionHarness.ts";
+import { retireAllBots } from "../infra/repo/retireAllBots.ts";
 
 const { TOURNEY_ROUND_ROBIN_COUNT } = params;
 
@@ -23,6 +24,10 @@ async function trainForever() {
 
     console.log("\n---- PRUNE ----");
     await startPruningHarness();
+
+    console.log("\n---- RETIRE ----");
+    await retireAllBots();
+    console.log("Retired all bots - ready to start a new generation");
   }
 }
 
