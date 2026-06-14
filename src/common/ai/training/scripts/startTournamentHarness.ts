@@ -10,6 +10,9 @@ import { roundRobinSize } from "../tournament/roundRobinSize.ts";
 
 const { CPU_WORKER_COUNT } = params;
 
+/**
+ * Play a single round-robin against all active bots in the pool.
+ */
 export async function startTournamentHarness() {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
   const botsInPool = await getActiveBotsByElo();
@@ -18,7 +21,6 @@ export async function startTournamentHarness() {
     totalIterations: roundRobinSize(botsInPool.length),
   });
 
-  // Play a single round-robin against all active bots in the pool.
   await Promise.all(
     roundRobin(botsInPool, async (p1, p2) => {
       const result = await runInPool({ 1: p1.tree, 2: p2.tree });

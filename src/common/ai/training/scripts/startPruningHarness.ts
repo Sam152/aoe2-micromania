@@ -8,16 +8,18 @@ import { truncateBotActivations } from "../infra/repo/truncateBotActivations.ts"
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { countUnitAwareBehaviourTreeNodes } from "../../behaviourTree/utils/countUnitAwareBehaviourTreeNodes.ts";
 
-const { PRUNING_MINIMUM_GAMES_COUNT } = params;
+const { TOURNEY_ROUND_ROBIN_COUNT, TOTAL_BOTS_PER_GENERATION } = params;
 
 export async function startPruningHarness() {
   // Get all active bots.
   const bots = await getActiveBotsByElo();
   console.log(`Found ${bots.length} active bots`);
 
-  const prunableBots = bots.filter((bot) => bot.gamesSinceLastPrune > PRUNING_MINIMUM_GAMES_COUNT);
+  const minimumGameCount = (TOTAL_BOTS_PER_GENERATION - 1) * TOURNEY_ROUND_ROBIN_COUNT;
+
+  const prunableBots = bots.filter((bot) => bot.gamesSinceLastPrune > minimumGameCount);
   console.log(
-    `Found ${prunableBots.length} bots with > ${PRUNING_MINIMUM_GAMES_COUNT} games played with the current version of their tree`,
+    `Found ${prunableBots.length} bots with > ${minimumGameCount} games played with the current version of their tree`,
   );
 
   const formatter = createProgressFormatter({

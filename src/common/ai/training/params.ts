@@ -20,6 +20,10 @@ export const prod = {
    * How many games must be played, before we increase the number of random mutations.
    */
   NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT: 10_000,
+  /**
+   * The number of round robins a generation will play, before a champion is crowned.
+   */
+  TOURNEY_ROUND_ROBIN_COUNT: 4,
 };
 
 type Params = typeof prod;
