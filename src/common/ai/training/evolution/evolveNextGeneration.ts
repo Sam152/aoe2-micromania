@@ -29,6 +29,7 @@ export async function evolveNextGeneration(
     arrayOfSize(CPU_WORKER_COUNT).map(async () => {
       while (!enough()) {
         const candidate = generateCandidateTree({ iterationCount: iterationCount++, champions });
+
         if (await canBeatAllChampions({ champions, tree: candidate, pool }) && !enough()) {
           winners.push(candidate);
           console.log(

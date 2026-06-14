@@ -22,6 +22,7 @@ export function generateCandidateTree(
 ): UnitAwareBehaviourTree {
   const startingPoint = champions.at(0)!;
 
+  // Increase the mutations, as the number of search iterations increases.
   const totalMutations = NEXT_GENERATION_RANDOM_MUTATIONS *
     (Math.floor(iterationCount / NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT) + 1);
 
