@@ -1,4 +1,4 @@
-export const prod = {
+export const params = {
   /**
    * How many workers should be fired up.
    */
@@ -25,13 +25,3 @@ export const prod = {
    */
   TOURNEY_ROUND_ROBIN_COUNT: 4,
 };
-
-type Params = typeof prod;
-
-/**
- * Scaled down params, so we can effectively test the harness.
- */
-export const dev: Params = prod;
-
-export const params = prod;
-// export const params: Params = dev;
