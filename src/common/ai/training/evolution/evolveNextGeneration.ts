@@ -25,14 +25,13 @@ export async function evolveNextGeneration(
   const winners: UnitAwareBehaviourTree[] = [];
   const enough = () => winners.length >= newBotsRequired;
 
-  let iterationCount = 0;
-  let lastWinAt = 0;
+  let iterationsSinceLastWin = 0;
 
   await Promise.all(
     arrayOfSize(CPU_WORKER_COUNT).map(async () => {
       while (!enough()) {
         const candidate = generateCandidateTree({
-          iterationsSinceLastWin: iterationCount++ - lastWinAt,
+          iterationsSinceLastWin: iterationsSinceLastWin++,
           champions,
         });
 
@@ -40,10 +39,10 @@ export async function evolveNextGeneration(
           winners.push(candidate);
           // Reset the search radius: finding a winner proves the current neighbourhood is
           // productive, so the next search should start cheap again rather than stay drifted out.
-          lastWinAt = iterationCount;
           console.log(
-            `(${winners.length}/${newBotsRequired}) Beat ${champions.length} champions after ${iterationCount} total iterations`,
+            `(${winners.length}/${newBotsRequired}) Beat ${champions.length} champions after ${iterationsSinceLastWin} iterations since last win`,
           );
+          iterationsSinceLastWin = 0;
           await insertBot(candidate, generation);
         }
       }

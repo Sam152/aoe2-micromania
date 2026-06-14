@@ -35,7 +35,7 @@ export function generateCandidateTree(
   // way growing the ceiling adds search space without abandoning the cheap wins.
   const count = 1 + Math.floor((Math.random() ** 2) * ceiling);
 
-  if (iterationsSinceLastWin % 5000 === 0) {
+  if (iterationsSinceLastWin > 0 && iterationsSinceLastWin % 5000 === 0) {
     console.log(`Chosen mutation count at ${iterationsSinceLastWin} iterations since last win was: ${count}`);
   }
 
@@ -55,13 +55,13 @@ export function randomlyMutateUnitAwareBehaviourTree(
   return {
     [UnitType.Archer]: a === "HEADS"
       ? randomlyMutateTree({ count, tree: tree[UnitType.Archer], unitType: UnitType.Archer })
-      : tree[UnitType.Archer],
+      : structuredClone(tree[UnitType.Archer]),
     [UnitType.Mangonel]: b === "HEADS"
       ? randomlyMutateTree({ count, tree: tree[UnitType.Mangonel], unitType: UnitType.Mangonel })
-      : tree[UnitType.Mangonel],
+      : structuredClone(tree[UnitType.Mangonel]),
     [UnitType.Monk]: c === "HEADS"
       ? randomlyMutateTree({ count, tree: tree[UnitType.Monk], unitType: UnitType.Monk })
-      : tree[UnitType.Monk],
+      : structuredClone(tree[UnitType.Monk]),
   };
 }
 
