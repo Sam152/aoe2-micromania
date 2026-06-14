@@ -22,7 +22,7 @@ export async function startEvolutionHarness() {
   }
 
   if ((await getAllChampions()).length === 0) {
-    console.log(`No champions found, generating generation zero`);
+    console.log(`No champions found, inserting gen 0`);
     await insertGenerationZero(sampleTree);
   }
 
