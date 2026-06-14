@@ -13,5 +13,5 @@ export function calculateMutationCount(
   const ceiling = NEXT_GENERATION_RANDOM_MUTATIONS *
     (Math.floor(iterationsSinceLastWin / NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT) + 1);
 
-  return 1 + Math.floor((random ** 2) * ceiling);
+  return Math.max(1 + Math.floor((random ** 2) * ceiling), 20);
 }
