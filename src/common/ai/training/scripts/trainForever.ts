@@ -11,32 +11,29 @@ const { TOURNEY_ROUND_ROBIN_COUNT } = params;
 
 async function trainForever() {
   while (true) {
-    console.log("\n---- EVOLVE ----");
-    const evolveTimer = createTimer("Evolution");
-    await startEvolutionHarness();
-    evolveTimer();
+    await step("EVOLVE", startEvolutionHarness);
 
-    console.log("\n---- TOURNAMENT ----");
-    for (let i = 0; i < TOURNEY_ROUND_ROBIN_COUNT; i++) {
-      console.log(`Starting ${i + 1} of ${TOURNEY_ROUND_ROBIN_COUNT}`);
-      await startTournamentHarness();
-    }
+    await step("TOURNAMENT", async () => {
+      for (let i = 0; i < TOURNEY_ROUND_ROBIN_COUNT; i++) {
+        console.log(`Starting ${i + 1} of ${TOURNEY_ROUND_ROBIN_COUNT}`);
+        await startTournamentHarness();
+      }
+    });
 
-    console.log("\n---- PROMOTING CHAMPION ----");
-    await startPromotionHarness();
+    await step("PROMOTING CHAMPION", startPromotionHarness);
 
-    console.log("\n---- PRUNE ----");
-    await startPruningHarness();
+    await step("PRUNE", startPruningHarness);
 
-    console.log("\n---- RETIRE ----");
-    await retireAllBots();
-    console.log("Retired all bots - ready to start a new generation");
+    await step("RETIRE", async () => {
+      await retireAllBots();
+      console.log("Retired all bots - ready to start a new generation");
+    });
   }
 }
 
 async function step(name: string, step: () => Promise<void>) {
-  console.log(`---- ${name} ----`);
-  const timer = createTimer();
+  console.log(`\n---- ${name} ----`);
+  const timer = createTimer(name);
   await step();
   timer();
 }
