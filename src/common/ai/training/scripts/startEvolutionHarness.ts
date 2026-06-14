@@ -4,7 +4,6 @@ import { activeBotsCount } from "../infra/repo/activeBotsCount.ts";
 import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
 
 import { evolveNextGeneration } from "../evolution/evolveNextGeneration.ts";
-import { insertBot } from "../infra/repo/insertBot.ts";
 
 import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
 import { insertGenerationZero } from "../infra/repo/insertGenerationZero.ts";
@@ -30,8 +29,7 @@ export async function startEvolutionHarness() {
   const generation = await getCurrentGenerationNumber() + 1;
   console.log(`Evolving ${requiredBots} generation ${generation} bots\n`);
 
-  const candidates = await evolveNextGeneration({ champions, newBotsRequired: requiredBots });
-  await Promise.all(candidates.map((tree) => insertBot(tree, generation)));
+  await evolveNextGeneration({ champions, newBotsRequired: requiredBots, generation });
 }
 
 if (import.meta.main) {
