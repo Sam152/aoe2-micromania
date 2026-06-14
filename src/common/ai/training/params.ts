@@ -8,9 +8,13 @@ export const params = {
    */
   TOTAL_BOTS_PER_GENERATION: 50,
   /**
+   * Amount of HP a candidate tree must survive with against a champion to enter the pool.
+   */
+  CANDIDATE_TREE_REQUIRED_HP_AGAINST_CHAMPION: 250,
+  /**
    * The maximum duration of a game in minutes.
    */
-  MAX_GAME_TIME_MINUTES: 3,
+  MAX_GAME_TIME_MINUTES: 5,
   /**
    * How many mutations should be applied, when training a next
    * generation.

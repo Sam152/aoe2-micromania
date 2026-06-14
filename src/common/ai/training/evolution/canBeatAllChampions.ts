@@ -2,6 +2,9 @@ import { Bot } from "../infra/repo/utils/botRowToBot.ts";
 import { GameWorkerPool } from "../tournament/createGameWorkerPool.ts";
 import { UnitAwareBehaviourTree } from "../../behaviourTree/BehaviourTree.ts";
 import { GameResult } from "../utils/determineWinner.ts";
+import { params } from "../params.ts";
+
+const { CANDIDATE_TREE_REQUIRED_HP_AGAINST_CHAMPION } = params;
 
 export async function canBeatAllChampions({ champions, pool, tree }: {
   champions: Bot[];
@@ -22,5 +25,5 @@ export async function canBeatAllChampions({ champions, pool, tree }: {
  * opponent? Tune this to favor aggression, defense etc.
  */
 export function hasPlayerTwoWonAgainstChampion(result: GameResult) {
-  return result.winner === 2 && result.hp[2] - result.hp[1] > 250;
+  return result.winner === 2 && result.hp[1] === 0 && result.hp[2] > CANDIDATE_TREE_REQUIRED_HP_AGAINST_CHAMPION;
 }
