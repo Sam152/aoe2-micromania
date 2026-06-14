@@ -2,7 +2,7 @@ import { UnitAwareBehaviourTree } from "../behaviourTree/BehaviourTree.ts";
 import { UnitType } from "../../units/UnitType.ts";
 import { randomlyMutateTree } from "./randomlyMutateTree.ts";
 
-export function randomlyMutateUnitAwareBehaviourTree(
+export function randomlyMutateUnitAwareBehaviourTreeAllUnits(
   { count, tree }: { count: number; tree: UnitAwareBehaviourTree },
 ): UnitAwareBehaviourTree {
   return {
