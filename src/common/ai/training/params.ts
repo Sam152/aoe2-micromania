@@ -27,7 +27,7 @@ export const params = {
   /**
    * The number of iterations that pass, before we attempt to look one generation further into the past for a mutation.
    */
-  NEXT_GENERATION_CHAMPION_LOOKBACK_ITERATION_STEP_AMOUNT: 20_000,
+  NEXT_GENERATION_CHAMPION_LOOKBACK_ITERATION_STEP_AMOUNT: 100_000,
   /**
    * The number of round robins a generation will play, before a champion is crowned.
    */
