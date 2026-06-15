@@ -20,7 +20,7 @@ export function generateCandidateTree(
   const startingPoint = selectBaseChampionToMutate({ iterationsSinceLastWin, champions });
 
   const count = calculateMutationCount({ iterationsSinceLastWin });
-  log(`${iterationsSinceLastWin}: mutation generation ${startingPoint.generation} a total of ${count} times`);
+  log(`${iterationsSinceLastWin}: mutated gen ${startingPoint.generation} a total of ${count} times`);
 
   return randomlyMutateUnitAwareBehaviourTree({
     tree: startingPoint.tree,
