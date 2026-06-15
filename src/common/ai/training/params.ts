@@ -19,12 +19,15 @@ export const params = {
    * How many mutations should be applied, when training a next
    * generation.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS: 4,
-  NEXT_GENERATION_MAXIMUM_RANDOM_MUTATIONS: 30,
+  NEXT_GENERATION_RANDOM_MUTATIONS: 6,
   /**
-   * How many games must be played, before we increase the number of random mutations.
+   * How many iterations before we start randomizing higher.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT: 5_000,
+  NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD: 50_000,
+  /**
+   * The number of iterations that pass, before we attempt to look one generation further into the past for a mutation.
+   */
+  NEXT_GENERATION_CHAMPION_LOOKBACK_ITERATION_STEP_AMOUNT: 20_000,
   /**
    * The number of round robins a generation will play, before a champion is crowned.
    */

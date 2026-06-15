@@ -1,9 +1,9 @@
 import { params } from "../../params.ts";
+import { randomArray } from "../../../../util/randomArray.ts";
 
 const {
   NEXT_GENERATION_RANDOM_MUTATIONS,
-  NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT,
-  NEXT_GENERATION_MAXIMUM_RANDOM_MUTATIONS,
+  NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD,
 } = params;
 
 type CalculateMutationCountArgs = {
@@ -14,8 +14,13 @@ type CalculateMutationCountArgs = {
 export function calculateMutationCount(
   { iterationsSinceLastWin, random = Math.random() }: CalculateMutationCountArgs,
 ): number {
-  const ceiling = NEXT_GENERATION_RANDOM_MUTATIONS *
-    (Math.floor(iterationsSinceLastWin / NEXT_GENERATION_RANDOM_MUTATIONS_STEP_AMOUNT) + 1);
-
-  return Math.min(1 + Math.floor((random ** 2) * ceiling), NEXT_GENERATION_MAXIMUM_RANDOM_MUTATIONS);
+  if (iterationsSinceLastWin > NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD) {
+    return randomArray([
+      NEXT_GENERATION_RANDOM_MUTATIONS * 2,
+      NEXT_GENERATION_RANDOM_MUTATIONS * 3,
+      NEXT_GENERATION_RANDOM_MUTATIONS * 4,
+      NEXT_GENERATION_RANDOM_MUTATIONS * 5,
+    ]);
+  }
+  return NEXT_GENERATION_RANDOM_MUTATIONS;
 }

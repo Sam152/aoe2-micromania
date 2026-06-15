@@ -4,6 +4,7 @@ import { UnitType } from "../../../../units/UnitType.ts";
 import { randomlyMutateTree } from "../../../mutation/randomlyMutateTree.ts";
 import { Coinflip, coinflip } from "../../../../util/coinflip.ts";
 import { calculateMutationCount } from "./calculateMutationCount.ts";
+import { selectBaseChampionToMutate } from "./selectBaseChampionToMutate.ts";
 
 type GenerateCandidateTreeArgs = {
   iterationsSinceLastWin: number;
@@ -13,24 +14,26 @@ type GenerateCandidateTreeArgs = {
 export function generateCandidateTree(
   { iterationsSinceLastWin, champions }: GenerateCandidateTreeArgs,
 ): UnitAwareBehaviourTree {
-  const startingPoint = champions.at(0)!;
+  const logCandidateInfo = iterationsSinceLastWin > 0 && iterationsSinceLastWin % 2_500 === 0;
+  const log = (info: string) => logCandidateInfo ? console.log(info) : null;
+
+  const startingPoint = selectBaseChampionToMutate({ iterationsSinceLastWin, champions });
 
   const count = calculateMutationCount({ iterationsSinceLastWin });
-
-  if (iterationsSinceLastWin > 0 && iterationsSinceLastWin % 5000 === 0) {
-    console.log(`Chosen mutation count at ${iterationsSinceLastWin} iterations since last win was: ${count}`);
-  }
+  log(`${iterationsSinceLastWin}: mutation generation ${startingPoint.generation} a total of ${count} times`);
 
   return randomlyMutateUnitAwareBehaviourTree({
     tree: startingPoint.tree,
     count,
+    log,
   });
 }
 
 export function randomlyMutateUnitAwareBehaviourTree(
-  { count, tree }: { count: number; tree: UnitAwareBehaviourTree },
+  { count, tree, log }: { count: number; tree: UnitAwareBehaviourTree; log: (info: string) => void },
 ): UnitAwareBehaviourTree {
   const [a, b, c] = flipUntilAtLeastOneHeads();
+  log(`Flipped ${a}, ${b}, ${c}`);
 
   // Don't always mutate all trees, we might have a strong tree for one unit that does
   // not want to be mutated.
