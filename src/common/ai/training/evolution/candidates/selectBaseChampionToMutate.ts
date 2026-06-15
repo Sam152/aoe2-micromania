@@ -9,9 +9,12 @@ export function selectBaseChampionToMutate(
     champions: Bot[];
   },
 ): Bot {
-  const lookback = Math.min(
-    champions.length,
-    1 + Math.floor(iterationsSinceLastWin / NEXT_GENERATION_CHAMPION_LOOKBACK_ITERATION_STEP_AMOUNT),
+  const lookback = Math.max(
+    2,
+    Math.min(
+      champions.length,
+      1 + Math.floor(iterationsSinceLastWin / NEXT_GENERATION_CHAMPION_LOOKBACK_ITERATION_STEP_AMOUNT),
+    ),
   );
   return champions[Math.floor(Math.random() * lookback)];
 }
