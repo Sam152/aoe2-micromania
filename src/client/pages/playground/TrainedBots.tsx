@@ -3,8 +3,9 @@ import { useTrpc } from "../../hooks/useTrpc.ts";
 import { GameCanvas } from "../../components/GameCanvas.tsx";
 import { LocalStateManager } from "../../../common/state/managers/LocalStateManager.ts";
 import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
-import {triggerBotTicks} from "../../../common/ai/integration/triggerBotTicks.ts";
-import {BotInstance, createBot} from "../../../common/ai/integration/createBot.ts";
+import { triggerBotTicks } from "../../../common/ai/integration/triggerBotTicks.ts";
+import { BotInstance, createBot } from "../../../common/ai/integration/createBot.ts";
+import { screenManager } from "../../../common/drawing/screenManager.ts";
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
@@ -19,8 +20,8 @@ export function TrainedBots() {
   const stateManager = useMemo(() => {
     const homeBot = bots.find((bot) => bot.id === homeBotId);
     const awayBot = bots.find((bot) => bot.id === awayBotId);
-    
-    const botsInstances: BotInstance[] = [homeBot, awayBot].filter(bot => !!bot).map((bot, i) =>
+
+    const botsInstances: BotInstance[] = [homeBot, awayBot].filter((bot) => !!bot).map((bot, i) =>
       createBot({
         playingAs: i + 1,
         playerId: `bot:${i + 1}`,
@@ -54,21 +55,23 @@ export function TrainedBots() {
   }, [homeBotId, awayBotId, bots]);
 
   return (
-    <div className="container">
-      <div className="vstack">
-        <BotSelector label="Home" bots={bots} value={homeBotId} onChange={setHomeBotId} />
-        <BotSelector label="Away" bots={bots} value={awayBotId} onChange={setAwayBotId} />
+    <>
+      {stateManager && (
+        <GameCanvas
+          key={`${homeBotId}-${awayBotId}`}
+          startAs="SPECTATOR"
+          stateManager={stateManager}
+          canvasStyle={{ width: "100vw", height: "calc(100vh - 53px)" }}
+        />
+      )}
 
-        {stateManager && (
-          <GameCanvas
-            key={`${homeBotId}-${awayBotId}`}
-            startAs="SPECTATOR"
-            stateManager={stateManager}
-            canvasStyle={{ width: "100vw", height: "calc(100vh - 53px)" }}
-          />
-        )}
+      <div className="container">
+        <div className="vstack">
+          <BotSelector label="Home" bots={bots} value={homeBotId} onChange={setHomeBotId} />
+          <BotSelector label="Away" bots={bots} value={awayBotId} onChange={setAwayBotId} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
