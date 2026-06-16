@@ -7,28 +7,20 @@ import {triggerBotTicks} from "../../../common/ai/integration/triggerBotTicks.ts
 import {BotInstance, createBot} from "../../../common/ai/integration/createBot.ts";
 
 export function TrainedBots() {
-  const trpc = useTrpc();
-
   const [bots, setBots] = useState<Bot[]>([]);
   const [homeBotId, setHomeBotId] = useState<number | null>(null);
   const [awayBotId, setAwayBotId] = useState<number | null>(null);
 
+  const trpc = useTrpc();
   useEffect(() => {
     trpc.getAllBots.query().then(setBots);
   }, [trpc]);
 
-  const botsInstances: BotInstance[] = [
-    createBot({
-      playingAs: 1,
-      playerId: 'bot:1',
-      tree: homeBotId,
-    }),
-    createBot({
-      playingAs: 2,
-      playerId: 'bot:2',
-      tree: ,
-    }),
-  ];
+  const botsInstances: BotInstance[] = [homeBotId, awayBotId].filter((id) => !!id).map((id, i) => createBot({
+    playingAs: i + 1,
+    playerId: `bot:${i + 1}`,
+    tree: bots.find((bot) => bot.id === id)!.tree,
+  }));
 
   const stateManager = useMemo(() => {
     const manager = new LocalStateManager("playground");
@@ -45,6 +37,13 @@ export function TrainedBots() {
       }
       triggerBotTicks(botsInstances, gameState, manager.dispatchGame.bind(manager), computed);
     });
+
+    botsInstances.map((instance) => {
+      manager.dispatchGame({
+        n: "CLIENT_LOADED_WITH_ID",
+        playerId: instance.playerId,
+      });
+    })
 
     return manager;
   }, [homeBotId, awayBotId]);
