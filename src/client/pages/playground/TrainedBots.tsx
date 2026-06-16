@@ -52,35 +52,8 @@ export function TrainedBots() {
   return (
     <div className="container">
       <div className="vstack">
-        <label>
-          Home
-          <select
-            value={homeBotId ?? ""}
-            onChange={(e) => setHomeBotId(e.target.value ? Number(e.target.value) : null)}
-          >
-            <option value="">Select a bot…</option>
-            {bots.map((bot) => (
-              <option key={bot.id} value={bot.id}>
-                {bot.botName} (elo {bot.elo})
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label>
-          Away
-          <select
-            value={awayBotId ?? ""}
-            onChange={(e) => setAwayBotId(e.target.value ? Number(e.target.value) : null)}
-          >
-            <option value="">Select a bot…</option>
-            {bots.map((bot) => (
-              <option key={bot.id} value={bot.id}>
-                {bot.botName} (elo {bot.elo})
-              </option>
-            ))}
-          </select>
-        </label>
+        <BotSelector label="Home" bots={bots} value={homeBotId} onChange={setHomeBotId} />
+        <BotSelector label="Away" bots={bots} value={awayBotId} onChange={setAwayBotId} />
 
         <GameCanvas
           key={`${homeBotId}-${awayBotId}`}
@@ -90,5 +63,29 @@ export function TrainedBots() {
         />
       </div>
     </div>
+  );
+}
+
+function BotSelector({ label, bots, value, onChange }: {
+  label: string;
+  bots: Bot[];
+  value: number | null;
+  onChange: (id: number | null) => void;
+}) {
+  return (
+    <label>
+      {label}
+      <select
+        value={value ?? ""}
+        onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
+      >
+        <option value="">Select a bot…</option>
+        {bots.map((bot) => (
+          <option key={bot.id} value={bot.id}>
+            {bot.botName} (elo {bot.elo})
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
