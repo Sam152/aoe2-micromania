@@ -15,7 +15,7 @@ export type Bot = {
 
 export function botRowToBot(row: postgres.Row): Bot {
   return {
-    id: row.id,
+    id: Number(row.id),
     botName: row.bot_name,
     tree: row.tree as UnitAwareBehaviourTree,
     elo: row.elo,

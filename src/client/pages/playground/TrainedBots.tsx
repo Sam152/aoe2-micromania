@@ -16,13 +16,23 @@ export function TrainedBots() {
     trpc.getAllBots.query().then(setBots);
   }, [trpc]);
 
-  const botsInstances: BotInstance[] = [homeBotId, awayBotId].filter((id) => !!id).map((id, i) => createBot({
-    playingAs: i + 1,
-    playerId: `bot:${i + 1}`,
-    tree: bots.find((bot) => bot.id === id)!.tree,
-  }));
-
   const stateManager = useMemo(() => {
+    const homeBot = bots.find((bot) => bot.id === homeBotId);
+    const awayBot = bots.find((bot) => bot.id === awayBotId);
+
+    console.log(bots, homeBot, awayBot, homeBotId);
+    if (!homeBot || !awayBot) {
+      return null;
+    }
+
+    const botsInstances: BotInstance[] = [homeBot, awayBot].map((bot, i) =>
+      createBot({
+        playingAs: i + 1,
+        playerId: `bot:${i + 1}`,
+        tree: bot.tree,
+      })
+    );
+
     const manager = new LocalStateManager("playground");
 
     manager.dispatchGame({
@@ -38,15 +48,15 @@ export function TrainedBots() {
       triggerBotTicks(botsInstances, gameState, manager.dispatchGame.bind(manager), computed);
     });
 
-    botsInstances.map((instance) => {
+    botsInstances.forEach((instance) => {
       manager.dispatchGame({
         n: "CLIENT_LOADED_WITH_ID",
         playerId: instance.playerId,
       });
-    })
+    });
 
     return manager;
-  }, [homeBotId, awayBotId]);
+  }, [homeBotId, awayBotId, bots]);
 
   return (
     <div className="container">
@@ -54,12 +64,14 @@ export function TrainedBots() {
         <BotSelector label="Home" bots={bots} value={homeBotId} onChange={setHomeBotId} />
         <BotSelector label="Away" bots={bots} value={awayBotId} onChange={setAwayBotId} />
 
-        <GameCanvas
-          key={`${homeBotId}-${awayBotId}`}
-          startAs="SPECTATOR"
-          stateManager={stateManager}
-          canvasStyle={{ width: "100vw", height: "calc(100vh - 53px)" }}
-        />
+        {stateManager && (
+          <GameCanvas
+            key={`${homeBotId}-${awayBotId}`}
+            startAs="SPECTATOR"
+            stateManager={stateManager}
+            canvasStyle={{ width: "100vw", height: "calc(100vh - 53px)" }}
+          />
+        )}
       </div>
     </div>
   );
