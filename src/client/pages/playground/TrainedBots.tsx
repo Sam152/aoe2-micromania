@@ -3,7 +3,8 @@ import { useTrpc } from "../../hooks/useTrpc.ts";
 import { GameCanvas } from "../../components/GameCanvas.tsx";
 import { LocalStateManager } from "../../../common/state/managers/LocalStateManager.ts";
 import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
-import stat = Deno.stat;
+import {triggerBotTicks} from "../../../common/ai/integration/triggerBotTicks.ts";
+import {BotInstance, createBot} from "../../../common/ai/integration/createBot.ts";
 
 export function TrainedBots() {
   const trpc = useTrpc();
@@ -16,9 +17,36 @@ export function TrainedBots() {
     trpc.getAllBots.query().then(setBots);
   }, [trpc]);
 
+  const botsInstances: BotInstance[] = [
+    createBot({
+      playingAs: 1,
+      playerId: 'bot:1',
+      tree: homeBotId,
+    }),
+    createBot({
+      playingAs: 2,
+      playerId: 'bot:2',
+      tree: ,
+    }),
+  ];
+
   const stateManager = useMemo(() => {
-      const stateManager = new LocalStateManager("playground");
-      return stateManager;
+    const manager = new LocalStateManager("playground");
+
+    manager.dispatchGame({
+      n: "MAP_PARAMETERS_SET",
+      size: 30,
+      terrain: "terrain/15008-grass-2",
+    });
+
+    manager.addPreTickListener((gameState, action, computed) => {
+      if (action.n !== "T") {
+        return;
+      }
+      triggerBotTicks(botsInstances, gameState, manager.dispatchGame.bind(manager), computed);
+    });
+
+    return manager;
   }, [homeBotId, awayBotId]);
 
   return (
