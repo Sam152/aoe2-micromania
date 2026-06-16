@@ -253,6 +253,61 @@ kbd {
   font-weight: 600;
 }
 
+/* Matchup overlay */
+.matchup-overlay {
+  position: absolute;
+  top: 69px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 12px 20px;
+  background-color: rgba(23, 25, 35, 0.85);
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.matchup-select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.matchup-select > span {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #a0aec0;
+}
+
+.matchup-select select {
+  height: 32px;
+  padding: 0 8px;
+  background-color: #2d3748;
+  color: #e2e8f0;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.matchup-select select:focus {
+  outline: none;
+  border-color: #3182ce;
+}
+
+.matchup-vs {
+  padding-bottom: 4px;
+  font-family: "Cinzel", serif;
+  font-weight: bold;
+  color: #e0bf4f;
+  text-shadow: 1px 1px 1px #000;
+}
+
 /* PlayingAs */
 .playing-as-label {
   display: block;

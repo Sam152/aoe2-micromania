@@ -19,15 +19,17 @@ export class LocalStateManager implements StateManagerInterface {
   private ticker!: ReturnType<typeof setInterval>;
   private clientStateListeners: Array<(state: ClientState, action: ClientStateAction) => void>;
   private budgetCalculator: FrameBudgetCalculator;
+  private secondDuration: number;
   private tickFn: () => void;
 
-  constructor(clientId: string | undefined, tickFn?: () => void) {
+  constructor(clientId: string | undefined, tickFn?: () => void, secondDuration = 1000) {
     this.gameState = defaultGameState();
     this.clientState = defaultClientState(clientId!);
     this.gameStateListeners = [];
     this.preGameStateListeners = [];
     this.clientStateListeners = [];
     this.budgetCalculator = frameBudgetCalculator();
+    this.secondDuration = secondDuration;
     this.tickFn = tickFn || (() => this.dispatchGame({ n: "T", t: this.gameState.ticks }));
   }
 
@@ -68,8 +70,7 @@ export class LocalStateManager implements StateManagerInterface {
   }
 
   init(): void {
-    this.ticker = setInterval(this.tickFn, 1000 / config.ticksPerSecond);
-    // this.ticker = setInterval(this.tickFn, config.ticksPerSecond / config.ticksPerSecond);
+    this.ticker = setInterval(this.tickFn, this.secondDuration / config.ticksPerSecond);
   }
 
   cleanUp(): void {

@@ -5,7 +5,6 @@ import { LocalStateManager } from "../../../common/state/managers/LocalStateMana
 import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
 import { triggerBotTicks } from "../../../common/ai/integration/triggerBotTicks.ts";
 import { BotInstance, createBot } from "../../../common/ai/integration/createBot.ts";
-import { screenManager } from "../../../common/drawing/screenManager.ts";
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
@@ -29,7 +28,7 @@ export function TrainedBots() {
       })
     );
 
-    const manager = new LocalStateManager("playground");
+    const manager = new LocalStateManager("playground", undefined, 500);
 
     manager.dispatchGame({
       n: "MAP_PARAMETERS_SET",
@@ -65,11 +64,10 @@ export function TrainedBots() {
         />
       )}
 
-      <div className="container">
-        <div className="vstack">
-          <BotSelector label="Home" bots={bots} value={homeBotId} onChange={setHomeBotId} />
-          <BotSelector label="Away" bots={bots} value={awayBotId} onChange={setAwayBotId} />
-        </div>
+      <div className="matchup-overlay">
+        <BotSelector label="Home" bots={bots} value={homeBotId} onChange={setHomeBotId} />
+        <span className="matchup-vs">VS</span>
+        <BotSelector label="Away" bots={bots} value={awayBotId} onChange={setAwayBotId} />
       </div>
     </>
   );
@@ -82,8 +80,8 @@ function BotSelector({ label, bots, value, onChange }: {
   onChange: (id: number | null) => void;
 }) {
   return (
-    <label>
-      {label}
+    <label className="matchup-select">
+      <span>{label}</span>
       <select
         value={value ?? ""}
         onChange={(e) => onChange(e.target.value ? Number(e.target.value) : null)}
