@@ -19,13 +19,8 @@ export function TrainedBots() {
   const stateManager = useMemo(() => {
     const homeBot = bots.find((bot) => bot.id === homeBotId);
     const awayBot = bots.find((bot) => bot.id === awayBotId);
-
-    console.log(bots, homeBot, awayBot, homeBotId);
-    if (!homeBot || !awayBot) {
-      return null;
-    }
-
-    const botsInstances: BotInstance[] = [homeBot, awayBot].map((bot, i) =>
+    
+    const botsInstances: BotInstance[] = [homeBot, awayBot].filter(bot => !!bot).map((bot, i) =>
       createBot({
         playingAs: i + 1,
         playerId: `bot:${i + 1}`,
