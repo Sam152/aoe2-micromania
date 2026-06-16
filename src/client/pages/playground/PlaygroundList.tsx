@@ -12,6 +12,7 @@ const playgrounds: Playground[] = [
   { name: "Mango fan-out", path: "/playground/mango-fanout" },
   { name: "Accuracy analysis", path: "/playground/accuracy-analysis" },
   { name: "Group unit vector facing direction", path: "/playground/group-unit-vector-facing-direction" },
+  { name: "Trained bots", path: "/playground/trained-bots" },
 ];
 
 export function PlaygroundList() {
