@@ -35,5 +35,5 @@ export const params = {
   /**
    * How many iterations before looking at a prior generation.
    */
-  BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 5,
+  BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 3,
 };

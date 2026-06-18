@@ -12,7 +12,7 @@ export function selectStartingTreeFromBots(
   },
 ): Bot {
   const tranche = Math.floor(iterationsSinceLastWin / BOT_SELECTION_ITERATION_BEFORE_LOOKING_AT_PRIOR_GENERATION);
-  const generationsToConsider = Math.max(1, tranche);
+  const generationsToConsider = Math.min(3, Math.max(1, tranche));
   const botsPerGeneration = tranche === 0 ? 1 : BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER;
 
   const generations = [...new Set(previousBots.map((bot) => bot.generation))]
