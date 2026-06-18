@@ -82,21 +82,27 @@ export function TrainedBots() {
       </div>
 
       <div className="matchup-bar">
-        <div className="generation-tiles" ref={championTilesRef}>
-          {champions.map((bot) => (
-            <BotTile
-              key={bot.id}
-              bot={bot}
-              expanded={expandedGen === bot.generation}
-              slot={homeBot?.id === bot.id ? "home" : awayBot?.id === bot.id ? "away" : undefined}
-              onClick={() => setExpandedGen(expandedGen === bot.generation ? null : bot.generation)}
-              onDragStart={handleDragStart}
-            />
-          ))}
+        <div className="matchup-tiles-col">
+          <div className="generation-tiles" ref={championTilesRef}>
+          {champions.map((bot) => {
+            const { slot, dashed } = slotForGeneration(bot.generation, bot.id, homeBot, awayBot);
+            return (
+              <BotTile
+                key={bot.id}
+                bot={bot}
+                expanded={expandedGen === bot.generation}
+                slot={slot}
+                dashed={dashed}
+                onClick={() => setExpandedGen(expandedGen === bot.generation ? null : bot.generation)}
+                onDragStart={handleDragStart}
+              />
+            );
+          })}
           {latestUnchampionedGen !== null && (
             <PlaceholderTile
               gen={latestUnchampionedGen}
               expanded={expandedGen === latestUnchampionedGen}
+              slot={slotForGeneration(latestUnchampionedGen, -1, homeBot, awayBot).slot}
               onClick={() => setExpandedGen(expandedGen === latestUnchampionedGen ? null : latestUnchampionedGen)}
             />
           )}
@@ -115,6 +121,7 @@ export function TrainedBots() {
             ))}
           </div>
         )}
+        </div>
 
         <div className="matchup-slots">
           <DropSlot
@@ -148,11 +155,28 @@ export function TrainedBots() {
   );
 }
 
+// Resolve the highlight for a generation's champion tile. A direct match (the
+// champion itself is slotted) renders solid; if instead one of its children is
+// slotted, the generation tile inherits the same colour but dashed.
+function slotForGeneration(
+  generation: number,
+  championId: number,
+  homeBot: Bot | null,
+  awayBot: Bot | null,
+): { slot?: "home" | "away"; dashed?: boolean } {
+  if (homeBot?.id === championId) { return { slot: "home" }; }
+  if (awayBot?.id === championId) { return { slot: "away" }; }
+  if (homeBot?.generation === generation) { return { slot: "home", dashed: true }; }
+  if (awayBot?.generation === generation) { return { slot: "away", dashed: true }; }
+  return {};
+}
+
 function BotTile({
   bot,
   expanded,
   small,
   slot,
+  dashed,
   onClick,
   onDragStart,
 }: {
@@ -160,6 +184,7 @@ function BotTile({
   expanded?: boolean;
   small?: boolean;
   slot?: "home" | "away";
+  dashed?: boolean;
   onClick?: () => void;
   onDragStart: (e: React.DragEvent, bot: Bot) => void;
 }) {
@@ -167,8 +192,8 @@ function BotTile({
     "gen-tile",
     expanded && "gen-tile--expanded",
     small && "gen-tile--small",
-    slot === "home" && "gen-tile--slotted-home",
-    slot === "away" && "gen-tile--slotted-away",
+    slot === "home" && (dashed ? "gen-tile--slotted-home-dashed" : "gen-tile--slotted-home"),
+    slot === "away" && (dashed ? "gen-tile--slotted-away-dashed" : "gen-tile--slotted-away"),
   ]
     .filter(Boolean)
     .join(" ");
@@ -189,13 +214,21 @@ function BotTile({
 function PlaceholderTile({
   gen,
   expanded,
+  slot,
   onClick,
 }: {
   gen: number;
   expanded: boolean;
+  slot?: "home" | "away";
   onClick: () => void;
 }) {
-  const classes = ["gen-tile", "gen-tile--placeholder", expanded && "gen-tile--expanded"]
+  const classes = [
+    "gen-tile",
+    "gen-tile--placeholder",
+    expanded && "gen-tile--expanded",
+    slot === "home" && "gen-tile--slotted-home-dashed",
+    slot === "away" && "gen-tile--slotted-away-dashed",
+  ]
     .filter(Boolean)
     .join(" ");
 
