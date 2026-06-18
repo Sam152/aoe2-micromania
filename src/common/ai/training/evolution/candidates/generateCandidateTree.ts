@@ -14,26 +14,19 @@ type GenerateCandidateTreeArgs = {
 export function generateCandidateTree(
   { iterationsSinceLastWin, previousBots }: GenerateCandidateTreeArgs,
 ): UnitAwareBehaviourTree {
-  const logCandidateInfo = iterationsSinceLastWin > 0 && iterationsSinceLastWin % 2_500 === 0;
-  const log = (info: string) => logCandidateInfo ? console.log(info) : null;
-
   const startingPoint = selectStartingTreeFromBots({ iterationsSinceLastWin, previousBots });
-
   const count = calculateMutationCount({ iterationsSinceLastWin });
-  log(`${iterationsSinceLastWin}: mutated gen ${startingPoint.generation} a total of ${count} times`);
 
   return randomlyMutateUnitAwareBehaviourTree({
     tree: startingPoint.tree,
     count,
-    log,
   });
 }
 
 export function randomlyMutateUnitAwareBehaviourTree(
-  { count, tree, log }: { count: number; tree: UnitAwareBehaviourTree; log: (info: string) => void },
+  { count, tree }: { count: number; tree: UnitAwareBehaviourTree },
 ): UnitAwareBehaviourTree {
   const [a, b, c] = flipUntilAtLeastOneHeads();
-  log(`Flipped ${a}, ${b}, ${c}`);
 
   // Don't always mutate all trees, we might have a strong tree for one unit that does
   // not want to be mutated.

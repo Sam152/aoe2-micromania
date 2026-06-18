@@ -12,16 +12,24 @@ function writeSync(text: string): void {
   }
 }
 
-export function createProgressFormatter({ totalIterations }: { totalIterations: number }): { advance: () => void } {
+export function createProgressFormatter(
+  { totalIterations, scaleFactor = 1 }: { totalIterations?: number; scaleFactor?: number } = {},
+): { advance: () => void } {
   let completed = 0;
 
   return {
     advance: () => {
       completed++;
-      writeSync(".");
 
-      if (completed % ROW_SIZE === 0 || completed === totalIterations) {
-        writeSync(` (${completed}/${totalIterations})\n`);
+      const isLast = completed === totalIterations;
+      const isDot = completed % scaleFactor === 0;
+      if (isDot) {
+        writeSync(".");
+      }
+
+      // Break the row every ROW_SIZE dots (i.e. ROW_SIZE * scaleFactor advances), or at the very end.
+      if ((isDot && completed % (ROW_SIZE * scaleFactor) === 0) || isLast) {
+        writeSync(totalIterations !== undefined ? ` (${completed}/${totalIterations})\n` : ` (${completed})\n`);
       }
     },
   };

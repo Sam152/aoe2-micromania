@@ -19,6 +19,7 @@ export async function startTournamentHarness(invertPositions: boolean) {
 
   const { advance } = createProgressFormatter({
     totalIterations: roundRobinSize(botsInPool.length),
+    scaleFactor: 100,
   });
 
   await Promise.all(
