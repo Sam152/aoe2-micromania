@@ -10,5 +10,6 @@
 - [ ] Tune node inserts - insert sequences less than actions and conditions
 
 Ideas:
- - [ ] Treat timeouts as draws
- - [ ] Increase requirement of new bots to beat bots from each generation
+
+- [ ] Treat timeouts as draws
+- [ ] Increase requirement of new bots to beat bots from each generation
