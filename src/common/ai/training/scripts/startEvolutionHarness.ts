@@ -9,6 +9,8 @@ import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNu
 import { insertGenerationZero } from "../infra/repo/insertGenerationZero.ts";
 import { getAllChampions } from "../infra/repo/getAllChampions.ts";
 
+import { getAllInactiveBots } from "../infra/repo/getAllInactiveBots.ts";
+
 const { TOTAL_BOTS_PER_GENERATION } = params;
 
 export async function startEvolutionHarness() {
@@ -26,10 +28,11 @@ export async function startEvolutionHarness() {
   }
 
   const champions = await getAllChampions();
+  const previousBots = await getAllInactiveBots();
   const generation = await getCurrentGenerationNumber() + 1;
   console.log(`Evolving ${requiredBots} generation ${generation} bots\n`);
 
-  await evolveNextGeneration({ champions, newBotsRequired: requiredBots, generation });
+  await evolveNextGeneration({ champions, newBotsRequired: requiredBots, generation, previousBots });
 }
 
 if (import.meta.main) {

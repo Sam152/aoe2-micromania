@@ -25,11 +25,15 @@ export const params = {
    */
   NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD: 50_000,
   /**
-   * The number of iterations that pass, before we attempt to look one generation further into the past for a mutation.
-   */
-  NEXT_GENERATION_CHAMPION_LOOKBACK_ITERATION_STEP_AMOUNT: 100_000,
-  /**
    * The number of round robins a generation will play, before a champion is crowned.
    */
   TOURNEY_ROUND_ROBIN_COUNT: 5,
+  /**
+   * How many iterations before looking at a prior generation.
+   */
+  BOT_SELECTION_ITERATION_BEFORE_LOOKING_AT_PRIOR_GENERATION: 20_000,
+  /**
+   * How many iterations before looking at a prior generation.
+   */
+  BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 5,
 };

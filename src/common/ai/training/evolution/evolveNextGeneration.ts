@@ -13,12 +13,13 @@ const { CPU_WORKER_COUNT } = params;
 
 type EvolveNextGenArgs = {
   champions: Bot[];
+  previousBots: Bot[];
   newBotsRequired: number;
   generation: number;
 };
 
 export async function evolveNextGeneration(
-  { champions, newBotsRequired, generation }: EvolveNextGenArgs,
+  { champions, newBotsRequired, generation, previousBots }: EvolveNextGenArgs,
 ): Promise<UnitAwareBehaviourTree[]> {
   const pool = createGameWorkerPool(CPU_WORKER_COUNT);
 
@@ -32,7 +33,7 @@ export async function evolveNextGeneration(
       while (!enough()) {
         const candidate = generateCandidateTree({
           iterationsSinceLastWin: iterationsSinceLastWin++,
-          champions,
+          previousBots,
         });
 
         if (await canBeatAllChampions({ champions, tree: candidate, pool }) && !enough()) {

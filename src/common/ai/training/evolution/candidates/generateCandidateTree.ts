@@ -4,20 +4,20 @@ import { UnitType } from "../../../../units/UnitType.ts";
 import { randomlyMutateTree } from "../../../mutation/randomlyMutateTree.ts";
 import { Coinflip, coinflip } from "../../../../util/coinflip.ts";
 import { calculateMutationCount } from "./calculateMutationCount.ts";
-import { selectBaseChampionToMutate } from "./selectBaseChampionToMutate.ts";
+import { selectStartingTreeFromBots } from "./selectStartingTreeFromBots.ts";
 
 type GenerateCandidateTreeArgs = {
   iterationsSinceLastWin: number;
-  champions: Bot[];
+  previousBots: Bot[];
 };
 
 export function generateCandidateTree(
-  { iterationsSinceLastWin, champions }: GenerateCandidateTreeArgs,
+  { iterationsSinceLastWin, previousBots }: GenerateCandidateTreeArgs,
 ): UnitAwareBehaviourTree {
   const logCandidateInfo = iterationsSinceLastWin > 0 && iterationsSinceLastWin % 2_500 === 0;
   const log = (info: string) => logCandidateInfo ? console.log(info) : null;
 
-  const startingPoint = selectBaseChampionToMutate({ iterationsSinceLastWin, champions });
+  const startingPoint = selectStartingTreeFromBots({ iterationsSinceLastWin, previousBots });
 
   const count = calculateMutationCount({ iterationsSinceLastWin });
   log(`${iterationsSinceLastWin}: mutated gen ${startingPoint.generation} a total of ${count} times`);
