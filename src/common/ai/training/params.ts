@@ -27,7 +27,7 @@ export const params = {
   /**
    * The number of round robins a generation will play, before a champion is crowned.
    */
-  TOURNEY_ROUND_ROBIN_COUNT: 5,
+  TOURNEY_ROUND_ROBIN_COUNT: 4,
   /**
    * How many iterations before looking at a prior generation.
    */

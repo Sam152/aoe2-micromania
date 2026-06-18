@@ -16,7 +16,7 @@ async function trainForever() {
     await step("TOURNAMENT", async () => {
       for (let i = 0; i < TOURNEY_ROUND_ROBIN_COUNT; i++) {
         console.log(`Starting ${i + 1} of ${TOURNEY_ROUND_ROBIN_COUNT}`);
-        await startTournamentHarness();
+        await startTournamentHarness(i % 2 === 0);
       }
     });
 

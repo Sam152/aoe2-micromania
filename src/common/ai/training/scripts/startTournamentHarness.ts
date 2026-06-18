@@ -13,7 +13,7 @@ const { CPU_WORKER_COUNT } = params;
 /**
  * Play a single round-robin against all active bots in the pool.
  */
-export async function startTournamentHarness() {
+export async function startTournamentHarness(invertPositions: boolean) {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
   const botsInPool = await getActiveBotsByElo();
 
@@ -22,12 +22,21 @@ export async function startTournamentHarness() {
   });
 
   await Promise.all(
-    roundRobin(botsInPool, async (p1, p2) => {
-      const result = await runInPool({ 1: p1.tree, 2: p2.tree });
-      await recordResult({
-        players: [p1, p2],
-        result,
-      });
+    roundRobin(botsInPool, async (playerA, playerB) => {
+      if (invertPositions) {
+        const result = await runInPool({ 1: playerA.tree, 2: playerB.tree });
+        await recordResult({
+          players: [playerA, playerB],
+          result,
+        });
+      } else {
+        const result = await runInPool({ 1: playerB.tree, 2: playerA.tree });
+        await recordResult({
+          players: [playerB, playerA],
+          result,
+        });
+      }
+
       advance();
     }),
   );
@@ -36,5 +45,5 @@ export async function startTournamentHarness() {
 }
 
 if (import.meta.main) {
-  startTournamentHarness().then(() => sql.end());
+  startTournamentHarness(false).then(() => sql.end());
 }
