@@ -12,8 +12,14 @@ export async function canBeatAllChampions({ champions, pool, tree }: {
   tree: UnitAwareBehaviourTree;
 }) {
   for (const champion of champions) {
-    const result = await pool.runInPool({ 1: champion.tree, 2: tree });
-    if (!hasPlayerTwoWonAgainstChampion(result)) {
+    // Force the bot to win in both positions, to properly generalize.
+    const resultA = await pool.runInPool({ 1: champion.tree, 2: tree });
+    if (!resultConsideredWinning({ result: resultA, incumbent: 1, challenger: 2 })) {
+      return false;
+    }
+
+    const resultB = await pool.runInPool({ 1: tree, 2: champion.tree });
+    if (!resultConsideredWinning({ result: resultB, incumbent: 2, challenger: 1 })) {
       return false;
     }
   }
@@ -24,6 +30,11 @@ export async function canBeatAllChampions({ champions, pool, tree }: {
  * What is considered a win? Do you have to win by some amount? Completely wipe out
  * opponent? Tune this to favor aggression, defense etc.
  */
-export function hasPlayerTwoWonAgainstChampion(result: GameResult) {
-  return result.winner === 2 && result.hp[1] === 0 && result.hp[2] > CANDIDATE_TREE_REQUIRED_HP_AGAINST_CHAMPION;
+export function resultConsideredWinning(
+  { result, challenger, incumbent }: { result: GameResult; challenger: 1 | 2; incumbent: 1 | 2 },
+) {
+  return result.winner === challenger &&
+    // Ensure the incumbent was completely defeated, to prevent camping and inactivity.
+    result.hp[incumbent] === 0 &&
+    result.hp[challenger] > CANDIDATE_TREE_REQUIRED_HP_AGAINST_CHAMPION;
 }
