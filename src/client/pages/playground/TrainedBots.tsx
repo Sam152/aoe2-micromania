@@ -69,6 +69,18 @@ export function TrainedBots() {
         canvasStyle={{ width: "100vw", height: "calc(100vh - 52px)" }}
       />
 
+      <div className="speed-controls">
+        {([["1x", 1000], ["2x", 500], ["4x", 250], ["max", 1]] as const).map(([label, ms]) => (
+          <button
+            key={label}
+            className={`speed-btn${tickInterval === ms ? " speed-btn--active" : ""}`}
+            onClick={() => setTickInterval(ms)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div className="matchup-bar">
         <div className="generation-tiles" ref={championTilesRef}>
           {champions.map((bot) => (
@@ -105,17 +117,6 @@ export function TrainedBots() {
         )}
 
         <div className="matchup-slots">
-          <div className="speed-controls">
-            {([["1x", 1000], ["2x", 500], ["4x", 250], ["max", 1]] as const).map(([label, ms]) => (
-              <button
-                key={label}
-                className={`speed-btn${tickInterval === ms ? " speed-btn--active" : ""}`}
-                onClick={() => setTickInterval(ms)}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
           <DropSlot
             color="home"
             bot={homeBot}
