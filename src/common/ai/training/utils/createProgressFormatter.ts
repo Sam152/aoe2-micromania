@@ -1,5 +1,10 @@
 const ROW_SIZE = 50;
 
+// Format numbers with a `_` thousands separator, e.g. 10000 -> "10_000".
+function formatNumber(n: number): string {
+  return n.toLocaleString("en-US").replaceAll(",", "_");
+}
+
 // Deno.stdout.writeSync may perform a partial write (returning fewer bytes than
 // requested) when stdout is non-blocking and its buffer is full — e.g. right
 // after the worker-pool spawn burst at the start of each tournament. Loop until
@@ -29,7 +34,11 @@ export function createProgressFormatter(
 
       // Break the row every ROW_SIZE dots (i.e. ROW_SIZE * scaleFactor advances), or at the very end.
       if ((isDot && completed % (ROW_SIZE * scaleFactor) === 0) || isLast) {
-        writeSync(totalIterations !== undefined ? ` (${completed}/${totalIterations})\n` : ` (${completed})\n`);
+        writeSync(
+          totalIterations !== undefined
+            ? ` (${formatNumber(completed)}/${formatNumber(totalIterations)})\n`
+            : ` (${formatNumber(completed)})\n`,
+        );
       }
     },
   };
