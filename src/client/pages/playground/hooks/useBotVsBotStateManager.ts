@@ -7,6 +7,7 @@ import { BotInstance, createBot } from "../../../../common/ai/integration/create
 export function useBotVsBotStateManager(
   homeBot: Bot | undefined,
   awayBot: Bot | undefined,
+  tickInterval: number,
 ): LocalStateManager {
   return useMemo(() => {
     const botsInstances: BotInstance[] = [homeBot, awayBot].filter((bot) => !!bot).map((bot, i) =>
@@ -17,7 +18,7 @@ export function useBotVsBotStateManager(
       })
     );
 
-    const manager = new LocalStateManager("playground", undefined, 500);
+    const manager = new LocalStateManager("playground", undefined, tickInterval);
 
     manager.dispatchGame({
       n: "MAP_PARAMETERS_SET",
@@ -40,5 +41,5 @@ export function useBotVsBotStateManager(
     });
 
     return manager;
-  }, [homeBot, awayBot]);
+  }, [homeBot, awayBot, tickInterval]);
 }

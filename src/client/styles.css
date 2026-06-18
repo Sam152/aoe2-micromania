@@ -376,6 +376,34 @@ kbd {
   padding-top: 12px;
 }
 
+.speed-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.speed-btn {
+  background: rgba(45, 55, 72, 0.55);
+  border: 1px solid rgba(74, 85, 104, 0.5);
+  border-radius: 6px;
+  color: #a0aec0;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 10px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.speed-btn:hover {
+  color: #e2e8f0;
+  border-color: rgba(160, 174, 192, 0.6);
+}
+
+.speed-btn--active {
+  color: #e0bf4f;
+  border-color: #e0bf4f;
+  background: rgba(224, 191, 79, 0.1);
+}
+
 .drop-slot {
   position: relative;
   width: 320px;

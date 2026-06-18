@@ -9,6 +9,7 @@ export function TrainedBots() {
   const [expandedGen, setExpandedGen] = useState<number | null>(null);
   const [homeBot, setHomeBot] = useState<Bot | null>(null);
   const [awayBot, setAwayBot] = useState<Bot | null>(null);
+  const [tickInterval, setTickInterval] = useState(500);
 
   const trpc = useTrpc();
   useEffect(() => {
@@ -33,7 +34,7 @@ export function TrainedBots() {
     [expandedGen, bots],
   );
 
-  const stateManager = useBotVsBotStateManager(homeBot ?? undefined, awayBot ?? undefined);
+  const stateManager = useBotVsBotStateManager(homeBot ?? undefined, awayBot ?? undefined, tickInterval);
 
   const championTilesRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -62,7 +63,7 @@ export function TrainedBots() {
   return (
     <>
       <GameCanvas
-        key={`${homeBot?.id}-${awayBot?.id}`}
+        key={`${homeBot?.id}-${awayBot?.id}-${tickInterval}`}
         startAs="SPECTATOR"
         stateManager={stateManager}
         canvasStyle={{ width: "100vw", height: "calc(100vh - 53px)" }}
@@ -95,6 +96,17 @@ export function TrainedBots() {
         )}
 
         <div className="matchup-slots">
+          <div className="speed-controls">
+            {([["1x", 1000], ["2x", 500], ["4x", 250], ["max", 1]] as const).map(([label, ms]) => (
+              <button
+                key={label}
+                className={`speed-btn${tickInterval === ms ? " speed-btn--active" : ""}`}
+                onClick={() => setTickInterval(ms)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <DropSlot
             label="Blue"
             bot={homeBot}
