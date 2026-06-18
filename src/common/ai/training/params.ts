@@ -31,7 +31,7 @@ export const params = {
   /**
    * How many iterations before looking at a prior generation.
    */
-  BOT_SELECTION_ITERATION_BEFORE_LOOKING_AT_PRIOR_GENERATION: 20_000,
+  BOT_SELECTION_ITERATION_BEFORE_LOOKING_AT_PRIOR_GENERATION: 100_000,
   /**
    * How many iterations before looking at a prior generation.
    */
