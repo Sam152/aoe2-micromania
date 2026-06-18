@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTrpc } from "../../hooks/useTrpc.ts";
 import { GameCanvas } from "../../components/GameCanvas.tsx";
 import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
@@ -20,13 +20,31 @@ export function TrainedBots() {
     [bots],
   );
 
+  const latestUnchampionedGen = useMemo(() => {
+    if (bots.length === 0) { return null; }
+    const maxGen = Math.max(...bots.map((b) => b.generation));
+    const hasChampion = bots.some((b) => b.generation === maxGen && b.generationChampion);
+    return hasChampion ? null : maxGen;
+  }, [bots]);
+
   const expandedGenBots = useMemo(
     () =>
-      expandedGen !== null ? [...bots.filter((b) => b.generation === expandedGen)].sort((a, b) => b.elo - a.elo) : [],
+      expandedGen !== null ? [...bots.filter((b) => b.generation === expandedGen)].sort((a, b) => a.elo - b.elo) : [],
     [expandedGen, bots],
   );
 
   const stateManager = useBotVsBotStateManager(homeBot ?? undefined, awayBot ?? undefined);
+
+  const championTilesRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (championTilesRef.current) {
+      championTilesRef.current.scrollLeft = championTilesRef.current.scrollWidth;
+    }
+  }, [champions]);
+
+  const scrollToEnd = useCallback((el: HTMLDivElement | null) => {
+    if (el) { el.scrollLeft = el.scrollWidth; }
+  }, []);
 
   const handleDragStart = (e: React.DragEvent, bot: Bot) => {
     e.dataTransfer.setData("botId", String(bot.id));
@@ -51,7 +69,7 @@ export function TrainedBots() {
       />
 
       <div className="matchup-bar">
-        <div className="generation-tiles">
+        <div className="generation-tiles" ref={championTilesRef}>
           {champions.map((bot) => (
             <BotTile
               key={bot.id}
@@ -61,24 +79,43 @@ export function TrainedBots() {
               onDragStart={handleDragStart}
             />
           ))}
+          {latestUnchampionedGen !== null && (
+            <PlaceholderTile
+              gen={latestUnchampionedGen}
+              expanded={expandedGen === latestUnchampionedGen}
+              onClick={() => setExpandedGen(expandedGen === latestUnchampionedGen ? null : latestUnchampionedGen)}
+            />
+          )}
         </div>
 
         {expandedGen !== null && expandedGenBots.length > 0 && (
-          <div className="generation-tiles generation-tiles--secondary">
+          <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
             {expandedGenBots.map((bot) => <BotTile key={bot.id} bot={bot} small onDragStart={handleDragStart} />)}
           </div>
         )}
 
         <div className="matchup-slots">
           <DropSlot
-            label="Home"
+            label="Blue"
             bot={homeBot}
             onDrop={(e) => handleDrop(e, "home")}
             onClear={() => setHomeBot(null)}
           />
-          <span className="matchup-vs">VS</span>
+          <div className="matchup-vs-group">
+            <span className="matchup-vs">VS</span>
+            <button
+              className="matchup-swap"
+              onClick={() => {
+                setHomeBot(awayBot);
+                setAwayBot(homeBot);
+              }}
+              title="Swap"
+            >
+              ⇄
+            </button>
+          </div>
           <DropSlot
-            label="Away"
+            label="Red"
             bot={awayBot}
             onDrop={(e) => handleDrop(e, "away")}
             onClear={() => setAwayBot(null)}
@@ -113,9 +150,31 @@ function BotTile({
       onDragStart={(e) => onDragStart(e, bot)}
       onClick={onClick}
     >
-      <span className="gen-tile__gen">Gen {bot.generation}</span>
-      <span className="gen-tile__elo">{bot.elo}</span>
+      <span className="gen-tile__gen">Gen</span>
+      <span className="gen-tile__elo">{bot.generation}</span>
       <span className="gen-tile__name">{bot.botName}</span>
+    </div>
+  );
+}
+
+function PlaceholderTile({
+  gen,
+  expanded,
+  onClick,
+}: {
+  gen: number;
+  expanded: boolean;
+  onClick: () => void;
+}) {
+  const classes = ["gen-tile", "gen-tile--placeholder", expanded && "gen-tile--expanded"]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div className={classes} onClick={onClick}>
+      <span className="gen-tile__gen">Gen {gen}</span>
+      <span className="gen-tile__elo">—</span>
+      <span className="gen-tile__name">in progress</span>
     </div>
   );
 }
