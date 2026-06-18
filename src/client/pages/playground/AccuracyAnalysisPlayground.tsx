@@ -184,7 +184,7 @@ export function AccuracyAnalysisPlayground() {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "100vw", height: "calc(100vh - 53px)", overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100vw", height: "calc(100vh - 52px)", overflow: "hidden" }}>
       <canvas
         style={{ width: "100%", height: "100%", display: "block", backgroundColor: "black" }}
         ref={canvasRef}

@@ -296,7 +296,7 @@ export function GroupUnitVectorFacingDirectionPlayground() {
         </div>
       </div>
       <canvas
-        style={{ width: "100vw", height: "calc(100vh - 53px)", display: "block", backgroundColor: "black" }}
+        style={{ width: "100vw", height: "calc(100vh - 52px)", display: "block", backgroundColor: "black" }}
         ref={ref}
       />
     </div>
