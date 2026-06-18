@@ -27,7 +27,5 @@ export function selectStartingTreeFromBots(
       .slice(0, BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER)
   );
 
-  console.log(candidates);
-
   return randomArray(candidates);
 }
