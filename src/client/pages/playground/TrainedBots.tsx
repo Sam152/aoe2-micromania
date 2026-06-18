@@ -66,7 +66,7 @@ export function TrainedBots() {
         key={`${homeBot?.id}-${awayBot?.id}-${tickInterval}`}
         startAs="SPECTATOR"
         stateManager={stateManager}
-        canvasStyle={{ width: "100vw", height: "calc(100vh - 53px)" }}
+        canvasStyle={{ width: "100vw", height: "calc(100vh - 52px)" }}
       />
 
       <div className="matchup-bar">
@@ -76,6 +76,7 @@ export function TrainedBots() {
               key={bot.id}
               bot={bot}
               expanded={expandedGen === bot.generation}
+              slot={homeBot?.id === bot.id ? "home" : awayBot?.id === bot.id ? "away" : undefined}
               onClick={() => setExpandedGen(expandedGen === bot.generation ? null : bot.generation)}
               onDragStart={handleDragStart}
             />
@@ -91,7 +92,15 @@ export function TrainedBots() {
 
         {expandedGen !== null && expandedGenBots.length > 0 && (
           <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
-            {expandedGenBots.map((bot) => <BotTile key={bot.id} bot={bot} small onDragStart={handleDragStart} />)}
+            {expandedGenBots.map((bot) => (
+              <BotTile
+                key={bot.id}
+                bot={bot}
+                small
+                slot={homeBot?.id === bot.id ? "home" : awayBot?.id === bot.id ? "away" : undefined}
+                onDragStart={handleDragStart}
+              />
+            ))}
           </div>
         )}
 
@@ -108,7 +117,7 @@ export function TrainedBots() {
             ))}
           </div>
           <DropSlot
-            label="Blue"
+            color="home"
             bot={homeBot}
             onDrop={(e) => handleDrop(e, "home")}
             onClear={() => setHomeBot(null)}
@@ -127,7 +136,7 @@ export function TrainedBots() {
             </button>
           </div>
           <DropSlot
-            label="Red"
+            color="away"
             bot={awayBot}
             onDrop={(e) => handleDrop(e, "away")}
             onClear={() => setAwayBot(null)}
@@ -142,16 +151,24 @@ function BotTile({
   bot,
   expanded,
   small,
+  slot,
   onClick,
   onDragStart,
 }: {
   bot: Bot;
   expanded?: boolean;
   small?: boolean;
+  slot?: "home" | "away";
   onClick?: () => void;
   onDragStart: (e: React.DragEvent, bot: Bot) => void;
 }) {
-  const classes = ["gen-tile", expanded && "gen-tile--expanded", small && "gen-tile--small"]
+  const classes = [
+    "gen-tile",
+    expanded && "gen-tile--expanded",
+    small && "gen-tile--small",
+    slot === "home" && "gen-tile--slotted-home",
+    slot === "away" && "gen-tile--slotted-away",
+  ]
     .filter(Boolean)
     .join(" ");
 
@@ -162,9 +179,8 @@ function BotTile({
       onDragStart={(e) => onDragStart(e, bot)}
       onClick={onClick}
     >
-      <span className="gen-tile__gen">Gen</span>
+      <span className="gen-tile__gen">{bot.elo}</span>
       <span className="gen-tile__elo">{bot.generation}</span>
-      <span className="gen-tile__name">{bot.botName}</span>
     </div>
   );
 }
@@ -186,18 +202,17 @@ function PlaceholderTile({
     <div className={classes} onClick={onClick}>
       <span className="gen-tile__gen">Gen {gen}</span>
       <span className="gen-tile__elo">—</span>
-      <span className="gen-tile__name">in progress</span>
     </div>
   );
 }
 
 function DropSlot({
-  label,
+  color,
   bot,
   onDrop,
   onClear,
 }: {
-  label: string;
+  color: "home" | "away";
   bot: Bot | null;
   onDrop: (e: React.DragEvent) => void;
   onClear: () => void;
@@ -206,6 +221,7 @@ function DropSlot({
 
   const classes = [
     "drop-slot",
+    `drop-slot--${color}`,
     dragOver && "drop-slot--over",
     bot && "drop-slot--filled",
   ]
@@ -225,12 +241,10 @@ function DropSlot({
         onDrop(e);
       }}
     >
-      <span className="drop-slot__label">{label}</span>
       {bot
         ? (
           <>
             <span className="drop-slot__name">{bot.botName}</span>
-            <span className="drop-slot__elo">Gen {bot.generation} · {bot.elo} ELO</span>
             <button className="drop-slot__clear" onClick={onClear}>✕</button>
           </>
         )

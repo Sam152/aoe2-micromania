@@ -25,7 +25,7 @@ export function GameCanvas({
     <canvas
       style={{
         width: "100vw",
-        height: "calc(100vh - 53px)",
+        height: "calc(100vh - 52px)",
         display: "block",
         backgroundColor: "black",
         ...canvasStyle,
