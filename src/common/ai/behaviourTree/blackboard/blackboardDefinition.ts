@@ -19,6 +19,7 @@ import { opponentUnitMovementTowardsVector } from "./catalog/opponentUnitMovemen
 import { unitPosition } from "./catalog/unitPosition.ts";
 import { opponentMedoidUnitByType } from "./catalog/opponentMedoidUnitByType.ts";
 import { opponentHasUnitType } from "./catalog/opponentHasUnitType.ts";
+import { opponentUnitCountByType } from "./catalog/opponentUnitCountByType.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -40,6 +41,7 @@ export const blackboardDefinition = {
   unitPosition,
   opponentMedoidUnitByType,
   opponentHasUnitType,
+  opponentUnitCountByType,
 } as const;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
