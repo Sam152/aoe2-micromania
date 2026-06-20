@@ -22,6 +22,7 @@ import { opponentHasUnitType } from "./catalog/opponentHasUnitType.ts";
 import { opponentUnitCountByType } from "./catalog/opponentUnitCountByType.ts";
 import { groupIsMostlyReloading } from "./catalog/groupIsMostlyReloading.ts";
 import { groupHasAnyReloading } from "./catalog/groupHasAnyReloading.ts";
+import { globalNonGroupUnitsOfTypeAveragePosition } from "./catalog/globalNonGroupUnitsOfTypeAveragePosition.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -46,6 +47,7 @@ export const blackboardDefinition = {
   opponentMedoidUnitByType,
   opponentHasUnitType,
   opponentUnitCountByType,
+  globalNonGroupUnitsOfTypeAveragePosition,
 } as const;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
