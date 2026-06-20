@@ -8,6 +8,7 @@ import { formationLine } from "./catalog/formationLine.ts";
 import { formationSplit } from "./catalog/formationSplit.ts";
 import { formationSpread } from "./catalog/formationSpread.ts";
 import { attackGround } from "./catalog/attackGround.ts";
+import { deleteGroup } from "./catalog/deleteGroup.ts";
 
 export const actionsList = {
   PATROL: patrol,
@@ -20,6 +21,7 @@ export const actionsList = {
   FORMATION_SPLIT: formationSplit,
   FORMATION_SPREAD: formationSpread,
   ATTACK_GROUND: attackGround,
+  DELETE_GROUP: deleteGroup,
 } as const;
 
 export type ActionsList = typeof actionsList;
