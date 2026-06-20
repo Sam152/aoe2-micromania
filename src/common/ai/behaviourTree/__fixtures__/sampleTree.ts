@@ -39,7 +39,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
               },
               distance: {
                 nodeType: "dataValue",
-                dataType: "groupIndex",
+                "dataType": "vectorMagnitude",
                 type: "LITERAL",
                 value: 400,
               },
