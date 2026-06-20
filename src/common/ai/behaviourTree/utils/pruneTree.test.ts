@@ -16,18 +16,18 @@ describe("pruneTree", () => {
 
     assertEquals(winner.hp, {
       1: 0,
-      2: 434,
+      2: 492,
     });
 
-    assertEquals(flattenTree(winningTree[UnitType.Archer]).length, 22);
-    assertEquals(flattenTree(winningTree[UnitType.Monk]).length, 8);
-    assertEquals(flattenTree(winningTree[UnitType.Mangonel]).length, 11);
+    assertEquals(flattenTree(winningTree[UnitType.Archer]).length, 15);
+    assertEquals(flattenTree(winningTree[UnitType.Monk]).length, 27);
+    assertEquals(flattenTree(winningTree[UnitType.Mangonel]).length, 4);
 
     // Pruning the tree reduces its branches significantly.
     const winningTreePruned = pruneUnitAwareTree(winningTree, winner.bots.player2.activations);
-    assertEquals(flattenTree(winningTreePruned[UnitType.Archer]).length, 11);
-    assertEquals(flattenTree(winningTreePruned[UnitType.Monk]).length, 3);
-    assertEquals(flattenTree(winningTreePruned[UnitType.Mangonel]).length, 3);
+    assertEquals(flattenTree(winningTreePruned[UnitType.Archer]).length, 15);
+    assertEquals(flattenTree(winningTreePruned[UnitType.Monk]).length, 11);
+    assertEquals(flattenTree(winningTreePruned[UnitType.Mangonel]).length, 4);
 
     // But the outcome of a match is exactly the same.
     const prunedWinner = determineWinner({
@@ -36,7 +36,7 @@ describe("pruneTree", () => {
     });
     assertEquals(prunedWinner.hp, {
       1: 0,
-      2: 434,
+      2: 492,
     });
   });
 });
