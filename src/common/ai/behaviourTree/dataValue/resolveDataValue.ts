@@ -24,12 +24,14 @@ export function resolveDataValueToPrimitive(
 
   if (dataValue.type === "BLACKBOARD") {
     const resolvedParams = resolveParamDataValues(dataValue.params, context);
-    if (resolvedParams === undefined) { return undefined; }
+    if (resolvedParams === undefined) {
+      return undefined;
+    }
     const computer = context.blackboardComputer[dataValue.blackboardKey];
     return computer({ ...context, params: resolvedParams as any });
   }
 
-  throw new Error();
+  throw new Error(`Error resolving: ${JSON.stringify(dataValue)}`);
 }
 
 type ResolvedParams<TParams extends Record<string, DataValue>> = {

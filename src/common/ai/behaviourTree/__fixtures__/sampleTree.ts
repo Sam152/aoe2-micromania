@@ -275,14 +275,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 dataType: "vector",
                 type: "BLACKBOARD",
                 blackboardKey: "opponentAveragePosition",
-                params: {
-                  vectorOffset: {
-                    nodeType: "dataValue",
-                    dataType: "vector",
-                    type: "LITERAL",
-                    value: { x: 0, y: 0 },
-                  },
-                },
+                params: {},
               },
             },
           },
@@ -314,14 +307,7 @@ export const sampleTree: UnitAwareBehaviourTree = {
             dataType: "vector",
             type: "BLACKBOARD",
             blackboardKey: "opponentAveragePosition",
-            params: {
-              vectorOffset: {
-                nodeType: "dataValue",
-                dataType: "vector",
-                type: "LITERAL",
-                value: { x: 0, y: 0 },
-              },
-            },
+            params: {},
           },
         },
       },
