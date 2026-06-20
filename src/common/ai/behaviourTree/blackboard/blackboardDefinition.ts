@@ -23,6 +23,8 @@ import { opponentUnitCountByType } from "./catalog/opponentUnitCountByType.ts";
 import { groupIsMostlyReloading } from "./catalog/groupIsMostlyReloading.ts";
 import { groupHasAnyReloading } from "./catalog/groupHasAnyReloading.ts";
 import { globalNonGroupUnitsOfTypeAveragePosition } from "./catalog/globalNonGroupUnitsOfTypeAveragePosition.ts";
+import { opponentClosestUnitByTypeNotInMinRange } from "./catalog/opponentClosestUnitByTypeNotInMinRange.ts";
+import { opponentArcherWithinMangoMinimumRange } from "./catalog/opponentArcherWithinMangoMinimumRange.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -47,7 +49,9 @@ export const blackboardDefinition = {
   opponentMedoidUnitByType,
   opponentHasUnitType,
   opponentUnitCountByType,
+  opponentClosestUnitByTypeNotInMinRange,
   globalNonGroupUnitsOfTypeAveragePosition,
+  opponentArcherWithinMangoMinimumRange,
 } as const;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
