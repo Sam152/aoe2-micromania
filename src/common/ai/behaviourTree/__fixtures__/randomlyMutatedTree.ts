@@ -353,7 +353,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               "distance": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
-                "dataType": "groupIndex",
+                "dataType": "vectorMagnitude",
                 "value": 438,
               },
             },
@@ -424,7 +424,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               },
               "distance": {
                 "nodeType": "dataValue",
-                "dataType": "groupIndex",
+                "dataType": "vectorMagnitude",
                 "type": "LITERAL",
                 "value": 400,
               },
@@ -541,7 +541,7 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                   "distance": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
-                    "dataType": "groupIndex",
+                    "dataType": "vectorMagnitude",
                     "value": 141,
                   },
                 },

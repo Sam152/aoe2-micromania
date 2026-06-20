@@ -112,7 +112,7 @@ export const winningTree: UnitAwareBehaviourTree = {
               "nodeType": "dataValue",
               "blackboardKey": "groupAveragePosition",
             },
-            "distance": { "type": "LITERAL", "value": 400, "dataType": "groupIndex", "nodeType": "dataValue" },
+            "distance": { "type": "LITERAL", "value": 400, "dataType": "vectorMagnitude", "nodeType": "dataValue" },
           },
           "nodeType": "condition",
         },

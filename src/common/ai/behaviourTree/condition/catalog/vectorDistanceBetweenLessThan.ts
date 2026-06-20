@@ -10,7 +10,7 @@ export const vectorDistanceBetweenLessThan = defineCondition({
       dataType: "vector",
     },
     distance: {
-      dataType: "groupIndex",
+      dataType: "vectorMagnitude",
     },
   },
   evaluate: ({ pointA, pointB, distance }) =>
