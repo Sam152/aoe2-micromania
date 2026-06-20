@@ -20,7 +20,7 @@ export type ActionDefinition<
   ) => GameStateAction | undefined;
 };
 
-type ActionDefinitionParam<TDataType extends DataType> = {
+export type ActionDefinitionParam<TDataType extends DataType> = {
   dataType: TDataType;
   allowedValueTypes: DataValueType[];
 };

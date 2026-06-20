@@ -1,22 +1,36 @@
-import { DataType } from "../../behaviourTree/dataType/dataTypes.ts";
+import { DataType, dataTypes } from "../../behaviourTree/dataType/dataTypes.ts";
 import { blackboardDefinition, BlackboardValue } from "../../behaviourTree/blackboard/blackboardDefinition.ts";
 import { randomArray } from "../../../util/randomArray.ts";
 
 import { ConditionNode } from "../../behaviourTree/condition/Condition.ts";
-import { ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
+import { ActionDefinitionParam, ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
 import { BlackboardDataValue } from "../../behaviourTree/dataValue/DataValue.ts";
-import { randomAllowedValueType } from "./randomAllowedValueType.ts";
+
 import { randomLiteral } from "./randomLiteral.ts";
+import { params } from "../../training/params.ts";
+import { actionsList } from "../../behaviourTree/action/actionsList.ts";
 
 type AttachedToNode = ConditionNode | ActionNode | BlackboardDataValue;
 
 export function randomDataValue(
   dataType: DataType,
-  _paramName: string,
-  _parent: AttachedToNode,
+  paramName: string,
+  parent: AttachedToNode,
   forceLiteral?: boolean,
 ): unknown {
-  const type = randomAllowedValueType(dataType);
+  let allowedDataTypes = new Set(dataTypes[dataType].allowedValueTypes);
+
+  // If the type of node we're getting params for is an action, we can narrow the allowedDataTypes,
+  // by the action param definitions, to exclude silliness like patrolling to a fixed literal value
+  // somewhere, which is highly unlikely to generalize.
+  if (parent.nodeType === "action") {
+    const actionDef = actionsList[parent.type];
+    const paramDef = actionDef.params[paramName as keyof typeof actionDef.params] as ActionDefinitionParam<any>;
+
+    allowedDataTypes = allowedDataTypes.intersection(new Set(paramDef.allowedValueTypes));
+  }
+
+  const type = randomArray([...allowedDataTypes]);
 
   if (type === "LITERAL" || forceLiteral) {
     return {
@@ -33,7 +47,7 @@ export function randomDataValue(
       .map(([key]) => key);
 
     if (candidateBlackboardKeys.length === 0) {
-      return randomDataValue(dataType, _paramName, _parent, true);
+      return randomDataValue(dataType, paramName, parent, true);
     }
 
     const key = randomArray(candidateBlackboardKeys);
