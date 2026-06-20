@@ -16,6 +16,7 @@ import {
   opponentNextProjectileLandingInTicksTimeByType,
 } from "./catalog/opponentNextProjectileLandingInTicksTimeByType.ts";
 import { opponentNextProjectileLandingPositionByType } from "./catalog/opponentNextProjectileLandingPositionByType.ts";
+import { opponentUnitMovementTowardsVector } from "./catalog/opponentUnitMovementDirection.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -34,6 +35,7 @@ export const blackboardDefinition = {
   opponentFormationByType,
   opponentNextProjectileLandingInTicksTimeByType,
   opponentNextProjectileLandingPositionByType,
+  opponentUnitMovementTowardsVector,
 } as const;
 
 export type BlackboardDefinition = typeof blackboardDefinition;
