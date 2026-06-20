@@ -5,7 +5,6 @@ import { groupAveragePosition } from "./catalog/groupAveragePosition.ts";
 import { globalOwnedUnitsOfTypeCount } from "./catalog/globalOwnedUnitsOfTypeCount.ts";
 import { opponentAveragePosition } from "./catalog/opponentAveragePosition.ts";
 import { opponentClosestUnitByType } from "./catalog/opponentClosestUnitByType.ts";
-import { opponentClosestUnitPositionByType } from "./catalog/opponentClosestUnitPositionByType.ts";
 import { opponentAverageUnitPositionByType } from "./catalog/opponentAverageUnitPositionByType.ts";
 import { groupUnitVectorFacingDirection } from "./catalog/groupUnitVectorFacingDirection.ts";
 import { groupIsConverting } from "./catalog/groupIsConverting.ts";
@@ -17,6 +16,8 @@ import {
 } from "./catalog/opponentNextProjectileLandingInTicksTimeByType.ts";
 import { opponentNextProjectileLandingPositionByType } from "./catalog/opponentNextProjectileLandingPositionByType.ts";
 import { opponentUnitMovementTowardsVector } from "./catalog/opponentUnitMovementDirection.ts";
+import { unitPosition } from "./catalog/unitPosition.ts";
+import { opponentMedoidUnitByType } from "./catalog/opponentMedoidUnitByType.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
@@ -26,7 +27,6 @@ export const blackboardDefinition = {
   globalOwnedUnitsOfTypeCount,
   opponentAveragePosition,
   opponentClosestUnitByType,
-  opponentClosestUnitPositionByType,
   opponentAverageUnitPositionByType,
   groupUnitVectorFacingDirection,
   groupVectorFacingDirection,
@@ -36,6 +36,8 @@ export const blackboardDefinition = {
   opponentNextProjectileLandingInTicksTimeByType,
   opponentNextProjectileLandingPositionByType,
   opponentUnitMovementTowardsVector,
+  unitPosition,
+  opponentMedoidUnitByType,
 } as const;
 
 export type BlackboardDefinition = typeof blackboardDefinition;

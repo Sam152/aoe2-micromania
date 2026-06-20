@@ -1,6 +1,7 @@
 import { defineBlackboardValue } from "../types/defineBlackboardValue.ts";
 import { closestExcludingPlayer } from "../../../../util/closestExcludingPlayer.ts";
 import { groupAveragePosition } from "../utils/groupAveragePosition.ts";
+import { playersQuadTreesForUnitType } from "../utils/playerQuadTreesForUnitType.ts";
 
 export const opponentClosestUnitByType = defineBlackboardValue({
   dataType: "unitId",
@@ -12,11 +13,7 @@ export const opponentClosestUnitByType = defineBlackboardValue({
   },
   resolve: ({ params, group, botState, computed }) =>
     closestExcludingPlayer({
-      playerQuadTrees: {
-        "ARCHER": () => computed.archerQuadTreesByPlayer(),
-        "MONK": () => computed.monkQuadTreesByPlayer(),
-        "MANGO": () => computed.mangoQuadTreesByPlayer(),
-      }[params.unitType](),
+      playerQuadTrees: playersQuadTreesForUnitType({ computed, unitType: params.unitType }),
       position: groupAveragePosition({ group, computed }),
       excludingPlayer: botState.playingAs,
     })?.id,

@@ -93,30 +93,6 @@ export const winningTree: UnitAwareBehaviourTree = {
     "nodes": [{
       "nodes": [
         {
-          "type": "vectorDistanceBetweenLessThan",
-          "invert": true,
-          "params": {
-            "pointA": {
-              "type": "BLACKBOARD",
-              "params": {
-                "unitType": { "type": "LITERAL", "value": "ARCHER", "dataType": "unitType", "nodeType": "dataValue" },
-              },
-              "dataType": "vector",
-              "nodeType": "dataValue",
-              "blackboardKey": "opponentClosestUnitPositionByType",
-            },
-            "pointB": {
-              "type": "BLACKBOARD",
-              "params": {},
-              "dataType": "vector",
-              "nodeType": "dataValue",
-              "blackboardKey": "groupAveragePosition",
-            },
-            "distance": { "type": "LITERAL", "value": 400, "dataType": "vectorMagnitude", "nodeType": "dataValue" },
-          },
-          "nodeType": "condition",
-        },
-        {
           "type": "MOVE_UNITS",
           "params": {
             "direction": {

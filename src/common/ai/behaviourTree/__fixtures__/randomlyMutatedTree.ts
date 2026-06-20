@@ -6,44 +6,6 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
     "nodeType": "selector",
     "nodes": [
       {
-        "nodeType": "condition",
-        "type": "groupIndexEquals",
-        "invert": true,
-        "params": {
-          "groupIndexLeft": {
-            "nodeType": "dataValue",
-            "type": "LITERAL",
-            "dataType": "groupIndex",
-            "value": 384,
-          },
-          "groupIndexRight": {
-            "nodeType": "dataValue",
-            "type": "LITERAL",
-            "dataType": "groupIndex",
-            "value": 113,
-          },
-        },
-      },
-      {
-        "nodeType": "condition",
-        "type": "groupIndexEquals",
-        "invert": true,
-        "params": {
-          "groupIndexLeft": {
-            "nodeType": "dataValue",
-            "type": "LITERAL",
-            "dataType": "groupIndex",
-            "value": 340,
-          },
-          "groupIndexRight": {
-            "nodeType": "dataValue",
-            "type": "LITERAL",
-            "dataType": "groupIndex",
-            "value": 183,
-          },
-        },
-      },
-      {
         "nodeType": "sequence",
         "nodes": [
           {
@@ -55,13 +17,13 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "unitCount",
-                "value": 34,
+                "value": 33,
               },
               "rightUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "unitCount",
-                "blackboardKey": "groupUnitCount",
+                "blackboardKey": "groupMetaUnitTypeGroupCount",
                 "params": {},
               },
             },
@@ -73,8 +35,8 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
             "params": {
               "leftUnitCount": {
                 "nodeType": "dataValue",
-                "type": "BLACKBOARD",
                 "dataType": "unitCount",
+                "type": "BLACKBOARD",
                 "blackboardKey": "globalOwnedUnitsOfTypeCount",
                 "params": {
                   "unitType": {
@@ -87,9 +49,9 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
               },
               "rightUnitCount": {
                 "nodeType": "dataValue",
-                "dataType": "unitCount",
                 "type": "LITERAL",
-                "value": 38,
+                "dataType": "unitCount",
+                "value": 27,
               },
             },
           },
@@ -105,16 +67,11 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "params": {
                   "vectorOffset": {
                     "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
                     "dataType": "vector",
-                    "blackboardKey": "opponentClosestUnitPositionByType",
-                    "params": {
-                      "unitType": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "unitType",
-                        "value": "MONK",
-                      },
+                    "type": "LITERAL",
+                    "value": {
+                      "x": 0,
+                      "y": 0,
                     },
                   },
                 },
@@ -127,23 +84,62 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "nodeType": "sequence",
         "nodes": [
           {
+            "nodeType": "selector",
+            "nodes": [
+              {
+                "nodeType": "condition",
+                "type": "vectorDistanceBetweenLessThan",
+                "invert": true,
+                "params": {
+                  "pointA": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "vector",
+                    "value": {
+                      "x": 350,
+                      "y": 299,
+                    },
+                  },
+                  "pointB": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "vector",
+                    "value": {
+                      "x": 541,
+                      "y": 127,
+                    },
+                  },
+                  "distance": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "vectorMagnitude",
+                    "value": 195,
+                  },
+                },
+              },
+              {
+                "nodeType": "action",
+                "type": "SPLIT_GROUP",
+                "params": {},
+              },
+            ],
+          },
+          {
+            "nodeType": "action",
+            "type": "FORMATION_LINE",
+            "params": {},
+          },
+          {
             "nodeType": "condition",
             "type": "unitCountGreaterThan",
             "invert": true,
             "params": {
               "leftUnitCount": {
                 "nodeType": "dataValue",
-                "type": "BLACKBOARD",
                 "dataType": "unitCount",
-                "blackboardKey": "globalOwnedUnitsOfTypeCount",
-                "params": {
-                  "unitType": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "unitType",
-                    "value": "MANGO",
-                  },
-                },
+                "type": "BLACKBOARD",
+                "blackboardKey": "groupMetaUnitTypeGroupCount",
+                "params": {},
               },
               "rightUnitCount": {
                 "nodeType": "dataValue",
@@ -152,36 +148,6 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "value": 2,
               },
             },
-          },
-          {
-            "nodeType": "sequence",
-            "nodes": [
-              {
-                "nodeType": "sequence",
-                "nodes": [],
-              },
-              {
-                "nodeType": "condition",
-                "type": "groupIndexGreaterThan",
-                "invert": true,
-                "params": {
-                  "groupIndexLeft": {
-                    "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
-                    "dataType": "groupIndex",
-                    "blackboardKey": "groupMetaUnitTypeIndex",
-                    "params": {},
-                  },
-                  "groupIndexRight": {
-                    "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
-                    "dataType": "groupIndex",
-                    "blackboardKey": "groupMetaUnitTypeIndex",
-                    "params": {},
-                  },
-                },
-              },
-            ],
           },
           {
             "nodeType": "action",
@@ -194,29 +160,43 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "nodeType": "sequence",
         "nodes": [
           {
+            "nodeType": "action",
+            "type": "IDLE",
+            "params": {
+              "forTicksAmount": {
+                "nodeType": "dataValue",
+                "type": "BLACKBOARD",
+                "dataType": "tickCount",
+                "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                "params": {
+                  "type": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "projectileType",
+                    "value": "ARROW",
+                  },
+                },
+              },
+            },
+          },
+          {
             "nodeType": "condition",
             "type": "groupIndexEquals",
             "invert": false,
             "params": {
               "groupIndexLeft": {
                 "nodeType": "dataValue",
-                "type": "BLACKBOARD",
+                "type": "LITERAL",
                 "dataType": "groupIndex",
-                "blackboardKey": "groupMetaUnitTypeIndex",
-                "params": {},
+                "value": 2,
               },
               "groupIndexRight": {
                 "nodeType": "dataValue",
+                "type": "LITERAL",
                 "dataType": "groupIndex",
-                "type": "BLACKBOARD",
-                "blackboardKey": "groupMetaUnitTypeIndex",
-                "params": {},
+                "value": 3,
               },
             },
-          },
-          {
-            "nodeType": "selector",
-            "nodes": [],
           },
           {
             "nodeType": "action",
@@ -227,11 +207,15 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "type": "LITERAL",
                 "dataType": "vector",
                 "value": {
-                  "x": 700,
-                  "y": 280,
+                  "x": 173,
+                  "y": 301,
                 },
               },
             },
+          },
+          {
+            "nodeType": "sequence",
+            "nodes": [],
           },
           {
             "nodeType": "action",
@@ -239,9 +223,9 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
             "params": {
               "forTicksAmount": {
                 "nodeType": "dataValue",
-                "dataType": "tickCount",
                 "type": "LITERAL",
-                "value": 100,
+                "dataType": "tickCount",
+                "value": 95,
               },
             },
           },
@@ -253,46 +237,40 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
     "nodeType": "sequence",
     "nodes": [
       {
-        "nodeType": "condition",
-        "type": "groupIndexGreaterThan",
-        "invert": true,
+        "nodeType": "selector",
+        "nodes": [],
+      },
+      {
+        "nodeType": "action",
+        "type": "FORMATION_LINE",
+        "params": {},
+      },
+      {
+        "nodeType": "action",
+        "type": "MOVE_UNITS",
         "params": {
-          "groupIndexLeft": {
+          "direction": {
             "nodeType": "dataValue",
             "type": "LITERAL",
-            "dataType": "groupIndex",
-            "value": 121,
-          },
-          "groupIndexRight": {
-            "nodeType": "dataValue",
-            "type": "LITERAL",
-            "dataType": "groupIndex",
-            "value": 414,
+            "dataType": "vector",
+            "value": {
+              "x": 338,
+              "y": 244,
+            },
           },
         },
       },
       {
         "nodeType": "action",
-        "type": "PATROL",
+        "type": "ATTACK_GROUND",
         "params": {
-          "direction": {
+          "attackGroundPosition": {
             "nodeType": "dataValue",
             "type": "BLACKBOARD",
             "dataType": "vector",
-            "blackboardKey": "opponentAveragePosition",
-            "params": {},
-          },
-        },
-      },
-      {
-        "nodeType": "selector",
-        "nodes": [
-          {
-            "nodeType": "condition",
-            "type": "vectorDistanceBetweenLessThan",
-            "invert": false,
+            "blackboardKey": "groupUnitVectorFacingDirection",
             "params": {
-              "pointA": {
+              "direction": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "vector",
@@ -302,28 +280,21 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                     "nodeType": "dataValue",
                     "type": "BLACKBOARD",
                     "dataType": "vector",
-                    "blackboardKey": "groupUnitVectorFacingDirection",
+                    "blackboardKey": "unitPosition",
                     "params": {
-                      "direction": {
+                      "unitWithPosition": {
                         "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "vector",
-                        "value": {
-                          "x": 886,
-                          "y": 192,
+                        "type": "BLACKBOARD",
+                        "dataType": "unitId",
+                        "blackboardKey": "opponentMedoidUnitByType",
+                        "params": {
+                          "unitType": {
+                            "nodeType": "dataValue",
+                            "type": "LITERAL",
+                            "dataType": "unitType",
+                            "value": "MONK",
+                          },
                         },
-                      },
-                      "angle": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "vectorAngle",
-                        "value": 214,
-                      },
-                      "magnitude": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "vectorMagnitude",
-                        "value": 498,
                       },
                     },
                   },
@@ -331,34 +302,159 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "vectorAngle",
-                    "value": 305,
+                    "value": 161,
                   },
                   "magnitude": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "vectorMagnitude",
-                    "value": 428,
+                    "value": 359,
                   },
                 },
               },
-              "pointB": {
+              "angle": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
-                "dataType": "vector",
-                "value": {
-                  "x": 138,
-                  "y": 959,
-                },
+                "dataType": "vectorAngle",
+                "value": 174,
               },
-              "distance": {
+              "magnitude": {
                 "nodeType": "dataValue",
                 "type": "LITERAL",
                 "dataType": "vectorMagnitude",
-                "value": 438,
+                "value": 417,
               },
             },
           },
+        },
+      },
+      {
+        "nodeType": "condition",
+        "type": "unitCountGreaterThan",
+        "invert": false,
+        "params": {
+          "leftUnitCount": {
+            "nodeType": "dataValue",
+            "type": "BLACKBOARD",
+            "dataType": "unitCount",
+            "blackboardKey": "groupMetaUnitTypeGroupCount",
+            "params": {},
+          },
+          "rightUnitCount": {
+            "nodeType": "dataValue",
+            "type": "LITERAL",
+            "dataType": "unitCount",
+            "value": 39,
+          },
+        },
+      },
+      {
+        "nodeType": "selector",
+        "nodes": [
+          {
+            "nodeType": "selector",
+            "nodes": [],
+          },
+          {
+            "nodeType": "sequence",
+            "nodes": [
+              {
+                "nodeType": "selector",
+                "nodes": [
+                  {
+                    "nodeType": "sequence",
+                    "nodes": [
+                      {
+                        "nodeType": "condition",
+                        "type": "tickCountEquals",
+                        "invert": false,
+                        "params": {
+                          "leftTicks": {
+                            "nodeType": "dataValue",
+                            "type": "LITERAL",
+                            "dataType": "tickCount",
+                            "value": 93,
+                          },
+                          "rightTicks": {
+                            "nodeType": "dataValue",
+                            "type": "LITERAL",
+                            "dataType": "tickCount",
+                            "value": 81,
+                          },
+                        },
+                      },
+                      {
+                        "nodeType": "action",
+                        "type": "MERGE_GROUP",
+                        "params": {},
+                      },
+                      {
+                        "nodeType": "action",
+                        "type": "PATROL",
+                        "params": {
+                          "direction": {
+                            "nodeType": "dataValue",
+                            "type": "BLACKBOARD",
+                            "dataType": "vector",
+                            "blackboardKey": "groupVectorFacingDirection",
+                            "params": {
+                              "direction": {
+                                "nodeType": "dataValue",
+                                "type": "BLACKBOARD",
+                                "dataType": "vector",
+                                "blackboardKey": "groupAveragePosition",
+                                "params": {},
+                              },
+                              "angle": {
+                                "nodeType": "dataValue",
+                                "type": "LITERAL",
+                                "dataType": "vectorAngle",
+                                "value": 10,
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    "nodeType": "action",
+                    "type": "FORMATION_SPREAD",
+                    "params": {},
+                  },
+                ],
+              },
+            ],
+          },
         ],
+      },
+      {
+        "nodeType": "action",
+        "type": "PATROL",
+        "params": {
+          "direction": {
+            "nodeType": "dataValue",
+            "dataType": "vector",
+            "type": "BLACKBOARD",
+            "blackboardKey": "opponentAveragePosition",
+            "params": {
+              "vectorOffset": {
+                "nodeType": "dataValue",
+                "type": "BLACKBOARD",
+                "dataType": "vector",
+                "blackboardKey": "opponentAverageUnitPositionByType",
+                "params": {
+                  "unitType": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "unitType",
+                    "value": "MANGO",
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       {
         "nodeType": "action",
@@ -366,9 +462,9 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "params": {
           "forTicksAmount": {
             "nodeType": "dataValue",
-            "type": "LITERAL",
             "dataType": "tickCount",
-            "value": 83,
+            "type": "LITERAL",
+            "value": 77,
           },
         },
       },
@@ -378,8 +474,59 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
     "nodeType": "selector",
     "nodes": [
       {
+        "nodeType": "condition",
+        "type": "tickCountLessThan",
+        "invert": false,
+        "params": {
+          "leftTicks": {
+            "nodeType": "dataValue",
+            "type": "LITERAL",
+            "dataType": "tickCount",
+            "value": 34,
+          },
+          "rightTicks": {
+            "nodeType": "dataValue",
+            "type": "BLACKBOARD",
+            "dataType": "tickCount",
+            "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+            "params": {
+              "type": {
+                "nodeType": "dataValue",
+                "type": "LITERAL",
+                "dataType": "projectileType",
+                "value": "MANGO_ROCK",
+              },
+            },
+          },
+        },
+      },
+      {
+        "nodeType": "condition",
+        "type": "tickCountEquals",
+        "invert": true,
+        "params": {
+          "leftTicks": {
+            "nodeType": "dataValue",
+            "type": "LITERAL",
+            "dataType": "tickCount",
+            "value": 75,
+          },
+          "rightTicks": {
+            "nodeType": "dataValue",
+            "type": "LITERAL",
+            "dataType": "tickCount",
+            "value": 57,
+          },
+        },
+      },
+      {
         "nodeType": "sequence",
         "nodes": [
+          {
+            "nodeType": "action",
+            "type": "FORMATION_SPREAD",
+            "params": {},
+          },
           {
             "nodeType": "condition",
             "type": "vectorDistanceBetweenLessThan",
@@ -389,13 +536,21 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "nodeType": "dataValue",
                 "dataType": "vector",
                 "type": "BLACKBOARD",
-                "blackboardKey": "opponentClosestUnitPositionByType",
+                "blackboardKey": "unitPosition",
                 "params": {
-                  "unitType": {
+                  "unitWithPosition": {
                     "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "unitType",
-                    "value": "ARCHER",
+                    "dataType": "unitId",
+                    "type": "BLACKBOARD",
+                    "blackboardKey": "opponentClosestUnitByType",
+                    "params": {
+                      "unitType": {
+                        "nodeType": "dataValue",
+                        "dataType": "unitType",
+                        "type": "LITERAL",
+                        "value": "ARCHER",
+                      },
+                    },
                   },
                 },
               },
@@ -403,22 +558,26 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
                 "dataType": "vector",
-                "blackboardKey": "groupVectorFacingDirection",
+                "blackboardKey": "groupUnitVectorFacingDirection",
                 "params": {
                   "direction": {
                     "nodeType": "dataValue",
-                    "type": "LITERAL",
+                    "type": "BLACKBOARD",
                     "dataType": "vector",
-                    "value": {
-                      "x": 859,
-                      "y": 6,
-                    },
+                    "blackboardKey": "groupAveragePosition",
+                    "params": {},
                   },
                   "angle": {
                     "nodeType": "dataValue",
                     "type": "LITERAL",
                     "dataType": "vectorAngle",
-                    "value": 281,
+                    "value": 229,
+                  },
+                  "magnitude": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "vectorMagnitude",
+                    "value": 410,
                   },
                 },
               },
@@ -442,24 +601,22 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "params": {
                   "direction": {
                     "nodeType": "dataValue",
-                    "type": "LITERAL",
+                    "type": "BLACKBOARD",
                     "dataType": "vector",
-                    "value": {
-                      "x": 229,
-                      "y": 659,
-                    },
+                    "blackboardKey": "opponentAveragePosition",
+                    "params": {},
                   },
                   "angle": {
                     "nodeType": "dataValue",
                     "dataType": "vectorAngle",
                     "type": "LITERAL",
-                    "value": 354,
+                    "value": 180,
                   },
                   "magnitude": {
                     "nodeType": "dataValue",
                     "dataType": "vectorMagnitude",
                     "type": "LITERAL",
-                    "value": 150,
+                    "value": 271,
                   },
                 },
               },
@@ -471,18 +628,37 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         "nodeType": "sequence",
         "nodes": [
           {
+            "nodeType": "sequence",
+            "nodes": [],
+          },
+          {
             "nodeType": "action",
-            "type": "FORMATION_LINE",
+            "type": "FORMATION_SPLIT",
             "params": {},
           },
           {
             "nodeType": "action",
-            "type": "FORMATION_SPREAD",
-            "params": {},
+            "type": "CONVERT",
+            "params": {
+              "unit": {
+                "nodeType": "dataValue",
+                "type": "BLACKBOARD",
+                "dataType": "unitId",
+                "blackboardKey": "opponentMedoidUnitByType",
+                "params": {
+                  "unitType": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "unitType",
+                    "value": "MANGO",
+                  },
+                },
+              },
+            },
           },
           {
             "nodeType": "condition",
-            "invert": true,
+            "invert": false,
             "type": "booleanIsTrue",
             "params": {
               "subject": {
@@ -503,14 +679,14 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "params": {
                   "unit": {
                     "nodeType": "dataValue",
-                    "dataType": "unitId",
                     "type": "BLACKBOARD",
+                    "dataType": "unitId",
                     "blackboardKey": "opponentClosestUnitByType",
                     "params": {
                       "unitType": {
                         "nodeType": "dataValue",
-                        "dataType": "unitType",
                         "type": "LITERAL",
+                        "dataType": "unitType",
                         "value": "MANGO",
                       },
                     },
@@ -518,52 +694,8 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 },
               },
               {
-                "nodeType": "condition",
-                "type": "vectorDistanceBetweenLessThan",
-                "invert": true,
-                "params": {
-                  "pointA": {
-                    "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
-                    "dataType": "vector",
-                    "blackboardKey": "groupAveragePosition",
-                    "params": {},
-                  },
-                  "pointB": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "vector",
-                    "value": {
-                      "x": 909,
-                      "y": 25,
-                    },
-                  },
-                  "distance": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "vectorMagnitude",
-                    "value": 141,
-                  },
-                },
-              },
-              {
-                "nodeType": "condition",
-                "type": "unitCountEquals",
-                "invert": false,
-                "params": {
-                  "leftUnitCount": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "unitCount",
-                    "value": 4,
-                  },
-                  "rightUnitCount": {
-                    "nodeType": "dataValue",
-                    "type": "LITERAL",
-                    "dataType": "unitCount",
-                    "value": 2,
-                  },
-                },
+                "nodeType": "sequence",
+                "nodes": [],
               },
               {
                 "nodeType": "action",
@@ -571,14 +703,14 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
                 "params": {
                   "unit": {
                     "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
                     "dataType": "unitId",
+                    "type": "BLACKBOARD",
                     "blackboardKey": "opponentClosestUnitByType",
                     "params": {
                       "unitType": {
                         "nodeType": "dataValue",
-                        "type": "LITERAL",
                         "dataType": "unitType",
+                        "type": "LITERAL",
                         "value": "MANGO",
                       },
                     },
@@ -590,43 +722,24 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
         ],
       },
       {
-        "nodeType": "condition",
-        "type": "unitCountGreaterThan",
-        "invert": false,
-        "params": {
-          "leftUnitCount": {
-            "nodeType": "dataValue",
-            "type": "BLACKBOARD",
-            "dataType": "unitCount",
-            "blackboardKey": "groupMetaUnitTypeGroupCount",
-            "params": {},
-          },
-          "rightUnitCount": {
-            "nodeType": "dataValue",
-            "type": "LITERAL",
-            "dataType": "unitCount",
-            "value": 25,
-          },
-        },
-      },
-      {
-        "nodeType": "action",
-        "type": "FORMATION_LINE",
-        "params": {},
-      },
-      {
-        "nodeType": "selector",
+        "nodeType": "sequence",
         "nodes": [
           {
             "nodeType": "condition",
-            "type": "booleanIsTrue",
+            "type": "unitCountEquals",
             "invert": true,
             "params": {
-              "subject": {
+              "leftUnitCount": {
+                "nodeType": "dataValue",
+                "type": "LITERAL",
+                "dataType": "unitCount",
+                "value": 30,
+              },
+              "rightUnitCount": {
                 "nodeType": "dataValue",
                 "type": "BLACKBOARD",
-                "dataType": "boolean",
-                "blackboardKey": "groupIsConverting",
+                "dataType": "unitCount",
+                "blackboardKey": "groupMetaUnitTypeGroupCount",
                 "params": {},
               },
             },
@@ -635,31 +748,11 @@ export const randomlyMutatedTree: UnitAwareBehaviourTree = {
       },
       {
         "nodeType": "sequence",
-        "nodes": [],
-      },
-      {
-        "nodeType": "sequence",
         "nodes": [
           {
-            "nodeType": "selector",
-            "nodes": [],
-          },
-          {
-            "nodeType": "condition",
-            "type": "booleanIsTrue",
-            "invert": false,
-            "params": {
-              "subject": {
-                "nodeType": "dataValue",
-                "type": "LITERAL",
-                "dataType": "boolean",
-                "value": true,
-              },
-            },
-          },
-          {
-            "nodeType": "sequence",
-            "nodes": [],
+            "nodeType": "action",
+            "type": "FORMATION_SPLIT",
+            "params": {},
           },
         ],
       },

@@ -20,13 +20,21 @@ export const sampleTree: UnitAwareBehaviourTree = {
                 nodeType: "dataValue",
                 dataType: "vector",
                 type: "BLACKBOARD",
-                blackboardKey: "opponentClosestUnitPositionByType",
+                blackboardKey: "unitPosition",
                 params: {
-                  unitType: {
+                  unitWithPosition: {
                     nodeType: "dataValue",
-                    dataType: "unitType",
-                    type: "LITERAL",
-                    value: "ARCHER",
+                    dataType: "unitId",
+                    type: "BLACKBOARD",
+                    blackboardKey: "opponentClosestUnitByType",
+                    params: {
+                      unitType: {
+                        nodeType: "dataValue",
+                        "dataType": "unitType",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
+                    },
                   },
                 },
               },
