@@ -3,6 +3,9 @@ import { useTrpc } from "../../hooks/useTrpc.ts";
 import { GameCanvas } from "../../components/GameCanvas.tsx";
 import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
 import { useBotVsBotStateManager } from "./hooks/useBotVsBotStateManager.ts";
+import { randomlyMutateUnitAwareBehaviourTree } from "../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";
+import { params } from "../../../common/ai/training/params.ts";
+import { UnitType } from "../../../common/units/UnitType.ts";
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
@@ -10,6 +13,11 @@ export function TrainedBots() {
   const [homeBot, setHomeBot] = useState<Bot | null>(null);
   const [awayBot, setAwayBot] = useState<Bot | null>(null);
   const [tickInterval, setTickInterval] = useState(500);
+  const [countText, setCountText] = useState(String(params.NEXT_GENERATION_RANDOM_MUTATIONS));
+  const count = Math.max(1, Number(countText) || 1);
+  const [mutationSeed, setMutationSeed] = useState(0);
+  const [swapSeed, setSwapSeed] = useState(0);
+  const [inspectBot, setInspectBot] = useState<Bot | null>(null);
 
   const trpc = useTrpc();
   useEffect(() => {
@@ -20,6 +28,16 @@ export function TrainedBots() {
     () => bots.filter((b) => b.generationChampion).sort((a, b) => a.generation - b.generation),
     [bots],
   );
+
+  // On first load, default the matchup to the highest-generation champion vs itself.
+  const defaultedRef = useRef(false);
+  useEffect(() => {
+    if (defaultedRef.current || champions.length === 0) { return; }
+    defaultedRef.current = true;
+    const topChamp = champions[champions.length - 1];
+    setHomeBot(topChamp);
+    setAwayBot(topChamp);
+  }, [champions]);
 
   const latestUnchampionedGen = useMemo(() => {
     if (bots.length === 0) { return null; }
@@ -34,7 +52,8 @@ export function TrainedBots() {
     [expandedGen, bots],
   );
 
-  const stateManager = useBotVsBotStateManager(homeBot ?? undefined, awayBot ?? undefined, tickInterval);
+  const gameKey = `${homeBot?.id}-${awayBot?.id}-${tickInterval}-${mutationSeed}-${swapSeed}`;
+  const stateManager = useBotVsBotStateManager(homeBot ?? undefined, awayBot ?? undefined, tickInterval, gameKey);
 
   const championTilesRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -60,13 +79,38 @@ export function TrainedBots() {
     else { setAwayBot(bot); }
   };
 
+  const handleMutate = (slot: "home" | "away") => {
+    const bot = slot === "home" ? homeBot : awayBot;
+    if (!bot) { return; }
+    // Always mutate the original bot's tree, never an already-mutated one, so
+    // repeated rolls produce fresh single mutations rather than compounding.
+    const original = bots.find((b) => b.id === bot.id) ?? bot;
+    const tree = randomlyMutateUnitAwareBehaviourTree({ tree: original.tree, count });
+    const letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
+    const mutated: Bot = { ...original, tree, botName: `${original.botName}-${letter}${count}` };
+    if (slot === "home") { setHomeBot(mutated); }
+    else { setAwayBot(mutated); }
+    setMutationSeed((s) => s + 1);
+  };
+
+  const handleRevert = (slot: "home" | "away") => {
+    const bot = slot === "home" ? homeBot : awayBot;
+    if (!bot) { return; }
+    const original = bots.find((b) => b.id === bot.id) ?? bot;
+    if (slot === "home") { setHomeBot(original); }
+    else { setAwayBot(original); }
+    setMutationSeed((s) => s + 1);
+  };
+
   return (
     <>
       <GameCanvas
-        key={`${homeBot?.id}-${awayBot?.id}-${tickInterval}`}
+        key={gameKey}
         startAs="SPECTATOR"
         stateManager={stateManager}
         canvasStyle={{ width: "100vw", height: "calc(100vh - 52px)" }}
+        // Allow browser controls like find to work.
+        preventDefaultOnInput={false}
       />
 
       <div className="speed-controls">
@@ -79,6 +123,15 @@ export function TrainedBots() {
             {label}
           </button>
         ))}
+        <label className="count-control">
+          mutation count
+          <input
+            type="number"
+            min={1}
+            value={countText}
+            onChange={(e) => setCountText(e.target.value)}
+          />
+        </label>
       </div>
 
       <div className="matchup-bar">
@@ -129,6 +182,9 @@ export function TrainedBots() {
             bot={homeBot}
             onDrop={(e) => handleDrop(e, "home")}
             onClear={() => setHomeBot(null)}
+            onMutate={() => handleMutate("home")}
+            onRevert={() => handleRevert("home")}
+            onInspect={() => setInspectBot(homeBot)}
           />
           <div className="matchup-vs-group">
             <span className="matchup-vs">VS</span>
@@ -137,6 +193,7 @@ export function TrainedBots() {
               onClick={() => {
                 setHomeBot(awayBot);
                 setAwayBot(homeBot);
+                setSwapSeed((s) => s + 1);
               }}
               title="Swap"
             >
@@ -148,9 +205,14 @@ export function TrainedBots() {
             bot={awayBot}
             onDrop={(e) => handleDrop(e, "away")}
             onClear={() => setAwayBot(null)}
+            onMutate={() => handleMutate("away")}
+            onRevert={() => handleRevert("away")}
+            onInspect={() => setInspectBot(awayBot)}
           />
         </div>
       </div>
+
+      {inspectBot && <TreeModal bot={inspectBot} onClose={() => setInspectBot(null)} />}
     </>
   );
 }
@@ -245,11 +307,17 @@ function DropSlot({
   bot,
   onDrop,
   onClear,
+  onMutate,
+  onRevert,
+  onInspect,
 }: {
   color: "home" | "away";
   bot: Bot | null;
   onDrop: (e: React.DragEvent) => void;
   onClear: () => void;
+  onMutate: () => void;
+  onRevert: () => void;
+  onInspect: () => void;
 }) {
   const [dragOver, setDragOver] = useState(false);
 
@@ -279,10 +347,41 @@ function DropSlot({
         ? (
           <>
             <span className="drop-slot__name">{bot.botName}</span>
+            <button className="drop-slot__inspect" onClick={onInspect} title="Inspect tree">{"{}"}</button>
+            <button className="drop-slot__revert" onClick={onRevert} title="Revert to original tree">↺</button>
+            <button className="drop-slot__dice" onClick={onMutate} title="Mutate tree">⚅</button>
             <button className="drop-slot__clear" onClick={onClear}>✕</button>
           </>
         )
         : <span className="drop-slot__empty">drag a bot here</span>}
+    </div>
+  );
+}
+
+function TreeModal({ bot, onClose }: { bot: Bot; onClose: () => void }) {
+  const unitTypes = [UnitType.Archer, UnitType.Mangonel, UnitType.Monk];
+  const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
+
+  return (
+    <div className="tree-modal__backdrop" onClick={onClose}>
+      <div className="tree-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="tree-modal__header">
+          <span className="tree-modal__title">{bot.botName}</span>
+          <button className="tree-modal__close" onClick={onClose}>✕</button>
+        </div>
+        <div className="tree-modal__tabs">
+          {unitTypes.map((unit) => (
+            <button
+              key={unit}
+              className={`tree-modal__tab${activeUnit === unit ? " tree-modal__tab--active" : ""}`}
+              onClick={() => setActiveUnit(unit)}
+            >
+              {UnitType[unit]}
+            </button>
+          ))}
+        </div>
+        <pre className="tree-modal__json">{JSON.stringify(bot.tree[activeUnit], null, 2)}</pre>
+      </div>
     </div>
   );
 }

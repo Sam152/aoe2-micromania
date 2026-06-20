@@ -423,6 +423,25 @@ kbd {
   background: rgba(224, 191, 79, 0.1);
 }
 
+.count-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #a0aec0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.count-control input {
+  width: 52px;
+  background: rgba(45, 55, 72, 0.55);
+  border: 1px solid rgba(74, 85, 104, 0.5);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
 .drop-slot {
   position: relative;
   width: 320px;
@@ -434,7 +453,7 @@ kbd {
   gap: 2px;
   border: 2px dashed rgba(74, 85, 104, 0.5);
   border-radius: 8px;
-  padding: 4px 24px 4px 12px;
+  padding: 4px 114px 4px 12px;
   transition: border-color 0.15s, background 0.15s;
 }
 
@@ -462,7 +481,9 @@ kbd {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
 }
 
 .drop-slot__empty {
@@ -473,19 +494,182 @@ kbd {
 
 .drop-slot__clear {
   position: absolute;
-  top: 5px;
-  right: 7px;
-  background: none;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #0d1117;
   border: none;
-  color: #4a5568;
-  font-size: 10px;
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 13px;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 0;
   line-height: 1;
 }
 
 .drop-slot__clear:hover {
+  color: #a0aec0;
+}
+
+.drop-slot__revert {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #0d1117;
+  border: none;
+  border-radius: 4px;
   color: #e2e8f0;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.drop-slot__revert:hover {
+  color: #a0aec0;
+}
+
+.drop-slot__inspect {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #0d1117;
+  border: none;
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.drop-slot__inspect:hover {
+  color: #a0aec0;
+}
+
+.drop-slot__dice {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #0d1117;
+  border: none;
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.drop-slot__dice:hover {
+  color: #a0aec0;
+}
+
+.tree-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.tree-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(720px, 90vw);
+  max-height: 80vh;
+  background: #1a202c;
+  border: 1px solid rgba(74, 85, 104, 0.6);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tree-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(74, 85, 104, 0.4);
+}
+
+.tree-modal__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.tree-modal__close {
+  background: none;
+  border: none;
+  color: #a0aec0;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.tree-modal__close:hover {
+  color: #e2e8f0;
+}
+
+.tree-modal__tabs {
+  display: flex;
+  gap: 4px;
+  padding: 10px 16px 0;
+}
+
+.tree-modal__tab {
+  background: rgba(45, 55, 72, 0.55);
+  border: 1px solid rgba(74, 85, 104, 0.5);
+  border-radius: 6px 6px 0 0;
+  color: #a0aec0;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 14px;
+}
+
+.tree-modal__tab--active {
+  color: #e0bf4f;
+  border-color: #e0bf4f;
+  background: rgba(224, 191, 79, 0.1);
+}
+
+.tree-modal__json {
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #cbd5e0;
+  white-space: pre;
 }
 
 .matchup-vs-group {

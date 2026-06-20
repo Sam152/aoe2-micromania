@@ -8,6 +8,7 @@ export function useBotVsBotStateManager(
   homeBot: Bot | undefined,
   awayBot: Bot | undefined,
   tickInterval: number,
+  key: string,
 ): LocalStateManager {
   return useMemo(() => {
     const botsInstances: BotInstance[] = [homeBot, awayBot].filter((bot) => !!bot).map((bot, i) =>
@@ -41,5 +42,5 @@ export function useBotVsBotStateManager(
     });
 
     return manager;
-  }, [homeBot, awayBot, tickInterval]);
+  }, [homeBot, awayBot, tickInterval, key]);
 }

@@ -10,6 +10,7 @@ export const convert = defineAction({
   params: {
     unit: {
       dataType: "unitId",
+      allowedValueTypes: ["BLACKBOARD"],
     },
   },
   execute: ({ unit }, { group }) => {

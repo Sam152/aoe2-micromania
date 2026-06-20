@@ -10,6 +10,7 @@ export const idle = defineAction({
   params: {
     forTicksAmount: {
       dataType: "tickCount",
+      allowedValueTypes: ["BLACKBOARD", "LITERAL"],
     },
   },
   execute: () => undefined,

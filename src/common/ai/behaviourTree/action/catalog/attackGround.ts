@@ -10,6 +10,7 @@ export const attackGround = defineAction({
   params: {
     attackGroundPosition: {
       dataType: "vector",
+      allowedValueTypes: ["BLACKBOARD"],
     },
   },
   execute: ({ attackGroundPosition }, { group }): GameStateAction => {

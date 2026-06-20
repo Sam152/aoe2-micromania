@@ -13,10 +13,10 @@ export class RenderLoopManager {
   private inputManager: InputManager;
   private running: boolean;
 
-  constructor(stateManager: StateManagerInterface, canvas: HTMLCanvasElement) {
+  constructor(stateManager: StateManagerInterface, canvas: HTMLCanvasElement, preventDefaultOnInput = true) {
     this.stateManager = stateManager;
     this.renderer = new CanvasRenderer(canvas);
-    this.inputManager = new InputManager(canvas, stateManager, clientStateTransmitter);
+    this.inputManager = new InputManager(canvas, stateManager, clientStateTransmitter, preventDefaultOnInput);
     this.running = false;
 
     this.onResize = this.onResize.bind(this);

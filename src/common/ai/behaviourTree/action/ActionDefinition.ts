@@ -2,7 +2,7 @@ import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
 import { ActionsList } from "./actionsList.ts";
 import { GameState, GameStateAction } from "../../../../types.ts";
 import { BotState, BotUnitGroup } from "../../integration/createBot.ts";
-import { DataValueOfType } from "../dataValue/DataValue.ts";
+import { DataValueOfType, DataValueType } from "../dataValue/DataValue.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 
 export type ActionDefinition<
@@ -22,6 +22,7 @@ export type ActionDefinition<
 
 type ActionDefinitionParam<TDataType extends DataType> = {
   dataType: TDataType;
+  allowedValueTypes: DataValueType[];
 };
 
 /**
