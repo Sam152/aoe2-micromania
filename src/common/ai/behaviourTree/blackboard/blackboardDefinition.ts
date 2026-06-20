@@ -20,12 +20,16 @@ import { unitPosition } from "./catalog/unitPosition.ts";
 import { opponentMedoidUnitByType } from "./catalog/opponentMedoidUnitByType.ts";
 import { opponentHasUnitType } from "./catalog/opponentHasUnitType.ts";
 import { opponentUnitCountByType } from "./catalog/opponentUnitCountByType.ts";
+import { groupIsMostlyReloading } from "./catalog/groupIsMostlyReloading.ts";
+import { groupHasAnyReloading } from "./catalog/groupHasAnyReloading.ts";
 
 export const blackboardDefinition = {
   groupMetaUnitTypeGroupCount,
   groupMetaUnitTypeIndex,
   groupUnitCount,
   groupAveragePosition,
+  groupIsMostlyReloading,
+  groupHasAnyReloading,
   globalOwnedUnitsOfTypeCount,
   opponentAveragePosition,
   opponentClosestUnitByType,
