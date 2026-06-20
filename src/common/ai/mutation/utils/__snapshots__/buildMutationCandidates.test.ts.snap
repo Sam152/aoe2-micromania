@@ -43,17 +43,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -121,17 +111,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -197,17 +177,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -275,17 +245,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -351,17 +311,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -429,17 +379,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -505,17 +445,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -583,17 +513,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -655,17 +575,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -714,17 +624,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -773,17 +673,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -832,17 +722,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1019,17 +899,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           blackboardKey: "opponentAveragePosition",
           dataType: "vector",
           nodeType: "dataValue",
-          params: {
-            vectorOffset: {
-              dataType: "vector",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
+          params: {},
           type: "BLACKBOARD",
         },
       },
@@ -1037,48 +907,6 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
     },
     paramName: "direction",
     type: "REPLACE_PARAM_DATA_VALUE",
-  },
-  {
-    node: {
-      blackboardKey: "opponentAveragePosition",
-      dataType: "vector",
-      nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
-      type: "BLACKBOARD",
-    },
-    paramName: "vectorOffset",
-    type: "REPLACE_PARAM_DATA_VALUE",
-  },
-  {
-    paramName: "vectorOffset",
-    parentNode: {
-      blackboardKey: "opponentAveragePosition",
-      dataType: "vector",
-      nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
-      type: "BLACKBOARD",
-    },
-    type: "CHANGE_LITERAL_DATA_VALUE",
   },
   {
     listNode: {
@@ -1341,17 +1169,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1405,17 +1223,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1469,17 +1277,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1533,17 +1331,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1668,17 +1456,7 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           blackboardKey: "opponentAveragePosition",
           dataType: "vector",
           nodeType: "dataValue",
-          params: {
-            vectorOffset: {
-              dataType: "vector",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
+          params: {},
           type: "BLACKBOARD",
         },
       },
@@ -1686,48 +1464,6 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
     },
     paramName: "direction",
     type: "REPLACE_PARAM_DATA_VALUE",
-  },
-  {
-    node: {
-      blackboardKey: "opponentAveragePosition",
-      dataType: "vector",
-      nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
-      type: "BLACKBOARD",
-    },
-    paramName: "vectorOffset",
-    type: "REPLACE_PARAM_DATA_VALUE",
-  },
-  {
-    paramName: "vectorOffset",
-    parentNode: {
-      blackboardKey: "opponentAveragePosition",
-      dataType: "vector",
-      nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
-      type: "BLACKBOARD",
-    },
-    type: "CHANGE_LITERAL_DATA_VALUE",
   },
   {
     node: {

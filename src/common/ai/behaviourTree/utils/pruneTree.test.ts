@@ -31,7 +31,7 @@ describe("pruneTree", () => {
     const pruned = pruneUnitAwareTree(winningTree, winner.bots.player2.activations);
 
     assertEquals(treeSize(pruned), {
-      archerLength: 15,
+      archerLength: 14,
       monkLength: 12,
       mangoLength: 4,
     });

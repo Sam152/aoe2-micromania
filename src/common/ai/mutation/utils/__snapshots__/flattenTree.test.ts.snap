@@ -43,17 +43,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -121,17 +111,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -193,17 +173,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -251,17 +221,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -329,17 +289,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -428,17 +378,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -558,17 +498,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           blackboardKey: "opponentAveragePosition",
           dataType: "vector",
           nodeType: "dataValue",
-          params: {
-            vectorOffset: {
-              dataType: "vector",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
+          params: {},
           type: "BLACKBOARD",
         },
       },
@@ -612,17 +542,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -636,17 +556,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       blackboardKey: "opponentAveragePosition",
       dataType: "vector",
       nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
+      params: {},
       type: "BLACKBOARD",
     },
     paramKey: "direction",
@@ -657,50 +567,11 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           blackboardKey: "opponentAveragePosition",
           dataType: "vector",
           nodeType: "dataValue",
-          params: {
-            vectorOffset: {
-              dataType: "vector",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
+          params: {},
           type: "BLACKBOARD",
         },
       },
       type: "PATROL",
-    },
-  },
-  {
-    node: {
-      dataType: "vector",
-      nodeType: "dataValue",
-      type: "LITERAL",
-      value: {
-        x: 0,
-        y: 0,
-      },
-    },
-    paramKey: "vectorOffset",
-    parent: {
-      blackboardKey: "opponentAveragePosition",
-      dataType: "vector",
-      nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
-      type: "BLACKBOARD",
     },
   },
   {
@@ -774,17 +645,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -852,17 +713,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -1066,17 +917,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1136,17 +977,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -1214,17 +1045,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
                   blackboardKey: "opponentAveragePosition",
                   dataType: "vector",
                   nodeType: "dataValue",
-                  params: {
-                    vectorOffset: {
-                      dataType: "vector",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: {
-                        x: 0,
-                        y: 0,
-                      },
-                    },
-                  },
+                  params: {},
                   type: "BLACKBOARD",
                 },
               },
@@ -1299,17 +1120,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1397,17 +1208,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           blackboardKey: "opponentAveragePosition",
           dataType: "vector",
           nodeType: "dataValue",
-          params: {
-            vectorOffset: {
-              dataType: "vector",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
+          params: {},
           type: "BLACKBOARD",
         },
       },
@@ -1444,17 +1245,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1480,17 +1271,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
       blackboardKey: "opponentAveragePosition",
       dataType: "vector",
       nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
+      params: {},
       type: "BLACKBOARD",
     },
     paramKey: "direction",
@@ -1501,50 +1282,11 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
           blackboardKey: "opponentAveragePosition",
           dataType: "vector",
           nodeType: "dataValue",
-          params: {
-            vectorOffset: {
-              dataType: "vector",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: {
-                x: 0,
-                y: 0,
-              },
-            },
-          },
+          params: {},
           type: "BLACKBOARD",
         },
       },
       type: "PATROL",
-    },
-  },
-  {
-    node: {
-      dataType: "vector",
-      nodeType: "dataValue",
-      type: "LITERAL",
-      value: {
-        x: 0,
-        y: 0,
-      },
-    },
-    paramKey: "vectorOffset",
-    parent: {
-      blackboardKey: "opponentAveragePosition",
-      dataType: "vector",
-      nodeType: "dataValue",
-      params: {
-        vectorOffset: {
-          dataType: "vector",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: {
-            x: 0,
-            y: 0,
-          },
-        },
-      },
-      type: "BLACKBOARD",
     },
   },
   {
@@ -1591,17 +1333,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
               blackboardKey: "opponentAveragePosition",
               dataType: "vector",
               nodeType: "dataValue",
-              params: {
-                vectorOffset: {
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: {
-                    x: 0,
-                    y: 0,
-                  },
-                },
-              },
+              params: {},
               type: "BLACKBOARD",
             },
           },
@@ -1656,7 +1388,6 @@ snapshot[`flattenTree > generates candidates from tree 2`] = `
   "condition > dataValue",
   "sequence > action",
   "action > dataValue",
-  "dataValue > dataValue",
   "selector > sequence",
   "sequence > condition",
   "condition > dataValue",
@@ -1668,7 +1399,6 @@ snapshot[`flattenTree > generates candidates from tree 2`] = `
   "condition > dataValue",
   "sequence > action",
   "action > dataValue",
-  "dataValue > dataValue",
   "sequence > action",
   "action > dataValue",
 ]
