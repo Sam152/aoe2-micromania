@@ -345,6 +345,24 @@ kbd {
   box-shadow: 0 0 0 1px rgba(252, 129, 129, 0.3);
 }
 
+.gen-tile--slotted-both {
+  border: 3px solid;
+  border-top-color: #fc8181;
+  border-right-color: #fc8181;
+  border-bottom-color: #4299e1;
+  border-left-color: #4299e1;
+  box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.3);
+}
+
+.gen-tile--slotted-both-dashed {
+  border: 3px dashed;
+  border-top-color: #fc8181;
+  border-right-color: #fc8181;
+  border-bottom-color: #4299e1;
+  border-left-color: #4299e1;
+  box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.3);
+}
+
 .gen-tile--placeholder {
   border-style: dashed;
   cursor: pointer;

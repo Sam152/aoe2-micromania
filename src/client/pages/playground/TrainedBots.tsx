@@ -168,7 +168,13 @@ export function TrainedBots() {
                 key={bot.id}
                 bot={bot}
                 small
-                slot={homeBot?.id === bot.id ? "home" : awayBot?.id === bot.id ? "away" : undefined}
+                slot={homeBot?.id === bot.id && awayBot?.id === bot.id
+                  ? "both"
+                  : homeBot?.id === bot.id
+                  ? "home"
+                  : awayBot?.id === bot.id
+                  ? "away"
+                  : undefined}
                 onDragStart={handleDragStart}
               />
             ))}
@@ -225,11 +231,17 @@ function slotForGeneration(
   championId: number,
   homeBot: Bot | null,
   awayBot: Bot | null,
-): { slot?: "home" | "away"; dashed?: boolean } {
-  if (homeBot?.id === championId) { return { slot: "home" }; }
-  if (awayBot?.id === championId) { return { slot: "away" }; }
-  if (homeBot?.generation === generation) { return { slot: "home", dashed: true }; }
-  if (awayBot?.generation === generation) { return { slot: "away", dashed: true }; }
+): { slot?: "home" | "away" | "both"; dashed?: boolean } {
+  const isHome = homeBot?.id === championId;
+  const isAway = awayBot?.id === championId;
+  if (isHome && isAway) { return { slot: "both" }; }
+  if (isHome) { return { slot: "home" }; }
+  if (isAway) { return { slot: "away" }; }
+  const homeGen = homeBot?.generation === generation;
+  const awayGen = awayBot?.generation === generation;
+  if (homeGen && awayGen) { return { slot: "both", dashed: true }; }
+  if (homeGen) { return { slot: "home", dashed: true }; }
+  if (awayGen) { return { slot: "away", dashed: true }; }
   return {};
 }
 
@@ -245,7 +257,7 @@ function BotTile({
   bot: Bot;
   expanded?: boolean;
   small?: boolean;
-  slot?: "home" | "away";
+  slot?: "home" | "away" | "both";
   dashed?: boolean;
   onClick?: () => void;
   onDragStart: (e: React.DragEvent, bot: Bot) => void;
@@ -256,6 +268,7 @@ function BotTile({
     small && "gen-tile--small",
     slot === "home" && (dashed ? "gen-tile--slotted-home-dashed" : "gen-tile--slotted-home"),
     slot === "away" && (dashed ? "gen-tile--slotted-away-dashed" : "gen-tile--slotted-away"),
+    slot === "both" && (dashed ? "gen-tile--slotted-both-dashed" : "gen-tile--slotted-both"),
   ]
     .filter(Boolean)
     .join(" ");
@@ -281,7 +294,7 @@ function PlaceholderTile({
 }: {
   gen: number;
   expanded: boolean;
-  slot?: "home" | "away";
+  slot?: "home" | "away" | "both";
   onClick: () => void;
 }) {
   const classes = [
@@ -290,6 +303,7 @@ function PlaceholderTile({
     expanded && "gen-tile--expanded",
     slot === "home" && "gen-tile--slotted-home-dashed",
     slot === "away" && "gen-tile--slotted-away-dashed",
+    slot === "both" && "gen-tile--slotted-both-dashed",
   ]
     .filter(Boolean)
     .join(" ");
