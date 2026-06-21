@@ -11,7 +11,7 @@ import { ArrowFramesPlayground } from "./pages/playground/ArrowFramesPlayground.
 import { MangoFanOutPlayground } from "./pages/playground/MangoFanOutPlayground.tsx";
 import { AccuracyAnalysisPlayground } from "./pages/playground/AccuracyAnalysisPlayground.tsx";
 import { GroupUnitVectorFacingDirectionPlayground } from "./pages/playground/GroupUnitVectorFacingDirectionPlayground.tsx";
-import { TrainedBots } from "./pages/playground/TrainedBots.tsx";
+import { TrainedBots } from "./pages/playground/TrainedBots/TrainedBots.tsx";
 
 import { SpectateGame } from "./pages/SpectateGame.tsx";
 import { PlaygroundList } from "./pages/playground/PlaygroundList.tsx";

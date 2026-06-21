@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTrpc } from "../../hooks/useTrpc.ts";
-import { GameCanvas } from "../../components/GameCanvas.tsx";
-import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
+import { useTrpc } from "../../../hooks/useTrpc.ts";
+import { GameCanvas } from "../../../components/GameCanvas.tsx";
+import type { Bot } from "../../../../common/ai/training/infra/repo/getAllBots.ts";
 import { useBotVsBotStateManager } from "./hooks/useBotVsBotStateManager.ts";
 import { useBlackboardOverlay } from "./hooks/useBlackboardOverlay.ts";
-import { randomlyMutateUnitAwareBehaviourTree } from "../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";
-import { params } from "../../../common/ai/training/params.ts";
-import { UnitType } from "../../../common/units/UnitType.ts";
+import { randomlyMutateUnitAwareBehaviourTree } from "../../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";
+import { params } from "../../../../common/ai/training/params.ts";
+import { UnitType } from "../../../../common/units/UnitType.ts";
+import { blackboardDefinition } from "../../../../common/ai/behaviourTree/blackboard/blackboardDefinition.ts";
+
+const blackboardKeys = Object.keys(blackboardDefinition);
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
@@ -20,6 +23,9 @@ export function TrainedBots() {
   const [swapSeed, setSwapSeed] = useState(0);
   const [inspectBot, setInspectBot] = useState<Bot | null>(null);
   const [showOverlay, setShowOverlay] = useState(true);
+  const [overlayMenuOpen, setOverlayMenuOpen] = useState(false);
+  // Empty set means "show all"; checking values narrows the overlay to those.
+  const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
 
   const trpc = useTrpc();
   useEffect(() => {
@@ -61,7 +67,15 @@ export function TrainedBots() {
     tickInterval,
     gameKey,
   );
-  useBlackboardOverlay(stateManager, botInstances, showOverlay);
+  useBlackboardOverlay(stateManager, botInstances, showOverlay, selectedKeys);
+
+  const toggleKey = (key: string) =>
+    setSelectedKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) { next.delete(key); }
+      else { next.add(key); }
+      return next;
+    });
 
   const championTilesRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -141,12 +155,35 @@ export function TrainedBots() {
           />
         </label>
         <button
-          className={`speed-btn${showOverlay ? " speed-btn--active" : ""}`}
+          className={`speed-btn speed-btn--standalone${showOverlay ? " speed-btn--active" : ""}`}
           onClick={() => setShowOverlay((v) => !v)}
           title="Toggle blackboard overlay"
         >
           blackboard
         </button>
+        <div className="bb-menu">
+          <button
+            className={`speed-btn${overlayMenuOpen ? " speed-btn--active" : ""}`}
+            onClick={() => setOverlayMenuOpen((v) => !v)}
+            title="Choose which blackboard values to show"
+          >
+            ☰
+          </button>
+          {overlayMenuOpen && (
+            <div className="bb-menu__dropdown">
+              {blackboardKeys.map((key) => (
+                <label key={key} className="bb-menu__item">
+                  <input
+                    type="checkbox"
+                    checked={selectedKeys.has(key)}
+                    onChange={() => toggleKey(key)}
+                  />
+                  {key}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="matchup-bar">
