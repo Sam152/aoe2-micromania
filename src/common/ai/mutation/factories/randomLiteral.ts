@@ -1,6 +1,5 @@
 import { DataType, TypeFromDataType } from "../../behaviourTree/dataType/dataTypes.ts";
 import { randomArray } from "../../../util/randomArray.ts";
-import { projectileType } from "../../behaviourTree/dataType/catalog/projectileType.ts";
 
 const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   boolean: () => Math.random() < 0.5,
@@ -10,7 +9,9 @@ const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   unitType: () => randomArray(["ARCHER", "MANGO", "MONK"]),
   formation: () => randomArray(["SPREAD", "LINE", "SPLIT"]),
   projectileType: () => randomArray(["MANGO_ROCK", "ARROW"]),
-  vector: () => ({ x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) }),
+  vector: () => {
+    throw new Error("We decided these werent suitable to be literals");
+  },
   vectorMagnitude: () => Math.floor(Math.random() * 500),
   vectorAngle: () => Math.floor(Math.random() * 360),
   unitId: () => {
