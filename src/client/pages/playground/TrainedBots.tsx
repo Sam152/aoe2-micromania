@@ -3,6 +3,7 @@ import { useTrpc } from "../../hooks/useTrpc.ts";
 import { GameCanvas } from "../../components/GameCanvas.tsx";
 import type { Bot } from "../../../common/ai/training/infra/repo/getAllBots.ts";
 import { useBotVsBotStateManager } from "./hooks/useBotVsBotStateManager.ts";
+import { useBlackboardOverlay } from "./hooks/useBlackboardOverlay.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";
 import { params } from "../../../common/ai/training/params.ts";
 import { UnitType } from "../../../common/units/UnitType.ts";
@@ -18,6 +19,7 @@ export function TrainedBots() {
   const [mutationSeed, setMutationSeed] = useState(0);
   const [swapSeed, setSwapSeed] = useState(0);
   const [inspectBot, setInspectBot] = useState<Bot | null>(null);
+  const [showOverlay, setShowOverlay] = useState(true);
 
   const trpc = useTrpc();
   useEffect(() => {
@@ -53,7 +55,13 @@ export function TrainedBots() {
   );
 
   const gameKey = `${homeBot?.id}-${awayBot?.id}-${tickInterval}-${mutationSeed}-${swapSeed}`;
-  const stateManager = useBotVsBotStateManager(homeBot ?? undefined, awayBot ?? undefined, tickInterval, gameKey);
+  const { manager: stateManager, botInstances } = useBotVsBotStateManager(
+    homeBot ?? undefined,
+    awayBot ?? undefined,
+    tickInterval,
+    gameKey,
+  );
+  useBlackboardOverlay(stateManager, botInstances, showOverlay);
 
   const championTilesRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -132,54 +140,61 @@ export function TrainedBots() {
             onChange={(e) => setCountText(e.target.value)}
           />
         </label>
+        <button
+          className={`speed-btn${showOverlay ? " speed-btn--active" : ""}`}
+          onClick={() => setShowOverlay((v) => !v)}
+          title="Toggle blackboard overlay"
+        >
+          blackboard
+        </button>
       </div>
 
       <div className="matchup-bar">
         <div className="matchup-tiles-col">
           <div className="generation-tiles" ref={championTilesRef}>
-          {champions.map((bot) => {
-            const { slot, dashed } = slotForGeneration(bot.generation, bot.id, homeBot, awayBot);
-            return (
-              <BotTile
-                key={bot.id}
-                bot={bot}
-                expanded={expandedGen === bot.generation}
-                slot={slot}
-                dashed={dashed}
-                onClick={() => setExpandedGen(expandedGen === bot.generation ? null : bot.generation)}
-                onDragStart={handleDragStart}
+            {champions.map((bot) => {
+              const { slot, dashed } = slotForGeneration(bot.generation, bot.id, homeBot, awayBot);
+              return (
+                <BotTile
+                  key={bot.id}
+                  bot={bot}
+                  expanded={expandedGen === bot.generation}
+                  slot={slot}
+                  dashed={dashed}
+                  onClick={() => setExpandedGen(expandedGen === bot.generation ? null : bot.generation)}
+                  onDragStart={handleDragStart}
+                />
+              );
+            })}
+            {latestUnchampionedGen !== null && (
+              <PlaceholderTile
+                gen={latestUnchampionedGen}
+                expanded={expandedGen === latestUnchampionedGen}
+                slot={slotForGeneration(latestUnchampionedGen, -1, homeBot, awayBot).slot}
+                onClick={() => setExpandedGen(expandedGen === latestUnchampionedGen ? null : latestUnchampionedGen)}
               />
-            );
-          })}
-          {latestUnchampionedGen !== null && (
-            <PlaceholderTile
-              gen={latestUnchampionedGen}
-              expanded={expandedGen === latestUnchampionedGen}
-              slot={slotForGeneration(latestUnchampionedGen, -1, homeBot, awayBot).slot}
-              onClick={() => setExpandedGen(expandedGen === latestUnchampionedGen ? null : latestUnchampionedGen)}
-            />
-          )}
-        </div>
-
-        {expandedGen !== null && expandedGenBots.length > 0 && (
-          <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
-            {expandedGenBots.map((bot) => (
-              <BotTile
-                key={bot.id}
-                bot={bot}
-                small
-                slot={homeBot?.id === bot.id && awayBot?.id === bot.id
-                  ? "both"
-                  : homeBot?.id === bot.id
-                  ? "home"
-                  : awayBot?.id === bot.id
-                  ? "away"
-                  : undefined}
-                onDragStart={handleDragStart}
-              />
-            ))}
+            )}
           </div>
-        )}
+
+          {expandedGen !== null && expandedGenBots.length > 0 && (
+            <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
+              {expandedGenBots.map((bot) => (
+                <BotTile
+                  key={bot.id}
+                  bot={bot}
+                  small
+                  slot={homeBot?.id === bot.id && awayBot?.id === bot.id
+                    ? "both"
+                    : homeBot?.id === bot.id
+                    ? "home"
+                    : awayBot?.id === bot.id
+                    ? "away"
+                    : undefined}
+                  onDragStart={handleDragStart}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="matchup-slots">
