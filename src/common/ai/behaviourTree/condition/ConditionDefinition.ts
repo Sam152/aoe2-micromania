@@ -11,7 +11,7 @@ export type ConditionDefinition<
   evaluate: (params: { [TKey in keyof TParams]: TypeFromDataType<TParams[TKey]["dataType"]> }) => boolean;
 };
 
-type ConditionDefinitionParam<TDataType extends DataType> = {
+export type ConditionDefinitionParam<TDataType extends DataType> = {
   dataType: TDataType;
   allowedValueTypes: DataValueType[];
 };

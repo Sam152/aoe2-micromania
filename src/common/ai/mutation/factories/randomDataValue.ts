@@ -9,6 +9,8 @@ import { BlackboardDataValue } from "../../behaviourTree/dataValue/DataValue.ts"
 import { randomLiteral } from "./randomLiteral.ts";
 import { params } from "../../training/params.ts";
 import { actionsList } from "../../behaviourTree/action/actionsList.ts";
+import { conditionList } from "../../behaviourTree/condition/conditionList.ts";
+import { ConditionDefinitionParam } from "../../behaviourTree/condition/ConditionDefinition.ts";
 
 type AttachedToNode = ConditionNode | ActionNode | BlackboardDataValue;
 
@@ -26,6 +28,15 @@ export function randomDataValue(
   if (parent.nodeType === "action") {
     const actionDef = actionsList[parent.type];
     const paramDef = actionDef.params[paramName as keyof typeof actionDef.params] as ActionDefinitionParam<any>;
+
+    allowedDataTypes = allowedDataTypes.intersection(new Set(paramDef.allowedValueTypes));
+  }
+
+  if (parent.nodeType === "condition") {
+    const conditionDef = conditionList[parent.type];
+    const paramDef = conditionDef.params[paramName as keyof typeof conditionDef.params] as ConditionDefinitionParam<
+      any
+    >;
 
     allowedDataTypes = allowedDataTypes.intersection(new Set(paramDef.allowedValueTypes));
   }
