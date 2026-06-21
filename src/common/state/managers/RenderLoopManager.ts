@@ -121,6 +121,7 @@ export class RenderLoopManager {
       this.stateManager.getClientState(),
       this.stateManager.dispatchClient.bind(this.stateManager),
     );
+    this.stateManager.dispatchClient({ n: "FRAME_RENDERING_ENDED" });
 
     if (this.running) {
       globalThis.requestAnimationFrame(this.render.bind(this));

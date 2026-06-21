@@ -306,7 +306,7 @@ export type ClientStateAction =
     unit: UnitInstance;
   }
   | {
-    n: "FRAME_RENDERING_STARTED";
+    n: "FRAME_RENDERING_STARTED" | "FRAME_RENDERING_ENDED";
   }
   | {
     n: "FIXATE_CAMERA";
