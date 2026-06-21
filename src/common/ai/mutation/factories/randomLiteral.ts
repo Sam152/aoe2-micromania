@@ -9,9 +9,7 @@ const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   unitType: () => randomArray(["ARCHER", "MANGO", "MONK"]),
   formation: () => randomArray(["SPREAD", "LINE", "SPLIT"]),
   projectileType: () => randomArray(["MANGO_ROCK", "ARROW"]),
-  vector: () => {
-    throw new Error("We decided these werent suitable to be literals");
-  },
+  vector: () => ({ x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) }),
   vectorMagnitude: () => Math.floor(Math.random() * 500),
   vectorAngle: () => Math.floor(Math.random() * 360),
   unitId: () => {
