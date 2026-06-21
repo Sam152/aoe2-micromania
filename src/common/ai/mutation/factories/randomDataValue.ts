@@ -1,13 +1,10 @@
 import { DataType, dataTypes } from "../../behaviourTree/dataType/dataTypes.ts";
 import { blackboardDefinition, BlackboardValue } from "../../behaviourTree/blackboard/blackboardDefinition.ts";
 import { randomArray } from "../../../util/randomArray.ts";
-
 import { ConditionNode } from "../../behaviourTree/condition/Condition.ts";
 import { ActionDefinitionParam, ActionNode } from "../../behaviourTree/action/ActionDefinition.ts";
 import { BlackboardDataValue } from "../../behaviourTree/dataValue/DataValue.ts";
-
 import { randomLiteral } from "./randomLiteral.ts";
-import { params } from "../../training/params.ts";
 import { actionsList } from "../../behaviourTree/action/actionsList.ts";
 import { conditionList } from "../../behaviourTree/condition/conditionList.ts";
 import { ConditionDefinitionParam } from "../../behaviourTree/condition/ConditionDefinition.ts";
