@@ -6,7 +6,7 @@ export const params = {
   /**
    * How many bots we should aim to keep in the active player pool.
    */
-  TOTAL_BOTS_PER_GENERATION: 50,
+  TOTAL_BOTS_PER_GENERATION: 5,
   /**
    * Amount of HP a candidate tree must survive with against a champion to enter the pool.
    */
@@ -33,7 +33,7 @@ export const params = {
    */
   BOT_SELECTION_ITERATION_BEFORE_LOOKING_AT_PRIOR_GENERATION: 100_000,
   /**
-   * How many iterations before looking at a prior generation.
+   * How many bots from prior generations to consider mutating from.
    */
   BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 3,
 };

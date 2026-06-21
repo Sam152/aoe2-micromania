@@ -9,11 +9,12 @@ import { createCachedBlackboardComputer } from "../../../../common/ai/behaviourT
 import { unitMetadataFactory } from "../../../../common/units/unitMetadataFactory.ts";
 import { UnitType } from "../../../../common/units/UnitType.ts";
 
-// Home is player 1, away is player 2 — match the drop-slot border colours.
-const PLAYER_COLORS: Record<number, string> = { 1: "#4299e1", 2: "#fc8181" };
-const UNIT_BOX_COLOR = "#ff9d2e";
+// Home is player 1, away is player 2 — darker than the drop-slot border colours
+// so the labels stay legible over the game.
+const PLAYER_COLORS: Record<number, string> = { 1: "#2b6cb0", 2: "#c53030" };
+const UNIT_BOX_COLOR = "#c05621";
 
-type PanelLine = { text: string; color: string; header?: boolean };
+type PanelLine = { text: string; header?: boolean };
 
 // Split the blackboard values into how they should be drawn, based on the
 // declared data type of each definition entry.
@@ -21,6 +22,13 @@ function category(dataType: string): "vector" | "unitId" | "scalar" {
   if (dataType === "vector") { return "vector"; }
   if (dataType === "unitId") { return "unitId"; }
   return "scalar";
+}
+
+// Group-scoped values get anchored to their group; everything else (global /
+// opponent) is rendered once. Only affects scalar readouts — arrows and boxes
+// are always drawn per group.
+function isGroupKey(key: BlackboardKey): boolean {
+  return key.startsWith("group");
 }
 
 // The blackboard unit types — see the `unitType` data type catalog entry.
@@ -56,6 +64,17 @@ function paramVariants(key: BlackboardKey): { params: Record<string, unknown>; s
   });
 }
 
+// A magnitude/angle pair that swings smoothly over time, used to drive the
+// groupUnitVectorFacingDirection arrow: angle eases between -30 and 30 degrees,
+// magnitude between 100 and 200.
+function currentFacing(): { magnitude: number; angle: number } {
+  const t = Date.now() / 1000;
+  return {
+    angle: Math.sin(t * 1.5) * 30,
+    magnitude: 150 + Math.sin(t * 1.0) * 50,
+  };
+}
+
 function formatScalar(value: unknown): string {
   if (typeof value === "boolean") { return value ? "true" : "false"; }
   if (typeof value === "number") { return Number.isInteger(value) ? String(value) : value.toFixed(1); }
@@ -89,43 +108,63 @@ export function renderBlackboardOverlay({
   ctx.textBaseline = "alphabetic";
 
   const panel: PanelLine[] = [];
+  const groupLabels: { cx: number; cy: number; header: string; lines: string[] }[] = [];
+  const keys = Object.keys(blackboardDefinition) as BlackboardKey[];
 
   for (const { botState } of botInstances) {
     // Only the red player (away / player 2) is overlaid.
     if (botState.playingAs !== 2) { continue; }
     const color = PLAYER_COLORS[botState.playingAs] ?? "#ffffff";
 
-    botState.unitGroups.forEach((group, groupIndex) => {
-      const groupUnits = group.includedUnits.map((id) => unitsById[id]).filter(Boolean);
-      if (groupUnits.length === 0) { return; }
+    const groups = botState.unitGroups
+      .map((group, groupIndex) => {
+        const groupUnits = group.includedUnits.map((id) => unitsById[id]).filter(Boolean);
+        return { group, groupIndex, groupUnits };
+      })
+      .filter(({ groupUnits }) => groupUnits.length > 0);
 
+    if (groups.length === 0) { continue; }
+
+    // Global / opponent scalars don't depend on the group, so resolve them once
+    // (using the first group as context) into the bottom-left panel.
+    panel.push({ text: `P${botState.playingAs} global / opponent`, header: true });
+    const sharedComputer = createCachedBlackboardComputer({ computed });
+    for (const key of keys) {
+      if (isGroupKey(key) || category(blackboardDefinition[key].dataType) !== "scalar") { continue; }
+      for (const variant of paramVariants(key)) {
+        const value = resolve(sharedComputer, key, gameState, botState, groups[0].group, variant.params);
+        if (value === undefined || value === null) { continue; }
+        panel.push({ text: `${key}${variant.suffix}: ${formatScalar(value)}` });
+      }
+    }
+
+    // Per group: arrows for vectors, boxes for unit ids, and a black label of
+    // the group-scoped scalars anchored beneath the group's average position.
+    for (const { group, groupIndex, groupUnits } of groups) {
       const centroid = {
         x: groupUnits.reduce((sum, u) => sum + u.position.x, 0) / groupUnits.length,
         y: groupUnits.reduce((sum, u) => sum + u.position.y, 0) / groupUnits.length,
       };
 
-      const label = `P${botState.playingAs} ${UnitType[group.unitType]} #${groupIndex}`;
-      panel.push({ text: `${label}  (units: ${groupUnits.length})`, color, header: true });
-
       // A fresh computer per group: its cache keys ignore the group, so reusing
       // one across groups would return the first group's cached results.
       const computer = createCachedBlackboardComputer({ computed });
+      const groupLabelLines: string[] = [];
 
-      for (const key of Object.keys(blackboardDefinition) as BlackboardKey[]) {
+      for (const key of keys) {
         const cat = category(blackboardDefinition[key].dataType);
-
         for (const variant of paramVariants(key)) {
-          let value: unknown;
-          try {
-            value = (computer[key] as (p: unknown) => unknown)({
-              state: gameState,
-              botState,
-              group,
-              params: variant.params,
-            });
-          } catch {
-            value = undefined;
+          let params = variant.params;
+          // Point the facing-direction arrows at the opponents, with a magnitude
+          // and angle that swing smoothly over time. (groupVectorFacingDirection
+          // has no magnitude param — it just ignores the extra value.)
+          if (key === "groupUnitVectorFacingDirection" || key === "groupVectorFacingDirection") {
+            const opponentAverage = resolve(computer, "opponentAveragePosition", gameState, botState, group, {});
+            if (!opponentAverage) { continue; }
+            params = { direction: opponentAverage, ...currentFacing() };
           }
+
+          const value = resolve(computer, key, gameState, botState, group, params);
           if (value === undefined || value === null) { continue; }
 
           const label = `${key}${variant.suffix}`;
@@ -138,16 +177,41 @@ export function renderBlackboardOverlay({
             if (!unit) { continue; }
             const radius = unitMetadataFactory.getUnit(unit.unitType).selectionRadius;
             drawUnitBox(ctx, sx(unit.position.x), sy(unit.position.y), radius, scale, label);
-          } else {
-            panel.push({ text: `  ${label}: ${formatScalar(value)}`, color });
+          } else if (isGroupKey(key)) {
+            groupLabelLines.push(`${label}: ${formatScalar(value)}`);
           }
         }
       }
-    });
+
+      if (groupLabelLines.length > 0) {
+        groupLabels.push({
+          cx: sx(centroid.x),
+          cy: sy(centroid.y),
+          header: `${UnitType[group.unitType]} #${groupIndex}`,
+          lines: groupLabelLines,
+        });
+      }
+    }
   }
 
+  drawGroupLabels(ctx, groupLabels, scale);
   drawPanel(ctx, panel, scale);
   ctx.restore();
+}
+
+function resolve(
+  computer: ReturnType<typeof createCachedBlackboardComputer>,
+  key: BlackboardKey,
+  state: GameState,
+  botState: BotInstance["botState"],
+  group: BotInstance["botState"]["unitGroups"][number],
+  params: Record<string, unknown>,
+): unknown {
+  try {
+    return (computer[key] as (p: unknown) => unknown)({ state, botState, group, params });
+  } catch {
+    return undefined;
+  }
 }
 
 function drawArrow(
@@ -187,7 +251,7 @@ function drawArrow(
   ctx.fill();
 
   ctx.globalAlpha = 1;
-  ctx.font = `${9 * scale}px ui-monospace, Menlo, monospace`;
+  ctx.font = `${13 * scale}px ui-monospace, Menlo, monospace`;
   ctx.fillText(label, x2 + 4 * scale, y2 - 4 * scale);
   ctx.restore();
 }
@@ -205,8 +269,64 @@ function drawUnitBox(
   ctx.lineWidth = 2 * scale;
   ctx.strokeRect(x - radius, y - radius, radius * 2, radius * 2);
   ctx.fillStyle = UNIT_BOX_COLOR;
-  ctx.font = `${9 * scale}px ui-monospace, Menlo, monospace`;
+  ctx.font = `${13 * scale}px ui-monospace, Menlo, monospace`;
   ctx.fillText(label, x - radius, y - radius - 3 * scale);
+  ctx.restore();
+}
+
+// Group-scoped scalars rendered as black-text labels stacked up from the
+// bottom-right of the screen, each joined by a leader line back to the group's
+// average position on the canvas.
+function drawGroupLabels(
+  ctx: CanvasRenderingContext2D,
+  labels: { cx: number; cy: number; header: string; lines: string[] }[],
+  scale: number,
+): void {
+  if (labels.length === 0) { return; }
+
+  const fontSize = 14 * scale;
+  const lineHeight = 18 * scale;
+  const pad = 5 * scale;
+  const edge = 8 * scale; // padding from the screen edges.
+  const stackGap = 8 * scale; // gap between stacked boxes.
+  const rightX = ctx.canvas.width - edge;
+
+  ctx.save();
+  ctx.font = `${fontSize}px ui-monospace, Menlo, monospace`;
+  ctx.textBaseline = "top";
+
+  let bottom = ctx.canvas.height - edge;
+  for (const { cx, cy, header, lines } of labels) {
+    const all = [header, ...lines];
+    const width = Math.max(...all.map((t) => ctx.measureText(t).width)) + pad * 2;
+    const height = all.length * lineHeight + pad * 2;
+    const boxX = rightX - width;
+    const boxY = bottom - height;
+
+    // Leader line from the group's position to the box, plus a dot on the group.
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.85)";
+    ctx.lineWidth = 1 * scale;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(boxX, boxY + height / 2);
+    ctx.stroke();
+    ctx.fillStyle = "rgba(0, 0, 0, 0.85)";
+    ctx.beginPath();
+    ctx.arc(cx, cy, 2.5 * scale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Light backing so the black text stays legible over the game.
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    ctx.fillRect(boxX, boxY, width, height);
+
+    ctx.fillStyle = "#000000";
+    all.forEach((text, i) => {
+      ctx.font = `${i === 0 ? "bold " : ""}${fontSize}px ui-monospace, Menlo, monospace`;
+      ctx.fillText(text, boxX + pad, boxY + pad + i * lineHeight);
+    });
+
+    bottom = boxY - stackGap;
+  }
   ctx.restore();
 }
 
@@ -217,31 +337,38 @@ function drawPanel(ctx: CanvasRenderingContext2D, lines: PanelLine[], scale: num
   if (lines.length === 0) { return; }
 
   const padding = 8 * scale;
-  const lineHeight = 14 * scale;
-  const columnWidth = 230 * scale;
-  const fontSize = 11 * scale;
+  const lineHeight = 19 * scale;
+  const fontSize = 15 * scale;
+  const columnGap = 14 * scale;
 
+  const fontFor = (header?: boolean) => `${header ? "bold " : ""}${fontSize}px ui-monospace, Menlo, monospace`;
   const perColumn = Math.max(1, Math.floor((ctx.canvas.height - padding * 2) / lineHeight));
 
   ctx.save();
-  ctx.font = `${fontSize}px ui-monospace, Menlo, monospace`;
   ctx.textBaseline = "top";
 
-  for (let start = 0, column = 0; start < lines.length; start += perColumn, column++) {
+  let x = padding;
+  for (let start = 0; start < lines.length; start += perColumn) {
     const columnLines = lines.slice(start, start + perColumn);
-    const x = padding + column * columnWidth;
+    // Size each column's backing strips to its widest line so text never spills.
+    const columnWidth = Math.max(...columnLines.map((line) => {
+      ctx.font = fontFor(line.header);
+      return ctx.measureText(line.text).width;
+    }));
     // Bottom-anchor the column: its last line sits just above the bottom padding.
     const top = ctx.canvas.height - padding - columnLines.length * lineHeight;
 
     columnLines.forEach((line, i) => {
       const y = top + i * lineHeight;
       // Backing strip so text stays readable over the game.
-      ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
-      ctx.fillRect(x - 2 * scale, y, columnWidth - 6 * scale, lineHeight);
-      ctx.fillStyle = line.color;
-      ctx.font = `${line.header ? "bold " : ""}${fontSize}px ui-monospace, Menlo, monospace`;
-      ctx.fillText(line.text, x, y + 1 * scale);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+      ctx.fillRect(x - 2 * scale, y, columnWidth + 4 * scale, lineHeight);
+      ctx.fillStyle = "#000000";
+      ctx.font = fontFor(line.header);
+      ctx.fillText(line.text, x, y + 2 * scale);
     });
+
+    x += columnWidth + columnGap;
   }
   ctx.restore();
 }
