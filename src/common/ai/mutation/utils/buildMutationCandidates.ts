@@ -60,8 +60,7 @@ function buildMutationCandidatesWithWeights(flatNodes: FlatTreeNode[]): Mutation
         // Insert conditions and actions 3x as often as sequences or selectors.
         { type: "ADD_NODE_TO_LIST", listNode: flatNode.node, weight: 3 },
         { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node },
-        // Do nodes get naturally removed by the pruner?
-        // { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node },
+        { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node, weight: 2 },
       ];
     }
 

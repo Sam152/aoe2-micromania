@@ -19,7 +19,7 @@ export const params = {
    * How many mutations should be applied, when training a next
    * generation.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS: 6,
+  NEXT_GENERATION_RANDOM_MUTATIONS: 20,
   /**
    * How many iterations before we start randomizing higher.
    */
