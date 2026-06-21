@@ -690,6 +690,22 @@ kbd {
   white-space: pre;
 }
 
+.tree-modal__line {
+  display: block;
+  padding: 0 4px;
+  margin: 0 -4px;
+}
+
+.tree-modal__line--added {
+  background: rgba(72, 187, 120, 0.22);
+  color: #9ae6b4;
+}
+
+.tree-modal__line--removed {
+  background: rgba(245, 101, 101, 0.22);
+  color: #feb2b2;
+}
+
 .matchup-vs-group {
   display: flex;
   flex-direction: column;

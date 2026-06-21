@@ -1,4 +1,5 @@
 import { DataType, TypeFromDataType } from "../dataType/dataTypes.ts";
+import { DataValueType } from "../dataValue/DataValue.ts";
 
 export type ConditionDefinition<
   TParams extends Record<string, { [TKey in DataType]: ConditionDefinitionParam<TKey> }[DataType]> = Record<
@@ -12,6 +13,7 @@ export type ConditionDefinition<
 
 type ConditionDefinitionParam<TDataType extends DataType> = {
   dataType: TDataType;
+  allowedValueTypes: DataValueType[];
 };
 
 /**

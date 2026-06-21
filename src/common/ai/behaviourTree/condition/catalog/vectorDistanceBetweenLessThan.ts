@@ -5,12 +5,15 @@ export const vectorDistanceBetweenLessThan = defineCondition({
   params: {
     pointA: {
       dataType: "vector",
+      allowedValueTypes: ["BLACKBOARD"],
     },
     pointB: {
       dataType: "vector",
+      allowedValueTypes: ["BLACKBOARD"],
     },
     distance: {
       dataType: "vectorMagnitude",
+      allowedValueTypes: ["BLACKBOARD", "LITERAL"],
     },
   },
   evaluate: ({ pointA, pointB, distance }) =>
