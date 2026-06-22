@@ -64,9 +64,8 @@ export function createBot(
     playerId,
     botState,
     tick: (state, dispatcher, computed) => {
-      if (botState.unitGroups.length === 0) {
-        createInitialUnitGroups(botState, state);
-      }
+      // Always create initial groups, to account for conversions.
+      createInitialUnitGroups(botState, state);
 
       botState.unitGroups.forEach((group) => {
         tickUnitGroupDecisions({
