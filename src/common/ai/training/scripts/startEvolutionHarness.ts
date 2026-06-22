@@ -1,15 +1,12 @@
 import { sql } from "../infra/connection.ts";
 import { params } from "../params.ts";
 import { activeBotsCount } from "../infra/repo/activeBotsCount.ts";
-import { sampleTree } from "../../behaviourTree/__fixtures__/sampleTree.ts";
-
 import { evolveNextGeneration } from "../evolution/evolveNextGeneration.ts";
-
 import { getCurrentGenerationNumber } from "../infra/repo/getCurrentGenerationNumber.ts";
 import { insertGenerationZero } from "../infra/repo/insertGenerationZero.ts";
 import { getAllChampions } from "../infra/repo/getAllChampions.ts";
-
 import { getAllInactiveBots } from "../infra/repo/getAllInactiveBots.ts";
+import { emptyTree } from "../../behaviourTree/__fixtures__/emptyTree.ts";
 
 const { TOTAL_BOTS_PER_GENERATION } = params;
 
@@ -24,7 +21,7 @@ export async function startEvolutionHarness() {
 
   if ((await getAllChampions()).length === 0) {
     console.log(`No champions found, inserting gen 0`);
-    await insertGenerationZero(sampleTree);
+    await insertGenerationZero(emptyTree);
   }
 
   const champions = await getAllChampions();
