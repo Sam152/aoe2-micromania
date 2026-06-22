@@ -11,7 +11,7 @@ export const opponentUnitMovementTowardsVector = defineBlackboardValue({
     },
     positionInTicksAmount: {
       dataType: "tickCount",
-      default: 20,
+      default: 40,
     },
   },
   resolve: ({ params: { movingUnit, positionInTicksAmount }, computed }) => {

@@ -71,6 +71,7 @@ export function tickUnitGroupDecisions(
       if (entry.type === "IDLE") {
         executeAfterTick += entry.resolvedParams.forTicksAmount;
       }
+
       return {
         action: entry,
         // Execute sequences of actions 1 tick apart, except for IDLE which will only execute after its

@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { LocalStateManager } from "../../../../common/state/managers/LocalStateManager.ts";
-import { BotInstance } from "../../../../common/ai/integration/createBot.ts";
-import { ComputedTickState } from "../../../../common/state/computed/createComputedTickState.ts";
-import { createComputedTickState } from "../../../../common/state/computed/createComputedTickState.ts";
-import { renderBlackboardOverlay } from "../util/renderBlackboardOverlay.ts";
+import { LocalStateManager } from "../../../../../common/state/managers/LocalStateManager.ts";
+import { BotInstance } from "../../../../../common/ai/integration/createBot.ts";
+import { ComputedTickState } from "../../../../../common/state/computed/createComputedTickState.ts";
+import { createComputedTickState } from "../../../../../common/state/computed/createComputedTickState.ts";
+import { renderBlackboardOverlay } from "../overlay/renderBlackboardOverlay.ts";
 
 // Draws the blackboard overlay on top of the main game canvas. We hook the
 // FRAME_RENDERING_ENDED client event so we paint after the renderer has drawn
@@ -12,13 +12,16 @@ export function useBlackboardOverlay(
   manager: LocalStateManager,
   botInstances: BotInstance[],
   enabled: boolean,
+  visibleKeys: Set<string>,
 ): void {
   // The state manager has no listener removal, so we attach a single listener
   // per manager instance and read live values through refs.
   const enabledRef = useRef(enabled);
   const botsRef = useRef(botInstances);
+  const visibleKeysRef = useRef(visibleKeys);
   enabledRef.current = enabled;
   botsRef.current = botInstances;
+  visibleKeysRef.current = visibleKeys;
 
   useEffect(() => {
     // The computed tick state (quadtrees etc.) only changes per game tick, so
@@ -37,7 +40,14 @@ export function useBlackboardOverlay(
         cachedTick = gameState.ticks;
       }
 
-      renderBlackboardOverlay({ ctx, gameState, clientState, botInstances: botsRef.current, computed });
+      renderBlackboardOverlay({
+        ctx,
+        gameState,
+        clientState,
+        botInstances: botsRef.current,
+        computed,
+        visibleKeys: visibleKeysRef.current,
+      });
     });
   }, [manager]);
 }

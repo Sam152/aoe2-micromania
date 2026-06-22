@@ -448,6 +448,52 @@ kbd {
   color: #a0aec0;
   font-size: 12px;
   font-weight: 600;
+  margin-left: 16px;
+}
+
+.speed-controls .speed-btn--standalone {
+  margin-left: 16px;
+}
+
+.bb-menu {
+  position: relative;
+}
+
+.bb-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: rgba(26, 32, 44, 0.95);
+  border: 1px solid rgba(74, 85, 104, 0.6);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.bb-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  color: #cbd5e0;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.bb-menu__item:hover {
+  color: #e2e8f0;
+}
+
+.bb-menu__item input {
+  cursor: pointer;
 }
 
 .count-control input {

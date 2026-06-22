@@ -1,17 +1,18 @@
 ## AI Todo
 
-- [ ] BB closestInRangeOfType
-- [ ] BB projectiles
-- [ ] Actions formations
+- [x] BB closestInRangeOfType
+- [x] BB projectiles
+- [x] Actions formations
 - [x] Train harness
 - [ ] Offspring?
 - [x] Random mutations
-- [ ] Randomize mutation count?
-- [ ] Tune node inserts - insert sequences less than actions and conditions
-- [ ] Do not allow primitives to fill certain action params (but all them to full the params of BB params)
-- [ ] Require victory in both positions
+- [x] Randomize mutation count?
+- [x] Tune node inserts - insert sequences less than actions and conditions
+- [x] Do not allow primitives to fill certain action params (but all them to full the params of BB params)
+- [x] Require victory in both positions
+- [ ] Converted units do not form or join groups
 
 Ideas:
 
-- [ ] Treat timeouts as draws
-- [ ] Increase requirement of new bots to beat bots from each generation
+- [x] Treat timeouts as draws
+- [x] Increase requirement of new bots to beat bots from each generation

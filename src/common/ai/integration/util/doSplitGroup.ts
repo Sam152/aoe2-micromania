@@ -20,36 +20,15 @@ export function doSplitGroup(
     unitType: group.unitType,
     includedUnits: groupOne,
     actionQueue: [
-      {
-        action: {
-          type: "IDLE",
-          actionNode: {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
-          },
-          resolvedParams: { forTicksAmount: 1 },
-        },
-        executeAfterTick: state.ticks + 1,
-      },
+      ...group.actionQueue,
     ],
   });
   botState.unitGroups.push({
     unitType: group.unitType,
     includedUnits: groupTwo,
     actionQueue: [
-      {
-        action: {
-          type: "IDLE",
-          actionNode: {
-            nodeType: "action",
-            type: "IDLE",
-            params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
-          },
-          resolvedParams: { forTicksAmount: 1 },
-        },
-        executeAfterTick: state.ticks + 1,
-      },
+      // Should we maintain the queue of actions, after a split?
+      ...group.actionQueue,
     ],
   });
 
