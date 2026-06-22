@@ -10,9 +10,7 @@
 - [x] Tune node inserts - insert sequences less than actions and conditions
 - [x] Do not allow primitives to fill certain action params (but all them to full the params of BB params)
 - [x] Require victory in both positions
-- [ ] Converted units do not form or join groups
-
-Ideas:
-
 - [x] Treat timeouts as draws
 - [x] Increase requirement of new bots to beat bots from each generation
+- [x] Converted units do not form or join groups
+- [ ] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector => sequence.
