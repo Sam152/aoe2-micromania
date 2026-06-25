@@ -95,7 +95,7 @@ export function randomlyMutateTree(
     }
 
     if (mutation.type === "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST") {
-      const borrowedNode = borrowGeneticTrait({ unitType, previousBots, types: ["action", "condition"] });
+      const borrowedNode = borrowGeneticTrait({ unitType, previousBots, types: ["selector", "sequence"] });
       if (!borrowedNode) {
         return;
       }
