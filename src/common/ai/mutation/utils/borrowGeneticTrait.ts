@@ -23,6 +23,7 @@ export function borrowGeneticTrait(
 }
 
 function getCandidateBotsFromPrevious(previousBots: Bot[]): Bot {
-  // Select a random bot from the last 5 generations.
-  // That is, if we have gen 1 to 10, select generations 6,7,8,9,10 and a random bot from any of those generations.
+  const latestGeneration = Math.max(...previousBots.map((bot) => bot.generation));
+  const recentBots = previousBots.filter((bot) => bot.generation > latestGeneration - 5);
+  return randomArray(recentBots);
 }
