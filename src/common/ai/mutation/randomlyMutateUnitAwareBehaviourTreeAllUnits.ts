@@ -4,7 +4,11 @@ import { randomlyMutateTree } from "./randomlyMutateTree.ts";
 import { Bot } from "../training/infra/repo/utils/botRowToBot.ts";
 
 export function randomlyMutateUnitAwareBehaviourTreeAllUnits(
-  { count, tree, previousBots }: { count: number; tree: UnitAwareBehaviourTree; previousBots: Bot[] },
+  { count, tree, previousBots }: {
+    count: number;
+    tree: UnitAwareBehaviourTree;
+    previousBots: Pick<Bot, "tree" | "generation">[];
+  },
 ): UnitAwareBehaviourTree {
   return {
     [UnitType.Archer]: randomlyMutateTree({

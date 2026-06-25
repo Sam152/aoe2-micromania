@@ -19,7 +19,7 @@ export function randomlyMutateTree(
     count: number;
     tree: BehaviourTreeNode;
     unitType: UnitType;
-    previousBots: Bot[];
+    previousBots: Pick<Bot, "tree" | "generation">[];
   },
 ): BehaviourTreeNode {
   const newTree = structuredClone(tree);

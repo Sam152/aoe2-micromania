@@ -8,7 +8,11 @@ import { randomArray } from "../../../util/randomArray.ts";
  * Previous bots is a result of getAllInactiveBots().
  */
 export function borrowGeneticTrait(
-  { previousBots, types, unitType }: { types: BehaviourTreeNodeType[]; previousBots: Bot[]; unitType: UnitType },
+  { previousBots, types, unitType }: {
+    types: BehaviourTreeNodeType[];
+    previousBots: Pick<Bot, "tree" | "generation">[];
+    unitType: UnitType;
+  },
 ): BehaviourTreeNode | undefined {
   const bot = getCandidateBotsFromPrevious(previousBots);
   const candidateNodes = flattenTree(bot.tree[unitType])
@@ -22,7 +26,9 @@ export function borrowGeneticTrait(
   return structuredClone(randomArray(candidateNodes).node) as BehaviourTreeNode;
 }
 
-function getCandidateBotsFromPrevious(previousBots: Bot[]): Bot {
+function getCandidateBotsFromPrevious(
+  previousBots: Pick<Bot, "tree" | "generation">[],
+): Pick<Bot, "tree" | "generation"> {
   const latestGeneration = Math.max(...previousBots.map((bot) => bot.generation));
   const recentBots = previousBots.filter((bot) => bot.generation > latestGeneration - 5);
   return randomArray(recentBots);
