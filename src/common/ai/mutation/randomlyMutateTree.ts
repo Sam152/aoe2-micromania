@@ -12,6 +12,7 @@ import { randomLiteral } from "./factories/randomLiteral.ts";
 import { isNever } from "../../util/isNever.ts";
 import { Bot } from "../training/infra/repo/utils/botRowToBot.ts";
 import { borrowGeneticTrait } from "./utils/borrowGeneticTrait.ts";
+import { insertNodeAtRandomIndex } from "./utils/insertNodeAtRandomIndex.ts";
 
 export function randomlyMutateTree(
   { count, tree, unitType, previousBots }: {
@@ -59,11 +60,7 @@ export function randomlyMutateTree(
         "condition",
         "action",
       ]);
-      mutation.listNode.nodes.splice(
-        Math.floor(Math.random() * mutation.listNode.nodes.length),
-        0,
-        randomNode(unitType, type),
-      );
+      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, type));
       return;
     }
 
@@ -72,11 +69,7 @@ export function randomlyMutateTree(
         "sequence",
         "selector",
       ]);
-      mutation.listNode.nodes.splice(
-        Math.floor(Math.random() * mutation.listNode.nodes.length),
-        0,
-        randomNode(unitType, type),
-      );
+      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, type));
       return;
     }
 
@@ -85,12 +78,7 @@ export function randomlyMutateTree(
       if (!borrowedNode) {
         return;
       }
-
-      mutation.listNode.nodes.splice(
-        Math.floor(Math.random() * mutation.listNode.nodes.length),
-        0,
-        borrowedNode,
-      );
+      insertNodeAtRandomIndex(mutation.listNode, borrowedNode);
       return;
     }
 
@@ -99,11 +87,7 @@ export function randomlyMutateTree(
       if (!borrowedNode) {
         return;
       }
-      mutation.listNode.nodes.splice(
-        Math.floor(Math.random() * mutation.listNode.nodes.length),
-        0,
-        borrowedNode,
-      );
+      insertNodeAtRandomIndex(mutation.listNode, borrowedNode);
       return;
     }
 
