@@ -3,1499 +3,1310 @@ export const snapshot = {};
 snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
 [
   {
-    listNode: {
-      nodeType: "selector",
-      nodes: [
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "globalOwnedUnitsOfTypeCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {
-                    unitType: {
-                      dataType: "unitType",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: "ARCHER",
+    effect: {
+      listNode: {
+        nodeType: "selector",
+        nodes: [
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: true,
+                nodeType: "condition",
+                params: {
+                  leftUnitCount: {
+                    blackboardKey: "globalOwnedUnitsOfTypeCount",
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    params: {
+                      unitType: {
+                        dataType: "unitType",
+                        nodeType: "dataValue",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
                     },
+                    type: "BLACKBOARD",
                   },
-                  type: "BLACKBOARD",
+                  rightUnitCount: {
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 8,
+                  },
                 },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 8,
-                },
+                type: "unitCountGreaterThan",
               },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+              {
+                nodeType: "action",
+                params: {
+                  direction: {
+                    blackboardKey: "opponentAveragePosition",
+                    dataType: "vector",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "PATROL",
               },
-              type: "PATROL",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+            ],
+          },
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: true,
+                nodeType: "condition",
+                params: {
+                  leftUnitCount: {
+                    blackboardKey: "groupMetaUnitTypeGroupCount",
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
+                  rightUnitCount: {
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 2,
+                  },
                 },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
+                type: "unitCountGreaterThan",
               },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {},
-              type: "SPLIT_GROUP",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: false,
-              nodeType: "condition",
-              params: {
-                groupIndexLeft: {
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 0,
-                },
-                groupIndexRight: {
-                  blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
+              {
+                nodeType: "action",
+                params: {},
+                type: "SPLIT_GROUP",
               },
-              type: "groupIndexEquals",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+            ],
+          },
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: false,
+                nodeType: "condition",
+                params: {
+                  groupIndexLeft: {
+                    dataType: "groupIndex",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 0,
+                  },
+                  groupIndexRight: {
+                    blackboardKey: "groupMetaUnitTypeIndex",
+                    dataType: "groupIndex",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "groupIndexEquals",
               },
-              type: "PATROL",
-            },
-            {
-              nodeType: "action",
-              params: {
-                forTicksAmount: {
-                  dataType: "tickCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 100,
+              {
+                nodeType: "action",
+                params: {
+                  direction: {
+                    blackboardKey: "opponentAveragePosition",
+                    dataType: "vector",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "PATROL",
               },
-              type: "IDLE",
-            },
-          ],
-        },
-      ],
+              {
+                nodeType: "action",
+                params: {
+                  forTicksAmount: {
+                    dataType: "tickCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 100,
+                  },
+                },
+                type: "IDLE",
+              },
+            ],
+          },
+        ],
+      },
+      type: "ADD_NODE_TO_LIST",
     },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
+    probability: 3,
   },
   {
-    listNode: {
-      nodeType: "selector",
-      nodes: [
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "globalOwnedUnitsOfTypeCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {
-                    unitType: {
-                      dataType: "unitType",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: "ARCHER",
+    effect: {
+      listNode: {
+        nodeType: "selector",
+        nodes: [
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: true,
+                nodeType: "condition",
+                params: {
+                  leftUnitCount: {
+                    blackboardKey: "globalOwnedUnitsOfTypeCount",
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    params: {
+                      unitType: {
+                        dataType: "unitType",
+                        nodeType: "dataValue",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
                     },
+                    type: "BLACKBOARD",
                   },
-                  type: "BLACKBOARD",
+                  rightUnitCount: {
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 8,
+                  },
                 },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 8,
-                },
+                type: "unitCountGreaterThan",
               },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+              {
+                nodeType: "action",
+                params: {
+                  direction: {
+                    blackboardKey: "opponentAveragePosition",
+                    dataType: "vector",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "PATROL",
               },
-              type: "PATROL",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+            ],
+          },
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: true,
+                nodeType: "condition",
+                params: {
+                  leftUnitCount: {
+                    blackboardKey: "groupMetaUnitTypeGroupCount",
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
+                  rightUnitCount: {
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 2,
+                  },
                 },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
+                type: "unitCountGreaterThan",
               },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {},
-              type: "SPLIT_GROUP",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: false,
-              nodeType: "condition",
-              params: {
-                groupIndexLeft: {
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 0,
-                },
-                groupIndexRight: {
-                  blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
+              {
+                nodeType: "action",
+                params: {},
+                type: "SPLIT_GROUP",
               },
-              type: "groupIndexEquals",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+            ],
+          },
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: false,
+                nodeType: "condition",
+                params: {
+                  groupIndexLeft: {
+                    dataType: "groupIndex",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 0,
+                  },
+                  groupIndexRight: {
+                    blackboardKey: "groupMetaUnitTypeIndex",
+                    dataType: "groupIndex",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "groupIndexEquals",
               },
-              type: "PATROL",
-            },
-            {
-              nodeType: "action",
-              params: {
-                forTicksAmount: {
-                  dataType: "tickCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 100,
+              {
+                nodeType: "action",
+                params: {
+                  direction: {
+                    blackboardKey: "opponentAveragePosition",
+                    dataType: "vector",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "PATROL",
               },
-              type: "IDLE",
-            },
-          ],
-        },
-      ],
+              {
+                nodeType: "action",
+                params: {
+                  forTicksAmount: {
+                    dataType: "tickCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 100,
+                  },
+                },
+                type: "IDLE",
+              },
+            ],
+          },
+        ],
+      },
+      type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
     },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
+    probability: 1,
   },
   {
-    listNode: {
-      nodeType: "selector",
-      nodes: [
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "globalOwnedUnitsOfTypeCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {
-                    unitType: {
-                      dataType: "unitType",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: "ARCHER",
+    effect: {
+      listNode: {
+        nodeType: "selector",
+        nodes: [
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: true,
+                nodeType: "condition",
+                params: {
+                  leftUnitCount: {
+                    blackboardKey: "globalOwnedUnitsOfTypeCount",
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    params: {
+                      unitType: {
+                        dataType: "unitType",
+                        nodeType: "dataValue",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
                     },
+                    type: "BLACKBOARD",
                   },
-                  type: "BLACKBOARD",
-                },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 8,
-                },
-              },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
-              },
-              type: "PATROL",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
-              },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {},
-              type: "SPLIT_GROUP",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: false,
-              nodeType: "condition",
-              params: {
-                groupIndexLeft: {
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 0,
-                },
-                groupIndexRight: {
-                  blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
-              },
-              type: "groupIndexEquals",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
-              },
-              type: "PATROL",
-            },
-            {
-              nodeType: "action",
-              params: {
-                forTicksAmount: {
-                  dataType: "tickCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 100,
-                },
-              },
-              type: "IDLE",
-            },
-          ],
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "selector",
-      nodes: [
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "globalOwnedUnitsOfTypeCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {
-                    unitType: {
-                      dataType: "unitType",
-                      nodeType: "dataValue",
-                      type: "LITERAL",
-                      value: "ARCHER",
-                    },
+                  rightUnitCount: {
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 8,
                   },
-                  type: "BLACKBOARD",
                 },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 8,
-                },
+                type: "unitCountGreaterThan",
               },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+              {
+                nodeType: "action",
+                params: {
+                  direction: {
+                    blackboardKey: "opponentAveragePosition",
+                    dataType: "vector",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "PATROL",
               },
-              type: "PATROL",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: true,
-              nodeType: "condition",
-              params: {
-                leftUnitCount: {
-                  blackboardKey: "groupMetaUnitTypeGroupCount",
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+            ],
+          },
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: true,
+                nodeType: "condition",
+                params: {
+                  leftUnitCount: {
+                    blackboardKey: "groupMetaUnitTypeGroupCount",
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
+                  rightUnitCount: {
+                    dataType: "unitCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 2,
+                  },
                 },
-                rightUnitCount: {
-                  dataType: "unitCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 2,
-                },
+                type: "unitCountGreaterThan",
               },
-              type: "unitCountGreaterThan",
-            },
-            {
-              nodeType: "action",
-              params: {},
-              type: "SPLIT_GROUP",
-            },
-          ],
-        },
-        {
-          nodeType: "sequence",
-          nodes: [
-            {
-              invert: false,
-              nodeType: "condition",
-              params: {
-                groupIndexLeft: {
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 0,
-                },
-                groupIndexRight: {
-                  blackboardKey: "groupMetaUnitTypeIndex",
-                  dataType: "groupIndex",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
-                },
+              {
+                nodeType: "action",
+                params: {},
+                type: "SPLIT_GROUP",
               },
-              type: "groupIndexEquals",
-            },
-            {
-              nodeType: "action",
-              params: {
-                direction: {
-                  blackboardKey: "opponentAveragePosition",
-                  dataType: "vector",
-                  nodeType: "dataValue",
-                  params: {},
-                  type: "BLACKBOARD",
+            ],
+          },
+          {
+            nodeType: "sequence",
+            nodes: [
+              {
+                invert: false,
+                nodeType: "condition",
+                params: {
+                  groupIndexLeft: {
+                    dataType: "groupIndex",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 0,
+                  },
+                  groupIndexRight: {
+                    blackboardKey: "groupMetaUnitTypeIndex",
+                    dataType: "groupIndex",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "groupIndexEquals",
               },
-              type: "PATROL",
-            },
-            {
-              nodeType: "action",
-              params: {
-                forTicksAmount: {
-                  dataType: "tickCount",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: 100,
+              {
+                nodeType: "action",
+                params: {
+                  direction: {
+                    blackboardKey: "opponentAveragePosition",
+                    dataType: "vector",
+                    nodeType: "dataValue",
+                    params: {},
+                    type: "BLACKBOARD",
+                  },
                 },
+                type: "PATROL",
               },
-              type: "IDLE",
-            },
-          ],
-        },
-      ],
-    },
-    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "globalOwnedUnitsOfTypeCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {
-                unitType: {
-                  dataType: "unitType",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: "ARCHER",
+              {
+                nodeType: "action",
+                params: {
+                  forTicksAmount: {
+                    dataType: "tickCount",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: 100,
+                  },
                 },
+                type: "IDLE",
               },
-              type: "BLACKBOARD",
-            },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 8,
-            },
+            ],
           },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "PATROL",
-        },
-      ],
+        ],
+      },
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
+    probability: 2,
   },
   {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "globalOwnedUnitsOfTypeCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {
-                unitType: {
-                  dataType: "unitType",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: "ARCHER",
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "globalOwnedUnitsOfTypeCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {
+                  unitType: {
+                    dataType: "unitType",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
                 },
+                type: "BLACKBOARD",
               },
-              type: "BLACKBOARD",
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 8,
+              },
             },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 8,
-            },
+            type: "unitCountGreaterThan",
           },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
             },
+            type: "PATROL",
           },
-          type: "PATROL",
-        },
-      ],
+        ],
+      },
+      type: "ADD_NODE_TO_LIST",
     },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
+    probability: 3,
   },
   {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "globalOwnedUnitsOfTypeCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {
-                unitType: {
-                  dataType: "unitType",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: "ARCHER",
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "globalOwnedUnitsOfTypeCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {
+                  unitType: {
+                    dataType: "unitType",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
                 },
+                type: "BLACKBOARD",
               },
-              type: "BLACKBOARD",
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 8,
+              },
             },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 8,
-            },
+            type: "unitCountGreaterThan",
           },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
             },
+            type: "PATROL",
           },
-          type: "PATROL",
-        },
-      ],
+        ],
+      },
+      type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
     },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
+    probability: 1,
   },
   {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "globalOwnedUnitsOfTypeCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {
-                unitType: {
-                  dataType: "unitType",
-                  nodeType: "dataValue",
-                  type: "LITERAL",
-                  value: "ARCHER",
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "globalOwnedUnitsOfTypeCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {
+                  unitType: {
+                    dataType: "unitType",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
                 },
+                type: "BLACKBOARD",
               },
-              type: "BLACKBOARD",
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 8,
+              },
             },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 8,
-            },
+            type: "unitCountGreaterThan",
           },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
             },
+            type: "PATROL",
           },
-          type: "PATROL",
-        },
-      ],
-    },
-    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
-  },
-  {
-    condition: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "globalOwnedUnitsOfTypeCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {
-            unitType: {
-              dataType: "unitType",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: "ARCHER",
-            },
-          },
-          type: "BLACKBOARD",
-        },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 8,
-        },
+        ],
       },
-      type: "unitCountGreaterThan",
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    type: "INVERT_CONDITION",
+    probability: 2,
   },
   {
-    node: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "globalOwnedUnitsOfTypeCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {
-            unitType: {
-              dataType: "unitType",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: "ARCHER",
+    effect: {
+      condition: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "globalOwnedUnitsOfTypeCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {
+              unitType: {
+                dataType: "unitType",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: "ARCHER",
+              },
             },
+            type: "BLACKBOARD",
           },
-          type: "BLACKBOARD",
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 8,
+          },
         },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 8,
-        },
+        type: "unitCountGreaterThan",
       },
-      type: "unitCountGreaterThan",
+      type: "INVERT_CONDITION",
     },
-    paramName: "leftUnitCount",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    node: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "globalOwnedUnitsOfTypeCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {
-            unitType: {
-              dataType: "unitType",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: "ARCHER",
+    effect: {
+      node: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "globalOwnedUnitsOfTypeCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {
+              unitType: {
+                dataType: "unitType",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: "ARCHER",
+              },
             },
+            type: "BLACKBOARD",
           },
-          type: "BLACKBOARD",
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 8,
+          },
         },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 8,
-        },
+        type: "unitCountGreaterThan",
       },
-      type: "unitCountGreaterThan",
+      paramName: "leftUnitCount",
+      type: "REPLACE_PARAM_DATA_VALUE",
     },
-    paramName: "rightUnitCount",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    node: {
-      blackboardKey: "globalOwnedUnitsOfTypeCount",
-      dataType: "unitCount",
-      nodeType: "dataValue",
-      params: {
-        unitType: {
-          dataType: "unitType",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: "ARCHER",
+    effect: {
+      node: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "globalOwnedUnitsOfTypeCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {
+              unitType: {
+                dataType: "unitType",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: "ARCHER",
+              },
+            },
+            type: "BLACKBOARD",
+          },
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 8,
+          },
         },
+        type: "unitCountGreaterThan",
       },
-      type: "BLACKBOARD",
+      paramName: "rightUnitCount",
+      type: "REPLACE_PARAM_DATA_VALUE",
     },
-    paramName: "unitType",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    paramName: "unitType",
-    parentNode: {
-      blackboardKey: "globalOwnedUnitsOfTypeCount",
-      dataType: "unitCount",
-      nodeType: "dataValue",
-      params: {
-        unitType: {
-          dataType: "unitType",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: "ARCHER",
+    effect: {
+      node: {
+        blackboardKey: "globalOwnedUnitsOfTypeCount",
+        dataType: "unitCount",
+        nodeType: "dataValue",
+        params: {
+          unitType: {
+            dataType: "unitType",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: "ARCHER",
+          },
         },
+        type: "BLACKBOARD",
       },
-      type: "BLACKBOARD",
+      paramName: "unitType",
+      type: "REPLACE_PARAM_DATA_VALUE",
     },
-    type: "CHANGE_LITERAL_DATA_VALUE",
+    probability: 1,
   },
   {
-    paramName: "rightUnitCount",
-    parentNode: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "globalOwnedUnitsOfTypeCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {
-            unitType: {
-              dataType: "unitType",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: "ARCHER",
-            },
+    effect: {
+      paramName: "unitType",
+      parentNode: {
+        blackboardKey: "globalOwnedUnitsOfTypeCount",
+        dataType: "unitCount",
+        nodeType: "dataValue",
+        params: {
+          unitType: {
+            dataType: "unitType",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: "ARCHER",
           },
-          type: "BLACKBOARD",
         },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 8,
-        },
+        type: "BLACKBOARD",
       },
-      type: "unitCountGreaterThan",
+      type: "CHANGE_LITERAL_DATA_VALUE",
     },
-    type: "CHANGE_LITERAL_DATA_VALUE",
+    probability: 1,
   },
   {
-    node: {
-      nodeType: "action",
-      params: {
-        direction: {
-          blackboardKey: "opponentAveragePosition",
-          dataType: "vector",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
+    effect: {
+      paramName: "rightUnitCount",
+      parentNode: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "globalOwnedUnitsOfTypeCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {
+              unitType: {
+                dataType: "unitType",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: "ARCHER",
+              },
+            },
+            type: "BLACKBOARD",
+          },
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 8,
+          },
         },
+        type: "unitCountGreaterThan",
       },
-      type: "PATROL",
+      type: "CHANGE_LITERAL_DATA_VALUE",
     },
-    paramName: "direction",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
+    effect: {
+      node: {
+        nodeType: "action",
+        params: {
+          direction: {
+            blackboardKey: "opponentAveragePosition",
+            dataType: "vector",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
           },
-          type: "unitCountGreaterThan",
         },
-        {
-          nodeType: "action",
-          params: {},
-          type: "SPLIT_GROUP",
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
-          },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {},
-          type: "SPLIT_GROUP",
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
-          },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {},
-          type: "SPLIT_GROUP",
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: true,
-          nodeType: "condition",
-          params: {
-            leftUnitCount: {
-              blackboardKey: "groupMetaUnitTypeGroupCount",
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-            rightUnitCount: {
-              dataType: "unitCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 2,
-            },
-          },
-          type: "unitCountGreaterThan",
-        },
-        {
-          nodeType: "action",
-          params: {},
-          type: "SPLIT_GROUP",
-        },
-      ],
-    },
-    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
-  },
-  {
-    condition: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
+        type: "PATROL",
       },
-      type: "unitCountGreaterThan",
+      paramName: "direction",
+      type: "REPLACE_PARAM_DATA_VALUE",
     },
-    type: "INVERT_CONDITION",
+    probability: 1,
   },
   {
-    node: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "groupMetaUnitTypeGroupCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 2,
+              },
+            },
+            type: "unitCountGreaterThan",
+          },
+          {
+            nodeType: "action",
+            params: {},
+            type: "SPLIT_GROUP",
+          },
+        ],
       },
-      type: "unitCountGreaterThan",
+      type: "ADD_NODE_TO_LIST",
     },
-    paramName: "leftUnitCount",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 3,
   },
   {
-    node: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "groupMetaUnitTypeGroupCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 2,
+              },
+            },
+            type: "unitCountGreaterThan",
+          },
+          {
+            nodeType: "action",
+            params: {},
+            type: "SPLIT_GROUP",
+          },
+        ],
       },
-      type: "unitCountGreaterThan",
+      type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
     },
-    paramName: "rightUnitCount",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    paramName: "rightUnitCount",
-    parentNode: {
-      invert: true,
-      nodeType: "condition",
-      params: {
-        leftUnitCount: {
-          blackboardKey: "groupMetaUnitTypeGroupCount",
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
-        rightUnitCount: {
-          dataType: "unitCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 2,
-        },
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "groupMetaUnitTypeGroupCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 2,
+              },
+            },
+            type: "unitCountGreaterThan",
+          },
+          {
+            nodeType: "action",
+            params: {},
+            type: "SPLIT_GROUP",
+          },
+        ],
       },
-      type: "unitCountGreaterThan",
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    type: "CHANGE_LITERAL_DATA_VALUE",
+    probability: 2,
   },
   {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: false,
-          nodeType: "condition",
-          params: {
-            groupIndexLeft: {
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 0,
-            },
-            groupIndexRight: {
-              blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
+    effect: {
+      condition: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "groupMetaUnitTypeGroupCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
           },
-          type: "groupIndexEquals",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 2,
           },
-          type: "PATROL",
         },
-        {
-          nodeType: "action",
-          params: {
-            forTicksAmount: {
-              dataType: "tickCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 100,
-            },
-          },
-          type: "IDLE",
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: false,
-          nodeType: "condition",
-          params: {
-            groupIndexLeft: {
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 0,
-            },
-            groupIndexRight: {
-              blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "groupIndexEquals",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "PATROL",
-        },
-        {
-          nodeType: "action",
-          params: {
-            forTicksAmount: {
-              dataType: "tickCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 100,
-            },
-          },
-          type: "IDLE",
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: false,
-          nodeType: "condition",
-          params: {
-            groupIndexLeft: {
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 0,
-            },
-            groupIndexRight: {
-              blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "groupIndexEquals",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "PATROL",
-        },
-        {
-          nodeType: "action",
-          params: {
-            forTicksAmount: {
-              dataType: "tickCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 100,
-            },
-          },
-          type: "IDLE",
-        },
-      ],
-    },
-    type: "ADD_NODE_TO_LIST",
-    weight: 3,
-  },
-  {
-    listNode: {
-      nodeType: "sequence",
-      nodes: [
-        {
-          invert: false,
-          nodeType: "condition",
-          params: {
-            groupIndexLeft: {
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 0,
-            },
-            groupIndexRight: {
-              blackboardKey: "groupMetaUnitTypeIndex",
-              dataType: "groupIndex",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "groupIndexEquals",
-        },
-        {
-          nodeType: "action",
-          params: {
-            direction: {
-              blackboardKey: "opponentAveragePosition",
-              dataType: "vector",
-              nodeType: "dataValue",
-              params: {},
-              type: "BLACKBOARD",
-            },
-          },
-          type: "PATROL",
-        },
-        {
-          nodeType: "action",
-          params: {
-            forTicksAmount: {
-              dataType: "tickCount",
-              nodeType: "dataValue",
-              type: "LITERAL",
-              value: 100,
-            },
-          },
-          type: "IDLE",
-        },
-      ],
-    },
-    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
-  },
-  {
-    condition: {
-      invert: false,
-      nodeType: "condition",
-      params: {
-        groupIndexLeft: {
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 0,
-        },
-        groupIndexRight: {
-          blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
+        type: "unitCountGreaterThan",
       },
-      type: "groupIndexEquals",
+      type: "INVERT_CONDITION",
     },
-    type: "INVERT_CONDITION",
+    probability: 1,
   },
   {
-    node: {
-      invert: false,
-      nodeType: "condition",
-      params: {
-        groupIndexLeft: {
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 0,
+    effect: {
+      node: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "groupMetaUnitTypeGroupCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 2,
+          },
         },
-        groupIndexRight: {
-          blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
+        type: "unitCountGreaterThan",
       },
-      type: "groupIndexEquals",
+      paramName: "leftUnitCount",
+      type: "REPLACE_PARAM_DATA_VALUE",
     },
-    paramName: "groupIndexLeft",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    node: {
-      invert: false,
-      nodeType: "condition",
-      params: {
-        groupIndexLeft: {
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 0,
+    effect: {
+      node: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "groupMetaUnitTypeGroupCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 2,
+          },
         },
-        groupIndexRight: {
-          blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
+        type: "unitCountGreaterThan",
       },
-      type: "groupIndexEquals",
+      paramName: "rightUnitCount",
+      type: "REPLACE_PARAM_DATA_VALUE",
     },
-    paramName: "groupIndexRight",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    paramName: "groupIndexLeft",
-    parentNode: {
-      invert: false,
-      nodeType: "condition",
-      params: {
-        groupIndexLeft: {
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 0,
+    effect: {
+      paramName: "rightUnitCount",
+      parentNode: {
+        invert: true,
+        nodeType: "condition",
+        params: {
+          leftUnitCount: {
+            blackboardKey: "groupMetaUnitTypeGroupCount",
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+          rightUnitCount: {
+            dataType: "unitCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 2,
+          },
         },
-        groupIndexRight: {
-          blackboardKey: "groupMetaUnitTypeIndex",
-          dataType: "groupIndex",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
+        type: "unitCountGreaterThan",
       },
-      type: "groupIndexEquals",
+      type: "CHANGE_LITERAL_DATA_VALUE",
     },
-    type: "CHANGE_LITERAL_DATA_VALUE",
+    probability: 1,
   },
   {
-    node: {
-      nodeType: "action",
-      params: {
-        direction: {
-          blackboardKey: "opponentAveragePosition",
-          dataType: "vector",
-          nodeType: "dataValue",
-          params: {},
-          type: "BLACKBOARD",
-        },
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: false,
+            nodeType: "condition",
+            params: {
+              groupIndexLeft: {
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 0,
+              },
+              groupIndexRight: {
+                blackboardKey: "groupMetaUnitTypeIndex",
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "groupIndexEquals",
+          },
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "PATROL",
+          },
+          {
+            nodeType: "action",
+            params: {
+              forTicksAmount: {
+                dataType: "tickCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 100,
+              },
+            },
+            type: "IDLE",
+          },
+        ],
       },
-      type: "PATROL",
+      type: "ADD_NODE_TO_LIST",
     },
-    paramName: "direction",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 3,
   },
   {
-    node: {
-      nodeType: "action",
-      params: {
-        forTicksAmount: {
-          dataType: "tickCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 100,
-        },
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: false,
+            nodeType: "condition",
+            params: {
+              groupIndexLeft: {
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 0,
+              },
+              groupIndexRight: {
+                blackboardKey: "groupMetaUnitTypeIndex",
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "groupIndexEquals",
+          },
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "PATROL",
+          },
+          {
+            nodeType: "action",
+            params: {
+              forTicksAmount: {
+                dataType: "tickCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 100,
+              },
+            },
+            type: "IDLE",
+          },
+        ],
       },
-      type: "IDLE",
+      type: "ADD_SEQ_OR_SEL_NODE_TO_LIST",
     },
-    paramName: "forTicksAmount",
-    type: "REPLACE_PARAM_DATA_VALUE",
+    probability: 1,
   },
   {
-    paramName: "forTicksAmount",
-    parentNode: {
-      nodeType: "action",
-      params: {
-        forTicksAmount: {
-          dataType: "tickCount",
-          nodeType: "dataValue",
-          type: "LITERAL",
-          value: 100,
-        },
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: false,
+            nodeType: "condition",
+            params: {
+              groupIndexLeft: {
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 0,
+              },
+              groupIndexRight: {
+                blackboardKey: "groupMetaUnitTypeIndex",
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "groupIndexEquals",
+          },
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "PATROL",
+          },
+          {
+            nodeType: "action",
+            params: {
+              forTicksAmount: {
+                dataType: "tickCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 100,
+              },
+            },
+            type: "IDLE",
+          },
+        ],
       },
-      type: "IDLE",
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    type: "CHANGE_LITERAL_DATA_VALUE",
+    probability: 2,
+  },
+  {
+    effect: {
+      condition: {
+        invert: false,
+        nodeType: "condition",
+        params: {
+          groupIndexLeft: {
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 0,
+          },
+          groupIndexRight: {
+            blackboardKey: "groupMetaUnitTypeIndex",
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+        },
+        type: "groupIndexEquals",
+      },
+      type: "INVERT_CONDITION",
+    },
+    probability: 1,
+  },
+  {
+    effect: {
+      node: {
+        invert: false,
+        nodeType: "condition",
+        params: {
+          groupIndexLeft: {
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 0,
+          },
+          groupIndexRight: {
+            blackboardKey: "groupMetaUnitTypeIndex",
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+        },
+        type: "groupIndexEquals",
+      },
+      paramName: "groupIndexLeft",
+      type: "REPLACE_PARAM_DATA_VALUE",
+    },
+    probability: 1,
+  },
+  {
+    effect: {
+      node: {
+        invert: false,
+        nodeType: "condition",
+        params: {
+          groupIndexLeft: {
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 0,
+          },
+          groupIndexRight: {
+            blackboardKey: "groupMetaUnitTypeIndex",
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+        },
+        type: "groupIndexEquals",
+      },
+      paramName: "groupIndexRight",
+      type: "REPLACE_PARAM_DATA_VALUE",
+    },
+    probability: 1,
+  },
+  {
+    effect: {
+      paramName: "groupIndexLeft",
+      parentNode: {
+        invert: false,
+        nodeType: "condition",
+        params: {
+          groupIndexLeft: {
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 0,
+          },
+          groupIndexRight: {
+            blackboardKey: "groupMetaUnitTypeIndex",
+            dataType: "groupIndex",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+        },
+        type: "groupIndexEquals",
+      },
+      type: "CHANGE_LITERAL_DATA_VALUE",
+    },
+    probability: 1,
+  },
+  {
+    effect: {
+      node: {
+        nodeType: "action",
+        params: {
+          direction: {
+            blackboardKey: "opponentAveragePosition",
+            dataType: "vector",
+            nodeType: "dataValue",
+            params: {},
+            type: "BLACKBOARD",
+          },
+        },
+        type: "PATROL",
+      },
+      paramName: "direction",
+      type: "REPLACE_PARAM_DATA_VALUE",
+    },
+    probability: 1,
+  },
+  {
+    effect: {
+      node: {
+        nodeType: "action",
+        params: {
+          forTicksAmount: {
+            dataType: "tickCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 100,
+          },
+        },
+        type: "IDLE",
+      },
+      paramName: "forTicksAmount",
+      type: "REPLACE_PARAM_DATA_VALUE",
+    },
+    probability: 1,
+  },
+  {
+    effect: {
+      paramName: "forTicksAmount",
+      parentNode: {
+        nodeType: "action",
+        params: {
+          forTicksAmount: {
+            dataType: "tickCount",
+            nodeType: "dataValue",
+            type: "LITERAL",
+            value: 100,
+          },
+        },
+        type: "IDLE",
+      },
+      type: "CHANGE_LITERAL_DATA_VALUE",
+    },
+    probability: 1,
   },
 ]
 `;

@@ -1,6 +1,6 @@
-type Probabilities<T> = Array<{
+export type Probabilities<T> = Array<{
   probability: number;
-  effect: () => T;
+  effect: T;
 }>;
 
 export function withProbability<T>(probabilities: Probabilities<T>): T {
@@ -10,9 +10,9 @@ export function withProbability<T>(probabilities: Probabilities<T>): T {
   for (const { probability, effect } of probabilities) {
     roll -= probability;
     if (roll < 0) {
-      return effect();
+      return effect;
     }
   }
 
-  return probabilities[probabilities.length - 1].effect();
+  return probabilities[probabilities.length - 1].effect;
 }

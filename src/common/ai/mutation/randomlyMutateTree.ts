@@ -4,6 +4,7 @@ import { arrayOfSize } from "../../util/arrayOfSize.ts";
 import { buildMutationCandidates } from "./utils/buildMutationCandidates.ts";
 import { flattenTree } from "./utils/flattenTree.ts";
 import { randomArray } from "../../util/randomArray.ts";
+import { withProbability } from "../training/utils/withProbability.ts";
 import { DataValue } from "../behaviourTree/dataValue/DataValue.ts";
 import { randomNode } from "./factories/randomNode.ts";
 import { randomDataValue } from "./factories/randomDataValue.ts";
@@ -17,7 +18,7 @@ export function randomlyMutateTree(
 
   arrayOfSize(count).forEach(() => {
     const candidates = buildMutationCandidates(flattenTree(newTree));
-    const mutation = randomArray(candidates);
+    const mutation = withProbability(candidates);
 
     if (mutation.type === "INVERT_CONDITION") {
       mutation.condition.invert = !mutation.condition.invert;
