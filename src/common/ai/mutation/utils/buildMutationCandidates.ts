@@ -45,11 +45,14 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): Probabilitie
       ];
     }
 
+    if (flatNode.node.nodeType === "action") {
+      return gatherReplaceParamCandidates(flatNode.node);
+    }
+
     if (flatNode.node.nodeType === "selector" || flatNode.node.nodeType === "sequence") {
       return [
-        // Insert conditions and actions 3x as often as sequences or selectors.
-        { probability: 3, effect: { type: "ADD_NODE_TO_LIST", listNode: flatNode.node } },
-        { probability: 1, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
+        { probability: 10, effect: { type: "ADD_NODE_TO_LIST", listNode: flatNode.node } },
+        { probability: 3, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
         { probability: 2, effect: { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node } },
       ];
     }
@@ -67,10 +70,6 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): Probabilitie
           parentNode: flatNode.parent as ConditionNode | ActionNode | BlackboardDataValue,
         },
       }];
-    }
-
-    if (flatNode.node.nodeType === "action") {
-      return gatherReplaceParamCandidates(flatNode.node);
     }
 
     return [];
