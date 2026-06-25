@@ -11,6 +11,7 @@ import { randomDataValue } from "./factories/randomDataValue.ts";
 import { randomLiteral } from "./factories/randomLiteral.ts";
 import { isNever } from "../../util/isNever.ts";
 import { Bot } from "../training/infra/repo/utils/botRowToBot.ts";
+import { borrowGeneticTrait } from "./utils/borrowGeneticTrait.ts";
 
 export function randomlyMutateTree(
   { count, tree, unitType, previousBots }: {
@@ -80,9 +81,30 @@ export function randomlyMutateTree(
     }
 
     if (mutation.type === "BORROW_GENETIC_NODE_INTO_LIST") {
+      const borrowedNode = borrowGeneticTrait({ unitType, previousBots, types: ["action", "condition"] });
+      if (!borrowedNode) {
+        return;
+      }
+
+      mutation.listNode.nodes.splice(
+        Math.floor(Math.random() * mutation.listNode.nodes.length),
+        0,
+        borrowedNode,
+      );
+      return;
     }
 
     if (mutation.type === "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST") {
+      const borrowedNode = borrowGeneticTrait({ unitType, previousBots, types: ["action", "condition"] });
+      if (!borrowedNode) {
+        return;
+      }
+      mutation.listNode.nodes.splice(
+        Math.floor(Math.random() * mutation.listNode.nodes.length),
+        0,
+        borrowedNode,
+      );
+      return;
     }
 
     return isNever(mutation);

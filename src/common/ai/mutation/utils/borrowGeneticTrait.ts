@@ -19,7 +19,7 @@ export function borrowGeneticTrait(
     return;
   }
 
-  return randomArray(candidateNodes).node as BehaviourTreeNode;
+  return structuredClone(randomArray(candidateNodes).node) as BehaviourTreeNode;
 }
 
 function getCandidateBotsFromPrevious(previousBots: Bot[]): Bot {
