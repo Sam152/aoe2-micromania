@@ -22,7 +22,7 @@ export function TrainedBots() {
   const [mutationSeed, setMutationSeed] = useState(0);
   const [swapSeed, setSwapSeed] = useState(0);
   const [inspectBot, setInspectBot] = useState<Bot | null>(null);
-  const [showOverlay, setShowOverlay] = useState(true);
+  const [showOverlay, setShowOverlay] = useState(false);
   const [overlayMenuOpen, setOverlayMenuOpen] = useState(false);
   // Empty set means "show all"; checking values narrows the overlay to those.
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());

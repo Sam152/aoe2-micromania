@@ -4,7 +4,7 @@
 - [x] BB projectiles
 - [x] Actions formations
 - [x] Train harness
-- [ ] Offspring?
+- [x] Offspring?
 - [x] Random mutations
 - [x] Randomize mutation count?
 - [x] Tune node inserts - insert sequences less than actions and conditions
@@ -13,4 +13,5 @@
 - [x] Treat timeouts as draws
 - [x] Increase requirement of new bots to beat bots from each generation
 - [x] Converted units do not form or join groups
-- [ ] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector => sequence.
+- [x] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector => sequence.
+- [ ] Support retaining bots from prior runs.
