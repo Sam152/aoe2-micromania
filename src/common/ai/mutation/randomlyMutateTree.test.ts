@@ -7,7 +7,10 @@ import { dumpTree } from "./dumpTree.ts";
 
 describe.skip("randomlyMutateTree", () => {
   it("randomlyMutatedTree", () => {
-    dumpTree("randomlyMutatedTree", randomlyMutateUnitAwareBehaviourTreeAllUnits({ count: 20, tree: sampleTree }));
+    dumpTree(
+      "randomlyMutatedTree",
+      randomlyMutateUnitAwareBehaviourTreeAllUnits({ count: 20, tree: sampleTree, previousBots: [] }),
+    );
   });
 
   it("randomlyGeneratedTree", () => {
@@ -17,6 +20,7 @@ describe.skip("randomlyMutateTree", () => {
       randomlyMutateUnitAwareBehaviourTreeAllUnits({
         count: 5000,
         tree: { [UnitType.Archer]: emptyTree, [UnitType.Mangonel]: emptyTree, [UnitType.Monk]: emptyTree },
+        previousBots: [],
       }),
     );
   });

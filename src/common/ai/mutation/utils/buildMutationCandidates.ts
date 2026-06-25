@@ -16,11 +16,19 @@ export type MutationCandidate =
     paramName: string;
   }
   | {
-    type:
-      | "ADD_NODE_TO_LIST"
-      | "ADD_SEQ_OR_SEL_NODE_TO_LIST"
-      | "BORROW_GENETIC_NODE_INTO_LIST"
-      | "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST";
+    type: "ADD_NODE_TO_LIST";
+    listNode: Sequence | Selector;
+  }
+  | {
+    type: "ADD_SEQ_OR_SEL_NODE_TO_LIST";
+    listNode: Sequence | Selector;
+  }
+  | {
+    type: "BORROW_GENETIC_NODE_INTO_LIST";
+    listNode: Sequence | Selector;
+  }
+  | {
+    type: "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST";
     listNode: Sequence | Selector;
   }
   | {
