@@ -15,6 +15,10 @@ export function borrowGeneticTrait(
   },
 ): BehaviourTreeNode | undefined {
   const bot = getCandidateBotsFromPrevious(previousBots);
+  if (!bot) {
+    return;
+  }
+
   const candidateNodes = flattenTree(bot.tree[unitType])
     .filter((node) => types.includes(node.node.nodeType as BehaviourTreeNodeType));
 
@@ -28,7 +32,11 @@ export function borrowGeneticTrait(
 
 function getCandidateBotsFromPrevious(
   previousBots: Pick<Bot, "tree" | "generation">[],
-): Pick<Bot, "tree" | "generation"> {
+): Pick<Bot, "tree" | "generation"> | undefined {
+  if (previousBots.length === 0) {
+    return;
+  }
+
   const latestGeneration = Math.max(...previousBots.map((bot) => bot.generation));
   const recentBots = previousBots.filter((bot) => bot.generation > latestGeneration - 5);
   return randomArray(recentBots);
