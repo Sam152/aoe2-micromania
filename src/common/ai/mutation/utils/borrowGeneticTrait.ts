@@ -3,6 +3,9 @@ import { Bot } from "../../training/infra/repo/utils/botRowToBot.ts";
 import { flattenTree } from "./flattenTree.ts";
 import { UnitType } from "../../../units/UnitType.ts";
 import { randomArray } from "../../../util/randomArray.ts";
+import { params } from "../../training/params.ts";
+
+const { TRAIT_BORROWING_FROM_LAST_N_GENERATIONS } = params;
 
 /**
  * Previous bots is a result of getAllInactiveBots().
@@ -38,6 +41,8 @@ function getCandidateBotsFromPrevious(
   }
 
   const latestGeneration = Math.max(...previousBots.map((bot) => bot.generation));
-  const recentBots = previousBots.filter((bot) => bot.generation > latestGeneration - 5);
+  const recentBots = previousBots.filter((bot) =>
+    bot.generation > latestGeneration - TRAIT_BORROWING_FROM_LAST_N_GENERATIONS
+  );
   return randomArray(recentBots);
 }

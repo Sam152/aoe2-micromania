@@ -36,4 +36,8 @@ export const params = {
    * How many bots from prior generations to consider mutating from.
    */
   BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 3,
+  /**
+   * How many of the last n generations to borrow traits from.
+   */
+  TRAIT_BORROWING_FROM_LAST_N_GENERATIONS: 5,
 };
