@@ -107,7 +107,7 @@ export function TrainedBots() {
     // Always mutate the original bot's tree, never an already-mutated one, so
     // repeated rolls produce fresh single mutations rather than compounding.
     const original = bots.find((b) => b.id === bot.id) ?? bot;
-    const tree = randomlyMutateUnitAwareBehaviourTree({ tree: original.tree, count });
+    const tree = randomlyMutateUnitAwareBehaviourTree({ tree: original.tree, count, previousBots: bots });
     const letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
     const mutated: Bot = { ...original, tree, botName: `${original.botName}-${letter}${count}` };
     if (slot === "home") { setHomeBot(mutated); }

@@ -7,7 +7,20 @@ import { assertEquals } from "@std/assert";
 function group(includedUnits: number[]): BotUnitGroup {
   return {
     unitType: UnitType.Archer,
-    actionQueue: [],
+    actionQueue: [
+      {
+        action: {
+          type: "IDLE",
+          actionNode: {
+            nodeType: "action",
+            type: "IDLE",
+            params: { forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 1 } },
+          },
+          resolvedParams: { forTicksAmount: 1 },
+        } as const,
+        executeAfterTick: 43,
+      },
+    ],
     includedUnits,
   };
 }

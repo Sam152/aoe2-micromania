@@ -4,20 +4,29 @@ import { arrayOfSize } from "../../util/arrayOfSize.ts";
 import { buildMutationCandidates } from "./utils/buildMutationCandidates.ts";
 import { flattenTree } from "./utils/flattenTree.ts";
 import { randomArray } from "../../util/randomArray.ts";
+import { withProbability } from "../training/utils/withProbability.ts";
 import { DataValue } from "../behaviourTree/dataValue/DataValue.ts";
 import { randomNode } from "./factories/randomNode.ts";
 import { randomDataValue } from "./factories/randomDataValue.ts";
 import { randomLiteral } from "./factories/randomLiteral.ts";
 import { isNever } from "../../util/isNever.ts";
+import { Bot } from "../training/infra/repo/utils/botRowToBot.ts";
+import { borrowGeneticTrait } from "./utils/borrowGeneticTrait.ts";
+import { insertNodeAtRandomIndex } from "./utils/insertNodeAtRandomIndex.ts";
 
 export function randomlyMutateTree(
-  { count, tree, unitType }: { count: number; tree: BehaviourTreeNode; unitType: UnitType },
+  { count, tree, unitType, previousBots }: {
+    count: number;
+    tree: BehaviourTreeNode;
+    unitType: UnitType;
+    previousBots: Pick<Bot, "tree" | "generation">[];
+  },
 ): BehaviourTreeNode {
   const newTree = structuredClone(tree);
 
   arrayOfSize(count).forEach(() => {
     const candidates = buildMutationCandidates(flattenTree(newTree));
-    const mutation = randomArray(candidates);
+    const mutation = withProbability(candidates);
 
     if (mutation.type === "INVERT_CONDITION") {
       mutation.condition.invert = !mutation.condition.invert;
@@ -51,11 +60,7 @@ export function randomlyMutateTree(
         "condition",
         "action",
       ]);
-      mutation.listNode.nodes.splice(
-        Math.floor(Math.random() * mutation.listNode.nodes.length),
-        0,
-        randomNode(unitType, type),
-      );
+      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, type));
       return;
     }
 
@@ -64,11 +69,25 @@ export function randomlyMutateTree(
         "sequence",
         "selector",
       ]);
-      mutation.listNode.nodes.splice(
-        Math.floor(Math.random() * mutation.listNode.nodes.length),
-        0,
-        randomNode(unitType, type),
-      );
+      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, type));
+      return;
+    }
+
+    if (mutation.type === "BORROW_GENETIC_NODE_INTO_LIST") {
+      const borrowedNode = borrowGeneticTrait({ unitType, previousBots, types: ["action", "condition"] });
+      if (!borrowedNode) {
+        return;
+      }
+      insertNodeAtRandomIndex(mutation.listNode, borrowedNode);
+      return;
+    }
+
+    if (mutation.type === "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST") {
+      const borrowedNode = borrowGeneticTrait({ unitType, previousBots, types: ["selector", "sequence"] });
+      if (!borrowedNode) {
+        return;
+      }
+      insertNodeAtRandomIndex(mutation.listNode, borrowedNode);
       return;
     }
 

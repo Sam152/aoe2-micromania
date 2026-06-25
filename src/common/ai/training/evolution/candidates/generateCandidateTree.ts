@@ -18,13 +18,14 @@ export function generateCandidateTree(
   const count = calculateMutationCount({ iterationsSinceLastWin });
 
   return randomlyMutateUnitAwareBehaviourTree({
+    previousBots,
     tree: startingPoint.tree,
     count,
   });
 }
 
 export function randomlyMutateUnitAwareBehaviourTree(
-  { count, tree }: { count: number; tree: UnitAwareBehaviourTree },
+  { count, tree, previousBots }: { count: number; tree: UnitAwareBehaviourTree; previousBots: Bot[] },
 ): UnitAwareBehaviourTree {
   const [a, b, c] = flipUntilAtLeastOneHeads();
 
@@ -32,13 +33,13 @@ export function randomlyMutateUnitAwareBehaviourTree(
   // not want to be mutated.
   return {
     [UnitType.Archer]: a === "HEADS"
-      ? randomlyMutateTree({ count, tree: tree[UnitType.Archer], unitType: UnitType.Archer })
+      ? randomlyMutateTree({ count, tree: tree[UnitType.Archer], unitType: UnitType.Archer, previousBots })
       : structuredClone(tree[UnitType.Archer]),
     [UnitType.Mangonel]: b === "HEADS"
-      ? randomlyMutateTree({ count, tree: tree[UnitType.Mangonel], unitType: UnitType.Mangonel })
+      ? randomlyMutateTree({ count, tree: tree[UnitType.Mangonel], unitType: UnitType.Mangonel, previousBots })
       : structuredClone(tree[UnitType.Mangonel]),
     [UnitType.Monk]: c === "HEADS"
-      ? randomlyMutateTree({ count, tree: tree[UnitType.Monk], unitType: UnitType.Monk })
+      ? randomlyMutateTree({ count, tree: tree[UnitType.Monk], unitType: UnitType.Monk, previousBots })
       : structuredClone(tree[UnitType.Monk]),
   };
 }
