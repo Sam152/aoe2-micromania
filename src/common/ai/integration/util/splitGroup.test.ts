@@ -29,7 +29,7 @@ describe("splitGroup", () => {
   it("splits an even group into two equal halves", () => {
     const g = group([1, 2, 3, 4]);
     const botState = { unitGroups: [g] };
-    doSplitGroup({ group: g, botState, state: { ticks: 10 } });
+    doSplitGroup({ group: g, botState, state: { ticks: 10 }, splitGroupInto: "HALF" });
 
     assertEquals(g.includedUnits, []);
     assertEquals(botState.unitGroups.length, 3);
@@ -41,7 +41,7 @@ describe("splitGroup", () => {
     const g = group([1, 2]);
     g.unitType = UnitType.Mangonel;
     const botState = { unitGroups: [g] };
-    doSplitGroup({ group: g, botState, state: { ticks: 42 } });
+    doSplitGroup({ group: g, splitGroupInto: "HALF", botState, state: { ticks: 42 } });
 
     const [, first, second] = botState.unitGroups;
     assertEquals(first.unitType, UnitType.Mangonel);

@@ -15,6 +15,7 @@ const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   unitId: () => {
     throw new Error("Generating random unit IDs does not make sense");
   },
+  groupSize: () => randomArray(["HALF", "ONE"]),
 };
 
 export function randomLiteral<TDataType extends DataType>(dataType: TDataType): TypeFromDataType<TDataType> {

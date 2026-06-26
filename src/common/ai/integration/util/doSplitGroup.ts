@@ -3,7 +3,7 @@ import { GameState } from "../../../../types.ts";
 import { GroupSize } from "../../behaviourTree/dataType/catalog/groupSize.ts";
 
 export function doSplitGroup(
-  { group, botState, state, splitGroupInto }: {
+  { group, botState, splitGroupInto }: {
     group: BotUnitGroup;
     botState: Pick<BotState, "unitGroups">;
     state: Pick<GameState, "ticks">;

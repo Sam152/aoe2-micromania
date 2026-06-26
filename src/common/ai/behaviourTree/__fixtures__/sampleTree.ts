@@ -239,7 +239,18 @@ export const sampleTree: UnitAwareBehaviourTree = {
               },
             },
           },
-          { nodeType: "action", type: "SPLIT_GROUP", params: {} },
+          {
+            nodeType: "action",
+            type: "SPLIT_GROUP",
+            params: {
+              splitGroupInto: {
+                nodeType: "dataValue",
+                dataType: "groupSize",
+                type: "LITERAL",
+                value: "HALF",
+              },
+            },
+          },
         ],
       },
       // Then patrol one of the groups.

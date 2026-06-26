@@ -75,7 +75,18 @@ export const winningTree: UnitAwareBehaviourTree = {
     "nodeType": "selector",
   },
   "1": {
-    "nodes": [{ "type": "SPLIT_GROUP", "params": {}, "nodeType": "action" }, {
+    "nodes": [{
+      "type": "SPLIT_GROUP",
+      "params": {
+        splitGroupInto: {
+          nodeType: "dataValue",
+          dataType: "groupSize",
+          type: "LITERAL",
+          value: "HALF",
+        },
+      },
+      "nodeType": "action",
+    }, {
       "type": "PATROL",
       "params": {
         "direction": {
