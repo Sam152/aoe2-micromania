@@ -79,19 +79,11 @@ export function evaluateTreeNode(
       blackboardComputer,
     });
 
-    const actionIsInvalid =
-      // If we cannot resolve the params for an action, bail early, the
-      // action is not a valid one to take... but potentially, are we
-      // getting outdated data? Should we try resolve the params again,
-      // when executing the action?
-      !resolvedParams ||
-      // Do not allow the bot to just micro 40 groups. Consider it invalid during
-      // eval. I guess this could also be rejected when executing the action.
-      (node.type === "SPLIT_GROUP" &&
-        botState.unitGroups.filter(({ unitType }) => unitType === group.unitType).length >=
-          params.WHEEL_CLAMP_MAXIUM_GROUP_SIZE_PER_UNIT_TYPE);
-
-    if (actionIsInvalid) {
+    // If we cannot resolve the params for an action, bail early, the
+    // action is not a valid one to take... but potentially, are we
+    // getting outdated data? Should we try resolve the params again,
+    // when executing the action?
+    if (!resolvedParams) {
       return {
         result: false,
         actionNodes,
