@@ -8,8 +8,13 @@ import { doSplitGroup } from "../../../integration/util/doSplitGroup.ts";
 export const splitGroup = defineAction({
   type: "SPLIT_GROUP",
   applicableForUnitType: [UnitType.Monk, UnitType.Archer, UnitType.Mangonel],
-  params: {},
-  execute: ({}, { group, state, botState }) => {
-    doSplitGroup({ group, state, botState });
+  params: {
+    splitGroupInto: {
+      dataType: "groupSize",
+      allowedValueTypes: ["LITERAL"],
+    },
+  },
+  execute: ({ splitGroupInto }, { group, state, botState }) => {
+    doSplitGroup({ group, state, botState, splitGroupInto });
   },
 });

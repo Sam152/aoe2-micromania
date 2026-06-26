@@ -13,7 +13,8 @@
 - [x] Treat timeouts as draws
 - [x] Increase requirement of new bots to beat bots from each generation
 - [x] Converted units do not form or join groups
-- [x] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector => sequence.
+- [x] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector =>
+      sequence.
 - [ ] Support retaining bots from prior runs.
 - [ ] Add upgrades and balistics to bots
 - [ ] Fix range

@@ -40,4 +40,8 @@ export const params = {
    * How many of the last n generations to borrow traits from.
    */
   TRAIT_BORROWING_FROM_LAST_N_GENERATIONS: 5,
+  /**
+   * Computer too strong microing 40 groups.
+   */
+  WHEEL_CLAMP_MAXIUM_GROUP_SIZE_PER_UNIT_TYPE: 4,
 };

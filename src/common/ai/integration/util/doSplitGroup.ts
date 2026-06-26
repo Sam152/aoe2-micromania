@@ -1,20 +1,22 @@
 import { BotState, BotUnitGroup } from "../createBot.ts";
 import { GameState } from "../../../../types.ts";
+import { GroupSize } from "../../behaviourTree/dataType/catalog/groupSize.ts";
 
 export function doSplitGroup(
-  { group, botState, state }: {
+  { group, botState, state, splitGroupInto }: {
     group: BotUnitGroup;
     botState: Pick<BotState, "unitGroups">;
     state: Pick<GameState, "ticks">;
+    splitGroupInto: GroupSize;
   },
 ) {
   if (group.includedUnits.length < 2) {
     return;
   }
 
-  const halfWay = Math.floor(group.includedUnits.length / 2);
-  const groupOne = group.includedUnits.slice(0, halfWay);
-  const groupTwo = group.includedUnits.slice(halfWay);
+  const pivot = splitGroupInto === "HALF" ? Math.floor(group.includedUnits.length / 2) : 1;
+  const groupOne = group.includedUnits.slice(0, pivot);
+  const groupTwo = group.includedUnits.slice(pivot);
 
   botState.unitGroups.push({
     unitType: group.unitType,

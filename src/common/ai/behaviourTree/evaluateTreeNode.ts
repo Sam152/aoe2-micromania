@@ -7,6 +7,7 @@ import { conditionList } from "./condition/conditionList.ts";
 import { ActionsList } from "./action/actionsList.ts";
 import { DataType, TypeFromDataType } from "./dataType/dataTypes.ts";
 import { BlackboardComputer } from "./blackboard/utils/createCachedBlackboardComputer.ts";
+import { params } from "../training/params.ts";
 
 export type ActionNodeWithResolvedParams<TType extends keyof ActionsList = keyof ActionsList> = TType extends
   keyof ActionsList ? {
@@ -78,11 +79,19 @@ export function evaluateTreeNode(
       blackboardComputer,
     });
 
-    // If we cannot resolve the params for an action, bail early, the
-    // action is not a valid one to take... but potentially, are we
-    // getting outdated data? Should we try resolve the params again,
-    // when executing the action?
-    if (!resolvedParams) {
+    const actionIsInvalid =
+      // If we cannot resolve the params for an action, bail early, the
+      // action is not a valid one to take... but potentially, are we
+      // getting outdated data? Should we try resolve the params again,
+      // when executing the action?
+      !resolvedParams ||
+      // Do not allow the bot to just micro 40 groups. Consider it invalid during
+      // eval. I guess this could also be rejected when executing the action.
+      (node.type === "SPLIT_GROUP" &&
+        botState.unitGroups.filter(({ unitType }) => unitType === group.unitType).length >=
+          params.WHEEL_CLAMP_MAXIUM_GROUP_SIZE_PER_UNIT_TYPE);
+
+    if (actionIsInvalid) {
       return {
         result: false,
         actionNodes,
