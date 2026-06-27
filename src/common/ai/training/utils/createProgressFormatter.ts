@@ -1,7 +1,7 @@
 const ROW_SIZE = 50;
 
 // Format numbers with a `_` thousands separator, e.g. 10000 -> "10_000".
-function formatNumber(n: number): string {
+export function formatNumber(n: number): string {
   return n.toLocaleString("en-US").replaceAll(",", "_");
 }
 

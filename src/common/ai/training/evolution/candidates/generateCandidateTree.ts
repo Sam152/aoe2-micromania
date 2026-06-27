@@ -4,17 +4,16 @@ import { UnitType } from "../../../../units/UnitType.ts";
 import { randomlyMutateTree } from "../../../mutation/randomlyMutateTree.ts";
 import { Coinflip, coinflip } from "../../../../util/coinflip.ts";
 import { calculateMutationCount } from "./calculateMutationCount.ts";
-import { selectStartingTreeFromBots } from "./selectStartingTreeFromBots.ts";
 
 type GenerateCandidateTreeArgs = {
   iterationsSinceLastWin: number;
   borrowBots: Bot[];
+  startingPoint: Bot;
 };
 
 export function generateCandidateTree(
-  { iterationsSinceLastWin, borrowBots }: GenerateCandidateTreeArgs,
+  { iterationsSinceLastWin, borrowBots, startingPoint }: GenerateCandidateTreeArgs,
 ): UnitAwareBehaviourTree {
-  const startingPoint = selectStartingTreeFromBots({ iterationsSinceLastWin, previousBots: borrowBots });
   const count = calculateMutationCount({ iterationsSinceLastWin });
 
   return randomlyMutateUnitAwareBehaviourTree({
