@@ -24,7 +24,7 @@ describe("pruneTree", () => {
     assertEquals(treeSize(winningTree), {
       archerLength: 15,
       monkLength: 22,
-      mangoLength: 4,
+      mangoLength: 5,
     });
 
     // Pruning the tree reduces its branches significantly.
@@ -33,7 +33,7 @@ describe("pruneTree", () => {
     assertEquals(treeSize(pruned), {
       archerLength: 14,
       monkLength: 12,
-      mangoLength: 4,
+      mangoLength: 5,
     });
 
     // But the outcome of a match is exactly the same.

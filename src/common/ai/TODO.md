@@ -16,5 +16,7 @@
 - [x] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector =>
       sequence.
 - [ ] Support retaining bots from prior runs.
-- [ ] Add upgrades and balistics to bots
+- [x] Add upgrades and balistics to bots
 - [ ] Fix range
+- [ ] Make gen size 1 - restart from zero at threshold
+- [ ] Add probability of mutation based on depth (with 0 at root) - as to not insert conditions or actions at level 0.
