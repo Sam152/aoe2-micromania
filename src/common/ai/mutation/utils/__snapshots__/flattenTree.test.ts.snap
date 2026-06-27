@@ -3,6 +3,7 @@ export const snapshot = {};
 snapshot[`flattenTree > generates candidates from tree 1`] = `
 [
   {
+    depth: 0,
     node: {
       nodeType: "selector",
       nodes: [
@@ -143,6 +144,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     parent: undefined,
   },
   {
+    depth: 1,
     node: {
       nodeType: "sequence",
       nodes: [
@@ -327,6 +329,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       invert: true,
       nodeType: "condition",
@@ -402,6 +405,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       blackboardKey: "globalOwnedUnitsOfTypeCount",
       dataType: "unitCount",
@@ -446,6 +450,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       dataType: "unitType",
       nodeType: "dataValue",
@@ -469,6 +474,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       dataType: "unitCount",
       nodeType: "dataValue",
@@ -505,6 +511,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       nodeType: "action",
       params: {
@@ -566,6 +573,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       blackboardKey: "opponentAveragePosition",
       dataType: "vector",
@@ -589,6 +597,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 1,
     node: {
       nodeType: "sequence",
       nodes: [
@@ -765,6 +774,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       invert: true,
       nodeType: "condition",
@@ -825,6 +835,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       blackboardKey: "groupMetaUnitTypeGroupCount",
       dataType: "unitCount",
@@ -855,6 +866,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       dataType: "unitCount",
       nodeType: "dataValue",
@@ -884,6 +896,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       nodeType: "action",
       params: {
@@ -936,6 +949,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       dataType: "groupSize",
       nodeType: "dataValue",
@@ -957,6 +971,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 1,
     node: {
       nodeType: "sequence",
       nodes: [
@@ -1146,6 +1161,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       invert: false,
       nodeType: "condition",
@@ -1219,6 +1235,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       dataType: "groupIndex",
       nodeType: "dataValue",
@@ -1248,6 +1265,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       blackboardKey: "groupMetaUnitTypeIndex",
       dataType: "groupIndex",
@@ -1278,6 +1296,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       nodeType: "action",
       params: {
@@ -1344,6 +1363,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       blackboardKey: "opponentAveragePosition",
       dataType: "vector",
@@ -1367,6 +1387,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       nodeType: "action",
       params: {
@@ -1432,6 +1453,7 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
     },
   },
   {
+    depth: 2,
     node: {
       dataType: "tickCount",
       nodeType: "dataValue",
@@ -1457,27 +1479,27 @@ snapshot[`flattenTree > generates candidates from tree 1`] = `
 
 snapshot[`flattenTree > generates candidates from tree 2`] = `
 [
-  "undefined > selector",
-  "selector > sequence",
-  "sequence > condition",
-  "condition > dataValue",
-  "dataValue > dataValue",
-  "condition > dataValue",
-  "sequence > action",
-  "action > dataValue",
-  "selector > sequence",
-  "sequence > condition",
-  "condition > dataValue",
-  "condition > dataValue",
-  "sequence > action",
-  "action > dataValue",
-  "selector > sequence",
-  "sequence > condition",
-  "condition > dataValue",
-  "condition > dataValue",
-  "sequence > action",
-  "action > dataValue",
-  "sequence > action",
-  "action > dataValue",
+  "undefined > selector (0",
+  "selector > sequence (1",
+  "sequence > condition (2",
+  "condition > dataValue (2",
+  "dataValue > dataValue (2",
+  "condition > dataValue (2",
+  "sequence > action (2",
+  "action > dataValue (2",
+  "selector > sequence (1",
+  "sequence > condition (2",
+  "condition > dataValue (2",
+  "condition > dataValue (2",
+  "sequence > action (2",
+  "action > dataValue (2",
+  "selector > sequence (1",
+  "sequence > condition (2",
+  "condition > dataValue (2",
+  "condition > dataValue (2",
+  "sequence > action (2",
+  "action > dataValue (2",
+  "sequence > action (2",
+  "action > dataValue (2",
 ]
 `;
