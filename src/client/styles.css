@@ -363,16 +363,6 @@ kbd {
   box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.3);
 }
 
-.gen-tile--placeholder {
-  border-style: dashed;
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.gen-tile--placeholder .gen-tile__elo {
-  color: #718096;
-}
-
 .gen-tile--small {
   width: 46px;
   height: 46px;
@@ -384,6 +374,10 @@ kbd {
   letter-spacing: 0.05em;
   color: #a0aec0;
   font-weight: 600;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .gen-tile--small .gen-tile__gen {

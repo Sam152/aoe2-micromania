@@ -13,7 +13,7 @@ const blackboardKeys = Object.keys(blackboardDefinition);
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
-  const [expandedGen, setExpandedGen] = useState<number | null>(null);
+  const [expandedGroup, setExpandedGroup] = useState<string | null>(null);
   const [homeBot, setHomeBot] = useState<Bot | null>(null);
   const [awayBot, setAwayBot] = useState<Bot | null>(null);
   const [tickInterval, setTickInterval] = useState(500);
@@ -32,32 +32,36 @@ export function TrainedBots() {
     trpc.getAllBots.query().then(setBots);
   }, [trpc]);
 
-  const champions = useMemo(
-    () => bots.filter((b) => b.generationChampion).sort((a, b) => a.generation - b.generation),
-    [bots],
-  );
-
-  // On first load, default the matchup to the highest-generation champion vs itself.
-  const defaultedRef = useRef(false);
-  useEffect(() => {
-    if (defaultedRef.current || champions.length === 0) { return; }
-    defaultedRef.current = true;
-    const topChamp = champions[champions.length - 1];
-    setHomeBot(topChamp);
-    setAwayBot(topChamp);
-  }, [champions]);
-
-  const latestUnchampionedGen = useMemo(() => {
-    if (bots.length === 0) { return null; }
-    const maxGen = Math.max(...bots.map((b) => b.generation));
-    const hasChampion = bots.some((b) => b.generation === maxGen && b.generationChampion);
-    return hasChampion ? null : maxGen;
+  // One leader per group: the highest-rated bot in each group. Groups are
+  // ordered by their leader's elo ascending so the strongest sits at the end
+  // (and gets scrolled into view on load).
+  const groupLeaders = useMemo(() => {
+    const byGroup = new Map<string, Bot>();
+    for (const bot of bots) {
+      const current = byGroup.get(bot.groupName);
+      if (!current || bot.elo > current.elo) { byGroup.set(bot.groupName, bot); }
+    }
+    return [...byGroup.values()].sort((a, b) => a.elo - b.elo);
   }, [bots]);
 
-  const expandedGenBots = useMemo(
+  // On first load, default the matchup to the strongest group leader vs the
+  // second strongest (or itself if there's only one group).
+  const defaultedRef = useRef(false);
+  useEffect(() => {
+    if (defaultedRef.current || groupLeaders.length === 0) { return; }
+    defaultedRef.current = true;
+    const topLeader = groupLeaders[groupLeaders.length - 1];
+    const runnerUp = groupLeaders[groupLeaders.length - 2] ?? topLeader;
+    setHomeBot(topLeader);
+    setAwayBot(runnerUp);
+  }, [groupLeaders]);
+
+  const expandedGroupBots = useMemo(
     () =>
-      expandedGen !== null ? [...bots.filter((b) => b.generation === expandedGen)].sort((a, b) => a.elo - b.elo) : [],
-    [expandedGen, bots],
+      expandedGroup !== null
+        ? [...bots.filter((b) => b.groupName === expandedGroup)].sort((a, b) => a.generation - b.generation)
+        : [],
+    [expandedGroup, bots],
   );
 
   const gameKey = `${homeBot?.id}-${awayBot?.id}-${tickInterval}-${mutationSeed}-${swapSeed}`;
@@ -82,7 +86,7 @@ export function TrainedBots() {
     if (championTilesRef.current) {
       championTilesRef.current.scrollLeft = championTilesRef.current.scrollWidth;
     }
-  }, [champions]);
+  }, [groupLeaders]);
 
   const scrollToEnd = useCallback((el: HTMLDivElement | null) => {
     if (el) { el.scrollLeft = el.scrollWidth; }
@@ -189,36 +193,30 @@ export function TrainedBots() {
       <div className="matchup-bar">
         <div className="matchup-tiles-col">
           <div className="generation-tiles" ref={championTilesRef}>
-            {champions.map((bot) => {
-              const { slot, dashed } = slotForGeneration(bot.generation, bot.id, homeBot, awayBot);
+            {groupLeaders.map((bot) => {
+              const { slot, dashed } = slotForGroup(bot.groupName, bot.id, homeBot, awayBot);
               return (
                 <BotTile
                   key={bot.id}
-                  bot={bot}
-                  expanded={expandedGen === bot.generation}
+                  label={bot.groupName}
+                  value={bot.elo}
+                  expanded={expandedGroup === bot.groupName}
                   slot={slot}
                   dashed={dashed}
-                  onClick={() => setExpandedGen(expandedGen === bot.generation ? null : bot.generation)}
-                  onDragStart={handleDragStart}
+                  onClick={() => setExpandedGroup(expandedGroup === bot.groupName ? null : bot.groupName)}
+                  onDragStart={(e) => handleDragStart(e, bot)}
                 />
               );
             })}
-            {latestUnchampionedGen !== null && (
-              <PlaceholderTile
-                gen={latestUnchampionedGen}
-                expanded={expandedGen === latestUnchampionedGen}
-                slot={slotForGeneration(latestUnchampionedGen, -1, homeBot, awayBot).slot}
-                onClick={() => setExpandedGen(expandedGen === latestUnchampionedGen ? null : latestUnchampionedGen)}
-              />
-            )}
           </div>
 
-          {expandedGen !== null && expandedGenBots.length > 0 && (
+          {expandedGroup !== null && expandedGroupBots.length > 0 && (
             <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
-              {expandedGenBots.map((bot) => (
+              {expandedGroupBots.map((bot) => (
                 <BotTile
                   key={bot.id}
-                  bot={bot}
+                  label={`gen ${bot.generation}`}
+                  value={bot.elo}
                   small
                   slot={homeBot?.id === bot.id && awayBot?.id === bot.id
                     ? "both"
@@ -227,7 +225,7 @@ export function TrainedBots() {
                     : awayBot?.id === bot.id
                     ? "away"
                     : undefined}
-                  onDragStart={handleDragStart}
+                  onDragStart={(e) => handleDragStart(e, bot)}
                 />
               ))}
             </div>
@@ -281,30 +279,31 @@ export function TrainedBots() {
   );
 }
 
-// Resolve the highlight for a generation's champion tile. A direct match (the
-// champion itself is slotted) renders solid; if instead one of its children is
-// slotted, the generation tile inherits the same colour but dashed.
-function slotForGeneration(
-  generation: number,
-  championId: number,
+// Resolve the highlight for a group's leader tile. A direct match (the leader
+// itself is slotted) renders solid; if instead another bot from the same group
+// is slotted, the leader tile inherits the same colour but dashed.
+function slotForGroup(
+  groupName: string,
+  leaderId: number,
   homeBot: Bot | null,
   awayBot: Bot | null,
 ): { slot?: "home" | "away" | "both"; dashed?: boolean } {
-  const isHome = homeBot?.id === championId;
-  const isAway = awayBot?.id === championId;
+  const isHome = homeBot?.id === leaderId;
+  const isAway = awayBot?.id === leaderId;
   if (isHome && isAway) { return { slot: "both" }; }
   if (isHome) { return { slot: "home" }; }
   if (isAway) { return { slot: "away" }; }
-  const homeGen = homeBot?.generation === generation;
-  const awayGen = awayBot?.generation === generation;
-  if (homeGen && awayGen) { return { slot: "both", dashed: true }; }
-  if (homeGen) { return { slot: "home", dashed: true }; }
-  if (awayGen) { return { slot: "away", dashed: true }; }
+  const homeGroup = homeBot?.groupName === groupName;
+  const awayGroup = awayBot?.groupName === groupName;
+  if (homeGroup && awayGroup) { return { slot: "both", dashed: true }; }
+  if (homeGroup) { return { slot: "home", dashed: true }; }
+  if (awayGroup) { return { slot: "away", dashed: true }; }
   return {};
 }
 
 function BotTile({
-  bot,
+  label,
+  value,
   expanded,
   small,
   slot,
@@ -312,13 +311,14 @@ function BotTile({
   onClick,
   onDragStart,
 }: {
-  bot: Bot;
+  label: string;
+  value: string | number;
   expanded?: boolean;
   small?: boolean;
   slot?: "home" | "away" | "both";
   dashed?: boolean;
   onClick?: () => void;
-  onDragStart: (e: React.DragEvent, bot: Bot) => void;
+  onDragStart: (e: React.DragEvent) => void;
 }) {
   const classes = [
     "gen-tile",
@@ -335,41 +335,11 @@ function BotTile({
     <div
       className={classes}
       draggable
-      onDragStart={(e) => onDragStart(e, bot)}
+      onDragStart={onDragStart}
       onClick={onClick}
     >
-      <span className="gen-tile__gen">{bot.elo}</span>
-      <span className="gen-tile__elo">{bot.generation}</span>
-    </div>
-  );
-}
-
-function PlaceholderTile({
-  gen,
-  expanded,
-  slot,
-  onClick,
-}: {
-  gen: number;
-  expanded: boolean;
-  slot?: "home" | "away" | "both";
-  onClick: () => void;
-}) {
-  const classes = [
-    "gen-tile",
-    "gen-tile--placeholder",
-    expanded && "gen-tile--expanded",
-    slot === "home" && "gen-tile--slotted-home-dashed",
-    slot === "away" && "gen-tile--slotted-away-dashed",
-    slot === "both" && "gen-tile--slotted-both-dashed",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  return (
-    <div className={classes} onClick={onClick}>
-      <span className="gen-tile__gen">Gen {gen}</span>
-      <span className="gen-tile__elo">—</span>
+      <span className="gen-tile__gen" title={label}>{label}</span>
+      <span className="gen-tile__elo">{value}</span>
     </div>
   );
 }
