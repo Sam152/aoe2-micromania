@@ -335,16 +335,6 @@ kbd {
   box-shadow: 0 0 0 1px rgba(252, 129, 129, 0.3);
 }
 
-.gen-tile--slotted-home-dashed {
-  border: 3px dashed #4299e1;
-  box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.3);
-}
-
-.gen-tile--slotted-away-dashed {
-  border: 3px dashed #fc8181;
-  box-shadow: 0 0 0 1px rgba(252, 129, 129, 0.3);
-}
-
 .gen-tile--slotted-both {
   border: 3px solid;
   border-top-color: #fc8181;
@@ -352,18 +342,6 @@ kbd {
   border-bottom-color: #4299e1;
   border-left-color: #4299e1;
   box-shadow: 0 0 0 1px rgba(66, 153, 225, 0.3);
-}
-
-/* Per-side dashing for the striped tile: away (red) is top/right, home (blue)
-   is bottom/left, so a same-group-but-indirect slot dashes only its half. */
-.gen-tile--slotted-both-away-dashed {
-  border-top-style: dashed;
-  border-right-style: dashed;
-}
-
-.gen-tile--slotted-both-home-dashed {
-  border-bottom-style: dashed;
-  border-left-style: dashed;
 }
 
 .gen-tile--small {

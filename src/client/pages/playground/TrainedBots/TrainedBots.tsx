@@ -202,7 +202,7 @@ export function TrainedBots() {
         <div className="matchup-tiles-col">
           <div className="generation-tiles" ref={championTilesRef}>
             {groupLeaders.map((bot) => {
-              const { slot, dashed, homeDashed, awayDashed } = slotForGroup(bot.groupName, bot.id, homeBot, awayBot);
+              const slot = slotForGroup(bot.groupName, homeBot, awayBot);
               return (
                 <BotTile
                   key={bot.id}
@@ -211,9 +211,6 @@ export function TrainedBots() {
                   title={bot.groupName}
                   expanded={expandedGroup === bot.groupName}
                   slot={slot}
-                  dashed={dashed}
-                  homeDashed={homeDashed}
-                  awayDashed={awayDashed}
                   onClick={() => setExpandedGroup(expandedGroup === bot.groupName ? null : bot.groupName)}
                   onDragStart={(e) => handleDragStart(e, bot)}
                 />
@@ -291,25 +288,20 @@ export function TrainedBots() {
   );
 }
 
-// Resolve the highlight for a group's leader tile. Each side (home/away) is
-// considered independently: if that slot holds the leader itself it renders
-// solid, if it holds another bot from the same group it renders dashed. When
-// both slots belong to this group the tile is striped (red away / blue home),
-// with each half solid or dashed according to its own directness.
+// Resolve the highlight for a group's leader tile based on which slots hold a
+// bot from this group. Both slots from this group stripes the tile (red away /
+// blue home); a single slot colours it solid in that slot's colour.
 function slotForGroup(
   groupName: string,
-  leaderId: number,
   homeBot: Bot | null,
   awayBot: Bot | null,
-): { slot?: "home" | "away" | "both"; dashed?: boolean; homeDashed?: boolean; awayDashed?: boolean } {
+): "home" | "away" | "both" | undefined {
   const homeInGroup = homeBot?.groupName === groupName;
   const awayInGroup = awayBot?.groupName === groupName;
-  if (homeInGroup && awayInGroup) {
-    return { slot: "both", homeDashed: homeBot?.id !== leaderId, awayDashed: awayBot?.id !== leaderId };
-  }
-  if (homeInGroup) { return { slot: "home", dashed: homeBot?.id !== leaderId }; }
-  if (awayInGroup) { return { slot: "away", dashed: awayBot?.id !== leaderId }; }
-  return {};
+  if (homeInGroup && awayInGroup) { return "both"; }
+  if (homeInGroup) { return "home"; }
+  if (awayInGroup) { return "away"; }
+  return undefined;
 }
 
 // The initials of a hyphen/underscore separated name, e.g. "foo-bar" -> "fb".
@@ -324,9 +316,6 @@ function BotTile({
   expanded,
   small,
   slot,
-  dashed,
-  homeDashed,
-  awayDashed,
   onClick,
   onDragStart,
 }: {
@@ -336,9 +325,6 @@ function BotTile({
   expanded?: boolean;
   small?: boolean;
   slot?: "home" | "away" | "both";
-  dashed?: boolean;
-  homeDashed?: boolean;
-  awayDashed?: boolean;
   onClick?: () => void;
   onDragStart: (e: React.DragEvent) => void;
 }) {
@@ -346,11 +332,9 @@ function BotTile({
     "gen-tile",
     expanded && "gen-tile--expanded",
     small && "gen-tile--small",
-    slot === "home" && (dashed ? "gen-tile--slotted-home-dashed" : "gen-tile--slotted-home"),
-    slot === "away" && (dashed ? "gen-tile--slotted-away-dashed" : "gen-tile--slotted-away"),
+    slot === "home" && "gen-tile--slotted-home",
+    slot === "away" && "gen-tile--slotted-away",
     slot === "both" && "gen-tile--slotted-both",
-    slot === "both" && homeDashed && "gen-tile--slotted-both-home-dashed",
-    slot === "both" && awayDashed && "gen-tile--slotted-both-away-dashed",
   ]
     .filter(Boolean)
     .join(" ");
