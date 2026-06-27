@@ -5,7 +5,7 @@ export type Bot = {
   id: number;
   botName: string;
   tree: UnitAwareBehaviourTree;
-  generationChampion: boolean;
+  groupName: string;
   elo: number;
   wins: number;
   losses: number;
@@ -24,7 +24,7 @@ export function botRowToBot(row: postgres.Row): Bot {
     losses: row.losses,
     draws: row.draws,
     gamesSinceLastPrune: row.games_since_last_prune,
-    generationChampion: row.generation_champion,
+    groupName: row.group_name,
     generation: row.generation,
   };
 }

@@ -4,10 +4,6 @@ export const params = {
    */
   CPU_WORKER_COUNT: 10,
   /**
-   * How many bots we should aim to keep in the active player pool.
-   */
-  TOTAL_BOTS_PER_GENERATION: 5,
-  /**
    * Amount of HP a candidate tree must survive with against a champion to enter the pool.
    */
   CANDIDATE_TREE_REQUIRED_HP_AGAINST_CHAMPION: 30 * 10,
@@ -20,6 +16,10 @@ export const params = {
    * generation.
    */
   NEXT_GENERATION_RANDOM_MUTATIONS: 20,
+  /**
+   * How many iterations we should run before saying a hill has been climbed.
+   */
+  NEXT_GENERATION_MAXIMUM_ITERATIONS_UNTIL_QUIT: 2_000_000,
   /**
    * How many iterations before we start randomizing higher.
    */

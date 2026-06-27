@@ -8,17 +8,17 @@ import { selectStartingTreeFromBots } from "./selectStartingTreeFromBots.ts";
 
 type GenerateCandidateTreeArgs = {
   iterationsSinceLastWin: number;
-  previousBots: Bot[];
+  borrowBots: Bot[];
 };
 
 export function generateCandidateTree(
-  { iterationsSinceLastWin, previousBots }: GenerateCandidateTreeArgs,
+  { iterationsSinceLastWin, borrowBots }: GenerateCandidateTreeArgs,
 ): UnitAwareBehaviourTree {
-  const startingPoint = selectStartingTreeFromBots({ iterationsSinceLastWin, previousBots });
+  const startingPoint = selectStartingTreeFromBots({ iterationsSinceLastWin, previousBots: borrowBots });
   const count = calculateMutationCount({ iterationsSinceLastWin });
 
   return randomlyMutateUnitAwareBehaviourTree({
-    previousBots,
+    previousBots: borrowBots,
     tree: startingPoint.tree,
     count,
   });
