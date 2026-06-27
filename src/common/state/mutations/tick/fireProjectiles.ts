@@ -13,6 +13,7 @@ import { soundManager } from "../../../sounds/SoundManger.ts";
 
 import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
+import { computeAimingFor } from "./computeAimingFor.ts";
 
 export function fireProjectiles(state: GameState, computed: ComputedTickState) {
   const fireUnits = computed.nonMonkUnits();
@@ -62,8 +63,9 @@ export function fireProjectiles(state: GameState, computed: ComputedTickState) {
         return;
       }
 
-      const aimingFor =
-        (unit.targetingUnit ? computed.unitsById()[unit.targetingUnit!]!.position : unit.targetingPosition)!;
+      const aimingFor = (unit.targetingUnit
+        ? computeAimingFor({ targetingUnit: computed.unitsById()[unit.targetingUnit!]!, unit, state })
+        : unit.targetingPosition)!;
 
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
