@@ -1,5 +1,6 @@
 CREATE TABLE bots (
   id BIGSERIAL PRIMARY KEY
+  ,created timestamptz NOT NULL DEFAULT clock_timestamp()
   ,bot_name TEXT NOT NULL UNIQUE
   ,generation INT NOT NULL DEFAULT 0
   ,elo INT NOT NULL DEFAULT 1600
@@ -24,6 +25,7 @@ CREATE TABLE activations (
 
 CREATE TABLE match_results (
   id BIGSERIAL PRIMARY KEY
+  ,played timestamptz NOT NULL DEFAULT clock_timestamp()
   ,bot_id BIGINT NOT NULL REFERENCES bots(id)
   ,opponent_id BIGINT NOT NULL REFERENCES bots(id)
   ,tick_count INT NOT NULL

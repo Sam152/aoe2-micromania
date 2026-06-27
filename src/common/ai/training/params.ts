@@ -25,14 +25,6 @@ export const params = {
    */
   NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD: 50_000,
   /**
-   * How many iterations before looking at a prior generation.
-   */
-  BOT_SELECTION_ITERATION_BEFORE_LOOKING_AT_PRIOR_GENERATION: 100_000,
-  /**
-   * How many bots from prior generations to consider mutating from.
-   */
-  BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 3,
-  /**
    * The minimum number of groups we should have, before attempting to borrow traits.
    * This is a lever to generate some amount of diversity in the pools, before building
    * more convergent trees.

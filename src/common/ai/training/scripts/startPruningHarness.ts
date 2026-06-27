@@ -1,15 +1,16 @@
 import { sql } from "../infra/connection.ts";
-import { getAllBotsByElo } from "../infra/repo/getAllBotsByElo.ts";
+
 import { getActivations } from "../infra/repo/getActivations.ts";
 import { pruneUnitAwareTree } from "../../behaviourTree/utils/pruneTree.ts";
 import { updateBotTree } from "../infra/repo/updateBotTree.ts";
 import { truncateBotActivations } from "../infra/repo/truncateBotActivations.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { countUnitAwareBehaviourTreeNodes } from "../../behaviourTree/utils/countUnitAwareBehaviourTreeNodes.ts";
+import { getAllTourneyBots } from "../infra/repo/getAllTourneyBots.ts";
 
 export async function startPruningHarness() {
   // Get all active bots.
-  const bots = await getAllBotsByElo();
+  const bots = await getAllTourneyBots();
   console.log(`Found ${bots.length} active bots`);
 
   // We should have played two round robins against the whole pool, so we should

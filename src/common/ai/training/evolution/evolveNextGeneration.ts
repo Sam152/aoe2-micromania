@@ -41,6 +41,8 @@ export async function evolveNextGeneration(
         });
 
         if (await canBeatAllChampions({ champions: activeBots, tree: candidate, pool }) && !enough()) {
+          winners.push(candidate);
+
           // Reset the search radius: finding a winner proves the current neighbourhood is
           // productive, so the next search should start cheap again rather than stay drifted out.
           console.log(
@@ -51,7 +53,6 @@ export async function evolveNextGeneration(
           iterationsSinceLastWin = 0;
           progressFormatter = createProgressFormatter({ scaleFactor: 100 });
           await insertBot(candidate, generation, activeBots[0]!.groupName);
-          winners.push(candidate);
         }
 
         progressFormatter.advance();
