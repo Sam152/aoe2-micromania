@@ -19,4 +19,4 @@
 - [x] Add upgrades and balistics to bots
 - [ ] Fix range
 - [ ] Make gen size 1 - restart from zero at threshold
-- [ ] Add probability of mutation based on depth (with 0 at root) - as to not insert conditions or actions at level 0.
+- [x] Add probability of mutation based on depth (with 0 at root) - as to not insert conditions or actions at level 0.
