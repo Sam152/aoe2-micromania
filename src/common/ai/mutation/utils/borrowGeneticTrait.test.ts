@@ -23,7 +23,7 @@ describe("borrowGeneticTrait", () => {
       generation: 1,
     }] as unknown as Bot[];
 
-    const node = borrowGeneticTrait({ previousBots, types: ["condition"], unitType: UnitType.Archer });
+    const node = borrowGeneticTrait({ borrowBots: previousBots, types: ["condition"], unitType: UnitType.Archer });
 
     assertEquals(node?.nodeType, "condition");
   });

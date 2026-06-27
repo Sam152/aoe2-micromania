@@ -11,13 +11,13 @@ const { TRAIT_BORROWING_FROM_LAST_N_GENERATIONS } = params;
  * Previous bots is a result of getAllInactiveBots().
  */
 export function borrowGeneticTrait(
-  { previousBots, types, unitType }: {
+  { borrowBots, types, unitType }: {
     types: BehaviourTreeNodeType[];
-    previousBots: Pick<Bot, "tree" | "generation">[];
+    borrowBots: Pick<Bot, "tree" | "generation">[];
     unitType: UnitType;
   },
 ): BehaviourTreeNode | undefined {
-  const bot = getCandidateBotsFromPrevious(previousBots);
+  const bot = borrowBots.length > 0 ? randomArray(borrowBots) : undefined;
   if (!bot) {
     return;
   }
@@ -31,18 +31,4 @@ export function borrowGeneticTrait(
   }
 
   return structuredClone(randomArray(candidateNodes).node) as BehaviourTreeNode;
-}
-
-function getCandidateBotsFromPrevious(
-  previousBots: Pick<Bot, "tree" | "generation">[],
-): Pick<Bot, "tree" | "generation"> | undefined {
-  if (previousBots.length === 0) {
-    return;
-  }
-
-  const latestGeneration = Math.max(...previousBots.map((bot) => bot.generation));
-  const recentBots = previousBots.filter((bot) =>
-    bot.generation > latestGeneration - TRAIT_BORROWING_FROM_LAST_N_GENERATIONS
-  );
-  return randomArray(recentBots);
 }

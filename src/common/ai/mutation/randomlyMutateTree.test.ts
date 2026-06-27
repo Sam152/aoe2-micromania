@@ -12,7 +12,7 @@ describe.skip("randomlyMutateTree", () => {
       randomlyMutateUnitAwareBehaviourTreeAllUnits({
         count: 20,
         tree: sampleTree,
-        previousBots: [
+        borrowBots: [
           { tree: sampleTree, generation: 1 },
         ],
       }),
@@ -26,7 +26,7 @@ describe.skip("randomlyMutateTree", () => {
       randomlyMutateUnitAwareBehaviourTreeAllUnits({
         count: 5000,
         tree: { [UnitType.Archer]: emptyTree, [UnitType.Mangonel]: emptyTree, [UnitType.Monk]: emptyTree },
-        previousBots: [
+        borrowBots: [
           { tree: sampleTree, generation: 1 },
         ],
       }),

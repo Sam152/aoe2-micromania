@@ -33,9 +33,15 @@ export const params = {
    */
   BOT_SELECTION_BOTS_PER_GENERATION_TO_CONSIDER: 3,
   /**
-   * How many of the last n generations to borrow traits from.
+   * The minimum number of groups we should have, before attempting to borrow traits.
+   * This is a lever to generate some amount of diversity in the pools, before building
+   * more convergent trees.
    */
-  TRAIT_BORROWING_FROM_LAST_N_GENERATIONS: 5,
+  TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS: 10,
+  /**
+   * The N highest rated bots to borrow traits from.
+   */
+  TRAIT_BORROWING_HIGHEST_N_BOTS_TO_BORROW_FROM: 20,
   /**
    * Computer too strong microing 40 groups.
    */

@@ -1,11 +1,13 @@
-export function createTimer(): () => number {
+export function createTimer(print = true): () => string {
   const start = performance.now();
 
   return () => {
     const elapsed = performance.now() - start;
     const pretty = formatDuration(elapsed);
-    console.log(`Took ${pretty}`);
-    return elapsed;
+    if (print) {
+      console.log(`Took ${pretty}`);
+    }
+    return pretty;
   };
 }
 

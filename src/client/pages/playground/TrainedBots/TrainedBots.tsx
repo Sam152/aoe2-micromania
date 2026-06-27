@@ -13,6 +13,7 @@ const blackboardKeys = Object.keys(blackboardDefinition);
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
+  const [borrowBots, setBorrowBots] = useState<Bot[]>([]);
   const [expandedGroup, setExpandedGroup] = useState<string | null>(null);
   const [homeBot, setHomeBot] = useState<Bot | null>(null);
   const [awayBot, setAwayBot] = useState<Bot | null>(null);
@@ -30,6 +31,7 @@ export function TrainedBots() {
   const trpc = useTrpc();
   useEffect(() => {
     trpc.getAllBots.query().then(setBots);
+    trpc.getAllBorrowBots.query().then(setBorrowBots);
   }, [trpc]);
 
   // One leader per group: the highest-rated bot in each group. Groups are
@@ -111,7 +113,7 @@ export function TrainedBots() {
     // Always mutate the original bot's tree, never an already-mutated one, so
     // repeated rolls produce fresh single mutations rather than compounding.
     const original = bots.find((b) => b.id === bot.id) ?? bot;
-    const tree = randomlyMutateUnitAwareBehaviourTree({ tree: original.tree, count, previousBots: bots });
+    const tree = randomlyMutateUnitAwareBehaviourTree({ tree: original.tree, count, borrowBots });
     const letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
     const mutated: Bot = { ...original, tree, botName: `${original.botName}-${letter}${count}` };
     if (slot === "home") { setHomeBot(mutated); }

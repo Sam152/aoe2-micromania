@@ -9,6 +9,7 @@ import { generateCandidateTree } from "./candidates/generateCandidateTree.ts";
 import { canBeatAllChampions } from "./canBeatAllChampions.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 import { createProgressFormatter, formatNumber } from "../utils/createProgressFormatter.ts";
+import { createTimer } from "../utils/createTimer.ts";
 
 const { NEXT_GENERATION_MAXIMUM_ITERATIONS_UNTIL_QUIT, CPU_WORKER_COUNT } = params;
 
@@ -28,6 +29,7 @@ export async function evolveNextGeneration(
 
   let iterationsSinceLastWin = 0;
   let progressFormatter = createProgressFormatter({ scaleFactor: 100 });
+  const timer = createTimer(false);
 
   await Promise.all(
     arrayOfSize(CPU_WORKER_COUNT).map(async () => {
@@ -42,7 +44,9 @@ export async function evolveNextGeneration(
           // Reset the search radius: finding a winner proves the current neighbourhood is
           // productive, so the next search should start cheap again rather than stay drifted out.
           console.log(
-            `\nBeat ${activeBots.length} champions after ${formatNumber(iterationsSinceLastWin)} iterations`,
+            `\nBeat ${activeBots.length} champions after ${
+              formatNumber(iterationsSinceLastWin)
+            } iterations and ${timer()}`,
           );
           iterationsSinceLastWin = 0;
           progressFormatter = createProgressFormatter({ scaleFactor: 100 });
