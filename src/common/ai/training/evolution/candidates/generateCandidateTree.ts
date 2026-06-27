@@ -29,17 +29,16 @@ export function randomlyMutateUnitAwareBehaviourTree(
 ): UnitAwareBehaviourTree {
   // Don't always mutate all trees, we might have a strong tree for one unit that does
   // not want to be mutated.
-  const updatedTree = (unitType: UnitType) =>
-    withProbability([
-      {
-        probability: 20,
-        effect: () => structuredClone(tree[unitType]),
-      },
-      {
-        probability: 80,
-        effect: () => randomlyMutateTree({ count, tree: tree[unitType], unitType, borrowBots: borrowBots }),
-      },
-    ])();
+  const updatedTree = (unitType: UnitType) => (withProbability([
+    {
+      probability: 20,
+      effect: () => structuredClone(tree[unitType]),
+    },
+    {
+      probability: 80,
+      effect: () => randomlyMutateTree({ count, tree: tree[unitType], unitType, borrowBots: borrowBots }),
+    },
+  ])());
 
   return {
     [UnitType.Archer]: updatedTree(UnitType.Archer),
