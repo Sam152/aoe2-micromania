@@ -24,7 +24,7 @@ export async function startEvolutionHarness() {
     const borrowBots = await getAllBorrowBots();
     const generation = await getCurrentGenerationNumber() + 1;
 
-    console.log(`Evolving group ${activeBots[0].groupName} generation ${generation}\n`);
+    console.log(`\nEvolving group ${activeBots[0].groupName} generation ${generation}`);
     const nextGeneration = await evolveNextGeneration({ activeBots, generation, borrowBots });
 
     if (nextGeneration === "EXCEEDED_MAX_ITERATIONS") {
