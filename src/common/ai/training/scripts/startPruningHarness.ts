@@ -1,6 +1,5 @@
 import { sql } from "../infra/connection.ts";
-import { params } from "../params.ts";
-import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
+import { getAllBotsByElo } from "../infra/repo/getAllBotsByElo.ts";
 import { getActivations } from "../infra/repo/getActivations.ts";
 import { pruneUnitAwareTree } from "../../behaviourTree/utils/pruneTree.ts";
 import { updateBotTree } from "../infra/repo/updateBotTree.ts";
@@ -8,14 +7,14 @@ import { truncateBotActivations } from "../infra/repo/truncateBotActivations.ts"
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { countUnitAwareBehaviourTreeNodes } from "../../behaviourTree/utils/countUnitAwareBehaviourTreeNodes.ts";
 
-const { TOURNEY_ROUND_ROBIN_COUNT, TOTAL_BOTS_PER_GENERATION } = params;
-
 export async function startPruningHarness() {
   // Get all active bots.
-  const bots = await getActiveBotsByElo();
+  const bots = await getAllBotsByElo();
   console.log(`Found ${bots.length} active bots`);
 
-  const minimumGameCount = (TOTAL_BOTS_PER_GENERATION - 1) * TOURNEY_ROUND_ROBIN_COUNT;
+  // We should have played two round robins against the whole pool, so we should
+  // have this amount of games played before pruning.
+  const minimumGameCount = (bots.length - 1) * 2;
 
   const prunableBots = bots.filter((bot) => bot.gamesSinceLastPrune >= minimumGameCount);
   console.log(

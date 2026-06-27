@@ -1,33 +1,17 @@
-import { params } from "../params.ts";
 import { startEvolutionHarness } from "./startEvolutionHarness.ts";
 import { startTournamentHarness } from "./startTournamentHarness.ts";
 import { startPruningHarness } from "./startPruningHarness.ts";
-
-import { startPromotionHarness } from "./startPromotionHarness.ts";
-import { retireAllBots } from "../infra/repo/retireAllBots.ts";
 import { createTimer } from "../utils/createTimer.ts";
-
-const { TOURNEY_ROUND_ROBIN_COUNT } = params;
 
 async function trainForever() {
   while (true) {
     await step("EVOLVE", startEvolutionHarness);
 
-    await step("TOURNAMENT", async () => {
-      for (let i = 0; i < TOURNEY_ROUND_ROBIN_COUNT; i++) {
-        console.log(`Starting ${i + 1} of ${TOURNEY_ROUND_ROBIN_COUNT}`);
-        await startTournamentHarness(i % 2 === 0);
-      }
-    });
-
-    await step("PROMOTING CHAMPION", startPromotionHarness);
+    // Play every bot we have, in a double round-robin.
+    await step("TOURNAMENT", () => startTournamentHarness(false));
+    await step("TOURNAMENT (INVERTED)", () => startTournamentHarness(true));
 
     await step("PRUNE", startPruningHarness);
-
-    await step("RETIRE", async () => {
-      await retireAllBots();
-      console.log("Retired all bots - ready to start a new generation");
-    });
   }
 }
 

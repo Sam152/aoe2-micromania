@@ -1,12 +1,11 @@
 import { sql } from "../infra/connection.ts";
-import { getActiveBotsByElo } from "../infra/repo/getActiveBotsByElo.ts";
 import { createGameWorkerPool } from "../tournament/createGameWorkerPool.ts";
-
 import { roundRobin } from "../tournament/roundRobin.ts";
 import { recordResult } from "../tournament/recordResult.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { params } from "../params.ts";
 import { roundRobinSize } from "../tournament/roundRobinSize.ts";
+import { getAllBots } from "../infra/repo/getAllBots.ts";
 
 const { CPU_WORKER_COUNT } = params;
 
@@ -15,15 +14,15 @@ const { CPU_WORKER_COUNT } = params;
  */
 export async function startTournamentHarness(invertPositions: boolean) {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
-  const botsInPool = await getActiveBotsByElo();
+  const tourneyBots = await getAllBots();
 
   const { advance } = createProgressFormatter({
-    totalIterations: roundRobinSize(botsInPool.length),
+    totalIterations: roundRobinSize(tourneyBots.length),
     scaleFactor: 100,
   });
 
   await Promise.all(
-    roundRobin(botsInPool, async (playerA, playerB) => {
+    roundRobin(tourneyBots, async (playerA, playerB) => {
       if (invertPositions) {
         const result = await runInPool({ 1: playerA.tree, 2: playerB.tree });
         await recordResult({
