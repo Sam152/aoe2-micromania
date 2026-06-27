@@ -60,8 +60,8 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): Probabilitie
     if (flatNode.node.nodeType === "selector" || flatNode.node.nodeType === "sequence") {
       return [
         { probability: 5, effect: { type: "BORROW_GENETIC_NODE_INTO_LIST", listNode: flatNode.node } },
-        { probability: 5, effect: { type: "ADD_NODE_TO_LIST", listNode: flatNode.node } },
         { probability: 3, effect: { type: "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST", listNode: flatNode.node } },
+        { probability: 5, effect: { type: "ADD_NODE_TO_LIST", listNode: flatNode.node } },
         { probability: 3, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
         { probability: 2, effect: { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node } },
       ];
