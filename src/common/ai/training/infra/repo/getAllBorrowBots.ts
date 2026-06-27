@@ -6,15 +6,13 @@ export type { Bot };
 
 const { TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS, TRAIT_BORROWING_HIGHEST_N_BOTS_TO_BORROW_FROM } = params;
 
-/**
- * Get all bots that can be borrowed from, for the purposes of genetic mutation.
- */
 export async function getAllBorrowBots(): Promise<Bot[]> {
   const rows = await sql`
     SELECT *
     FROM bots
-    -- TODO
-    WHERE 1 = 2
-    ORDER BY id DESC`;
+    WHERE is_active = false
+      AND (SELECT COUNT(DISTINCT group_name) FROM bots) >= ${TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS}
+    ORDER BY elo DESC
+    LIMIT ${TRAIT_BORROWING_HIGHEST_N_BOTS_TO_BORROW_FROM}`;
   return rows.map(botRowToBot);
 }

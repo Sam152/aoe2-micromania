@@ -36,7 +36,7 @@ export async function evolveNextGeneration(
       while (!enough()) {
         const candidate = generateCandidateTree({
           iterationsSinceLastWin: iterationsSinceLastWin++,
-          borrowBots: borrowBots,
+          borrowBots,
           startingPoint: activeBots.at(0)!,
         });
 
