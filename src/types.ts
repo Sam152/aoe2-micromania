@@ -98,11 +98,15 @@ export type StateTransmitter = (
   gameDispatcher: GameDispatcher,
 ) => void;
 
+export type Upgrade = "BALLISTICS";
+
 export interface GameState {
   ticks: number;
   idAt: number;
 
   activePlayers: Record<string, number>;
+  upgrades: Record<number, Partial<Record<Upgrade, true>>>;
+
   queuedPlayers: string[];
 
   units: UnitInstance[];
@@ -154,6 +158,11 @@ export type GameStateAction =
     unitType: UnitType;
     forPlayer: PlayerId;
     direction?: CompassDirection;
+  }
+  | {
+    n: "RESEARCH_UPGRADE";
+    upgrade: Upgrade;
+    forPlayer: PlayerId;
   }
   | {
     n: "MOVE_UNITS_TO";

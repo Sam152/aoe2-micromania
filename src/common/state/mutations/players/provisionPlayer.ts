@@ -20,6 +20,7 @@ export function provisionPlayer(state: GameState, playerId: string, computed: Co
   // Otherwise, spawn some units and 14.
   const newPlayerNumber = getPlayerNumber(state.activePlayers);
   state.activePlayers[playerId] = newPlayerNumber;
+  state.upgrades[newPlayerNumber] = {};
   spawnStartingUnits(state, newPlayerNumber, computed);
 }
 

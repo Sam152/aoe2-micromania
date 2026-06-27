@@ -106,6 +106,10 @@ export function gameStateMutator(state: GameState, action: GameStateAction, comp
     ++state.ticks;
   }
 
+  if (action.n === "RESEARCH_UPGRADE") {
+    state.upgrades[action.forPlayer][action.upgrade] = true;
+  }
+
   if (action.n === "MAP_PARAMETERS_SET") {
     state.mapSize = action.size;
     state.mapTerrain = action.terrain;
@@ -120,6 +124,7 @@ export function defaultState(): GameState {
     idAt: 1,
 
     activePlayers: {},
+    upgrades: {},
     queuedPlayers: [],
 
     units: [],
