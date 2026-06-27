@@ -198,8 +198,9 @@ export function TrainedBots() {
               return (
                 <BotTile
                   key={bot.id}
-                  label={bot.groupName}
-                  value={bot.elo}
+                  label={String(bot.elo)}
+                  value={initials(bot.groupName)}
+                  title={bot.groupName}
                   expanded={expandedGroup === bot.groupName}
                   slot={slot}
                   dashed={dashed}
@@ -215,8 +216,9 @@ export function TrainedBots() {
               {expandedGroupBots.map((bot) => (
                 <BotTile
                   key={bot.id}
-                  label={`gen ${bot.generation}`}
-                  value={bot.elo}
+                  label={String(bot.elo)}
+                  value={initials(bot.botName)}
+                  title={bot.botName}
                   small
                   slot={homeBot?.id === bot.id && awayBot?.id === bot.id
                     ? "both"
@@ -301,9 +303,15 @@ function slotForGroup(
   return {};
 }
 
+// The initials of a hyphen/underscore separated name, e.g. "foo-bar" -> "fb".
+function initials(name: string): string {
+  return name.split(/[-_]/).map((part) => part[0] ?? "").join("");
+}
+
 function BotTile({
   label,
   value,
+  title,
   expanded,
   small,
   slot,
@@ -313,6 +321,7 @@ function BotTile({
 }: {
   label: string;
   value: string | number;
+  title?: string;
   expanded?: boolean;
   small?: boolean;
   slot?: "home" | "away" | "both";
@@ -337,8 +346,9 @@ function BotTile({
       draggable
       onDragStart={onDragStart}
       onClick={onClick}
+      title={title}
     >
-      <span className="gen-tile__gen" title={label}>{label}</span>
+      <span className="gen-tile__gen">{label}</span>
       <span className="gen-tile__elo">{value}</span>
     </div>
   );
