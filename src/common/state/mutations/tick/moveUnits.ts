@@ -7,7 +7,10 @@ import { hasValue } from "../../../util/hasValue.ts";
 export function moveUnits(state: GameState) {
   // Move all units that have some active waypoint.
   state.units
-    .filter(({ waypoints, reformingTo }) => waypoints.length > 0 && !hasValue(reformingTo))
+    .filter(
+      ({ waypoints, reformingTo, movingDirection }) =>
+        waypoints.length > 0 && !hasValue(reformingTo) && hasValue(movingDirection),
+    )
     .forEach(function (unit) {
       unit.position.add(calculateUnitMovementPerTick(unit)!);
 

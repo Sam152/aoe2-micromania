@@ -1,5 +1,5 @@
 import { UnitInstance } from "../../../../types.ts";
-import { Unit } from "../../Unit.ts";
+import { UnitType } from "../../UnitType.ts";
 
 export function groupByTypes(units: UnitInstance[]): UnitMap {
   const gathered = units.reduce<GatheredUnits>((unitMap, unit) => {
@@ -12,5 +12,5 @@ export function groupByTypes(units: UnitInstance[]): UnitMap {
   return entries.sort((typeA, typeB) => typeB[0] - typeA[0]);
 }
 
-type GatheredUnits = Partial<Record<Unit, Record<number, UnitInstance>>>;
-export type UnitMap = [Unit, Record<number, UnitInstance>][];
+type GatheredUnits = Partial<Record<UnitType, Record<number, UnitInstance>>>;
+export type UnitMap = [UnitType, Record<number, UnitInstance>][];

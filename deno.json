@@ -1,11 +1,22 @@
 {
   "nodeModulesDir": "auto",
+  "vendor": true,
   "tasks": {
-    "start": "deno run --check --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
-    "start:debug": "deno run --inspect --check --allow-env --allow-net --allow-read --allow-write --allow-ffi --allow-run src/start.ts",
+    "start": "deno run --check -A src/start.ts",
+    "start:debug": "deno run --inspect --check -A src/start.ts",
     "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
-    "on-save": "deno --allow-run .hooks/on-save.ts"
+    "on-save": "deno --allow-run .hooks/on-save.ts",
+    "validate": "deno check && deno test -P",
+    "training:docker:start": "docker compose -f src/common/ai/training/infra/docker-compose.yml up -d",
+    "training:docker:reset": "docker compose -f src/common/ai/training/infra/docker-compose.yml down -v && deno task training:docker:start",
+    "training:evolve": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startEvolutionHarness.ts",
+    "training:tourney": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startTournamentHarness.ts",
+    "training:promote": "deno run --allow-read --allow-env --allow-net src/common/ai/training/scripts/startPromotionHarness.ts",
+    "training:prune": "deno run --allow-env --allow-net src/common/ai/training/scripts/startPruningHarness.ts",
+    "training:forever": "deno run --allow-env --allow-read --allow-net src/common/ai/training/scripts/trainForever.ts",
+    "training:dump": "docker compose -f src/common/ai/training/infra/docker-compose.yml exec postgres pg_dump --data-only -U postgres postgres | gzip > src/common/ai/training/infra/data/dump.sql.gz",
+    "training:load": "gunzip -c src/common/ai/training/infra/data/dump.sql.gz | docker compose -f src/common/ai/training/infra/docker-compose.yml exec -T postgres psql -U postgres postgres"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -32,14 +43,29 @@
       ]
     }
   },
+  "test": {
+    "permissions": {
+      "read": true,
+      "write": true
+    }
+  },
   "imports": {
+    "@criblinc/docker-names": "npm:@criblinc/docker-names@^1.2.2",
+    "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/cli": "jsr:@std/cli@^1.0.29",
+    "@std/testing": "jsr:@std/testing@^1.0.19",
+    "@std/testing/bdd": "jsr:@std/testing/bdd",
+    "@trpc/client": "npm:@trpc/client@^11.17.0",
+    "@trpc/server": "npm:@trpc/server@^11.17.0",
+    "@types/d3-quadtree": "npm:@types/d3-quadtree@^3.0.6",
     "@types/react": "npm:@types/react@^18",
     "@types/react-dom": "npm:@types/react-dom@^18",
     "@luca/esbuild-deno-loader": "jsr:@luca/esbuild-deno-loader@^0.11.1",
     "@std/crypto": "jsr:@std/crypto@^1.1.0",
     "esbuild": "npm:esbuild@0.28.0",
     "@types/three": "npm:@types/three@^0.184.1",
+    "pino": "npm:pino@^10.3.1",
+    "postgres": "npm:postgres@^3.4.9",
     "react": "npm:react@18",
     "react/jsx-runtime": "npm:react@18/jsx-runtime",
     "react-dom": "npm:react-dom@18",

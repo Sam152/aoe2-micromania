@@ -7,6 +7,8 @@ import * as esbuild from "esbuild";
 import { bundleClient } from "./bundle/bundleClient.ts";
 import { bundleWorker } from "./bundle/bundleWorker.ts";
 import { createStaticAssetMap, StaticAssetMap } from "./bundle/createStaticAssetMap.ts";
+import { logger } from "./server/logger.ts";
+import { trpcHandler } from "./server/trpc/router.ts";
 
 logErrors();
 
@@ -22,6 +24,10 @@ const staticAssets: StaticAssetMap = {
 
 const httpServer = createServer(async (req, res) => {
   const pathname = new URL(req.url ?? "/", "http://localhost").pathname;
+
+  if (pathname.startsWith("/trpc/")) {
+    return trpcHandler(req, res);
+  }
 
   const staticAsset = staticAssets[pathname];
   if (req.method === "GET" && staticAsset) {
@@ -50,4 +56,4 @@ io.on("connection", (socket) => {
 
 const port = parseInt(Deno.env.get("PORT") ?? "3000");
 httpServer.listen(port);
-console.log(`Server listening on port ${port}`);
+logger.info(`Server listening on port ${port}`);

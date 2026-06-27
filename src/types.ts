@@ -1,5 +1,5 @@
 import { UnitState } from "./common/units/UnitState.ts";
-import { Unit } from "./common/units/Unit.ts";
+import { UnitType } from "./common/units/UnitType.ts";
 import { CompassDirection } from "./common/units/CompassDirection.ts";
 import { AnimationStyle } from "./common/units/AnimationStyle.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
@@ -10,11 +10,12 @@ import { Hotkey } from "./common/input/Hotkey.ts";
 import { DamageType } from "./common/units/DamageType.ts";
 import { Sound } from "./common/sounds/Sound.ts";
 import { AccuracyFunction } from "./common/state/mutations/tick/applyAccuracy.ts";
+import { GameStateListener, PreTickListener } from "./common/state/managers/GameStateListener.ts";
 
 export interface UnitInstance {
   id: number;
   ownedByPlayer: PlayerId;
-  unitType: Unit;
+  unitType: UnitType;
 
   unitStateStartedAt: number;
   unitState: UnitState;
@@ -64,7 +65,7 @@ export interface UnitInstance {
 export interface FallenUnitInstance {
   id: number;
   ownedByPlayer: PlayerId;
-  unitType: Unit;
+  unitType: UnitType;
   unitFallenAt: number;
   position: Vector2;
   direction: CompassDirection;
@@ -74,7 +75,7 @@ export interface ProjectileInstance {
   id: number;
   ownedBy: PlayerId;
   type: ProjectileType;
-  firedByType: Unit;
+  firedByType: UnitType;
   targeting?: PlayerId;
   startingPoint: Vector2;
   destination: Vector2;
@@ -97,11 +98,15 @@ export type StateTransmitter = (
   gameDispatcher: GameDispatcher,
 ) => void;
 
+export type Upgrade = "BALLISTICS";
+
 export interface GameState {
   ticks: number;
   idAt: number;
 
   activePlayers: Record<string, number>;
+  upgrades: Record<number, Partial<Record<Upgrade, true>>>;
+
   queuedPlayers: string[];
 
   units: UnitInstance[];
@@ -123,7 +128,8 @@ export type PlayerId = number;
 
 export type GameStateAction =
   | {
-    n: "T"; // Tick, reduced in size for a smaller transmission, could be an enum in the future.
+    // Tick, reduced in size for a smaller transmission, could be an enum in the future.
+    n: "T";
     // Send the number of ticks in state, down the pipe at the same time, for desync protection.
     t: number;
   }
@@ -149,9 +155,14 @@ export type GameStateAction =
   | {
     n: "SPAWN_UNIT";
     position: Vector2;
-    unitType: Unit;
+    unitType: UnitType;
     forPlayer: PlayerId;
     direction?: CompassDirection;
+  }
+  | {
+    n: "RESEARCH_UPGRADE";
+    upgrade: Upgrade;
+    forPlayer: PlayerId;
   }
   | {
     n: "MOVE_UNITS_TO";
@@ -304,7 +315,7 @@ export type ClientStateAction =
     unit: UnitInstance;
   }
   | {
-    n: "FRAME_RENDERING_STARTED";
+    n: "FRAME_RENDERING_STARTED" | "FRAME_RENDERING_ENDED";
   }
   | {
     n: "FIXATE_CAMERA";
@@ -362,7 +373,9 @@ export interface StateManagerInterface {
 
   getClientState(): ClientState;
 
-  addGameStateListener(listener: (state: GameState, action: GameStateAction) => void): void;
+  addGameStateListener(listener: GameStateListener): void;
+
+  addPreTickListener(listener: PreTickListener): void;
 
   addClientStateListener(listener: (state: ClientState, action: ClientStateAction) => void): void;
 }

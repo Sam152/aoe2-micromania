@@ -20,6 +20,10 @@ export function startGame(io: Server): {
     gameMode.onTick(gameState, action, state);
   });
 
+  state.addPreTickListener((gameState, action, computed) => {
+    gameMode.preTick(gameState, action, state, computed);
+  });
+
   state.init();
   gameMode.start(state);
 

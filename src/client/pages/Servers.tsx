@@ -22,12 +22,13 @@ export function Servers() {
                 </tr>
               </thead>
               <tbody>
-                {servers.length === 0 && arrayOfSize(regionalServers.length).map((i) => <RowSkeleton key={i} />)}
+                {servers.length === 0 &&
+                  arrayOfSize(Object.keys(regionalServers).length).map((i) => <RowSkeleton key={i} />)}
                 {servers.map((server, i) => (
                   <tr key={i}>
                     <td>
                       <h3 className="heading-md">
-                        {server.server.replace("https://", "").replace(".aoe.cx", "")}
+                        {server.label}
                       </h3>
                     </td>
                     <td>{server.ping}</td>

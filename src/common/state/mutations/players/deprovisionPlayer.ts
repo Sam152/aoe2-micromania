@@ -1,9 +1,9 @@
 import { GameState } from "../../../../types.ts";
 import { registerUnitFallen } from "../tick/registerUnitFallen.ts";
 import { provisionPlayer } from "./provisionPlayer.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 
-export function deprovisionPlayer(state: GameState, playerId: string, computed: ComputedFrameState) {
+export function deprovisionPlayer(state: GameState, playerId: string, computed: ComputedTickState) {
   // If the player is actually playing, remove them as an active player and despawn their units.
   if (state.activePlayers[playerId]) {
     // Remove the disconnected player from the active player pool.

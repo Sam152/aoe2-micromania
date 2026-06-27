@@ -2,11 +2,11 @@ import { GameState, UnitInstance } from "../../../../types.ts";
 import { UnitState } from "../../../units/UnitState.ts";
 import { getAttackRange } from "../../../util/inAttackRange.ts";
 import { hasScalarValue } from "../../../util/hasValue.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
-import { Unit } from "../../../units/Unit.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
+import { closestUnitNotOwnedByBruteForce } from "../../../util/closestUnitNotOwnedByBruteForce.ts";
 
-export function autoAttack(state: GameState, computed: ComputedFrameState) {
-  const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
+export function autoAttack(state: GameState, computed: ComputedTickState) {
+  const fireUnits = computed.nonMonkUnits();
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
       (unit.unitState === UnitState.Idle || hasScalarValue(unit.patrollingTo)) &&
@@ -14,7 +14,7 @@ export function autoAttack(state: GameState, computed: ComputedFrameState) {
     );
   });
   autoAttackingUnits.forEach((attackingUnit) => {
-    const closest = closestUnitNotOwnedBy(attackingUnit.ownedByPlayer, attackingUnit, computed);
+    const closest = closestUnitNotOwnedByBruteForce(attackingUnit.ownedByPlayer, attackingUnit, state.units);
     if (closest) {
       attackingUnit.targetingUnit = closest.id;
     }
@@ -24,12 +24,12 @@ export function autoAttack(state: GameState, computed: ComputedFrameState) {
 export function closestUnitNotOwnedBy(
   notOwnedBy: number,
   attackingUnit: UnitInstance,
-  computed: ComputedFrameState,
+  computed: ComputedTickState,
 ): UnitInstance | undefined {
   let distance: number;
   let closestUnit: UnitInstance | undefined;
 
-  Object.entries(computed.playerUnitQuadTrees).forEach(([player, tree]) => {
+  Object.entries(computed.unitQuadTreesByPlayer()).forEach(([player, tree]) => {
     if (parseInt(player) === notOwnedBy) {
       return;
     }

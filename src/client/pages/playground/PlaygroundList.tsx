@@ -11,6 +11,8 @@ const playgrounds: Playground[] = [
   { name: "Arrow frames", path: "/playground/arrow-frames" },
   { name: "Mango fan-out", path: "/playground/mango-fanout" },
   { name: "Accuracy analysis", path: "/playground/accuracy-analysis" },
+  { name: "Group unit vector facing direction", path: "/playground/group-unit-vector-facing-direction" },
+  { name: "Trained bots", path: "/playground/trained-bots" },
 ];
 
 export function PlaygroundList() {

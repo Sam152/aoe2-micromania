@@ -4,17 +4,17 @@ import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMoveme
 import { inAttackRange } from "../../../util/inAttackRange.ts";
 import { setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { stopUnit } from "../initiated/stopUnit.ts";
 
 export const CONVERSION_JUICE_TICKS_RECHARGE = 100;
 
-export function convertUnits(state: GameState, computed: ComputedFrameState) {
+export function convertUnits(state: GameState, computed: ComputedTickState) {
   const convertingUnits = state.units.filter((unit) => !!unit.convertingUnit);
 
   // Check if a unit should be firing or moving towards its target.
   convertingUnits.forEach((monk) => {
-    const convertingUnit = computed.unitIndex[monk.convertingUnit!];
+    const convertingUnit = computed.unitsById()[monk.convertingUnit!];
 
     // Either the target of a conversion was already converted, or it cycled out
     // of the unit list.
@@ -36,7 +36,7 @@ export function convertUnits(state: GameState, computed: ComputedFrameState) {
       }
 
       if (state.ticks === monk.conversionSucceedsAt) {
-        const converted = computed.unitIndex[monk.convertingUnit!];
+        const converted = computed.unitsById()[monk.convertingUnit!];
 
         if (converted) {
           converted.ownedByPlayer = monk.ownedByPlayer;

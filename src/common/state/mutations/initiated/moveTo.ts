@@ -10,6 +10,10 @@ import { addUnitReformingSpeedFactor } from "../../../util/addUnitReformingSpeed
 import { snapToClamp } from "../../../util/snapToClamp.ts";
 
 export function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
+  if (units.length === 0) {
+    return;
+  }
+
   units.forEach((unit) => {
     stopUnit(unit);
     unit.lastCommandedDirection = destination;

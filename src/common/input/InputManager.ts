@@ -21,6 +21,7 @@ export class InputManager {
   private leftMouseDown: boolean;
   private shiftDown: boolean;
   private ctrlDown: boolean;
+  private preventDefaultOnInput: boolean;
 
   private onPointerLockChange: () => void;
   private onMouseMove: (e: MouseEvent) => void;
@@ -35,6 +36,7 @@ export class InputManager {
     element: HTMLCanvasElement,
     stateManager: StateManagerInterface,
     clientStateTransmitter: StateTransmitter,
+    preventDefaultOnInput = true,
   ) {
     this.element = element;
     this.dragging = false;
@@ -43,6 +45,7 @@ export class InputManager {
     this.leftMouseDown = false;
     this.shiftDown = false;
     this.ctrlDown = false;
+    this.preventDefaultOnInput = preventDefaultOnInput;
 
     this.stateManager = stateManager;
     this.clientStateTransmitter = clientStateTransmitter;
@@ -117,17 +120,26 @@ export class InputManager {
 
       const k = e.keyCode;
 
+      // Always allow refresh.
+      if (e.metaKey && k == 82) {
+        return;
+      }
+
       if (k === hotkeyManager.getBindFor(Hotkey.Stop)) {
+        this.preventDefault(e);
         this.dispatch({ n: "HOTKEY_STOP" });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.DeleteUnit)) {
+        this.preventDefault(e);
         this.dispatch({ n: e.shiftKey ? "HOTKEY_SHIFT_DELETE" : "HOTKEY_DELETE" });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.AttackGround)) {
+        this.preventDefault(e);
         const { activeCommand } = this.stateManager.getClientState();
         this.dispatch({ n: activeCommand === ActiveCommand.AttackGround ? "HOTKEY_CANCEL" : "HOTKEY_ATTACK_GROUND" });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.Patrol)) {
+        this.preventDefault(e);
         const { activeCommand, mousePosition } = this.stateManager.getClientState();
         this.dispatch(
           activeCommand === ActiveCommand.Patrol
@@ -136,16 +148,20 @@ export class InputManager {
         );
       }
       if (k === hotkeyManager.getBindFor(Hotkey.LineFormation)) {
+        this.preventDefault(e);
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Line });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.SpreadFormation)) {
+        this.preventDefault(e);
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Spread });
       }
       if (k === hotkeyManager.getBindFor(Hotkey.SplitFormation)) {
+        this.preventDefault(e);
         this.dispatch({ n: "HOTKEY_FORMATION_CHANGED", formation: FormationType.Split });
       }
       controlGroups.forEach((keycode) => {
         if (k === keycode) {
+          this.preventDefault(e);
           this.dispatch({
             n: this.ctrlDown ? "CONTROL_GROUP_ASSIGNED" : "CONTROL_GROUP_SELECTED",
             group: keycode - digit0KeyCode,
@@ -160,7 +176,9 @@ export class InputManager {
       this.ctrlDown = e.ctrlKey;
     };
 
-    this.onContextMenu = (e) => e.preventDefault();
+    this.onContextMenu = (e) => {
+      this.preventDefault(e);
+    };
 
     this.onClick = (e) => {
       const camera = this.stateManager.getClientState().camera;
@@ -183,6 +201,12 @@ export class InputManager {
     document.addEventListener("keydown", this.onKeyDown);
     document.addEventListener("keyup", this.onKeyUp);
     element.addEventListener("click", this.onClick);
+  }
+
+  preventDefault(e: Event) {
+    if (this.preventDefaultOnInput) {
+      e.preventDefault();
+    }
   }
 
   dispatchInput(): void {

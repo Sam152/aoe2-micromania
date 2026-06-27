@@ -1,7 +1,7 @@
-import { Unit } from "./Unit.ts";
+import { UnitType } from "./UnitType.ts";
 import { unitMetadataFactory } from "./unitMetadataFactory.ts";
 
-export function calculateDamage(attacking: Unit, receiving: Unit) {
+export function calculateDamage(attacking: UnitType, receiving: UnitType) {
   const attackingMetadata = unitMetadataFactory.getUnit(attacking);
   const receivingMetadata = unitMetadataFactory.getUnit(receiving);
 

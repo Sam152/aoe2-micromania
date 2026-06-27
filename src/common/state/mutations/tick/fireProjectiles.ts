@@ -10,12 +10,13 @@ import { inAttackRange, inMinimumRange } from "../../../util/inAttackRange.ts";
 import { setUnitMovementAwayFrom, setUnitMovementTowards } from "../initiated/setUnitMovementTowards.ts";
 import { compassDirectionCalculator } from "../../../units/compassDirectionCalculator.ts";
 import { soundManager } from "../../../sounds/SoundManger.ts";
-import { Unit } from "../../../units/Unit.ts";
-import { ComputedFrameState } from "../../computed/createComputedFrameState.ts";
-import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 
-export function fireProjectiles(state: GameState, computed: ComputedFrameState) {
-  const fireUnits = state.units.filter((unit) => unit.unitType !== Unit.Monk);
+import { ComputedTickState } from "../../computed/createComputedTickState.ts";
+import { projectileMetadata } from "../../../units/projectileMetadata.ts";
+import { computeAimingFor } from "./computeAimingFor.ts";
+
+export function fireProjectiles(state: GameState, computed: ComputedTickState) {
+  const fireUnits = computed.nonMonkUnits();
 
   // Check if a unit should be firing or moving towards its target.
   fireUnits
@@ -24,14 +25,14 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
         (hasValue(unit.targetingUnit) || hasValue(unit.targetingPosition)) && unit.unitState !== UnitState.Firing,
     )
     .forEach((unit) => {
-      if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
+      if (unit.targetingUnit && !computed.unitsById()[unit.targetingUnit]) {
         unit.targetingUnit = undefined;
         unit.unitState = UnitState.Idle;
         return;
       }
 
       const targetingPosition =
-        (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
+        (unit.targetingUnit ? computed.unitsById()[unit.targetingUnit!]!.position : unit.targetingPosition)!;
 
       if (inMinimumRange(unit, targetingPosition)) {
         setUnitMovementAwayFrom(state, unit, targetingPosition);
@@ -56,14 +57,15 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
   fireUnits
     .filter(({ unitState }) => unitState === UnitState.Firing)
     .forEach((unit) => {
-      if (unit.targetingUnit && !computed.unitIndex[unit.targetingUnit]) {
+      if (unit.targetingUnit && !computed.unitsById()[unit.targetingUnit]) {
         unit.targetingUnit = undefined;
         unit.unitState = UnitState.Idle;
         return;
       }
 
-      const aimingFor =
-        (unit.targetingUnit ? computed.unitIndex[unit.targetingUnit!]!.position : unit.targetingPosition)!;
+      const aimingFor = (unit.targetingUnit
+        ? computeAimingFor({ targetingUnit: computed.unitsById()[unit.targetingUnit!]!, unit, state })
+        : unit.targetingPosition)!;
 
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
       const firingFrame = Math.ceil((unitData.attackFrameDelay / config.gameSpeed) * config.ticksPerSecond);
@@ -83,7 +85,7 @@ export function fireProjectiles(state: GameState, computed: ComputedFrameState) 
           aimingFor,
         });
 
-        const targetingUnit = computed.unitIndex[unit.targetingUnit!];
+        const targetingUnit = computed.unitsById()[unit.targetingUnit!];
         const distance = unit.position.distanceTo(landedPosition);
 
         state.projectiles.push({

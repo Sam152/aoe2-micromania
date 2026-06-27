@@ -3,7 +3,7 @@ import { GameState } from "../../../../types.ts";
 const CLEAN_AFTER_TICKS = 800;
 
 export function cleanFallen(state: GameState) {
-  if (state.ticks % 30) {
+  if (state.ticks % 30 === 0) {
     state.fallenUnits = state.fallenUnits.filter((unit) => {
       const cleanUpPoint = unit.unitFallenAt + CLEAN_AFTER_TICKS;
       const shouldClean = state.ticks > cleanUpPoint;

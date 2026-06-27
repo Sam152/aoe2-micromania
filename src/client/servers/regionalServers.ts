@@ -1,10 +1,11 @@
-export const regionalServers = ["https://us-east.aoe.cx", "https://ap-south.aoe.cx"];
+export const regionalServers = { "https://ageofmicro.com": "perth-au" };
 
-export async function serversByPing(): Promise<{ server: string; ping: number }[]> {
+export async function serversByPing(): Promise<{ server: string; label: string; ping: number }[]> {
   return (
     await Promise.all(
-      regionalServers.map(async (server) => ({
+      Object.entries(regionalServers).map(async ([server, label]) => ({
         server,
+        label,
         ping: await measurePing(server),
       })),
     )

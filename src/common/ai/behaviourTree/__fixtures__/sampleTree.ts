@@ -1,0 +1,339 @@
+import { UnitAwareBehaviourTree } from "../BehaviourTree.ts";
+import { UnitType } from "../../../units/UnitType.ts";
+
+/**
+ * A human wrote this one.
+ */
+export const sampleTree: UnitAwareBehaviourTree = {
+  [UnitType.Monk]: {
+    nodeType: "selector",
+    nodes: [
+      {
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "condition",
+            type: "vectorDistanceBetweenLessThan",
+            invert: true,
+            params: {
+              pointA: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "unitPosition",
+                params: {
+                  unitWithPosition: {
+                    nodeType: "dataValue",
+                    dataType: "unitId",
+                    type: "BLACKBOARD",
+                    blackboardKey: "opponentClosestUnitByType",
+                    params: {
+                      unitType: {
+                        nodeType: "dataValue",
+                        "dataType": "unitType",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
+                    },
+                  },
+                },
+              },
+              pointB: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "groupAveragePosition",
+                params: {},
+              },
+              distance: {
+                nodeType: "dataValue",
+                "dataType": "vectorMagnitude",
+                type: "LITERAL",
+                value: 400,
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "MOVE_UNITS",
+            params: {
+              direction: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "groupUnitVectorFacingDirection",
+                params: {
+                  direction: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "BLACKBOARD",
+                    blackboardKey: "opponentAverageUnitPositionByType",
+                    params: {
+                      unitType: {
+                        nodeType: "dataValue",
+                        dataType: "unitType",
+                        type: "LITERAL",
+                        value: "ARCHER",
+                      },
+                    },
+                  },
+                  angle: {
+                    nodeType: "dataValue",
+                    dataType: "vectorAngle",
+                    type: "LITERAL",
+                    value: 180,
+                  },
+                  magnitude: {
+                    nodeType: "dataValue",
+                    dataType: "vectorMagnitude",
+                    type: "LITERAL",
+                    value: 150,
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+      {
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "condition",
+            invert: true,
+            type: "booleanIsTrue",
+            params: {
+              subject: {
+                nodeType: "dataValue",
+                dataType: "boolean",
+                type: "BLACKBOARD",
+                blackboardKey: "groupIsConverting",
+                params: {},
+              },
+            },
+          },
+          {
+            nodeType: "selector",
+            nodes: [{
+              nodeType: "action",
+              type: "CONVERT",
+              params: {
+                unit: {
+                  nodeType: "dataValue",
+                  dataType: "unitId",
+                  type: "BLACKBOARD",
+                  blackboardKey: "opponentClosestUnitByType",
+                  params: {
+                    unitType: {
+                      nodeType: "dataValue",
+                      dataType: "unitType",
+                      type: "LITERAL",
+                      value: "MANGO",
+                    },
+                  },
+                },
+              },
+            }, {
+              nodeType: "action",
+              type: "CONVERT",
+              params: {
+                unit: {
+                  nodeType: "dataValue",
+                  dataType: "unitId",
+                  type: "BLACKBOARD",
+                  blackboardKey: "opponentClosestUnitByType",
+                  params: {
+                    unitType: {
+                      nodeType: "dataValue",
+                      dataType: "unitType",
+                      type: "LITERAL",
+                      value: "ARCHER",
+                    },
+                  },
+                },
+              },
+            }],
+          },
+        ],
+      },
+      {
+        nodeType: "sequence",
+        nodes: [],
+      },
+      {
+        nodeType: "sequence",
+        nodes: [],
+      },
+    ],
+  },
+  [UnitType.Archer]: {
+    nodeType: "selector",
+    nodes: [
+      // If we have less than 8 units, just patrol them all.
+      {
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "condition",
+            type: "unitCountGreaterThan",
+            invert: true,
+            params: {
+              leftUnitCount: {
+                nodeType: "dataValue",
+                dataType: "unitCount",
+                type: "BLACKBOARD",
+                blackboardKey: "globalOwnedUnitsOfTypeCount",
+                params: {
+                  unitType: {
+                    nodeType: "dataValue",
+                    dataType: "unitType",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
+                },
+              },
+              rightUnitCount: {
+                nodeType: "dataValue",
+                dataType: "unitCount",
+                type: "LITERAL",
+                value: 8,
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "PATROL",
+            params: {
+              direction: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "opponentAveragePosition",
+                params: {},
+              },
+            },
+          },
+        ],
+      },
+      // If there are less than two groups of archers, split them.
+      {
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "condition",
+            type: "unitCountGreaterThan",
+            invert: true,
+            params: {
+              leftUnitCount: {
+                nodeType: "dataValue",
+                dataType: "unitCount",
+                type: "BLACKBOARD",
+                blackboardKey: "groupMetaUnitTypeGroupCount",
+                params: {},
+              },
+              rightUnitCount: {
+                nodeType: "dataValue",
+                dataType: "unitCount",
+                type: "LITERAL",
+                value: 2,
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "SPLIT_GROUP",
+            params: {
+              splitGroupInto: {
+                nodeType: "dataValue",
+                dataType: "groupSize",
+                type: "LITERAL",
+                value: "HALF",
+              },
+            },
+          },
+        ],
+      },
+      // Then patrol one of the groups.
+      {
+        nodeType: "sequence",
+        nodes: [
+          {
+            nodeType: "condition",
+            type: "groupIndexEquals",
+            invert: false,
+            params: {
+              groupIndexLeft: {
+                nodeType: "dataValue",
+                dataType: "groupIndex",
+                type: "LITERAL",
+                value: 0,
+              },
+              groupIndexRight: {
+                nodeType: "dataValue",
+                dataType: "groupIndex",
+                type: "BLACKBOARD",
+                blackboardKey: "groupMetaUnitTypeIndex",
+                params: {},
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "PATROL",
+            params: {
+              direction: {
+                nodeType: "dataValue",
+                dataType: "vector",
+                type: "BLACKBOARD",
+                blackboardKey: "opponentAveragePosition",
+                params: {},
+              },
+            },
+          },
+          {
+            nodeType: "action",
+            type: "IDLE",
+            params: {
+              forTicksAmount: {
+                nodeType: "dataValue",
+                dataType: "tickCount",
+                type: "LITERAL",
+                value: 100,
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+  [UnitType.Mangonel]: {
+    nodeType: "sequence",
+    nodes: [
+      {
+        nodeType: "action",
+        type: "PATROL",
+        params: {
+          direction: {
+            nodeType: "dataValue",
+            dataType: "vector",
+            type: "BLACKBOARD",
+            blackboardKey: "opponentAveragePosition",
+            params: {},
+          },
+        },
+      },
+      {
+        nodeType: "action",
+        type: "IDLE",
+        params: {
+          forTicksAmount: {
+            nodeType: "dataValue",
+            dataType: "tickCount",
+            type: "LITERAL",
+            value: 100,
+          },
+        },
+      },
+    ],
+  },
+};

@@ -4,7 +4,7 @@ import { screenManager } from "../../../common/drawing/screenManager.ts";
 import { slpManager } from "../../../common/drawing/SlpManager.ts";
 import { createCircularProbabilityAccuracy, defaults } from "../../../common/state/mutations/tick/applyAccuracy.ts";
 import { unitMetadataFactory } from "../../../common/units/unitMetadataFactory.ts";
-import { Unit } from "../../../common/units/Unit.ts";
+import { UnitType } from "../../../common/units/UnitType.ts";
 import { UnitState } from "../../../common/units/UnitState.ts";
 import { config } from "../../../common/config.ts";
 
@@ -32,7 +32,7 @@ export function AccuracyAnalysisPlayground() {
     canvas.width = globalThis.innerWidth * scale;
     canvas.height = (globalThis.innerHeight - screenManager.getTopOffset()) * scale;
 
-    const archerMeta = unitMetadataFactory.getUnit(Unit.Archer);
+    const archerMeta = unitMetadataFactory.getUnit(UnitType.Archer);
 
     const topH = Math.floor(canvas.height * 0.55);
 
@@ -184,7 +184,7 @@ export function AccuracyAnalysisPlayground() {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "100vw", height: "calc(100vh - 53px)", overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100vw", height: "calc(100vh - 52px)", overflow: "hidden" }}>
       <canvas
         style={{ width: "100%", height: "100%", display: "block", backgroundColor: "black" }}
         ref={canvasRef}

@@ -13,10 +13,10 @@ export class RenderLoopManager {
   private inputManager: InputManager;
   private running: boolean;
 
-  constructor(stateManager: StateManagerInterface, canvas: HTMLCanvasElement) {
+  constructor(stateManager: StateManagerInterface, canvas: HTMLCanvasElement, preventDefaultOnInput = true) {
     this.stateManager = stateManager;
     this.renderer = new CanvasRenderer(canvas);
-    this.inputManager = new InputManager(canvas, stateManager, clientStateTransmitter);
+    this.inputManager = new InputManager(canvas, stateManager, clientStateTransmitter, preventDefaultOnInput);
     this.running = false;
 
     this.onResize = this.onResize.bind(this);
@@ -49,7 +49,11 @@ export class RenderLoopManager {
 
       // Fixate on a logical part of the map, when significant actions occur.
       const clientId = this.stateManager.getClientState().clientId;
-      if (action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === clientId) {
+
+      const clientJustLoaded = action.n === "CLIENT_LOADED_WITH_ID" && action.playerId === clientId;
+      const playerCycled = action.n === "CYCLE_PLAYER" && action.playerId === clientId;
+
+      if (clientJustLoaded || playerCycled) {
         if (state.activePlayers[clientId]) {
           this.fixateCameraOnPlayerUnits(state, state.activePlayers[clientId]);
         } else {
@@ -84,7 +88,7 @@ export class RenderLoopManager {
     const towardsMiddle = middleOfGrid.sub(unitsVector);
 
     // The amount "towards the middle" we should nudge the camera.
-    const startingCamera = unitsVector.add(towardsMiddle.multiplyScalar(0.5));
+    const startingCamera = unitsVector.add(towardsMiddle.multiplyScalar(0.2));
 
     this.stateManager.dispatchClient({
       n: "FIXATE_CAMERA",
@@ -117,6 +121,7 @@ export class RenderLoopManager {
       this.stateManager.getClientState(),
       this.stateManager.dispatchClient.bind(this.stateManager),
     );
+    this.stateManager.dispatchClient({ n: "FRAME_RENDERING_ENDED" });
 
     if (this.running) {
       globalThis.requestAnimationFrame(this.render.bind(this));

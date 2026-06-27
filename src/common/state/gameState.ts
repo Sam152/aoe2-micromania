@@ -6,7 +6,7 @@ import { stopUnit, stopUnitExceptForWaypoints } from "./mutations/initiated/stop
 import { fireProjectiles } from "./mutations/tick/fireProjectiles.ts";
 import { moveUnits } from "./mutations/tick/moveUnits.ts";
 import { registerProjectileHits } from "./mutations/tick/registerProjectileHits.ts";
-import { unitsInGameState } from "../util/unitsInGameState.ts";
+import { unitsInGameState, unitsInGameStateComputed } from "../util/unitsInGameState.ts";
 import { registerUnitFallen } from "./mutations/tick/registerUnitFallen.ts";
 import { patrolUnits } from "./mutations/tick/patrolUnits.ts";
 import { reformUnits } from "./mutations/tick/reformUnits.ts";
@@ -19,15 +19,13 @@ import { setUnitMovementTowardsCurrentWaypoint } from "./mutations/initiated/set
 import { snapToClamp } from "../util/snapToClamp.ts";
 import { provisionPlayer } from "./mutations/players/provisionPlayer.ts";
 import { cyclePlayers } from "./mutations/players/cyclePlayers.ts";
-import { createComputedFrameState } from "./computed/createComputedFrameState.ts";
+import { ComputedTickState } from "./computed/createComputedTickState.ts";
 import { deprovisionPlayer } from "./mutations/players/deprovisionPlayer.ts";
 import { cleanFallen } from "./mutations/tick/cleanFallen.ts";
 import { startConversion } from "./mutations/initiated/startConversion.ts";
 import { convertUnits } from "./mutations/tick/convertUnits.ts";
 
-export function gameStateMutator(state: GameState, action: GameStateAction): GameState {
-  const computed = createComputedFrameState(state);
-
+export function gameStateMutator(state: GameState, action: GameStateAction, computed: ComputedTickState): GameState {
   if (action.n === "CLIENT_LOADED_WITH_ID") {
     provisionPlayer(state, action.playerId, computed);
   }
@@ -42,7 +40,7 @@ export function gameStateMutator(state: GameState, action: GameStateAction): Gam
     spawnUnit(state, action);
   }
   if (action.n === "MOVE_UNITS_TO") {
-    const units = unitsInGameState(state, action.units);
+    const units = unitsInGameStateComputed(computed, action.units);
     moveTo(state, units, action.position);
   }
   if (action.n === "ADD_WAYPOINT") {
@@ -63,13 +61,13 @@ export function gameStateMutator(state: GameState, action: GameStateAction): Gam
   }
 
   if (action.n === "STOP_UNITS") {
-    unitsInGameState(state, action.units).forEach((unit) => stopUnit(unit));
+    unitsInGameStateComputed(computed, action.units).forEach((unit) => stopUnit(unit));
   }
   if (action.n === "DELETE_UNITS") {
-    unitsInGameState(state, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
+    unitsInGameStateComputed(computed, action.units).forEach((deletedUnit) => registerUnitFallen(state, deletedUnit));
   }
   if (action.n === "ATTACK") {
-    unitsInGameState(state, action.units).forEach((attackingUnit) => {
+    unitsInGameStateComputed(computed, action.units).forEach((attackingUnit) => {
       stopUnit(attackingUnit);
       attackingUnit.targetingUnit = action.target;
     });
@@ -78,19 +76,19 @@ export function gameStateMutator(state: GameState, action: GameStateAction): Gam
     action.units.map((monkId) => startConversion(state, computed, monkId, action.target));
   }
   if (action.n === "ATTACK_GROUND") {
-    unitsInGameState(state, action.units).forEach((attackingUnit) => {
+    unitsInGameStateComputed(computed, action.units).forEach((attackingUnit) => {
       stopUnit(attackingUnit);
       attackingUnit.targetingPosition = action.position;
     });
   }
 
   if (action.n === "PATROL") {
-    const units = unitsInGameState(state, action.units);
+    const units = unitsInGameStateComputed(computed, action.units);
     patrolTo(state, units, action.position);
   }
 
   if (action.n === "FORMATION_CHANGED") {
-    changeFormation(state, action);
+    changeFormation(state, action, computed);
   }
 
   if (action.n === "T") {
@@ -108,6 +106,10 @@ export function gameStateMutator(state: GameState, action: GameStateAction): Gam
     ++state.ticks;
   }
 
+  if (action.n === "RESEARCH_UPGRADE") {
+    state.upgrades[action.forPlayer][action.upgrade] = true;
+  }
+
   if (action.n === "MAP_PARAMETERS_SET") {
     state.mapSize = action.size;
     state.mapTerrain = action.terrain;
@@ -122,6 +124,7 @@ export function defaultState(): GameState {
     idAt: 1,
 
     activePlayers: {},
+    upgrades: {},
     queuedPlayers: [],
 
     units: [],
