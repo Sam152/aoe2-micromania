@@ -1,9 +1,9 @@
 import { createHTTPHandler } from "@trpc/server/adapters/standalone";
 import { publicProcedure, router } from "./init.ts";
-import { getAllBots } from "../../common/ai/training/infra/repo/getAllBots.ts";
+import { getAllTourneyBots } from "../../common/ai/training/infra/repo/getAllTourneyBots.ts";
 
 export const appRouter = router({
-  getAllBots: publicProcedure.query(getAllBots),
+  getAllBots: publicProcedure.query(getAllTourneyBots),
 });
 
 export type AppRouter = typeof appRouter;

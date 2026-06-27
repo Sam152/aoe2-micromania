@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { LocalStateManager } from "../../../../../common/state/managers/LocalStateManager.ts";
-import type { Bot } from "../../../../../common/ai/training/infra/repo/getAllBots.ts";
+import type { Bot } from "../../../../../common/ai/training/infra/repo/getAllTourneyBots.ts";
 import { triggerBotTicks } from "../../../../../common/ai/integration/triggerBotTicks.ts";
 import { BotInstance, createBot } from "../../../../../common/ai/integration/createBot.ts";
 

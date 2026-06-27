@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTrpc } from "../../../hooks/useTrpc.ts";
 import { GameCanvas } from "../../../components/GameCanvas.tsx";
-import type { Bot } from "../../../../common/ai/training/infra/repo/getAllBots.ts";
+import type { Bot } from "../../../../common/ai/training/infra/repo/getAllTourneyBots.ts";
 import { useBotVsBotStateManager } from "./hooks/useBotVsBotStateManager.ts";
 import { useBlackboardOverlay } from "./hooks/useBlackboardOverlay.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "../../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";

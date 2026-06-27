@@ -5,7 +5,7 @@ import { recordResult } from "../tournament/recordResult.ts";
 import { createProgressFormatter } from "../utils/createProgressFormatter.ts";
 import { params } from "../params.ts";
 import { roundRobinSize } from "../tournament/roundRobinSize.ts";
-import { getAllBots } from "../infra/repo/getAllBots.ts";
+import { getAllTourneyBots } from "../infra/repo/getAllTourneyBots.ts";
 
 const { CPU_WORKER_COUNT } = params;
 
@@ -14,7 +14,7 @@ const { CPU_WORKER_COUNT } = params;
  */
 export async function startTournamentHarness(invertPositions: boolean) {
   const { runInPool, terminatePool } = createGameWorkerPool(CPU_WORKER_COUNT);
-  const tourneyBots = await getAllBots();
+  const tourneyBots = await getAllTourneyBots();
 
   const { advance } = createProgressFormatter({
     totalIterations: roundRobinSize(tourneyBots.length),
