@@ -50,9 +50,9 @@ export async function evolveNextGeneration(
               formatNumber(iterationsSinceLastWin)
             } iterations and ${timer()}`,
           );
-          iterationsSinceLastWin = 0;
           progressFormatter = createProgressFormatter({ scaleFactor: 100 });
-          await insertBot(candidate, generation, activeBots[0]!.groupName);
+          await insertBot(candidate, generation, activeBots[0]!.groupName, iterationsSinceLastWin);
+          iterationsSinceLastWin = 0;
         }
 
         progressFormatter.advance();

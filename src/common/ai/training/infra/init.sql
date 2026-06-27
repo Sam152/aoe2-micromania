@@ -1,6 +1,7 @@
 CREATE TABLE bots (
   id BIGSERIAL PRIMARY KEY
   ,created timestamptz NOT NULL DEFAULT clock_timestamp()
+  ,iteration_count INT NOT NULL DEFAULT 0
   ,bot_name TEXT NOT NULL UNIQUE
   ,generation INT NOT NULL DEFAULT 0
   ,elo INT NOT NULL DEFAULT 1600

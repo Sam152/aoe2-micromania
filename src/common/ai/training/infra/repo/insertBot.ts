@@ -8,11 +8,13 @@ export async function insertBot(
   tree: UnitAwareBehaviourTree,
   generation: number,
   groupName: string,
+  iterationCount: number,
   tx: postgres.Sql | postgres.TransactionSql = sql,
 ): Promise<number> {
   const botName = `${randomArray(left)}-${generateName()}`;
-  const [{ id }] = await tx`INSERT INTO bots (bot_name, tree, generation, group_name) VALUES (${botName}, ${
-    tx.json(tree)
-  }, ${generation}, ${groupName}) RETURNING id`;
+  const [{ id }] =
+    await tx`INSERT INTO bots (bot_name, tree, generation, group_name, iteration_count) VALUES (${botName}, ${
+      tx.json(tree)
+    }, ${generation}, ${groupName}, ${iterationCount}) RETURNING id`;
   return id;
 }
