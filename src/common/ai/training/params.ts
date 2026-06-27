@@ -45,5 +45,5 @@ export const params = {
   /**
    * Computer too strong microing 40 groups.
    */
-  WHEEL_CLAMP_MAXIUM_GROUP_SIZE_PER_UNIT_TYPE: 4,
+  WHEEL_CLAMP_MAXIMUM_GROUP_SIZE_PER_UNIT_TYPE: 4,
 };
