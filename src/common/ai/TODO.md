@@ -15,8 +15,10 @@
 - [x] Converted units do not form or join groups
 - [x] Check mutation system for stuckness - nodes that cannot be deleted, or replaced. A transition selector =>
       sequence.
-- [ ] Support retaining bots from prior runs.
+- [x] Support retaining bots from prior runs.
 - [x] Add upgrades and balistics to bots
 - [ ] Fix range
-- [ ] Make gen size 1 - restart from zero at threshold
+- [x] Make gen size 1 - restart from zero at threshold
 - [x] Add probability of mutation based on depth (with 0 at root) - as to not insert conditions or actions at level 0.
+- [ ] Tourney does a lot of repeat matches over the course of a long harness run.
+- [ ] Tourney size grows too large.
