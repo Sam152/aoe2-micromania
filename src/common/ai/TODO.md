@@ -23,5 +23,5 @@
 - [ ] Tourney does a lot of repeat matches over the course of a long harness run.
 - [ ] Tourney size grows too large - pick all 0 games + top N.
 - [ ] Look deeper into borrowed traits.
-- [ ] Trees are unpruned, through training process.
+- [ ] Trees are unpruned, through training process - prune trees during entry into the pool, based on beating prior gens.
 - [ ] Inserted seq or sel, need to be seeded with some nodes, they are just inserted as empty in big trees.
