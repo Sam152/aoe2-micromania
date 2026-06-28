@@ -28,8 +28,11 @@ export const params = {
    * The minimum number of groups we should have, before attempting to borrow traits.
    * This is a lever to generate some amount of diversity in the pools, before building
    * more convergent trees.
+   *
+   * @todo - find the right balance here, do some more tree analysis, perhaps select
+   * from the tree roots at a higher %.
    */
-  TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS: 10,
+  TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS: 50,
   /**
    * The N highest rated bots to borrow traits from.
    */
