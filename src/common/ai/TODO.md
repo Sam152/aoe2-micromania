@@ -21,4 +21,6 @@
 - [x] Make gen size 1 - restart from zero at threshold
 - [x] Add probability of mutation based on depth (with 0 at root) - as to not insert conditions or actions at level 0.
 - [ ] Tourney does a lot of repeat matches over the course of a long harness run.
-- [ ] Tourney size grows too large.
+- [ ] Tourney size grows too large - pick all 0 games + top N.
+- [ ] Look deeper into borrowed traits.
+- [ ] Trees are unpruned, through training process.
