@@ -31,7 +31,9 @@ export function renderBlackboardOverlay({
   // Keys to render. When empty, every value is shown.
   visibleKeys: Set<string>;
 }): void {
-  const isVisible = (key: BlackboardKey) => visibleKeys.size === 0 || visibleKeys.has(key);
+  // Visibility is keyed by the per-variant label (e.g. `key[ARCHER]`), so each
+  // enum value of a key can be toggled independently. Empty set shows all.
+  const isVisible = (label: string) => visibleKeys.size === 0 || visibleKeys.has(label);
   const camera = clientState.camera;
   // FRAME_RENDERING_ENDED fires after the renderer resets to the identity
   // transform, so we re-apply the camera offset ourselves. World units map 1:1
@@ -69,11 +71,13 @@ export function renderBlackboardOverlay({
     const sharedComputer = createCachedBlackboardComputer({ computed });
     const firstGroup = groups[0].group;
     for (const key of keys) {
-      if (!isVisible(key) || isGroupKey(key) || category(blackboardDefinition[key].dataType) !== "scalar") {
+      if (isGroupKey(key) || category(blackboardDefinition[key].dataType) !== "scalar") {
         continue;
       }
       const config = overlayConfig[key];
       for (const variant of paramVariants(key)) {
+        const label = `${key}${variant.suffix}`;
+        if (!isVisible(label)) { continue; }
         const params = resolveConfiguredParams(
           config,
           variant.params,
@@ -81,8 +85,10 @@ export function renderBlackboardOverlay({
         );
         if (params === null) { continue; }
         const value = resolveValue(sharedComputer, key, gameState, botState, firstGroup, params);
-        if (value === undefined || value === null) { continue; }
-        panel.push({ text: `${key}${variant.suffix}: ${formatScalar(value)}` });
+        // The panel is a stable readout: show every scalar field, with a dash
+        // when it currently has no value (e.g. no incoming projectile to time).
+        const text = value === undefined || value === null ? "—" : formatScalar(value);
+        panel.push({ text: `${label}: ${text}` });
       }
     }
 
@@ -100,11 +106,12 @@ export function renderBlackboardOverlay({
       const groupLabelLines: string[] = [];
 
       for (const key of keys) {
-        if (!isVisible(key)) { continue; }
         const cat = category(blackboardDefinition[key].dataType);
         const config = overlayConfig[key];
 
         for (const variant of paramVariants(key)) {
+          const label = `${key}${variant.suffix}`;
+          if (!isVisible(label)) { continue; }
           const params = resolveConfiguredParams(
             config,
             variant.params,
@@ -115,7 +122,6 @@ export function renderBlackboardOverlay({
           const value = resolveValue(computer, key, gameState, botState, group, params);
           if (value === undefined || value === null) { continue; }
 
-          const label = `${key}${variant.suffix}`;
           if (cat === "vector") {
             const origin = resolveVectorOrigin(config, params, centroid, unitsById);
             if (!origin) { continue; }

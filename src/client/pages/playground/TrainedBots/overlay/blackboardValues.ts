@@ -38,6 +38,17 @@ export function defaultParams(key: BlackboardKey): Record<string, unknown> {
   return out;
 }
 
+// The full set of toggleable overlay items: one per param variant of every key.
+// Keys with an enum param (unitType / projectileType) expand to one item per
+// enum value, so each can be toggled independently in the overlay menu. The
+// label (e.g. `opponentMedoidUnitByType[ARCHER]`) is also what the renderer
+// checks against `visibleKeys`.
+export function overlayItems(): { key: BlackboardKey; label: string }[] {
+  return (Object.keys(blackboardDefinition) as BlackboardKey[]).flatMap((key) =>
+    paramVariants(key).map((variant) => ({ key, label: `${key}${variant.suffix}` }))
+  );
+}
+
 // "By type" values take an enum param (unitType / projectileType) — produce one
 // readout per value, expanding the cartesian product if there are several.
 export function paramVariants(key: BlackboardKey): { params: Record<string, unknown>; suffix: string }[] {

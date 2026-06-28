@@ -7,9 +7,11 @@ import { useBlackboardOverlay } from "./hooks/useBlackboardOverlay.ts";
 import { randomlyMutateUnitAwareBehaviourTree } from "../../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";
 import { params } from "../../../../common/ai/training/params.ts";
 import { UnitType } from "../../../../common/units/UnitType.ts";
-import { blackboardDefinition } from "../../../../common/ai/behaviourTree/blackboard/blackboardDefinition.ts";
+import { overlayItems } from "./overlay/blackboardValues.ts";
 
-const blackboardKeys = Object.keys(blackboardDefinition);
+// One checkbox per overlay item: keys with an enum param expand to one entry
+// per enum value (e.g. `key[ARCHER]`), each toggleable independently.
+const overlayCheckboxes = overlayItems();
 
 export function TrainedBots() {
   const [bots, setBots] = useState<Bot[]>([]);
@@ -183,14 +185,14 @@ export function TrainedBots() {
           </button>
           {overlayMenuOpen && (
             <div className="bb-menu__dropdown">
-              {blackboardKeys.map((key) => (
-                <label key={key} className="bb-menu__item">
+              {overlayCheckboxes.map(({ label }) => (
+                <label key={label} className="bb-menu__item">
                   <input
                     type="checkbox"
-                    checked={selectedKeys.has(key)}
-                    onChange={() => toggleKey(key)}
+                    checked={selectedKeys.has(label)}
+                    onChange={() => toggleKey(label)}
                   />
-                  {key}
+                  {label}
                 </label>
               ))}
             </div>
