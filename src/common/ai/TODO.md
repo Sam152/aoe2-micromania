@@ -24,3 +24,4 @@
 - [ ] Tourney size grows too large - pick all 0 games + top N.
 - [ ] Look deeper into borrowed traits.
 - [ ] Trees are unpruned, through training process.
+- [ ] Inserted seq or sel, need to be seeded with some nodes, they are just inserted as empty in big trees.
