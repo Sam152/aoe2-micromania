@@ -10,6 +10,9 @@ import { canBeatAllChampions } from "./canBeatAllChampions.ts";
 import { insertBot } from "../infra/repo/insertBot.ts";
 import { createProgressFormatter, formatNumber } from "../utils/createProgressFormatter.ts";
 import { createTimer } from "../utils/createTimer.ts";
+import { pruneUnitAwareTree } from "../../behaviourTree/utils/pruneTree.ts";
+
+import { countUnitAwareBehaviourTreeNodes } from "../../behaviourTree/utils/countUnitAwareBehaviourTreeNodes.ts";
 
 const { NEXT_GENERATION_MAXIMUM_ITERATIONS_UNTIL_QUIT, CPU_WORKER_COUNT } = params;
 
@@ -40,15 +43,29 @@ export async function evolveNextGeneration(
           startingPoint: activeBots.at(0)!,
         });
 
-        if (await canBeatAllChampions({ champions: activeBots, tree: candidate, pool }) && !enough()) {
-          winners.push(candidate);
+        const result = await canBeatAllChampions({ champions: activeBots, tree: candidate, pool });
+        if (result.outcome === "YES" && !enough()) {
+          const pruned = pruneUnitAwareTree(candidate, result.activations);
+
+          // Re-try the pruned tree against the set of champions it beat, to prove the pruning
+          // process did not destroy the capabilities of the tree. Any failure here indicates the
+          // pruning process did not work.
+          const prunedGameResult = await canBeatAllChampions({ champions: activeBots, tree: pruned, pool });
+          if (prunedGameResult.outcome === "NOPE") {
+            console.log("Original tree", JSON.stringify(candidate, null, 4));
+            console.log("Pruned tree", JSON.stringify(pruned, null, 4));
+            throw new Error("Pruned tree no longer capeable of beating champions.");
+          }
+
+          winners.push(pruned);
+          const prunedNodes = countUnitAwareBehaviourTreeNodes(candidate) - countUnitAwareBehaviourTreeNodes(pruned);
 
           // Reset the search radius: finding a winner proves the current neighbourhood is
           // productive, so the next search should start cheap again rather than stay drifted out.
           console.log(
             `\nBeat ${activeBots.length} champions after ${
               formatNumber(iterationsSinceLastWin)
-            } iterations and ${timer()}`,
+            } iterations and ${timer()} - pruned ${prunedNodes} nodes`,
           );
           progressFormatter = createProgressFormatter({ scaleFactor: 100 });
           await insertBot(candidate, generation, activeBots[0]!.groupName, iterationsSinceLastWin);
