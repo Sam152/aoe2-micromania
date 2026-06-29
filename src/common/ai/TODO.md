@@ -26,3 +26,4 @@
 - [ ] Trees are unpruned, through training process - prune trees during entry into the pool, based on beating prior gens.
 - [ ] Inserted seq or sel, need to be seeded with some nodes, they are just inserted as empty in big trees.
 - [ ] More aggressive pruning - walk node removal?
+- [ ] Idea for benchmarking mutation harness: take a difficult to beat tree, measure how many iterations required to beat it with different versions.
