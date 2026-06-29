@@ -46,6 +46,7 @@ export async function evolveNextGeneration(
         const result = await canBeatAllChampions({ champions: activeBots, tree: candidate, pool });
         if (result.outcome === "YES" && !enough()) {
           const pruned = pruneUnitAwareTree(candidate, result.activations);
+          winners.push(pruned);
 
           // Re-try the pruned tree against the set of champions it beat, to prove the pruning
           // process did not destroy the capabilities of the tree. Any failure here indicates the
@@ -57,7 +58,6 @@ export async function evolveNextGeneration(
             throw new Error("Pruned tree no longer capable of beating champions.");
           }
 
-          winners.push(pruned);
           const prunedNodeCount = countUnitAwareBehaviourTreeNodes(pruned);
           const prunedNodes = countUnitAwareBehaviourTreeNodes(candidate) - prunedNodeCount;
 
@@ -72,7 +72,7 @@ export async function evolveNextGeneration(
           );
 
           progressFormatter = createProgressFormatter({ scaleFactor: 100 });
-          await insertBot(candidate, generation, activeBots[0]!.groupName, iterationsSinceLastWin);
+          await insertBot(pruned, generation, activeBots[0]!.groupName, iterationsSinceLastWin);
           iterationsSinceLastWin = 0;
         }
 
