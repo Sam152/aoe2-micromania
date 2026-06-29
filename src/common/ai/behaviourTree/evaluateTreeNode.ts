@@ -141,25 +141,20 @@ export function evaluateTreeNode(
         path: `${path}.nodes[${i}]`,
       });
       if (!result.result) {
-        const hadAtLeastOneAction = sequenceActionNodes.length > 0;
-        if (hadAtLeastOneAction) {
-          activations?.add(path);
-        }
-        return {
-          result: hadAtLeastOneAction,
-          actionNodes: sequenceActionNodes,
-        };
+        break;
       }
       sequenceActionNodes.push(...result.actionNodes);
     }
 
-    // Only consider a sequence as activated, if it had at least one node
-    // that activated.
-    if (node.nodes.length > 0) {
+    // A sequence only succeeds if it actually produced an action. A sequence that
+    // resolves (or aborts) without producing one has no effect, so it reports failure
+    // and never activates.
+    const hadAtLeastOneAction = sequenceActionNodes.length > 0;
+    if (hadAtLeastOneAction) {
       activations?.add(path);
     }
     return {
-      result: true,
+      result: hadAtLeastOneAction,
       actionNodes: sequenceActionNodes,
     };
   }

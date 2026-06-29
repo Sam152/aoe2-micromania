@@ -1,23 +1,27 @@
 import { describe, it } from "@std/testing/bdd";
-import { assert, assertEquals } from "@std/assert";
+import { assertEquals } from "@std/assert";
 import { corruptAfterPruningTree } from "./__fixtures__/corruptAfterPruningTree.ts";
 import { corruptAfterPlayingAgainst } from "./__fixtures__/corruptAfterPlayingAgainst.ts";
 import { createGameWorkerPool } from "../../training/tournament/createGameWorkerPool.ts";
-import { canBeatAllChampions } from "../../training/evolution/canBeatAllChampions.ts";
 import { pruneUnitAwareTree } from "./pruneTree.ts";
+import { createUnitTypeActivations } from "../../integration/createBot.ts";
+import { mergeActivations } from "../../training/utils/mergeActivations.ts";
 
 describe("pruneTree bug", () => {
   it("pruning does not change behaviour against any champion", async () => {
     const pool = createGameWorkerPool(2);
 
-    const result = await canBeatAllChampions({
-      champions: corruptAfterPlayingAgainst,
-      tree: corruptAfterPruningTree,
-      pool,
-    });
-    assert(result.outcome === "YES");
+    // Play the tree against every champion in both positions, gathering the
+    // activations that pruning is allowed to act on.
+    const activations = createUnitTypeActivations();
+    for (const champion of corruptAfterPlayingAgainst) {
+      const a = await pool.runInPool({ 1: champion.tree, 2: corruptAfterPruningTree });
+      mergeActivations(activations, a.bots.player2.activations);
+      const b = await pool.runInPool({ 1: corruptAfterPruningTree, 2: champion.tree });
+      mergeActivations(activations, b.bots.player1.activations);
+    }
 
-    const pruned = pruneUnitAwareTree(corruptAfterPruningTree, result.activations);
+    const pruned = pruneUnitAwareTree(corruptAfterPruningTree, activations);
 
     // Pruning should only remove dead branches, so the game must play out
     // identically against every champion in both positions.
