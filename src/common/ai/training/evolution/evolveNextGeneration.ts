@@ -54,7 +54,7 @@ export async function evolveNextGeneration(
           if (prunedGameResult.outcome === "NOPE") {
             console.log("Original tree", JSON.stringify(candidate, null, 4));
             console.log("Pruned tree", JSON.stringify(pruned, null, 4));
-            throw new Error("Pruned tree no longer capeable of beating champions.");
+            throw new Error("Pruned tree no longer capable of beating champions.");
           }
 
           winners.push(pruned);
