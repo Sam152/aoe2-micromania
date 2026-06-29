@@ -6,18 +6,73 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
       {
         "nodes": [
           {
-            "nodes": [
-              {
-                "nodes": [
-                  {
-                    "nodeType": "selector",
-                    "nodes": [],
+            "type": "PATROL",
+            "params": {
+              "direction": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "movingUnit": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "unitType": {
+                        "type": "LITERAL",
+                        "value": "MONK",
+                        "dataType": "unitType",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "dataType": "unitId",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "opponentMedoidUnitByType",
                   },
-                ],
-                "nodeType": "sequence",
+                  "positionInTicksAmount": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "type": {
+                        "type": "LITERAL",
+                        "value": "MANGO_ROCK",
+                        "dataType": "projectileType",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "dataType": "tickCount",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                  },
+                },
+                "dataType": "vector",
+                "nodeType": "dataValue",
+                "blackboardKey": "opponentUnitMovementTowardsVector",
               },
-            ],
-            "nodeType": "sequence",
+            },
+            "nodeType": "action",
+          },
+          {
+            "type": "unitCountEquals",
+            "invert": false,
+            "params": {
+              "leftUnitCount": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "unitType": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "unitType",
+                    "value": "MONK",
+                  },
+                },
+                "dataType": "unitCount",
+                "nodeType": "dataValue",
+                "blackboardKey": "opponentUnitCountByType",
+              },
+              "rightUnitCount": {
+                "type": "LITERAL",
+                "value": 34,
+                "dataType": "unitCount",
+                "nodeType": "dataValue",
+              },
+            },
+            "nodeType": "condition",
           },
           {
             "type": "FORMATION_LINE",
@@ -25,42 +80,15 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
             "nodeType": "action",
           },
           {
-            "nodes": [
-              {
-                "nodes": [
-                  {
-                    "type": "MERGE_GROUP",
-                    "params": {},
-                    "nodeType": "action",
-                  },
-                  {
-                    "type": "FORMATION_SPLIT",
-                    "params": {},
-                    "nodeType": "action",
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-            ],
-            "nodeType": "selector",
-          },
-          {
-            "type": "groupIndexGreaterThan",
+            "type": "booleanIsTrue",
             "invert": true,
             "params": {
-              "groupIndexLeft": {
-                "type": "BLACKBOARD",
-                "params": {},
-                "dataType": "groupIndex",
+              "subject": {
                 "nodeType": "dataValue",
-                "blackboardKey": "groupMetaUnitTypeIndex",
-              },
-              "groupIndexRight": {
                 "type": "BLACKBOARD",
+                "dataType": "boolean",
+                "blackboardKey": "groupHasAnyReloading",
                 "params": {},
-                "dataType": "groupIndex",
-                "nodeType": "dataValue",
-                "blackboardKey": "groupMetaUnitTypeIndex",
               },
             },
             "nodeType": "condition",
@@ -68,151 +96,149 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
           {
             "nodes": [
               {
-                "type": "PATROL",
-                "params": {
-                  "direction": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "movingUnit": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "ARCHER",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "unitId",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentClosestUnitByType",
-                      },
-                      "positionInTicksAmount": {
-                        "type": "LITERAL",
-                        "value": 45,
-                        "dataType": "tickCount",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentUnitMovementTowardsVector",
-                  },
-                },
-                "nodeType": "action",
-              },
-              {
                 "nodes": [
-                  {
-                    "nodeType": "condition",
-                    "type": "formationEquals",
-                    "invert": true,
-                    "params": {
-                      "leftFormation": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "formation",
-                        "blackboardKey": "opponentFormationByType",
-                        "params": {
-                          "unitType": {
-                            "nodeType": "dataValue",
-                            "type": "LITERAL",
-                            "dataType": "unitType",
-                            "value": "ARCHER",
-                          },
-                        },
-                      },
-                      "rightFormation": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "formation",
-                        "value": "SPLIT",
-                      },
-                    },
-                  },
-                  {
-                    "type": "FORMATION_LINE",
-                    "params": {},
-                    "nodeType": "action",
-                  },
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [],
-                  },
                   {
                     "nodeType": "selector",
-                    "nodes": [],
+                    "nodes": [
+                      {
+                        "nodeType": "selector",
+                        "nodes": [],
+                      },
+                    ],
                   },
                   {
-                    "type": "MOVE_UNITS",
+                    "type": "unitCountEquals",
+                    "invert": false,
                     "params": {
-                      "direction": {
+                      "leftUnitCount": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "unitCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupUnitCount",
+                      },
+                      "rightUnitCount": {
                         "type": "BLACKBOARD",
                         "params": {
-                          "type": {
+                          "unitType": {
                             "type": "LITERAL",
-                            "value": "ARROW",
-                            "dataType": "projectileType",
+                            "value": "MANGO",
+                            "dataType": "unitType",
                             "nodeType": "dataValue",
                           },
                         },
-                        "dataType": "vector",
+                        "dataType": "unitCount",
                         "nodeType": "dataValue",
-                        "blackboardKey": "opponentNextProjectileLandingPositionByType",
+                        "blackboardKey": "opponentUnitCountByType",
                       },
                     },
-                    "nodeType": "action",
+                    "nodeType": "condition",
                   },
-                ],
-                "nodeType": "selector",
-              },
-              {
-                "nodes": [
+                  {
+                    "nodes": [],
+                    "nodeType": "selector",
+                  },
+                  {
+                    "type": "unitCountEquals",
+                    "invert": false,
+                    "params": {
+                      "leftUnitCount": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "unitCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupUnitCount",
+                      },
+                      "rightUnitCount": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "unitType": {
+                            "type": "LITERAL",
+                            "value": "MANGO",
+                            "dataType": "unitType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "unitCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentUnitCountByType",
+                      },
+                    },
+                    "nodeType": "condition",
+                  },
                   {
                     "nodes": [
                       {
-                        "type": "MERGE_GROUP",
-                        "params": {},
-                        "nodeType": "action",
+                        "nodeType": "selector",
+                        "nodes": [],
                       },
-                    ],
-                    "nodeType": "sequence",
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "nodes": [
-                  {
-                    "nodeType": "condition",
-                    "type": "tickCountEquals",
-                    "invert": false,
-                    "params": {
-                      "leftTicks": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "tickCount",
-                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                      {
+                        "nodeType": "condition",
+                        "type": "groupIndexEquals",
+                        "invert": false,
                         "params": {
-                          "type": {
+                          "groupIndexLeft": {
+                            "nodeType": "dataValue",
+                            "type": "BLACKBOARD",
+                            "dataType": "groupIndex",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
+                            "params": {},
+                          },
+                          "groupIndexRight": {
                             "nodeType": "dataValue",
                             "type": "LITERAL",
-                            "dataType": "projectileType",
-                            "value": "MANGO_ROCK",
+                            "dataType": "groupIndex",
+                            "value": 0,
                           },
                         },
                       },
-                      "rightTicks": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "tickCount",
-                        "value": 2,
+                      {
+                        "nodeType": "condition",
+                        "type": "groupIndexGreaterThan",
+                        "invert": false,
+                        "params": {
+                          "groupIndexLeft": {
+                            "nodeType": "dataValue",
+                            "type": "BLACKBOARD",
+                            "dataType": "groupIndex",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
+                            "params": {},
+                          },
+                          "groupIndexRight": {
+                            "nodeType": "dataValue",
+                            "type": "BLACKBOARD",
+                            "dataType": "groupIndex",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
+                            "params": {},
+                          },
+                        },
                       },
-                    },
+                      {
+                        "type": "unitCountGreaterThan",
+                        "invert": false,
+                        "params": {
+                          "leftUnitCount": {
+                            "type": "BLACKBOARD",
+                            "params": {},
+                            "dataType": "unitCount",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "groupUnitCount",
+                          },
+                          "rightUnitCount": {
+                            "type": "LITERAL",
+                            "value": 16,
+                            "dataType": "unitCount",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "nodeType": "condition",
+                      },
+                    ],
+                    "nodeType": "selector",
                   },
                   {
-                    "type": "groupIndexEquals",
-                    "invert": false,
+                    "type": "groupIndexGreaterThan",
+                    "invert": true,
                     "params": {
                       "groupIndexLeft": {
                         "type": "BLACKBOARD",
@@ -231,353 +257,8 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                     "nodeType": "condition",
                   },
                 ],
-                "nodeType": "sequence",
-              },
-              {
-                "type": "tickCountEquals",
-                "invert": false,
-                "params": {
-                  "leftTicks": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "type": {
-                        "type": "LITERAL",
-                        "value": "MANGO_ROCK",
-                        "dataType": "projectileType",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "tickCount",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
-                  },
-                  "rightTicks": {
-                    "type": "LITERAL",
-                    "value": 29,
-                    "dataType": "tickCount",
-                    "nodeType": "dataValue",
-                  },
-                },
-                "nodeType": "condition",
-              },
-              {
-                "type": "FORMATION_LINE",
-                "params": {},
-                "nodeType": "action",
-              },
-              {
-                "nodes": [
-                  {
-                    "nodeType": "selector",
-                    "nodes": [],
-                  },
-                  {
-                    "nodes": [],
-                    "nodeType": "selector",
-                  },
-                ],
                 "nodeType": "selector",
               },
-              {
-                "type": "booleanIsTrue",
-                "invert": false,
-                "params": {
-                  "subject": {
-                    "type": "BLACKBOARD",
-                    "params": {},
-                    "dataType": "boolean",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "groupHasAnyReloading",
-                  },
-                },
-                "nodeType": "condition",
-              },
-            ],
-            "nodeType": "sequence",
-          },
-          {
-            "nodes": [
-              {
-                "nodes": [
-                  {
-                    "nodeType": "selector",
-                    "nodes": [],
-                  },
-                  {
-                    "nodes": [
-                      {
-                        "nodeType": "selector",
-                        "nodes": [],
-                      },
-                      {
-                        "nodeType": "action",
-                        "type": "FORMATION_LINE",
-                        "params": {},
-                      },
-                    ],
-                    "nodeType": "selector",
-                  },
-                  {
-                    "nodes": [],
-                    "nodeType": "selector",
-                  },
-                  {
-                    "nodes": [
-                      {
-                        "nodeType": "condition",
-                        "type": "unitCountGreaterThan",
-                        "invert": false,
-                        "params": {
-                          "leftUnitCount": {
-                            "nodeType": "dataValue",
-                            "type": "BLACKBOARD",
-                            "dataType": "unitCount",
-                            "blackboardKey": "groupUnitCount",
-                            "params": {},
-                          },
-                          "rightUnitCount": {
-                            "nodeType": "dataValue",
-                            "type": "LITERAL",
-                            "dataType": "unitCount",
-                            "value": 13,
-                          },
-                        },
-                      },
-                    ],
-                    "nodeType": "selector",
-                  },
-                ],
-                "nodeType": "selector",
-              },
-              {
-                "type": "unitCountEquals",
-                "invert": true,
-                "params": {
-                  "leftUnitCount": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "unitType": {
-                        "type": "LITERAL",
-                        "value": "MANGO",
-                        "dataType": "unitType",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "unitCount",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "globalOwnedUnitsOfTypeCount",
-                  },
-                  "rightUnitCount": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "unitType": {
-                        "type": "LITERAL",
-                        "value": "ARCHER",
-                        "dataType": "unitType",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "unitCount",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "globalOwnedUnitsOfTypeCount",
-                  },
-                },
-                "nodeType": "condition",
-              },
-            ],
-            "nodeType": "sequence",
-          },
-          {
-            "type": "groupIndexEquals",
-            "invert": true,
-            "params": {
-              "groupIndexLeft": {
-                "type": "BLACKBOARD",
-                "params": {},
-                "dataType": "groupIndex",
-                "nodeType": "dataValue",
-                "blackboardKey": "groupMetaUnitTypeIndex",
-              },
-              "groupIndexRight": {
-                "type": "LITERAL",
-                "value": 1,
-                "dataType": "groupIndex",
-                "nodeType": "dataValue",
-              },
-            },
-            "nodeType": "condition",
-          },
-        ],
-        "nodeType": "sequence",
-      },
-    ],
-    "nodeType": "selector",
-  },
-  "1": {
-    "nodes": [
-      {
-        "nodes": [
-          {
-            "nodes": [
-              {
-                "type": "ATTACK_GROUND",
-                "params": {
-                  "attackGroundPosition": {
-                    "type": "BLACKBOARD",
-                    "params": {},
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentAveragePosition",
-                  },
-                },
-                "nodeType": "action",
-              },
-              {
-                "type": "groupIndexEquals",
-                "invert": true,
-                "params": {
-                  "groupIndexLeft": {
-                    "type": "BLACKBOARD",
-                    "params": {},
-                    "dataType": "groupIndex",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "groupMetaUnitTypeIndex",
-                  },
-                  "groupIndexRight": {
-                    "type": "LITERAL",
-                    "value": 2,
-                    "dataType": "groupIndex",
-                    "nodeType": "dataValue",
-                  },
-                },
-                "nodeType": "condition",
-              },
-              {
-                "nodes": [
-                  {
-                    "nodeType": "action",
-                    "type": "SPLIT_GROUP",
-                    "params": {
-                      "splitGroupInto": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "groupSize",
-                        "value": "HALF",
-                      },
-                    },
-                  },
-                  {
-                    "type": "PATROL",
-                    "params": {
-                      "direction": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "vector",
-                        "blackboardKey": "groupAveragePosition",
-                        "params": {},
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                  {
-                    "nodeType": "selector",
-                    "nodes": [
-                      {
-                        "nodeType": "action",
-                        "type": "FORMATION_SPREAD",
-                        "params": {},
-                      },
-                    ],
-                  },
-                  {
-                    "type": "ATTACK_GROUND",
-                    "params": {
-                      "attackGroundPosition": {
-                        "type": "BLACKBOARD",
-                        "params": {},
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "groupAveragePosition",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                  {
-                    "type": "ATTACK_GROUND",
-                    "params": {
-                      "attackGroundPosition": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "unitWithPosition": {
-                            "type": "BLACKBOARD",
-                            "params": {
-                              "unitType": {
-                                "type": "LITERAL",
-                                "value": "ARCHER",
-                                "dataType": "unitType",
-                                "nodeType": "dataValue",
-                              },
-                            },
-                            "dataType": "unitId",
-                            "nodeType": "dataValue",
-                            "blackboardKey": "opponentClosestUnitByTypeNotInMinRange",
-                          },
-                        },
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "unitPosition",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "type": "PATROL",
-                "params": {
-                  "direction": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "unitType": {
-                        "type": "LITERAL",
-                        "value": "ARCHER",
-                        "dataType": "unitType",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentAverageUnitPositionByType",
-                  },
-                },
-                "nodeType": "action",
-              },
-            ],
-            "nodeType": "sequence",
-          },
-          {
-            "nodeType": "condition",
-            "type": "groupIndexGreaterThan",
-            "invert": false,
-            "params": {
-              "groupIndexLeft": {
-                "nodeType": "dataValue",
-                "type": "BLACKBOARD",
-                "dataType": "groupIndex",
-                "blackboardKey": "groupMetaUnitTypeIndex",
-                "params": {},
-              },
-              "groupIndexRight": {
-                "nodeType": "dataValue",
-                "type": "LITERAL",
-                "dataType": "groupIndex",
-                "value": 0,
-              },
-            },
-          },
-          {
-            "nodes": [
               {
                 "type": "SPLIT_GROUP",
                 "params": {
@@ -593,271 +274,92 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
               {
                 "nodes": [
                   {
-                    "nodeType": "selector",
-                    "nodes": [],
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "nodes": [
-                  {
-                    "type": "vectorDistanceBetweenLessThan",
-                    "invert": false,
-                    "params": {
-                      "pointA": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "angle": {
-                            "type": "LITERAL",
-                            "value": 93,
-                            "dataType": "vectorAngle",
-                            "nodeType": "dataValue",
-                          },
-                          "direction": {
-                            "type": "BLACKBOARD",
-                            "params": {
-                              "unitType": {
-                                "type": "LITERAL",
-                                "value": "ARCHER",
-                                "dataType": "unitType",
-                                "nodeType": "dataValue",
-                              },
-                            },
-                            "dataType": "vector",
-                            "nodeType": "dataValue",
-                            "blackboardKey": "globalNonGroupUnitsOfTypeAveragePosition",
-                          },
-                        },
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "groupVectorFacingDirection",
-                      },
-                      "pointB": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "ARCHER",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "globalNonGroupUnitsOfTypeAveragePosition",
-                      },
-                      "distance": {
-                        "type": "LITERAL",
-                        "value": 265,
-                        "dataType": "vectorMagnitude",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "condition",
-                  },
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [],
-                  },
-                  {
-                    "type": "FORMATION_SPLIT",
-                    "params": {},
                     "nodeType": "action",
+                    "type": "FORMATION_LINE",
+                    "params": {},
                   },
-                ],
-                "nodeType": "sequence",
-              },
-            ],
-            "nodeType": "selector",
-          },
-          {
-            "type": "unitCountEquals",
-            "invert": true,
-            "params": {
-              "leftUnitCount": {
-                "type": "BLACKBOARD",
-                "params": {
-                  "unitType": {
-                    "type": "LITERAL",
-                    "value": "ARCHER",
-                    "dataType": "unitType",
-                    "nodeType": "dataValue",
-                  },
-                },
-                "dataType": "unitCount",
-                "nodeType": "dataValue",
-                "blackboardKey": "opponentUnitCountByType",
-              },
-              "rightUnitCount": {
-                "type": "BLACKBOARD",
-                "params": {
-                  "unitType": {
-                    "type": "LITERAL",
-                    "value": "ARCHER",
-                    "dataType": "unitType",
-                    "nodeType": "dataValue",
-                  },
-                },
-                "dataType": "unitCount",
-                "nodeType": "dataValue",
-                "blackboardKey": "opponentUnitCountByType",
-              },
-            },
-            "nodeType": "condition",
-          },
-          {
-            "nodes": [
-              {
-                "type": "MERGE_GROUP",
-                "params": {},
-                "nodeType": "action",
-              },
-              {
-                "type": "vectorDistanceBetweenLessThan",
-                "invert": false,
-                "params": {
-                  "pointA": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "movingUnit": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "MONK",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "unitId",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentClosestUnitByType",
-                      },
-                      "positionInTicksAmount": {
-                        "type": "LITERAL",
-                        "value": 82,
-                        "dataType": "tickCount",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentUnitMovementTowardsVector",
-                  },
-                  "pointB": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "angle": {
-                        "type": "LITERAL",
-                        "value": 177,
-                        "dataType": "vectorAngle",
-                        "nodeType": "dataValue",
-                      },
-                      "direction": {
-                        "type": "BLACKBOARD",
-                        "params": {},
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "groupAveragePosition",
-                      },
-                      "magnitude": {
-                        "type": "LITERAL",
-                        "value": 200,
-                        "dataType": "vectorMagnitude",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "groupUnitVectorFacingDirection",
-                  },
-                  "distance": {
-                    "type": "LITERAL",
-                    "value": 159,
-                    "dataType": "vectorMagnitude",
-                    "nodeType": "dataValue",
-                  },
-                },
-                "nodeType": "condition",
-              },
-              {
-                "nodes": [
                   {
                     "type": "unitCountEquals",
-                    "invert": false,
+                    "invert": true,
                     "params": {
                       "leftUnitCount": {
                         "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "MONK",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
+                        "params": {},
                         "dataType": "unitCount",
                         "nodeType": "dataValue",
-                        "blackboardKey": "opponentUnitCountByType",
+                        "blackboardKey": "groupMetaUnitTypeGroupCount",
                       },
                       "rightUnitCount": {
                         "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "MONK",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
+                        "params": {},
                         "dataType": "unitCount",
                         "nodeType": "dataValue",
-                        "blackboardKey": "opponentUnitCountByType",
+                        "blackboardKey": "groupMetaUnitTypeGroupCount",
                       },
                     },
                     "nodeType": "condition",
                   },
                   {
-                    "nodeType": "sequence",
-                    "nodes": [],
-                  },
-                  {
-                    "type": "vectorDistanceBetweenLessThan",
-                    "invert": false,
-                    "params": {
-                      "pointA": {
-                        "type": "BLACKBOARD",
-                        "params": {},
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "groupAveragePosition",
-                      },
-                      "pointB": {
-                        "type": "BLACKBOARD",
-                        "params": {},
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentAveragePosition",
-                      },
-                      "distance": {
-                        "type": "LITERAL",
-                        "value": 65,
-                        "dataType": "vectorMagnitude",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "condition",
-                  },
-                ],
-                "nodeType": "selector",
-              },
-              {
-                "nodes": [
-                  {
+                    "nodeType": "action",
                     "type": "IDLE",
                     "params": {
                       "forTicksAmount": {
+                        "nodeType": "dataValue",
+                        "type": "BLACKBOARD",
+                        "dataType": "tickCount",
+                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                        "params": {
+                          "type": {
+                            "nodeType": "dataValue",
+                            "type": "LITERAL",
+                            "dataType": "projectileType",
+                            "value": "MANGO_ROCK",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  {
+                    "type": "DELETE_GROUP",
+                    "params": {},
+                    "nodeType": "action",
+                  },
+                  {
+                    "nodes": [
+                      {
+                        "nodeType": "sequence",
+                        "nodes": [],
+                      },
+                      {
+                        "nodeType": "selector",
+                        "nodes": [],
+                      },
+                    ],
+                    "nodeType": "selector",
+                  },
+                  {
+                    "nodeType": "selector",
+                    "nodes": [],
+                  },
+                  {
+                    "type": "tickCountEquals",
+                    "invert": true,
+                    "params": {
+                      "leftTicks": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "type": {
+                            "type": "LITERAL",
+                            "value": "MANGO_ROCK",
+                            "dataType": "projectileType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "tickCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                      },
+                      "rightTicks": {
                         "type": "BLACKBOARD",
                         "params": {
                           "type": {
@@ -872,7 +374,7 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                         "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
                       },
                     },
-                    "nodeType": "action",
+                    "nodeType": "condition",
                   },
                   {
                     "nodes": [
@@ -880,56 +382,15 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                         "nodeType": "selector",
                         "nodes": [
                           {
-                            "nodeType": "action",
-                            "type": "MERGE_GROUP",
-                            "params": {},
-                          },
-                        ],
-                      },
-                      {
-                        "nodeType": "condition",
-                        "type": "groupIndexEquals",
-                        "invert": true,
-                        "params": {
-                          "groupIndexLeft": {
-                            "nodeType": "dataValue",
-                            "type": "BLACKBOARD",
-                            "dataType": "groupIndex",
-                            "blackboardKey": "groupMetaUnitTypeIndex",
-                            "params": {},
-                          },
-                          "groupIndexRight": {
-                            "nodeType": "dataValue",
-                            "type": "LITERAL",
-                            "dataType": "groupIndex",
-                            "value": 1,
-                          },
-                        },
-                      },
-                    ],
-                    "nodeType": "sequence",
-                  },
-                  {
-                    "type": "vectorDistanceBetweenLessThan",
-                    "invert": false,
-                    "params": {
-                      "pointA": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "vector",
-                        "blackboardKey": "groupUnitVectorFacingDirection",
-                        "params": {
-                          "direction": {
-                            "nodeType": "dataValue",
-                            "type": "BLACKBOARD",
-                            "dataType": "vector",
-                            "blackboardKey": "opponentUnitMovementTowardsVector",
+                            "nodeType": "condition",
+                            "type": "formationEquals",
+                            "invert": false,
                             "params": {
-                              "movingUnit": {
+                              "leftFormation": {
                                 "nodeType": "dataValue",
                                 "type": "BLACKBOARD",
-                                "dataType": "unitId",
-                                "blackboardKey": "opponentMedoidUnitByType",
+                                "dataType": "formation",
+                                "blackboardKey": "opponentFormationByType",
                                 "params": {
                                   "unitType": {
                                     "nodeType": "dataValue",
@@ -939,155 +400,105 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                                   },
                                 },
                               },
-                              "positionInTicksAmount": {
+                              "rightFormation": {
                                 "nodeType": "dataValue",
                                 "type": "BLACKBOARD",
-                                "dataType": "tickCount",
-                                "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
-                                "params": {
-                                  "type": {
-                                    "nodeType": "dataValue",
-                                    "type": "LITERAL",
-                                    "dataType": "projectileType",
-                                    "value": "ARROW",
-                                  },
-                                },
+                                "dataType": "formation",
+                                "blackboardKey": "groupFormation",
+                                "params": {},
                               },
                             },
-                          },
-                          "angle": {
-                            "nodeType": "dataValue",
-                            "type": "LITERAL",
-                            "dataType": "vectorAngle",
-                            "value": 153,
-                          },
-                          "magnitude": {
-                            "nodeType": "dataValue",
-                            "type": "LITERAL",
-                            "dataType": "vectorMagnitude",
-                            "value": 385,
-                          },
-                        },
-                      },
-                      "pointB": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "movingUnit": {
-                            "type": "BLACKBOARD",
-                            "params": {
-                              "unitType": {
-                                "type": "LITERAL",
-                                "value": "ARCHER",
-                                "dataType": "unitType",
-                                "nodeType": "dataValue",
-                              },
-                            },
-                            "dataType": "unitId",
-                            "nodeType": "dataValue",
-                            "blackboardKey": "opponentMedoidUnitByType",
-                          },
-                          "positionInTicksAmount": {
-                            "type": "BLACKBOARD",
-                            "params": {
-                              "type": {
-                                "type": "LITERAL",
-                                "value": "MANGO_ROCK",
-                                "dataType": "projectileType",
-                                "nodeType": "dataValue",
-                              },
-                            },
-                            "dataType": "tickCount",
-                            "nodeType": "dataValue",
-                            "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
-                          },
-                        },
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentUnitMovementTowardsVector",
-                      },
-                      "distance": {
-                        "type": "LITERAL",
-                        "value": 252,
-                        "dataType": "vectorMagnitude",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "condition",
-                  },
-                  {
-                    "nodes": [],
-                    "nodeType": "sequence",
-                  },
-                  {
-                    "type": "unitCountEquals",
-                    "invert": true,
-                    "params": {
-                      "leftUnitCount": {
-                        "type": "BLACKBOARD",
-                        "params": {},
-                        "dataType": "unitCount",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "groupMetaUnitTypeGroupCount",
-                      },
-                      "rightUnitCount": {
-                        "type": "LITERAL",
-                        "value": 3,
-                        "dataType": "unitCount",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "condition",
-                  },
-                  {
-                    "nodes": [
-                      {
-                        "nodes": [
-                          {
-                            "type": "FORMATION_LINE",
-                            "params": {},
-                            "nodeType": "action",
                           },
                         ],
-                        "nodeType": "sequence",
-                      },
-                      {
-                        "nodeType": "selector",
-                        "nodes": [],
                       },
                       {
                         "nodes": [],
                         "nodeType": "selector",
                       },
                     ],
-                    "nodeType": "sequence",
-                  },
-                  {
                     "nodeType": "selector",
-                    "nodes": [],
                   },
                   {
-                    "type": "groupIndexEquals",
-                    "invert": true,
-                    "params": {
-                      "groupIndexLeft": {
-                        "type": "BLACKBOARD",
-                        "params": {},
-                        "dataType": "groupIndex",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "groupMetaUnitTypeIndex",
+                    "nodes": [
+                      {
+                        "nodes": [
+                          {
+                            "nodeType": "selector",
+                            "nodes": [],
+                          },
+                          {
+                            "type": "tickCountEquals",
+                            "invert": false,
+                            "params": {
+                              "leftTicks": {
+                                "type": "BLACKBOARD",
+                                "params": {
+                                  "type": {
+                                    "type": "LITERAL",
+                                    "value": "ARROW",
+                                    "dataType": "projectileType",
+                                    "nodeType": "dataValue",
+                                  },
+                                },
+                                "dataType": "tickCount",
+                                "nodeType": "dataValue",
+                                "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                              },
+                              "rightTicks": {
+                                "type": "LITERAL",
+                                "value": 53,
+                                "dataType": "tickCount",
+                                "nodeType": "dataValue",
+                              },
+                            },
+                            "nodeType": "condition",
+                          },
+                        ],
+                        "nodeType": "selector",
                       },
-                      "groupIndexRight": {
-                        "type": "LITERAL",
-                        "value": 2,
-                        "dataType": "groupIndex",
-                        "nodeType": "dataValue",
+                      {
+                        "nodeType": "selector",
+
+                        "nodes": [],
                       },
-                    },
-                    "nodeType": "condition",
+                      {
+                        "nodeType": "selector",
+                        "nodes": [],
+                      },
+                      {
+                        "nodeType": "sequence",
+                        "nodes": [],
+                      },
+                      {
+                        "nodes": [],
+                        "nodeType": "sequence",
+                      },
+                    ],
+                    "nodeType": "selector",
                   },
                 ],
                 "nodeType": "sequence",
               },
+              {
+                "type": "FORMATION_SPREAD",
+                "params": {},
+                "nodeType": "action",
+              },
+            ],
+            "nodeType": "selector",
+          },
+        ],
+        "nodeType": "sequence",
+      },
+    ],
+    "nodeType": "selector",
+  },
+  "1": {
+    "nodes": [
+      {
+        "nodes": [
+          {
+            "nodes": [
               {
                 "type": "IDLE",
                 "params": {
@@ -1109,16 +520,819 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                 "nodeType": "action",
               },
               {
-                "type": "SPLIT_GROUP",
+                "nodeType": "condition",
+                "type": "formationEquals",
+                "invert": true,
                 "params": {
-                  "splitGroupInto": {
-                    "type": "LITERAL",
-                    "value": "HALF",
-                    "dataType": "groupSize",
+                  "leftFormation": {
                     "nodeType": "dataValue",
+                    "type": "BLACKBOARD",
+                    "dataType": "formation",
+                    "blackboardKey": "groupFormation",
+                    "params": {},
+                  },
+                  "rightFormation": {
+                    "nodeType": "dataValue",
+                    "type": "BLACKBOARD",
+                    "dataType": "formation",
+                    "blackboardKey": "opponentFormationByType",
+                    "params": {
+                      "unitType": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "unitType",
+                        "value": "MONK",
+                      },
+                    },
+                  },
+                },
+              },
+              {
+                "type": "PATROL",
+                "params": {
+                  "direction": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "angle": {
+                        "type": "LITERAL",
+                        "value": 318,
+                        "dataType": "vectorAngle",
+                        "nodeType": "dataValue",
+                      },
+                      "direction": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "vector",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentAveragePosition",
+                      },
+                      "magnitude": {
+                        "type": "LITERAL",
+                        "value": 283,
+                        "dataType": "vectorMagnitude",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "groupUnitVectorFacingDirection",
                   },
                 },
                 "nodeType": "action",
+              },
+              {
+                "nodes": [
+                  {
+                    "nodes": [
+                      {
+                        "nodes": [
+                          {
+                            "nodeType": "action",
+                            "type": "DELETE_GROUP",
+                            "params": {},
+                          },
+                        ],
+                        "nodeType": "selector",
+                      },
+                    ],
+                    "nodeType": "sequence",
+                  },
+                  {
+                    "nodes": [
+                      {
+                        "nodeType": "selector",
+                        "nodes": [],
+                      },
+                    ],
+                    "nodeType": "selector",
+                  },
+                  {
+                    "type": "PATROL",
+                    "params": {
+                      "direction": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "vector",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupAveragePosition",
+                      },
+                    },
+                    "nodeType": "action",
+                  },
+                ],
+                "nodeType": "selector",
+              },
+              {
+                "nodeType": "condition",
+                "type": "groupIndexGreaterThan",
+                "invert": true,
+                "params": {
+                  "groupIndexLeft": {
+                    "nodeType": "dataValue",
+                    "type": "BLACKBOARD",
+                    "dataType": "groupIndex",
+                    "blackboardKey": "groupMetaUnitTypeIndex",
+                    "params": {},
+                  },
+                  "groupIndexRight": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "groupIndex",
+                    "value": 2,
+                  },
+                },
+              },
+              {
+                "nodes": [
+                  {
+                    "type": "tickCountEquals",
+                    "invert": false,
+                    "params": {
+                      "leftTicks": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "type": {
+                            "type": "LITERAL",
+                            "value": "ARROW",
+                            "dataType": "projectileType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "tickCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                      },
+                      "rightTicks": {
+                        "type": "LITERAL",
+                        "value": 15,
+                        "dataType": "tickCount",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "nodeType": "condition",
+                  },
+                  {
+                    "type": "SPLIT_GROUP",
+                    "params": {
+                      "splitGroupInto": {
+                        "type": "LITERAL",
+                        "value": "HALF",
+                        "dataType": "groupSize",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "nodeType": "action",
+                  },
+                  {
+                    "nodes": [
+                      {
+                        "nodeType": "sequence",
+                        "nodes": [],
+                      },
+                    ],
+                    "nodeType": "sequence",
+                  },
+                ],
+                "nodeType": "sequence",
+              },
+              {
+                "nodes": [
+                  {
+                    "nodeType": "condition",
+                    "type": "groupIndexEquals",
+                    "invert": true,
+                    "params": {
+                      "groupIndexLeft": {
+                        "nodeType": "dataValue",
+                        "type": "BLACKBOARD",
+                        "dataType": "groupIndex",
+                        "blackboardKey": "groupMetaUnitTypeIndex",
+                        "params": {},
+                      },
+                      "groupIndexRight": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "groupIndex",
+                        "value": 1,
+                      },
+                    },
+                  },
+                  {
+                    "nodeType": "condition",
+                    "type": "unitCountEquals",
+                    "invert": false,
+                    "params": {
+                      "leftUnitCount": {
+                        "nodeType": "dataValue",
+                        "type": "BLACKBOARD",
+                        "dataType": "unitCount",
+                        "blackboardKey": "opponentUnitCountByType",
+                        "params": {
+                          "unitType": {
+                            "nodeType": "dataValue",
+                            "type": "LITERAL",
+                            "dataType": "unitType",
+                            "value": "ARCHER",
+                          },
+                        },
+                      },
+                      "rightUnitCount": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "unitCount",
+                        "value": 31,
+                      },
+                    },
+                  },
+                  {
+                    "nodeType": "action",
+                    "type": "SPLIT_GROUP",
+                    "params": {
+                      "splitGroupInto": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "groupSize",
+                        "value": "HALF",
+                      },
+                    },
+                  },
+                  {
+                    "type": "tickCountLessThan",
+                    "invert": false,
+                    "params": {
+                      "leftTicks": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "type": {
+                            "type": "LITERAL",
+                            "value": "ARROW",
+                            "dataType": "projectileType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "tickCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                      },
+                      "rightTicks": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "tickCount",
+                        "value": 82,
+                      },
+                    },
+                    "nodeType": "condition",
+                  },
+                  {
+                    "nodes": [],
+                    "nodeType": "selector",
+                  },
+                  {
+                    "type": "IDLE",
+                    "params": {
+                      "forTicksAmount": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "tickCount",
+                        "value": 15,
+                      },
+                    },
+                    "nodeType": "action",
+                  },
+                ],
+                "nodeType": "sequence",
+              },
+            ],
+            "nodeType": "selector",
+          },
+          {
+            "nodes": [],
+            "nodeType": "selector",
+          },
+          {
+            "type": "FORMATION_SPREAD",
+            "params": {},
+            "nodeType": "action",
+          },
+          {
+            "type": "unitCountGreaterThan",
+            "invert": true,
+            "params": {
+              "leftUnitCount": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "unitType": {
+                    "type": "LITERAL",
+                    "value": "ARCHER",
+                    "dataType": "unitType",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "dataType": "unitCount",
+                "nodeType": "dataValue",
+                "blackboardKey": "globalOwnedUnitsOfTypeCount",
+              },
+              "rightUnitCount": {
+                "nodeType": "dataValue",
+                "type": "BLACKBOARD",
+                "dataType": "unitCount",
+                "blackboardKey": "globalOwnedUnitsOfTypeCount",
+                "params": {
+                  "unitType": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "unitType",
+                    "value": "MANGO",
+                  },
+                },
+              },
+            },
+            "nodeType": "condition",
+          },
+        ],
+        "nodeType": "sequence",
+      },
+      {
+        "nodes": [
+          {
+            "nodeType": "action",
+            "type": "MOVE_UNITS",
+            "params": {
+              "direction": {
+                "nodeType": "dataValue",
+                "type": "BLACKBOARD",
+                "dataType": "vector",
+                "blackboardKey": "groupUnitVectorFacingDirection",
+                "params": {
+                  "direction": {
+                    "nodeType": "dataValue",
+                    "type": "BLACKBOARD",
+                    "dataType": "vector",
+                    "blackboardKey": "opponentAveragePosition",
+                    "params": {},
+                  },
+                  "angle": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "vectorAngle",
+                    "value": 291,
+                  },
+                  "magnitude": {
+                    "nodeType": "dataValue",
+                    "type": "LITERAL",
+                    "dataType": "vectorMagnitude",
+                    "value": 486,
+                  },
+                },
+              },
+            },
+          },
+          {
+            "type": "groupIndexGreaterThan",
+            "invert": true,
+            "params": {
+              "groupIndexLeft": {
+                "type": "BLACKBOARD",
+                "params": {},
+                "dataType": "groupIndex",
+                "nodeType": "dataValue",
+                "blackboardKey": "groupMetaUnitTypeIndex",
+              },
+              "groupIndexRight": {
+                "type": "LITERAL",
+                "value": 1,
+                "dataType": "groupIndex",
+                "nodeType": "dataValue",
+              },
+            },
+            "nodeType": "condition",
+          },
+          {
+            "type": "unitCountEquals",
+            "invert": true,
+            "params": {
+              "leftUnitCount": {
+                "type": "BLACKBOARD",
+                "params": {},
+                "dataType": "unitCount",
+                "nodeType": "dataValue",
+                "blackboardKey": "groupUnitCount",
+              },
+              "rightUnitCount": {
+                "type": "LITERAL",
+                "value": 4,
+                "dataType": "unitCount",
+                "nodeType": "dataValue",
+              },
+            },
+            "nodeType": "condition",
+          },
+          {
+            "nodes": [
+              {
+                "nodeType": "selector",
+                "nodes": [],
+              },
+            ],
+            "nodeType": "sequence",
+          },
+          {
+            "type": "vectorDistanceBetweenLessThan",
+            "invert": true,
+            "params": {
+              "pointA": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "angle": {
+                    "type": "LITERAL",
+                    "value": 191,
+                    "dataType": "vectorAngle",
+                    "nodeType": "dataValue",
+                  },
+                  "direction": {
+                    "nodeType": "dataValue",
+                    "type": "BLACKBOARD",
+                    "dataType": "vector",
+                    "blackboardKey": "opponentNextProjectileLandingPositionByType",
+                    "params": {
+                      "type": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "projectileType",
+                        "value": "MANGO_ROCK",
+                      },
+                    },
+                  },
+                  "magnitude": {
+                    "type": "LITERAL",
+                    "value": 163,
+                    "dataType": "vectorMagnitude",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "dataType": "vector",
+                "nodeType": "dataValue",
+                "blackboardKey": "groupUnitVectorFacingDirection",
+              },
+              "pointB": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "angle": {
+                    "type": "LITERAL",
+                    "value": 30,
+                    "dataType": "vectorAngle",
+                    "nodeType": "dataValue",
+                  },
+                  "direction": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "type": {
+                        "nodeType": "dataValue",
+                        "type": "LITERAL",
+                        "dataType": "projectileType",
+                        "value": "ARROW",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "opponentNextProjectileLandingPositionByType",
+                  },
+                  "magnitude": {
+                    "type": "LITERAL",
+                    "value": 72,
+                    "dataType": "vectorMagnitude",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "dataType": "vector",
+                "nodeType": "dataValue",
+                "blackboardKey": "groupUnitVectorFacingDirection",
+              },
+              "distance": {
+                "type": "LITERAL",
+                "value": 497,
+                "dataType": "vectorMagnitude",
+                "nodeType": "dataValue",
+              },
+            },
+            "nodeType": "condition",
+          },
+          {
+            "type": "PATROL",
+            "params": {
+              "direction": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "angle": {
+                    "type": "LITERAL",
+                    "value": 311,
+                    "dataType": "vectorAngle",
+                    "nodeType": "dataValue",
+                  },
+                  "direction": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "angle": {
+                        "type": "LITERAL",
+                        "value": 335,
+                        "dataType": "vectorAngle",
+                        "nodeType": "dataValue",
+                      },
+                      "direction": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "vector",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentAveragePosition",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "groupVectorFacingDirection",
+                  },
+                  "magnitude": {
+                    "type": "LITERAL",
+                    "value": 337,
+                    "dataType": "vectorMagnitude",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "dataType": "vector",
+                "nodeType": "dataValue",
+                "blackboardKey": "groupUnitVectorFacingDirection",
+              },
+            },
+            "nodeType": "action",
+          },
+        ],
+        "nodeType": "selector",
+      },
+    ],
+    "nodeType": "selector",
+  },
+  "2": {
+    "nodes": [
+      {
+        "nodes": [
+          {
+            "nodes": [],
+            "nodeType": "selector",
+          },
+          {
+            "type": "groupIndexGreaterThan",
+            "invert": false,
+            "params": {
+              "groupIndexLeft": {
+                "type": "BLACKBOARD",
+                "params": {},
+                "dataType": "groupIndex",
+                "nodeType": "dataValue",
+                "blackboardKey": "groupMetaUnitTypeIndex",
+              },
+              "groupIndexRight": {
+                "type": "LITERAL",
+                "value": 3,
+                "dataType": "groupIndex",
+                "nodeType": "dataValue",
+              },
+            },
+            "nodeType": "condition",
+          },
+          {
+            "nodes": [
+              {
+                "nodes": [],
+                "nodeType": "sequence",
+              },
+              {
+                "type": "vectorDistanceBetweenLessThan",
+                "invert": true,
+                "params": {
+                  "pointA": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "angle": {
+                        "type": "LITERAL",
+                        "value": 86,
+                        "dataType": "vectorAngle",
+                        "nodeType": "dataValue",
+                      },
+                      "direction": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "angle": {
+                            "type": "LITERAL",
+                            "value": 260,
+                            "dataType": "vectorAngle",
+                            "nodeType": "dataValue",
+                          },
+                          "direction": {
+                            "type": "BLACKBOARD",
+                            "params": {
+                              "type": {
+                                "type": "LITERAL",
+                                "value": "ARROW",
+                                "dataType": "projectileType",
+                                "nodeType": "dataValue",
+                              },
+                            },
+                            "dataType": "vector",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "opponentNextProjectileLandingPositionByType",
+                          },
+                        },
+                        "dataType": "vector",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupVectorFacingDirection",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "groupVectorFacingDirection",
+                  },
+                  "pointB": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "movingUnit": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "unitType": {
+                            "type": "LITERAL",
+                            "value": "ARCHER",
+                            "dataType": "unitType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "unitId",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentMedoidUnitByType",
+                      },
+                      "positionInTicksAmount": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "type": {
+                            "type": "LITERAL",
+                            "value": "ARROW",
+                            "dataType": "projectileType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "tickCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "opponentUnitMovementTowardsVector",
+                  },
+                  "distance": {
+                    "type": "LITERAL",
+                    "value": 50,
+                    "dataType": "vectorMagnitude",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "nodeType": "condition",
+              },
+            ],
+            "nodeType": "sequence",
+          },
+        ],
+        "nodeType": "selector",
+      },
+      {
+        "nodes": [
+          {
+            "type": "MOVE_UNITS",
+            "params": {
+              "direction": {
+                "type": "BLACKBOARD",
+                "params": {
+                  "unitType": {
+                    "type": "LITERAL",
+                    "value": "MONK",
+                    "dataType": "unitType",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "dataType": "vector",
+                "nodeType": "dataValue",
+                "blackboardKey": "opponentAverageUnitPositionByType",
+              },
+            },
+            "nodeType": "action",
+          },
+          {
+            "type": "FORMATION_SPLIT",
+            "params": {},
+            "nodeType": "action",
+          },
+          {
+            "nodes": [],
+            "nodeType": "selector",
+          },
+          {
+            "nodes": [
+              {
+                "nodes": [
+                  {
+                    "type": "MERGE_GROUP",
+                    "params": {},
+                    "nodeType": "action",
+                  },
+                ],
+                "nodeType": "selector",
+              },
+              {
+                "nodes": [
+                  {
+                    "nodes": [
+                      {
+                        "nodes": [
+                          {
+                            "nodes": [
+                              {
+                                "nodes": [],
+                                "nodeType": "sequence",
+                              },
+                            ],
+                            "nodeType": "sequence",
+                          },
+                          {
+                            "nodes": [
+                              {
+                                "type": "MOVE_UNITS",
+                                "params": {
+                                  "direction": {
+                                    "type": "BLACKBOARD",
+                                    "params": {
+                                      "angle": {
+                                        "type": "LITERAL",
+                                        "value": 287,
+                                        "dataType": "vectorAngle",
+                                        "nodeType": "dataValue",
+                                      },
+                                      "direction": {
+                                        "type": "BLACKBOARD",
+                                        "params": {
+                                          "unitType": {
+                                            "type": "LITERAL",
+                                            "value": "MANGO",
+                                            "dataType": "unitType",
+                                            "nodeType": "dataValue",
+                                          },
+                                        },
+                                        "dataType": "vector",
+                                        "nodeType": "dataValue",
+                                        "blackboardKey": "globalNonGroupUnitsOfTypeAveragePosition",
+                                      },
+                                    },
+                                    "dataType": "vector",
+                                    "nodeType": "dataValue",
+                                    "blackboardKey": "groupVectorFacingDirection",
+                                  },
+                                },
+                                "nodeType": "action",
+                              },
+                            ],
+                            "nodeType": "selector",
+                          },
+                        ],
+                        "nodeType": "selector",
+                      },
+                    ],
+                    "nodeType": "selector",
+                  },
+                ],
+                "nodeType": "selector",
+              },
+              {
+                "type": "tickCountEquals",
+                "invert": false,
+                "params": {
+                  "leftTicks": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "type": {
+                        "type": "LITERAL",
+                        "value": "MANGO_ROCK",
+                        "dataType": "projectileType",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "dataType": "tickCount",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                  },
+                  "rightTicks": {
+                    "type": "LITERAL",
+                    "value": 57,
+                    "dataType": "tickCount",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "nodeType": "condition",
               },
               {
                 "nodes": [
@@ -1131,7 +1345,100 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                         "params": {
                           "unitType": {
                             "type": "LITERAL",
-                            "value": "ARCHER",
+                            "value": "MANGO",
+                            "dataType": "unitType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "formation",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentFormationByType",
+                      },
+                      "rightFormation": {
+                        "type": "LITERAL",
+                        "value": "SPREAD",
+                        "dataType": "formation",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "nodeType": "condition",
+                  },
+                  {
+                    "type": "CONVERT",
+                    "params": {
+                      "unit": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "unitType": {
+                            "type": "LITERAL",
+                            "value": "MONK",
+                            "dataType": "unitType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "unitId",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentClosestUnitByTypeNotInMinRange",
+                      },
+                    },
+                    "nodeType": "action",
+                  },
+                  {
+                    "type": "formationEquals",
+                    "invert": true,
+                    "params": {
+                      "leftFormation": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "formation",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupFormation",
+                      },
+                      "rightFormation": {
+                        "type": "LITERAL",
+                        "value": "SPREAD",
+                        "dataType": "formation",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "nodeType": "condition",
+                  },
+                  {
+                    "nodes": [
+                      {
+                        "type": "groupIndexEquals",
+                        "invert": false,
+                        "params": {
+                          "groupIndexLeft": {
+                            "type": "BLACKBOARD",
+                            "params": {},
+                            "dataType": "groupIndex",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
+                          },
+                          "groupIndexRight": {
+                            "type": "BLACKBOARD",
+                            "params": {},
+                            "dataType": "groupIndex",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
+                          },
+                        },
+                        "nodeType": "condition",
+                      },
+                    ],
+                    "nodeType": "selector",
+                  },
+                  {
+                    "type": "formationEquals",
+                    "invert": true,
+                    "params": {
+                      "leftFormation": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "unitType": {
+                            "type": "LITERAL",
+                            "value": "MANGO",
                             "dataType": "unitType",
                             "nodeType": "dataValue",
                           },
@@ -1149,22 +1456,113 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                     },
                     "nodeType": "condition",
                   },
+                ],
+                "nodeType": "selector",
+              },
+              {
+                "type": "vectorDistanceBetweenLessThan",
+                "invert": false,
+                "params": {
+                  "pointA": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "movingUnit": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "unitType": {
+                            "type": "LITERAL",
+                            "value": "MONK",
+                            "dataType": "unitType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "unitId",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentMedoidUnitByType",
+                      },
+                      "positionInTicksAmount": {
+                        "type": "BLACKBOARD",
+                        "params": {
+                          "type": {
+                            "type": "LITERAL",
+                            "value": "ARROW",
+                            "dataType": "projectileType",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "dataType": "tickCount",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "opponentUnitMovementTowardsVector",
+                  },
+                  "pointB": {
+                    "type": "BLACKBOARD",
+                    "params": {
+                      "angle": {
+                        "type": "LITERAL",
+                        "value": 59,
+                        "dataType": "vectorAngle",
+                        "nodeType": "dataValue",
+                      },
+                      "direction": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "vector",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupAveragePosition",
+                      },
+                      "magnitude": {
+                        "type": "LITERAL",
+                        "value": 77,
+                        "dataType": "vectorMagnitude",
+                        "nodeType": "dataValue",
+                      },
+                    },
+                    "dataType": "vector",
+                    "nodeType": "dataValue",
+                    "blackboardKey": "groupUnitVectorFacingDirection",
+                  },
+                  "distance": {
+                    "type": "LITERAL",
+                    "value": 300,
+                    "dataType": "vectorMagnitude",
+                    "nodeType": "dataValue",
+                  },
+                },
+                "nodeType": "condition",
+              },
+              {
+                "nodes": [
                   {
                     "nodes": [
                       {
-                        "nodeType": "selector",
-                        "nodes": [],
-                      },
-                      {
-                        "type": "groupIndexEquals",
+                        "type": "booleanIsTrue",
                         "invert": false,
                         "params": {
-                          "groupIndexLeft": {
-                            "nodeType": "dataValue",
+                          "subject": {
                             "type": "BLACKBOARD",
-                            "dataType": "groupIndex",
-                            "blackboardKey": "groupMetaUnitTypeIndex",
                             "params": {},
+                            "dataType": "boolean",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "groupIsConverting",
+                          },
+                        },
+                        "nodeType": "condition",
+                      },
+                      {
+                        "type": "groupIndexGreaterThan",
+                        "invert": true,
+                        "params": {
+                          "groupIndexLeft": {
+                            "type": "BLACKBOARD",
+                            "params": {},
+                            "dataType": "groupIndex",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
                           },
                           "groupIndexRight": {
                             "type": "BLACKBOARD",
@@ -1177,82 +1575,206 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
                         "nodeType": "condition",
                       },
                     ],
-                    "nodeType": "sequence",
+                    "nodeType": "selector",
                   },
                   {
-                    "nodeType": "action",
-                    "type": "PATROL",
+                    "nodes": [
+                      {
+                        "nodes": [],
+                        "nodeType": "selector",
+                      },
+                    ],
+                    "nodeType": "selector",
+                  },
+                  {
+                    "type": "formationEquals",
+                    "invert": true,
                     "params": {
-                      "direction": {
-                        "nodeType": "dataValue",
+                      "leftFormation": {
                         "type": "BLACKBOARD",
-                        "dataType": "vector",
-                        "blackboardKey": "groupAveragePosition",
                         "params": {},
-                      },
-                    },
-                  },
-                  {
-                    "type": "tickCountLessThan",
-                    "invert": false,
-                    "params": {
-                      "leftTicks": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "type": {
-                            "type": "LITERAL",
-                            "value": "ARROW",
-                            "dataType": "projectileType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "tickCount",
+                        "dataType": "formation",
                         "nodeType": "dataValue",
-                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                        "blackboardKey": "groupFormation",
                       },
-                      "rightTicks": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "type": {
-                            "type": "LITERAL",
-                            "value": "MANGO_ROCK",
-                            "dataType": "projectileType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "tickCount",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
-                      },
-                    },
-                    "nodeType": "condition",
-                  },
-                  {
-                    "type": "unitCountGreaterThan",
-                    "invert": false,
-                    "params": {
-                      "leftUnitCount": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "MONK",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "unitCount",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "globalOwnedUnitsOfTypeCount",
-                      },
-                      "rightUnitCount": {
-                        "nodeType": "dataValue",
+                      "rightFormation": {
                         "type": "LITERAL",
-                        "dataType": "unitCount",
-                        "value": 0,
+                        "value": "LINE",
+                        "dataType": "formation",
+                        "nodeType": "dataValue",
                       },
                     },
                     "nodeType": "condition",
+                  },
+                  {
+                    "type": "groupIndexGreaterThan",
+                    "invert": true,
+                    "params": {
+                      "groupIndexLeft": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "groupIndex",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupMetaUnitTypeIndex",
+                      },
+                      "groupIndexRight": {
+                        "type": "BLACKBOARD",
+                        "params": {},
+                        "dataType": "groupIndex",
+                        "nodeType": "dataValue",
+                        "blackboardKey": "groupMetaUnitTypeIndex",
+                      },
+                    },
+                    "nodeType": "condition",
+                  },
+                  {
+                    "nodes": [
+                      {
+                        "nodes": [
+                          {
+                            "type": "CONVERT",
+                            "params": {
+                              "unit": {
+                                "type": "BLACKBOARD",
+                                "params": {},
+                                "dataType": "unitId",
+                                "nodeType": "dataValue",
+                                "blackboardKey": "opponentArcherWithinMangoMinimumRange",
+                              },
+                            },
+                            "nodeType": "action",
+                          },
+                        ],
+                        "nodeType": "selector",
+                      },
+                      {
+                        "type": "FORMATION_SPREAD",
+                        "params": {},
+                        "nodeType": "action",
+                      },
+                      {
+                        "type": "groupIndexGreaterThan",
+                        "invert": true,
+                        "params": {
+                          "groupIndexLeft": {
+                            "type": "BLACKBOARD",
+                            "params": {},
+                            "dataType": "groupIndex",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "groupMetaUnitTypeIndex",
+                          },
+                          "groupIndexRight": {
+                            "type": "LITERAL",
+                            "value": 0,
+                            "dataType": "groupIndex",
+                            "nodeType": "dataValue",
+                          },
+                        },
+                        "nodeType": "condition",
+                      },
+                      {
+                        "nodes": [
+                          {
+                            "type": "MERGE_GROUP",
+                            "params": {},
+                            "nodeType": "action",
+                          },
+                          {
+                            "nodes": [],
+                            "nodeType": "sequence",
+                          },
+                        ],
+                        "nodeType": "sequence",
+                      },
+                      {
+                        "type": "FORMATION_SPREAD",
+                        "params": {},
+                        "nodeType": "action",
+                      },
+                      {
+                        "nodes": [
+                          {
+                            "type": "SPLIT_GROUP",
+                            "params": {
+                              "splitGroupInto": {
+                                "type": "LITERAL",
+                                "value": "HALF",
+                                "dataType": "groupSize",
+                                "nodeType": "dataValue",
+                              },
+                            },
+                            "nodeType": "action",
+                          },
+                          {
+                            "nodes": [
+                              {
+                                "type": "tickCountEquals",
+                                "invert": true,
+                                "params": {
+                                  "leftTicks": {
+                                    "type": "BLACKBOARD",
+                                    "params": {
+                                      "type": {
+                                        "type": "LITERAL",
+                                        "value": "MANGO_ROCK",
+                                        "dataType": "projectileType",
+                                        "nodeType": "dataValue",
+                                      },
+                                    },
+                                    "dataType": "tickCount",
+                                    "nodeType": "dataValue",
+                                    "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
+                                  },
+                                  "rightTicks": {
+                                    "type": "LITERAL",
+                                    "value": 38,
+                                    "dataType": "tickCount",
+                                    "nodeType": "dataValue",
+                                  },
+                                },
+                                "nodeType": "condition",
+                              },
+                              {
+                                "nodes": [
+                                  {
+                                    "nodes": [],
+                                    "nodeType": "sequence",
+                                  },
+                                ],
+                                "nodeType": "selector",
+                              },
+                            ],
+                            "nodeType": "sequence",
+                          },
+                        ],
+                        "nodeType": "sequence",
+                      },
+                      {
+                        "type": "CONVERT",
+                        "params": {
+                          "unit": {
+                            "type": "BLACKBOARD",
+                            "params": {
+                              "unitType": {
+                                "type": "LITERAL",
+                                "value": "MANGO",
+                                "dataType": "unitType",
+                                "nodeType": "dataValue",
+                              },
+                            },
+                            "dataType": "unitId",
+                            "nodeType": "dataValue",
+                            "blackboardKey": "opponentMedoidUnitByType",
+                          },
+                        },
+                        "nodeType": "action",
+                      },
+                      {
+                        "nodes": [],
+                        "nodeType": "selector",
+                      },
+                    ],
+                    "nodeType": "sequence",
                   },
                 ],
                 "nodeType": "sequence",
@@ -1261,527 +1783,7 @@ export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
             "nodeType": "sequence",
           },
         ],
-        "nodeType": "selector",
-      },
-    ],
-    "nodeType": "selector",
-  },
-  "2": {
-    "nodes": [
-      {
-        "nodes": [
-          {
-            "nodes": [],
-            "nodeType": "selector",
-          },
-          {
-            "type": "IDLE",
-            "params": {
-              "forTicksAmount": {
-                "type": "LITERAL",
-                "value": 40,
-                "dataType": "tickCount",
-                "nodeType": "dataValue",
-              },
-            },
-            "nodeType": "action",
-          },
-          {
-            "nodes": [
-              {
-                "nodes": [
-                  {
-                    "nodeType": "action",
-                    "type": "FORMATION_SPLIT",
-                    "params": {},
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "nodes": [],
-                "nodeType": "selector",
-              },
-            ],
-            "nodeType": "selector",
-          },
-        ],
-        "nodeType": "selector",
-      },
-      {
-        "nodes": [
-          {
-            "type": "SPLIT_GROUP",
-            "params": {
-              "splitGroupInto": {
-                "type": "LITERAL",
-                "value": "HALF",
-                "dataType": "groupSize",
-                "nodeType": "dataValue",
-              },
-            },
-            "nodeType": "action",
-          },
-          {
-            "nodes": [
-              {
-                "nodes": [
-                  {
-                    "nodeType": "condition",
-                    "type": "groupIndexGreaterThan",
-                    "invert": false,
-                    "params": {
-                      "groupIndexLeft": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "groupIndex",
-                        "blackboardKey": "groupMetaUnitTypeIndex",
-                        "params": {},
-                      },
-                      "groupIndexRight": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "groupIndex",
-                        "blackboardKey": "groupMetaUnitTypeIndex",
-                        "params": {},
-                      },
-                    },
-                  },
-                  {
-                    "type": "SPLIT_GROUP",
-                    "params": {
-                      "splitGroupInto": {
-                        "type": "LITERAL",
-                        "value": "HALF",
-                        "dataType": "groupSize",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                  {
-                    "type": "SPLIT_GROUP",
-                    "params": {
-                      "splitGroupInto": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "groupSize",
-                        "value": "ONE",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                  {
-                    "type": "MOVE_UNITS",
-                    "params": {
-                      "direction": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "unitType": {
-                            "type": "LITERAL",
-                            "value": "MANGO",
-                            "dataType": "unitType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "vector",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentAverageUnitPositionByType",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "nodeType": "action",
-                "type": "MOVE_UNITS",
-                "params": {
-                  "direction": {
-                    "nodeType": "dataValue",
-                    "type": "BLACKBOARD",
-                    "dataType": "vector",
-                    "blackboardKey": "opponentAveragePosition",
-                    "params": {},
-                  },
-                },
-              },
-              {
-                "nodes": [
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [],
-                  },
-                  {
-                    "nodes": [
-                      {
-                        "nodeType": "selector",
-                        "nodes": [],
-                      },
-                    ],
-                    "nodeType": "selector",
-                  },
-                  {
-                    "nodeType": "condition",
-                    "type": "vectorDistanceBetweenLessThan",
-                    "invert": false,
-                    "params": {
-                      "pointA": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "vector",
-                        "blackboardKey": "opponentNextProjectileLandingPositionByType",
-                        "params": {
-                          "type": {
-                            "nodeType": "dataValue",
-                            "type": "LITERAL",
-                            "dataType": "projectileType",
-                            "value": "ARROW",
-                          },
-                        },
-                      },
-                      "pointB": {
-                        "nodeType": "dataValue",
-                        "type": "BLACKBOARD",
-                        "dataType": "vector",
-                        "blackboardKey": "unitPosition",
-                        "params": {
-                          "unitWithPosition": {
-                            "nodeType": "dataValue",
-                            "type": "BLACKBOARD",
-                            "dataType": "unitId",
-                            "blackboardKey": "opponentMedoidUnitByType",
-                            "params": {
-                              "unitType": {
-                                "nodeType": "dataValue",
-                                "type": "LITERAL",
-                                "dataType": "unitType",
-                                "value": "ARCHER",
-                              },
-                            },
-                          },
-                        },
-                      },
-                      "distance": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "vectorMagnitude",
-                        "value": 275,
-                      },
-                    },
-                  },
-                  {
-                    "nodes": [
-                      {
-                        "type": "DELETE_GROUP",
-                        "params": {},
-                        "nodeType": "action",
-                      },
-                    ],
-                    "nodeType": "selector",
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "nodeType": "selector",
-                "nodes": [],
-              },
-              {
-                "type": "formationEquals",
-                "invert": false,
-                "params": {
-                  "leftFormation": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "unitType": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "unitType",
-                        "value": "MONK",
-                      },
-                    },
-                    "dataType": "formation",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentFormationByType",
-                  },
-                  "rightFormation": {
-                    "type": "BLACKBOARD",
-                    "params": {
-                      "unitType": {
-                        "type": "LITERAL",
-                        "value": "MANGO",
-                        "dataType": "unitType",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "dataType": "formation",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentFormationByType",
-                  },
-                },
-                "nodeType": "condition",
-              },
-            ],
-            "nodeType": "selector",
-          },
-          {
-            "nodeType": "action",
-            "type": "MERGE_GROUP",
-            "params": {},
-          },
-          {
-            "type": "booleanIsTrue",
-            "invert": false,
-            "params": {
-              "subject": {
-                "type": "BLACKBOARD",
-                "params": {},
-                "dataType": "boolean",
-                "nodeType": "dataValue",
-                "blackboardKey": "groupHasAnyReloading",
-              },
-            },
-            "nodeType": "condition",
-          },
-          {
-            "type": "FORMATION_SPLIT",
-            "params": {},
-            "nodeType": "action",
-          },
-          {
-            "nodes": [
-              {
-                "type": "SPLIT_GROUP",
-                "params": {
-                  "splitGroupInto": {
-                    "type": "LITERAL",
-                    "value": "ONE",
-                    "dataType": "groupSize",
-                    "nodeType": "dataValue",
-                  },
-                },
-                "nodeType": "action",
-              },
-              {
-                "type": "MOVE_UNITS",
-                "params": {
-                  "direction": {
-                    "type": "BLACKBOARD",
-                    "params": {},
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "groupAveragePosition",
-                  },
-                },
-                "nodeType": "action",
-              },
-            ],
-            "nodeType": "selector",
-          },
-          {
-            "nodes": [
-              {
-                "nodes": [
-                  {
-                    "nodes": [
-                      {
-                        "nodes": [],
-                        "nodeType": "sequence",
-                      },
-                      {
-                        "type": "CONVERT",
-                        "params": {
-                          "unit": {
-                            "type": "BLACKBOARD",
-                            "params": {},
-                            "dataType": "unitId",
-                            "nodeType": "dataValue",
-                            "blackboardKey": "opponentArcherWithinMangoMinimumRange",
-                          },
-                        },
-                        "nodeType": "action",
-                      },
-                    ],
-                    "nodeType": "selector",
-                  },
-                  {
-                    "type": "SPLIT_GROUP",
-                    "params": {
-                      "splitGroupInto": {
-                        "type": "LITERAL",
-                        "value": "ONE",
-                        "dataType": "groupSize",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [
-                      {
-                        "nodeType": "condition",
-                        "type": "unitCountEquals",
-                        "invert": false,
-                        "params": {
-                          "leftUnitCount": {
-                            "nodeType": "dataValue",
-                            "type": "BLACKBOARD",
-                            "dataType": "unitCount",
-                            "blackboardKey": "groupUnitCount",
-                            "params": {},
-                          },
-                          "rightUnitCount": {
-                            "nodeType": "dataValue",
-                            "type": "BLACKBOARD",
-                            "dataType": "unitCount",
-                            "blackboardKey": "opponentUnitCountByType",
-                            "params": {
-                              "unitType": {
-                                "nodeType": "dataValue",
-                                "type": "LITERAL",
-                                "dataType": "unitType",
-                                "value": "MANGO",
-                              },
-                            },
-                          },
-                        },
-                      },
-                      {
-                        "nodeType": "sequence",
-                        "nodes": [],
-                      },
-                    ],
-                  },
-                  {
-                    "type": "tickCountLessThan",
-                    "invert": true,
-                    "params": {
-                      "leftTicks": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "type": {
-                            "type": "LITERAL",
-                            "value": "MANGO_ROCK",
-                            "dataType": "projectileType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "tickCount",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
-                      },
-                      "rightTicks": {
-                        "type": "BLACKBOARD",
-                        "params": {
-                          "type": {
-                            "type": "LITERAL",
-                            "value": "MANGO_ROCK",
-                            "dataType": "projectileType",
-                            "nodeType": "dataValue",
-                          },
-                        },
-                        "dataType": "tickCount",
-                        "nodeType": "dataValue",
-                        "blackboardKey": "opponentNextProjectileLandingInTicksTimeByType",
-                      },
-                    },
-                    "nodeType": "condition",
-                  },
-                ],
-                "nodeType": "sequence",
-              },
-              {
-                "type": "MOVE_UNITS",
-                "params": {
-                  "direction": {
-                    "type": "BLACKBOARD",
-                    "params": {},
-                    "dataType": "vector",
-                    "nodeType": "dataValue",
-                    "blackboardKey": "opponentAveragePosition",
-                  },
-                },
-                "nodeType": "action",
-              },
-              {
-                "nodes": [
-                  {
-                    "nodeType": "action",
-                    "type": "SPLIT_GROUP",
-                    "params": {
-                      "splitGroupInto": {
-                        "nodeType": "dataValue",
-                        "type": "LITERAL",
-                        "dataType": "groupSize",
-                        "value": "HALF",
-                      },
-                    },
-                  },
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [],
-                  },
-                ],
-                "nodeType": "selector",
-              },
-              {
-                "nodes": [
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [
-                      {
-                        "nodeType": "sequence",
-                        "nodes": [],
-                      },
-                    ],
-                  },
-                  {
-                    "nodeType": "sequence",
-                    "nodes": [],
-                  },
-                  {
-                    "type": "SPLIT_GROUP",
-                    "params": {
-                      "splitGroupInto": {
-                        "type": "LITERAL",
-                        "value": "ONE",
-                        "dataType": "groupSize",
-                        "nodeType": "dataValue",
-                      },
-                    },
-                    "nodeType": "action",
-                  },
-                ],
-                "nodeType": "selector",
-              },
-            ],
-            "nodeType": "selector",
-          },
-          {
-            "type": "groupIndexGreaterThan",
-            "invert": false,
-            "params": {
-              "groupIndexLeft": {
-                "type": "BLACKBOARD",
-                "params": {},
-                "dataType": "groupIndex",
-                "nodeType": "dataValue",
-                "blackboardKey": "groupMetaUnitTypeIndex",
-              },
-              "groupIndexRight": {
-                "type": "LITERAL",
-                "value": 0,
-                "dataType": "groupIndex",
-                "nodeType": "dataValue",
-              },
-            },
-            "nodeType": "condition",
-          },
-        ],
-        "nodeType": "selector",
+        "nodeType": "sequence",
       },
     ],
     "nodeType": "selector",
