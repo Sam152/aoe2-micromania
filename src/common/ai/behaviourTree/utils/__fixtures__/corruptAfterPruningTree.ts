@@ -1,4 +1,6 @@
-export const corruptAfterPruningTree = {
+import { UnitAwareBehaviourTree } from "../../BehaviourTree.ts";
+
+export const corruptAfterPruningTree: UnitAwareBehaviourTree = {
   "0": {
     "nodes": [
       {

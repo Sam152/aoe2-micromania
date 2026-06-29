@@ -18,7 +18,7 @@ type CanBeatAllChampionsResult = { outcome: "NOPE" } | {
 };
 
 export async function canBeatAllChampions({ champions, pool, tree }: {
-  champions: Bot[];
+  champions: Pick<Bot, "tree">[];
   pool: GameWorkerPool;
   tree: UnitAwareBehaviourTree;
 }): Promise<CanBeatAllChampionsResult> {
