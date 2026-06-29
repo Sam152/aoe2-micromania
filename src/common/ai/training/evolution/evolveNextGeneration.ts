@@ -58,15 +58,19 @@ export async function evolveNextGeneration(
           }
 
           winners.push(pruned);
-          const prunedNodes = countUnitAwareBehaviourTreeNodes(candidate) - countUnitAwareBehaviourTreeNodes(pruned);
+          const prunedNodeCount = countUnitAwareBehaviourTreeNodes(pruned);
+          const prunedNodes = countUnitAwareBehaviourTreeNodes(candidate) - prunedNodeCount;
 
-          // Reset the search radius: finding a winner proves the current neighbourhood is
-          // productive, so the next search should start cheap again rather than stay drifted out.
           console.log(
-            `\nBeat ${activeBots.length} champions after ${
-              formatNumber(iterationsSinceLastWin)
-            } iterations and ${timer()} - pruned ${prunedNodes} nodes`,
+            [
+              `\nBeat ${activeBots.length} champions after ${
+                formatNumber(iterationsSinceLastWin)
+              } iterations and ${timer()}`,
+              `- pruned node count: ${formatNumber(prunedNodes)}`,
+              `- resulting node count: ${formatNumber(prunedNodeCount)}`,
+            ].join("\n"),
           );
+
           progressFormatter = createProgressFormatter({ scaleFactor: 100 });
           await insertBot(candidate, generation, activeBots[0]!.groupName, iterationsSinceLastWin);
           iterationsSinceLastWin = 0;
