@@ -41,7 +41,7 @@ export async function canBeatAllChampions({ champions, pool, tree }: {
     if (!resultConsideredWinning({ result: resultB, incumbent: 2, challenger: 1 })) {
       return { outcome: "NOPE" };
     }
-    appendActivations(resultA.bots.player1.activations);
+    appendActivations(resultB.bots.player1.activations);
   }
 
   return {
