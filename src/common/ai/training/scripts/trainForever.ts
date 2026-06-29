@@ -1,6 +1,6 @@
 import { startEvolutionHarness } from "./startEvolutionHarness.ts";
 import { startTournamentHarness } from "./startTournamentHarness.ts";
-import { startPruningHarness } from "./startPruningHarness.ts";
+
 import { createTimer } from "../utils/createTimer.ts";
 
 async function trainForever() {
@@ -11,7 +11,9 @@ async function trainForever() {
     await step("TOURNAMENT", () => startTournamentHarness(false));
     await step("TOURNAMENT (INVERTED)", () => startTournamentHarness(true));
 
-    await step("PRUNE", startPruningHarness);
+    // Don't prune, because we now prune when selecting a candidate.
+    // We may also not need to store activations in the database anymore.
+    // await step("PRUNE", startPruningHarness);
   }
 }
 
