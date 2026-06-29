@@ -49,22 +49,23 @@ export function TrainedBots() {
   }, [bots]);
 
   // On first load, default the matchup to the latest two generations in the
-  // active (strongest) group: the newest generation vs the one before it (or
-  // itself if the group has only one generation).
+  // currently active group (the one still being trained): the newest
+  // generation vs the one before it (or itself if there's only one).
+  // Slot colours: home is blue, away is red (see styles.css .drop-slot--home
+  // / .drop-slot--away), so the later generation goes in away to show red.
   const defaultedRef = useRef(false);
   useEffect(() => {
-    if (defaultedRef.current || groupLeaders.length === 0) { return; }
-    defaultedRef.current = true;
-    const activeGroup = groupLeaders[groupLeaders.length - 1].groupName;
-    const byGeneration = bots
-      .filter((b) => b.groupName === activeGroup)
+    if (defaultedRef.current || bots.length === 0) { return; }
+    const activeBots = bots
+      .filter((b) => b.isActive)
       .sort((a, b) => b.generation - a.generation);
-    const latest = byGeneration[0];
-    const previous = byGeneration[1] ?? latest;
-    // Away is the red slot, so put the later generation there.
-    setHomeBot(previous);
-    setAwayBot(latest);
-  }, [groupLeaders, bots]);
+    if (activeBots.length === 0) { return; }
+    defaultedRef.current = true;
+    const latest = activeBots[0];
+    const previous = activeBots[1] ?? latest;
+    setHomeBot(previous); // blue
+    setAwayBot(latest); // red
+  }, [bots]);
 
   const expandedGroupBots = useMemo(
     () =>

@@ -12,6 +12,7 @@ export type Bot = {
   draws: number;
   gamesSinceLastPrune: number;
   generation: number;
+  isActive: boolean;
 };
 
 export function botRowToBot(row: postgres.Row): Bot {
@@ -26,5 +27,6 @@ export function botRowToBot(row: postgres.Row): Bot {
     gamesSinceLastPrune: row.games_since_last_prune,
     groupName: row.group_name,
     generation: row.generation,
+    isActive: row.is_active,
   };
 }
