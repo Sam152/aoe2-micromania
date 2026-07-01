@@ -508,6 +508,17 @@ function DropSlot({
   );
 }
 
+// Close a modal when Escape is pressed.
+function useEscape(onClose: () => void) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { onClose(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+}
+
 function BotDetailModal({
   bot,
   onClose,
@@ -517,6 +528,8 @@ function BotDetailModal({
   onClose: () => void;
   onInspect: () => void;
 }) {
+  useEscape(onClose);
+
   const games = bot.wins + bot.losses + bot.draws;
   const winRate = games > 0 ? `${Math.round((bot.wins / games) * 100)}%` : "—";
   const rows: [string, React.ReactNode][] = [
@@ -557,6 +570,7 @@ function BotDetailModal({
 }
 
 function TreeModal({ bot, baseBot, onClose }: { bot: Bot; baseBot: Bot; onClose: () => void }) {
+  useEscape(onClose);
   const unitTypes = [UnitType.Archer, UnitType.Mangonel, UnitType.Monk];
   const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
 
