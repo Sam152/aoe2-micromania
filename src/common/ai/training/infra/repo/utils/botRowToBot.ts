@@ -10,7 +10,6 @@ export type Bot = {
   wins: number;
   losses: number;
   draws: number;
-  gamesSinceLastPrune: number;
   generation: number;
   isActive: boolean;
 };
@@ -24,7 +23,6 @@ export function botRowToBot(row: postgres.Row): Bot {
     wins: row.wins,
     losses: row.losses,
     draws: row.draws,
-    gamesSinceLastPrune: row.games_since_last_prune,
     groupName: row.group_name,
     generation: row.generation,
     isActive: row.is_active,

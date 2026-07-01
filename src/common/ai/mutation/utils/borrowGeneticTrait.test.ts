@@ -19,7 +19,6 @@ describe("borrowGeneticTrait", () => {
       wins: 0,
       losses: 0,
       draws: 0,
-      gamesSinceLastPrune: 0,
       generation: 1,
     }] as unknown as Bot[];
 
