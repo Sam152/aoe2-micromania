@@ -25,6 +25,8 @@ export function TrainedBots() {
   const [mutationSeed, setMutationSeed] = useState(0);
   const [swapSeed, setSwapSeed] = useState(0);
   const [inspectBot, setInspectBot] = useState<Bot | null>(null);
+  const [detailBot, setDetailBot] = useState<Bot | null>(null);
+  const [viewMode, setViewMode] = useState<"generation" | "skill">("generation");
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayMenuOpen, setOverlayMenuOpen] = useState(false);
   // Empty set means "show all"; checking values narrows the overlay to those.
@@ -56,16 +58,39 @@ export function TrainedBots() {
   const defaultedRef = useRef(false);
   useEffect(() => {
     if (defaultedRef.current || bots.length === 0) { return; }
-    const activeBots = bots
-      .filter((b) => b.isActive)
-      .sort((a, b) => b.generation - a.generation);
-    if (activeBots.length === 0) { return; }
+    const { home, away } = defaultGenerationMatchup(bots);
+    if (!home && !away) { return; }
     defaultedRef.current = true;
-    const latest = activeBots[0];
-    const previous = activeBots[1] ?? latest;
-    setHomeBot(previous); // blue
-    setAwayBot(latest); // red
+    setHomeBot(home); // blue
+    setAwayBot(away); // red
   }, [bots]);
+
+  // Bot skill view: the 30 highest-rated bots across all groups, generations
+  // ignored entirely. Sorted ascending so the strongest sits on the right (and
+  // gets scrolled into view), matching the generation view's leader strip.
+  const topBots = useMemo(
+    () => [...bots].sort((a, b) => b.elo - a.elo).slice(0, 30).reverse(),
+    [bots],
+  );
+
+  // Switching views also swaps in that view's canonical matchup: skill view
+  // pits the two highest-rated bots (highest in red/away, next in blue/home),
+  // generation view restores the default latest-vs-previous matchup.
+  const selectView = (mode: "generation" | "skill") => {
+    if (mode === viewMode) { return; }
+    setViewMode(mode);
+    if (mode === "skill") {
+      const ranked = [...bots].sort((a, b) => b.elo - a.elo);
+      if (ranked.length > 0) {
+        setAwayBot(ranked[0]); // red = highest
+        setHomeBot(ranked[1] ?? ranked[0]); // blue = next highest
+      }
+    } else {
+      const { home, away } = defaultGenerationMatchup(bots);
+      setHomeBot(home);
+      setAwayBot(away);
+    }
+  };
 
   const expandedGroupBots = useMemo(
     () =>
@@ -151,6 +176,22 @@ export function TrainedBots() {
       />
 
       <div className="speed-controls">
+        <div className="view-toggle">
+          <button
+            className={`speed-btn${viewMode === "generation" ? " speed-btn--active" : ""}`}
+            onClick={() => selectView("generation")}
+            title="Generation view"
+          >
+            ⑂
+          </button>
+          <button
+            className={`speed-btn${viewMode === "skill" ? " speed-btn--active" : ""}`}
+            onClick={() => selectView("skill")}
+            title="Bot skill view"
+          >
+            ★
+          </button>
+        </div>
         {([["1x", 1000], ["2x", 500], ["4x", 250], ["max", 1]] as const).map(([label, ms]) => (
           <button
             key={label}
@@ -203,45 +244,60 @@ export function TrainedBots() {
 
       <div className="matchup-bar">
         <div className="matchup-tiles-col">
-          <div className="generation-tiles" ref={championTilesRef}>
-            {groupLeaders.map((bot) => {
-              const slot = slotForGroup(bot.groupName, homeBot, awayBot);
-              return (
-                <BotTile
-                  key={bot.id}
-                  label={String(bot.elo)}
-                  value={initials(bot.groupName)}
-                  title={bot.groupName}
-                  expanded={expandedGroup === bot.groupName}
-                  slot={slot}
-                  onClick={() => setExpandedGroup(expandedGroup === bot.groupName ? null : bot.groupName)}
-                  onDragStart={(e) => handleDragStart(e, bot)}
-                />
-              );
-            })}
-          </div>
+          {viewMode === "generation"
+            ? (
+              <>
+                <div className="generation-tiles" ref={championTilesRef}>
+                  {groupLeaders.map((bot) => {
+                    const slot = slotForGroup(bot.groupName, homeBot, awayBot);
+                    return (
+                      <BotTile
+                        key={bot.id}
+                        label={String(bot.elo)}
+                        value={initials(bot.groupName)}
+                        title={bot.groupName}
+                        expanded={expandedGroup === bot.groupName}
+                        slot={slot}
+                        onClick={() => setExpandedGroup(expandedGroup === bot.groupName ? null : bot.groupName)}
+                        onDragStart={(e) => handleDragStart(e, bot)}
+                      />
+                    );
+                  })}
+                </div>
 
-          {expandedGroup !== null && expandedGroupBots.length > 0 && (
-            <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
-              {expandedGroupBots.map((bot) => (
-                <BotTile
-                  key={bot.id}
-                  label={String(bot.elo)}
-                  value={initials(bot.botName)}
-                  title={bot.botName}
-                  small
-                  slot={homeBot?.id === bot.id && awayBot?.id === bot.id
-                    ? "both"
-                    : homeBot?.id === bot.id
-                    ? "home"
-                    : awayBot?.id === bot.id
-                    ? "away"
-                    : undefined}
-                  onDragStart={(e) => handleDragStart(e, bot)}
-                />
-              ))}
-            </div>
-          )}
+                {expandedGroup !== null && expandedGroupBots.length > 0 && (
+                  <div className="generation-tiles generation-tiles--secondary" ref={scrollToEnd}>
+                    {expandedGroupBots.map((bot) => (
+                      <BotTile
+                        key={bot.id}
+                        label={String(bot.elo)}
+                        value={initials(bot.botName)}
+                        title={bot.botName}
+                        small
+                        slot={slotForBot(bot, homeBot, awayBot)}
+                        onDragStart={(e) => handleDragStart(e, bot)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            )
+            : (
+              <div className="generation-tiles" ref={scrollToEnd}>
+                {topBots.map((bot) => (
+                  <BotTile
+                    key={bot.id}
+                    label={String(bot.elo)}
+                    value={initials(bot.botName)}
+                    title={bot.botName}
+                    expanded={detailBot?.id === bot.id}
+                    slot={slotForBot(bot, homeBot, awayBot)}
+                    onClick={() => setDetailBot(detailBot?.id === bot.id ? null : bot)}
+                    onDragStart={(e) => handleDragStart(e, bot)}
+                  />
+                ))}
+              </div>
+            )}
         </div>
 
         <div className="matchup-slots">
@@ -287,8 +343,33 @@ export function TrainedBots() {
           onClose={() => setInspectBot(null)}
         />
       )}
+
+      {detailBot && (
+        <BotDetailModal
+          bot={detailBot}
+          onClose={() => setDetailBot(null)}
+          onInspect={() => {
+            setInspectBot(detailBot);
+            setDetailBot(null);
+          }}
+        />
+      )}
     </>
   );
+}
+
+// The default generation-view matchup: within the currently active group (the
+// one still being trained), the newest generation vs the one before it (or
+// itself if there's only one). Home is blue, away is red, so the later
+// generation goes in away to show red.
+function defaultGenerationMatchup(bots: Bot[]): { home: Bot | null; away: Bot | null } {
+  const activeBots = bots
+    .filter((b) => b.isActive)
+    .sort((a, b) => b.generation - a.generation);
+  if (activeBots.length === 0) { return { home: null, away: null }; }
+  const latest = activeBots[0];
+  const previous = activeBots[1] ?? latest;
+  return { home: previous, away: latest };
 }
 
 // Resolve the highlight for a group's leader tile based on which slots hold a
@@ -304,6 +385,21 @@ function slotForGroup(
   if (homeInGroup && awayInGroup) { return "both"; }
   if (homeInGroup) { return "home"; }
   if (awayInGroup) { return "away"; }
+  return undefined;
+}
+
+// The highlight for a single bot's tile based on which slots hold that exact
+// bot (by id): both slots stripes it, a single slot colours it solid.
+function slotForBot(
+  bot: Bot,
+  homeBot: Bot | null,
+  awayBot: Bot | null,
+): "home" | "away" | "both" | undefined {
+  const home = homeBot?.id === bot.id;
+  const away = awayBot?.id === bot.id;
+  if (home && away) { return "both"; }
+  if (home) { return "home"; }
+  if (away) { return "away"; }
   return undefined;
 }
 
@@ -408,6 +504,54 @@ function DropSlot({
           </>
         )
         : <span className="drop-slot__empty">drag a bot here</span>}
+    </div>
+  );
+}
+
+function BotDetailModal({
+  bot,
+  onClose,
+  onInspect,
+}: {
+  bot: Bot;
+  onClose: () => void;
+  onInspect: () => void;
+}) {
+  const games = bot.wins + bot.losses + bot.draws;
+  const winRate = games > 0 ? `${Math.round((bot.wins / games) * 100)}%` : "—";
+  const rows: [string, React.ReactNode][] = [
+    ["Name", bot.botName],
+    ["Group", bot.groupName],
+    ["Generation", bot.generation],
+    ["Elo", bot.elo],
+    ["Wins", bot.wins],
+    ["Losses", bot.losses],
+    ["Draws", bot.draws],
+    ["Games", games],
+    ["Win rate", winRate],
+    ["Active", bot.isActive ? "yes" : "no"],
+    ["ID", bot.id],
+  ];
+
+  return (
+    <div className="tree-modal__backdrop" onClick={onClose}>
+      <div className="tree-modal bot-detail" onClick={(e) => e.stopPropagation()}>
+        <div className="tree-modal__header">
+          <span className="tree-modal__title">{bot.botName}</span>
+          <button className="tree-modal__close" onClick={onClose}>✕</button>
+        </div>
+        <dl className="bot-detail__grid">
+          {rows.map(([label, value]) => (
+            <div key={label} className="bot-detail__row">
+              <dt className="bot-detail__key">{label}</dt>
+              <dd className="bot-detail__val">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="bot-detail__actions">
+          <button className="speed-btn" onClick={onInspect}>{"{}"} inspect tree</button>
+        </div>
+      </div>
     </div>
   );
 }
