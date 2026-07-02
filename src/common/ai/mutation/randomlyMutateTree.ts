@@ -25,7 +25,7 @@ export function randomlyMutateTree(
   const newTree = structuredClone(tree);
 
   arrayOfSize(count).forEach(() => {
-    const candidates = buildMutationCandidates(flattenTree(newTree));
+    const candidates = buildMutationCandidates(flattenTree(newTree), borrowBots.length > 0);
     const mutation = withProbability(candidates);
 
     if (mutation.type === "INVERT_CONDITION") {
@@ -55,12 +55,13 @@ export function randomlyMutateTree(
       return;
     }
 
-    if (mutation.type === "ADD_NODE_TO_LIST") {
-      const type: BehaviourTreeNodeType = randomArray([
-        "condition",
-        "action",
-      ]);
-      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, type));
+    if (mutation.type === "ADD_CONDITION_TO_LIST") {
+      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, "condition"));
+      return;
+    }
+
+    if (mutation.type === "ADD_ACTION_TO_LIST") {
+      insertNodeAtRandomIndex(mutation.listNode, randomNode(unitType, "action"));
       return;
     }
 

@@ -4,11 +4,10 @@ import { GameCanvas } from "../../../components/GameCanvas.tsx";
 import type { Bot } from "../../../../common/ai/training/infra/repo/getAllTourneyBots.ts";
 import { useBotVsBotStateManager } from "./hooks/useBotVsBotStateManager.ts";
 import { useBlackboardOverlay } from "./hooks/useBlackboardOverlay.ts";
-import { randomlyMutateUnitAwareBehaviourTree } from "../../../../common/ai/training/evolution/candidates/generateCandidateTree.ts";
-import { params } from "../../../../common/ai/training/params.ts";
+import { randomlyMutateUnitAwareBehaviourTreeAllUnits } from "../../../../common/ai/mutation/randomlyMutateUnitAwareBehaviourTreeAllUnits.ts";
 import { UnitType } from "../../../../common/units/UnitType.ts";
 import { overlayItems } from "./overlay/blackboardValues.ts";
-import { BehaviourTreeView } from "./BehaviourTreeView.tsx";
+import { BehaviourTreeView, CandidateInfo } from "./BehaviourTreeView.tsx";
 
 // One checkbox per overlay item: keys with an enum param expand to one entry
 // per enum value (e.g. `key[ARCHER]`), each toggleable independently.
@@ -21,7 +20,7 @@ export function TrainedBots() {
   const [homeBot, setHomeBot] = useState<Bot | null>(null);
   const [awayBot, setAwayBot] = useState<Bot | null>(null);
   const [tickInterval, setTickInterval] = useState(500);
-  const [countText, setCountText] = useState(String(params.NEXT_GENERATION_RANDOM_MUTATIONS));
+  const [countText, setCountText] = useState("1");
   const count = Math.max(1, Number(countText) || 1);
   const [mutationSeed, setMutationSeed] = useState(0);
   const [swapSeed, setSwapSeed] = useState(0);
@@ -144,12 +143,10 @@ export function TrainedBots() {
   const handleMutate = (slot: "home" | "away") => {
     const bot = slot === "home" ? homeBot : awayBot;
     if (!bot) { return; }
-    // Always mutate the original bot's tree, never an already-mutated one, so
-    // repeated rolls produce fresh single mutations rather than compounding.
-    const original = bots.find((b) => b.id === bot.id) ?? bot;
-    const tree = randomlyMutateUnitAwareBehaviourTree({ tree: original.tree, count, borrowBots });
-    const letter = String.fromCharCode(97 + Math.floor(Math.random() * 26));
-    const mutated: Bot = { ...original, tree, botName: `${original.botName}-${letter}${count}` };
+    // Cumulative: mutate the current (possibly already-mutated) tree so rolls
+    // compound, bumping the -a{n} suffix to show how many times it's mutated.
+    const tree = randomlyMutateUnitAwareBehaviourTreeAllUnits({ tree: bot.tree, count, borrowBots });
+    const mutated: Bot = { ...bot, tree, botName: nextMutationName(bot.botName, count) };
     if (slot === "home") { setHomeBot(mutated); }
     else { setAwayBot(mutated); }
     setMutationSeed((s) => s + 1);
@@ -340,6 +337,8 @@ export function TrainedBots() {
         <TreeModal
           bot={inspectBot}
           baseBot={bots.find((b) => b.id === inspectBot.id) ?? inspectBot}
+          borrowBots={borrowBots}
+          count={count}
           onClose={() => setInspectBot(null)}
         />
       )}
@@ -391,6 +390,14 @@ function slotForBot(
   if (home) { return "home"; }
   if (away) { return "away"; }
   return undefined;
+}
+
+// Advance the "-a{n}" mutation counter on a bot name by `count` (the number of
+// mutations just applied), or start it there, so the number tracks the total
+// mutations applied: e.g. two rolls at count 3 read foo-a3, foo-a6.
+function nextMutationName(name: string, count: number): string {
+  const match = name.match(/^(.*)-a(\d+)$/);
+  return match ? `${match[1]}-a${Number(match[2]) + count}` : `${name}-a${count}`;
 }
 
 // The initials of a hyphen/underscore separated name, e.g. "foo-bar" -> "fb".
@@ -509,35 +516,91 @@ function useEscape(onClose: () => void) {
   }, [onClose]);
 }
 
-function TreeModal({ bot, baseBot, onClose }: { bot: Bot; baseBot: Bot; onClose: () => void }) {
+function TreeModal(
+  { bot, baseBot, borrowBots, count, onClose }: {
+    bot: Bot;
+    baseBot: Bot;
+    borrowBots: Bot[];
+    count: number;
+    onClose: () => void;
+  },
+) {
   useEscape(onClose);
   const unitTypes = [UnitType.Archer, UnitType.Mangonel, UnitType.Monk];
   const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
+  // The bot currently displayed; the dice button replaces it with a mutation.
+  const [current, setCurrent] = useState<Bot>(bot);
+  // The node whose mutation candidates the floating panel is showing, if any.
+  const [inspected, setInspected] = useState<{ title: string; candidates: CandidateInfo[] } | null>(null);
 
   const games = baseBot.wins + baseBot.losses + baseBot.draws;
   const winPct = games > 0 ? Math.round((baseBot.wins / games) * 100) : 0;
 
+  // Cumulative: mutate the currently displayed tree so rolls compound, bumping
+  // the -a{n} suffix to show how many times it's been mutated. The tree's nodes
+  // change identity, so any open candidates panel is stale — close it.
+  const handleMutate = () => {
+    const tree = randomlyMutateUnitAwareBehaviourTreeAllUnits({ tree: current.tree, count, borrowBots });
+    setCurrent({ ...current, tree, botName: nextMutationName(current.botName, count) });
+    setInspected(null);
+  };
+
+  // Revert all mutations, restoring the original tree the modal opened on.
+  const handleRevert = () => {
+    setCurrent(bot);
+    setInspected(null);
+  };
+
+  const selectUnit = (unit: UnitType) => {
+    setActiveUnit(unit);
+    setInspected(null); // candidates belong to the previous unit's tree
+  };
+
   return (
     <div className="tree-modal__backdrop" onClick={onClose}>
-      <div className="tree-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="tree-modal__header">
-          <span className="tree-modal__title">
-            {bot.botName} · {bot.groupName} · {winPct}% win · {games} games
-          </span>
-          <button className="tree-modal__close" onClick={onClose}>✕</button>
+      <div className="tree-modal__layout" onClick={(e) => e.stopPropagation()}>
+        {inspected && (
+          <div className="mutation-panel">
+            <div className="mutation-panel__header">
+              <span className="mutation-panel__title">{inspected.title}</span>
+              <button className="tree-modal__close" onClick={() => setInspected(null)}>✕</button>
+            </div>
+            <div className="mutation-panel__list">
+              {inspected.candidates.map((c, i) => (
+                <div key={i} className="mutation-panel__row">
+                  <span className="mutation-panel__label">{c.label}</span>
+                  <span className="mutation-panel__pct">{c.probability}/{c.total}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="tree-modal">
+          <div className="tree-modal__header">
+            <span className="tree-modal__title">
+              {current.botName} · {current.groupName} · {winPct}% win · {games} games
+            </span>
+            <button className="tree-modal__dice" onClick={handleRevert} title="Revert to original tree">↺</button>
+            <button className="tree-modal__dice" onClick={handleMutate} title="Mutate tree">⚅</button>
+            <button className="tree-modal__close" onClick={onClose}>✕</button>
+          </div>
+          <div className="tree-modal__tabs">
+            {unitTypes.map((unit) => (
+              <button
+                key={unit}
+                className={`tree-modal__tab${activeUnit === unit ? " tree-modal__tab--active" : ""}`}
+                onClick={() => selectUnit(unit)}
+              >
+                {UnitType[unit]}
+              </button>
+            ))}
+          </div>
+          <BehaviourTreeView
+            node={current.tree[activeUnit]}
+            withBorrowedGeneticTraits={borrowBots.length > 0}
+            onInspectNode={(title, candidates) => setInspected({ title, candidates })}
+          />
         </div>
-        <div className="tree-modal__tabs">
-          {unitTypes.map((unit) => (
-            <button
-              key={unit}
-              className={`tree-modal__tab${activeUnit === unit ? " tree-modal__tab--active" : ""}`}
-              onClick={() => setActiveUnit(unit)}
-            >
-              {UnitType[unit]}
-            </button>
-          ))}
-        </div>
-        <BehaviourTreeView node={bot.tree[activeUnit]} base={baseBot.tree[activeUnit]} />
       </div>
     </div>
   );

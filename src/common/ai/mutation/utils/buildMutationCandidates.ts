@@ -16,7 +16,11 @@ export type MutationCandidate =
     paramName: string;
   }
   | {
-    type: "ADD_NODE_TO_LIST";
+    type: "ADD_ACTION_TO_LIST";
+    listNode: Sequence | Selector;
+  }
+  | {
+    type: "ADD_CONDITION_TO_LIST";
     listNode: Sequence | Selector;
   }
   | {
@@ -44,7 +48,10 @@ export type MutationCandidate =
 /**
  * Build a weighted list of candidate mutations, expressed as probabilities.
  */
-export function buildMutationCandidates(flatNodes: FlatTreeNode[]): Probabilities<MutationCandidate> {
+export function buildMutationCandidates(
+  flatNodes: FlatTreeNode[],
+  withBorrowedGeneticTraits: boolean,
+): Probabilities<MutationCandidate> {
   return flatNodes.flatMap((flatNode): Probabilities<MutationCandidate> => {
     if (flatNode.node.nodeType === "condition") {
       return [
@@ -58,29 +65,37 @@ export function buildMutationCandidates(flatNodes: FlatTreeNode[]): Probabilitie
     }
 
     if (flatNode.node.nodeType === "selector" || flatNode.node.nodeType === "sequence") {
-      // Do not add random conditions and actions to the root.
-      if (flatNode.depth === 0) {
-        return [
-          { probability: 1, effect: { type: "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST", listNode: flatNode.node } },
-          { probability: 1, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
-          { probability: 1, effect: { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node } },
-        ];
-      }
       // Mutate more the deeper the depths go.
       const baseProbability = flatNode.depth + 1;
-      return [
-        {
-          probability: baseProbability * 2,
-          effect: { type: "BORROW_GENETIC_NODE_INTO_LIST", listNode: flatNode.node },
-        },
-        {
-          probability: baseProbability * 2,
-          effect: { type: "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST", listNode: flatNode.node },
-        },
-        { probability: baseProbability * 2, effect: { type: "ADD_NODE_TO_LIST", listNode: flatNode.node } },
-        { probability: baseProbability * 2, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
-        { probability: baseProbability, effect: { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node } },
+      const mutations: Probabilities<MutationCandidate> = [
+        { probability: baseProbability, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
       ];
+
+      // Do not add random conditions and actions to the root, do not remove nodes from
+      // the root - let them be pruned, but this just removes large amounts of nodes, essentially
+      // resetting the whole tree.
+      if (flatNode.depth > 0) {
+        mutations.push(
+          { probability: baseProbability * 10, effect: { type: "ADD_ACTION_TO_LIST", listNode: flatNode.node } },
+          { probability: baseProbability * 5, effect: { type: "ADD_CONDITION_TO_LIST", listNode: flatNode.node } },
+          { probability: baseProbability, effect: { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node } },
+        );
+      }
+
+      if (withBorrowedGeneticTraits) {
+        mutations.push(
+          {
+            probability: baseProbability * 10,
+            effect: { type: "BORROW_GENETIC_NODE_INTO_LIST", listNode: flatNode.node },
+          },
+          {
+            probability: baseProbability * 10,
+            effect: { type: "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST", listNode: flatNode.node },
+          },
+        );
+      }
+
+      return mutations;
     }
 
     if (flatNode.node.nodeType === "dataValue" && flatNode.node.type === "BLACKBOARD") {

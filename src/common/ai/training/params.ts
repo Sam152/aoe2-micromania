@@ -15,7 +15,7 @@ export const params = {
    * How many mutations should be applied, when training a next
    * generation.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS: 200,
+  NEXT_GENERATION_RANDOM_MUTATIONS: 5,
   /**
    * How many iterations we should run before saying a hill has been climbed.
    */
