@@ -26,7 +26,6 @@ export function TrainedBots() {
   const [mutationSeed, setMutationSeed] = useState(0);
   const [swapSeed, setSwapSeed] = useState(0);
   const [inspectBot, setInspectBot] = useState<Bot | null>(null);
-  const [detailBot, setDetailBot] = useState<Bot | null>(null);
   const [viewMode, setViewMode] = useState<"generation" | "skill">("generation");
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayMenuOpen, setOverlayMenuOpen] = useState(false);
@@ -291,9 +290,9 @@ export function TrainedBots() {
                     label={String(bot.elo)}
                     value={initials(bot.botName)}
                     title={bot.botName}
-                    expanded={detailBot?.id === bot.id}
+                    expanded={inspectBot?.id === bot.id}
                     slot={slotForBot(bot, homeBot, awayBot)}
-                    onClick={() => setDetailBot(detailBot?.id === bot.id ? null : bot)}
+                    onClick={() => setInspectBot(bot)}
                     onDragStart={(e) => handleDragStart(e, bot)}
                   />
                 ))}
@@ -340,20 +339,11 @@ export function TrainedBots() {
       {inspectBot && (
         <TreeModal
           bot={inspectBot}
+          baseBot={bots.find((b) => b.id === inspectBot.id) ?? inspectBot}
           onClose={() => setInspectBot(null)}
         />
       )}
 
-      {detailBot && (
-        <BotDetailModal
-          bot={detailBot}
-          onClose={() => setDetailBot(null)}
-          onInspect={() => {
-            setInspectBot(detailBot);
-            setDetailBot(null);
-          }}
-        />
-      )}
     </>
   );
 }
@@ -519,57 +509,7 @@ function useEscape(onClose: () => void) {
   }, [onClose]);
 }
 
-function BotDetailModal({
-  bot,
-  onClose,
-  onInspect,
-}: {
-  bot: Bot;
-  onClose: () => void;
-  onInspect: () => void;
-}) {
-  useEscape(onClose);
-
-  const games = bot.wins + bot.losses + bot.draws;
-  const winRate = games > 0 ? `${Math.round((bot.wins / games) * 100)}%` : "—";
-  const rows: [string, React.ReactNode][] = [
-    ["Name", bot.botName],
-    ["Group", bot.groupName],
-    ["Generation", bot.generation],
-    ["Elo", bot.elo],
-    ["Wins", bot.wins],
-    ["Losses", bot.losses],
-    ["Draws", bot.draws],
-    ["Games", games],
-    ["Win rate", winRate],
-    ["Active", bot.isActive ? "yes" : "no"],
-    ["ID", bot.id],
-  ];
-
-  return (
-    <div className="tree-modal__backdrop" onClick={onClose}>
-      <div className="tree-modal bot-detail" onClick={(e) => e.stopPropagation()}>
-        <div className="tree-modal__header">
-          <span className="tree-modal__title">{bot.botName}</span>
-          <button className="tree-modal__close" onClick={onClose}>✕</button>
-        </div>
-        <dl className="bot-detail__grid">
-          {rows.map(([label, value]) => (
-            <div key={label} className="bot-detail__row">
-              <dt className="bot-detail__key">{label}</dt>
-              <dd className="bot-detail__val">{value}</dd>
-            </div>
-          ))}
-        </dl>
-        <div className="bot-detail__actions">
-          <button className="speed-btn" onClick={onInspect}>{"{}"} inspect tree</button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TreeModal({ bot, onClose }: { bot: Bot; onClose: () => void }) {
+function TreeModal({ bot, baseBot, onClose }: { bot: Bot; baseBot: Bot; onClose: () => void }) {
   useEscape(onClose);
   const unitTypes = [UnitType.Archer, UnitType.Mangonel, UnitType.Monk];
   const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
@@ -578,7 +518,7 @@ function TreeModal({ bot, onClose }: { bot: Bot; onClose: () => void }) {
     <div className="tree-modal__backdrop" onClick={onClose}>
       <div className="tree-modal" onClick={(e) => e.stopPropagation()}>
         <div className="tree-modal__header">
-          <span className="tree-modal__title">{bot.botName}</span>
+          <span className="tree-modal__title">{bot.botName} · {bot.groupName}</span>
           <button className="tree-modal__close" onClick={onClose}>✕</button>
         </div>
         <div className="tree-modal__tabs">
@@ -592,7 +532,7 @@ function TreeModal({ bot, onClose }: { bot: Bot; onClose: () => void }) {
             </button>
           ))}
         </div>
-        <BehaviourTreeView node={bot.tree[activeUnit]} />
+        <BehaviourTreeView node={bot.tree[activeUnit]} base={baseBot.tree[activeUnit]} />
       </div>
     </div>
   );

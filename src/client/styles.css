@@ -707,33 +707,6 @@ kbd {
   background: rgba(224, 191, 79, 0.1);
 }
 
-.tree-modal__json {
-  margin: 0;
-  padding: 16px;
-  overflow: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #cbd5e0;
-  white-space: pre;
-}
-
-.tree-modal__line {
-  display: block;
-  padding: 0 4px;
-  margin: 0 -4px;
-}
-
-.tree-modal__line--added {
-  background: rgba(72, 187, 120, 0.22);
-  color: #9ae6b4;
-}
-
-.tree-modal__line--removed {
-  background: rgba(245, 101, 101, 0.22);
-  color: #feb2b2;
-}
-
 /* Behaviour tree view: a stack of colour-coded tiles, each tree level
    indented a little further to the left. */
 .bt-view {
@@ -747,15 +720,88 @@ kbd {
   margin-left: 16px;
 }
 
+/* A vertical line down the left of a composite's children connects the nodes in
+   the list, and its style encodes the composite's logic: a solid line for a
+   sequence (AND — every child must run), a dashed line for a selector (OR — the
+   first succeeding child wins). */
+.bt-children--and,
+.bt-children--or {
+  margin-left: 7px;
+  padding-left: 12px;
+  border-left: 2px solid #4a5568;
+}
+
+.bt-children--or {
+  border-left-style: dashed;
+}
+
+/* A horizontal stub joins the vertical line to each direct child, ending in a
+   small circle notch where it meets the node. */
+.bt-children--and > .bt-node,
+.bt-children--or > .bt-node {
+  position: relative;
+}
+
+.bt-children--and > .bt-node::before,
+.bt-children--or > .bt-node::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 15px;
+  width: 12px;
+  border-top: 2px solid #4a5568;
+}
+
+.bt-children--and > .bt-node::after,
+.bt-children--or > .bt-node::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4a5568;
+}
+
 .bt-tile {
   display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: column;
+  align-items: stretch;
   margin: 2px 0;
   padding: 4px 10px;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-left-width: 3px;
+}
+
+.bt-tile__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bt-tile--collapsible > .bt-tile__header {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Data values nest inside their parent node's tile rather than trailing below
+   it, so a node's params read as part of the node. */
+.bt-tile__values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bt-tile__toggle {
+  color: #718096;
+  font-size: 9px;
+  width: 10px;
+  text-align: center;
 }
 
 .bt-tile__param {
@@ -787,6 +833,49 @@ kbd {
   color: #718096;
 }
 
+/* Diff markers sit on top of the type colours: a status ring plus a +/-/≠
+   marker, kept type-independent so they read on any tile colour. */
+.bt-tile__status {
+  font-weight: 700;
+  width: 12px;
+  text-align: center;
+}
+
+.bt-tile__was {
+  font-size: 10px;
+  color: #a0aec0;
+  text-decoration: line-through;
+}
+
+.bt-tile--added {
+  box-shadow: 0 0 0 2px #e0bf4f;
+}
+
+.bt-tile--added .bt-tile__status {
+  color: #e0bf4f;
+}
+
+.bt-tile--changed {
+  box-shadow: 0 0 0 2px #ed8936;
+}
+
+.bt-tile--changed .bt-tile__status {
+  color: #ed8936;
+}
+
+.bt-tile--removed {
+  opacity: 0.5;
+  border-style: dashed;
+}
+
+.bt-tile--removed .bt-tile__label {
+  text-decoration: line-through;
+}
+
+.bt-tile--removed .bt-tile__status {
+  color: #feb2b2;
+}
+
 .bt-tile--composite {
   background: rgba(74, 85, 104, 0.25);
   border-left-color: #718096;
@@ -812,47 +901,6 @@ kbd {
 .bt-tile--value {
   background: rgba(72, 187, 120, 0.15);
   border-left-color: #48bb78;
-}
-
-.bot-detail {
-  width: min(420px, 90vw);
-}
-
-.bot-detail__grid {
-  margin: 0;
-  padding: 8px 16px 4px;
-  overflow-y: auto;
-}
-
-.bot-detail__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(74, 85, 104, 0.25);
-}
-
-.bot-detail__key {
-  margin: 0;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #a0aec0;
-  font-weight: 600;
-}
-
-.bot-detail__val {
-  margin: 0;
-  font-size: 14px;
-  color: #e2e8f0;
-  font-weight: 600;
-  text-align: right;
-  word-break: break-word;
-}
-
-.bot-detail__actions {
-  padding: 12px 16px 16px;
 }
 
 .matchup-vs-group {
