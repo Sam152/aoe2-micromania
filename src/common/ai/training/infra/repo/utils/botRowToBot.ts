@@ -5,6 +5,7 @@ export type Bot = {
   id: number;
   botName: string;
   tree: UnitAwareBehaviourTree;
+  iterationCount: number;
   groupName: string;
   elo: number;
   wins: number;
@@ -19,6 +20,7 @@ export function botRowToBot(row: postgres.Row): Bot {
     id: Number(row.id),
     botName: row.bot_name,
     tree: row.tree as UnitAwareBehaviourTree,
+    iterationCount: row.iteration_count,
     elo: row.elo,
     wins: row.wins,
     losses: row.losses,

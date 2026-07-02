@@ -8,6 +8,7 @@ import { randomlyMutateUnitAwareBehaviourTree } from "../../../../common/ai/trai
 import { params } from "../../../../common/ai/training/params.ts";
 import { UnitType } from "../../../../common/units/UnitType.ts";
 import { overlayItems } from "./overlay/blackboardValues.ts";
+import { BehaviourTreeView } from "./BehaviourTreeView.tsx";
 
 // One checkbox per overlay item: keys with an enum param expand to one entry
 // per enum value (e.g. `key[ARCHER]`), each toggleable independently.
@@ -25,7 +26,6 @@ export function TrainedBots() {
   const [mutationSeed, setMutationSeed] = useState(0);
   const [swapSeed, setSwapSeed] = useState(0);
   const [inspectBot, setInspectBot] = useState<Bot | null>(null);
-  const [detailBot, setDetailBot] = useState<Bot | null>(null);
   const [viewMode, setViewMode] = useState<"generation" | "skill">("generation");
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayMenuOpen, setOverlayMenuOpen] = useState(false);
@@ -290,9 +290,9 @@ export function TrainedBots() {
                     label={String(bot.elo)}
                     value={initials(bot.botName)}
                     title={bot.botName}
-                    expanded={detailBot?.id === bot.id}
+                    expanded={inspectBot?.id === bot.id}
                     slot={slotForBot(bot, homeBot, awayBot)}
-                    onClick={() => setDetailBot(detailBot?.id === bot.id ? null : bot)}
+                    onClick={() => setInspectBot(bot)}
                     onDragStart={(e) => handleDragStart(e, bot)}
                   />
                 ))}
@@ -344,16 +344,6 @@ export function TrainedBots() {
         />
       )}
 
-      {detailBot && (
-        <BotDetailModal
-          bot={detailBot}
-          onClose={() => setDetailBot(null)}
-          onInspect={() => {
-            setInspectBot(detailBot);
-            setDetailBot(null);
-          }}
-        />
-      )}
     </>
   );
 }
@@ -508,72 +498,32 @@ function DropSlot({
   );
 }
 
-function BotDetailModal({
-  bot,
-  onClose,
-  onInspect,
-}: {
-  bot: Bot;
-  onClose: () => void;
-  onInspect: () => void;
-}) {
-  const games = bot.wins + bot.losses + bot.draws;
-  const winRate = games > 0 ? `${Math.round((bot.wins / games) * 100)}%` : "—";
-  const rows: [string, React.ReactNode][] = [
-    ["Name", bot.botName],
-    ["Group", bot.groupName],
-    ["Generation", bot.generation],
-    ["Elo", bot.elo],
-    ["Wins", bot.wins],
-    ["Losses", bot.losses],
-    ["Draws", bot.draws],
-    ["Games", games],
-    ["Win rate", winRate],
-    ["Active", bot.isActive ? "yes" : "no"],
-    ["ID", bot.id],
-  ];
-
-  return (
-    <div className="tree-modal__backdrop" onClick={onClose}>
-      <div className="tree-modal bot-detail" onClick={(e) => e.stopPropagation()}>
-        <div className="tree-modal__header">
-          <span className="tree-modal__title">{bot.botName}</span>
-          <button className="tree-modal__close" onClick={onClose}>✕</button>
-        </div>
-        <dl className="bot-detail__grid">
-          {rows.map(([label, value]) => (
-            <div key={label} className="bot-detail__row">
-              <dt className="bot-detail__key">{label}</dt>
-              <dd className="bot-detail__val">{value}</dd>
-            </div>
-          ))}
-        </dl>
-        <div className="bot-detail__actions">
-          <button className="speed-btn" onClick={onInspect}>{"{}"} inspect tree</button>
-        </div>
-      </div>
-    </div>
-  );
+// Close a modal when Escape is pressed.
+function useEscape(onClose: () => void) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { onClose(); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 }
 
 function TreeModal({ bot, baseBot, onClose }: { bot: Bot; baseBot: Bot; onClose: () => void }) {
+  useEscape(onClose);
   const unitTypes = [UnitType.Archer, UnitType.Mangonel, UnitType.Monk];
   const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
 
-  const lines = useMemo(
-    () =>
-      diffJsonLines(
-        JSON.stringify(baseBot.tree[activeUnit], null, 2),
-        JSON.stringify(bot.tree[activeUnit], null, 2),
-      ),
-    [baseBot, bot, activeUnit],
-  );
+  const games = baseBot.wins + baseBot.losses + baseBot.draws;
+  const winPct = games > 0 ? Math.round((baseBot.wins / games) * 100) : 0;
 
   return (
     <div className="tree-modal__backdrop" onClick={onClose}>
       <div className="tree-modal" onClick={(e) => e.stopPropagation()}>
         <div className="tree-modal__header">
-          <span className="tree-modal__title">{bot.botName}</span>
+          <span className="tree-modal__title">
+            {bot.botName} · {bot.groupName} · {winPct}% win · {games} games
+          </span>
           <button className="tree-modal__close" onClick={onClose}>✕</button>
         </div>
         <div className="tree-modal__tabs">
@@ -587,52 +537,9 @@ function TreeModal({ bot, baseBot, onClose }: { bot: Bot; baseBot: Bot; onClose:
             </button>
           ))}
         </div>
-        <pre className="tree-modal__json">
-          {lines.map((line, i) => (
-            <div key={i} className={`tree-modal__line tree-modal__line--${line.type}`}>
-              {line.text}
-            </div>
-          ))}
-        </pre>
+        <BehaviourTreeView node={bot.tree[activeUnit]} base={baseBot.tree[activeUnit]} />
       </div>
     </div>
   );
 }
 
-type DiffLine = { type: "same" | "added" | "removed"; text: string };
-
-// Line-based LCS diff: lines only in `next` are added (green), lines only in
-// `prev` are removed (red), shared lines are unchanged.
-function diffJsonLines(prev: string, next: string): DiffLine[] {
-  const a = prev.split("\n");
-  const b = next.split("\n");
-  const n = a.length;
-  const m = b.length;
-
-  const lcs: number[][] = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
-  for (let i = n - 1; i >= 0; i--) {
-    for (let j = m - 1; j >= 0; j--) {
-      lcs[i][j] = a[i] === b[j] ? lcs[i + 1][j + 1] + 1 : Math.max(lcs[i + 1][j], lcs[i][j + 1]);
-    }
-  }
-
-  const out: DiffLine[] = [];
-  let i = 0;
-  let j = 0;
-  while (i < n && j < m) {
-    if (a[i] === b[j]) {
-      out.push({ type: "same", text: a[i] });
-      i++;
-      j++;
-    } else if (lcs[i + 1][j] >= lcs[i][j + 1]) {
-      out.push({ type: "removed", text: a[i] });
-      i++;
-    } else {
-      out.push({ type: "added", text: b[j] });
-      j++;
-    }
-  }
-  while (i < n) { out.push({ type: "removed", text: a[i++] }); }
-  while (j < m) { out.push({ type: "added", text: b[j++] }); }
-  return out;
-}
