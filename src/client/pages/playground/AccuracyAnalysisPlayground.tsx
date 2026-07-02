@@ -14,14 +14,10 @@ const MAX_RANGE_PX = 6 * config.tileGameStatsLength;
 
 export function AccuracyAnalysisPlayground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const cgfSliderRef = useRef<HTMLInputElement>(null);
+  const ldfSliderRef = useRef<HTMLInputElement>(null);
   const csSliderRef = useRef<HTMLInputElement>(null);
-  const cgrSliderRef = useRef<HTMLInputElement>(null);
-  const cgfLabelRef = useRef<HTMLSpanElement>(null);
+  const ldfLabelRef = useRef<HTMLSpanElement>(null);
   const csLabelRef = useRef<HTMLSpanElement>(null);
-  const cgrLabelRef = useRef<HTMLSpanElement>(null);
-  const mcsSliderRef = useRef<HTMLInputElement>(null);
-  const mcsLabelRef = useRef<HTMLSpanElement>(null);
   const paramsRef = useRef({ ...defaults });
 
   useEffect(() => {
@@ -41,12 +37,10 @@ export function AccuracyAnalysisPlayground() {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const { circleGrowthFactor, clusterStrength, circleGrowthRate, minCircleSize } = paramsRef.current;
+      const { linearDistanceFactor, clusterStrength } = paramsRef.current;
       const accuracyFn = createCircularProbabilityAccuracy({
-        circleGrowthFactor,
+        linearDistanceFactor,
         clusterStrength,
-        circleGrowthRate,
-        minCircleSize,
       });
 
       // ── TOP: scatter with sample dots ─────────────────────────────
@@ -54,7 +48,7 @@ export function AccuracyAnalysisPlayground() {
       RANGES_TILES.forEach((tiles, rangeIndex) => {
         const gameRange = tiles * config.tileGameStatsLength;
         const targetPos = new Vector2(firingPos.x + gameRange, firingPos.y);
-        const circleSize = circleGrowthFactor * Math.log(Math.max(minCircleSize, gameRange - circleGrowthRate));
+        const circleSize = gameRange * linearDistanceFactor;
 
         ctx.save();
         ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
@@ -122,7 +116,7 @@ export function AccuracyAnalysisPlayground() {
       const rowCY = topH + (canvas.height - topH) / 2;
 
       for (let d = 5; d <= MAX_RANGE_PX; d += 5) {
-        const r = circleGrowthFactor * Math.log(Math.max(minCircleSize, d - circleGrowthRate));
+        const r = d * linearDistanceFactor;
         if (r <= 0) { continue; }
 
         ctx.strokeStyle = "rgba(255, 200, 50, 0.12)";
@@ -133,10 +127,10 @@ export function AccuracyAnalysisPlayground() {
       }
     };
 
-    const onCGF = () => {
-      const v = parseFloat(cgfSliderRef.current!.value);
-      paramsRef.current.circleGrowthFactor = v;
-      if (cgfLabelRef.current) { cgfLabelRef.current.textContent = v.toFixed(1); }
+    const onLDF = () => {
+      const v = parseFloat(ldfSliderRef.current!.value);
+      paramsRef.current.linearDistanceFactor = v;
+      if (ldfLabelRef.current) { ldfLabelRef.current.textContent = v.toFixed(2); }
       draw();
     };
 
@@ -147,28 +141,10 @@ export function AccuracyAnalysisPlayground() {
       draw();
     };
 
-    const onCGR = () => {
-      const v = parseFloat(cgrSliderRef.current!.value);
-      paramsRef.current.circleGrowthRate = v;
-      if (cgrLabelRef.current) { cgrLabelRef.current.textContent = v.toFixed(0); }
-      draw();
-    };
-
-    const onMCS = () => {
-      const v = parseFloat(mcsSliderRef.current!.value);
-      paramsRef.current.minCircleSize = v;
-      if (mcsLabelRef.current) { mcsLabelRef.current.textContent = v.toFixed(0); }
-      draw();
-    };
-
-    const cgfSlider = cgfSliderRef.current!;
+    const ldfSlider = ldfSliderRef.current!;
     const csSlider = csSliderRef.current!;
-    const cgrSlider = cgrSliderRef.current!;
-    const mcsSlider = mcsSliderRef.current!;
-    cgfSlider.addEventListener("input", onCGF);
+    ldfSlider.addEventListener("input", onLDF);
     csSlider.addEventListener("input", onCS);
-    cgrSlider.addEventListener("input", onCGR);
-    mcsSlider.addEventListener("input", onMCS);
 
     (async () => {
       await slpManager.downloadPreRenderAll();
@@ -176,10 +152,8 @@ export function AccuracyAnalysisPlayground() {
     })();
 
     return () => {
-      cgfSlider.removeEventListener("input", onCGF);
+      ldfSlider.removeEventListener("input", onLDF);
       csSlider.removeEventListener("input", onCS);
-      cgrSlider.removeEventListener("input", onCGR);
-      mcsSlider.removeEventListener("input", onMCS);
     };
   }, []);
 
@@ -207,52 +181,18 @@ export function AccuracyAnalysisPlayground() {
       >
         <div style={{ marginBottom: "14px" }}>
           <div>
-            <code>circleGrowthFactor</code>: <span ref={cgfLabelRef}>{defaults.circleGrowthFactor}</span>
+            <code>linearDistanceFactor</code>: <span ref={ldfLabelRef}>{defaults.linearDistanceFactor}</span>
           </div>
           <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
-            scales the logarithmic spread curve
+            max spread circle radius, as a fraction of distance
           </div>
           <input
-            ref={cgfSliderRef}
+            ref={ldfSliderRef}
             type="range"
-            min="1"
-            max="20"
-            step="0.5"
-            defaultValue={defaults.circleGrowthFactor}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <div style={{ marginBottom: "14px" }}>
-          <div>
-            <code>circleGrowthRate</code>: <span ref={cgrLabelRef}>{defaults.circleGrowthRate}</span>
-          </div>
-          <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
-            offset inside log — ln(distance − cgr)
-          </div>
-          <input
-            ref={cgrSliderRef}
-            type="range"
-            min="-300"
-            max="300"
-            step="1"
-            defaultValue={defaults.circleGrowthRate}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <div style={{ marginBottom: "14px" }}>
-          <div>
-            <code>minCircleSize</code>: <span ref={mcsLabelRef}>{defaults.minCircleSize}</span>
-          </div>
-          <div style={{ fontSize: "11px", color: "rgba(200,200,200,0.6)", margin: "2px 0 4px" }}>
-            floor inside log — Math.max(mcs, …)
-          </div>
-          <input
-            ref={mcsSliderRef}
-            type="range"
-            min="1"
-            max="200"
-            step="1"
-            defaultValue={defaults.minCircleSize}
+            min="0"
+            max="0.3"
+            step="0.005"
+            defaultValue={defaults.linearDistanceFactor}
             style={{ width: "100%" }}
           />
         </div>
