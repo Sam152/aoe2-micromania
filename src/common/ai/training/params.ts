@@ -15,7 +15,7 @@ export const params = {
    * How many mutations should be applied, when training a next
    * generation.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS: 200,
+  NEXT_GENERATION_RANDOM_MUTATIONS: 5,
   /**
    * How many iterations we should run before saying a hill has been climbed.
    */
@@ -23,7 +23,7 @@ export const params = {
   /**
    * How many iterations before we start randomizing higher.
    */
-  NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD: 100_000,
+  NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD: 10_000,
   /**
    * The minimum number of groups we should have, before attempting to borrow traits.
    * This is a lever to generate some amount of diversity in the pools, before building

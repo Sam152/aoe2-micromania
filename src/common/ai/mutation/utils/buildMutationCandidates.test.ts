@@ -9,7 +9,7 @@ describe("buildMutationCandidates", () => {
   it("generates candidates from tree", async (t) => {
     const tree = sampleTree[UnitType.Archer];
 
-    const candidates = buildMutationCandidates(flattenTree(tree));
+    const candidates = buildMutationCandidates(flattenTree(tree), false);
     await assertSnapshot(t, candidates);
   });
 });
