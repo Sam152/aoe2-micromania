@@ -7,7 +7,7 @@ import { useBlackboardOverlay } from "./hooks/useBlackboardOverlay.ts";
 import { randomlyMutateUnitAwareBehaviourTreeAllUnits } from "../../../../common/ai/mutation/randomlyMutateUnitAwareBehaviourTreeAllUnits.ts";
 import { UnitType } from "../../../../common/units/UnitType.ts";
 import { overlayItems } from "./overlay/blackboardValues.ts";
-import { BehaviourTreeView, CandidateInfo } from "./BehaviourTreeView.tsx";
+import { BehaviourTreeView, NodeSelection } from "./BehaviourTreeView.tsx";
 import { mutateAllUnitsWithLog, MutationLogEntry } from "./mutateWithLog.ts";
 
 // One checkbox per overlay item: keys with an enum param expand to one entry
@@ -134,8 +134,11 @@ export function TrainedBots() {
 
   const handleDrop = (e: React.DragEvent, slot: "home" | "away") => {
     e.preventDefault();
-    const botId = Number(e.dataTransfer.getData("botId"));
-    const bot = bots.find((b) => b.id === botId);
+    // A fresh empty bot when dragged from the empty-bot button, otherwise the
+    // dragged bot looked up by id.
+    const bot = e.dataTransfer.getData("emptyBot")
+      ? makeEmptyBot()
+      : bots.find((b) => b.id === Number(e.dataTransfer.getData("botId")));
     if (!bot) { return; }
     if (slot === "home") { setHomeBot(bot); }
     else { setAwayBot(bot); }
@@ -156,7 +159,8 @@ export function TrainedBots() {
   const handleRevert = (slot: "home" | "away") => {
     const bot = slot === "home" ? homeBot : awayBot;
     if (!bot) { return; }
-    const original = bots.find((b) => b.id === bot.id) ?? bot;
+    // The empty bot has no persisted original, so restore a fresh empty tree.
+    const original = bot.id === EMPTY_BOT_ID ? makeEmptyBot() : bots.find((b) => b.id === bot.id) ?? bot;
     if (slot === "home") { setHomeBot(original); }
     else { setAwayBot(original); }
     setMutationSeed((s) => s + 1);
@@ -238,6 +242,14 @@ export function TrainedBots() {
             </div>
           )}
         </div>
+        <button
+          className="speed-btn speed-btn--standalone"
+          draggable
+          onDragStart={(e) => e.dataTransfer.setData("emptyBot", "1")}
+          title="Drag an empty bot into a player slot"
+        >
+          empty bot
+        </button>
       </div>
 
       <div className="matchup-bar">
@@ -393,6 +405,33 @@ function slotForBot(
   return undefined;
 }
 
+// Sentinel id for the draggable empty bot; it has no persisted original, so
+// reverting one restores a fresh empty tree rather than a lookup in `bots`.
+const EMPTY_BOT_ID = -1;
+
+// A throwaway bot with an empty (no-op) selector tree per unit, for dragging a
+// blank slate into a player slot to build up (via mutation) or play against.
+function makeEmptyBot(): Bot {
+  const emptyTree = () => ({ nodeType: "selector" as const, nodes: [] });
+  return {
+    id: EMPTY_BOT_ID,
+    botName: "empty",
+    tree: {
+      [UnitType.Archer]: emptyTree(),
+      [UnitType.Mangonel]: emptyTree(),
+      [UnitType.Monk]: emptyTree(),
+    },
+    iterationCount: 0,
+    groupName: "empty",
+    elo: 0,
+    wins: 0,
+    losses: 0,
+    draws: 0,
+    generation: 0,
+    isActive: false,
+  };
+}
+
 // Advance the "-a{n}" mutation counter on a bot name by `count` (the number of
 // mutations just applied), or start it there, so the number tracks the total
 // mutations applied: e.g. two rolls at count 3 read foo-a3, foo-a6.
@@ -531,12 +570,19 @@ function TreeModal(
   const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
   // The bot currently displayed; the dice button replaces it with a mutation.
   const [current, setCurrent] = useState<Bot>(bot);
-  // The node whose mutation candidates the floating panel is showing, if any.
-  const [inspected, setInspected] = useState<{ title: string; candidates: CandidateInfo[] } | null>(null);
+  // The left candidates panel shows, in priority order, the node being hovered,
+  // the node pinned by clicking its ⚙ icon, else the root node (the default).
+  const [panelRoot, setPanelRoot] = useState<NodeSelection | null>(null);
+  const [panelPinned, setPanelPinned] = useState<NodeSelection | null>(null);
+  const [panelHovered, setPanelHovered] = useState<NodeSelection | null>(null);
+  const panelSelection = panelHovered ?? panelPinned ?? panelRoot;
   // A running log of every mutation rolled since the modal opened (or last revert).
   const [mutationLog, setMutationLog] = useState<MutationLogEntry[]>([]);
   // Log entries (by index) whose full mutation JSON is expanded.
   const [expandedLog, setExpandedLog] = useState<Set<number>>(new Set());
+  // Bumped whenever the displayed tree changes, to remount the tree view so per
+  // node collapse state resets cleanly rather than sticking to the wrong nodes.
+  const [treeVersion, setTreeVersion] = useState(0);
 
   const games = baseBot.wins + baseBot.losses + baseBot.draws;
   const winPct = games > 0 ? Math.round((baseBot.wins / games) * 100) : 0;
@@ -549,15 +595,25 @@ function TreeModal(
     const { tree, log } = mutateAllUnitsWithLog({ tree: current.tree, count, borrowBots });
     setCurrent({ ...current, tree, botName: nextMutationName(current.botName, count) });
     setMutationLog((prev) => [...prev, ...log]);
-    setInspected(null);
+    setTreeVersion((v) => v + 1);
   };
 
-  // Revert all mutations, restoring the original tree the modal opened on.
+  // Revert all mutations: the empty bot restores a fresh empty tree, any other
+  // bot restores the tree the modal opened on.
   const handleRevert = () => {
-    setCurrent(bot);
+    setCurrent(bot.id === EMPTY_BOT_ID ? makeEmptyBot() : bot);
     setMutationLog([]);
     setExpandedLog(new Set());
-    setInspected(null);
+    setTreeVersion((v) => v + 1);
+  };
+
+  // The tree changed (mutate / revert / unit switch): the tree view remounts and
+  // reports its new root, which becomes the panel default and clears any stale
+  // hovered/pinned selection pointing at the previous tree.
+  const handleDefaultNode = (selection: NodeSelection) => {
+    setPanelRoot(selection);
+    setPanelPinned(null);
+    setPanelHovered(null);
   };
 
   const toggleLogEntry = (index: number) =>
@@ -569,21 +625,22 @@ function TreeModal(
     });
 
   const selectUnit = (unit: UnitType) => {
-    setActiveUnit(unit);
-    setInspected(null); // candidates belong to the previous unit's tree
+    setActiveUnit(unit); // remounts the tree view, which resets the panel via handleDefaultNode
   };
 
   return (
     <div className="tree-modal__backdrop" onClick={onClose}>
       <div className="tree-modal__layout" onClick={(e) => e.stopPropagation()}>
-        {inspected && (
+        {panelSelection && (
           <div className="mutation-panel">
             <div className="mutation-panel__header">
-              <span className="mutation-panel__title">{inspected.title}</span>
-              <button className="tree-modal__close" onClick={() => setInspected(null)}>✕</button>
+              <span className="mutation-panel__title">
+                {panelSelection.title}
+                {panelPinned && !panelHovered && <span className="mutation-panel__pin" title="Pinned"> 📌</span>}
+              </span>
             </div>
             <div className="mutation-panel__list">
-              {inspected.candidates.map((c, i) => (
+              {panelSelection.candidates.map((c, i) => (
                 <div key={i} className="mutation-panel__row">
                   <span className="mutation-panel__label">{c.label}</span>
                   <span className="mutation-panel__pct">{c.probability}/{c.total}</span>
@@ -613,18 +670,22 @@ function TreeModal(
             ))}
           </div>
           <BehaviourTreeView
+            key={`${activeUnit}-${treeVersion}`}
             node={current.tree[activeUnit]}
             withBorrowedGeneticTraits={borrowBots.length > 0}
-            onInspectNode={(title, candidates) => setInspected({ title, candidates })}
+            onHover={setPanelHovered}
+            onPin={setPanelPinned}
+            onDefault={handleDefaultNode}
+            highlightedNodes={new Set(mutationLog.filter((_, i) => expandedLog.has(i)).map((e) => e.node))}
           />
         </div>
         {(() => {
-          // Only show log entries for the unit whose tree is currently on screen,
-          // keeping each entry's original index so its expanded state is stable.
+          // The log panel is always open. It shows entries for the unit whose tree
+          // is currently on screen, keeping each entry's original index so its
+          // expanded state is stable.
           const entries = mutationLog
             .map((entry, index) => ({ entry, index }))
             .filter(({ entry }) => entry.unitType === activeUnit);
-          if (entries.length === 0) { return null; }
           return (
             <div className="mutation-log">
               <div className="mutation-panel__header">
@@ -640,10 +701,11 @@ function TreeModal(
                 </button>
               </div>
               <div className="mutation-panel__list">
+                {entries.length === 0 && <div className="mutation-panel__row mutation-log__empty">No mutations yet</div>}
                 {entries.map(({ entry, index }) => (
                   <div key={index} className="mutation-log__entry">
                     <div
-                      className="mutation-panel__row mutation-log__row"
+                      className={`mutation-panel__row mutation-log__row mutation-log__row--${entry.kind}`}
                       onClick={() => toggleLogEntry(index)}
                     >
                       <span className="bt-tile__toggle">{expandedLog.has(index) ? "▾" : "▸"}</span>

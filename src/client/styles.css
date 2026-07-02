@@ -693,10 +693,33 @@ kbd {
 .mutation-log__row {
   cursor: pointer;
   user-select: none;
+  /* Coloured left border keyed to the affected node type, matching the tree
+     tiles (see .bt-tile--*). */
+  border-left: 3px solid transparent;
+}
+
+.mutation-log__row--composite {
+  background: rgba(74, 85, 104, 0.25);
+  border-left-color: #718096;
+}
+
+.mutation-log__row--action {
+  background: rgba(245, 101, 101, 0.15);
+  border-left-color: #f56565;
+}
+
+.mutation-log__row--condition {
+  background: rgba(99, 179, 237, 0.15);
+  border-left-color: #63b3ed;
+}
+
+.mutation-log__row--value {
+  background: rgba(72, 187, 120, 0.15);
+  border-left-color: #48bb78;
 }
 
 .mutation-log__row:hover {
-  background: rgba(74, 85, 104, 0.25);
+  filter: brightness(1.4);
 }
 
 .mutation-log__json {
@@ -743,6 +766,15 @@ kbd {
   color: #718096;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.mutation-panel__pin {
+  font-size: 11px;
+}
+
+.mutation-log__empty {
+  color: #718096;
+  font-style: italic;
 }
 
 .tree-modal__header {
@@ -921,6 +953,10 @@ kbd {
 .bt-tile__label {
   font-weight: 600;
   color: #e2e8f0;
+}
+
+.bt-tile--highlighted {
+  box-shadow: 0 0 0 2px #f6e05e;
 }
 
 .bt-tile__muts {

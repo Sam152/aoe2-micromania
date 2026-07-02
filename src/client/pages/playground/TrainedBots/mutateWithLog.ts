@@ -22,9 +22,21 @@ import { arrayOfSize } from "../../../../common/util/arrayOfSize.ts";
 import { randomArray } from "../../../../common/util/randomArray.ts";
 import { Bot } from "../../../../common/ai/training/infra/repo/utils/botRowToBot.ts";
 
+// The tree-tile category a mutation relates to, used to colour its log row the
+// same way the corresponding tile is coloured.
+export type MutationKind = "composite" | "condition" | "action" | "value";
+
 // One rolled mutation, captured for the log panel. `json` is the full mutation
 // object serialised at roll time (before it's applied), shown when expanded.
-export type MutationLogEntry = { unitType: UnitType; description: string; json: string };
+// `node` is the live tree node the mutation acts on, used to highlight the
+// matching tile — it points into the tree returned by this roll.
+export type MutationLogEntry = {
+  unitType: UnitType;
+  description: string;
+  json: string;
+  node: object;
+  kind: MutationKind;
+};
 
 // A playground-only reimplementation of the core all-units mutation, calling
 // the same core functions in the same sequence but capturing each rolled
@@ -56,7 +68,13 @@ function mutateTreeWithLog(
     const mutation = withProbability(candidates);
 
     // Log the rolled mutation before it's applied to the tree.
-    log.push({ unitType, description: describeMutation(mutation), json: JSON.stringify(mutation, null, 2) });
+    log.push({
+      unitType,
+      description: describeMutation(mutation),
+      json: JSON.stringify(mutation, null, 2),
+      node: mutationNode(mutation),
+      kind: mutationKind(mutation),
+    });
 
     if (mutation.type === "INVERT_CONDITION") {
       mutation.condition.invert = !mutation.condition.invert;
@@ -120,6 +138,39 @@ function mutateTreeWithLog(
   });
 
   return newTree;
+}
+
+// The tree node a mutation acts on, used to highlight its tile. Returned as a
+// plain object since it's only ever compared by identity.
+function mutationNode(mutation: MutationCandidate): object {
+  switch (mutation.type) {
+    case "INVERT_CONDITION":
+      return mutation.condition;
+    case "REPLACE_PARAM_DATA_VALUE":
+      return mutation.node;
+    case "CHANGE_LITERAL_DATA_VALUE":
+      return mutation.parentNode;
+    default:
+      return mutation.listNode;
+  }
+}
+
+// The tree-tile category a mutation relates to, so its log row matches the
+// colour of the affected node: conditions blue, actions red, data values green,
+// and structural list operations (add composite / borrow / remove) grey.
+function mutationKind(mutation: MutationCandidate): MutationKind {
+  switch (mutation.type) {
+    case "INVERT_CONDITION":
+    case "ADD_CONDITION_TO_LIST":
+      return "condition";
+    case "ADD_ACTION_TO_LIST":
+      return "action";
+    case "REPLACE_PARAM_DATA_VALUE":
+    case "CHANGE_LITERAL_DATA_VALUE":
+      return "value";
+    default:
+      return "composite";
+  }
 }
 
 // A human-readable one-liner describing the rolled mutation for the log.

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { BehaviourTreeNode } from "../../../../common/ai/behaviourTree/BehaviourTree.ts";
 import type { DataValue } from "../../../../common/ai/behaviourTree/dataValue/DataValue.ts";
 import { flattenTree } from "../../../../common/ai/mutation/utils/flattenTree.ts";
@@ -12,27 +12,40 @@ import {
 // denominator withProbability rolls against), shown as e.g. "2/30".
 export type CandidateInfo = { label: string; probability: number; total: number };
 
+// A node's mutation candidates surfaced to the side panel, with a title.
+export type NodeSelection = { title: string; candidates: CandidateInfo[] };
+
 // Renders a behaviour tree as a stack of tiles, one per node, each level of the
 // tree indented a little further to the left. Tiles are colour-coded by node
 // type: red for actions, blue for conditions, green for data values, and a
 // neutral grey for the structural composites (selector / sequence).
 //
-// Each node that has mutation candidates gets a button that surfaces them to
-// the parent via `onInspectNode`, which opens the floating candidates panel.
+// The ⚙ icon on each node drives the candidates panel: hovering it previews
+// that node's candidates (`onHover`), clicking it pins them (`onPin`). On mount
+// / whenever the tree changes, the root node is reported as the default
+// (`onDefault`).
 export function BehaviourTreeView(
-  { node, withBorrowedGeneticTraits, onInspectNode }: {
+  { node, withBorrowedGeneticTraits, onHover, onPin, onDefault, highlightedNodes }: {
     node: BehaviourTreeNode;
     withBorrowedGeneticTraits: boolean;
-    onInspectNode: (title: string, candidates: CandidateInfo[]) => void;
+    onHover: (selection: NodeSelection | null) => void;
+    onPin: (selection: NodeSelection) => void;
+    onDefault: (selection: NodeSelection) => void;
+    // Tree nodes to highlight, matched by identity (from expanded log entries).
+    highlightedNodes: Set<object>;
   },
 ) {
   const candidatesByNode = useMemo(
     () => buildCandidatesByNode(node, withBorrowedGeneticTraits),
     [node, withBorrowedGeneticTraits],
   );
+  // Report the root node as the panel's default whenever the tree changes.
+  useEffect(() => {
+    onDefault({ title: node.nodeType, candidates: candidatesByNode.get(node) ?? [] });
+  }, [node, candidatesByNode]);
   return (
     <div className="bt-view">
-      <TreeTile tile={build(node, candidatesByNode)} onInspectNode={onInspectNode} />
+      <TreeTile tile={build(node, candidatesByNode, highlightedNodes)} onHover={onHover} onPin={onPin} />
     </div>
   );
 }
@@ -51,13 +64,19 @@ type Tile = {
   badge?: string; // "NOT" on inverted conditions
   list?: "or" | "and"; // a composite's logic: selector = OR, sequence = AND
   candidates: CandidateInfo[]; // mutation candidates owned by this node
+  highlighted: boolean; // this node is the target of an expanded log mutation
   children: Tile[];
 };
 
 function TreeTile(
-  { tile, onInspectNode }: { tile: Tile; onInspectNode: (title: string, candidates: CandidateInfo[]) => void },
+  { tile, onHover, onPin }: {
+    tile: Tile;
+    onHover: (selection: NodeSelection | null) => void;
+    onPin: (selection: NodeSelection) => void;
+  },
 ) {
   const hasChildren = tile.children.length > 0;
+  const title = tile.paramName ? `${tile.paramName}: ${tile.label}` : tile.label;
   // Composites hold structural children in a list rendered below the tile with
   // connector lines; every other node's children are green data values, which
   // render nested inside the tile itself.
@@ -70,6 +89,7 @@ function TreeTile(
     "bt-tile",
     `bt-tile--${tile.kind}`,
     hasChildren && "bt-tile--collapsible",
+    tile.highlighted && "bt-tile--highlighted",
   ].filter(Boolean).join(" ");
 
   return (
@@ -84,10 +104,12 @@ function TreeTile(
           {tile.candidates.length > 0 && (
             <button
               className="bt-tile__muts"
-              title="Show mutation candidates"
+              title="Hover to preview mutation candidates, click to pin"
+              onMouseEnter={() => onHover({ title, candidates: tile.candidates })}
+              onMouseLeave={() => onHover(null)}
               onClick={(e) => {
                 e.stopPropagation();
-                onInspectNode(tile.paramName ? `${tile.paramName}: ${tile.label}` : tile.label, tile.candidates);
+                onPin({ title, candidates: tile.candidates });
               }}
             >
               ⚙ {tile.candidates.length}
@@ -96,13 +118,13 @@ function TreeTile(
         </div>
         {!isList && hasChildren && !collapsed && (
           <div className="bt-tile__values">
-            {tile.children.map((child, i) => <TreeTile key={i} tile={child} onInspectNode={onInspectNode} />)}
+            {tile.children.map((child, i) => <TreeTile key={i} tile={child} onHover={onHover} onPin={onPin} />)}
           </div>
         )}
       </div>
       {isList && !collapsed && (
         <div className={`bt-children bt-children--${tile.list}`}>
-          {tile.children.map((child, i) => <TreeTile key={i} tile={child} onInspectNode={onInspectNode} />)}
+          {tile.children.map((child, i) => <TreeTile key={i} tile={child} onHover={onHover} onPin={onPin} />)}
         </div>
       )}
     </div>
@@ -168,15 +190,22 @@ function candidateLabel(effect: MutationCandidate): string {
 }
 
 // Build a tile for a node and all its descendants.
-function build(node: NodeOrValue, candidatesByNode: Map<object, CandidateInfo[]>, paramName?: string): Tile {
+function build(
+  node: NodeOrValue,
+  candidatesByNode: Map<object, CandidateInfo[]>,
+  highlightedNodes: Set<object>,
+  paramName?: string,
+): Tile {
   const candidates = candidatesByNode.get(node) ?? [];
+  const highlighted = highlightedNodes.has(node);
   if (node.nodeType === "selector" || node.nodeType === "sequence") {
     return {
       kind: "composite",
       label: node.nodeType,
       list: node.nodeType === "selector" ? "or" : "and",
       candidates,
-      children: node.nodes.map((c) => build(c, candidatesByNode)),
+      highlighted,
+      children: node.nodes.map((c) => build(c, candidatesByNode, highlightedNodes)),
     };
   }
   if (node.nodeType === "condition") {
@@ -185,14 +214,21 @@ function build(node: NodeOrValue, candidatesByNode: Map<object, CandidateInfo[]>
       label: node.type,
       badge: node.invert ? "NOT" : undefined,
       candidates,
-      children: paramTiles(node.params, candidatesByNode),
+      highlighted,
+      children: paramTiles(node.params, candidatesByNode, highlightedNodes),
     };
   }
   if (node.nodeType === "action") {
-    return { kind: "action", label: node.type, candidates, children: paramTiles(node.params, candidatesByNode) };
+    return {
+      kind: "action",
+      label: node.type,
+      candidates,
+      highlighted,
+      children: paramTiles(node.params, candidatesByNode, highlightedNodes),
+    };
   }
   if (node.type === "LITERAL") {
-    return { kind: "value", label: String(node.value), meta: node.dataType, paramName, candidates, children: [] };
+    return { kind: "value", label: String(node.value), meta: node.dataType, paramName, candidates, highlighted, children: [] };
   }
   return {
     kind: "value",
@@ -200,10 +236,15 @@ function build(node: NodeOrValue, candidatesByNode: Map<object, CandidateInfo[]>
     meta: node.dataType,
     paramName,
     candidates,
-    children: paramTiles(node.params, candidatesByNode),
+    highlighted,
+    children: paramTiles(node.params, candidatesByNode, highlightedNodes),
   };
 }
 
-function paramTiles(params: Record<string, DataValue>, candidatesByNode: Map<object, CandidateInfo[]>): Tile[] {
-  return Object.entries(params).map(([name, value]) => build(value, candidatesByNode, name));
+function paramTiles(
+  params: Record<string, DataValue>,
+  candidatesByNode: Map<object, CandidateInfo[]>,
+  highlightedNodes: Set<object>,
+): Tile[] {
+  return Object.entries(params).map(([name, value]) => build(value, candidatesByNode, highlightedNodes, name));
 }

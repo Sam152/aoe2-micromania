@@ -67,6 +67,7 @@ export function buildMutationCandidates(
     if (flatNode.node.nodeType === "selector" || flatNode.node.nodeType === "sequence") {
       // Mutate more the deeper the depths go.
       const baseProbability = flatNode.depth + 1;
+
       const mutations: Probabilities<MutationCandidate> = [
         { probability: baseProbability, effect: { type: "ADD_SEQ_OR_SEL_NODE_TO_LIST", listNode: flatNode.node } },
       ];
@@ -76,8 +77,8 @@ export function buildMutationCandidates(
       // resetting the whole tree.
       if (flatNode.depth > 0) {
         mutations.push(
-          { probability: baseProbability * 10, effect: { type: "ADD_ACTION_TO_LIST", listNode: flatNode.node } },
-          { probability: baseProbability * 5, effect: { type: "ADD_CONDITION_TO_LIST", listNode: flatNode.node } },
+          { probability: baseProbability * 2, effect: { type: "ADD_ACTION_TO_LIST", listNode: flatNode.node } },
+          { probability: baseProbability, effect: { type: "ADD_CONDITION_TO_LIST", listNode: flatNode.node } },
           { probability: baseProbability, effect: { type: "REMOVE_NODE_FROM_LIST", listNode: flatNode.node } },
         );
       }
@@ -85,11 +86,11 @@ export function buildMutationCandidates(
       if (withBorrowedGeneticTraits) {
         mutations.push(
           {
-            probability: baseProbability * 10,
+            probability: baseProbability * 2,
             effect: { type: "BORROW_GENETIC_NODE_INTO_LIST", listNode: flatNode.node },
           },
           {
-            probability: baseProbability * 10,
+            probability: baseProbability * 2,
             effect: { type: "BORROW_GENETIC_SEQ_OR_SEL_INTO_LIST", listNode: flatNode.node },
           },
         );
