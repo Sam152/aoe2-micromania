@@ -152,8 +152,10 @@ function candidateLabel(effect: MutationCandidate): string {
       return `Replace param "${effect.paramName}" with a new data value`;
     case "CHANGE_LITERAL_DATA_VALUE":
       return `Change literal "${effect.paramName}"`;
-    case "ADD_NODE_TO_LIST":
-      return "Add a random action/condition child";
+    case "ADD_ACTION_TO_LIST":
+      return "Add a random action child";
+    case "ADD_CONDITION_TO_LIST":
+      return "Add a random condition child";
     case "ADD_SEQ_OR_SEL_NODE_TO_LIST":
       return "Add a random sequence/selector child";
     case "BORROW_GENETIC_NODE_INTO_LIST":

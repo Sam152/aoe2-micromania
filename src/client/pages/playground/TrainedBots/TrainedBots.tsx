@@ -8,6 +8,7 @@ import { randomlyMutateUnitAwareBehaviourTreeAllUnits } from "../../../../common
 import { UnitType } from "../../../../common/units/UnitType.ts";
 import { overlayItems } from "./overlay/blackboardValues.ts";
 import { BehaviourTreeView, CandidateInfo } from "./BehaviourTreeView.tsx";
+import { mutateAllUnitsWithLog, MutationLogEntry } from "./mutateWithLog.ts";
 
 // One checkbox per overlay item: keys with an enum param expand to one entry
 // per enum value (e.g. `key[ARCHER]`), each toggleable independently.
@@ -532,24 +533,40 @@ function TreeModal(
   const [current, setCurrent] = useState<Bot>(bot);
   // The node whose mutation candidates the floating panel is showing, if any.
   const [inspected, setInspected] = useState<{ title: string; candidates: CandidateInfo[] } | null>(null);
+  // A running log of every mutation rolled since the modal opened (or last revert).
+  const [mutationLog, setMutationLog] = useState<MutationLogEntry[]>([]);
+  // Log entries (by index) whose full mutation JSON is expanded.
+  const [expandedLog, setExpandedLog] = useState<Set<number>>(new Set());
 
   const games = baseBot.wins + baseBot.losses + baseBot.draws;
   const winPct = games > 0 ? Math.round((baseBot.wins / games) * 100) : 0;
 
   // Cumulative: mutate the currently displayed tree so rolls compound, bumping
-  // the -a{n} suffix to show how many times it's been mutated. The tree's nodes
-  // change identity, so any open candidates panel is stale — close it.
+  // the -a{n} suffix to show how many times it's been mutated. Each rolled
+  // mutation is appended to the running log. The tree's nodes change identity,
+  // so any open candidates panel is stale — close it.
   const handleMutate = () => {
-    const tree = randomlyMutateUnitAwareBehaviourTreeAllUnits({ tree: current.tree, count, borrowBots });
+    const { tree, log } = mutateAllUnitsWithLog({ tree: current.tree, count, borrowBots });
     setCurrent({ ...current, tree, botName: nextMutationName(current.botName, count) });
+    setMutationLog((prev) => [...prev, ...log]);
     setInspected(null);
   };
 
   // Revert all mutations, restoring the original tree the modal opened on.
   const handleRevert = () => {
     setCurrent(bot);
+    setMutationLog([]);
+    setExpandedLog(new Set());
     setInspected(null);
   };
+
+  const toggleLogEntry = (index: number) =>
+    setExpandedLog((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) { next.delete(index); }
+      else { next.add(index); }
+      return next;
+    });
 
   const selectUnit = (unit: UnitType) => {
     setActiveUnit(unit);
@@ -601,6 +618,44 @@ function TreeModal(
             onInspectNode={(title, candidates) => setInspected({ title, candidates })}
           />
         </div>
+        {(() => {
+          // Only show log entries for the unit whose tree is currently on screen,
+          // keeping each entry's original index so its expanded state is stable.
+          const entries = mutationLog
+            .map((entry, index) => ({ entry, index }))
+            .filter(({ entry }) => entry.unitType === activeUnit);
+          if (entries.length === 0) { return null; }
+          return (
+            <div className="mutation-log">
+              <div className="mutation-panel__header">
+                <span className="mutation-panel__title">Mutation log ({entries.length})</span>
+                <button
+                  className="tree-modal__close"
+                  onClick={() => {
+                    setMutationLog([]);
+                    setExpandedLog(new Set());
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="mutation-panel__list">
+                {entries.map(({ entry, index }) => (
+                  <div key={index} className="mutation-log__entry">
+                    <div
+                      className="mutation-panel__row mutation-log__row"
+                      onClick={() => toggleLogEntry(index)}
+                    >
+                      <span className="bt-tile__toggle">{expandedLog.has(index) ? "▾" : "▸"}</span>
+                      <span className="mutation-panel__label">{entry.description}</span>
+                    </div>
+                    {expandedLog.has(index) && <pre className="mutation-log__json">{entry.json}</pre>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );

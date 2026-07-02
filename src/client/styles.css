@@ -666,11 +666,11 @@ kbd {
   overflow: hidden;
 }
 
-.mutation-panel {
-  /* Float to the left of the modal without affecting its position. */
+.mutation-panel,
+.mutation-log {
+  /* Float alongside the modal without affecting its position. */
   position: absolute;
   top: 0;
-  right: calc(100% + 12px);
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -679,6 +679,35 @@ kbd {
   border: 1px solid rgba(74, 85, 104, 0.6);
   border-radius: 10px;
   overflow: hidden;
+}
+
+/* Candidates panel sits to the left, mutation log to the right. */
+.mutation-panel {
+  right: calc(100% + 12px);
+}
+
+.mutation-log {
+  left: calc(100% + 12px);
+}
+
+.mutation-log__row {
+  cursor: pointer;
+  user-select: none;
+}
+
+.mutation-log__row:hover {
+  background: rgba(74, 85, 104, 0.25);
+}
+
+.mutation-log__json {
+  margin: 0;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #a0aec0;
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 .mutation-panel__header {
