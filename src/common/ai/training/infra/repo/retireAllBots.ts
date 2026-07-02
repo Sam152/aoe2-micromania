@@ -6,3 +6,7 @@ export async function retireAllBots(
 ): Promise<void> {
   await tx`UPDATE bots SET is_active = FALSE`;
 }
+
+if (import.meta.main) {
+  retireAllBots().then(() => sql.end());
+}
