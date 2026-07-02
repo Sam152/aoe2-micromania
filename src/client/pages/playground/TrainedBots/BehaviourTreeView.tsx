@@ -45,9 +45,8 @@ function TreeTile({ tile }: { tile: DiffTile }) {
   // connector lines; every other node's children are green data values, which
   // render nested inside the tile itself.
   const isList = tile.list !== undefined;
-  // Only composites start expanded. Actions, conditions and blackboard values
-  // hold data values, which stay hidden by default to keep the tree compact.
-  const [collapsed, setCollapsed] = useState(() => tile.kind !== "composite");
+  // Every node starts expanded so the full tree is visible by default.
+  const [collapsed, setCollapsed] = useState(false);
 
   const classes = [
     "bt-tile",

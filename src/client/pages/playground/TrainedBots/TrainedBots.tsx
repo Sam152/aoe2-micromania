@@ -514,11 +514,16 @@ function TreeModal({ bot, baseBot, onClose }: { bot: Bot; baseBot: Bot; onClose:
   const unitTypes = [UnitType.Archer, UnitType.Mangonel, UnitType.Monk];
   const [activeUnit, setActiveUnit] = useState<UnitType>(unitTypes[0]);
 
+  const games = baseBot.wins + baseBot.losses + baseBot.draws;
+  const winPct = games > 0 ? Math.round((baseBot.wins / games) * 100) : 0;
+
   return (
     <div className="tree-modal__backdrop" onClick={onClose}>
       <div className="tree-modal" onClick={(e) => e.stopPropagation()}>
         <div className="tree-modal__header">
-          <span className="tree-modal__title">{bot.botName} · {bot.groupName}</span>
+          <span className="tree-modal__title">
+            {bot.botName} · {bot.groupName} · {winPct}% win · {games} games
+          </span>
           <button className="tree-modal__close" onClick={onClose}>✕</button>
         </div>
         <div className="tree-modal__tabs">
