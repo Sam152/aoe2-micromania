@@ -12,7 +12,7 @@ type CalculateMutationCountArgs = {
 export function calculateMutationCount(
   { iterationsSinceLastWin }: CalculateMutationCountArgs,
 ): number {
-  const factor = Math.max(
+  const factor = Math.min(
     3,
     iterationsSinceLastWin > 0
       ? Math.ceil(iterationsSinceLastWin / NEXT_GENERATION_RANDOM_MUTATIONS_ITERATION_COUNT_INCREASE_THRESHOLD)
