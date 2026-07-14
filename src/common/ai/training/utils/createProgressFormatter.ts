@@ -1,3 +1,5 @@
+import { createTimer } from "./createTimer.ts";
+
 const ROW_SIZE = 50;
 
 // Format numbers with a `_` thousands separator, e.g. 10000 -> "10_000".
@@ -21,6 +23,7 @@ export function createProgressFormatter(
   { totalIterations, scaleFactor = 1 }: { totalIterations?: number; scaleFactor?: number } = {},
 ): { advance: () => void } {
   let completed = 0;
+  let timer = createTimer(false);
 
   return {
     advance: () => {
@@ -36,9 +39,13 @@ export function createProgressFormatter(
       if ((isDot && completed % (ROW_SIZE * scaleFactor) === 0) || isLast) {
         writeSync(
           totalIterations !== undefined
-            ? ` (${formatNumber(completed)}/${formatNumber(totalIterations)})\n`
-            : ` (${formatNumber(completed)})\n`,
+            ? ` (${formatNumber(completed)}/${formatNumber(totalIterations)})`
+            : ` (${formatNumber(completed)})`,
         );
+        writeSync(` ${timer()}`);
+        timer = createTimer(false);
+
+        writeSync("\n");
       }
     },
   };
