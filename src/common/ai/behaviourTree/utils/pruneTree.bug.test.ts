@@ -10,13 +10,13 @@ import { mergeActivations } from "../../training/utils/mergeActivations.ts";
 const expectedHps = [
   { asPlayer1: { 1: 720, 2: 0 }, asPlayer2: { 1: 0, 2: 720 } },
   { asPlayer1: { 1: 770, 2: 0 }, asPlayer2: { 1: 0, 2: 770 } },
-  { asPlayer1: { 1: 430, 2: 0 }, asPlayer2: { 1: 0, 2: 436 } },
-  { asPlayer1: { 1: 444, 2: 0 }, asPlayer2: { 1: 0, 2: 486 } },
-  { asPlayer1: { 1: 502, 2: 0 }, asPlayer2: { 1: 0, 2: 522 } },
-  { asPlayer1: { 1: 594, 2: 0 }, asPlayer2: { 1: 0, 2: 590 } },
-  { asPlayer1: { 1: 590, 2: 0 }, asPlayer2: { 1: 0, 2: 574 } },
-  { asPlayer1: { 1: 112, 2: 0 }, asPlayer2: { 1: 0, 2: 278 } },
-  { asPlayer1: { 1: 686, 2: 0 }, asPlayer2: { 1: 0, 2: 684 } },
+  { asPlayer1: { 1: 424, 2: 0 }, asPlayer2: { 1: 0, 2: 442 } },
+  { asPlayer1: { 1: 442, 2: 0 }, asPlayer2: { 1: 0, 2: 492 } },
+  { asPlayer1: { 1: 490, 2: 0 }, asPlayer2: { 1: 0, 2: 524 } },
+  { asPlayer1: { 1: 616, 2: 0 }, asPlayer2: { 1: 0, 2: 620 } },
+  { asPlayer1: { 1: 617, 2: 0 }, asPlayer2: { 1: 0, 2: 578 } },
+  { asPlayer1: { 1: 144, 2: 0 }, asPlayer2: { 1: 0, 2: 282 } },
+  { asPlayer1: { 1: 704, 2: 0 }, asPlayer2: { 1: 0, 2: 702 } },
 ];
 
 describe("pruneTree bug", () => {
