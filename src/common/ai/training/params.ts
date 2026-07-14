@@ -2,7 +2,7 @@ export const params = {
   /**
    * How many workers should be fired up.
    */
-  CPU_WORKER_COUNT: 10,
+  CPU_WORKER_COUNT: 12,
   /**
    * Amount of HP a candidate tree must survive with against a champion to enter the pool.
    */
