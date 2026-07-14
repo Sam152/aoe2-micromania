@@ -12,7 +12,7 @@ export type GameWorkerPool = { runInPool: (trees: Trees) => Promise<GameResult>;
 
 export function createGameWorkerPool(workerCount: number): GameWorkerPool {
   const available: Worker[] = Array.from(
-    { length: workerCount },
+    { length: Math.min(navigator.hardwareConcurrency, workerCount) },
     () => new Worker(new URL("./worker.ts", import.meta.url), { type: "module" }),
   );
   const queue: PendingJob[] = [];
