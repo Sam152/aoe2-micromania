@@ -19,7 +19,7 @@ export const params = {
   /**
    * How many iterations we should run before saying a hill has been climbed.
    */
-  NEXT_GENERATION_MAXIMUM_ITERATIONS_UNTIL_QUIT: 500_000,
+  NEXT_GENERATION_MAXIMUM_ITERATIONS_UNTIL_QUIT: 10_000_000,
   /**
    * How many iterations before we start randomizing higher.
    */
