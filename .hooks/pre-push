@@ -9,3 +9,4 @@ cd "$ROOT_DIR"
 
 deno check
 deno check src/client/index.tsx
+
