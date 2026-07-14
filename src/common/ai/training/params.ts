@@ -32,7 +32,7 @@ export const params = {
    * @todo - find the right balance here, do some more tree analysis, perhaps select
    * from the tree roots at a higher %.
    */
-  TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS: 50,
+  TRAIT_BORROWING_MINIMUM_NUMBER_GROUPS: 20,
   /**
    * The N highest rated bots to borrow traits from.
    */

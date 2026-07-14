@@ -301,6 +301,7 @@ kbd {
 }
 
 .gen-tile {
+  position: relative;
   flex-shrink: 0;
   width: 58px;
   height: 58px;
@@ -381,6 +382,22 @@ kbd {
 
 .gen-tile--small .gen-tile__elo {
   font-size: 14px;
+}
+
+.gen-tile__borrowed-icon {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 11px;
+  line-height: 1;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(45, 55, 72, 0.9);
+  border: 1px solid rgba(160, 174, 192, 0.6);
 }
 
 .matchup-slots {

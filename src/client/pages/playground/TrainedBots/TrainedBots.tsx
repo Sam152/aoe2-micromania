@@ -92,6 +92,8 @@ export function TrainedBots() {
     }
   };
 
+  const borrowedBotIds = useMemo(() => new Set(borrowBots.map((b) => b.id)), [borrowBots]);
+
   const expandedGroupBots = useMemo(
     () =>
       expandedGroup !== null
@@ -268,6 +270,7 @@ export function TrainedBots() {
                         title={bot.groupName}
                         expanded={expandedGroup === bot.groupName}
                         slot={slot}
+                        isBorrowed={borrowedBotIds.has(bot.id)}
                         onClick={() => setExpandedGroup(expandedGroup === bot.groupName ? null : bot.groupName)}
                         onDragStart={(e) => handleDragStart(e, bot)}
                       />
@@ -285,6 +288,7 @@ export function TrainedBots() {
                         title={bot.botName}
                         small
                         slot={slotForBot(bot, homeBot, awayBot)}
+                        isBorrowed={borrowedBotIds.has(bot.id)}
                         onDragStart={(e) => handleDragStart(e, bot)}
                       />
                     ))}
@@ -302,6 +306,7 @@ export function TrainedBots() {
                     title={bot.botName}
                     expanded={inspectBot?.id === bot.id}
                     slot={slotForBot(bot, homeBot, awayBot)}
+                    isBorrowed={borrowedBotIds.has(bot.id)}
                     onClick={() => setInspectBot(bot)}
                     onDragStart={(e) => handleDragStart(e, bot)}
                   />
@@ -355,7 +360,6 @@ export function TrainedBots() {
           onClose={() => setInspectBot(null)}
         />
       )}
-
     </>
   );
 }
@@ -452,6 +456,7 @@ function BotTile({
   expanded,
   small,
   slot,
+  isBorrowed,
   onClick,
   onDragStart,
 }: {
@@ -461,6 +466,7 @@ function BotTile({
   expanded?: boolean;
   small?: boolean;
   slot?: "home" | "away" | "both";
+  isBorrowed?: boolean;
   onClick?: () => void;
   onDragStart: (e: React.DragEvent) => void;
 }) {
@@ -483,6 +489,7 @@ function BotTile({
       onClick={onClick}
       title={title}
     >
+      {isBorrowed && <span className="gen-tile__borrowed-icon" title="Borrowed bot">🌱</span>}
       <span className="gen-tile__gen">{label}</span>
       <span className="gen-tile__elo">{value}</span>
     </div>
@@ -551,8 +558,8 @@ function useEscape(onClose: () => void) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") { onClose(); }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    globalThis.addEventListener("keydown", onKey);
+    return () => globalThis.removeEventListener("keydown", onKey);
   }, [onClose]);
 }
 
@@ -636,7 +643,7 @@ function TreeModal(
             <div className="mutation-panel__header">
               <span className="mutation-panel__title">
                 {panelSelection.title}
-                {panelPinned && !panelHovered && <span className="mutation-panel__pin" title="Pinned"> 📌</span>}
+                {panelPinned && !panelHovered && <span className="mutation-panel__pin" title="Pinned">📌</span>}
               </span>
             </div>
             <div className="mutation-panel__list">
@@ -701,7 +708,11 @@ function TreeModal(
                 </button>
               </div>
               <div className="mutation-panel__list">
-                {entries.length === 0 && <div className="mutation-panel__row mutation-log__empty">No mutations yet</div>}
+                {entries.length === 0 && (
+                  <div className="mutation-panel__row mutation-log__empty">
+                    No mutations yet
+                  </div>
+                )}
                 {entries.map(({ entry, index }) => (
                   <div key={index} className="mutation-log__entry">
                     <div
@@ -722,4 +733,3 @@ function TreeModal(
     </div>
   );
 }
-
