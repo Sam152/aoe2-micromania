@@ -13,7 +13,7 @@ describe.skip("randomlyMutateTree", () => {
         count: 20,
         tree: sampleTree,
         borrowBots: [
-          { tree: sampleTree, generation: 1 },
+          { tree: sampleTree, id: 1 },
         ],
       }),
     );
@@ -27,7 +27,7 @@ describe.skip("randomlyMutateTree", () => {
         count: 5000,
         tree: { [UnitType.Archer]: emptyTree, [UnitType.Mangonel]: emptyTree, [UnitType.Monk]: emptyTree },
         borrowBots: [
-          { tree: sampleTree, generation: 1 },
+          { tree: sampleTree, id: 1 },
         ],
       }),
     );

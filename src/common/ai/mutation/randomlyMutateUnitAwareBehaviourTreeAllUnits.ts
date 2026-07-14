@@ -7,7 +7,7 @@ export function randomlyMutateUnitAwareBehaviourTreeAllUnits(
   { count, tree, borrowBots }: {
     count: number;
     tree: UnitAwareBehaviourTree;
-    borrowBots: Pick<Bot, "tree" | "generation">[];
+    borrowBots: Pick<Bot, "tree" | "id">[];
   },
 ): UnitAwareBehaviourTree {
   return {

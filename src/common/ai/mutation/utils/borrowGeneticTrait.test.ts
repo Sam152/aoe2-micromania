@@ -12,15 +12,8 @@ describe("borrowGeneticTrait", () => {
     };
     const previousBots = [{
       id: 1,
-      botName: "bot-1",
       tree: { [UnitType.Archer]: tree, [UnitType.Mangonel]: tree, [UnitType.Monk]: tree },
-      generationChampion: false,
-      elo: 0,
-      wins: 0,
-      losses: 0,
-      draws: 0,
-      generation: 1,
-    }] as unknown as Bot[];
+    }] as Bot[];
 
     const node = borrowGeneticTrait({ borrowBots: previousBots, types: ["condition"], unitType: UnitType.Archer });
 
