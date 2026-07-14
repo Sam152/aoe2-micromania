@@ -148,149 +148,6 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
   {
     effect: {
       listNode: {
-        nodeType: "selector",
-        nodes: [
-          {
-            nodeType: "sequence",
-            nodes: [
-              {
-                invert: true,
-                nodeType: "condition",
-                params: {
-                  leftUnitCount: {
-                    blackboardKey: "globalOwnedUnitsOfTypeCount",
-                    dataType: "unitCount",
-                    nodeType: "dataValue",
-                    params: {
-                      unitType: {
-                        dataType: "unitType",
-                        nodeType: "dataValue",
-                        type: "LITERAL",
-                        value: "ARCHER",
-                      },
-                    },
-                    type: "BLACKBOARD",
-                  },
-                  rightUnitCount: {
-                    dataType: "unitCount",
-                    nodeType: "dataValue",
-                    type: "LITERAL",
-                    value: 8,
-                  },
-                },
-                type: "unitCountGreaterThan",
-              },
-              {
-                nodeType: "action",
-                params: {
-                  direction: {
-                    blackboardKey: "opponentAveragePosition",
-                    dataType: "vector",
-                    nodeType: "dataValue",
-                    params: {},
-                    type: "BLACKBOARD",
-                  },
-                },
-                type: "PATROL",
-              },
-            ],
-          },
-          {
-            nodeType: "sequence",
-            nodes: [
-              {
-                invert: true,
-                nodeType: "condition",
-                params: {
-                  leftUnitCount: {
-                    blackboardKey: "groupMetaUnitTypeGroupCount",
-                    dataType: "unitCount",
-                    nodeType: "dataValue",
-                    params: {},
-                    type: "BLACKBOARD",
-                  },
-                  rightUnitCount: {
-                    dataType: "unitCount",
-                    nodeType: "dataValue",
-                    type: "LITERAL",
-                    value: 2,
-                  },
-                },
-                type: "unitCountGreaterThan",
-              },
-              {
-                nodeType: "action",
-                params: {
-                  splitGroupInto: {
-                    dataType: "groupSize",
-                    nodeType: "dataValue",
-                    type: "LITERAL",
-                    value: "HALF",
-                  },
-                },
-                type: "SPLIT_GROUP",
-              },
-            ],
-          },
-          {
-            nodeType: "sequence",
-            nodes: [
-              {
-                invert: false,
-                nodeType: "condition",
-                params: {
-                  groupIndexLeft: {
-                    dataType: "groupIndex",
-                    nodeType: "dataValue",
-                    type: "LITERAL",
-                    value: 0,
-                  },
-                  groupIndexRight: {
-                    blackboardKey: "groupMetaUnitTypeIndex",
-                    dataType: "groupIndex",
-                    nodeType: "dataValue",
-                    params: {},
-                    type: "BLACKBOARD",
-                  },
-                },
-                type: "groupIndexEquals",
-              },
-              {
-                nodeType: "action",
-                params: {
-                  direction: {
-                    blackboardKey: "opponentAveragePosition",
-                    dataType: "vector",
-                    nodeType: "dataValue",
-                    params: {},
-                    type: "BLACKBOARD",
-                  },
-                },
-                type: "PATROL",
-              },
-              {
-                nodeType: "action",
-                params: {
-                  forTicksAmount: {
-                    dataType: "tickCount",
-                    nodeType: "dataValue",
-                    type: "LITERAL",
-                    value: 100,
-                  },
-                },
-                type: "IDLE",
-              },
-            ],
-          },
-        ],
-      },
-      type: "REMOVE_NODE_FROM_LIST",
-    },
-    probability: 1,
-  },
-  {
-    effect: {
-      listNode: {
         nodeType: "sequence",
         nodes: [
           {
@@ -386,7 +243,58 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
         ],
       },
-      type: "REMOVE_NODE_FROM_LIST",
+      type: "ADD_ACTION_TO_LIST",
+    },
+    probability: 4,
+  },
+  {
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "globalOwnedUnitsOfTypeCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {
+                  unitType: {
+                    dataType: "unitType",
+                    nodeType: "dataValue",
+                    type: "LITERAL",
+                    value: "ARCHER",
+                  },
+                },
+                type: "BLACKBOARD",
+              },
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 8,
+              },
+            },
+            type: "unitCountGreaterThan",
+          },
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "PATROL",
+          },
+        ],
+      },
+      type: "ADD_CONDITION_TO_LIST",
     },
     probability: 2,
   },
@@ -437,9 +345,9 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
         ],
       },
-      type: "ADD_NODE_TO_LIST",
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    probability: 8,
+    probability: 2,
   },
   {
     effect: {
@@ -720,7 +628,50 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
         ],
       },
-      type: "REMOVE_NODE_FROM_LIST",
+      type: "ADD_ACTION_TO_LIST",
+    },
+    probability: 4,
+  },
+  {
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: true,
+            nodeType: "condition",
+            params: {
+              leftUnitCount: {
+                blackboardKey: "groupMetaUnitTypeGroupCount",
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+              rightUnitCount: {
+                dataType: "unitCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 2,
+              },
+            },
+            type: "unitCountGreaterThan",
+          },
+          {
+            nodeType: "action",
+            params: {
+              splitGroupInto: {
+                dataType: "groupSize",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: "HALF",
+              },
+            },
+            type: "SPLIT_GROUP",
+          },
+        ],
+      },
+      type: "ADD_CONDITION_TO_LIST",
     },
     probability: 2,
   },
@@ -763,9 +714,9 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
         ],
       },
-      type: "ADD_NODE_TO_LIST",
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    probability: 8,
+    probability: 2,
   },
   {
     effect: {
@@ -1020,7 +971,63 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
         ],
       },
-      type: "REMOVE_NODE_FROM_LIST",
+      type: "ADD_ACTION_TO_LIST",
+    },
+    probability: 4,
+  },
+  {
+    effect: {
+      listNode: {
+        nodeType: "sequence",
+        nodes: [
+          {
+            invert: false,
+            nodeType: "condition",
+            params: {
+              groupIndexLeft: {
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 0,
+              },
+              groupIndexRight: {
+                blackboardKey: "groupMetaUnitTypeIndex",
+                dataType: "groupIndex",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "groupIndexEquals",
+          },
+          {
+            nodeType: "action",
+            params: {
+              direction: {
+                blackboardKey: "opponentAveragePosition",
+                dataType: "vector",
+                nodeType: "dataValue",
+                params: {},
+                type: "BLACKBOARD",
+              },
+            },
+            type: "PATROL",
+          },
+          {
+            nodeType: "action",
+            params: {
+              forTicksAmount: {
+                dataType: "tickCount",
+                nodeType: "dataValue",
+                type: "LITERAL",
+                value: 100,
+              },
+            },
+            type: "IDLE",
+          },
+        ],
+      },
+      type: "ADD_CONDITION_TO_LIST",
     },
     probability: 2,
   },
@@ -1076,9 +1083,9 @@ snapshot[`buildMutationCandidates > generates candidates from tree 1`] = `
           },
         ],
       },
-      type: "ADD_NODE_TO_LIST",
+      type: "REMOVE_NODE_FROM_LIST",
     },
-    probability: 8,
+    probability: 2,
   },
   {
     effect: {
