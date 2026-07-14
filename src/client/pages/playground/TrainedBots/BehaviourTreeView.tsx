@@ -228,7 +228,15 @@ function build(
     };
   }
   if (node.type === "LITERAL") {
-    return { kind: "value", label: String(node.value), meta: node.dataType, paramName, candidates, highlighted, children: [] };
+    return {
+      kind: "value",
+      label: String(node.value),
+      meta: node.dataType,
+      paramName,
+      candidates,
+      highlighted,
+      children: [],
+    };
   }
   return {
     kind: "value",
