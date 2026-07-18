@@ -13,6 +13,7 @@ const playgrounds: Playground[] = [
   { name: "Accuracy analysis", path: "/playground/accuracy-analysis" },
   { name: "Group unit vector facing direction", path: "/playground/group-unit-vector-facing-direction" },
   { name: "Trained bots", path: "/playground/trained-bots" },
+  { name: "Bot building-block frequency", path: "/playground/bot-frequency" },
 ];
 
 export function PlaygroundList() {

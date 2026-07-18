@@ -12,6 +12,7 @@ import { MangoFanOutPlayground } from "./pages/playground/MangoFanOutPlayground.
 import { AccuracyAnalysisPlayground } from "./pages/playground/AccuracyAnalysisPlayground.tsx";
 import { GroupUnitVectorFacingDirectionPlayground } from "./pages/playground/GroupUnitVectorFacingDirectionPlayground.tsx";
 import { TrainedBots } from "./pages/playground/TrainedBots/TrainedBots.tsx";
+import { BotActionFrequencyPlayground } from "./pages/playground/BotActionFrequencyPlayground.tsx";
 
 import { SpectateGame } from "./pages/SpectateGame.tsx";
 import { PlaygroundList } from "./pages/playground/PlaygroundList.tsx";
@@ -37,6 +38,7 @@ export function App() {
             element={<GroupUnitVectorFacingDirectionPlayground />}
           />
           <Route path="/playground/trained-bots" element={<TrainedBots />} />
+          <Route path="/playground/bot-frequency" element={<BotActionFrequencyPlayground />} />
         </Routes>
       </BrowserRouter>
     </ConnectedStateProvider>
