@@ -45,5 +45,7 @@ export async function startTournamentHarness(invertPositions: boolean) {
 }
 
 if (import.meta.main) {
-  startTournamentHarness(false).then(() => sql.end());
+  await startTournamentHarness(false)
+    .then(() => startTournamentHarness(true))
+    .then(() => sql.end());
 }
