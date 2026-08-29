@@ -7,5 +7,5 @@ export const diceRoll = defineCondition({
       allowedValueTypes: ["LITERAL"],
     },
   },
-  evaluate: ({ sides }) => false,
+  evaluate: ({ sides }) => Math.floor(Math.random() * sides) === 0,
 });
