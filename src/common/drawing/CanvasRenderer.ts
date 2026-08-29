@@ -208,7 +208,7 @@ export class CanvasRenderer implements RendererInterface {
           .map((position) => {
             slpManager
               .getAsset(projectileInfo.asset)
-              .drawFrame(this.context, position, projectileInfo.frames[projectile.id % projectileInfo.frames.length]);
+              .drawFrame(this.context, position, gameState.ticks);
           });
       }
 
