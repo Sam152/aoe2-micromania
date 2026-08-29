@@ -70,7 +70,8 @@ export function registerProjectileHits(state: GameState) {
 
   // Landed rocks only render a short animation that splashes the ground, so for visual reasons
   // we don't need to keep them for a long time. We could filter them based on ticks and animation
-  // duration, but retaining the last 20 is also fine.
+  // duration, but retaining the last 20 is also fine. This should allow for about 4 simultanous
+  // shots to land, without their animations disappearing.
   state.landedRocks.splice(20);
 
   // Keep a good amount of landed arrows on the battlefield.
