@@ -176,11 +176,14 @@ export const jimAi: UnitAwareBehaviourTree = {
               },
             ],
           },
+          // Short IDLE deliberately: while any action is queued (including an IDLE), the whole tree -
+          // including the archer-avoidance guard above - stops being re-evaluated until it drains. A
+          // long idle here would let the monk walk blindly through archer range on the way to the mangos.
           {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 80 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 15 },
             },
           },
         ],
@@ -236,35 +239,137 @@ export const jimAi: UnitAwareBehaviourTree = {
               rightTicks: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 40 },
             },
           },
+          // Dodge left, right, or straight back - randomized so it isn't a predictable single escape line.
           {
-            nodeType: "action",
-            type: "MOVE_UNITS",
-            params: {
-              direction: {
-                nodeType: "dataValue",
-                dataType: "vector",
-                type: "BLACKBOARD",
-                blackboardKey: "groupUnitVectorFacingDirection",
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 3 },
+                    },
+                  },
+                  {
+                    nodeType: "action",
+                    type: "MOVE_UNITS",
+                    params: {
+                      direction: {
+                        nodeType: "dataValue",
+                        dataType: "vector",
+                        type: "BLACKBOARD",
+                        blackboardKey: "groupUnitVectorFacingDirection",
+                        params: {
+                          direction: {
+                            nodeType: "dataValue",
+                            dataType: "vector",
+                            type: "BLACKBOARD",
+                            blackboardKey: "opponentNextProjectileLandingPositionByType",
+                            params: {
+                              type: {
+                                nodeType: "dataValue",
+                                dataType: "projectileType",
+                                type: "LITERAL",
+                                value: "MANGO_ROCK",
+                              },
+                            },
+                          },
+                          angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 90 },
+                          magnitude: {
+                            nodeType: "dataValue",
+                            dataType: "vectorMagnitude",
+                            type: "LITERAL",
+                            value: 220,
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 2 },
+                    },
+                  },
+                  {
+                    nodeType: "action",
+                    type: "MOVE_UNITS",
+                    params: {
+                      direction: {
+                        nodeType: "dataValue",
+                        dataType: "vector",
+                        type: "BLACKBOARD",
+                        blackboardKey: "groupUnitVectorFacingDirection",
+                        params: {
+                          direction: {
+                            nodeType: "dataValue",
+                            dataType: "vector",
+                            type: "BLACKBOARD",
+                            blackboardKey: "opponentNextProjectileLandingPositionByType",
+                            params: {
+                              type: {
+                                nodeType: "dataValue",
+                                dataType: "projectileType",
+                                type: "LITERAL",
+                                value: "MANGO_ROCK",
+                              },
+                            },
+                          },
+                          angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: -90 },
+                          magnitude: {
+                            nodeType: "dataValue",
+                            dataType: "vectorMagnitude",
+                            type: "LITERAL",
+                            value: 220,
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                nodeType: "action",
+                type: "MOVE_UNITS",
                 params: {
                   direction: {
                     nodeType: "dataValue",
                     dataType: "vector",
                     type: "BLACKBOARD",
-                    blackboardKey: "opponentNextProjectileLandingPositionByType",
+                    blackboardKey: "groupUnitVectorFacingDirection",
                     params: {
-                      type: {
+                      direction: {
                         nodeType: "dataValue",
-                        dataType: "projectileType",
-                        type: "LITERAL",
-                        value: "MANGO_ROCK",
+                        dataType: "vector",
+                        type: "BLACKBOARD",
+                        blackboardKey: "opponentNextProjectileLandingPositionByType",
+                        params: {
+                          type: {
+                            nodeType: "dataValue",
+                            dataType: "projectileType",
+                            type: "LITERAL",
+                            value: "MANGO_ROCK",
+                          },
+                        },
                       },
+                      angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 180 },
+                      magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 220 },
                     },
                   },
-                  angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 180 },
-                  magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 220 },
                 },
               },
-            },
+            ],
           },
         ],
       },
@@ -346,7 +451,7 @@ export const jimAi: UnitAwareBehaviourTree = {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 60 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 20 },
             },
           },
         ],
@@ -369,34 +474,112 @@ export const jimAi: UnitAwareBehaviourTree = {
               },
             },
           },
+          // Step back-left, back-right, or straight back - randomized so the retreat line isn't predictable.
           {
-            nodeType: "action",
-            type: "MOVE_UNITS",
-            params: {
-              direction: {
-                nodeType: "dataValue",
-                dataType: "vector",
-                type: "BLACKBOARD",
-                blackboardKey: "groupUnitVectorFacingDirection",
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 3 },
+                    },
+                  },
+                  {
+                    nodeType: "action",
+                    type: "MOVE_UNITS",
+                    params: {
+                      direction: {
+                        nodeType: "dataValue",
+                        dataType: "vector",
+                        type: "BLACKBOARD",
+                        blackboardKey: "groupUnitVectorFacingDirection",
+                        params: {
+                          direction: {
+                            nodeType: "dataValue",
+                            dataType: "vector",
+                            type: "BLACKBOARD",
+                            blackboardKey: "opponentAveragePosition",
+                            params: {},
+                          },
+                          angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 140 },
+                          magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 70 },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 2 },
+                    },
+                  },
+                  {
+                    nodeType: "action",
+                    type: "MOVE_UNITS",
+                    params: {
+                      direction: {
+                        nodeType: "dataValue",
+                        dataType: "vector",
+                        type: "BLACKBOARD",
+                        blackboardKey: "groupUnitVectorFacingDirection",
+                        params: {
+                          direction: {
+                            nodeType: "dataValue",
+                            dataType: "vector",
+                            type: "BLACKBOARD",
+                            blackboardKey: "opponentAveragePosition",
+                            params: {},
+                          },
+                          angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 220 },
+                          magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 70 },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              {
+                nodeType: "action",
+                type: "MOVE_UNITS",
                 params: {
                   direction: {
                     nodeType: "dataValue",
                     dataType: "vector",
                     type: "BLACKBOARD",
-                    blackboardKey: "opponentAveragePosition",
-                    params: {},
+                    blackboardKey: "groupUnitVectorFacingDirection",
+                    params: {
+                      direction: {
+                        nodeType: "dataValue",
+                        dataType: "vector",
+                        type: "BLACKBOARD",
+                        blackboardKey: "opponentAveragePosition",
+                        params: {},
+                      },
+                      angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 180 },
+                      magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 70 },
+                    },
                   },
-                  angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 180 },
-                  magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 70 },
                 },
               },
-            },
+            ],
           },
           {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 30 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 15 },
             },
           },
         ],
@@ -438,7 +621,27 @@ export const jimAi: UnitAwareBehaviourTree = {
               distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 450 },
             },
           },
-          { nodeType: "action", type: "FORMATION_SPREAD", params: {} },
+          // Usually spread against the splash, but occasionally split instead so it isn't a predictable tell.
+          {
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 4 },
+                    },
+                  },
+                  { nodeType: "action", type: "FORMATION_SPLIT", params: {} },
+                ],
+              },
+              { nodeType: "action", type: "FORMATION_SPREAD", params: {} },
+            ],
+          },
           {
             nodeType: "action",
             type: "MOVE_UNITS",
@@ -468,7 +671,7 @@ export const jimAi: UnitAwareBehaviourTree = {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 70 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 20 },
             },
           },
         ],
@@ -510,7 +713,27 @@ export const jimAi: UnitAwareBehaviourTree = {
               distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 350 },
             },
           },
-          { nodeType: "action", type: "FORMATION_SPLIT", params: {} },
+          // Usually split to spoil their aim, but occasionally spread instead so it isn't a predictable tell.
+          {
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 4 },
+                    },
+                  },
+                  { nodeType: "action", type: "FORMATION_SPREAD", params: {} },
+                ],
+              },
+              { nodeType: "action", type: "FORMATION_SPLIT", params: {} },
+            ],
+          },
           {
             nodeType: "action",
             type: "MOVE_UNITS",
@@ -545,10 +768,44 @@ export const jimAi: UnitAwareBehaviourTree = {
           },
         ],
       },
-      // Everyone else: patrol the main fight.
+      // Everyone else: patrol the main fight, in a randomly-picked formation so the default stance varies too.
       {
         nodeType: "sequence",
         nodes: [
+          {
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 4 },
+                    },
+                  },
+                  { nodeType: "action", type: "FORMATION_SPREAD", params: {} },
+                ],
+              },
+              {
+                nodeType: "sequence",
+                nodes: [
+                  {
+                    nodeType: "condition",
+                    type: "diceRoll",
+                    invert: false,
+                    params: {
+                      sides: { nodeType: "dataValue", dataType: "sidedDice", type: "LITERAL", value: 3 },
+                    },
+                  },
+                  { nodeType: "action", type: "FORMATION_SPLIT", params: {} },
+                ],
+              },
+              { nodeType: "action", type: "FORMATION_LINE", params: {} },
+            ],
+          },
           {
             nodeType: "action",
             type: "PATROL",
