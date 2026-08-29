@@ -102,6 +102,71 @@ export const jimAi: UnitAwareBehaviourTree = {
               },
             },
           },
+          // Hysteresis guard: CONVERT targets the globally-closest Mango/Archer with no distance
+          // check of its own, so without this it re-fires the instant the retreat guard above stops
+          // triggering (i.e. the moment the monk steps just outside 250) - marching it straight back
+          // into the same archer's range and yo-yoing at the boundary. Require archers to be genuinely
+          // absent, or clearly further than the retreat trigger, before allowing conversion to resume.
+          {
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "condition",
+                type: "booleanIsTrue",
+                invert: true,
+                params: {
+                  subject: {
+                    nodeType: "dataValue",
+                    dataType: "boolean",
+                    type: "BLACKBOARD",
+                    blackboardKey: "opponentHasUnitType",
+                    params: {
+                      unitType: { nodeType: "dataValue", dataType: "unitType", type: "LITERAL", value: "ARCHER" },
+                    },
+                  },
+                },
+              },
+              {
+                nodeType: "condition",
+                type: "vectorDistanceBetweenLessThan",
+                // No invert: the raw (bugged) implementation is a greater-than check, which is
+                // exactly "archer is far away" here - see NOTE above.
+                invert: false,
+                params: {
+                  pointA: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "BLACKBOARD",
+                    blackboardKey: "groupAveragePosition",
+                    params: {},
+                  },
+                  pointB: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitPosition",
+                    params: {
+                      unitWithPosition: {
+                        nodeType: "dataValue",
+                        dataType: "unitId",
+                        type: "BLACKBOARD",
+                        blackboardKey: "opponentClosestUnitByType",
+                        params: {
+                          unitType: {
+                            nodeType: "dataValue",
+                            dataType: "unitType",
+                            type: "LITERAL",
+                            value: "ARCHER",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 850 },
+                },
+              },
+            ],
+          },
           {
             nodeType: "selector",
             nodes: [
@@ -143,6 +208,70 @@ export const jimAi: UnitAwareBehaviourTree = {
       {
         nodeType: "sequence",
         nodes: [
+          // Same hysteresis guard as the CONVERT branch above - without it, this is the loophole that
+          // recreates the exact yo-yo: the moment CONVERT gets blocked by that guard, this branch would
+          // otherwise immediately march the monk straight at the mango average (through the same nearby
+          // archer) with no distance awareness of its own.
+          {
+            nodeType: "selector",
+            nodes: [
+              {
+                nodeType: "condition",
+                type: "booleanIsTrue",
+                invert: true,
+                params: {
+                  subject: {
+                    nodeType: "dataValue",
+                    dataType: "boolean",
+                    type: "BLACKBOARD",
+                    blackboardKey: "opponentHasUnitType",
+                    params: {
+                      unitType: { nodeType: "dataValue", dataType: "unitType", type: "LITERAL", value: "ARCHER" },
+                    },
+                  },
+                },
+              },
+              {
+                nodeType: "condition",
+                type: "vectorDistanceBetweenLessThan",
+                // No invert: the raw (bugged) implementation is a greater-than check, which is
+                // exactly "archer is far away" here - see NOTE above.
+                invert: false,
+                params: {
+                  pointA: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "BLACKBOARD",
+                    blackboardKey: "groupAveragePosition",
+                    params: {},
+                  },
+                  pointB: {
+                    nodeType: "dataValue",
+                    dataType: "vector",
+                    type: "BLACKBOARD",
+                    blackboardKey: "unitPosition",
+                    params: {
+                      unitWithPosition: {
+                        nodeType: "dataValue",
+                        dataType: "unitId",
+                        type: "BLACKBOARD",
+                        blackboardKey: "opponentClosestUnitByType",
+                        params: {
+                          unitType: {
+                            nodeType: "dataValue",
+                            dataType: "unitType",
+                            type: "LITERAL",
+                            value: "ARCHER",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 850 },
+                },
+              },
+            ],
+          },
           {
             nodeType: "selector",
             nodes: [
