@@ -1,10 +1,11 @@
-import { GameState } from "../../../../types.ts";
+import { GameState, LandedArrow } from "../../../../types.ts";
 import { calculateDamage } from "../../../units/calculateDamage.ts";
 import { registerUnitFallen } from "./registerUnitFallen.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 import { pointInCircle } from "../../../util/pointInCircle.ts";
 import { soundManager } from "../../../sounds/SoundManger.ts";
+import { computeArrowAngle } from "../../../units/computeArrowAngle.ts";
 
 export function registerProjectileHits(state: GameState) {
   const landedProjectiles = state.projectiles.filter(({ arrivingTick }) => arrivingTick === state.ticks);
@@ -51,4 +52,11 @@ export function registerProjectileHits(state: GameState) {
   // Remove landed projectiles from the game state.
   const landedIds = new Set(landedProjectiles.map(({ id }) => id));
   state.projectiles = state.projectiles.filter(({ id }) => !landedIds.has(id));
+
+  state.landedArrow.unshift(...standardProjectiles.map((landedArrow): LandedArrow => ({
+    id: landedArrow.id,
+    destination: landedArrow.destination,
+    angle: computeArrowAngle({ arrow: landedArrow, percentageComplete: 1 }),
+  })));
+  state.landedArrow.splice(100);
 }

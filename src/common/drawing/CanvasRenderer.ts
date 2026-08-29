@@ -24,6 +24,7 @@ import { CursorAsset, loadCursorFile } from "./cursorLoader.ts";
 import { assetUrl } from "../../client/util/assetUrl.ts";
 
 import { fanOutMangoProjections } from "./helpers/fanOutMangoProjections.ts";
+import { computeArrowAngle } from "../units/computeArrowAngle.ts";
 
 export class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -196,20 +197,30 @@ export class CanvasRenderer implements RendererInterface {
       }
 
       if (projectile.type === ProjectileType.Arrow) {
-        const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
         const position = getArrowPosition(projectile, percentageComplete);
-        const angle = position.clone().sub(positionPrevious).angle();
-
         slpManager
           .getAsset(projectileInfo.asset)
           .drawFrame(
             this.context,
             position,
             projectileInfo.frames[projectile.id % projectileInfo.frames.length],
-            angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
+            computeArrowAngle({ arrow: projectile, percentageComplete }),
             { x: 2, y: 19 },
           );
       }
+    });
+
+    const arrowProjectile = projectileMetadata[ProjectileType.Arrow]!;
+    gameState.landedArrow.forEach((landedArrow) => {
+      slpManager
+        .getAsset(arrowProjectile.asset)
+        .drawFrame(
+          this.context,
+          landedArrow.destination,
+          arrowProjectile.frames[landedArrow.id % arrowProjectile.frames.length],
+          landedArrow.angle,
+          { x: 2, y: 19 },
+        );
     });
   }
 
