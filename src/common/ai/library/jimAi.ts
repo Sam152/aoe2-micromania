@@ -763,7 +763,7 @@ export const jimAi: UnitAwareBehaviourTree = {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 70 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 20 },
             },
           },
         ],
@@ -823,7 +823,7 @@ export const jimAi: UnitAwareBehaviourTree = {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 80 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 20 },
             },
           },
         ],
@@ -962,7 +962,7 @@ export const jimAi: UnitAwareBehaviourTree = {
             nodeType: "action",
             type: "IDLE",
             params: {
-              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 100 },
+              forTicksAmount: { nodeType: "dataValue", dataType: "tickCount", type: "LITERAL", value: 20 },
             },
           },
         ],
