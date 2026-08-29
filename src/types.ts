@@ -91,6 +91,12 @@ export type LandedArrow = {
   angle: number;
 };
 
+export type LandedRocks = {
+  id: number;
+  destination: Vector2;
+  landedOnTick: number;
+};
+
 export interface RendererInterface {
   render: (gameState: GameState, clientState: ClientState, clientStateDispatcher: ClientDispatcher) => void;
   bootUp: () => Promise<void>;
@@ -117,7 +123,8 @@ export interface GameState {
 
   units: UnitInstance[];
   projectiles: ProjectileInstance[];
-  landedArrow: LandedArrow[];
+  landedArrows: LandedArrow[];
+  landedRocks: LandedRocks[];
   fallenUnits: FallenUnitInstance[];
 
   soundQueue: Sound[];

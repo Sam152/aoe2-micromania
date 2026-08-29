@@ -129,7 +129,8 @@ export function defaultState(): GameState {
 
     units: [],
     projectiles: [],
-    landedArrow: [],
+    landedArrows: [],
+    landedRocks: [],
     fallenUnits: [],
 
     gameEnded: false,

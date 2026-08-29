@@ -136,7 +136,7 @@ export class CanvasRenderer implements RendererInterface {
 
   drawLandedArrows(gameState: GameState) {
     const arrowProjectile = projectileMetadata[ProjectileType.Arrow]!;
-    gameState.landedArrow.forEach((landedArrow) => {
+    gameState.landedArrows.forEach((landedArrow) => {
       slpManager
         .getAsset(arrowProjectile.asset)
         .drawFrame(

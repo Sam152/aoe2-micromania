@@ -28,7 +28,7 @@ export function registerProjectileHits(state: GameState) {
         registerUnitFallen(state, hitUnit);
       }
     } else {
-      state.landedArrow.unshift({
+      state.landedArrows.unshift({
         id: projectile.id,
         destination: projectile.destination,
         angle: computeArrowAngle({ arrow: projectile, percentageComplete: 1 }),
@@ -59,5 +59,5 @@ export function registerProjectileHits(state: GameState) {
   const landedIds = new Set(landedProjectiles.map(({ id }) => id));
   state.projectiles = state.projectiles.filter(({ id }) => !landedIds.has(id));
 
-  state.landedArrow.splice(200);
+  state.landedArrows.splice(200);
 }
