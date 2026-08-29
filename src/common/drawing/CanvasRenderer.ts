@@ -119,6 +119,7 @@ export class CanvasRenderer implements RendererInterface {
     this.translateCamera(clientState.camera);
     this.drawTerrain(gameState);
     this.drawFallenUnits(gameState);
+    this.drawLandedArrows(gameState);
     this.drawUnits(gameState, clientState, clientStateDispatcher);
     this.drawProjectiles(gameState, clientState, clientStateDispatcher);
     this.drawMovementCommandAnimations(gameState, clientState);
@@ -131,6 +132,21 @@ export class CanvasRenderer implements RendererInterface {
 
     this.context.setTransform(1, 0, 0, 1, 0, 0);
     this.drawCursor(clientState);
+  }
+
+  drawLandedArrows(gameState: GameState) {
+    const arrowProjectile = projectileMetadata[ProjectileType.Arrow]!;
+    gameState.landedArrow.forEach((landedArrow) => {
+      slpManager
+        .getAsset(arrowProjectile.asset)
+        .drawFrame(
+          this.context,
+          landedArrow.destination,
+          arrowProjectile.frames[landedArrow.id % arrowProjectile.frames.length],
+          landedArrow.angle,
+          { x: 2, y: 19 },
+        );
+    });
   }
 
   translateCamera(camera: Vector2): void {
@@ -208,19 +224,6 @@ export class CanvasRenderer implements RendererInterface {
             { x: 2, y: 19 },
           );
       }
-    });
-
-    const arrowProjectile = projectileMetadata[ProjectileType.Arrow]!;
-    gameState.landedArrow.forEach((landedArrow) => {
-      slpManager
-        .getAsset(arrowProjectile.asset)
-        .drawFrame(
-          this.context,
-          landedArrow.destination,
-          arrowProjectile.frames[landedArrow.id % arrowProjectile.frames.length],
-          landedArrow.angle,
-          { x: 2, y: 19 },
-        );
     });
   }
 

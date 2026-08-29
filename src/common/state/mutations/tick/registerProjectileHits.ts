@@ -1,4 +1,4 @@
-import { GameState, LandedArrow } from "../../../../types.ts";
+import { GameState } from "../../../../types.ts";
 import { calculateDamage } from "../../../units/calculateDamage.ts";
 import { registerUnitFallen } from "./registerUnitFallen.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
@@ -27,6 +27,12 @@ export function registerProjectileHits(state: GameState) {
       if (hitUnit.hitPoints <= 0) {
         registerUnitFallen(state, hitUnit);
       }
+    } else {
+      state.landedArrow.unshift({
+        id: projectile.id,
+        destination: projectile.destination,
+        angle: computeArrowAngle({ arrow: projectile, percentageComplete: 1 }),
+      });
     }
   });
 
@@ -53,10 +59,5 @@ export function registerProjectileHits(state: GameState) {
   const landedIds = new Set(landedProjectiles.map(({ id }) => id));
   state.projectiles = state.projectiles.filter(({ id }) => !landedIds.has(id));
 
-  state.landedArrow.unshift(...standardProjectiles.map((landedArrow): LandedArrow => ({
-    id: landedArrow.id,
-    destination: landedArrow.destination,
-    angle: computeArrowAngle({ arrow: landedArrow, percentageComplete: 1 }),
-  })));
-  state.landedArrow.splice(100);
+  state.landedArrow.splice(200);
 }
