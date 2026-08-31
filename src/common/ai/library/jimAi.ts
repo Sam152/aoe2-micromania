@@ -41,7 +41,10 @@ export const jimAi: UnitAwareBehaviourTree = {
                 blackboardKey: "groupAveragePosition",
                 params: {},
               },
-              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 250 },
+              // Archer's real attack range is 6 tiles * 99 (config.tileGameStatsLength) = 594 world
+              // units (see units/unitMetadataFactory.ts + util/inAttackRange.ts) - trigger a bit
+              // beyond that so the monk reacts before it's actually being shot at, not after.
+              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 650 },
             },
           },
           {
@@ -77,7 +80,7 @@ export const jimAi: UnitAwareBehaviourTree = {
                     },
                   },
                   angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 180 },
-                  magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 260 },
+                  magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 350 },
                 },
               },
             },
@@ -747,7 +750,9 @@ export const jimAi: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 450 },
+              // Mangonel's real attack range is 7 tiles * 99 (config.tileGameStatsLength) = 693 world
+              // units (units/unitMetadataFactory.ts + util/inAttackRange.ts) - react a bit before that.
+              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 750 },
             },
           },
           // Usually spread against the splash, but occasionally split instead so it isn't a predictable tell.
@@ -839,7 +844,9 @@ export const jimAi: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 350 },
+              // Archer's real attack range is 6 tiles * 99 (config.tileGameStatsLength) = 594 world
+              // units (units/unitMetadataFactory.ts + util/inAttackRange.ts) - react a bit before that.
+              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 650 },
             },
           },
           // Usually split to spoil their aim, but occasionally spread instead so it isn't a predictable tell.
@@ -996,7 +1003,10 @@ export const jimAi: UnitAwareBehaviourTree = {
                   },
                 },
               },
-              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 200 },
+              // Monk's conversion range (the "attackRange" field is repurposed for Monks) is 9 tiles *
+              // 99 (config.tileGameStatsLength) = 891 world units (units/unitMetadataFactory.ts +
+              // util/inAttackRange.ts) - react before the monk is close enough to actually convert us.
+              distance: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 950 },
             },
           },
           {
@@ -1027,7 +1037,7 @@ export const jimAi: UnitAwareBehaviourTree = {
                     },
                   },
                   angle: { nodeType: "dataValue", dataType: "vectorAngle", type: "LITERAL", value: 180 },
-                  magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 260 },
+                  magnitude: { nodeType: "dataValue", dataType: "vectorMagnitude", type: "LITERAL", value: 350 },
                 },
               },
             },
