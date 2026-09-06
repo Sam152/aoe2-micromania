@@ -2,7 +2,7 @@
   "nodeModulesDir": "auto",
   "vendor": true,
   "tasks": {
-    "start": "deno run --check -A src/start.ts",
+    "start": "deno run --allow-run=deno .hooks/start-forever.ts",
     "start:debug": "deno run --inspect --check -A src/start.ts",
     "start:watch": "deno run --allow-run=deno .hooks/watch-forever.ts",
     "hooks:init": "git config core.hooksPath .hooks",
