@@ -12,6 +12,7 @@ const literalGenerators: { [K in DataType]: () => TypeFromDataType<K> } = {
   vector: () => ({ x: Math.floor(Math.random() * 1000), y: Math.floor(Math.random() * 1000) }),
   vectorMagnitude: () => Math.floor(Math.random() * 500),
   vectorAngle: () => Math.floor(Math.random() * 360),
+  sidedDice: () => 2,
   unitId: () => {
     throw new Error("Generating random unit IDs does not make sense");
   },

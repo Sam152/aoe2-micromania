@@ -3,6 +3,7 @@ while (true) {
     args: [
       "run",
       "--check",
+      "--env-file",
       "-A",
       "src/start.ts",
     ],

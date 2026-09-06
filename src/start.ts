@@ -9,6 +9,7 @@ import { bundleWorker } from "./bundle/bundleWorker.ts";
 import { createStaticAssetMap, StaticAssetMap } from "./bundle/createStaticAssetMap.ts";
 import { logger } from "./server/logger.ts";
 import { trpcHandler } from "./server/trpc/router.ts";
+import { traced } from "./server/telemetry.ts";
 
 logErrors();
 
@@ -51,7 +52,10 @@ const { registerPlayer } = startGame(io);
 
 io.on("connection", (socket) => {
   const player = new Player(socket);
-  registerPlayer(player);
+  traced("socket.connect", {
+    "player.id": socket.id,
+    "player.nickname": player.getNickname(),
+  }, () => registerPlayer(player));
 });
 
 const port = parseInt(Deno.env.get("PORT") ?? "3000");

@@ -4,6 +4,7 @@ while (true) {
       "run",
       "--check",
       "--watch=src/",
+      "--env-file",
       "-A",
       "src/start.ts",
     ],
