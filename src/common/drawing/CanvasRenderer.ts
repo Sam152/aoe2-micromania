@@ -24,6 +24,7 @@ import { CursorAsset, loadCursorFile } from "./cursorLoader.ts";
 import { assetUrl } from "../../client/util/assetUrl.ts";
 
 import { fanOutMangoProjections } from "./helpers/fanOutMangoProjections.ts";
+import { computeArrowAngle } from "../units/computeArrowAngle.ts";
 
 export class CanvasRenderer implements RendererInterface {
   public canvas: HTMLCanvasElement;
@@ -118,6 +119,7 @@ export class CanvasRenderer implements RendererInterface {
     this.translateCamera(clientState.camera);
     this.drawTerrain(gameState);
     this.drawFallenUnits(gameState);
+    this.drawLandedArrows(gameState);
     this.drawUnits(gameState, clientState, clientStateDispatcher);
     this.drawProjectiles(gameState, clientState, clientStateDispatcher);
     this.drawMovementCommandAnimations(gameState, clientState);
@@ -130,6 +132,21 @@ export class CanvasRenderer implements RendererInterface {
 
     this.context.setTransform(1, 0, 0, 1, 0, 0);
     this.drawCursor(clientState);
+  }
+
+  drawLandedArrows(gameState: GameState) {
+    const arrowProjectile = projectileMetadata[ProjectileType.Arrow]!;
+    gameState.landedArrows.forEach((landedArrow) => {
+      slpManager
+        .getAsset(arrowProjectile.asset)
+        .drawFrame(
+          this.context,
+          landedArrow.destination,
+          arrowProjectile.frames[landedArrow.id % arrowProjectile.frames.length],
+          landedArrow.angle,
+          { x: 2, y: 19 },
+        );
+    });
   }
 
   translateCamera(camera: Vector2): void {
@@ -191,22 +208,19 @@ export class CanvasRenderer implements RendererInterface {
           .map((position) => {
             slpManager
               .getAsset(projectileInfo.asset)
-              .drawFrame(this.context, position, projectileInfo.frames[projectile.id % projectileInfo.frames.length]);
+              .drawFrame(this.context, position, gameState.ticks);
           });
       }
 
       if (projectile.type === ProjectileType.Arrow) {
-        const positionPrevious = getArrowPosition(projectile, Math.max(0, percentageComplete - 0.1));
         const position = getArrowPosition(projectile, percentageComplete);
-        const angle = position.clone().sub(positionPrevious).angle();
-
         slpManager
           .getAsset(projectileInfo.asset)
           .drawFrame(
             this.context,
             position,
             projectileInfo.frames[projectile.id % projectileInfo.frames.length],
-            angle + Math.PI * (projectile.type === ProjectileType.Arrow ? 1.5 : 3),
+            computeArrowAngle({ arrow: projectile, percentageComplete }),
             { x: 2, y: 19 },
           );
       }

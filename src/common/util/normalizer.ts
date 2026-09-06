@@ -39,5 +39,13 @@ export function normalizeGameStateObject(state: GameState): GameState {
     destination: new Vector2(projectile.destination.x, projectile.destination.y),
     pathVector: new Vector2(projectile.pathVector.x, projectile.pathVector.y),
   }));
+  state.landedArrows = state.landedArrows.map((arrow) => ({
+    ...arrow,
+    destination: new Vector2(arrow.destination.x, arrow.destination.y),
+  }));
+  state.landedRocks = state.landedRocks.map((rock) => ({
+    ...rock,
+    destination: new Vector2(rock.destination.x, rock.destination.y),
+  }));
   return state;
 }

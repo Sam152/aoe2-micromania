@@ -5,6 +5,8 @@ import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 import { pointInCircle } from "../../../util/pointInCircle.ts";
 import { soundManager } from "../../../sounds/SoundManger.ts";
+import { computeArrowAngle } from "../../../units/computeArrowAngle.ts";
+import { ProjectileType } from "../../../units/ProjectileType.ts";
 
 export function registerProjectileHits(state: GameState) {
   const landedProjectiles = state.projectiles.filter(({ arrivingTick }) => arrivingTick === state.ticks);
@@ -26,6 +28,12 @@ export function registerProjectileHits(state: GameState) {
       if (hitUnit.hitPoints <= 0) {
         registerUnitFallen(state, hitUnit);
       }
+    } else {
+      state.landedArrows.unshift({
+        id: projectile.id,
+        destination: projectile.destination,
+        angle: computeArrowAngle({ arrow: projectile, percentageComplete: 1 }),
+      });
     }
   });
 
@@ -51,4 +59,21 @@ export function registerProjectileHits(state: GameState) {
   // Remove landed projectiles from the game state.
   const landedIds = new Set(landedProjectiles.map(({ id }) => id));
   state.projectiles = state.projectiles.filter(({ id }) => !landedIds.has(id));
+
+  state.landedRocks.unshift(
+    ...landedProjectiles.filter(({ type }) => type === ProjectileType.Rock).map((projectile) => ({
+      id: projectile.id,
+      destination: projectile.destination,
+      landedOnTick: projectile.arrivingTick,
+    })),
+  );
+
+  // Landed rocks only render a short animation that splashes the ground, so for visual reasons
+  // we don't need to keep them for a long time. We could filter them based on ticks and animation
+  // duration, but retaining the last 20 is also fine. This should allow for about 4 simultanous
+  // shots to land, without their animations disappearing.
+  state.landedRocks.splice(20);
+
+  // Keep a good amount of landed arrows on the battlefield.
+  state.landedArrows.splice(200);
 }

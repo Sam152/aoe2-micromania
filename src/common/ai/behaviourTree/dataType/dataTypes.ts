@@ -13,6 +13,7 @@ import { tickCount } from "./catalog/tickCount.ts";
 import { groupIndex } from "./catalog/groupIndex.ts";
 import { projectileType } from "./catalog/projectileType.ts";
 import { groupSize } from "./catalog/groupSize.ts";
+import { sidedDice } from "./catalog/sidedDice.ts";
 
 export const dataTypes = {
   boolean,
@@ -27,6 +28,7 @@ export const dataTypes = {
   formation,
   projectileType,
   groupSize,
+  sidedDice,
 };
 
 export type DataType = keyof typeof dataTypes;

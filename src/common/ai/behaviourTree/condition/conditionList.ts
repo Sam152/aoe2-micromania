@@ -7,6 +7,7 @@ import { unitCountEquals } from "./catalog/unitCountEquals.ts";
 import { formationEquals } from "./catalog/formationEquals.ts";
 import { tickCountLessThan } from "./catalog/tickCountLessThan.ts";
 import { tickCountEquals } from "./catalog/tickCountEquals.ts";
+import { diceRoll } from "./catalog/diceRoll.ts";
 
 export const conditionList = {
   groupIndexEquals,
@@ -18,6 +19,7 @@ export const conditionList = {
   formationEquals,
   tickCountLessThan,
   tickCountEquals,
+  diceRoll,
 } as const;
 
 export type ConditionList = typeof conditionList;

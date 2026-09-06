@@ -18,7 +18,10 @@ export function randomNode(unitType: UnitType, type: BehaviourTreeNodeType): Beh
   }
 
   if (type === "condition") {
-    const conditionType = randomArray(Object.keys(conditionList) as ConditionType[]);
+    const conditionType = randomArray(
+      // Forbid dice rolls - keep the AI training deterministic.
+      Object.keys(conditionList).filter((cond) => cond !== "diceRoll") as ConditionType[],
+    );
     const conditionDef = conditionList[conditionType];
 
     const condition: ConditionNode = {
