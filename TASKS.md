@@ -12,10 +12,10 @@
 - [ ] Boot on idle
 - [x] Logging/observability
 - [ ] Persisting events / replay
-- [ ] Better CDN caching for static assets
+- [x] Better CDN caching for static assets
 - [ ] Validated dispatch
 - [x] Desync validation
-- [ ] Analytics/stats
+- [x] Analytics/stats
 
 ## Gameplay
 
@@ -36,13 +36,13 @@
 - [ ] Selection panel
 - [ ] Formation changing while units idle
 - [ ] Restoring stack patrol behaviour
-- [ ] Leave arrows on the field
+- [x] Leave arrows on the field
 - [ ] Fix mango range
 - [ ] Mango trails
 
 # Interface
 
-- [ ] Camera over spawn location
+- [x] Camera over spawn location
 - [x] Asset rendering off main thread
 - [x] GH/Discord links
 - [x] Spectate mode
