@@ -39,6 +39,7 @@
 - [x] Leave arrows on the field
 - [ ] Fix mango range
 - [ ] Mango trails
+- [ ] Human written AI
 
 # Interface
 
