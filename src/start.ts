@@ -55,6 +55,7 @@ io.on("connection", (socket) => {
   traced("socket.connect", {
     "player.id": socket.id,
     "player.nickname": player.getNickname(),
+    "client.address": player.getIpAddress(),
   }, () => registerPlayer(player));
 });
 

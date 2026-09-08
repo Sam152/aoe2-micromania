@@ -50,6 +50,7 @@ export function startGame(io: Server): {
         traced("game.action", {
           "game.action.name": action.n,
           "player.id": player.socket.id,
+          "client.address": player.getIpAddress(),
           "game.ticks": state.getGameState().ticks,
         }, () => {
           if (action.n === "SPECTATE_CLIENT_LOADED") {
@@ -72,6 +73,7 @@ export function startGame(io: Server): {
       player.socket.on("disconnect", (reason) => {
         traced("socket.disconnect", {
           "player.id": player.socket.id,
+          "client.address": player.getIpAddress(),
           "socket.disconnect_reason": reason,
         }, () => {
           spectators.delete(player.socket.id);
