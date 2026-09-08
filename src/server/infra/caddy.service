@@ -1,0 +1,30 @@
+# Installed to /etc/systemd/system/caddy.service by ./install.sh.
+# Adapted from the official unit at https://github.com/caddyserver/dist.
+
+[Unit]
+Description=Caddy (TLS termination for direct.ageofmicro.com)
+Documentation=https://caddyserver.com/docs/
+After=network.target network-online.target
+Requires=network-online.target
+
+[Service]
+Type=notify
+User=caddy
+Group=caddy
+
+# Holds CLOUDFLARE_API_TOKEN, and optionally MICROMANIA_UPSTREAM and
+# CADDY_HTTPS_PORT. Note the absence of --environ on ExecStart: the official unit
+# passes it, which would print the API token into the journal.
+EnvironmentFile=/etc/caddy/caddy.env
+
+ExecStart=/usr/local/bin/caddy run --config /etc/caddy/Caddyfile
+ExecReload=/usr/local/bin/caddy reload --config /etc/caddy/Caddyfile --force
+
+TimeoutStopSec=5s
+LimitNOFILE=1048576
+PrivateTmp=true
+ProtectSystem=full
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target

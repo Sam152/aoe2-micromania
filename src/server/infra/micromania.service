@@ -1,0 +1,35 @@
+# The game server. Installed to ~/.config/systemd/user/micromania.service by
+# ./install-micromania.sh.
+#
+# This is a *user* unit, not a system one, run as sam with lingering enabled so it
+# starts at boot without a login. Caddy (see caddy.service) is a system unit and
+# reaches this over 127.0.0.1:3000.
+#
+# Paths are absolute to /home/sam on deathstar. There is one box, so they are
+# hardcoded rather than templated.
+
+[Unit]
+Description=Micromania game server (deno task start)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/sam/micromania
+Environment=PATH=/home/sam/.deno/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Environment=DENO_DIR=/home/sam/.cache/deno
+
+# `deno task start` wraps .hooks/start-forever.ts, which runs src/start.ts with
+# --env-file, so OTEL config comes from the repo's .env rather than from systemd.
+ExecStart=/home/sam/.deno/bin/deno task start
+
+Restart=always
+RestartSec=5
+KillMode=mixed
+TimeoutStopSec=20
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=micromania
+
+[Install]
+WantedBy=default.target

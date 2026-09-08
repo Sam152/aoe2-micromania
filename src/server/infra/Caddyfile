@@ -1,0 +1,50 @@
+# TLS termination for direct.ageofmicro.com, the hostname that bypasses Cloudflare.
+#
+#   browser --tcp/443--> router --forward--> caddy :3001 --> deno :3000
+#
+# The Cloudflare proxied hostname (ageofmicro.com) does not pass through Caddy and
+# is unaffected by this config. See ./README.md for the router forward, the
+# Cloudflare token and the install steps.
+
+{
+	# The router forwards WAN 443 to this port, so HTTPS sites listen here instead
+	# of on 443. Staying above 1024 means Caddy needs no privileged bind.
+	https_port {$CADDY_HTTPS_PORT:3001}
+
+	# Certificates are issued over DNS-01, so no inbound port 80 is required. Left
+	# alone, automatic HTTPS would bind port 80 to serve HTTP->HTTPS redirects and
+	# fail as an unprivileged user. Port 80 stays with whatever the router already
+	# points it at.
+	auto_https disable_redirects
+
+	# DNS-01 via Cloudflare. The token comes from the environment file read by the
+	# systemd unit, so it is never written into this repo.
+	acme_dns cloudflare {$CLOUDFLARE_API_TOKEN}
+
+	servers {
+		# HTTP/3 would advertise Alt-Svc on Caddy's own port (3001), which is not
+		# the port clients reach the box on. Supporting it would need a UDP 443 ->
+		# 3001 forward as well, so keep to TCP.
+		protocols h1 h2
+	}
+}
+
+https://direct.ageofmicro.com {
+	log {
+		output file /var/log/caddy/direct.ageofmicro.com.log {
+			roll_size 10MiB
+			roll_keep 5
+		}
+	}
+
+	encode zstd gzip
+
+	# Socket.io is configured for the websocket transport only; reverse_proxy
+	# handles the upgrade without extra configuration.
+	reverse_proxy {$MICROMANIA_UPSTREAM:127.0.0.1:3000} {
+		# The server reads the left most x-forwarded-for entry as the client address
+		# (src/server/utils/clientAddress.ts). Replace the header instead of
+		# appending to it, so a client cannot inject its own left most entry.
+		header_up X-Forwarded-For {remote_host}
+	}
+}
