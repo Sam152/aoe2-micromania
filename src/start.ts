@@ -30,6 +30,14 @@ const httpServer = createServer(async (req, res) => {
     return trpcHandler(req, res);
   }
 
+  if (pathname === "/ping") {
+    res.writeHead(200, {
+      "Content-Type": "text/plain",
+      "Cache-Control": "no-store, no-cache, must-revalidate",
+    });
+    return res.end("OK");
+  }
+
   const staticAsset = staticAssets[pathname];
   if (req.method === "GET" && staticAsset) {
     const headers = {
