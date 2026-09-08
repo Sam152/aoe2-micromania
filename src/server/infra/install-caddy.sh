@@ -76,6 +76,26 @@ echo "==> Installing systemd unit"
 install -m 0644 "$INFRA_DIR/caddy.service" /etc/systemd/system/caddy.service
 systemctl daemon-reload
 
+# Validation has to come after the token check, not before it: `caddy validate`
+# provisions every module, and the Cloudflare DNS provider rejects a placeholder
+# token outright ("API token 'replace-me' appears invalid"). Validating first
+# would abort the script under `set -e` before printing the instructions below.
+if [[ "$TOKEN_MISSING" -eq 1 ]]; then
+  cat <<MSG
+
+Caddy is installed but NOT started, and the config was NOT validated:
+$CADDY_ETC/caddy.env still has the placeholder token.
+
+Add a Cloudflare API token with Zone/DNS/Edit and Zone/Zone/Read on
+ageofmicro.com, then re-run this script (which will validate and start), or do it
+by hand:
+
+  sudo systemctl enable --now caddy
+  journalctl -u caddy -f
+MSG
+  exit 0
+fi
+
 # Validate with the same environment the unit will run with, so the {$VAR}
 # placeholders in the Caddyfile resolve the way they will in production.
 echo "==> Validating config"
@@ -84,19 +104,6 @@ set -a
 . "$CADDY_ETC/caddy.env"
 set +a
 "$CADDY_BIN" validate --config "$CADDY_ETC/Caddyfile"
-
-if [[ "$TOKEN_MISSING" -eq 1 ]]; then
-  cat <<MSG
-
-Caddy is installed but NOT started: $CADDY_ETC/caddy.env still has the placeholder
-token. Add a Cloudflare API token with Zone/DNS/Edit and Zone/Zone/Read on
-ageofmicro.com, then:
-
-  sudo systemctl enable --now caddy
-  journalctl -u caddy -f
-MSG
-  exit 0
-fi
 
 if systemctl is-active --quiet caddy; then
   echo "==> Reloading config"

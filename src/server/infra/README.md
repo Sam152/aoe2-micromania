@@ -80,8 +80,10 @@ sudo ./src/server/infra/install-caddy.sh
 The script downloads a Caddy build with the `caddy-dns/cloudflare` module baked in
 (the stock binary has no DNS providers compiled in), creates the `caddy` system
 user, symlinks the Caddyfile out of this repo, and installs the unit. On first run
-it seeds `/etc/caddy/caddy.env` from the example and stops there. Fill in the
-token, then:
+it seeds `/etc/caddy/caddy.env` from the example and stops there without
+validating — `caddy validate` provisions the Cloudflare module, which rejects a
+placeholder token. Fill in the token, then either re-run the installer (it
+validates and starts once a real token is present) or:
 
 ```sh
 sudo systemctl enable --now caddy
@@ -174,6 +176,7 @@ python3 -m http.server 3001    # on deathstar
 | Connection times out from outside             | Router forward WAN 443 → box 3001; `ss -lntp \| grep 3001` on the box                                   |
 | Connection refused on 443                     | Forward exists but nothing is listening — `systemctl status caddy`                                       |
 | Router login page instead of the game         | The Orbi is still answering WAN 443 — disable remote management / HTTPS admin on WAN, keep the forward   |
+| `token 'replace-me' appears invalid`           | `/etc/caddy/caddy.env` still has the placeholder — add the real token. Note `caddy validate` cannot run without a valid token, since it provisions the CF module |
 | `no solvers available` or TXT record errors    | Token permissions (needs Zone/DNS/Edit **and** Zone/Zone/Read); `journalctl -u caddy` shows the CF error |
 | Certificate is Cloudflare's, not Let's Encrypt | You resolved the proxied hostname; confirm `dig +short direct.ageofmicro.com` is the WAN IP             |
 | `502` from Caddy                              | Game server is down: `systemctl --user status micromania`, or `MICROMANIA_UPSTREAM` is wrong             |
