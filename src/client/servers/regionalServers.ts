@@ -1,4 +1,4 @@
-export const regionalServers = { "https://ageofmicro.com": "perth-au" };
+export const regionalServers = { "https://ageofmicro.com": "perth-au-cf", "http://203.12.14.7": "perth-au-direct" };
 
 export async function serversByPing(): Promise<{ server: string; label: string; ping: number }[]> {
   return (
