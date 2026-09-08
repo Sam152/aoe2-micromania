@@ -28,13 +28,22 @@ origin it hits today, and port 80 keeps whatever forward it has.
 | ------------------------ | ---------------------------------------------------------- |
 | `micromania.service`     | Game server unit. Symlinked into `~/.config/systemd/user`.  |
 | `install-micromania.sh`  | Installs the above. Run as `sam`, **not** root.             |
-| `Caddyfile`              | Caddy config. Symlinked to `/etc/caddy/Caddyfile`.          |
+| `Caddyfile`              | Caddy config. Copied to `/etc/caddy/Caddyfile` by the installer. |
 | `caddy.service`          | Caddy unit, installed to `/etc/systemd/system`.             |
 | `caddy.env.example`      | Template for `/etc/caddy/caddy.env` (holds the CF token).    |
 | `install-caddy.sh`       | Installs the Caddy binary, user, dirs, unit and symlink.    |
 
-Both installers symlink rather than copy, so this repo stays the source of truth
-and `git pull` + a reload is the whole update path.
+The game server unit is symlinked from this repo, so a `git pull` picks it up.
+The Caddyfile is **copied** instead: Caddy runs as its own user, which cannot
+traverse `/home/sam` (mode `0700`), so a symlink into the checkout is unreadable to
+it. Config therefore reaches the box by re-running the installer:
+
+```sh
+sudo ./src/server/infra/install-caddy.sh --config-only   # copy Caddyfile + reload
+```
+
+Editing the repo Caddyfile and running only `systemctl reload caddy` silently
+reloads the *old* config — use `--config-only`.
 
 ## Why the privilege split
 
@@ -99,7 +108,7 @@ completes the challenge. Renewals happen automatically and need no inbound ports
 ssh deathstar
 cd micromania && git pull
 systemctl --user restart micromania    # game server: rebundles client on boot
-sudo systemctl reload caddy            # only if the Caddyfile changed
+sudo ./src/server/infra/install-caddy.sh --config-only   # only if the Caddyfile changed
 ```
 
 Caddy `reload` is graceful and does not drop in-flight websockets; `restart` does.
@@ -159,6 +168,10 @@ python3 -m http.server 3001    # on deathstar
 - **`X-Forwarded-For` is replaced, not appended.** The server trusts the left most
   entry (`src/server/utils/clientAddress.ts`), which a client could otherwise
   forge by sending its own header. Caddy overwrites it with the real peer address.
+  Verified end to end: a request carrying `X-Forwarded-For: 1.2.3.4-SPOOFED`
+  reaches the upstream as the real peer address. Caddy logs
+  `Unnecessary header_up X-Forwarded-For` on start — that warning is wrong for this
+  purpose, since Caddy's default *appends* to a client supplied value. Leave it.
 - **Token stays out of the repo.** It lives only in `/etc/caddy/caddy.env`
   (mode 0600, owned by `caddy`). The Caddy unit deliberately omits the `--environ`
   flag that the upstream unit passes, since that would print the token into the
@@ -176,6 +189,9 @@ python3 -m http.server 3001    # on deathstar
 | Connection times out from outside             | Router forward WAN 443 → box 3001; `ss -lntp \| grep 3001` on the box                                   |
 | Connection refused on 443                     | Forward exists but nothing is listening — `systemctl status caddy`                                       |
 | Router login page instead of the game         | The Orbi is still answering WAN 443 — disable remote management / HTTPS admin on WAN, keep the forward   |
+| `open /etc/caddy/Caddyfile: permission denied` | Config was symlinked into `/home/sam` (mode 0700) which the `caddy` user cannot traverse — re-run with `--config-only` to copy it |
+| `open /var/log/caddy/*.log: permission denied` | A root-run `caddy validate` created the log file root-owned: `sudo chown -R caddy:caddy /var/log/caddy` |
+| CF `403` / `Code:10000 Authentication error`   | Token can read but not write DNS. Grant Zone/DNS/**Edit**; test with `curl -H "Authorization: Bearer $T" https://api.cloudflare.com/client/v4/zones?name=ageofmicro.com` |
 | `token 'replace-me' appears invalid`           | `/etc/caddy/caddy.env` still has the placeholder — add the real token. Note `caddy validate` cannot run without a valid token, since it provisions the CF module |
 | `no solvers available` or TXT record errors    | Token permissions (needs Zone/DNS/Edit **and** Zone/Zone/Read); `journalctl -u caddy` shows the CF error |
 | Certificate is Cloudflare's, not Let's Encrypt | You resolved the proxied hostname; confirm `dig +short direct.ageofmicro.com` is the WAN IP             |

@@ -4,7 +4,8 @@
 # Caddyfile in this repo. Idempotent: safe to re-run after editing the Caddyfile
 # or bumping Caddy.
 #
-#   sudo ./src/server/infra/install-caddy.sh
+#   sudo ./src/server/infra/install-caddy.sh                 # full install
+#   sudo ./src/server/infra/install-caddy.sh --config-only   # sync Caddyfile + reload
 #
 # See ./README.md for the router forward and Cloudflare token this depends on.
 set -euo pipefail
@@ -14,10 +15,26 @@ CADDY_BIN=/usr/local/bin/caddy
 CADDY_ETC=/etc/caddy
 CADDY_MODULE=github.com/caddy-dns/cloudflare
 
+CONFIG_ONLY=0
+if [[ "${1:-}" == "--config-only" ]]; then
+  CONFIG_ONLY=1
+elif [[ -n "${1:-}" ]]; then
+  echo "Unknown argument: $1 (expected --config-only or nothing)" >&2
+  exit 1
+fi
+
 if [[ "$(id -u)" -ne 0 ]]; then
   echo "Run as root: sudo $0" >&2
   exit 1
 fi
+
+if [[ "$CONFIG_ONLY" -eq 1 && ! -x "$CADDY_BIN" ]]; then
+  echo "--config-only needs an existing install: $CADDY_BIN not found." >&2
+  echo "Run without the flag first." >&2
+  exit 1
+fi
+
+if [[ "$CONFIG_ONLY" -eq 0 ]]; then
 
 case "$(uname -m)" in
   x86_64) ARCH=amd64 ;;
@@ -58,10 +75,18 @@ fi
 install -d -o caddy -g caddy -m 0750 /var/lib/caddy /var/log/caddy
 install -d -m 0755 "$CADDY_ETC"
 
-# Symlink rather than copy, so the repo stays the source of truth for the config
-# and `git pull` + `systemctl reload caddy` is the whole update path.
-echo "==> Linking $CADDY_ETC/Caddyfile -> $INFRA_DIR/Caddyfile"
-ln -sfn "$INFRA_DIR/Caddyfile" "$CADDY_ETC/Caddyfile"
+fi  # end of full-install-only section
+
+# Copy rather than symlink. Caddy runs as its own user and the checkout lives under
+# a mode 0700 home directory, which that user cannot traverse -- a symlink here
+# fails with "open /etc/caddy/Caddyfile: permission denied". So the repo stays the
+# source of truth and this script is the way config reaches the box; re-run it with
+# --config-only after editing the Caddyfile.
+echo "==> Installing $CADDY_ETC/Caddyfile from $INFRA_DIR/Caddyfile"
+# Remove first: install(1) follows an existing symlink and would write through it,
+# clobbering the repo file's ownership.
+rm -f "$CADDY_ETC/Caddyfile"
+install -o root -g root -m 0644 "$INFRA_DIR/Caddyfile" "$CADDY_ETC/Caddyfile"
 
 TOKEN_MISSING=0
 if [[ ! -f "$CADDY_ETC/caddy.env" ]]; then
@@ -105,14 +130,25 @@ set -a
 set +a
 "$CADDY_BIN" validate --config "$CADDY_ETC/Caddyfile"
 
+# Validation provisions every module, including the file logger, so running it as
+# root creates the log file root-owned and the service (running as caddy) then dies
+# with "open /var/log/caddy/...: permission denied". Hand back anything root just
+# created.
+chown -R caddy:caddy /var/log/caddy /var/lib/caddy
+
 if systemctl is-active --quiet caddy; then
   echo "==> Reloading config"
   systemctl reload caddy
-  echo
-  echo "Config reloaded. The binary on disk was updated too, but the running process"
-  echo "is still the old one. Restart when dropping live connections is acceptable:"
-  echo
-  echo "  sudo systemctl restart caddy"
+  if [[ "$CONFIG_ONLY" -eq 0 ]]; then
+    echo
+    echo "Config reloaded. The binary on disk was updated too, but the running process"
+    echo "is still the old one. Restart when dropping live connections is acceptable:"
+    echo
+    echo "  sudo systemctl restart caddy"
+  fi
+elif [[ "$CONFIG_ONLY" -eq 1 ]]; then
+  echo "==> Config installed; caddy is not running. Start it with:"
+  echo "      sudo systemctl start caddy"
 else
   echo "==> Enabling and starting caddy"
   systemctl enable --now caddy
