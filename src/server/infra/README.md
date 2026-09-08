@@ -1,139 +1,146 @@
-# Server infra: `deathstar`
+# Server infra
 
-Everything needed to run the game server and terminate TLS for it on the box.
+TLS termination and process supervision for a self-hosted game server.
 
-The box is `deathstar` (`ssh deathstar`): Debian 13 trixie, aarch64, repo checked
-out at `/home/sam/micromania`. Two services:
+## Architecture
 
-| Service              | Kind        | Runs as | Listens | Purpose                     |
-| -------------------- | ----------- | ------- | ------- | --------------------------- |
-| `micromania.service` | user unit   | `sam`   | `:3000` | The deno game server        |
-| `caddy.service`      | system unit | `caddy` | `:3001` | TLS termination for `direct.ageofmicro.com` |
+The site is reachable on two hostnames:
 
-`ageofmicro.com` is proxied by Cloudflare, which terminates TLS for it.
-`direct.ageofmicro.com` is unproxied, so Caddy terminates that one on the box:
+- `ageofmicro.com` is served through a CDN, which terminates TLS at its edge.
+- `direct.ageofmicro.com` resolves straight to the origin host, bypassing the CDN.
+  Nothing in front of it terminates TLS, so the origin has to.
+
+Caddy provides that termination and reverse proxies to the game server:
 
 ```
-browser --tcp/443--> router --forward--> caddy :3001 --> deno :3000
-                                          ^
-                          TLS terminates here, cert from Let's Encrypt
+client --tcp/443--> [port mapping] --> caddy :3001 --> game server :3000
+                                        |
+                        TLS terminates here; certificate from
+                        Let's Encrypt via the ACME DNS-01 challenge
 ```
 
-Nothing here touches the Cloudflare path. `ageofmicro.com` keeps hitting whatever
-origin it hits today, and port 80 keeps whatever forward it has.
+Caddy listens on **3001**, not 443, so it needs no privileged bind and does not
+contend with anything else on the standard port; inbound 443 is mapped to it
+externally. Certificates are issued over **DNS-01**, so no inbound port is needed
+for issuance or renewal — only API credentials for the DNS zone.
+
+Two services, deliberately at different privilege levels:
+
+| Service              | Kind        | Runs as       | Listens | Purpose                          |
+| -------------------- | ----------- | ------------- | ------- | -------------------------------- |
+| `micromania.service` | user unit   | checkout user | `:3000` | The deno game server             |
+| `caddy.service`      | system unit | `caddy`       | `:3001` | TLS termination + reverse proxy  |
+
+The game server needs no root and runs as the user owning the checkout and its
+`.env`. Caddy is a system unit because it installs a binary under `/usr/local/bin`
+and holds ACME credentials under `/etc/caddy`. The CDN-served hostname does not
+pass through Caddy and is unaffected by anything here.
 
 ## Files
 
-| File                     | Purpose                                                    |
-| ------------------------ | ---------------------------------------------------------- |
-| `micromania.service`     | Game server unit. Symlinked into `~/.config/systemd/user`.  |
-| `install-micromania.sh`  | Installs the above. Run as `sam`, **not** root.             |
-| `Caddyfile`              | Caddy config. Copied to `/etc/caddy/Caddyfile` by the installer. |
-| `caddy.service`          | Caddy unit, installed to `/etc/systemd/system`.             |
-| `caddy.env.example`      | Template for `/etc/caddy/caddy.env` (holds the CF token).    |
-| `install-caddy.sh`       | Installs the Caddy binary, user, dirs, unit and symlink.    |
+| File                     | Purpose                                                          |
+| ------------------------ | ---------------------------------------------------------------- |
+| `micromania.service`     | Game server unit. Symlinked into `~/.config/systemd/user`.        |
+| `install-micromania.sh`  | Installs the above. Run as the checkout user, **not** root.       |
+| `Caddyfile`              | Caddy config. Copied to `/etc/caddy/Caddyfile` by the installer.  |
+| `caddy.service`          | Caddy unit, installed to `/etc/systemd/system`.                   |
+| `caddy.env.example`      | Template for `/etc/caddy/caddy.env`. Holds the DNS API token.     |
+| `install-caddy.sh`       | Installs the Caddy binary, service user, directories and config.  |
 
-The game server unit is symlinked from this repo, so a `git pull` picks it up.
-The Caddyfile is **copied** instead: Caddy runs as its own user, which cannot
-traverse `/home/sam` (mode `0700`), so a symlink into the checkout is unreadable to
-it. Config therefore reaches the box by re-running the installer:
+## Requirements
 
-```sh
-sudo ./src/server/infra/install-caddy.sh --config-only   # copy Caddyfile + reload
-```
+1. Linux with systemd. The Caddy installer detects `amd64`, `arm64` and `arm`.
+2. Inbound TCP **443** mapped to port **3001** on the host.
+3. An **A record** for `direct.ageofmicro.com` pointing at the host's public
+   address, served directly rather than through the CDN proxy.
+4. A **Cloudflare API token** scoped to the zone, with:
+   - `Zone` / `DNS` / **`Edit`** — writes the `_acme-challenge` TXT record
+   - `Zone` / `Zone` / **`Read`** — resolves the zone by name
 
-Editing the repo Caddyfile and running only `systemctl reload caddy` silently
-reloads the *old* config — use `--config-only`.
+   The "Edit zone DNS" template grants exactly this. No paid CDN plan is involved:
+   the certificate comes from Let's Encrypt, and the API token only writes one
+   temporary DNS record per issuance.
+5. Lingering enabled for the checkout user, so the game server starts at boot
+   without a login: `sudo loginctl enable-linger <user>`.
 
-## Why the privilege split
+## Install
 
-The game server is a **user** unit with `Linger=yes`: it needs no root, and runs
-as the user that owns the checkout and the `.env`. Caddy is a **system** unit
-because it installs a binary into `/usr/local/bin` and holds the ACME token in
-`/etc/caddy`. Keep them separate — `install-micromania.sh` refuses to run as root
-and `install-caddy.sh` requires it.
-
-## Game server
+### Game server
 
 ```sh
-./src/server/infra/install-micromania.sh          # as sam, no sudo
+./src/server/infra/install-micromania.sh     # as the checkout user, no sudo
 systemctl --user status micromania
 journalctl --user -u micromania -f
 ```
 
-Environment (OTEL credentials) comes from the repo's `.env`, loaded by deno's
-`--env-file` via `.hooks/start-forever.ts` — not from systemd. So a credential
-change is `.env` + `systemctl --user restart micromania`, with nothing to touch in
-the unit.
+Environment (telemetry credentials) comes from the repo's `.env`, loaded by deno's
+`--env-file`, not from systemd. A credential change is `.env` plus
+`systemctl --user restart micromania`, with nothing to change in the unit.
 
-## Caddy
-
-### Prerequisites
-
-1. **Router forward:** WAN TCP `443` → `deathstar:3001`. Caddy listens on 3001 so
-   it needs no privileged bind and does not collide with the Orbi's own HTTPS
-   admin page, which used to answer on WAN 443.
-2. **DNS:** `direct.ageofmicro.com` A record → WAN IP, grey cloud (DNS only).
-   Already the case.
-3. **Cloudflare API token** with these permissions on `ageofmicro.com`, from
-   <https://dash.cloudflare.com/profile/api-tokens>:
-   - Zone / DNS / **Edit** — writes the `_acme-challenge` TXT record
-   - Zone / Zone / **Read** — looks the zone up by name
-
-### Install
+### Caddy
 
 ```sh
 sudo ./src/server/infra/install-caddy.sh
 ```
 
-The script downloads a Caddy build with the `caddy-dns/cloudflare` module baked in
-(the stock binary has no DNS providers compiled in), creates the `caddy` system
-user, symlinks the Caddyfile out of this repo, and installs the unit. On first run
-it seeds `/etc/caddy/caddy.env` from the example and stops there without
-validating — `caddy validate` provisions the Cloudflare module, which rejects a
-placeholder token. Fill in the token, then either re-run the installer (it
-validates and starts once a real token is present) or:
+This downloads a Caddy build with the `caddy-dns/cloudflare` module compiled in
+(the stock binary has no DNS providers), creates the `caddy` system user and its
+directories, copies in the config, and installs the unit. On first run it seeds
+`/etc/caddy/caddy.env` from the example and stops without validating — validation
+provisions the DNS module, which rejects a placeholder token.
+
+Add the token to `/etc/caddy/caddy.env`, then either re-run the installer, or:
 
 ```sh
 sudo systemctl enable --now caddy
 journalctl -u caddy -f
 ```
 
-First issuance takes 30-90s: Caddy writes a TXT record, waits for propagation, and
-completes the challenge. Renewals happen automatically and need no inbound ports.
+First issuance takes 30-90s while the TXT record propagates; look for
+`certificate obtained successfully`. Renewal is automatic and needs no inbound
+ports.
 
-## Deploying a change
+## Configuration
+
+`/etc/caddy/caddy.env`, mode `0600`, owned by `caddy`. systemd parses it, so use
+plain `KEY=value` with no quoting or shell expansion.
+
+| Variable               | Default          | Purpose                                     |
+| ---------------------- | ---------------- | ------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN` | required         | ACME DNS-01 credential                      |
+| `MICROMANIA_UPSTREAM`  | `127.0.0.1:3000` | Where the game server listens               |
+| `CADDY_HTTPS_PORT`     | `3001`           | Must match the inbound 443 mapping          |
+
+## Updating
 
 ```sh
-ssh deathstar
-cd micromania && git pull
-systemctl --user restart micromania    # game server: rebundles client on boot
-sudo ./src/server/infra/install-caddy.sh --config-only   # only if the Caddyfile changed
+git pull
+systemctl --user restart micromania                      # rebundles the client on boot
+sudo ./src/server/infra/install-caddy.sh --config-only    # only if the Caddyfile changed
 ```
 
+`--config-only` copies the Caddyfile and reloads, skipping the binary download.
 Caddy `reload` is graceful and does not drop in-flight websockets; `restart` does.
-Restarting `micromania` always drops connected players, since the game state lives
-in the process.
+Restarting the game server always disconnects players, since game state lives in
+the process.
+
+The game server unit is symlinked from the repo, so `git pull` picks it up. The
+Caddyfile is **copied** instead: Caddy runs as its own user, which cannot traverse
+a checkout under a private (mode `0700`) home directory, and a symlink there fails
+with `open /etc/caddy/Caddyfile: permission denied`. Editing the repo Caddyfile and
+running only `systemctl reload caddy` therefore reloads the *old* config — use
+`--config-only`.
 
 ## Verify
-
-From outside the network (phone on cellular, or a remote shell):
 
 ```sh
 curl -sv https://direct.ageofmicro.com/ -o /dev/null
 ```
 
-Expect `TLS certificate verify ok` with a Let's Encrypt issuer and a `200`. From
-inside the LAN, NAT hairpin makes the same command work; if the router does not
-hairpin, hit Caddy directly:
+Expect `TLS certificate verify ok`, a Let's Encrypt issuer, and `200`.
 
-```sh
-curl -sv --resolve direct.ageofmicro.com:3001:<deathstar-lan-ip> \
-  https://direct.ageofmicro.com:3001/ -o /dev/null
-```
-
-Websocket path (socket.io runs websocket-only transport, so this is the one that
-matters for gameplay):
+Websocket path — socket.io is configured for the websocket transport only, so this
+is the one that matters for gameplay:
 
 ```sh
 curl -sv -o /dev/null -H 'Connection: Upgrade' -H 'Upgrade: websocket' \
@@ -143,58 +150,35 @@ curl -sv -o /dev/null -H 'Connection: Upgrade' -H 'Upgrade: websocket' \
 
 Expect `101 Switching Protocols`.
 
-To test the router forward alone, before Caddy exists, put any listener on 3001 on
-the box and curl the public IP from off-network:
+To test the inbound port mapping before Caddy exists, run any listener on the
+Caddy port and request the public address from off-network:
 
 ```sh
-python3 -m http.server 3001    # on deathstar
+python3 -m http.server 3001
 ```
 
-## Decisions worth knowing
+## Design notes
 
-- **No port 80 listener.** DNS-01 issuance means Caddy never needs an HTTP
-  challenge, so `auto_https disable_redirects` is set. Without it Caddy binds port
-  80 for HTTP→HTTPS redirects and dies as an unprivileged user. If you later want
-  a redirect, repoint the router's WAN 80 forward at Caddy and add a
-  `http://direct.ageofmicro.com` site block on a high port.
-- **No HTTP/3.** Caddy would advertise `Alt-Svc` on its own port (3001), which is
-  not the port clients reach the box on. Enabling it properly needs a UDP 443 →
-  3001 forward as well.
+- **No port 80 listener.** DNS-01 issuance never needs an HTTP challenge, so
+  `auto_https disable_redirects` is set. Without it Caddy binds port 80 to serve
+  HTTP→HTTPS redirects and exits as an unprivileged user.
+- **No HTTP/3.** Caddy would advertise `Alt-Svc` on its own port, which is not the
+  port clients connect to. Enabling it properly needs the UDP 443 mapping too.
 - **No `/ping` shortcut in Caddy.** The client picks a server by timing
-  `GET /ping` against each host (`src/client/servers/regionalServers.ts`), and
-  neither host has a real `/ping` route — both fall through to the full HTML page.
-  Answering it cheaply here would make the direct host look artificially faster and
-  bias server selection, so the request goes to the app like any other.
+  `GET /ping` against each host (`src/client/servers/regionalServers.ts`); neither
+  host has a real `/ping` route, so both fall through to the full HTML page.
+  Answering it cheaply at the proxy would make the direct host look artificially
+  faster and bias server selection.
 - **`X-Forwarded-For` is replaced, not appended.** The server trusts the left most
   entry (`src/server/utils/clientAddress.ts`), which a client could otherwise
-  forge by sending its own header. Caddy overwrites it with the real peer address.
-  Verified end to end: a request carrying `X-Forwarded-For: 1.2.3.4-SPOOFED`
-  reaches the upstream as the real peer address. Caddy logs
-  `Unnecessary header_up X-Forwarded-For` on start — that warning is wrong for this
-  purpose, since Caddy's default *appends* to a client supplied value. Leave it.
-- **Token stays out of the repo.** It lives only in `/etc/caddy/caddy.env`
-  (mode 0600, owned by `caddy`). The Caddy unit deliberately omits the `--environ`
-  flag that the upstream unit passes, since that would print the token into the
-  journal.
-- **The game server unit was adopted, not rewritten.** It was hand-installed on the
-  box before this directory existed; the repo copy is byte identical, so
-  `install-micromania.sh` only swaps the file for a symlink. Converting it to a
-  system unit (`User=sam`, no lingering needed) would be tidier but changes a
-  working setup for no functional gain.
-
-## Troubleshooting
-
-| Symptom                                       | Check                                                                                                   |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Connection times out from outside             | Router forward WAN 443 → box 3001; `ss -lntp \| grep 3001` on the box                                   |
-| Connection refused on 443                     | Forward exists but nothing is listening — `systemctl status caddy`                                       |
-| Router login page instead of the game         | The Orbi is still answering WAN 443 — disable remote management / HTTPS admin on WAN, keep the forward   |
-| `open /etc/caddy/Caddyfile: permission denied` | Config was symlinked into `/home/sam` (mode 0700) which the `caddy` user cannot traverse — re-run with `--config-only` to copy it |
-| `open /var/log/caddy/*.log: permission denied` | A root-run `caddy validate` created the log file root-owned: `sudo chown -R caddy:caddy /var/log/caddy` |
-| CF `403` / `Code:10000 Authentication error`   | Token can read but not write DNS. Grant Zone/DNS/**Edit**; test with `curl -H "Authorization: Bearer $T" https://api.cloudflare.com/client/v4/zones?name=ageofmicro.com` |
-| `token 'replace-me' appears invalid`           | `/etc/caddy/caddy.env` still has the placeholder — add the real token. Note `caddy validate` cannot run without a valid token, since it provisions the CF module |
-| `no solvers available` or TXT record errors    | Token permissions (needs Zone/DNS/Edit **and** Zone/Zone/Read); `journalctl -u caddy` shows the CF error |
-| Certificate is Cloudflare's, not Let's Encrypt | You resolved the proxied hostname; confirm `dig +short direct.ageofmicro.com` is the WAN IP             |
-| `502` from Caddy                              | Game server is down: `systemctl --user status micromania`, or `MICROMANIA_UPSTREAM` is wrong             |
-| Game server dies after logout                 | `loginctl show-user sam \| grep Linger` — needs `Linger=yes`                                             |
-| Websocket fails but page loads                | Reload rather than restart Caddy during deploys; check for `101` with the curl above                     |
+  forge by sending its own header. Verified: a request carrying
+  `X-Forwarded-For: 1.2.3.4-SPOOFED` reaches the upstream as the real peer
+  address. Caddy logs `Unnecessary header_up X-Forwarded-For` at startup — that
+  warning does not apply to this use, since Caddy's default *appends* to a
+  client-supplied value. Leave the directive in place.
+- **The token stays out of the repo,** living only in `/etc/caddy/caddy.env`. The
+  Caddy unit omits the `--environ` flag that the upstream unit passes, since that
+  prints the environment, token included, into the journal.
+- **`caddy validate` runs as root**, which provisions the file logger and leaves
+  the log root-owned; the installer hands `/var/log/caddy` and `/var/lib/caddy`
+  back to the `caddy` user afterwards.
