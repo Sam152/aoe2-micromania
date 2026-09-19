@@ -2,9 +2,12 @@ import { hash } from "../../util/hash.ts";
 import { rockPositionFactory } from "./rockPosition.ts";
 import { ProjectileInstance } from "../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
+import { arrayOfSize } from "../../util/arrayOfSize.ts";
 
-const MAX_OVERSHOOT_AMOUNT = 12;
+const MAX_OVERSHOOT_AMOUNT = 50;
 const MAX_ANGLE_VARIANCE = 3;
+const ANGLE_SPREAD = 10;
+const TOTAL_PROJECTILES = 6;
 
 export function fanOutMangoProjections(projectile: ProjectileInstance, percentageComplete: number) {
   const rockPosition = rockPositionFactory(projectile, percentageComplete);
@@ -14,23 +17,23 @@ export function fanOutMangoProjections(projectile: ProjectileInstance, percentag
   const angleVariance = () =>
     ((hash(projectile.id + seedCount++) % (MAX_ANGLE_VARIANCE * 2)) - MAX_ANGLE_VARIANCE) / 1000;
 
-  const overshootVariance = () => (hash(projectile.id + seedCount++) % MAX_OVERSHOOT_AMOUNT) * 0.001;
+  const overshootVariance = () =>
+    ((hash(projectile.id + seedCount++) % MAX_OVERSHOOT_AMOUNT) - (MAX_OVERSHOOT_AMOUNT / 2)) * 0.001;
 
-  const newProjectiles = [
-    projectile.pathVector.clone().rotateAround(origin, -0.03 + angleVariance()),
-    projectile.pathVector.clone().multiplyScalar(1 + overshootVariance())
-      .rotateAround(
+  const step = (ANGLE_SPREAD * 0.01) / TOTAL_PROJECTILES;
+  const start = 0 - ((ANGLE_SPREAD * 0.01) / 2);
+
+  const angleFactors: (number | undefined)[] = arrayOfSize(TOTAL_PROJECTILES).map((i) => start + (i * step));
+
+  const newProjectiles = angleFactors.map((factor) => {
+    const newPosition = projectile.pathVector.clone().multiplyScalar(1 + overshootVariance());
+    return factor !== undefined
+      ? newPosition.rotateAround(
         origin,
-        -0.01 + angleVariance(),
-      ),
-    projectile.pathVector.clone().multiplyScalar(1 + overshootVariance()),
-    projectile.pathVector.clone().multiplyScalar(1 + overshootVariance())
-      .rotateAround(
-        origin,
-        0.01 + angleVariance(),
-      ),
-    projectile.pathVector.clone().rotateAround(origin, 0.03 + angleVariance()),
-  ];
+        factor + angleVariance(),
+      )
+      : newPosition;
+  });
 
   return newProjectiles
     .map((rotated) => {

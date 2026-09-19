@@ -112,6 +112,7 @@ export function MangoFanOutPlayground() {
         ctx.moveTo(destination.x, destination.y);
         ctx.lineTo(handle.x, handle.y);
         ctx.stroke();
+        dot(destination.x, destination.y, 3, "#3ddc60");
         dot(handle.x, handle.y, 3, "#ff4d4d");
 
         ctx.fillStyle = "#888";
