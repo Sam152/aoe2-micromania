@@ -10,7 +10,8 @@ export function autoAttack(state: GameState, computed: ComputedTickState) {
   const autoAttackingUnits = fireUnits.filter((unit) => {
     return (
       (unit.unitState === UnitState.Idle || hasScalarValue(unit.patrollingTo)) &&
-      (!hasScalarValue(unit.targetingUnit) || !hasScalarValue(unit.targetingPosition))
+      !hasScalarValue(unit.targetingUnit) &&
+      !hasScalarValue(unit.targetingPosition)
     );
   });
   autoAttackingUnits.forEach((attackingUnit) => {

@@ -3,6 +3,8 @@ import { calculateUnitMovementPerTick } from "../../../units/calculateUnitMoveme
 import { UnitType } from "../../../units/UnitType.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
+import { toWorldVector } from "../../../util/worldDistance.ts";
+import { config } from "../../../config.ts";
 
 export function computeAimingFor(
   { unit, targetingUnit, state }: { targetingUnit: UnitInstance; unit: UnitInstance; state: GameState },
@@ -15,17 +17,19 @@ export function computeAimingFor(
 
     if (movementPerTick) {
       const unitData = unitMetadataFactory.getUnit(unit.unitType);
-      const speed = projectileMetadata[unitData.firesProjectileType]!.speed;
+      const speed = projectileMetadata[unitData.firesProjectileType]!.speedInTiles * config.tileGameStatsLength;
 
       // The projectile leaves from the firing anchor, not the unit's origin.
       const startingPoint = unit.position.clone().add(unitData.firingAnchor);
 
       // Solve for the intercept time t where the projectile (travelling `speed` per tick)
       // reaches the target's future position: |D + V·t| = speed·t, which expands to the
-      // quadratic (V·V − speed²)t² + 2(D·V)t + (D·D) = 0.
-      const d = targetingUnit.position.clone().sub(startingPoint);
-      const a = movementPerTick.dot(movementPerTick) - speed * speed;
-      const b = 2 * d.dot(movementPerTick);
+      // quadratic (V·V − speed²)t² + 2(D·V)t + (D·D) = 0. Both vectors go into world space
+      // so that they are measured the same way as `speed`, whichever way the target runs.
+      const d = toWorldVector(targetingUnit.position.clone().sub(startingPoint));
+      const v = toWorldVector(movementPerTick);
+      const a = v.dot(v) - speed * speed;
+      const b = 2 * d.dot(v);
       const c = d.dot(d);
 
       const discriminant = b * b - 4 * a * c;

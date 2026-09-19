@@ -128,7 +128,7 @@ const unitDefinitions: {
     movementRate: 0.6,
     hitPoints: 50,
     attackRange: 7,
-    attackMinRange: 3,
+    attackMinRange: 2.5,
     attackDamage: 40,
     damageType: DamageType.Pierce,
     armor: {
@@ -136,8 +136,8 @@ const unitDefinitions: {
       [DamageType.Melee]: 0,
     },
     areaOfEffect: [
-      { distanceFromTarget: 30, percentageOfAttack: 1 },
-      { distanceFromTarget: 100, percentageOfAttack: 0.5 },
+      { distanceFromTargetInTiles: 0.3, percentageOfAttack: 1 },
+      { distanceFromTargetInTiles: 1, percentageOfAttack: 0.5 },
     ],
     firesProjectileType: ProjectileType.Rock,
     firingAnchor: new Vector2(0, -30),

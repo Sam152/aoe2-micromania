@@ -14,6 +14,7 @@ import { soundManager } from "../../../sounds/SoundManger.ts";
 import { ComputedTickState } from "../../computed/createComputedTickState.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 import { computeAimingFor } from "./computeAimingFor.ts";
+import { worldDistance } from "../../../util/worldDistance.ts";
 
 export function fireProjectiles(state: GameState, computed: ComputedTickState) {
   const fireUnits = computed.nonMonkUnits();
@@ -86,7 +87,7 @@ export function fireProjectiles(state: GameState, computed: ComputedTickState) {
         });
 
         const targetingUnit = computed.unitsById()[unit.targetingUnit!];
-        const distance = unit.position.distanceTo(landedPosition);
+        const distance = worldDistance(unit.position, landedPosition);
 
         state.projectiles.push({
           id,
@@ -95,7 +96,10 @@ export function fireProjectiles(state: GameState, computed: ComputedTickState) {
           startingPoint: startingPoint,
           destination: landedPosition.clone(),
           startingTick: state.ticks,
-          arrivingTick: Math.floor(state.ticks + distance / projectileMetadata[unitData.firesProjectileType]!.speed),
+          arrivingTick: Math.floor(
+            state.ticks +
+              distance / (projectileMetadata[unitData.firesProjectileType]!.speedInTiles * config.tileGameStatsLength),
+          ),
           pathVector: landedPosition.clone().sub(startingPoint),
           targeting: targetingUnit ? targetingUnit.id : undefined,
           hasDamage: true,

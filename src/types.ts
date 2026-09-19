@@ -423,7 +423,7 @@ export interface UnitStats {
   attackRange: number;
   attackMinRange: number;
   attackDamage: number;
-  areaOfEffect: Array<{ distanceFromTarget: number; percentageOfAttack: number }> | null;
+  areaOfEffect: Array<{ distanceFromTargetInTiles: number; percentageOfAttack: number }> | null;
   firingAnchor: Vector2;
   selectionRadius: number;
   hitBox: number;

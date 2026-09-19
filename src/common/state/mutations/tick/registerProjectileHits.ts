@@ -4,9 +4,11 @@ import { registerUnitFallen } from "./registerUnitFallen.ts";
 import { unitMetadataFactory } from "../../../units/unitMetadataFactory.ts";
 import { projectileMetadata } from "../../../units/projectileMetadata.ts";
 import { pointInCircle } from "../../../util/pointInCircle.ts";
+import { worldDistance } from "../../../util/worldDistance.ts";
 import { soundManager } from "../../../sounds/SoundManger.ts";
 import { computeArrowAngle } from "../../../units/computeArrowAngle.ts";
 import { ProjectileType } from "../../../units/ProjectileType.ts";
+import { config } from "../../../config.ts";
 
 export function registerProjectileHits(state: GameState) {
   const landedProjectiles = state.projectiles.filter(({ arrivingTick }) => arrivingTick === state.ticks);
@@ -40,10 +42,11 @@ export function registerProjectileHits(state: GameState) {
   areaProjectiles.forEach((projectile) => {
     const area = unitMetadataFactory.getUnit(projectile.firedByType).areaOfEffect;
     const damagedUnits = new Set<number>();
-    area!.forEach(({ distanceFromTarget, percentageOfAttack }) => {
+    area!.forEach(({ distanceFromTargetInTiles, percentageOfAttack }) => {
+      const blastRadius = distanceFromTargetInTiles * config.tileGameStatsLength;
       const affectedUnits = state.units
         // Find units within the radius of the blast.
-        .filter(({ position }) => position.distanceTo(projectile.destination) < distanceFromTarget)
+        .filter(({ position }) => worldDistance(position, projectile.destination) < blastRadius)
         // That haven't already been damaged.
         .filter(({ id }) => !damagedUnits.has(id));
       affectedUnits.forEach((affectedUnit) => {

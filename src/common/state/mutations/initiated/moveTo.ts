@@ -8,6 +8,7 @@ import { populationVector } from "../../../util/populationVector.ts";
 import { config } from "../../../config.ts";
 import { addUnitReformingSpeedFactor } from "../../../util/addUnitReformingSpeedFactor.ts";
 import { snapToClamp } from "../../../util/snapToClamp.ts";
+import { worldDistance } from "../../../util/worldDistance.ts";
 
 export function moveTo(state: GameState, units: UnitInstance[], destination: Vector2) {
   if (units.length === 0) {
@@ -31,7 +32,7 @@ export function moveTo(state: GameState, units: UnitInstance[], destination: Vec
   const position = averageVector(positions);
   // While moving, if the units are travelling a reasonable distance, reform them in their current location before
   // continuing to their destination.
-  if (units.length > 2 && position.distanceTo(destination) > config.movingReformDistance * 1.5) {
+  if (units.length > 2 && worldDistance(position, destination) > config.movingReformDistance * 1.5) {
     const reformAt = position.add(
       populationVector(units, "movingDirection").multiplyScalar(config.movingReformDistance),
     );

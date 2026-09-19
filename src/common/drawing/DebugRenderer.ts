@@ -1,5 +1,5 @@
 import { ClientDispatcher, ClientState, GameState, RendererInterface } from "../../types.ts";
-import { circle, emptyCircle } from "./shapes.ts";
+import { circle, emptyCircle, emptyEllipse } from "./shapes.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { arrayOfSize } from "../util/arrayOfSize.ts";
 import { bottomLeft, bottomRight, isInBounds, topLeft, topRight } from "../util/isInBounds.ts";
@@ -8,6 +8,7 @@ import { snapToClamp } from "../util/snapToClamp.ts";
 import { unitMetadataFactory } from "../units/unitMetadataFactory.ts";
 import { Grid } from "../terrain/Grid.ts";
 import { getStartingSpawnCandidates } from "../state/mutations/players/spawnStartingUnits.ts";
+import { worldRadiusToScreen } from "../util/worldDistance.ts";
 
 export class DebugRenderer implements RendererInterface {
   private canvas: HTMLCanvasElement;
@@ -28,6 +29,7 @@ export class DebugRenderer implements RendererInterface {
 
   render(gameState: GameState, clientState: ClientState, _clientStateDispatcher: ClientDispatcher): void {
     this.drawUnits(gameState);
+    this.drawAttackRanges(gameState);
     this.drawClampSnap(gameState, clientState);
     this.drawBoundary(gameState, clientState);
     this.drawGridTiles(gameState, clientState);
@@ -72,6 +74,32 @@ export class DebugRenderer implements RendererInterface {
         circle(this.context, clientState.lastLeftClick, 10, "red");
       }
     }
+  }
+
+  // Range is measured with `worldDistance`, which costs a vertical pixel more than a horizontal
+  // one, so the ground a unit can reach is an ellipse on screen rather than a circle. The axes
+  // come from the same scales the simulation uses, so the ring is exactly what it can hit.
+  drawAttackRanges(gameState: GameState) {
+    gameState.units.forEach((unit) => {
+      const metadata = unitMetadataFactory.getUnit(unit.unitType);
+
+      if (metadata.attackRange) {
+        const radius = worldRadiusToScreen(metadata.attackRange * config.tileGameStatsLength);
+        // A plain circle on the horizontal reach, as a reference: the gap between it and the
+        // ellipse at the top and bottom is the range the perspective correction takes away.
+        emptyCircle(this.context, unit.position, radius.x, "rgba(255, 255, 255, 0.18)");
+        emptyEllipse(this.context, unit.position, radius, "rgba(80, 200, 255, 0.45)");
+      }
+
+      if (metadata.attackMinRange) {
+        emptyEllipse(
+          this.context,
+          unit.position,
+          worldRadiusToScreen(metadata.attackMinRange * config.tileGameStatsLength),
+          "rgba(255, 90, 90, 0.45)",
+        );
+      }
+    });
   }
 
   drawUnits(gameState: GameState) {

@@ -1,6 +1,7 @@
 import { UnitInstance } from "../../types.ts";
 import { calculateUnitMovementPerTick } from "../units/calculateUnitMovementPerTick.ts";
 import { config } from "../config.ts";
+import { worldDistance, worldLength } from "./worldDistance.ts";
 
 export function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]) {
   if (units.length < 2) {
@@ -15,10 +16,10 @@ export function addUnitReformingSpeedFactor(ticks: number, units: UnitInstance[]
       return;
     }
 
-    const distanceToReform = unit.reformingTo.distanceTo(unit.position);
+    const distanceToReform = worldDistance(unit.reformingTo, unit.position);
     distances.push(distanceToReform);
     ticksForReform.push(
-      distanceToReform !== 0 ? Math.floor(distanceToReform / calculateUnitMovementPerTick(unit)!.length()) : 0,
+      distanceToReform !== 0 ? Math.floor(distanceToReform / worldLength(calculateUnitMovementPerTick(unit)!)) : 0,
     );
   });
 

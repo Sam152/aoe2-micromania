@@ -4,11 +4,15 @@ import { GameState, UnitInstance } from "../../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { ticksToDestination } from "../../../util/ticksToDestination.ts";
 import { snapToClamp } from "../../../util/snapToClamp.ts";
+import { worldLength } from "../../../util/worldDistance.ts";
 
 export function setUnitMovementTowards(state: GameState, unit: UnitInstance, destination: Vector2): Vector2 {
   const snappedDestination = snapToClamp(destination, state.mapSize);
 
-  unit.movingDirection = snappedDestination.clone().sub(unit.position).normalize();
+  // Scale the heading so that it is one unit long across the ground rather than on screen.
+  // Normalising in screen space would send units up and down the map twice as fast.
+  const heading = snappedDestination.clone().sub(unit.position);
+  unit.movingDirection = heading.divideScalar(worldLength(heading) || 1);
   const ticks = ticksToDestination(unit, snappedDestination);
 
   unit.direction = compassDirectionCalculator.getDirection(unit.position, destination);

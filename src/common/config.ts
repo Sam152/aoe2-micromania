@@ -1,3 +1,6 @@
+const tileWidth = 96;
+const tileHeight = 48;
+
 export const config = {
   /**
    * If the game should render debug information.
@@ -28,10 +31,14 @@ export const config = {
    */
   tileWidth: 96,
   tileHeight: 48,
+  tileGameStatsLength: Math.hypot(tileWidth / 2, tileHeight / 2),
   /**
-   * The length of a single tile as far as the game statistics are concerned.
+   * How much of the isometric vertical squash to correct for when measuring the ground.
+   * 1 corrects it fully, so a tile measures the same in every direction; 0 not at all, so
+   * distances are raw screen pixels. A tile step measures the same at any setting, so this
+   * only trades reach and pace between the vertical and horizontal, never overall.
    */
-  tileGameStatsLength: 99,
+  perspectiveCorrection: 0.3,
   /**
    * How fast the camera should pan.
    */

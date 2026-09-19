@@ -4,7 +4,7 @@ import { ProjectileInstance } from "../../../types.ts";
 import { Vector2 } from "three/src/math/Vector2.js";
 import { arrayOfSize } from "../../util/arrayOfSize.ts";
 
-const MAX_OVERSHOOT_AMOUNT = 50;
+const MAX_OVERSHOOT_AMOUNT = 60;
 const MAX_ANGLE_VARIANCE = 3;
 const ANGLE_SPREAD = 10;
 const TOTAL_PROJECTILES = 6;
