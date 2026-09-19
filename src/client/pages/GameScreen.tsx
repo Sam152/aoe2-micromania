@@ -3,10 +3,12 @@ import { connectedEvents, gameStateToConnectedState, useConnectedState } from ".
 import { useEffect, useMemo } from "react";
 import { NetworkedStateManager } from "../../common/state/managers/NetworkedStateManager.ts";
 import { GameCanvas } from "../components/GameCanvas.tsx";
+import { useHiddenBodyOverflow } from "../hooks/useHiddenBodyOverflow.ts";
 
 export function GameScreen() {
   const connection = useRegionalConnection();
   const [, setConnectedState] = useConnectedState();
+  useHiddenBodyOverflow();
 
   const state = useMemo<NetworkedStateManager | undefined>(() => {
     if (connection.hasConnected) {
