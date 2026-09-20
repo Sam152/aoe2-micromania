@@ -10,7 +10,7 @@ export function inAttackRange(unit: UnitInstance, position: Vector2): boolean {
 
 export function getAttackRange(unit: UnitInstance) {
   const unitData = unitMetadataFactory.getUnit(unit.unitType);
-  return unitData.attackRange * config.tileGameStatsLength;
+  return unitData.attackRange * config.tileGameStatsLength * config.unitRangeFactor;
 }
 
 export function inMinimumRange(unit: UnitInstance, position: Vector2): boolean {
