@@ -21,7 +21,7 @@ export const config = {
   /**
    * A constant, multiplied by unit range statistics to make them feel correct.
    */
-  unitRangeFactor: 1.5,
+  unitRangeFactor: 1.4,
   /**
    * The factory by which units may travel faster than their actual speed, in order to get into formation.
    */

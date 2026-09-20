@@ -84,7 +84,7 @@ export class DebugRenderer implements RendererInterface {
       const metadata = unitMetadataFactory.getUnit(unit.unitType);
 
       if (metadata.attackRange) {
-        const radius = worldRadiusToScreen(metadata.attackRange * config.tileGameStatsLength);
+        const radius = worldRadiusToScreen(metadata.attackRange * config.tileGameStatsLength * config.unitRangeFactor);
         // A plain circle on the horizontal reach, as a reference: the gap between it and the
         // ellipse at the top and bottom is the range the perspective correction takes away.
         emptyCircle(this.context, unit.position, radius.x, "rgba(255, 255, 255, 0.18)");
@@ -95,7 +95,7 @@ export class DebugRenderer implements RendererInterface {
         emptyEllipse(
           this.context,
           unit.position,
-          worldRadiusToScreen(metadata.attackMinRange * config.tileGameStatsLength),
+          worldRadiusToScreen(metadata.attackMinRange * config.tileGameStatsLength * config.unitRangeFactor),
           "rgba(255, 90, 90, 0.45)",
         );
       }

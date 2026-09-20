@@ -128,7 +128,7 @@ const unitDefinitions: {
     movementRate: 0.6,
     hitPoints: 50,
     attackRange: 7,
-    attackMinRange: 2.5,
+    attackMinRange: 2,
     attackDamage: 40,
     damageType: DamageType.Pierce,
     armor: {
