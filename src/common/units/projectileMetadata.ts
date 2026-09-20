@@ -14,7 +14,7 @@ export const projectileMetadata: PartialRecord<
   }
 > = {
   [ProjectileType.Arrow]: {
-    speedInTiles: 0.4,
+    speedInTiles: 0.5,
     asset: "projectiles/p_arrow_x1",
     frames: [97],
     damageIsAreaOfEffect: false,
