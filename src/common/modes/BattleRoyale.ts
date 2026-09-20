@@ -41,7 +41,7 @@ export class BattleRoyale implements GameMode {
       return;
     }
     this.cyclePlayers(state, action, manager);
-    // this.cycleBots(state, action, manager);
+    this.cycleBots(state, action, manager);
     //this.cycleTerrain(state, action, manager);
   }
 
