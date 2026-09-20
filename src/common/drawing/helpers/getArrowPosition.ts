@@ -10,7 +10,7 @@ export function getArrowPosition(
   const lengthComplete = percentageComplete * length;
 
   const zValue = (-1 * Math.pow(lengthComplete - length / 2, 2) + Math.pow(length / 2, 2)) *
-    (projectile.type === ProjectileType.Arrow ? 0.0013 : 0.0018);
+    (projectile.type === ProjectileType.Arrow ? 0.0013 : 0.0019);
 
   const positionOnPathVector = projectile.pathVector.clone().multiplyScalar(percentageComplete);
   return projectile.startingPoint.clone().add(positionOnPathVector).sub(new Vector2(0, zValue));
